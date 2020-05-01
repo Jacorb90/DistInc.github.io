@@ -7,12 +7,13 @@ const DEFAULT_START = {
 	rank: new ExpantaNum(1),
 	tier: new ExpantaNum(0),
 	rockets: new ExpantaNum(0),
+	achievements: [],
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc"],
 }
 
 // Formatting Data
@@ -96,4 +97,32 @@ const LAYER_FP = {
 const TABBTN_SHOWN = {
 	main: function() { return true },
 	rockets: function() { return (tmp.rockets ? (tmp.rockets.canRocket||player.rockets.gt(0)) : false) },
+	achievements: function() { return true },
+}
+
+// Achievements
+
+const ACH_DATA = {
+	rows: 2,
+	cols: 4,
+	descs: {
+		11: "Go at least 100m.",
+		12: "Do a rank reset.",
+		13: "Do a tier reset.",
+		14: "Do a rocket reset.",
+		
+		21: "Go at least 500km.",
+		22: "Reach Rank 8.",
+		23: "Reach Tier 3.",
+		24: "Reach 2 Rockets.",
+	}
+}
+
+// Update Temp Data for Achievements
+
+for (let r=1;r<=ACH_DATA.rows;r++) {
+	for (let c=1;c<=ACH_DATA.cols;c++) {
+		let id = r*10+c
+		TMP_DATA.ELS.push("ach"+id)
+	}
 }

@@ -96,10 +96,21 @@
 .tab { text-align: center; }
 
 .band {
-	background-color: #03fcf0;
 	width: 100%;
 	height: 70px;
 	text-align: center;
 }
 
+.lb { background-color: #03fcf0; }
+
+.gn { background-color: #4ceb34; }
+
+.dgn { background-color: #029c04 !important; }
+
 table { margin: auto; }
+
+.achCont {
+	height: 50px;
+	width: 50px;
+	background-color: #9e9d9b;
+}

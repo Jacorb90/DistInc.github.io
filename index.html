@@ -7,19 +7,22 @@
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
+	<script type="text/javascript" src="js/classes/Achievement.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
 	<title>Distance Incremental</title>
 </head>
 <body>
-	<div class="band">
+	<div class="band lb">
 		<table>
 			<tr>
 				<td><button id="maintabbtn" class="tabbtn" onclick="showTab('main')">Main</button></td>
+				<td><button id="achievementstabbtn" class="tabbtn" onclick="showTab('achievements')">Achievements</button></td>
 				<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
 			</tr>
 		</table><br>
 		<span id="nextFeature"></span><br>
 	</div>
+	<br>
 	<div id="main" class="tab">
 		You have gone a total of <span id="distance"></span>.<br>
 		Your current velocity is <span id="velocity"></span>/s (maximum <span id="maxVel"></span>/s).<br>
@@ -30,5 +33,22 @@
 	<div id="rockets" class="tab" style="display: none;">
 		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
 		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).
+	</div>
+	<div id="achievements" class="tab" style="display: none;">
+		<div id="achDesc" class="band gn"></div>
+		<table>
+			<tr>
+				<td id="ach11" class="achCont" onmouseover="tmp.ach[11].select()"></td>
+				<td id="ach12" class="achCont" onmouseover="tmp.ach[12].select()"></td>
+				<td id="ach13" class="achCont" onmouseover="tmp.ach[13].select()"></td>
+				<td id="ach14" class="achCont" onmouseover="tmp.ach[14].select()"></td>
+			</tr>
+			<tr>
+				<td id="ach21" class="achCont" onmouseover="tmp.ach[21].select()"></td>
+				<td id="ach22" class="achCont" onmouseover="tmp.ach[22].select()"></td>
+				<td id="ach23" class="achCont" onmouseover="tmp.ach[23].select()"></td>
+				<td id="ach24" class="achCont" onmouseover="tmp.ach[24].select()"></td>
+			</tr>
+		</table>
 	</div>
 </body>

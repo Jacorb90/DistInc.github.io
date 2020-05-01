@@ -61,9 +61,9 @@ function updateTemp() {
 	tmp.rockets = {}
 	tmp.rockets.canRocket = player.distance.gte(LAYER_REQS["rockets"][1])
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
-	tmp.rockets.eff = player.rockets.plus(1).log10()
-	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).max(player.rockets.plus(1))
-	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).max(player.rockets.plus(1))
+	tmp.rockets.eff = player.rockets.plus(1).logBase(3)
+	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
+	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
 	// Features
 	
@@ -78,6 +78,16 @@ function updateTemp() {
 			break;
 		}
 	}
+	
+	// Achievements
+	tmp.ach = {}
+	for (let r=1;r<=ACH_DATA.rows;r++) {
+		for (let c=1;c<=ACH_DATA.cols;c++) {
+			let id = r*10+c
+			tmp.ach[id] = new Achievement({name: id, has: player.achievements.includes(id)})
+		}
+	}
+	if (tmp.selAch===undefined||player.tab!=="achievements") tmp.selAch = 0
 }
 
 // Elements
@@ -109,6 +119,29 @@ function updateElements() {
 	
 	// Features
 	tmp.el.nextFeature.setTxt((tmp.nf === "none") ? "" : (tmp.features[tmp.nf].desc))
+	
+	// Achievements
+	tmp.el.achDesc.setHTML("<br>"+(tmp.selAch==0?"":tmp.ach[tmp.selAch].desc))
+	for (let r=1;r<=ACH_DATA.rows;r++) {
+		for (let c=1;c<=ACH_DATA.cols;c++) {
+			let id = r*10+c
+			tmp.el["ach"+id].setClasses({achCont: true, dgn: player.achievements.includes(id)})
+		}
+	}
+}
+
+// Achievements
+
+function updateAchievements() {
+	if (player.distance.gte(100)) tmp.ach[11].grant()
+	if (player.rank.gt(1)) tmp.ach[12].grant()
+	if (player.tier.gte(1)) tmp.ach[13].grant()
+	if (player.rockets.gt(0)) tmp.ach[14].grant()
+	
+	if (player.distance.gte(5e5)) tmp.ach[21].grant()
+	if (player.rank.gte(8)) tmp.ach[22].grant()
+	if (player.tier.gte(3)) tmp.ach[23].grant()
+	if (player.rockets.gte(2)) tmp.ach[24].grant()
 }
 
 // Game Loop
@@ -116,9 +149,10 @@ function updateElements() {
 function gameLoop(diff) {
 	updateTemp()
 	updateElements()
-	updateTabs()
 	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel)
 	player.distance = player.distance.plus(player.velocity.times(diff))
+	updateTabs()
+	updateAchievements()
 }
 
 var interval = setInterval(function() {
