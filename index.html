@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
+	<script type="text/javascript" src="js/constants.js"></script>
+	<script type="text/javascript" src="js/classes/Element.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/classes/Layer.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<title>Distance Incremental</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<td><button id="maintabbtn" class="tabbtn" onclick="showTab('main')">Main</button></td>
+			<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
+		</tr>
+	</table><br>
+	<div id="main" class="tab">
+		You have gone a total of <span id="distance"></span>.<br>
+		Your current velocity is <span id="velocity"></span>/s (maximum <span id="maxVel"></span>/s).<br>
+		Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup>.<br><br>
+		Rank <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
+		Tier <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+	</div>
+	<div id="rockets" class="tab" style="display: none;">
+		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
+		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).
+	</div>
+</body>
