@@ -84,3 +84,10 @@ const LAYER_REQS = {
 	tier: ["rank", 3],
 	rockets: ["distance", 5e7],
 }
+
+// Tab Data
+
+const TABBTN_SHOWN = {
+	main: function() { return true },
+	rockets: function() { return (tmp.rockets ? (tmp.rockets.canRocket||player.rockets.gt(0)) : false) },
+}

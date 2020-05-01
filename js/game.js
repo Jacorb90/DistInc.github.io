@@ -14,7 +14,7 @@ function updateTemp() {
 		tmp.el[id] = new Element(id)
 	}
 	
-	// Values
+	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(ExpantaNum.pow(1.1, player.rank))
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2)
@@ -27,6 +27,8 @@ function updateTemp() {
 	if (player.tier.gte(5)) tmp.acc = tmp.acc.times(5)
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow)
 	
+
+	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1)
 	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.1, player.rank))

@@ -28,4 +28,7 @@ class Element {
 		for (let i=0;i<list.length;i++) this.addClass(list[i])
 	}
 	static setClasses(id, data) { new Element(id).setClasses(data) }
+	
+	changeStyle(type, input) { this.el.style[type] = input }
+	static changeStyle(id, type, input) { this.changeStyle(type, input) }
 }
