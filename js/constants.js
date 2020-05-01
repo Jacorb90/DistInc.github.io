@@ -115,7 +115,15 @@ const ACH_DATA = {
 		22: "Reach Rank 8.",
 		23: "Reach Tier 3.",
 		24: "Reach 2 Rockets.",
-	}
+	},
+	rewards: {
+		12: "Acceleration is 10% higher.",
+		14: "Acceleration & Maximum Velocity are 50% higher.",
+		
+		21: "Maximum Velocity is 10% higher.",
+		23: "Acceleration is 20% higher.",
+		24: "Maximum Velocity is 25% higher.", 
+	},
 }
 
 // Update Temp Data for Achievements

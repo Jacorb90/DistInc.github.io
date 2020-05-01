@@ -25,6 +25,9 @@ function updateTemp() {
 	if (player.tier.gte(4)) tmp.acc = tmp.acc.times(3)
 	if (player.rank.gt(15)) tmp.acc = tmp.acc.times(4)
 	if (player.tier.gte(5)) tmp.acc = tmp.acc.times(5)
+	if (tmp.ach) if (tmp.ach[12].has) tmp.acc = tmp.acc.times(1.1)
+	if (tmp.ach) if (tmp.ach[23].has) tmp.acc = tmp.acc.times(1.2)
+	if (tmp.ach) if (tmp.ach[14].has) tmp.acc = tmp.acc.times(1.5)
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow)
 	
 
@@ -36,6 +39,9 @@ function updateTemp() {
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(3, player.tier))
 	if (player.rank.gt(5)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.975, player.rank))
 	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.1, player.rank))
+	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
+	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
+	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow)
 	
 	// Ranks
@@ -61,7 +67,9 @@ function updateTemp() {
 	tmp.rockets = {}
 	tmp.rockets.canRocket = player.distance.gte(LAYER_REQS["rockets"][1])
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
-	tmp.rockets.eff = player.rockets.plus(1).logBase(3)
+	let r = player.rockets
+	if (r.gte(10)) r = r.log10().times(10)
+	tmp.rockets.eff = r.plus(1).logBase(3)
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
@@ -88,6 +96,8 @@ function updateTemp() {
 		}
 	}
 	if (tmp.selAch===undefined||player.tab!=="achievements") tmp.selAch = 0
+	tmp.ga = player.achievements.length
+	tmp.ta = ACH_DATA.rows*ACH_DATA.cols
 }
 
 // Elements
@@ -121,7 +131,7 @@ function updateElements() {
 	tmp.el.nextFeature.setTxt((tmp.nf === "none") ? "" : (tmp.features[tmp.nf].desc))
 	
 	// Achievements
-	tmp.el.achDesc.setHTML("<br>"+(tmp.selAch==0?"":tmp.ach[tmp.selAch].desc))
+	tmp.el.achDesc.setHTML(tmp.ga+"/"+tmp.ta+"<br>"+(tmp.selAch==0?"":tmp.ach[tmp.selAch].desc))
 	for (let r=1;r<=ACH_DATA.rows;r++) {
 		for (let c=1;c<=ACH_DATA.cols;c++) {
 			let id = r*10+c
