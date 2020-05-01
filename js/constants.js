@@ -12,7 +12,7 @@ const DEFAULT_START = {
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature"],
 }
 
 // Formatting Data
@@ -83,6 +83,12 @@ const LAYER_REQS = {
 	rank: ["distance", 10],
 	tier: ["rank", 3],
 	rockets: ["distance", 5e7],
+}
+
+const LAYER_FP = {
+	rank: 1,
+	tier: 1,
+	rockets: 0.4,
 }
 
 // Tab Data

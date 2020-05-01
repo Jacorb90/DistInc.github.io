@@ -64,6 +64,20 @@ function updateTemp() {
 	tmp.rockets.eff = player.rockets.plus(1).log10()
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).max(player.rockets.plus(1))
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).max(player.rockets.plus(1))
+	
+	// Features
+	
+	tmp.features = {
+		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)}),
+	}
+	tmp.nf = "none"
+	for (let i=0;i<Object.keys(tmp.features).length;i++) {
+		let feature = Object.values(tmp.features)[i]
+		if (!feature.reached) {
+			tmp.nf = feature.name
+			break;
+		}
+	}
 }
 
 // Elements
@@ -92,6 +106,9 @@ function updateElements() {
 	tmp.el.rocketGain.setTxt(showNum(tmp.rockets.layer.gain))
 	tmp.el.rocketsAmt.setTxt(showNum(player.rockets))
 	tmp.el.rocketsEff.setTxt(showNum(tmp.rockets.eff))
+	
+	// Features
+	tmp.el.nextFeature.setTxt((tmp.nf === "none") ? "" : (tmp.features[tmp.nf].desc))
 }
 
 // Game Loop

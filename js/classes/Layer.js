@@ -8,7 +8,7 @@ class Layer {
 	get gain() {
 		if (this.type=="forced"||this.type=="semi-forced") return new ExpantaNum(1)
 		let req = LAYER_REQS[this.name]
-		let gain = player[req[0]].div(req[1]).pow(0.2)
+		let gain = player[req[0]].div(req[1]).pow(LAYER_FP[this.name])
 		return gain.floor()
 	}
 	

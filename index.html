@@ -6,16 +6,20 @@
 	<script type="text/javascript" src="js/classes/Element.js"></script>
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
+	<script type="text/javascript" src="js/classes/Feature.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
 	<title>Distance Incremental</title>
 </head>
 <body>
-	<table class="band">
-		<tr>
-			<td><button id="maintabbtn" class="tabbtn" onclick="showTab('main')">Main</button></td>
-			<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
-		</tr>
-	</table><br>
+	<div class="band">
+		<table>
+			<tr>
+				<td><button id="maintabbtn" class="tabbtn" onclick="showTab('main')">Main</button></td>
+				<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
+			</tr>
+		</table><br>
+		<span id="nextFeature"></span><br>
+	</div>
 	<div id="main" class="tab">
 		You have gone a total of <span id="distance"></span>.<br>
 		Your current velocity is <span id="velocity"></span>/s (maximum <span id="maxVel"></span>/s).<br>
