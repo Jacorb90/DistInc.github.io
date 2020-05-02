@@ -53,3 +53,37 @@ function updateTabs() {
 }
 
 function showTab(name) { player.tab = name }
+
+// Miscellaneous
+
+function ENString(obj) {
+	let ret = {};
+	for (const key in obj) {
+		if (obj[key] instanceof ExpantaNum) {
+			ret[key] = obj[key].toString()
+		} else if (obj[key] instanceof Array) {
+            ret[key] = obj[key]
+        } else if (obj[key] instanceof Object) {
+            ret[key] = transformToEN(obj[key]);
+        } else {
+            ret[key] = obj[key]
+        }
+	}
+	return ret
+}
+
+function transformToEN(obj, sc) {
+    let ret = {};
+    for (const key in obj) {
+        if (sc[key] instanceof ExpantaNum) {
+            ret[key] = new ExpantaNum(obj[key])
+        } else if (sc[key] instanceof Array) {
+            ret[key] = obj[key]
+        } else if (sc[key] instanceof Object) {
+            ret[key] = transformToEN(obj[key]);
+        } else {
+            ret[key] = obj[key]
+        }
+    }
+    return ret
+}

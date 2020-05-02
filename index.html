@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="js/game.js"></script>
 	<title>Distance Incremental</title>
 </head>
-<body>
+<body onload="load()">
 	<div class="band lb">
 		<table>
 			<tr>
@@ -19,7 +19,8 @@
 				<td><button id="achievementstabbtn" class="tabbtn" onclick="showTab('achievements')">Achievements</button></td>
 				<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
 			</tr>
-		</table><br>
+		</table>
+		<button class="tabbtn" onclick="save()">Save</button><br>
 		<span id="nextFeature"></span><br>
 	</div>
 	<br>
@@ -30,10 +31,6 @@
 		Rank <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
 		Tier <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
 	</div>
-	<div id="rockets" class="tab" style="display: none;">
-		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
-		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).
-	</div>
 	<div id="achievements" class="tab" style="display: none;">
 		<div id="achDesc" class="band gn"></div>
 		<table>
@@ -42,13 +39,28 @@
 				<td id="ach12" class="achCont" onmouseover="tmp.ach[12].select()"></td>
 				<td id="ach13" class="achCont" onmouseover="tmp.ach[13].select()"></td>
 				<td id="ach14" class="achCont" onmouseover="tmp.ach[14].select()"></td>
+				<td id="ach15" class="achCont" onmouseover="tmp.ach[15].select()"></td>
 			</tr>
 			<tr>
 				<td id="ach21" class="achCont" onmouseover="tmp.ach[21].select()"></td>
 				<td id="ach22" class="achCont" onmouseover="tmp.ach[22].select()"></td>
 				<td id="ach23" class="achCont" onmouseover="tmp.ach[23].select()"></td>
 				<td id="ach24" class="achCont" onmouseover="tmp.ach[24].select()"></td>
+				<td id="ach25" class="achCont" onmouseover="tmp.ach[25].select()"></td>
+			</tr>
+			<tr>
+				<td id="ach31" class="achCont" onmouseover="tmp.ach[31].select()"></td>
+				<td id="ach32" class="achCont" onmouseover="tmp.ach[32].select()"></td>
+				<td id="ach33" class="achCont" onmouseover="tmp.ach[33].select()"></td>
+				<td id="ach34" class="achCont" onmouseover="tmp.ach[34].select()"></td>
+				<td id="ach35" class="achCont" onmouseover="tmp.ach[35].select()"></td>
 			</tr>
 		</table>
+	</div>
+	<div id="rockets" class="tab" style="display: none;">
+		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
+		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).<br><br>
+		<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
+		You have <span id="rf"></span> rocket fuel, which boost the effect of rockets by <span id="rfEff"></span>%.
 	</div>
 </body>

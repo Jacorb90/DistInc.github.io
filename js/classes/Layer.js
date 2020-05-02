@@ -9,6 +9,8 @@ class Layer {
 		if (this.type=="forced"||this.type=="semi-forced") return new ExpantaNum(1)
 		let req = LAYER_REQS[this.name]
 		let gain = player[req[0]].div(req[1]).pow(LAYER_FP[this.name])
+		if (this.name=="rockets") if (tmp.ach) if (tmp.ach[34].has) gain = gain.times(1.1)
+		if (this.name=="rockets") if (tmp.ach) if (tmp.ach[15].has) gain = gain.times(1.05)
 		return gain.floor()
 	}
 	

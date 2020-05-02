@@ -1,6 +1,8 @@
 // Variables
 
 var player = Object.assign({}, DEFAULT_START)
+var loaded = false
+var interval;
 
 // Temp
 
@@ -25,11 +27,16 @@ function updateTemp() {
 	if (player.tier.gte(4)) tmp.acc = tmp.acc.times(3)
 	if (player.rank.gt(15)) tmp.acc = tmp.acc.times(4)
 	if (player.tier.gte(5)) tmp.acc = tmp.acc.times(5)
+	if (player.rank.gt(25)) tmp.acc = tmp.acc.times(10)
+	if (player.rank.gt(50)) tmp.acc = tmp.acc.times(15)
+	if (player.tier.gte(8)) tmp.acc = tmp.acc.times(10)
+	if (player.tier.gte(10)) tmp.acc = tmp.acc.times(15)
 	if (tmp.ach) if (tmp.ach[12].has) tmp.acc = tmp.acc.times(1.1)
 	if (tmp.ach) if (tmp.ach[23].has) tmp.acc = tmp.acc.times(1.2)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.acc = tmp.acc.times(1.5)
+	if (tmp.ach) if (tmp.ach[32].has) tmp.acc = tmp.acc.times(1.8)
+	if (tmp.ach) if (tmp.ach[35].has) tmp.acc = tmp.acc.times(1.8)
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow)
-	
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
@@ -98,6 +105,15 @@ function updateTemp() {
 	if (tmp.selAch===undefined||player.tab!=="achievements") tmp.selAch = 0
 	tmp.ga = player.achievements.length
 	tmp.ta = ACH_DATA.rows*ACH_DATA.cols
+	
+	// Rocket Fuel
+	
+	tmp.rf = {}
+	tmp.rf.fp = new ExpantaNum(1)
+	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.pow(1.1))).round()
+	tmp.rf.can = player.rockets.gte(tmp.rf.req)
+	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
+	tmp.rf.eff = player.rf.plus(1).logBase(2).plus(1).pow(0.2)
 }
 
 // Elements
@@ -138,6 +154,12 @@ function updateElements() {
 			tmp.el["ach"+id].setClasses({achCont: true, dgn: player.achievements.includes(id)})
 		}
 	}
+	
+	// Rocket Fuel
+	tmp.el.rf.setTxt(showNum(player.rf))
+	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can})
+	tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
+	tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
 }
 
 // Achievements
@@ -147,11 +169,35 @@ function updateAchievements() {
 	if (player.rank.gt(1)) tmp.ach[12].grant()
 	if (player.tier.gte(1)) tmp.ach[13].grant()
 	if (player.rockets.gt(0)) tmp.ach[14].grant()
+	if (player.rf.gt(0)) tmp.ach[15].grant()
 	
 	if (player.distance.gte(5e5)) tmp.ach[21].grant()
 	if (player.rank.gte(8)) tmp.ach[22].grant()
 	if (player.tier.gte(3)) tmp.ach[23].grant()
 	if (player.rockets.gte(2)) tmp.ach[24].grant()
+	if (player.rf.gte(2)) tmp.ach[25].grant()
+		
+	if (player.distance.gte(1e12)) tmp.ach[31].grant()
+	if (player.rank.gte(12)) tmp.ach[32].grant()
+	if (player.tier.gte(4)) tmp.ach[33].grant()
+	if (player.rockets.gte(10)) tmp.ach[34].grant()
+	if (player.rf.gte(3)) tmp.ach[35].grant()
+}
+
+// Saving/Loading
+
+function save() { localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(player)))) }
+
+function load() {
+	let ls = localStorage.getItem("dist-inc")
+	loaded = true
+	if (!((ls||"x")=="x")) {
+		let data = JSON.parse(atob(ls))
+		player = transformToEN(data, DEFAULT_START)
+	}
+	interval = setInterval(function() {
+		gameLoop(new ExpantaNum(1/33))
+	}, 33)
 }
 
 // Game Loop
@@ -164,7 +210,3 @@ function gameLoop(diff) {
 	updateTabs()
 	updateAchievements()
 }
-
-var interval = setInterval(function() {
-	gameLoop(new ExpantaNum(1/33))
-}, 33)
