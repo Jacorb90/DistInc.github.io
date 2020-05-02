@@ -205,3 +205,31 @@ const ROBOT_REQS = {
 	rankbot: new ExpantaNum(10),
 	tierbot: new ExpantaNum(50),
 }
+const ROBOT_COST_INC = {
+	interval: {
+		rankbot: new ExpantaNum(7),
+		tierbot: new ExpantaNum(8),
+	},
+	magnitude: {
+		rankbot: new ExpantaNum(3),
+		tierbot: new ExpantaNum(4),
+	},
+}
+const ROBOT_COST_START = {
+	interval: {
+		rankbot: new ExpantaNum(2),
+		tierbot: new ExpantaNum(2),
+	},
+	magnitude: {
+		rankbot: new ExpantaNum(1),
+		tierbot: new ExpantaNum(1),
+	},
+}
+const ROBOT_START_INTERVAL = {
+	rankbot: new ExpantaNum(4),
+	tierbot: new ExpantaNum(5),
+}
+const ROBOT_FL = {
+	rankbot: "ranks",
+	tierbot: "tiers",
+}

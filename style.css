@@ -120,3 +120,5 @@ table { margin: auto; }
 	width: 100%;
 	height: 200px;
 }
+
+.blocked { background-color: #990702 !important; }

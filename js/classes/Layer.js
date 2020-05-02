@@ -9,12 +9,7 @@ class Layer {
 		if (this.type=="forced"||this.type=="semi-forced") return new ExpantaNum(1)
 		let req = LAYER_REQS[this.name]
 		let gain = player[req[0]].div(req[1]).pow(LAYER_FP[this.name])
-		if (this.name=="rockets") {
-			if (tmp.ach) if (tmp.ach[34].has) gain = gain.times(1.1)
-			if (tmp.ach) if (tmp.ach[15].has) gain = gain.times(1.05)
-			if (tmp.ach) if (tmp.ach[26].has) gain = gain.times(1.1)
-			if (player.rank.gt(100)) gain = gain.times(2)
-		}
+		if (tmp.lm) if (tmp.lm[this.name]) gain = gain.times(tmp.lm[this.name])
 		return gain.floor()
 	}
 	
