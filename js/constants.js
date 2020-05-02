@@ -40,17 +40,6 @@ const DISTANCES = {
 	Mps: 3.086e22,
 	Gps: 3.086e25,
 	uni: 4.4e26,
-	"K uni": 4.4e29,
-	"M uni": 4.4e32,
-	"B uni": 4.4e35,
-	"T uni": 4.4e38,
-	"Qa uni": 4.4e41,
-	"Qi uni": 4.4e44,
-	"Sx uni": 4.4e47,
-	"Sp uni": 4.4e50,
-	"Oc uni": 4.4e53,
-	"No uni": 4.4e56,
-	"Dc uni": 4.4e59,
 }
 
 const TIMES = {
@@ -62,17 +51,6 @@ const TIMES = {
 	w: 604800,
 	y: 31556736,
 	mil: 31556736000,
-	"K mil": 31556736000*1e3,
-	"M mil": 31556736000*1e6,
-	"B mil": 31556736000*1e9,
-	"T mil": 31556736000*1e12,
-	"Qa mil": 31556736000*1e15,
-	"Qi mil": 31556736000*1e18,
-	"Sx mil": 31556736000*1e21,
-	"Sp mil": 31556736000*1e24,
-	"Oc mil": 31556736000*1e27,
-	"No mil": 31556736000*1e30,
-	"Dc mil": 31556736000*1e33,
 }
 
 // Ranks
@@ -91,6 +69,7 @@ const RANK_DESCS = {
 	30: "triple intelligence gain.",
 	40: "multiply intelligence gain by the number of primes less than or equal to your scrap amount (minimum 1, softcaps after 1,000,000,000 primes).",
 	50: "multiply your acceleration by 15.",
+	55: "double your maximum velocity for each rank up.",
 	60: "double scrap gain.",
 	75: "multiply your acceleration by 25.",
 	100: "double rocket gain.",
@@ -135,6 +114,13 @@ const LAYER_FP = {
 	tier: 1,
 	rockets: 0.4,
 	rf: 1,
+}
+
+const LAYER_SC = {
+	rank: new ExpantaNum(1/0),
+	tier: new ExpantaNum(1/0),
+	rockets: new ExpantaNum(1e5),
+	rf: new ExpantaNum(1/0),
 }
 
 // Tab Data

@@ -18,7 +18,7 @@ class Robot {
 	
 	get btnTxt() {
 		if (!this.unl) return "Purchase the "+capitalFirst(this.name)+" for "+showNum(ROBOT_REQS[this.name])+" scraps."
-		if (this.tabOpen) return "Exit this tab."
+		if (this.tabOpen) return "Close up this robot."
 		return "Open up "+capitalFirst(this.name)+" for improvements."
 	}
 	

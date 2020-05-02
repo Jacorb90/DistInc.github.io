@@ -38,6 +38,7 @@ function updateTemp() {
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(3, player.tier))
 	if (player.rank.gt(5)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.975, player.rank))
 	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.1, player.rank))
+	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(2, player.rank))
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
@@ -47,7 +48,9 @@ function updateTemp() {
 	tmp.ranks = {}
 	tmp.ranks.fp = new ExpantaNum(1)
 	if (player.tier.gte(1)) tmp.ranks.fp = tmp.ranks.fp.times(1.25)
-	if (player.tier.gte(3)) tmp.ranks.fp = tmp.ranks.fp.times(ExpantaNum.pow(1.1, player.tier))
+	let tier = player.tier
+	if (tier.gte(10)) tier = tier.log10().times(10)
+	if (player.tier.gte(3)) tmp.ranks.fp = tmp.ranks.fp.times(ExpantaNum.pow(1.1, tier))
 	tmp.ranks.req = new ExpantaNum(10).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(10).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
@@ -71,7 +74,7 @@ function updateTemp() {
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
-	tmp.rockets.eff = r.plus(1).logBase(3)
+	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
@@ -109,7 +112,7 @@ function updateTemp() {
 	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.pow(1.1))).round()
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
-	tmp.rf.eff = player.rf.plus(1).logBase(2).plus(1).pow(0.2)
+	tmp.rf.eff = player.rf.plus(1).logBase(2).plus(1).pow(0.05)
 	
 	// Automation
 	
