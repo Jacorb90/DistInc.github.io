@@ -30,5 +30,5 @@ class Element {
 	static setClasses(id, data) { new Element(id).setClasses(data) }
 	
 	changeStyle(type, input) { this.el.style[type] = input }
-	static changeStyle(id, type, input) { this.changeStyle(type, input) }
+	static changeStyle(id, type, input) { new Element(id).changeStyle(type, input) }
 }

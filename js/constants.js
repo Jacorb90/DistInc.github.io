@@ -35,7 +35,7 @@ const DISTANCES = {
 	Tm: 1e12, 
 	Pm: 1e15,
 	ly: 9.461e15,
-	ps: 3.086e16,
+	pc: 3.086e16,
 	kps: 3.086e19,
 	Mps: 3.086e22,
 	Gps: 3.086e25,
@@ -151,6 +151,28 @@ const TABBTN_SHOWN = {
 const ACH_DATA = {
 	rows: 3,
 	cols: 6,
+	names: {
+		11: "Quick Sprint",
+		12: "Better Shoes",
+		13: "Extreme Workout",
+		14: "Off to Space!",
+		15: "Rocket Blast",
+		16: "Humans are Irrelevant",
+		
+		21: "Driving for Hours",
+		22: "Oil Change",
+		23: "Three's the Lucky Number",
+		24: "Blastoff Again?",
+		25: "Refuel",
+		26: "Automated Evolution",
+		
+		31: "Just Under 1 Saturn Revolution",
+		32: "Putting in the Fake Fuel",
+		33: "IV Test",
+		34: "Why fly once when you can fly ten times?",
+		35: "Triple the Fuel",
+		36: "Automated Power Boosts",
+	},
 	descs: {
 		11: "Go at least 100m.",
 		12: "Do a rank reset.",
@@ -186,6 +208,7 @@ const ACH_DATA = {
 		32: "Acceleration is 80% higher.",
 		34: "Rocket gain is increased by 10%.",
 		35: "Acceleration is 80% higher.",
+		36: "Scrap & intelligence gain are increased by 50%.",
 	},
 }
 

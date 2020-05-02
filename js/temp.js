@@ -116,10 +116,12 @@ function updateTemp() {
 	tmp.auto = {}
 	tmp.auto.scrapGain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100)
 	if (player.rank.gt(60)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(2)
+	if (tmp.ach[36].has) tmp.auto.scrapGain = tmp.auto.scrapGain.times(1.5)
 	tmp.auto.intGain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000)
 	if (player.rank.gt(20)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (player.tier.gte(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
+	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5)
 	let primes = primesLTE(player.automation.scraps).max(1)
 	if (primes.gte(1e9)) primes = primes.log10().times(1e9/9)
 	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(primes)
@@ -128,9 +130,9 @@ function updateTemp() {
 	// Layer Mults
 	tmp.lm = {}
 	tmp.lm.rockets = new ExpantaNum(1)
-	if (tmp.ach) if (tmp.ach[34].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
-	if (tmp.ach) if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
-	if (tmp.ach) if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
+	if (tmp.ach[34].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
+	if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
+	if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)
 }
 
