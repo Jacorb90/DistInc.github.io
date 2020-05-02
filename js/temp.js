@@ -134,7 +134,7 @@ function updateTemp() {
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)
 }
 
-function updateElements() {
+function updateHTML() {
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))
 	tmp.el.velocity.setTxt(formatDistance(player.velocity))

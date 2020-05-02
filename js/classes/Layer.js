@@ -16,7 +16,7 @@ class Layer {
 	get fcBulk() {
 		if (!(this.type=="forced"||this.type=="semi-forced")) return new ExpantaNum(0)
 		if (!this.avail) return new ExpantaNum(0)
-		return tmp[this.name+"s"].bulk
+		return tmp[this.name+"s"].bulk.floor()
 	}
 	
 	reset(force=false) {
