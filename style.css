@@ -114,3 +114,9 @@ table { margin: auto; }
 	width: 50px;
 	background-color: #9e9d9b;
 }
+
+#robotTab {
+	background-color: #c9c9c9;
+	width: 100%;
+	height: 200px;
+}

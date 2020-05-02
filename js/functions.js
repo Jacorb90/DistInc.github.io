@@ -30,6 +30,18 @@ function formatDistance(x) {
 	}
 }
 
+function capitalFirst(str) { return str.split(" ").map(x => x[0].toUpperCase()+x.slice(1)).join(" "); }
+
+function formatTime(x) {
+	x = new ExpantaNum(x)
+	for (i=Object.keys(TIMES).length-1;i>=0;i--) {
+		let name = Object.keys(TIMES)[i]
+		let val = TIMES[name]
+		if (x.lt(val) && i>0) continue
+		return showNum(x.div(val))+name
+	}
+}
+
 // Tabs
 
 function isTabShown(name) {
@@ -56,34 +68,41 @@ function showTab(name) { player.tab = name }
 
 // Miscellaneous
 
+function deepCopy(obj) { return JSON.parse(JSON.stringify(obj)) }
+
 function ENString(obj) {
-	let ret = {};
-	for (const key in obj) {
-		if (obj[key] instanceof ExpantaNum) {
-			ret[key] = obj[key].toString()
-		} else if (obj[key] instanceof Array) {
-            ret[key] = obj[key]
-        } else if (obj[key] instanceof Object) {
-            ret[key] = transformToEN(obj[key]);
-        } else {
-            ret[key] = obj[key]
-        }
-	}
+	let ret = deepCopy(obj)
+	ret.distance = new ExpantaNum(ret.distance).toString()
+	ret.velocity = new ExpantaNum(ret.velocity).toString()
+	ret.rank = new ExpantaNum(ret.rank).toString()
+	ret.tier = new ExpantaNum(ret.tier).toString()
+	ret.rockets = new ExpantaNum(ret.rockets).toString()
+	ret.rf = new ExpantaNum(ret.rf).toString()
+	ret.automation.scraps = new ExpantaNum(ret.automation.scraps).toString()
+	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence).toString()
+	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j]).toString()
 	return ret
 }
 
 function transformToEN(obj, sc) {
-    let ret = {};
-    for (const key in obj) {
-        if (sc[key] instanceof ExpantaNum) {
-            ret[key] = new ExpantaNum(obj[key])
-        } else if (sc[key] instanceof Array) {
-            ret[key] = obj[key]
-        } else if (sc[key] instanceof Object) {
-            ret[key] = transformToEN(obj[key]);
-        } else {
-            ret[key] = obj[key]
-        }
-    }
+    let ret = deepCopy(obj)
+    for (const key in sc) if (ret[key]===undefined) ret[key] = sc[key]
+	ret.distance = new ExpantaNum(ret.distance)
+	ret.velocity = new ExpantaNum(ret.velocity)
+	ret.rank = new ExpantaNum(ret.rank)
+	ret.tier = new ExpantaNum(ret.tier)
+	ret.rockets = new ExpantaNum(ret.rockets)
+	ret.rf = new ExpantaNum(ret.rf)
+	ret.automation.scraps = new ExpantaNum(ret.automation.scraps)
+	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence)
+	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j])
     return ret
+}
+
+function primesLTE(x) {
+	x = new ExpantaNum(x).round()
+	if (x.lte(1)) return new ExpantaNum(0)
+	if (x.lte(11)) return ExpantaNum.mul(2.7135e-158, ExpantaNum.pow(2.116e14, x)).sub(x.pow(2).times(0.053030303)).plus(x.times(1.02576)).sub(0.9).round()
+	let ret = x.div(x.ln())
+	return ret.round()
 }

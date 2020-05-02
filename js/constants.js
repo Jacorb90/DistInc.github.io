@@ -9,12 +9,19 @@ const DEFAULT_START = {
 	tier: new ExpantaNum(0),
 	rockets: new ExpantaNum(0),
 	rf: new ExpantaNum(0),
+	automation: {
+		unl: false,
+		scraps: new ExpantaNum(0),
+		intelligence: new ExpantaNum(0),
+		robots: {},
+		open: "none",
+	},
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude"],
 }
 
 // Formatting Data
@@ -46,6 +53,28 @@ const DISTANCES = {
 	"Dc uni": 4.4e59,
 }
 
+const TIMES = {
+	ms: 1/1000,
+	s: 1,
+	m: 60,
+	h: 3600,
+	d: 86400,
+	w: 604800,
+	y: 31556736,
+	mil: 31556736000,
+	"K mil": 31556736000*1e3,
+	"M mil": 31556736000*1e6,
+	"B mil": 31556736000*1e9,
+	"T mil": 31556736000*1e12,
+	"Qa mil": 31556736000*1e15,
+	"Qi mil": 31556736000*1e18,
+	"Sx mil": 31556736000*1e21,
+	"Sp mil": 31556736000*1e24,
+	"Oc mil": 31556736000*1e27,
+	"No mil": 31556736000*1e30,
+	"Dc mil": 31556736000*1e33,
+}
+
 // Ranks
 
 const RANK_DESCS = {
@@ -57,8 +86,14 @@ const RANK_DESCS = {
 	8: "increase your maximum velocity by 10% for each rank up.",
 	10: "double your acceleration.",
 	15: "quadruple your acceleration.",
+	20: "double intelligence gain.",
 	25: "multiply your acceleration by 10.",
+	30: "triple intelligence gain.",
+	40: "multiply intelligence gain by the number of primes less than or equal to your scrap amount (minimum 1, softcaps after 1,000,000,000 primes).",
 	50: "multiply your acceleration by 15.",
+	60: "double scrap gain.",
+	75: "multiply your acceleration by 25.",
+	100: "double rocket gain.",
 }
 
 const DEFAULT_RANK_DESC = "rank up."
@@ -73,6 +108,8 @@ const TIER_DESCS = {
 	5: "quintuple your acceleration.",
 	8: "multiply your acceleration by 10.",
 	10: "multiply your acceleration by 15.",
+	12: "triple intelligence gain.",
+	15: "multiply your acceleration by 25.",
 }
 
 const DEFAULT_TIER_DESC = "tier up."
@@ -106,31 +143,35 @@ const TABBTN_SHOWN = {
 	main: function() { return true },
 	achievements: function() { return true },
 	rockets: function() { return (tmp.rockets ? (tmp.rockets.canRocket||player.rockets.gt(0)||player.rf.gt(0)) : false) },
+	auto: function() { return player.automation.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
 	rows: 3,
-	cols: 5,
+	cols: 6,
 	descs: {
 		11: "Go at least 100m.",
 		12: "Do a rank reset.",
 		13: "Do a tier reset.",
 		14: "Do a rocket reset.",
 		15: "Get at least 1 rocket fuel.",
+		16: "Unlock automation.",
 		
 		21: "Go at least 500km.",
 		22: "Reach Rank 8.",
 		23: "Reach Tier 3.",
 		24: "Reach 2 Rockets.",
 		25: "Get at least 2 rocket fuel.",
+		26: "Unlock Rankbot.",
 		
 		31: "Go at least 1Tm",
 		32: "Reach Rank 12",
 		33: "Reach Tier 4",
 		34: "Reach 10 Rockets.",
 		35: "Get at least 3 rocket fuel.",
+		36: "Unlock Tierbot.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -139,7 +180,8 @@ const ACH_DATA = {
 		
 		21: "Maximum Velocity is 10% higher.",
 		23: "Acceleration is 20% higher.",
-		24: "Maximum Velocity is 25% higher.", 
+		24: "Maximum Velocity is 25% higher.",
+		26: "Rocket gain is increased by 10%.",
 		
 		32: "Acceleration is 80% higher.",
 		34: "Rocket gain is increased by 10%.",
@@ -154,4 +196,12 @@ for (let r=1;r<=ACH_DATA.rows;r++) {
 		let id = r*10+c
 		TMP_DATA.ELS.push("ach"+id)
 	}
+}
+
+// Automation
+
+const AUTO_UNL = new ExpantaNum(1e12)
+const ROBOT_REQS = {
+	rankbot: new ExpantaNum(10),
+	tierbot: new ExpantaNum(50),
 }
