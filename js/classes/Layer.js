@@ -31,7 +31,7 @@ class Layer {
 	bulk(mag=new ExpantaNum(1)) {
 		if (!this.avail) return
 		if (!(this.type=="forced"||this.type=="semi-forced")) return
-		let m = player[this.name].plus(mag).min(this.fcBulk)
+		let m = player[this.name].plus(mag).min(this.fcBulk).floor()
 		player[this.name] = player[this.name].max(m)
 		this.reset(true)
 	}

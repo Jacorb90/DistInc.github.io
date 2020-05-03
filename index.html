@@ -21,6 +21,7 @@
 				<td><button id="achievementstabbtn" class="tabbtn" onclick="showTab('achievements')">Achievements</button></td>
 				<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
 				<td><button id="autotabbtn" class="tabbtn" onclick="showTab('auto')">Automation</button></td>
+				<td><button id="trtabbtn" class="tabbtn" onclick="showTab('tr')">Time Reversal</button></td>
 			</tr>
 		</table>
 		<button class="tabbtn" onclick="save()">Save</button><br>
@@ -28,6 +29,7 @@
 	</div>
 	<br>
 	<div id="main" class="tab">
+		<span id="ts"></span>
 		You have gone a total of <span id="distance"></span>.<br>
 		Your current velocity is <span id="velocity"></span>/s (maximum <span id="maxVel"></span>/s).<br>
 		Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup>.<br><br>
@@ -44,6 +46,7 @@
 				<td id="ach14" class="achCont" onmouseover="tmp.ach[14].select()"></td>
 				<td id="ach15" class="achCont" onmouseover="tmp.ach[15].select()"></td>
 				<td id="ach16" class="achCont" onmouseover="tmp.ach[16].select()"></td>
+				<td id="ach17" class="achCont" onmouseover="tmp.ach[17].select()"></td>
 			</tr>
 			<tr>
 				<td id="ach21" class="achCont" onmouseover="tmp.ach[21].select()"></td>
@@ -52,6 +55,7 @@
 				<td id="ach24" class="achCont" onmouseover="tmp.ach[24].select()"></td>
 				<td id="ach25" class="achCont" onmouseover="tmp.ach[25].select()"></td>
 				<td id="ach26" class="achCont" onmouseover="tmp.ach[26].select()"></td>
+				<td id="ach27" class="achCont" onmouseover="tmp.ach[27].select()"></td>
 			</tr>
 			<tr>
 				<td id="ach31" class="achCont" onmouseover="tmp.ach[31].select()"></td>
@@ -60,6 +64,16 @@
 				<td id="ach34" class="achCont" onmouseover="tmp.ach[34].select()"></td>
 				<td id="ach35" class="achCont" onmouseover="tmp.ach[35].select()"></td>
 				<td id="ach36" class="achCont" onmouseover="tmp.ach[36].select()"></td>
+				<td id="ach37" class="achCont" onmouseover="tmp.ach[37].select()"></td>
+			</tr>
+			<tr>
+				<td id="ach41" class="achCont" onmouseover="tmp.ach[41].select()"></td>
+				<td id="ach42" class="achCont" onmouseover="tmp.ach[42].select()"></td>
+				<td id="ach43" class="achCont" onmouseover="tmp.ach[43].select()"></td>
+				<td id="ach44" class="achCont" onmouseover="tmp.ach[44].select()"></td>
+				<td id="ach45" class="achCont" onmouseover="tmp.ach[45].select()"></td>
+				<td id="ach46" class="achCont" onmouseover="tmp.ach[46].select()"></td>
+				<td id="ach47" class="achCont" onmouseover="tmp.ach[47].select()"></td>
 			</tr>
 		</table>
 	</div>
@@ -67,7 +81,7 @@
 		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
 		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).<br><br>
 		<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
-		You have <span id="rf"></span> rocket fuel, which boost the effect of rockets by <span id="rfEff"></span>%.
+		You have <span id="rf"></span> rocket fuel, which boosts the effect of rockets by <span id="rfEff"></span>%.
 	</div>
 	<div id="auto" class="tab" style="display: none;">
 		<table>
@@ -96,5 +110,25 @@
 				</tr>
 			</table>
 		</div>
+	</div>
+	<div id="tr" class="tab" style="display: none;">
+		<br><button id="rt" class="btn" onclick="reverseTime()"></button><br><br>
+		You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel.<br><br>
+		<table>
+			<tr>
+				<td><button id="tr1" class="btn locked" onclick="tmp.tr.upg[1]()"></button></td>
+				<td><button id="tr2" class="btn locked" onclick="tmp.tr.upg[2]()"></button></td>
+				<td><button id="tr3" class="btn locked" onclick="tmp.tr.upg[3]()"></button></td>
+				<td><button id="tr4" class="btn locked" onclick="tmp.tr.upg[4]()"></button></td>
+				<td><button id="tr5" class="btn locked" onclick="tmp.tr.upg[5]()"></button></td>
+			</tr>
+			<tr>
+				<td><button id="tr6" class="btn locked" onclick="tmp.tr.upg[6]()"></button></td>
+				<td><button id="tr7" class="btn locked" onclick="tmp.tr.upg[7]()"></button></td>
+				<td><button id="tr8" class="btn locked" onclick="tmp.tr.upg[8]()"></button></td>
+				<td><button id="tr9" class="btn locked" onclick="tmp.tr.upg[9]()"></button></td>
+				<td><button id="tr10" class="btn locked" onclick="tmp.tr.upg[10]()"></button></td>
+			</tr>
+		</table>
 	</div>
 </body>

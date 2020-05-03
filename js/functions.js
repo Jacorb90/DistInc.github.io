@@ -91,6 +91,7 @@ function updateAchievements() {
 	if (player.rockets.gt(0)) tmp.ach[14].grant()
 	if (player.rf.gt(0)) tmp.ach[15].grant()
 	if (player.automation.unl) tmp.ach[16].grant()
+	if (player.tr.unl) tmp.ach[17].grant()
 	
 	if (player.distance.gte(5e5)) tmp.ach[21].grant()
 	if (player.rank.gte(8)) tmp.ach[22].grant()
@@ -98,6 +99,7 @@ function updateAchievements() {
 	if (player.rockets.gte(2)) tmp.ach[24].grant()
 	if (player.rf.gte(2)) tmp.ach[25].grant()
 	if (Object.keys(player.automation.robots).includes("rankbot")) tmp.ach[26].grant()
+	if (player.tr.cubes.gte(1000)) tmp.ach[27].grant()
 		
 	if (player.distance.gte(1e12)) tmp.ach[31].grant()
 	if (player.rank.gte(12)) tmp.ach[32].grant()
@@ -105,23 +107,46 @@ function updateAchievements() {
 	if (player.rockets.gte(10)) tmp.ach[34].grant()
 	if (player.rf.gte(3)) tmp.ach[35].grant()
 	if (Object.keys(player.automation.robots).includes("tierbot")) tmp.ach[36].grant()
+	if (player.tr.upgrades.length>=5) tmp.ach[37].grant()
+	
+	if (player.distance.gte(10*DISTANCES.pc)) tmp.ach[41].grant()
+	if (player.rank.gte(20)) tmp.ach[42].grant()
+	if (player.tier.gte(5)) tmp.ach[43].grant()
+	if (player.rockets.gte(1e5)) tmp.ach[44].grant()
+	if (player.rf.gte(6)) tmp.ach[45].grant()
+	if (player.automation.scraps.gte(5000)) tmp.ach[46].grant()
+	if (player.tr.upgrades.length>=10) tmp.ach[47].grant()
 }
 
 // Automation
 
 function autoTick(diff) {
-	player.automation.scraps = player.automation.scraps.plus(tmp.auto.scrapGain.times(diff))
-	player.automation.intelligence = player.automation.intelligence.plus(tmp.auto.intGain.times(diff))
+	player.automation.scraps = player.automation.scraps.plus(tmp.auto.scrapGain.times(diff)).max(0)
+	player.automation.intelligence = player.automation.intelligence.plus(tmp.auto.intGain.times(diff)).max(0)
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) {
 		let name = Object.keys(ROBOT_REQS)[i]
 		if (tmp.auto[name].unl) {
-			autoTimes[name] = autoTimes[name].plus(diff)
+			autoTimes[name] = autoTimes[name].plus(diff).max(0)
 			if (autoTimes[name].gte(tmp.auto[name].interval)) {
 				autoTimes[name] = new ExpantaNum(0)
 				tmp.auto[name].act()
 			}
 		}
 	}
+}
+
+// Time Reversal
+
+function reverseTime(force=false) {
+	if (!player.tr.unl) return
+	player.tr.active = !player.tr.active
+}
+
+function buyTRUpg(n) {
+	if (player.tr.upgrades.includes(n)) return
+	if (player.tr.cubes.lt(TR_UPGS[n].cost)) return
+	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost)
+	player.tr.upgrades.push(n)
 }
 
 // Miscellaneous
@@ -139,6 +164,7 @@ function ENString(obj) {
 	ret.automation.scraps = new ExpantaNum(ret.automation.scraps).toString()
 	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence).toString()
 	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j]).toString()
+	ret.tr.cubes = new ExpantaNum(ret.tr.cubes).toString()
 	return ret
 }
 
@@ -154,6 +180,7 @@ function transformToEN(obj, sc) {
 	ret.automation.scraps = new ExpantaNum(ret.automation.scraps)
 	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence)
 	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j])
+	ret.tr.cubes = new ExpantaNum(ret.tr.cubes)
     return ret
 }
 

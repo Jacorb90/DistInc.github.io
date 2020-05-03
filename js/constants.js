@@ -16,12 +16,18 @@ const DEFAULT_START = {
 		robots: {},
 		open: "none",
 	},
+	tr: {
+		unl: false,
+		active: false,
+		cubes: new ExpantaNum(0),
+		upgrades: [],
+	}
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts"],
 }
 
 // Formatting Data
@@ -36,9 +42,9 @@ const DISTANCES = {
 	Pm: 1e15,
 	ly: 9.461e15,
 	pc: 3.086e16,
-	kps: 3.086e19,
-	Mps: 3.086e22,
-	Gps: 3.086e25,
+	kpc: 3.086e19,
+	Mpc: 3.086e22,
+	Gpc: 3.086e25,
 	uni: 4.4e26,
 }
 
@@ -86,6 +92,7 @@ const TIER_DESCS = {
 	1: "double your acceleration and quintuple your maximum velocity if you are at least Rank 3.",
 	2: "make the rank requirement formula 10% slower for each tier up.",
 	3: "triple your acceleration.",
+	4: "double intelligence gain.",
 	5: "quintuple your acceleration.",
 	8: "multiply your acceleration by 10.",
 	10: "multiply your acceleration by 15.",
@@ -132,13 +139,14 @@ const TABBTN_SHOWN = {
 	achievements: function() { return true },
 	rockets: function() { return (tmp.rockets ? (tmp.rockets.canRocket||player.rockets.gt(0)||player.rf.gt(0)) : false) },
 	auto: function() { return player.automation.unl },
+	tr: function() { return player.tr.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
-	rows: 3,
-	cols: 6,
+	rows: 4,
+	cols: 7,
 	names: {
 		11: "Quick Sprint",
 		12: "Better Shoes",
@@ -146,6 +154,7 @@ const ACH_DATA = {
 		14: "Off to Space!",
 		15: "Rocket Blast",
 		16: "Humans are Irrelevant",
+		17: "Yet you're still moving forward.",
 		
 		21: "Driving for Hours",
 		22: "Oil Change",
@@ -153,6 +162,7 @@ const ACH_DATA = {
 		24: "Blastoff Again?",
 		25: "Refuel",
 		26: "Automated Evolution",
+		27: "Time of the Fittest",
 		
 		31: "Just Under 1 Saturn Revolution",
 		32: "Putting in the Fake Fuel",
@@ -160,6 +170,15 @@ const ACH_DATA = {
 		34: "Why fly once when you can fly ten times?",
 		35: "Triple the Fuel",
 		36: "Automated Power Boosts",
+		37: "That's so many?",
+		
+		41: "Parallax Time to the Tenth",
+		42: "Strong Winds",
+		43: "Like the drink",
+		44: "Now this is just pointless.",
+		45: "Not Quite 9000",
+		46: "A magnet's work.",
+		47: "Gotta buy em all!",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -168,6 +187,7 @@ const ACH_DATA = {
 		14: "Do a rocket reset.",
 		15: "Get at least 1 rocket fuel.",
 		16: "Unlock automation.",
+		17: "Unlock Time Reversal.",
 		
 		21: "Go at least 500km.",
 		22: "Reach Rank 8.",
@@ -175,6 +195,7 @@ const ACH_DATA = {
 		24: "Reach 2 Rockets.",
 		25: "Get at least 2 rocket fuel.",
 		26: "Unlock Rankbot.",
+		27: "Reach 1000 Time Cubes.",
 		
 		31: "Go at least 1Tm",
 		32: "Reach Rank 12",
@@ -182,21 +203,38 @@ const ACH_DATA = {
 		34: "Reach 10 Rockets.",
 		35: "Get at least 3 rocket fuel.",
 		36: "Unlock Tierbot.",
+		37: "Purchase 5 Time Reversal Upgrades.",
+		
+		41: "Go at least 10pc.",
+		42: "Reach Rank 20",
+		43: "Reach Tier 5.",
+		44: "Reach 1e+5 Rockets.",
+		45: "Get at least 6 normal rocket fuel.",
+		46: "Reach 5000 scraps.",
+		47: "Purchase 10 Time Reversal Upgrades.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
 		14: "Acceleration & Maximum Velocity are 50% higher.",
 		15: "Rocket gain is increased by 5%.",
+		17: "Time goes by 1% faster.",
 		
 		21: "Maximum Velocity is 10% higher.",
 		23: "Acceleration is 20% higher.",
 		24: "Maximum Velocity is 25% higher.",
 		26: "Rocket gain is increased by 10%.",
+		27: "Time goes by 10% faster.",
 		
 		32: "Acceleration is 80% higher.",
 		34: "Rocket gain is increased by 10%.",
 		35: "Acceleration is 80% higher.",
 		36: "Scrap & intelligence gain are increased by 50%.",
+		
+		41: "Maximum Velocity is 50% higher.",
+		43: "The Rank requirement formula is 2.5% slower.",
+		44: "Rocket gain is increased by 15%.",
+		46: "Intelligence gain is doubled.",
+		47: "Time goes by 50% faster.",
 	},
 }
 
@@ -244,3 +282,23 @@ const ROBOT_FL = {
 	rankbot: "ranks",
 	tierbot: "tiers",
 }
+
+// Time Reversal
+
+const TR_UPGS = {
+	1: { cost: new ExpantaNum(50), desc: "Increase Time Cube gain by 10% for each Rank or Tier." },
+	2: { cost: new ExpantaNum(300), desc: "Time goes by (log(n+1)) times faster, where n is your Time Cubes." },
+	3: { cost: new ExpantaNum(1000), desc: "The Rank requirement formula is 10% slower." },
+	4: { cost: new ExpantaNum(2500), desc: "Time Cube gain is increased by 33% for every OoM of Rockets (softcaps at 1e+10 Rockets)." },
+	5: { cost: new ExpantaNum(15000), desc: "Rocket Fuel is 10% stronger." },
+	6: { cost: new ExpantaNum(25000), desc: "Scrap & Intelligence gain are increased by 10% for every OoM of Time Cubes." },
+	7: { cost: new ExpantaNum(40000), desc: "Time goes by 5% faster for every achievement gotten." },
+	8: { cost: new ExpantaNum(75000), desc: "Rankbot's interval boosts its magnitude." },
+	9: { cost: new ExpantaNum(1.2e5), desc: "Tierbot's interval boosts its magnitude, but not as strongly as the previous upgrade." },
+	10: { cost: new ExpantaNum(2e5), desc: "Rocket gain is increased by 10% for every OoM of Time Cubes (softcaps at 1e+10 Time Cubes)." },
+}
+const TR_UPG_AMT = Object.keys(TR_UPGS).length
+
+// Update Temp Data for Time Reversal
+
+for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)

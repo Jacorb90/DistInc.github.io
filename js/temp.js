@@ -23,6 +23,21 @@ function updateTemp() {
 	let tier = player.tier
 	if (tier.gte(10)) tier = tier.log10().times(10)
 	tmp.t3 = ExpantaNum.pow(1.1, tier)
+
+	// Time Reversal Upgrade Effects
+	
+	tmp.tr1 = ExpantaNum.pow(1.1, player.rank.plus(player.tier))
+	tmp.tr2 = ExpantaNum.log10(player.tr.cubes.plus(1)).plus(1)
+	let rockets = player.rockets
+	if (rockets.gte(1e10)) rockets = rockets.pow(0.1).times(1e9)
+	tmp.tr4 = ExpantaNum.pow(1.33, rockets.plus(1).log10())
+	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10())
+	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length)
+	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).cbrt().max(1)
+	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2).max(1)
+	let cubes = player.tr.cubes
+	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
+	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
 	
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
@@ -62,6 +77,7 @@ function updateTemp() {
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
+	if (tmp.ach) if (tmp.ach[41].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow)
 	
 	// Ranks
@@ -69,6 +85,8 @@ function updateTemp() {
 	tmp.ranks.fp = new ExpantaNum(1)
 	if (player.tier.gt(0)) tmp.ranks.fp = tmp.ranks.fp.times(1.25)
 	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tmp.t3)
+	if (tmp.ach) if (tmp.ach[43].has) tmp.ranks.fp = tmp.ranks.fp.times(1.025)
+	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1)
 	tmp.ranks.req = new ExpantaNum(10).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(10).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
@@ -101,6 +119,7 @@ function updateTemp() {
 	tmp.features = {
 		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
 		automation: new Feature({name: "automation", req: AUTO_UNL, res: "distance", display: formatDistance, reached: player.automation.unl}),
+		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {
@@ -127,10 +146,12 @@ function updateTemp() {
 	
 	tmp.rf = {}
 	tmp.rf.fp = new ExpantaNum(1)
-	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.pow(1.1))).round()
+	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.div(tmp.rf.fp).pow(1.1))).round()
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
-	tmp.rf.eff = player.rf.plus(1).logBase(2).plus(1).pow(0.05)
+	tmp.rf.pow = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1)
+	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
 	
 	// Automation
 	
@@ -138,14 +159,26 @@ function updateTemp() {
 	tmp.auto.scrapGain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100)
 	if (player.rank.gt(60)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(2)
 	if (tmp.ach[36].has) tmp.auto.scrapGain = tmp.auto.scrapGain.times(1.5)
+	if (player.tr.upgrades.includes(6)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(tmp.tr6)
 	tmp.auto.intGain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000)
 	if (player.rank.gt(20)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
+	if (player.tier.gt(4)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.tier.gt(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5)
+	if (tmp.ach[46].has) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r111)
 	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r40)
+	if (player.tr.upgrades.includes(6)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.tr6)
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) tmp.auto[Object.keys(ROBOT_REQS)[i]] = new Robot(Object.keys(ROBOT_REQS)[i], ROBOT_FL[Object.keys(ROBOT_REQS)[i]])
+		
+	// Robots
+	
+	tmp.rd = {}
+	tmp.rd.mp = {}
+	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) tmp.rd.mp[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(8)) tmp.rd.mp.rankbot = tmp.rd.mp.rankbot.times(tmp.tr8)
+	if (player.tr.upgrades.includes(9)) tmp.rd.mp.tierbot = tmp.rd.mp.tierbot.times(tmp.tr9)
 	
 	// Layer Mults
 	tmp.lm = {}
@@ -153,7 +186,30 @@ function updateTemp() {
 	if (tmp.ach[34].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
 	if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
 	if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
+	if (tmp.ach[44].has) tmp.lm.rockets = tmp.lm.rockets.times(1.15)
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)
+	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10)
+	
+	// Time Reversal
+	
+	tmp.tr = {}
+	tmp.tr.cg = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
+	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
+	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
+	tmp.tr.eff = player.tr.cubes.plus(1).log10().plus(1).logBase(2)
+	tmp.tr.upg = {}
+	for (let i=1;i<=TR_UPG_AMT;i++) tmp.tr.upg[i] = function() { buyTRUpg(i) }
+	
+	// Miscellaneous
+	
+	tmp.freeRF = tmp.tr.eff
+	tmp.timeSpeed = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2)
+	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7)
+	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01)
+	if (tmp.ach[27].has) tmp.timeSpeed = tmp.timeSpeed.times(1.1)
+	if (tmp.ach[47].has) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
 }
 
 function updateHTML() {
@@ -194,7 +250,7 @@ function updateHTML() {
 	}
 	
 	// Rocket Fuel
-	tmp.el.rf.setTxt(showNum(player.rf))
+	tmp.el.rf.setTxt(showNum(player.rf)+(tmp.freeRF.gt(0)?(" + "+showNum(tmp.freeRF)):""))
 	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can})
 	tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
 	tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
@@ -216,4 +272,17 @@ function updateHTML() {
 		tmp.el.buyRobotInterval.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].intCost))})
 		tmp.el.buyRobotMagnitude.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost))})
 	}
+	
+	// Time Reversal
+	tmp.el.rt.setTxt(tmp.tr.txt)
+	tmp.el.tc.setTxt(showNum(player.tr.cubes))
+	tmp.el.frf.setTxt(showNum(tmp.tr.eff))
+	for (let i=1;i<=TR_UPG_AMT;i++) {
+		let upg = TR_UPGS[i]
+		tmp.el["tr"+i].setHTML(upg.desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
+		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i)})
+	}
+	
+	// Miscellaneous
+	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 }

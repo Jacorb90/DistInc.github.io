@@ -12,10 +12,16 @@ var tmp = {}
 function gameLoop(diff) {
 	updateTemp()
 	updateHTML()
-	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel)
-	player.distance = player.distance.plus(player.velocity.times(diff))
+	diff = diff.times(tmp.timeSpeed)
+	if (player.tr.active) {
+		player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
+		diff = diff.times(-1)
+	}
+	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel).max(0)
+	player.distance = player.distance.plus(player.velocity.times(diff)).max(0)
 	if (player.distance.gte(AUTO_UNL)) player.automation.unl = true
 	if (player.automation.unl) autoTick(diff)
+	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	updateTabs()
 	updateAchievements()
 }

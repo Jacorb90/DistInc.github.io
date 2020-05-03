@@ -10,7 +10,7 @@ class Robot {
 	
 	get interval() { return this.unl?ExpantaNum.div(ROBOT_START_INTERVAL[this.name], (this.i.plus(1))):new ExpantaNum(1/0) }
 	
-	get magnitude() { return this.unl?this.m.pow(2).plus(1):new ExpantaNum(0) }
+	get magnitude() { return this.unl?this.m.pow(2).plus(1).pow(tmp.rd?tmp.rd.mp[this.name]:1):new ExpantaNum(0) }
 	
 	get intCost() { return ExpantaNum.pow(ROBOT_COST_INC.interval[this.name], this.i).times(ROBOT_COST_START.interval[this.name]) }
 	
