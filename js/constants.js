@@ -74,11 +74,14 @@ const RANK_DESCS = {
 	20: "double intelligence gain.",
 	25: "multiply your acceleration by 10.",
 	30: "triple intelligence gain.",
+	35: "time goes by 50% faster.",
 	40: "multiply intelligence gain by the number of primes less than or equal to your scrap amount (minimum 1, softcaps after 1,000,000,000 primes).",
 	50: "multiply your acceleration by 15.",
 	55: "double your maximum velocity for each rank up.",
 	60: "double scrap gain.",
 	75: "multiply your acceleration by 25.",
+	80: "time goes by 50% faster.",
+	90: "time goes by 75% faster.",
 	100: "double rocket gain.",
 	111: "double intelligence gain for each rank up.",
 }
@@ -94,9 +97,12 @@ const TIER_DESCS = {
 	3: "triple your acceleration.",
 	4: "double intelligence gain.",
 	5: "quintuple your acceleration.",
+	6: "time goes by 50% faster.",
+	7: "time goes by 10% faster for each rocket fuel.",
 	8: "multiply your acceleration by 10.",
 	10: "multiply your acceleration by 15.",
 	12: "triple intelligence gain.",
+	13: "quadruple intelligence gain.",
 	15: "multiply your acceleration by 25.",
 }
 

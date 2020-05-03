@@ -23,6 +23,7 @@ function updateTemp() {
 	let tier = player.tier
 	if (tier.gte(10)) tier = tier.log10().times(10)
 	tmp.t3 = ExpantaNum.pow(1.1, tier)
+	tmp.t7 = ExpantaNum.pow(1.1, player.rf)
 
 	// Time Reversal Upgrade Effects
 	
@@ -165,6 +166,7 @@ function updateTemp() {
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (player.tier.gt(4)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.tier.gt(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
+	if (player.tier.gt(13)) tmp.auto.intGain = tmp.auto.intGain.times(4)
 	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5)
 	if (tmp.ach[46].has) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r111)
@@ -210,6 +212,11 @@ function updateTemp() {
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01)
 	if (tmp.ach[27].has) tmp.timeSpeed = tmp.timeSpeed.times(1.1)
 	if (tmp.ach[47].has) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.rank.gt(35)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.rank.gt(80)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.rank.gt(90)) tmp.timeSpeed = tmp.timeSpeed.times(1.75)
+	if (player.tier.gt(6)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.tier.gt(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.t7)
 }
 
 function updateHTML() {
