@@ -6,23 +6,42 @@ function updateTemp() {
 		tmp.el[id] = new Element(id)
 	}
 	
+	// Rank Effects
+	
+	tmp.r2 = ExpantaNum.pow(1.1, player.rank)
+	tmp.r4 = ExpantaNum.pow(3, player.tier)
+	tmp.r5 = ExpantaNum.pow(1.975, player.rank)
+	tmp.r8 = ExpantaNum.pow(1.1, player.rank)
+	tmp.r14 = ExpantaNum.pow(player.rf.plus(1), 1.6)
+	tmp.r40 = primesLTE(player.automation.scraps).max(1)
+	if (tmp.r40.gte(1e9)) tmp.r40 = tmp.r40.log10().times(1e9/9)
+	tmp.r55 = ExpantaNum.pow(2, player.rank)
+	tmp.r111 = ExpantaNum.pow(2, player.rank)
+	
+	// Tier Effects
+	
+	let tier = player.tier
+	if (tier.gte(10)) tier = tier.log10().times(10)
+	tmp.t3 = ExpantaNum.pow(1.1, tier)
+	
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
-	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(ExpantaNum.pow(1.1, player.rank))
+	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(tmp.r2)
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2)
-	if (player.tier.gte(2) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2)
-	if (player.rank.gt(4)) tmp.acc = tmp.acc.times(ExpantaNum.pow(3, player.tier))
-	if (player.rank.gt(5)) tmp.acc = tmp.acc.times(ExpantaNum.pow(1.975, player.rank))
+	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2)
+	if (player.rank.gt(4)) tmp.acc = tmp.acc.times(tmp.r4)
+	if (player.rank.gt(5)) tmp.acc = tmp.acc.times(tmp.r5)
 	if (player.rank.gt(10)) tmp.acc = tmp.acc.times(2)
-	if (player.tier.gte(4)) tmp.acc = tmp.acc.times(3)
+	if (player.tier.gt(3)) tmp.acc = tmp.acc.times(3)
+	if (player.rank.gt(14)) tmp.acc = tmp.acc.times(tmp.r14)
 	if (player.rank.gt(15)) tmp.acc = tmp.acc.times(4)
-	if (player.tier.gte(5)) tmp.acc = tmp.acc.times(5)
+	if (player.tier.gt(5)) tmp.acc = tmp.acc.times(5)
 	if (player.rank.gt(25)) tmp.acc = tmp.acc.times(10)
 	if (player.rank.gt(50)) tmp.acc = tmp.acc.times(15)
-	if (player.tier.gte(8)) tmp.acc = tmp.acc.times(10)
-	if (player.tier.gte(10)) tmp.acc = tmp.acc.times(15)
+	if (player.tier.gt(8)) tmp.acc = tmp.acc.times(10)
+	if (player.tier.gt(10)) tmp.acc = tmp.acc.times(15)
 	if (player.rank.gt(75)) tmp.acc = tmp.acc.times(25)
-	if (player.tier.gte(15)) tmp.acc = tmp.acc.times(25)
+	if (player.tier.gt(15)) tmp.acc = tmp.acc.times(25)
 	if (tmp.ach) if (tmp.ach[12].has) tmp.acc = tmp.acc.times(1.1)
 	if (tmp.ach) if (tmp.ach[23].has) tmp.acc = tmp.acc.times(1.2)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.acc = tmp.acc.times(1.5)
@@ -33,12 +52,13 @@ function updateTemp() {
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1)
-	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.1, player.rank))
-	if (player.tier.gte(2) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5)
-	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(3, player.tier))
-	if (player.rank.gt(5)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.975, player.rank))
-	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(1.1, player.rank))
-	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(ExpantaNum.pow(2, player.rank))
+	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(tmp.r2)
+	if (player.tier.gt(1) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5)
+	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(tmp.r4)
+	if (player.rank.gt(5)) tmp.maxVel = tmp.maxVel.times(tmp.r5)
+	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(tmp.r8)
+	if (player.rank.gt(14)) tmp.maxVel = tmp.maxVel.times(tmp.r14)
+	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(tmp.r55)
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
@@ -47,10 +67,8 @@ function updateTemp() {
 	// Ranks
 	tmp.ranks = {}
 	tmp.ranks.fp = new ExpantaNum(1)
-	if (player.tier.gte(1)) tmp.ranks.fp = tmp.ranks.fp.times(1.25)
-	let tier = player.tier
-	if (tier.gte(10)) tier = tier.log10().times(10)
-	if (player.tier.gte(3)) tmp.ranks.fp = tmp.ranks.fp.times(ExpantaNum.pow(1.1, tier))
+	if (player.tier.gt(0)) tmp.ranks.fp = tmp.ranks.fp.times(1.25)
+	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tmp.t3)
 	tmp.ranks.req = new ExpantaNum(10).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(10).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
@@ -81,7 +99,7 @@ function updateTemp() {
 	// Features
 	
 	tmp.features = {
-		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)}),
+		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
 		automation: new Feature({name: "automation", req: AUTO_UNL, res: "distance", display: formatDistance, reached: player.automation.unl}),
 	}
 	tmp.nf = "none"
@@ -123,12 +141,10 @@ function updateTemp() {
 	tmp.auto.intGain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000)
 	if (player.rank.gt(20)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
-	if (player.tier.gte(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
+	if (player.tier.gt(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5)
-	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(ExpantaNum.pow(2, player.rank))
-	let primes = primesLTE(player.automation.scraps).max(1)
-	if (primes.gte(1e9)) primes = primes.log10().times(1e9/9)
-	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(primes)
+	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r111)
+	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r40)
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) tmp.auto[Object.keys(ROBOT_REQS)[i]] = new Robot(Object.keys(ROBOT_REQS)[i], ROBOT_FL[Object.keys(ROBOT_REQS)[i]])
 	
 	// Layer Mults
