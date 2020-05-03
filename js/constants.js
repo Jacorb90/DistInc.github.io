@@ -73,6 +73,7 @@ const RANK_DESCS = {
 	60: "double scrap gain.",
 	75: "multiply your acceleration by 25.",
 	100: "double rocket gain.",
+	111: "double intelligence gain for each rank up.",
 }
 
 const DEFAULT_RANK_DESC = "rank up."

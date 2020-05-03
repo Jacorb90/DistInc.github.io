@@ -125,6 +125,7 @@ function updateTemp() {
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (player.tier.gte(12)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5)
+	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(ExpantaNum.pow(2, player.rank))
 	let primes = primesLTE(player.automation.scraps).max(1)
 	if (primes.gte(1e9)) primes = primes.log10().times(1e9/9)
 	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(primes)
