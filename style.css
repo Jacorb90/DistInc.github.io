@@ -2,9 +2,14 @@
 	user-select: none; 
 	margin: 0;
 	padding: 0;
+	font-family: Courier;
 }
 
 *:focus { outline: none; }
+
+body {
+	background-color: white;
+}
 
 .btn {
 	box-shadow: 3px 4px 0px 0px #218a3b;
@@ -15,7 +20,6 @@
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
 	font-size:12px;
 	max-width: 200px;
 	padding:7px 25px;
@@ -44,7 +48,6 @@
 	display:inline-block;
 	color:#ffffff;
 	cursor: default;
-	font-family:Arial;
 	font-size:12px;
 	max-width: 200px;
 	padding:7px 25px;
@@ -66,7 +69,6 @@
 	display:inline-block;
 	cursor:not-allowed;
 	color:#ffffff;
-	font-family:Arial;
 	font-size:12px;
 	max-width: 200px;
 	padding:7px 25px;
@@ -86,32 +88,31 @@
 	box-shadow: none;
 }
 
-.tabbtn {
+.btn.tb {
 	box-shadow: 3px 4px 0px 0px #218a3b;
 	background:linear-gradient(to bottom, #1dc42b 5%, #37f04a 100%);
 	background-color:#1dc42b;
-	border-radius:9px;
+	border-radius:9px !important;
 	border:1px solid #17cf2c;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:10px;
-	max-width: 100px;
-	padding:4px 12px;
+	font-size:10px !important;
+	max-width: 100px !important;
+	padding:4px 12px !important;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #057d29;
 }
 
-.tabbtn:hover {
+.btn.tb:hover {
 	background:linear-gradient(to bottom, #37f04a 5%, #1dc42b 100%);
 	background-color:#37f04a;
 }
 
-.tabbtn:active {
+.btn.tb:active {
 	position:relative;
-	top:3px;
-	left:2px;
+	top:3px !important;
+	left:2px !important;
 	box-shadow: none;
 }
 
@@ -140,6 +141,7 @@ table { margin: auto; }
 	height: 50px;
 	width: 50px;
 	background-color: #9e9d9b;
+	border-radius: 5px;
 }
 
 #robotTab {
@@ -155,4 +157,103 @@ table { margin: auto; }
 	width: 200px;
 	background-color: #58eb34;
 	color: black;
+	border-radius: 18px;
+}
+
+.btn.rt {
+	box-shadow: 3px 4px 0px 0px #8a2088;
+	background:linear-gradient(to bottom, #c21dc2 5%, #f037ea 100%);
+	background-color:#c21dc2;
+	border-radius:18px;
+	border:1px solid #d417ca;
+	display:inline-block;
+	cursor:pointer;
+	color:#054f0f;
+	font-size:12px;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #7a0578;
+}
+
+.btn.rt:hover {
+	background:linear-gradient(to bottom, #f037ea 5%, #c21dc2 100%);
+	background-color:#f037ea;
+}
+
+.btn.rt:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+.dead {
+	font-size: 15px;
+	color: #7f698c;
+	font-weight: bold;
+	text-shadow:0px 1px 0px #958e99;
+}
+
+.alive {
+	font-size: 15px;
+	color: #5d8576;
+	font-weight: bold;
+	text-shadow:0px 1px 0px #8a9692;
+}
+
+.btn.btndd {
+	box-shadow: 3px 4px 0px 0px #450387;
+	background:linear-gradient(to bottom, #830bbf 5%, #9405fa 100%);
+	background-color:#830bbf;
+	border-radius:18px;
+	border:1px solid #6c06d1;
+	display:inline-block;
+	cursor:pointer;
+	color:#e800dc;
+	font-size:12px;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #23005c;
+}
+
+.btn.btndd:hover {
+	background:linear-gradient(to bottom, #9405fa 5%, #830bbf 100%);
+	background-color:#9405fa;
+}
+
+.btn.btndd:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+.btn.rckt {
+	box-shadow: 3px 4px 0px 0px #8f8f8f;
+	background:linear-gradient(to bottom, #bfbfbf 5%, #e8e8e8 100%);
+	background-color:#bfbfbf;
+	border-radius:18px;
+	border:1px solid #cccccc;
+	display:inline-block;
+	cursor:pointer;
+	color:#636218;
+	font-size:12px;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ababa6;
+}
+
+.btn.rckt:hover {
+	background:linear-gradient(to bottom, #e8e8e8 5%, #bfbfbf 100%);
+	background-color:#e8e8e8;
+}
+
+.btn.rckt:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
 }

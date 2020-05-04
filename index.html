@@ -13,19 +13,19 @@
 	<script type="text/javascript" src="js/temp.js"></script>
 	<title>Distance Incremental</title>
 </head>
-<body onload="load()">
+<body id="body" onload="load()">
 	<div class="band lb">
 		<table>
 			<tr>
-				<td><button id="maintabbtn" class="tabbtn" onclick="showTab('main')">Main</button></td>
-				<td><button id="achievementstabbtn" class="tabbtn" onclick="showTab('achievements')">Achievements</button></td>
-				<td><button id="rocketstabbtn" class="tabbtn" onclick="showTab('rockets')">Rockets</button></td>
-				<td><button id="autotabbtn" class="tabbtn" onclick="showTab('auto')">Automation</button></td>
-				<td><button id="trtabbtn" class="tabbtn" onclick="showTab('tr')">Time Reversal</button></td>
-				<td><button id="collapsetabbtn" class="tabbtn" onclick="showTab('collapse')">Universal Collapse</button></td>
+				<td><button id="maintabbtn" class="btn tb" onclick="showTab('main')">Main</button></td>
+				<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
+				<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
+				<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
+				<td><button id="trtabbtn" class="btn tb rt" onclick="showTab('tr')">Time Reversal</button></td>
+				<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
 			</tr>
 		</table>
-		<button class="tabbtn" onclick="save()">Save</button><br>
+		<button class="btn tb" onclick="save()">Save</button><br>
 		<span id="nextFeature"></span><br>
 	</div>
 	<br>
@@ -115,7 +115,7 @@
 		<br><br>
 		<div id="robotTab">
 			<br><b><span id="robotName"></span></b><br><br>
-			<button id="robotMax" class="btn" onclick="tmp.auto[player.automation.open].maxAll()">Max All</button>
+			<button id="robotMax" class="btn rckt" onclick="tmp.auto[player.automation.open].maxAll()">Max All</button>
 			<table>
 				<tr>
 					<td><b>Interval</b>: <span id="robotInterval"></span></td>
@@ -129,7 +129,7 @@
 		</div>
 	</div>
 	<div id="tr" class="tab" style="display: none;">
-		<br><button id="rt" class="btn" onclick="reverseTime()"></button><br><br>
+		<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
 		You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel.<br><br>
 		<table>
 			<tr>
@@ -149,10 +149,10 @@
 		</table>
 	</div>
 	<div id="collapse" class="tab" style="display: none;">
-		<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain"></span> cadavers.</button><br><br>
-		You have <span id="cadavers"></span> cadavers, which make time go <span id="cadaverEff"></span>x faster.<br><br>
+		<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers.</button><br><br>
+		You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster.<br><br>
 		<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
-		You have <span id="lifeEssence"></span> life essence.<br><br>
+		You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
 		<table>
 			<tr>
 				<td id="lem1" class="msCont r"></td>

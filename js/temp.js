@@ -134,6 +134,7 @@ function updateTemp() {
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
+	if (tmp.rockets.eff.gte(5)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(5))
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
@@ -234,7 +235,9 @@ function updateTemp() {
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
-	tmp.tr.eff = player.tr.cubes.plus(1).log10().plus(1).logBase(2)
+	cubes = player.tr.cubes
+	if (cubes.gte(1e20)) cubes = cubes.cbrt().times(Math.pow(1e20, 2/3))
+	tmp.tr.eff = cubes.plus(1).log10().plus(1).logBase(2)
 	tmp.tr.upg = {}
 	for (let i=1;i<=TR_UPG_AMT;i++) tmp.tr.upg[i] = function() { buyTRUpg(i) }
 	
@@ -278,6 +281,7 @@ function updateTemp() {
 	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff)
 	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1)
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5)
+	tmp.bc = player.tr.active ? "#de97de" : "white"
 }
 
 function updateHTML() {
@@ -300,7 +304,7 @@ function updateHTML() {
 	tmp.el.tierReq.setTxt(showNum(tmp.tiers.req))
 	
 	// Rockets
-	tmp.el.rocketReset.setClasses({btn: true, locked: !tmp.rockets.canRocket})
+	tmp.el.rocketReset.setClasses({btn: true, locked: !tmp.rockets.canRocket, rckt: tmp.rockets.canRocket})
 	tmp.el.rocketGain.setTxt(showNum(tmp.rockets.layer.gain))
 	tmp.el.rocketsAmt.setTxt(showNum(player.rockets))
 	tmp.el.rocketsEff.setTxt(showNum(tmp.rockets.eff))
@@ -319,7 +323,7 @@ function updateHTML() {
 	
 	// Rocket Fuel
 	tmp.el.rf.setTxt(showNum(player.rf)+(tmp.freeRF.gt(0)?(" + "+showNum(tmp.freeRF)):""))
-	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can})
+	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can})
 	tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
 	tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
 	
@@ -328,7 +332,7 @@ function updateHTML() {
 	tmp.el.intAmt.setTxt(showNum(player.automation.intelligence))
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
-		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i]))})
+		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
 	}
 	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5))
 	tmp.el.robotTab.setDisplay(player.automation.open!="none")
@@ -338,8 +342,8 @@ function updateHTML() {
 	tmp.el.buyRobotInterval.setHTML(player.automation.open=="none"?"":("Upgrade Interval<br>Cost: "+showNum(tmp.auto[player.automation.open].intCost)+" intelligence."))
 	tmp.el.buyRobotMagnitude.setHTML(player.automation.open=="none"?"":("Upgrade Magnitude<br>Cost: "+showNum(tmp.auto[player.automation.open].magCost)+" intelligence."))
 	if (player.automation.open != "none") {
-		tmp.el.buyRobotInterval.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].intCost))})
-		tmp.el.buyRobotMagnitude.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost))})
+		tmp.el.buyRobotInterval.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].intCost)), rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].intCost)})
+		tmp.el.buyRobotMagnitude.setClasses({btn: true, locked: (player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost)), rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].magCost)})
 	}
 	tmp.el.robotMax.setDisplay(tmp.ach[48].has)
 	
@@ -350,15 +354,15 @@ function updateHTML() {
 	for (let i=1;i<=TR_UPG_AMT;i++) {
 		let upg = TR_UPGS[i]
 		tmp.el["tr"+i].setHTML(upg.desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
-		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i)})
+		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
 	
 	// Universal Collapse
-	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can})
+	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
 	tmp.el.cadaverGain.setTxt(showNum(tmp.collapse.layer.gain))
 	tmp.el.cadavers.setTxt(showNum(player.collapse.cadavers))
 	tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff))
-	tmp.el.sacrificeCadavers.setClasses({btn: true, locked: player.collapse.cadavers.eq(0)})
+	tmp.el.sacrificeCadavers.setClasses({btn: true, locked: player.collapse.cadavers.eq(0), btndd: player.collapse.cadavers.gt(0)})
 	tmp.el.lifeEssence.setTxt(showNum(player.collapse.lifeEssence))
 	for (let i=1;i<=EM_AMT;i++) {
 		let ms = ESSENCE_MILESTONES[i]
@@ -368,4 +372,5 @@ function updateHTML() {
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
+	tmp.el.body.changeStyle("background", tmp.bc)
 }
