@@ -24,6 +24,7 @@ function updateTemp() {
 	if (tier.gte(10)) tier = tier.log10().times(10)
 	tmp.t3 = ExpantaNum.pow(1.1, tier)
 	tmp.t7 = ExpantaNum.pow(1.1, player.rf)
+	tmp.t9 = player.automation.intelligence.plus(1).log10().plus(1).sqrt()
 
 	// Time Reversal Upgrade Effects
 	
@@ -85,6 +86,7 @@ function updateTemp() {
 	if (player.rank.gt(8)) tmp.maxVel = tmp.maxVel.times(tmp.r8)
 	if (player.rank.gt(14)) tmp.maxVel = tmp.maxVel.times(tmp.r14)
 	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(tmp.r55)
+	if (player.tier.gt(9)) tmp.maxVel = tmp.maxVel.times(tmp.t9)
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
@@ -274,6 +276,8 @@ function updateTemp() {
 	if (tmp.ach[52].has) tmp.timeSpeed = tmp.timeSpeed.times(1.2)
 	if (tmp.ach[57].has) tmp.timeSpeed = tmp.timeSpeed.times(1.1)
 	if (player.rank.gt(35)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.rank.gt(45)) tmp.timeSpeed = tmp.timeSpeed.times(1.8)
+	if (player.rank.gt(70)) tmp.timeSpeed = tmp.timeSpeed.times(1.4)
 	if (player.rank.gt(80)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
 	if (player.rank.gt(90)) tmp.timeSpeed = tmp.timeSpeed.times(1.75)
 	if (player.tier.gt(6)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
@@ -281,7 +285,11 @@ function updateTemp() {
 	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff)
 	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1)
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5)
-	tmp.bc = player.tr.active ? "#de97de" : "white"
+	tmp.bc = function() {
+		let color = "white"
+		if (player.tr.active) color = "#de97de"
+		return color
+	}()
 }
 
 function updateHTML() {
