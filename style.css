@@ -9,6 +9,7 @@
 
 body {
 	background-color: white;
+	transition-duration: 1s;
 }
 
 .btn {
