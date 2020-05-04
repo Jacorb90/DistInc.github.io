@@ -129,6 +129,11 @@
 
 .dgn { background-color: #029c04 !important; }
 
+.r {
+	background-color: #730e0e !important;
+	color: white !important;
+}
+
 table { margin: auto; }
 
 .achCont {
@@ -144,3 +149,10 @@ table { margin: auto; }
 }
 
 .blocked { background-color: #990702 !important; }
+
+.msCont {
+	height: 200px;
+	width: 200px;
+	background-color: #58eb34;
+	color: black;
+}

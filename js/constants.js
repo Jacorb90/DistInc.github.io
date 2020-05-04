@@ -21,13 +21,18 @@ const DEFAULT_START = {
 		active: false,
 		cubes: new ExpantaNum(0),
 		upgrades: [],
-	}
+	},
+	collapse: {
+		unl: false,
+		cadavers: new ExpantaNum(0),
+		lifeEssence: new ExpantaNum(0),
+	},
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax"],
 }
 
 // Formatting Data
@@ -115,6 +120,7 @@ const LAYER_RESETS = {
 	tier: ["distance", "velocity", "rank"],
 	rockets: ["distance", "velocity", "rank", "tier"],
 	rf: ["rockets"],
+	collapse: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr"],
 }
 
 const LAYER_REQS = {
@@ -122,6 +128,7 @@ const LAYER_REQS = {
 	tier: ["rank", 3],
 	rockets: ["distance", 5e7],
 	rf: ["rockets", 25],
+	collapse: ["distance", 50*DISTANCES.Mpc],
 }
 
 const LAYER_FP = {
@@ -129,6 +136,7 @@ const LAYER_FP = {
 	tier: 1,
 	rockets: 0.4,
 	rf: 1,
+	collapse: 0.1,
 }
 
 const LAYER_SC = {
@@ -136,6 +144,7 @@ const LAYER_SC = {
 	tier: new ExpantaNum(1/0),
 	rockets: new ExpantaNum(1e5),
 	rf: new ExpantaNum(1/0),
+	collapse: new ExpantaNum(100),
 }
 
 // Tab Data
@@ -146,13 +155,14 @@ const TABBTN_SHOWN = {
 	rockets: function() { return (tmp.rockets ? (tmp.rockets.canRocket||player.rockets.gt(0)||player.rf.gt(0)) : false) },
 	auto: function() { return player.automation.unl },
 	tr: function() { return player.tr.unl },
+	collapse: function() { return player.collapse.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
-	rows: 4,
-	cols: 7,
+	rows: 5,
+	cols: 8,
 	names: {
 		11: "Quick Sprint",
 		12: "Better Shoes",
@@ -161,6 +171,7 @@ const ACH_DATA = {
 		15: "Rocket Blast",
 		16: "Humans are Irrelevant",
 		17: "Yet you're still moving forward.",
+		18: "Intentional Death",
 		
 		21: "Driving for Hours",
 		22: "Oil Change",
@@ -169,6 +180,7 @@ const ACH_DATA = {
 		25: "Refuel",
 		26: "Automated Evolution",
 		27: "Time of the Fittest",
+		28: "Piling the Bodies",
 		
 		31: "Just Under 1 Saturn Revolution",
 		32: "Putting in the Fake Fuel",
@@ -177,6 +189,7 @@ const ACH_DATA = {
 		35: "Triple the Fuel",
 		36: "Automated Power Boosts",
 		37: "That's so many?",
+		38: "The Pain is Real",
 		
 		41: "Parallax Time to the Tenth",
 		42: "Strong Winds",
@@ -185,6 +198,16 @@ const ACH_DATA = {
 		45: "Not Quite 9000",
 		46: "A magnet's work.",
 		47: "Gotta buy em all!",
+		48: "Super Smart",
+		
+		51: "Out of this World",
+		52: "Taking up all the space.",
+		53: "2+2=10",
+		54: "Cacophany of Pain",
+		55: "Zooming at the Speed of Sound",
+		56: "Auto-Gas",
+		57: "No More Thinking",
+		58: "The Multiverse is Ever-Expanding",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -194,6 +217,7 @@ const ACH_DATA = {
 		15: "Get at least 1 rocket fuel.",
 		16: "Unlock automation.",
 		17: "Unlock Time Reversal.",
+		18: "Perform a Universal Collapse reset.",
 		
 		21: "Go at least 500km.",
 		22: "Reach Rank 8.",
@@ -202,6 +226,7 @@ const ACH_DATA = {
 		25: "Get at least 2 rocket fuel.",
 		26: "Unlock Rankbot.",
 		27: "Reach 1000 Time Cubes.",
+		28: "Reach 66 Cadavers.",
 		
 		31: "Go at least 1Tm",
 		32: "Reach Rank 12",
@@ -210,6 +235,7 @@ const ACH_DATA = {
 		35: "Get at least 3 rocket fuel.",
 		36: "Unlock Tierbot.",
 		37: "Purchase 5 Time Reversal Upgrades.",
+		38: "Reach all 12 Collapse Milestones.",
 		
 		41: "Go at least 10pc.",
 		42: "Reach Rank 20",
@@ -218,12 +244,23 @@ const ACH_DATA = {
 		45: "Get at least 6 normal rocket fuel.",
 		46: "Reach 5000 scraps.",
 		47: "Purchase 10 Time Reversal Upgrades.",
+		48: "Reach 1e+10 intelligence.",
+		
+		51: "Go at least 1uni.",
+		52: "Reach 1e+8 Rockets.",
+		53: "Get at least 10 normal rocket fuel.",
+		54: "Reach 1e+7 Time Cubes.",
+		55: "Get a Time Speed above 1e+5x.",
+		56: "Unlock Fuelbot.",
+		57: "Reach 9e15 Time Cubes.",
+		58: "Go at least 2.22e22uni.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
 		14: "Acceleration & Maximum Velocity are 50% higher.",
 		15: "Rocket gain is increased by 5%.",
 		17: "Time goes by 1% faster.",
+		18: "Time goes by 50% faster.",
 		
 		21: "Maximum Velocity is 10% higher.",
 		23: "Acceleration is 20% higher.",
@@ -235,22 +272,21 @@ const ACH_DATA = {
 		34: "Rocket gain is increased by 10%.",
 		35: "Acceleration is 80% higher.",
 		36: "Scrap & intelligence gain are increased by 50%.",
+		38: "Cadaver gain is doubled.",
 		
 		41: "Maximum Velocity is 50% higher.",
 		43: "The Rank requirement formula is 2.5% slower.",
 		44: "Rocket gain is increased by 15%.",
 		46: "Intelligence gain is doubled.",
 		47: "Time goes by 50% faster.",
+		48: "You can buy max robot upgrades.",
+		
+		51: "Maximum Velocity is 50% higher.",
+		52: "Time goes by 20% faster.",
+		55: "You gain 10% more Time Cubes.",
+		57: "Time goes by 10% faster.",
+		58: "The Rocket Fuel reset only resets Rockets to 50% of their current amount.",
 	},
-}
-
-// Update Temp Data for Achievements
-
-for (let r=1;r<=ACH_DATA.rows;r++) {
-	for (let c=1;c<=ACH_DATA.cols;c++) {
-		let id = r*10+c
-		TMP_DATA.ELS.push("ach"+id)
-	}
 }
 
 // Automation
@@ -259,34 +295,41 @@ const AUTO_UNL = new ExpantaNum(1e12)
 const ROBOT_REQS = {
 	rankbot: new ExpantaNum(10),
 	tierbot: new ExpantaNum(50),
+	fuelbot: new ExpantaNum(1e6),
 }
 const ROBOT_COST_INC = {
 	interval: {
 		rankbot: new ExpantaNum(7),
 		tierbot: new ExpantaNum(8),
+		fuelbot: new ExpantaNum(15),
 	},
 	magnitude: {
 		rankbot: new ExpantaNum(3),
 		tierbot: new ExpantaNum(4),
+		fuelbot: new ExpantaNum(12),
 	},
 }
 const ROBOT_COST_START = {
 	interval: {
 		rankbot: new ExpantaNum(2),
 		tierbot: new ExpantaNum(2),
+		fuelbot: new ExpantaNum(1e5),
 	},
 	magnitude: {
 		rankbot: new ExpantaNum(1),
 		tierbot: new ExpantaNum(1),
+		fuelbot: new ExpantaNum(4e5),
 	},
 }
 const ROBOT_START_INTERVAL = {
 	rankbot: new ExpantaNum(4),
 	tierbot: new ExpantaNum(5),
+	fuelbot: new ExpantaNum(3600),
 }
 const ROBOT_FL = {
 	rankbot: "ranks",
 	tierbot: "tiers",
+	fuelbot: "rf",
 }
 
 // Time Reversal
@@ -304,7 +347,32 @@ const TR_UPGS = {
 	10: { cost: new ExpantaNum(2e5), desc: "Rocket gain is increased by 10% for every OoM of Time Cubes (softcaps at 1e+10 Time Cubes)." },
 }
 const TR_UPG_AMT = Object.keys(TR_UPGS).length
+	
+// Universal Collapse
 
-// Update Temp Data for Time Reversal
+const COLLAPSE_UNL = new ExpantaNum(50*DISTANCES.Mpc)
+const ESSENCE_MILESTONES = {
+	1: { req: new ExpantaNum(1), desc: "Time goes by 100x faster, but this gets weaker the further you go (minimum 2x, at 50Mpc)." },
+	2: { req: new ExpantaNum(2), desc: "Time goes by 5x faster." },
+	3: { req: new ExpantaNum(3), desc: "Start with 10 Rockets on reset." },
+	4: { req: new ExpantaNum(5), desc: "Start with 1 Rocket Fuel on reset." },
+	5: { req: new ExpantaNum(10), desc: "Unlock Fuelbot, and Cadaver gain is boosted by Time Cubes." },
+	6: { req: new ExpantaNum(15), desc: "Gain 10x more Rockets." },
+	7: { req: new ExpantaNum(25), desc: "Keep Time Reversal upgrades on reset." },
+	8: { req: new ExpantaNum(50), desc: "Time Speed multiplies Rocket gain at a reduced rate." },
+	9: { req: new ExpantaNum(75), desc: "Gain 1% of Rocket gain every second (does nothing when Time is Reversed, but unaffected by Time Speed)." },
+	10: { req: new ExpantaNum(100), desc: "Life Essence boosts Cadaver gain." },
+	11: { req: new ExpantaNum(1000), desc: "Tiers do not reset Ranks." },
+	12: { req: new ExpantaNum(10000), desc: "Ranks do not reset anything." },
+}
+const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
+// Re-Update Temp Data
+for (let r=1;r<=ACH_DATA.rows;r++) {
+	for (let c=1;c<=ACH_DATA.cols;c++) {
+		let id = r*10+c
+		TMP_DATA.ELS.push("ach"+id)
+	}
+}
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
+for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)

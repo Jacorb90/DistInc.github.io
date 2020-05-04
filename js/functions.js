@@ -92,6 +92,7 @@ function updateAchievements() {
 	if (player.rf.gt(0)) tmp.ach[15].grant()
 	if (player.automation.unl) tmp.ach[16].grant()
 	if (player.tr.unl) tmp.ach[17].grant()
+	if (player.collapse.cadavers.gt(0)) tmp.ach[18].grant()
 	
 	if (player.distance.gte(5e5)) tmp.ach[21].grant()
 	if (player.rank.gte(8)) tmp.ach[22].grant()
@@ -100,6 +101,7 @@ function updateAchievements() {
 	if (player.rf.gte(2)) tmp.ach[25].grant()
 	if (Object.keys(player.automation.robots).includes("rankbot")) tmp.ach[26].grant()
 	if (player.tr.cubes.gte(1000)) tmp.ach[27].grant()
+	if (player.collapse.cadavers.gte(1000)) tmp.ach[28].grant()
 		
 	if (player.distance.gte(1e12)) tmp.ach[31].grant()
 	if (player.rank.gte(12)) tmp.ach[32].grant()
@@ -108,6 +110,7 @@ function updateAchievements() {
 	if (player.rf.gte(3)) tmp.ach[35].grant()
 	if (Object.keys(player.automation.robots).includes("tierbot")) tmp.ach[36].grant()
 	if (player.tr.upgrades.length>=5) tmp.ach[37].grant()
+	if (tmp.collapse.hasMilestone(12)) tmp.ach[38].grant()
 	
 	if (player.distance.gte(10*DISTANCES.pc)) tmp.ach[41].grant()
 	if (player.rank.gte(20)) tmp.ach[42].grant()
@@ -116,6 +119,16 @@ function updateAchievements() {
 	if (player.rf.gte(6)) tmp.ach[45].grant()
 	if (player.automation.scraps.gte(5000)) tmp.ach[46].grant()
 	if (player.tr.upgrades.length>=10) tmp.ach[47].grant()
+	if (player.automation.intelligence.gte(1e10)) tmp.ach[48].grant()
+	
+	if (player.distance.gte(DISTANCES.uni)) tmp.ach[51].grant()
+	if (player.rockets.gte(1e8)) tmp.ach[52].grant()
+	if (player.rf.gte(10)) tmp.ach[53].grant()
+	if (player.tr.cubes.gte(1e7)) tmp.ach[54].grant()
+	if (tmp.timeSpeed.gte(1e5)) tmp.ach[55].grant()
+	if (Object.keys(player.automation.robots).includes("fuelbot")) tmp.ach[56].grant()
+	if (player.tr.cubes.gte(9e15)) tmp.ach[57].grant()
+	if (player.distance.gte(2.22e22*DISTANCES.uni)) tmp.ach[58].grant()
 }
 
 // Automation
@@ -165,6 +178,8 @@ function ENString(obj) {
 	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence).toString()
 	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j]).toString()
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes).toString()
+	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers).toString()
+	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence).toString()
 	return ret
 }
 
@@ -181,6 +196,8 @@ function transformToEN(obj, sc) {
 	ret.automation.intelligence = new ExpantaNum(ret.automation.intelligence)
 	for (let i=0;i<Object.values(ret.automation.robots).length;i++) for (let j=0;j<=1;j++) ret.automation.robots[Object.keys(ret.automation.robots)[i]][j] = new ExpantaNum(Object.values(ret.automation.robots)[i][j])
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes)
+	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers)
+	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
     return ret
 }
 

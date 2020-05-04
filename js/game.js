@@ -12,6 +12,7 @@ var tmp = {}
 function gameLoop(diff) {
 	updateTemp()
 	updateHTML()
+	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	diff = diff.times(tmp.timeSpeed)
 	if (player.tr.active) {
 		player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
@@ -22,6 +23,7 @@ function gameLoop(diff) {
 	if (player.distance.gte(AUTO_UNL)) player.automation.unl = true
 	if (player.automation.unl) autoTick(diff)
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
+	if (player.distance.gte(COLLAPSE_UNL)) player.collapse.unl = true
 	updateTabs()
 	updateAchievements()
 }

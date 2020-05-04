@@ -1,8 +1,9 @@
 class Layer {
-	constructor(name, avail, type) {
+	constructor(name, avail, type, spec) {
 		this.name = name
 		this.avail = avail
 		this.type = type
+		this.spec = !(!spec)
 	}
 	
 	get gain() {
@@ -17,15 +18,20 @@ class Layer {
 	get fcBulk() {
 		if (!(this.type=="forced"||this.type=="semi-forced")) return new ExpantaNum(0)
 		if (!this.avail) return new ExpantaNum(0)
-		return tmp[this.name+"s"].bulk.floor()
+		if (this.name=="rf") return tmp[this.name].bulk.floor()
+		else return tmp[this.name+"s"].bulk.floor()
 	}
 	
 	reset(force=false) {
 		if (!force) {
 			if (!this.avail || this.gain.lt(1)) return
-			player[this.name] = player[this.name].plus(this.gain)
+			if (!this.spec) player[this.name] = player[this.name].plus(this.gain)
+			else tmp[this.name].doGain()
 		}
-		for (let i=0;i<LAYER_RESETS[this.name].length;i++) player[LAYER_RESETS[this.name][i]] = DEFAULT_START[LAYER_RESETS[this.name][i]]
+		let prev = transformToEN(player, DEFAULT_START)
+		for (let i=0;i<LAYER_RESETS[this.name].length;i++) player[LAYER_RESETS[this.name][i]] = ((DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object && !(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)) ? JSON.parse(JSON.stringify(DEFAULT_START[LAYER_RESETS[this.name][i]])) : DEFAULT_START[LAYER_RESETS[this.name][i]])
+		player = transformToEN(player, DEFAULT_START)
+		if (tmp[this.name]) if (tmp[this.name].onReset !== undefined) tmp[this.name].onReset(prev)
 	}
 	
 	bulk(mag=new ExpantaNum(1)) {

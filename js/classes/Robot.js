@@ -39,6 +39,22 @@ class Robot {
 		player.automation.robots[this.name][v] = player.automation.robots[this.name][v].plus(1)
 	}
 	
+	maxAll() {
+		if (!this.unl) return
+		if (!tmp.ach) return
+		if (!tmp.ach[48].has) return
+		if (player.automation.intelligence.gte(this.intCost)) {
+			let maxI = player.automation.intelligence.div(ROBOT_COST_START.interval[this.name]).max(1).logBase(ROBOT_COST_INC.interval[this.name]).plus(1).floor()
+			player.automation.intelligence = player.automation.intelligence.sub(this.intCost)
+			player.automation.robots[this.name][0] = player.automation.robots[this.name][0].max(maxI)
+		}
+		if (player.automation.intelligence.gte(this.magCost)) {
+			let maxM = player.automation.intelligence.div(ROBOT_COST_START.magnitude[this.name]).max(1).logBase(ROBOT_COST_INC.magnitude[this.name]).sqrt().floor()
+			player.automation.intelligence = player.automation.intelligence.sub(this.magCost)
+			player.automation.robots[this.name][1] = player.automation.robots[this.name][1].max(maxM)
+		}
+	}
+	
 	act() { 
 		tmp[this.fl].layer.bulk(this.magnitude)
 	}
