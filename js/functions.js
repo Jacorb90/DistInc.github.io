@@ -68,9 +68,7 @@ function showTab(name) { player.tab = name }
 
 // Saving/Loading
 
-function save() { localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(player)))) }
-
-function load() {
+function loadGame() {
 	let ls = localStorage.getItem("dist-inc")
 	loaded = true
 	if (!((ls||"x")=="x")) {
@@ -185,7 +183,7 @@ function ENString(obj) {
 
 function transformToEN(obj, sc) {
     let ret = deepCopy(obj)
-    for (const key in sc) if (ret[key]===undefined) ret[key] = sc[key]
+    for (const key in sc) if (ret[key]===undefined||key=="tab") ret[key] = sc[key]
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -208,3 +206,14 @@ function primesLTE(x) {
 	let ret = x.div(x.ln())
 	return ret.round()
 }
+
+function copyToClipboard(str) {
+	const el = document.createElement('textarea')
+	el.value = str
+	document.body.appendChild(el)
+	el.select()
+	document.execCommand('copy')
+	document.body.removeChild(el)
+}
+
+function reload() { location.reload() }

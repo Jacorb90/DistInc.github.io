@@ -258,3 +258,31 @@ table { margin: auto; }
 	left:2px;
 	box-shadow: none;
 }
+
+.btn.opt {
+	box-shadow: 3px 4px 0px 0px #ada195;
+	background:linear-gradient(to bottom, #d6ccba 5%, #fff1db 100%);
+	background-color:#d6ccba;
+	border-radius:18px;
+	border:1px solid #f0e3ce;
+	display:inline-block;
+	cursor:pointer;
+	color:#073d3b;
+	font-size:12px;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #d6c9b6;
+}
+
+.btn.opt:hover {
+	background:linear-gradient(to bottom, #fff1db 5%, #d6ccba 100%);
+	background-color:#fff1db;
+}
+
+.btn.opt:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}

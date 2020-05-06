@@ -6,6 +6,27 @@ function updateTemp() {
 		tmp.el[id] = new Element(id)
 	}
 	
+	// Options
+	
+	tmp.options = {}
+	tmp.options.save = function(sav=player) { localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav)))) }
+	tmp.options.setSave = function(ns) {
+		tmp.options.save(ns)
+		reload()
+	}
+	tmp.options.hardReset = function(force=false) {
+		if (!force) if (!confirm("Are you sure you want to reset? You will lose all of your progress if you do this!!!")) return
+		tmp.options.setSave(DEFAULT_START)
+	}
+	tmp.options.import = function() {
+		let sav = JSON.parse(atob(prompt("Paste your save here.")))
+		tmp.options.setSave(transformToEN(sav))
+	}
+	tmp.options.export = function() {
+		let toExport = btoa(JSON.stringify(ENString(player)))
+		copyToClipboard(toExport)
+	}
+	
 	// Rank Effects
 	
 	tmp.r2 = ExpantaNum.pow(1.1, player.rank)

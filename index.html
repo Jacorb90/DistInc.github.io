@@ -14,7 +14,7 @@
 	<title>Distance Incremental</title>
 	<link rel="icon" href="images/game_icon.ico" type="image/icon type">
 </head>
-<body id="body" onload="load()">
+<body id="body" onload="loadGame()">
 	<div class="band lb">
 		<table>
 			<tr>
@@ -39,7 +39,14 @@
 		Tier <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
 	</div>
 	<div id="options" class="tab" style="display: none;">
-		<button class="btn tb" onclick="save()">Save</button>
+		<table>
+			<tr>
+				<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
+				<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
+				<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
+				<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
+			</tr>
+		</table>
 	</div>
 	<div id="achievements" class="tab" style="display: none;">
 		<div id="achDesc" class="band gn"></div>
