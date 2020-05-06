@@ -19,6 +19,7 @@
 		<table>
 			<tr>
 				<td><button id="maintabbtn" class="btn tb" onclick="showTab('main')">Main</button></td>
+				<td><button id="optionstabbtn" class="btn tb" onclick="showTab('options')">Options</button></td>
 				<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
 				<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
 				<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
@@ -26,7 +27,6 @@
 				<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
 			</tr>
 		</table>
-		<button class="btn tb" onclick="save()">Save</button><br>
 		<span id="nextFeature"></span><br>
 	</div>
 	<br>
@@ -37,6 +37,9 @@
 		Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup>.<br><br>
 		Rank <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
 		Tier <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+	</div>
+	<div id="options" class="tab" style="display: none;">
+		<button class="btn tb" onclick="save()">Save</button>
 	</div>
 	<div id="achievements" class="tab" style="display: none;">
 		<div id="achDesc" class="band gn"></div>
