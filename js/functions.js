@@ -75,6 +75,7 @@ function loadGame() {
 		let data = JSON.parse(atob(ls))
 		player = transformToEN(data, DEFAULT_START)
 	}
+	setupHTML()
 	interval = setInterval(function() {
 		gameLoop(new ExpantaNum(1/33))
 	}, 33)

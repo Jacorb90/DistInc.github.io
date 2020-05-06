@@ -313,6 +313,22 @@ function updateTemp() {
 	}()
 }
 
+function setupHTML() {
+	// Achievement Table
+	let achTable = new Element("achTable")
+	let table = ""
+	for (let r=1;r<=ACH_DATA.rows;r++) {
+		table+="<tr>"
+		for (let c=1;c<=ACH_DATA.cols;c++) {
+			let id = r*10+c
+			table+="<td id='ach"+id+"' class='achCont' onmouseover='tmp.ach["+id+"].select()'>"
+			table+="</td>"
+		}
+		table+="</tr>"
+	}
+	achTable.setHTML(table)
+}
+
 function updateHTML() {
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))
