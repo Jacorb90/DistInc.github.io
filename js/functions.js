@@ -77,8 +77,17 @@ function loadGame() {
 	}
 	setupHTML()
 	interval = setInterval(function() {
-		gameLoop(new ExpantaNum(1/33))
+		simulateTime()
 	}, 33)
+}
+
+// Time Simulation (for when you decide to close the tab)
+
+function simulateTime() {
+	player.time = getCurrentTime()
+	let time = new ExpantaNum(player.time).sub(last).max(1000*1/33)
+	gameLoop(time.div(1000))
+	last = getCurrentTime()
 }
 
 // Achievements
@@ -218,3 +227,5 @@ function copyToClipboard(str) {
 }
 
 function reload() { location.reload() }
+
+function getCurrentTime() { return new Date().getTime() }

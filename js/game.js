@@ -6,6 +6,7 @@ var interval;
 var autoTimes = {}
 for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) autoTimes[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(0);
 var tmp = {}
+var last = getCurrentTime()
 
 // Game Loop
 

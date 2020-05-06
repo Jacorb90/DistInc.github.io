@@ -3,6 +3,7 @@
 const DEFAULT_START = {
 	tab: "main",
 	achievements: [],
+	time: new Date().getTime(),
 	distance: new ExpantaNum(0),
 	velocity: new ExpantaNum(0),
 	rank: new ExpantaNum(1),
