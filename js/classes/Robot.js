@@ -8,9 +8,9 @@ class Robot {
 		this.m = player.automation.robots[this.name]===undefined?new ExpantaNum(0):player.automation.robots[this.name][1]
 	}
 	
-	get interval() { return this.unl?ExpantaNum.div(ROBOT_START_INTERVAL[this.name], (this.i.plus(1))):new ExpantaNum(1/0) }
+	get interval() { return this.unl?ExpantaNum.div(ROBOT_START_INTERVAL[this.name], (this.i.plus(1).times(tmp.auto.intMod))):new ExpantaNum(1/0) }
 	
-	get magnitude() { return this.unl?this.m.pow(2).plus(1).pow(tmp.rd?tmp.rd.mp[this.name]:1):new ExpantaNum(0) }
+	get magnitude() { return this.unl?this.m.times(tmp.auto.magMod).pow(2).plus(1).pow(tmp.rd?tmp.rd.mp[this.name]:1):new ExpantaNum(0) }
 	
 	get intCost() { return ExpantaNum.pow(ROBOT_COST_INC.interval[this.name], this.i).times(ROBOT_COST_START.interval[this.name]) }
 	
