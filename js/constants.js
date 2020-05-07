@@ -2,7 +2,9 @@
 
 const DEFAULT_START = {
 	tab: "main",
+	optionsTab: "saving",
 	achievements: [],
+	modes: [],
 	time: new Date().getTime(),
 	distance: new ExpantaNum(0),
 	velocity: new ExpantaNum(0),
@@ -372,6 +374,17 @@ const ESSENCE_MILESTONES = {
 }
 const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
+// Modes
+
+const MODES = {
+	hard: {
+		desc: "Nothing is changed yet.",
+		balancing: "completely balanced (due to lack of change)",
+		balanceCheck: false,
+		combos: {},
+	},
+}
+
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
 	for (let c=1;c<=ACH_DATA.cols;c++) {
@@ -381,3 +394,4 @@ for (let r=1;r<=ACH_DATA.rows;r++) {
 }
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
 for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)
+for (let i=0;i<Object.keys(MODES).length;i++) TMP_DATA.ELS.push(Object.keys(MODES)[i]+"Mode")

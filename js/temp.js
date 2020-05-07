@@ -26,6 +26,37 @@ function updateTemp() {
 		let toExport = btoa(JSON.stringify(ENString(player)))
 		copyToClipboard(toExport)
 	}
+	tmp.options.startModes = function(modes) {
+		let s = transformToEN(DEFAULT_START)
+		s.modes = modes
+		tmp.options.save(s)
+		reload()
+	}
+	tmp.options.modes = {}
+	tmp.options.modes.select = function(name) {
+		if (modesSelected.includes(name)) modesSelected = modesSelected.filter(x => x!=name)
+		else modesSelected.push(name)
+	}
+	tmp.options.modes.confirm = function() {
+		if (modesSelected.length==0) tmp.options.startModes([])
+		if (modesSelected.length==1) {
+			let modeData = MODES[modesSelected[0]]
+			if (modeData.balanceCheck) if (!confirm("This mode is "+modeData.balancing+". Are you sure you want to enter this run?")) return
+			tmp.options.startModes(modesSelected)
+		} else {
+			let base = MODES[modesSelected[0]]
+			for (let i=1;i<modesSelected.length;i++) {
+				let mode = base.combos[modesSelected[i]]
+				if (mode.balanceCheck) if (!confirm("This mode combination is "+mode.balancing+". Are you sure you want to enter this mode combination?")) return
+				tmp.options.startModes(modesSelected)
+			}
+		}
+	}
+	
+	// Modes
+	
+	tmp.modes = {}
+	for (let i=0;i<Object.keys(MODES).length;i++) tmp.modes[Object.keys(MODES)[i]] = new Mode(Object.keys(MODES)[i])
 	
 	// Rank Effects
 	
@@ -330,6 +361,10 @@ function setupHTML() {
 }
 
 function updateHTML() {
+	// Options
+	
+	for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
+	
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))
 	tmp.el.velocity.setTxt(formatDistance(player.velocity))

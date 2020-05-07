@@ -7,6 +7,7 @@ var autoTimes = {}
 for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) autoTimes[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(0);
 var tmp = {}
 var last = getCurrentTime()
+var modesSelected = []
 
 // Game Loop
 
@@ -26,5 +27,6 @@ function gameLoop(diff) {
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	if (player.distance.gte(COLLAPSE_UNL)) player.collapse.unl = true
 	updateTabs()
+	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()
 }

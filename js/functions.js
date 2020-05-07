@@ -66,6 +66,22 @@ function updateTabs() {
 
 function showTab(name) { player.tab = name }
 
+// Options Tabs
+
+function isOptionsTabShown(name) {
+	return player.optionsTab==name
+}
+
+function updateOptionsTabs() {
+	var tabs = document.getElementsByClassName("optionstab")
+	for (i=0;i<tabs.length;i++) {
+		var el = new Element(tabs[i].id)
+		el.setDisplay(isOptionsTabShown(tabs[i].id))
+	}
+}
+
+function showOptionsTab(name) { player.optionsTab = name }
+
 // Saving/Loading
 
 function loadGame() {
@@ -170,6 +186,21 @@ function buyTRUpg(n) {
 	player.tr.upgrades.push(n)
 }
 
+// Modes
+
+function showModeDescs(modes) {
+	let d = ""
+	if (modes.length>1) {
+		for (let i=0;i<modes.length;i++) {
+			let mode = modes[i]
+			d += MODES[modes[i]].desc
+			if (i<modes.length-1) d += ","
+		}
+	} else if (modes.length==1) d = MODES[modes[0]].desc
+	else if (modes.length==0) d = "Just the main game."
+	alert(d)
+}
+
 // Miscellaneous
 
 function deepCopy(obj) { return JSON.parse(JSON.stringify(obj)) }
@@ -193,7 +224,7 @@ function ENString(obj) {
 
 function transformToEN(obj, sc) {
     let ret = deepCopy(obj)
-    for (const key in sc) if (ret[key]===undefined||key=="tab") ret[key] = sc[key]
+    for (const key in sc) if (ret[key]===undefined||key=="tab"||key=="optionsTab") ret[key] = sc[key]
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
