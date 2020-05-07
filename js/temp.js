@@ -189,20 +189,26 @@ function updateTemp() {
 	// Rockets
 	
 	tmp.rockets = {}
-	tmp.rockets.canRocket = player.distance.gte(LAYER_REQS["rockets"][1])
+	tmp.rockets.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.rockets.lrm = tmp.rockets.lrm.times(2)
+	tmp.rockets.sc = LAYER_SC["rockets"]
+	if (tmp.modes.hard.active) tmp.rockets.sc = new ExpantaNum(1)
+	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
+	tmp.rockets.esc = new ExpantaNum(5)
+	if (tmp.modes.hard.active) tmp.rockets.esc = tmp.rockets.esc.sub(0.5)
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
-	if (tmp.rockets.eff.gte(5)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(5))
+	if (tmp.rockets.eff.gte(tmp.rockets.esc)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(tmp.rockets.esc))
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
 	// Features
 	
 	tmp.features = {
-		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
-		automation: new Feature({name: "automation", req: AUTO_UNL, res: "distance", display: formatDistance, reached: player.automation.unl}),
+		rockets: new Feature({name: "rockets", req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm), res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
+		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl}),
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
 		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL), res: "distance", display: formatDistance, reached: player.collapse.unl}),
 	}
@@ -238,6 +244,7 @@ function updateTemp() {
 	tmp.rf.pow = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1)
 	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
+	if (tmp.modes.hard.active) tmp.rf.eff = tmp.rf.eff.sub(0.02)
 	tmp.rf.onReset = function(prev) {
 		if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10)
 		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)
@@ -246,6 +253,8 @@ function updateTemp() {
 	// Automation
 	
 	tmp.auto = {}
+	tmp.auto.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.auto.lrm = tmp.auto.lrm.times(10)
 	tmp.auto.scrapGain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100)
 	if (player.rank.gt(60)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(2)
 	if (tmp.ach[36].has) tmp.auto.scrapGain = tmp.auto.scrapGain.times(1.5)

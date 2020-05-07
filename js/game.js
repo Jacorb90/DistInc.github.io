@@ -22,7 +22,7 @@ function gameLoop(diff) {
 	}
 	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel).max(0)
 	player.distance = player.distance.plus(player.velocity.times(diff)).max(0)
-	if (player.distance.gte(AUTO_UNL)) player.automation.unl = true
+	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
 	if (player.automation.unl) autoTick(diff)
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	if (player.distance.gte(COLLAPSE_UNL)) player.collapse.unl = true
