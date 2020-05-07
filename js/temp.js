@@ -105,6 +105,7 @@ function updateTemp() {
 	
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
+	if (tmp.modes.hard.active) tmp.acc = tmp.acc.div(3)
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(tmp.r2)
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2)
@@ -131,6 +132,7 @@ function updateTemp() {
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1)
+	if (tmp.modes.hard.active) tmp.maxVel = tmp.maxVel.div(2)
 	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(tmp.r2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5)
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(tmp.r4)
@@ -153,8 +155,10 @@ function updateTemp() {
 	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tmp.t3)
 	if (tmp.ach) if (tmp.ach[43].has) tmp.ranks.fp = tmp.ranks.fp.times(1.025)
 	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1)
-	tmp.ranks.req = new ExpantaNum(10).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
-	tmp.ranks.bulk = player.distance.div(10).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
+	tmp.ranks.bc = new ExpantaNum(10)
+	if (tmp.modes.hard.active && player.rank<3) tmp.ranks.bc = tmp.ranks.bc.times(2)
+	tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)?(RANK_DESCS[player.rank.toNumber()]?RANK_DESCS[player.rank.toNumber()]:DEFAULT_RANK_DESC):DEFAULT_RANK_DESC
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req)
@@ -170,8 +174,10 @@ function updateTemp() {
 	// Tiers
 	tmp.tiers = {}
 	tmp.tiers.fp = new ExpantaNum(1)
-	tmp.tiers.req = new ExpantaNum(3).plus(player.tier.times(tmp.tiers.fp).pow(2))
-	tmp.tiers.bulk = player.rank.sub(3).max(0).sqrt().div(tmp.tiers.fp).add(1)
+	tmp.tiers.bc = new ExpantaNum(3)
+	if (tmp.modes.hard.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.plus(1)
+	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.times(tmp.tiers.fp).pow(2))
+	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().div(tmp.tiers.fp).add(1)
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req)
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced")
@@ -319,6 +325,7 @@ function updateTemp() {
 	
 	tmp.freeRF = tmp.tr.eff
 	tmp.timeSpeed = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.timeSpeed = tmp.timeSpeed.times(0.75)
 	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2)
 	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7)
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01)

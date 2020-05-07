@@ -378,9 +378,9 @@ const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
 const MODES = {
 	hard: {
-		desc: "Nothing is changed yet.",
-		balancing: "completely balanced (due to lack of change)",
-		balanceCheck: false,
+		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, & thirds acceleration.",
+		balancing: "only balanced up to the first Rocket reset",
+		balanceCheck: true,
 		combos: {},
 	},
 }
