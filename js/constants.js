@@ -378,8 +378,8 @@ const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
 const MODES = {
 	hard: {
-		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, & makes Interval/Magnitude upgrades 33.33% weaker.",
-		balancing: "only balanced up to unlocking Time Reversal",
+		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, & makes those 'Interval boosts Magnitude' upgrades 50% weaker, but to compensate, Universal Collapse is unlocked 50x sooner.",
+		balancing: "only balanced up to unlocking Universal Collapse",
 		balanceCheck: true,
 		combos: {},
 	},

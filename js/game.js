@@ -25,7 +25,7 @@ function gameLoop(diff) {
 	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
 	if (player.automation.unl) autoTick(diff)
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
-	if (player.distance.gte(COLLAPSE_UNL)) player.collapse.unl = true
+	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()

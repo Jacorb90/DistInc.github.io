@@ -87,8 +87,8 @@ function updateTemp() {
 	tmp.tr4 = ExpantaNum.pow(1.33, rockets.plus(1).log10())
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10())
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length)
-	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).cbrt().max(1)
-	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2).max(1)
+	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).pow(1/3*(tmp.modes.hard.active?0.5:1)).max(1)
+	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2*(tmp.modes.hard.active?0.5:1)).max(1)
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
@@ -210,7 +210,7 @@ function updateTemp() {
 		rockets: new Feature({name: "rockets", req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm), res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
 		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl}),
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
-		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL), res: "distance", display: formatDistance, reached: player.collapse.unl}),
+		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {
@@ -308,6 +308,7 @@ function updateTemp() {
 	
 	tmp.tr = {}
 	tmp.tr.cg = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.tr.cg = tmp.tr.cg.div(3)
 	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
@@ -321,7 +322,9 @@ function updateTemp() {
 	// Universal Collapse
 	
 	tmp.collapse = {}
-	tmp.collapse.can = player.distance.gte(LAYER_REQS["collapse"][1])
+	tmp.collapse.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.collapse.lrm = tmp.collapse.lrm.div(50)
+	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true)
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1)).pow(player.collapse.cadavers.plus(1).logBase(2)).plus(player.collapse.cadavers.sqrt())
 	if (tmp.collapse.eff.gte(1e12)) tmp.collapse.eff = tmp.collapse.eff.log10().times(1e12/12)
