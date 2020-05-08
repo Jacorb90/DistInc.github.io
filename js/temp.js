@@ -317,8 +317,9 @@ function updateTemp() {
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
+	tmp.tr.esc = new ExpantaNum(1e20)
 	cubes = player.tr.cubes
-	if (cubes.gte(1e20)) cubes = cubes.cbrt().times(Math.pow(1e20, 2/3))
+	if (cubes.gte(tmp.tr.esc)) cubes = cubes.cbrt().times(Math.pow(tmp.tr.esc, 2/3))
 	tmp.tr.eff = cubes.plus(1).log10().plus(1).logBase(2)
 	tmp.tr.upg = {}
 	for (let i=1;i<=TR_UPG_AMT;i++) tmp.tr.upg[i] = function() { buyTRUpg(i) }
@@ -326,6 +327,7 @@ function updateTemp() {
 	// Universal Collapse
 	
 	tmp.collapse = {}
+	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"])
 	tmp.collapse.lrm = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.lrm = tmp.collapse.lrm.div(50)
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
@@ -348,6 +350,15 @@ function updateTemp() {
 		if (tmp.collapse.hasMilestone(4)) player.rf = new ExpantaNum(1)
 		if (tmp.collapse.hasMilestone(7)) player.tr.upgrades = prev.tr.upgrades
 	}
+	
+	// Softcaps
+	
+	tmp.sc = {}
+	tmp.sc.rocketGain = tmp.rockets.layer.gain.gte(tmp.rockets.sc)
+	tmp.sc.rocketEff = tmp.rockets.eff.gte(tmp.rockets.esc)
+	tmp.sc.timeCubeEff = player.tr.cubes.gte(tmp.tr.esc)
+	tmp.sc.cadaverGain = tmp.collapse.layer.gain.gte(tmp.collapse.sc)
+	tmp.sc.cadaverEff = tmp.collapse.eff.gte(tmp.collapse.esc)
 	
 	// Miscellaneous
 	
@@ -483,6 +494,14 @@ function updateHTML() {
 		let ms = ESSENCE_MILESTONES[i]
 		tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
 		tmp.el["lem"+i].setClasses({msCont: true, r: !tmp.collapse.hasMilestone(i)})
+	}
+	
+	// Softcaps
+	for (let i=0;i<Object.keys(tmp.sc).length;i++) {
+		let name = Object.keys(tmp.sc)[i]
+		let reached = Object.values(tmp.sc)[i]
+		tmp.el[name+"SC"].setTxt(reached?("(softcapped)"):"")
+		tmp.el[name+"SC"].setClasses({sc: true})
 	}
 	
 	// Miscellaneous

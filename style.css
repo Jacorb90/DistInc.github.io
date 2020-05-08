@@ -314,3 +314,9 @@ table { margin: auto; }
 	left:2px;
 	box-shadow: none;
 }
+
+.sc {
+	color: #8a8767;
+	font-weight: bold;
+	text-shadow:0px 1px 0px #a0a67c;
+}
