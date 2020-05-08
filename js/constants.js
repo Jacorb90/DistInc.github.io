@@ -236,6 +236,8 @@ const ACH_DATA = {
 		61: "Jimmy the Crow's Debut",
 		62: "Alive Plus",
 		63: "Time Doesn't Exist",
+		64: "Acceleration does nothing.",
+		65: "One Death",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -286,6 +288,8 @@ const ACH_DATA = {
 		61: "Unlock Pathogens.",
 		62: "Reach 1e+6 Life Essence.",
 		63: "Reach 1e28 Time Cubes.",
+		64: "Reach Rank 50.",
+		65: "Reach 5e+7 Cadavers.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -321,6 +325,7 @@ const ACH_DATA = {
 		
 		61: "Maximum Velocity is 60% higher.",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
+		65: "Cadaver gain is increased by 40%.",
 	},
 }
 
@@ -420,6 +425,9 @@ const PTH_UPGS = {
 	1: { start: new ExpantaNum(5), inc: new ExpantaNum(3.5), desc: "Time Reversal Upgrade 2 is boosted by your Pathogens." },
 	2: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Rocket gain is boosted by your Cadavers." },
 	3: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Time Cube gain is boosted by your Cadavers." },
+	4: { start: new ExpantaNum(800), inc: new ExpantaNum(4), desc: "Maximum Velocity is boosted by your Pathogens." },
+	5: { start: new ExpantaNum(300), inc: new ExpantaNum(10/3), desc: "Boost Pathogen gain." },
+	6: { start: new ExpantaNum(800), inc: new ExpantaNum(12), desc: "The transfer from Cadavers to Life Essence is more efficient." },
 }
 const PTH_AMT = Object.keys(PTH_UPGS).length
 

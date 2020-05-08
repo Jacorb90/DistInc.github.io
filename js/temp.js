@@ -108,6 +108,10 @@ function updateTemp() {
 	if (tmp.ucme8.gte(50)) tmp.ucme8 = tmp.ucme8.times(2).log10().times(25)
 	tmp.ucme10 = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(8)
 	if (tmp.ucme10.gte(40)) tmp.ucme10 = tmp.ucme10.times(2.5).log10().times(20)
+		
+	// Pathogen Upgrade Effects
+	
+	tmp.pth5 = (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens[5].eff : new ExpantaNum(1)
 	
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
@@ -147,6 +151,7 @@ function updateTemp() {
 	if (player.rank.gt(14)) tmp.maxVel = tmp.maxVel.times(tmp.r14)
 	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(tmp.r55)
 	if (player.tier.gt(9)) tmp.maxVel = tmp.maxVel.times(tmp.t9)
+	if (tmp.pathogens && player.pathogens.unl) tmp.maxVel = tmp.maxVel.times(tmp.pathogens[4].eff)
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1)
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
@@ -312,6 +317,7 @@ function updateTemp() {
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
+	if (tmp.ach[65].has) tmp.lm.collapse = tmp.lm.collapse.times(1.4)
 	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {
 		tmp.lm.collapse = tmp.lm.collapse.div(2)
 		tmp.clghm = true
@@ -349,6 +355,7 @@ function updateTemp() {
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
 	tmp.collapse.sacEff = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)
+	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff)
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)) return
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff))
@@ -368,6 +375,7 @@ function updateTemp() {
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
 	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart)
 	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.ach63)
+	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	for (let i=1;i<=PTH_AMT;i++) {
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
@@ -381,13 +389,19 @@ function updateTemp() {
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
 			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
 			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
+			else if (i==4) return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9))
+			else if (i==5) return ExpantaNum.pow(3, bought.sqrt())
+			else if (i==6) return ExpantaNum.pow(1.4, bought.sqrt())
 			else return undefined
 		}()
 		tmp.pathogens[i].disp = function() {
 			let eff = tmp.pathogens[i].eff
 			if (i==1) return "+"+showNum(eff.sub(1).times(100))+"%"
-			else if (i==2) return "x"+showNum(eff)
-			else if (i==3) return "x"+showNum(eff)
+			else if (i==2) return showNum(eff)+"x"
+			else if (i==3) return showNum(eff)+"x"
+			else if (i==4) return showNum(eff)+"x"
+			else if (i==5) return showNum(eff)+"x"
+			else if (i==6) return "+"+showNum(eff.sub(1).times(100))+"%"
 			else return "???"
 		}()
 	}
