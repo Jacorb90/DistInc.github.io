@@ -158,6 +158,7 @@ function updateAchievements() {
 	
 	if (player.pathogens.unl) tmp.ach[61].grant()
 	if (player.collapse.lifeEssence.gte(1e6)) tmp.ach[62].grant()
+	if (player.tr.cubes.gte(1e28)) tmp.ach[63].grant()
 }
 
 // Automation

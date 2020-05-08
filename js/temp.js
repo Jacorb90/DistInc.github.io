@@ -77,6 +77,10 @@ function updateTemp() {
 	tmp.t3 = ExpantaNum.pow(1.1, tier)
 	tmp.t7 = ExpantaNum.pow(1.1, player.rf)
 	tmp.t9 = player.automation.intelligence.plus(1).log10().plus(1).sqrt()
+	
+	// Achievement Effects 
+	
+	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025)):new ExpantaNum(1)
 
 	// Time Reversal Upgrade Effects
 	
@@ -303,6 +307,7 @@ function updateTemp() {
 	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(6)) tmp.lm.rockets = tmp.lm.rockets.times(10)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(8)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.ucme8)
+	if (tmp.pathogens && player.pathogens.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.pathogens[2].eff)
 	tmp.lm.collapse = new ExpantaNum(1)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
@@ -320,6 +325,7 @@ function updateTemp() {
 	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
+	if (tmp.pathogens && player.pathogens.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.pathogens[3].eff)
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
 	tmp.tr.esc = new ExpantaNum(1e20)
 	cubes = player.tr.cubes
@@ -361,6 +367,7 @@ function updateTemp() {
 	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1)
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
 	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart)
+	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.ach63)
 	for (let i=1;i<=PTH_AMT;i++) {
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
@@ -372,11 +379,16 @@ function updateTemp() {
 		tmp.pathogens[i].eff = function() {
 			let bought = player.pathogens.upgrades[i]
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
+			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
+			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
 			else return undefined
 		}()
 		tmp.pathogens[i].disp = function() {
 			let eff = tmp.pathogens[i].eff
 			if (i==1) return "+"+showNum(eff.sub(1).times(100))+"%"
+			else if (i==2) return "x"+showNum(eff)
+			else if (i==3) return "x"+showNum(eff)
+			else return "???"
 		}()
 	}
 	
@@ -509,7 +521,7 @@ function updateHTML() {
 	for (let i=1;i<=TR_UPG_AMT;i++) {
 		let upg = TR_UPGS[i]
 		let desc = upg.desc
-		if (!tmp.pathogens[1].eff.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.pathogens[1].eff)+")</span>"
+		if (!tmp.tr2e.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr2e)+")</span>"
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
@@ -545,4 +557,5 @@ function updateHTML() {
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
+	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x<br><br>"):"")
 }

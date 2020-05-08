@@ -51,7 +51,7 @@ const DEFAULT_START = {
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff"],
 }
 
 // Formatting Data
@@ -235,6 +235,7 @@ const ACH_DATA = {
 		
 		61: "Jimmy the Crow's Debut",
 		62: "Alive Plus",
+		63: "Time Doesn't Exist",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -283,7 +284,8 @@ const ACH_DATA = {
 		58: "Go at least 2.22e22uni.",
 		
 		61: "Unlock Pathogens.",
-		62: "Reach 1e+6 Life Essence",
+		62: "Reach 1e+6 Life Essence.",
+		63: "Reach 1e28 Time Cubes.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -318,6 +320,7 @@ const ACH_DATA = {
 		58: "The Rocket Fuel reset only resets Rockets to 50% of their current amount.",
 		
 		61: "Maximum Velocity is 60% higher.",
+		63: "Time Speed boosts Pathogen gain at a reduced rate.",
 	},
 }
 
@@ -415,6 +418,8 @@ const MODES = {
 const PATHOGENS_UNL = new ExpantaNum(2.5e5)
 const PTH_UPGS = {
 	1: { start: new ExpantaNum(5), inc: new ExpantaNum(3.5), desc: "Time Reversal Upgrade 2 is boosted by your Pathogens." },
+	2: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Rocket gain is boosted by your Cadavers." },
+	3: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Time Cube gain is boosted by your Cadavers." },
 }
 const PTH_AMT = Object.keys(PTH_UPGS).length
 
