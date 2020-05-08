@@ -51,7 +51,7 @@ const DEFAULT_START = {
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt"],
 }
 
 // Formatting Data
@@ -185,7 +185,7 @@ const TABBTN_SHOWN = {
 // Achievements
 
 const ACH_DATA = {
-	rows: 5,
+	rows: 6,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -232,6 +232,8 @@ const ACH_DATA = {
 		56: "Auto-Gas",
 		57: "No More Thinking",
 		58: "The Multiverse is Ever-Expanding",
+		
+		61: "Jimmy the Crow's Debut",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -278,6 +280,8 @@ const ACH_DATA = {
 		56: "Unlock Fuelbot.",
 		57: "Reach 9e15 Time Cubes.",
 		58: "Go at least 2.22e22uni.",
+		
+		61: "Unlock Pathogens.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -310,6 +314,8 @@ const ACH_DATA = {
 		55: "You gain 10% more Time Cubes.",
 		57: "Time goes by 10% faster.",
 		58: "The Rocket Fuel reset only resets Rockets to 50% of their current amount.",
+		
+		61: "Maximum Velocity is 60% higher.",
 	},
 }
 

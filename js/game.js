@@ -15,6 +15,7 @@ function gameLoop(diff) {
 	updateTemp()
 	updateHTML()
 	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
+	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	diff = diff.times(tmp.timeSpeed)
 	if (player.tr.active) {
 		player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))

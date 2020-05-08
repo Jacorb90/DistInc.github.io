@@ -155,6 +155,8 @@ function updateAchievements() {
 	if (Object.keys(player.automation.robots).includes("fuelbot")) tmp.ach[56].grant()
 	if (player.tr.cubes.gte(9e15)) tmp.ach[57].grant()
 	if (player.distance.gte(2.22e22*DISTANCES.uni)) tmp.ach[58].grant()
+	
+	if (player.pathogens.unl) tmp.ach[61].grant()
 }
 
 // Automation

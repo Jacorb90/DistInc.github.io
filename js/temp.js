@@ -352,6 +352,13 @@ function updateTemp() {
 		if (tmp.collapse.hasMilestone(7)) player.tr.upgrades = prev.tr.upgrades
 	}
 	
+	// Pathogens
+	
+	tmp.pathogens = {}
+	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1)
+	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
+	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart)
+	
 	// Softcaps
 	
 	tmp.sc = {}
@@ -496,6 +503,9 @@ function updateHTML() {
 		tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
 		tmp.el["lem"+i].setClasses({msCont: true, r: !tmp.collapse.hasMilestone(i)})
 	}
+	
+	// Pathogens
+	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	
 	// Softcaps
 	for (let i=0;i<Object.keys(tmp.sc).length;i++) {
