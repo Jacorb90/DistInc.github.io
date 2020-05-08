@@ -224,7 +224,7 @@ function ENString(obj) {
 
 function transformToEN(obj, sc) {
     let ret = deepCopy(obj)
-    for (const key in sc) if (ret[key]===undefined||key=="tab"||key=="optionsTab") ret[key] = sc[key]
+    for (const key in sc) if (ret[key]===undefined) ret[key] = sc[key]
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)

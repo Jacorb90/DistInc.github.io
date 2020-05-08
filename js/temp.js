@@ -303,6 +303,10 @@ function updateTemp() {
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
+	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {
+		tmp.lm.collapse = tmp.lm.collapse.div(2)
+		tmp.clghm = true
+	}
 	
 	// Time Reversal
 	
@@ -327,11 +331,15 @@ function updateTemp() {
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true)
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1)).pow(player.collapse.cadavers.plus(1).logBase(2)).plus(player.collapse.cadavers.sqrt())
-	if (tmp.collapse.eff.gte(1e12)) tmp.collapse.eff = tmp.collapse.eff.log10().times(1e12/12)
+	tmp.collapse.esc = new ExpantaNum(1e12)
+	if (tmp.modes.hard.active) tmp.collapse.esc = tmp.collapse.esc.div(100)
+	if (tmp.collapse.eff.gte(tmp.collapse.esc)) tmp.collapse.eff = tmp.collapse.eff.log10().times(tmp.collapse.esc.div(tmp.collapse.esc.log10()))
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
+	tmp.collapse.sacEff = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)) return
-		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers)
+		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff))
 		player.collapse.cadavers = new ExpantaNum(0)
 	}
 	tmp.collapse.hasMilestone = function(n) { return player.collapse.lifeEssence.gte(ESSENCE_MILESTONES[n].req) }
