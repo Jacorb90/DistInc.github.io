@@ -221,6 +221,8 @@ function ENString(obj) {
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes).toString()
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers).toString()
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence).toString()
+	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount).toString()
+	for (let i=1;i<=Object.keys(sc.pathogens.upgrades);i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]).toString()
 	return ret
 }
 
@@ -239,6 +241,8 @@ function transformToEN(obj, sc) {
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes)
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers)
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
+	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount)
+	for (let i=1;i<=Object.keys(sc.pathogens.upgrades);i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
     return ret
 }
 

@@ -30,6 +30,22 @@ const DEFAULT_START = {
 		cadavers: new ExpantaNum(0),
 		lifeEssence: new ExpantaNum(0),
 	},
+	pathogens: {
+		unl: false,
+		amount: new ExpantaNum(0),
+		upgrades: {
+			1: new ExpantaNum(0),
+			2: new ExpantaNum(0),
+			3: new ExpantaNum(0),
+			4: new ExpantaNum(0),
+			5: new ExpantaNum(0),
+			6: new ExpantaNum(0),
+			7: new ExpantaNum(0),
+			8: new ExpantaNum(0),
+			9: new ExpantaNum(0),
+			10: new ExpantaNum(0),
+		},
+	},
 }
 
 // Temp Data
@@ -163,6 +179,7 @@ const TABBTN_SHOWN = {
 	auto: function() { return player.automation.unl },
 	tr: function() { return player.tr.unl },
 	collapse: function() { return player.collapse.unl },
+	pathogens: function() { return player.pathogens.unl },
 }
 
 // Achievements
@@ -379,11 +396,15 @@ const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 const MODES = {
 	hard: {
 		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, & makes the transfer from Cadavers to Life Essence 40% less efficient, but to compensate, Universal Collapse is unlocked 50x sooner.",
-		balancing: "completely balanced",
-		balanceCheck: false,
+		balancing: "balanced up to unlocking Pathogens",
+		balanceCheck: true,
 		combos: {},
 	},
 }
+
+// Collapse
+
+const PATHOGENS_UNL = new ExpantaNum(2.5e5)
 
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
