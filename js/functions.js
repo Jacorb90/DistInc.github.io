@@ -90,6 +90,8 @@ function loadGame() {
 	if (!((ls||"x")=="x")) {
 		let data = JSON.parse(atob(ls))
 		player = transformToEN(data, DEFAULT_START)
+		player.tab = DEFAULT_START.tab
+		player.optionsTab = DEFAULT_START.optionsTab
 	}
 	setupHTML()
 	interval = setInterval(function() {
