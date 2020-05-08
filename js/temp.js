@@ -26,6 +26,37 @@ function updateTemp() {
 		let toExport = btoa(JSON.stringify(ENString(player)))
 		copyToClipboard(toExport)
 	}
+	tmp.options.startModes = function(modes) {
+		let s = transformToEN(DEFAULT_START)
+		s.modes = modes
+		tmp.options.save(s)
+		reload()
+	}
+	tmp.options.modes = {}
+	tmp.options.modes.select = function(name) {
+		if (modesSelected.includes(name)) modesSelected = modesSelected.filter(x => x!=name)
+		else modesSelected.push(name)
+	}
+	tmp.options.modes.confirm = function() {
+		if (modesSelected.length==0) tmp.options.startModes([])
+		if (modesSelected.length==1) {
+			let modeData = MODES[modesSelected[0]]
+			if (modeData.balanceCheck) if (!confirm("This mode is "+modeData.balancing+". Are you sure you want to enter this run?")) return
+			tmp.options.startModes(modesSelected)
+		} else {
+			let base = MODES[modesSelected[0]]
+			for (let i=1;i<modesSelected.length;i++) {
+				let mode = base.combos[modesSelected[i]]
+				if (mode.balanceCheck) if (!confirm("This mode combination is "+mode.balancing+". Are you sure you want to enter this mode combination?")) return
+				tmp.options.startModes(modesSelected)
+			}
+		}
+	}
+	
+	// Modes
+	
+	tmp.modes = {}
+	for (let i=0;i<Object.keys(MODES).length;i++) tmp.modes[Object.keys(MODES)[i]] = new Mode(Object.keys(MODES)[i])
 	
 	// Rank Effects
 	
@@ -56,8 +87,8 @@ function updateTemp() {
 	tmp.tr4 = ExpantaNum.pow(1.33, rockets.plus(1).log10())
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10())
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length)
-	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).cbrt().max(1)
-	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2).max(1)
+	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).pow(1/3*(tmp.modes.hard.active?0.5:1)).max(1)
+	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2*(tmp.modes.hard.active?0.5:1)).max(1)
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
@@ -74,6 +105,7 @@ function updateTemp() {
 	
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
+	if (tmp.modes.hard.active) tmp.acc = tmp.acc.div(3)
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(tmp.r2)
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2)
@@ -100,6 +132,7 @@ function updateTemp() {
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1)
+	if (tmp.modes.hard.active) tmp.maxVel = tmp.maxVel.div(2)
 	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(tmp.r2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5)
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(tmp.r4)
@@ -122,8 +155,10 @@ function updateTemp() {
 	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tmp.t3)
 	if (tmp.ach) if (tmp.ach[43].has) tmp.ranks.fp = tmp.ranks.fp.times(1.025)
 	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1)
-	tmp.ranks.req = new ExpantaNum(10).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
-	tmp.ranks.bulk = player.distance.div(10).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
+	tmp.ranks.bc = new ExpantaNum(10)
+	if (tmp.modes.hard.active && player.rank<3) tmp.ranks.bc = tmp.ranks.bc.times(2)
+	tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)?(RANK_DESCS[player.rank.toNumber()]?RANK_DESCS[player.rank.toNumber()]:DEFAULT_RANK_DESC):DEFAULT_RANK_DESC
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req)
@@ -139,8 +174,10 @@ function updateTemp() {
 	// Tiers
 	tmp.tiers = {}
 	tmp.tiers.fp = new ExpantaNum(1)
-	tmp.tiers.req = new ExpantaNum(3).plus(player.tier.times(tmp.tiers.fp).pow(2))
-	tmp.tiers.bulk = player.rank.sub(3).max(0).sqrt().div(tmp.tiers.fp).add(1)
+	tmp.tiers.bc = new ExpantaNum(3)
+	if (tmp.modes.hard.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.plus(1)
+	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.times(tmp.tiers.fp).pow(2))
+	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().div(tmp.tiers.fp).add(1)
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req)
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced")
@@ -152,22 +189,28 @@ function updateTemp() {
 	// Rockets
 	
 	tmp.rockets = {}
-	tmp.rockets.canRocket = player.distance.gte(LAYER_REQS["rockets"][1])
+	tmp.rockets.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.rockets.lrm = tmp.rockets.lrm.times(2)
+	tmp.rockets.sc = LAYER_SC["rockets"]
+	if (tmp.modes.hard.active) tmp.rockets.sc = new ExpantaNum(1)
+	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
+	tmp.rockets.esc = new ExpantaNum(5)
+	if (tmp.modes.hard.active) tmp.rockets.esc = tmp.rockets.esc.sub(0.5)
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
-	if (tmp.rockets.eff.gte(5)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(5))
+	if (tmp.rockets.eff.gte(tmp.rockets.esc)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(tmp.rockets.esc))
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
 	// Features
 	
 	tmp.features = {
-		rockets: new Feature({name: "rockets", req: LAYER_REQS["rockets"][1], res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
-		automation: new Feature({name: "automation", req: AUTO_UNL, res: "distance", display: formatDistance, reached: player.automation.unl}),
+		rockets: new Feature({name: "rockets", req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm), res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
+		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl}),
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
-		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL), res: "distance", display: formatDistance, reached: player.collapse.unl}),
+		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {
@@ -201,6 +244,7 @@ function updateTemp() {
 	tmp.rf.pow = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1)
 	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
+	if (tmp.modes.hard.active) tmp.rf.eff = tmp.rf.eff.sub(0.02)
 	tmp.rf.onReset = function(prev) {
 		if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10)
 		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)
@@ -209,11 +253,15 @@ function updateTemp() {
 	// Automation
 	
 	tmp.auto = {}
+	tmp.auto.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.auto.lrm = tmp.auto.lrm.times(10)
 	tmp.auto.scrapGain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100)
+	if (tmp.modes.hard.active) tmp.auto.scrapGain = tmp.auto.scrapGain.div(2)
 	if (player.rank.gt(60)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(2)
 	if (tmp.ach[36].has) tmp.auto.scrapGain = tmp.auto.scrapGain.times(1.5)
 	if (player.tr.upgrades.includes(6)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(tmp.tr6)
 	tmp.auto.intGain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000)
+	if (tmp.modes.hard.active) tmp.auto.intGain = tmp.auto.intGain.div(2)
 	if (player.rank.gt(20)) tmp.auto.intGain = tmp.auto.intGain.times(2)
 	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3)
 	if (player.tier.gt(4)) tmp.auto.intGain = tmp.auto.intGain.times(2)
@@ -225,6 +273,12 @@ function updateTemp() {
 	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.r40)
 	if (player.tr.upgrades.includes(6)) tmp.auto.intGain = tmp.auto.intGain.times(tmp.tr6)
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) tmp.auto[Object.keys(ROBOT_REQS)[i]] = new Robot(Object.keys(ROBOT_REQS)[i], ROBOT_FL[Object.keys(ROBOT_REQS)[i]])
+	tmp.auto.intMod = new ExpantaNum(1)
+	tmp.auto.magMod = new ExpantaNum(1)
+	if (tmp.modes.hard.active) {
+		tmp.auto.intMod = tmp.auto.intMod.times(2/3)
+		tmp.auto.magMod = tmp.auto.magMod.times(2/3)
+	}
 		
 	// Robots
 	
@@ -249,17 +303,23 @@ function updateTemp() {
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
+	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {
+		tmp.lm.collapse = tmp.lm.collapse.div(2)
+		tmp.clghm = true
+	}
 	
 	// Time Reversal
 	
 	tmp.tr = {}
 	tmp.tr.cg = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.tr.cg = tmp.tr.cg.div(3)
 	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
+	tmp.tr.esc = new ExpantaNum(1e20)
 	cubes = player.tr.cubes
-	if (cubes.gte(1e20)) cubes = cubes.cbrt().times(Math.pow(1e20, 2/3))
+	if (cubes.gte(tmp.tr.esc)) cubes = cubes.cbrt().times(Math.pow(tmp.tr.esc, 2/3))
 	tmp.tr.eff = cubes.plus(1).log10().plus(1).logBase(2)
 	tmp.tr.upg = {}
 	for (let i=1;i<=TR_UPG_AMT;i++) tmp.tr.upg[i] = function() { buyTRUpg(i) }
@@ -267,14 +327,21 @@ function updateTemp() {
 	// Universal Collapse
 	
 	tmp.collapse = {}
-	tmp.collapse.can = player.distance.gte(LAYER_REQS["collapse"][1])
+	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"])
+	tmp.collapse.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.collapse.lrm = tmp.collapse.lrm.div(50)
+	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true)
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1)).pow(player.collapse.cadavers.plus(1).logBase(2)).plus(player.collapse.cadavers.sqrt())
-	if (tmp.collapse.eff.gte(1e12)) tmp.collapse.eff = tmp.collapse.eff.log10().times(1e12/12)
+	tmp.collapse.esc = new ExpantaNum(1e12)
+	if (tmp.modes.hard.active) tmp.collapse.esc = tmp.collapse.esc.div(100)
+	if (tmp.collapse.eff.gte(tmp.collapse.esc)) tmp.collapse.eff = tmp.collapse.eff.log10().times(tmp.collapse.esc.div(tmp.collapse.esc.log10()))
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
+	tmp.collapse.sacEff = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)) return
-		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers)
+		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff))
 		player.collapse.cadavers = new ExpantaNum(0)
 	}
 	tmp.collapse.hasMilestone = function(n) { return player.collapse.lifeEssence.gte(ESSENCE_MILESTONES[n].req) }
@@ -284,10 +351,20 @@ function updateTemp() {
 		if (tmp.collapse.hasMilestone(7)) player.tr.upgrades = prev.tr.upgrades
 	}
 	
+	// Softcaps
+	
+	tmp.sc = {}
+	tmp.sc.rocketGain = tmp.rockets.layer.gain.gte(tmp.rockets.sc)
+	tmp.sc.rocketEff = tmp.rockets.eff.gte(tmp.rockets.esc)
+	tmp.sc.timeCubeEff = player.tr.cubes.gte(tmp.tr.esc)
+	tmp.sc.cadaverGain = tmp.collapse.layer.gain.gte(tmp.collapse.sc)
+	tmp.sc.cadaverEff = tmp.collapse.eff.gte(tmp.collapse.esc)
+	
 	// Miscellaneous
 	
 	tmp.freeRF = tmp.tr.eff
 	tmp.timeSpeed = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.timeSpeed = tmp.timeSpeed.times(0.75)
 	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2)
 	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7)
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01)
@@ -330,6 +407,10 @@ function setupHTML() {
 }
 
 function updateHTML() {
+	// Options
+	
+	for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
+	
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))
 	tmp.el.velocity.setTxt(formatDistance(player.velocity))
@@ -413,6 +494,14 @@ function updateHTML() {
 		let ms = ESSENCE_MILESTONES[i]
 		tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
 		tmp.el["lem"+i].setClasses({msCont: true, r: !tmp.collapse.hasMilestone(i)})
+	}
+	
+	// Softcaps
+	for (let i=0;i<Object.keys(tmp.sc).length;i++) {
+		let name = Object.keys(tmp.sc)[i]
+		let reached = Object.values(tmp.sc)[i]
+		tmp.el[name+"SC"].setTxt(reached?("(softcapped)"):"")
+		tmp.el[name+"SC"].setClasses({sc: true})
 	}
 	
 	// Miscellaneous

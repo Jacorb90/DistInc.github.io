@@ -4,6 +4,7 @@
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
 	<script type="text/javascript" src="js/constants.js"></script>
 	<script type="text/javascript" src="js/classes/Element.js"></script>
+	<script type="text/javascript" src="js/classes/Mode.js"></script>
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
@@ -41,20 +42,37 @@
 	<div id="options" class="tab" style="display: none;">
 		<table>
 			<tr>
-				<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
-				<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
-				<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
-				<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
+				<td><button class="btn tb rckt" onclick="showOptionsTab('saving')">Saving</button></td>
+				<td><button class="btn tb rckt" onclick="showOptionsTab('modes')">Modes</button></td>
 			</tr>
-		</table>
+		</table><br><br>
+		<div id="saving" class="optionstab">
+			<table>
+				<tr>
+					<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
+					<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
+					<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
+					<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
+				</tr>
+			</table>
+		</div>
+		<div id="modes" class="optionstab" style="display: none;">
+			<table>
+				<tr>
+					<td><button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">Hard</button></td>
+				</tr>
+			</table><br><br>
+			<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
+			<button class="btn tb opt" onclick="showModeDescs(modesSelected)">Show Description</button>
+		</div>
 	</div>
 	<div id="achievements" class="tab" style="display: none;">
 		<div id="achDesc" class="band gn"></div>
 		<table id="achTable"></table>
 	</div>
 	<div id="rockets" class="tab" style="display: none;">
-		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets.</button><br><br>
-		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>).<br><br>
+		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
+		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
 		<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
 		You have <span id="rf"></span> rocket fuel, which boosts the effect of rockets by <span id="rfEff"></span>%.
 	</div>
@@ -90,7 +108,7 @@
 	</div>
 	<div id="tr" class="tab" style="display: none;">
 		<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
-		You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel.<br><br>
+		You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
 		<table>
 			<tr>
 				<td><button id="tr1" class="btn locked" onclick="tmp.tr.upg[1]()"></button></td>
@@ -109,8 +127,8 @@
 		</table>
 	</div>
 	<div id="collapse" class="tab" style="display: none;">
-		<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers.</button><br><br>
-		You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster.<br><br>
+		<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers <span id="cadaverGainSC"></span></button><br><br>
+		You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
 		<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
 		You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
 		<table>

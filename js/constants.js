@@ -2,7 +2,9 @@
 
 const DEFAULT_START = {
 	tab: "main",
+	optionsTab: "saving",
 	achievements: [],
+	modes: [],
 	time: new Date().getTime(),
 	distance: new ExpantaNum(0),
 	velocity: new ExpantaNum(0),
@@ -33,7 +35,7 @@ const DEFAULT_START = {
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC"],
 }
 
 // Formatting Data
@@ -372,6 +374,17 @@ const ESSENCE_MILESTONES = {
 }
 const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
+// Modes
+
+const MODES = {
+	hard: {
+		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, & makes the transfer from Cadavers to Life Essence 40% less efficient, but to compensate, Universal Collapse is unlocked 50x sooner.",
+		balancing: "completely balanced",
+		balanceCheck: false,
+		combos: {},
+	},
+}
+
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
 	for (let c=1;c<=ACH_DATA.cols;c++) {
@@ -381,3 +394,4 @@ for (let r=1;r<=ACH_DATA.rows;r++) {
 }
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
 for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)
+for (let i=0;i<Object.keys(MODES).length;i++) TMP_DATA.ELS.push(Object.keys(MODES)[i]+"Mode")
