@@ -157,6 +157,7 @@ function updateAchievements() {
 	if (player.distance.gte(2.22e22*DISTANCES.uni)) tmp.ach[58].grant()
 	
 	if (player.pathogens.unl) tmp.ach[61].grant()
+	if (player.collapse.lifeEssence.gte(1e6)) tmp.ach[62].grant()
 }
 
 // Automation
@@ -224,13 +225,13 @@ function ENString(obj) {
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers).toString()
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence).toString()
 	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount).toString()
-	for (let i=1;i<=Object.keys(sc.pathogens.upgrades);i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]).toString()
+	for (let i=1;i<=Object.keys(ret.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]).toString()
 	return ret
 }
 
-function transformToEN(obj, sc) {
+function transformToEN(obj, sc=DEFAULT_START) {
     let ret = deepCopy(obj)
-    for (const key in sc) if (ret[key]===undefined) ret[key] = sc[key]
+    for (const key in sc) if (ret[key]===undefined) ret[key] = deepCopy(sc[key])
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -244,7 +245,7 @@ function transformToEN(obj, sc) {
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers)
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
 	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount)
-	for (let i=1;i<=Object.keys(sc.pathogens.upgrades);i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
+	for (let i=1;i<=Object.keys(sc.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
     return ret
 }
 

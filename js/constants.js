@@ -234,6 +234,7 @@ const ACH_DATA = {
 		58: "The Multiverse is Ever-Expanding",
 		
 		61: "Jimmy the Crow's Debut",
+		62: "Alive Plus",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -282,6 +283,7 @@ const ACH_DATA = {
 		58: "Go at least 2.22e22uni.",
 		
 		61: "Unlock Pathogens.",
+		62: "Reach 1e+6 Life Essence",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -408,9 +410,13 @@ const MODES = {
 	},
 }
 
-// Collapse
+// Pathogens
 
 const PATHOGENS_UNL = new ExpantaNum(2.5e5)
+const PTH_UPGS = {
+	1: { start: new ExpantaNum(5), inc: new ExpantaNum(3.5), desc: "Time Reversal Upgrade 2 is boosted by your Pathogens." },
+}
+const PTH_AMT = Object.keys(PTH_UPGS).length
 
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
@@ -422,3 +428,4 @@ for (let r=1;r<=ACH_DATA.rows;r++) {
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
 for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)
 for (let i=0;i<Object.keys(MODES).length;i++) TMP_DATA.ELS.push(Object.keys(MODES)[i]+"Mode")
+for (let i=1;i<=PTH_AMT;i++) TMP_DATA.ELS.push("pth"+i)

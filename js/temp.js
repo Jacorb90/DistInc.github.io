@@ -81,7 +81,9 @@ function updateTemp() {
 	// Time Reversal Upgrade Effects
 	
 	tmp.tr1 = ExpantaNum.pow(1.1, player.rank.plus(player.tier))
-	tmp.tr2 = ExpantaNum.log10(player.tr.cubes.plus(1)).plus(1)
+	tmp.tr2e = new ExpantaNum(1)
+	if (tmp.pathogens && player.pathogens.unl) tmp.tr2e = tmp.tr2e.times(tmp.pathogens[1].eff)
+	tmp.tr2 = ExpantaNum.log10(player.tr.cubes.plus(1)).plus(1).pow(tmp.tr2e)
 	let rockets = player.rockets
 	if (rockets.gte(1e10)) rockets = rockets.pow(0.1).times(1e9)
 	tmp.tr4 = ExpantaNum.pow(1.33, rockets.plus(1).log10())
@@ -146,6 +148,7 @@ function updateTemp() {
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25)
 	if (tmp.ach) if (tmp.ach[41].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[51].has) tmp.maxVel = tmp.maxVel.times(1.5)
+	if (tmp.ach) if (tmp.ach[61].has) tmp.maxVel = tmp.maxVel.times(1.6)
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow)
 	
 	// Ranks
@@ -358,6 +361,24 @@ function updateTemp() {
 	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1)
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
 	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart)
+	for (let i=1;i<=PTH_AMT;i++) {
+		let upg = PTH_UPGS[i]
+		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
+		tmp.pathogens[i].buy = function() {
+			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
+			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
+			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
+		}
+		tmp.pathogens[i].eff = function() {
+			let bought = player.pathogens.upgrades[i]
+			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
+			else return undefined
+		}()
+		tmp.pathogens[i].disp = function() {
+			let eff = tmp.pathogens[i].eff
+			if (i==1) return "+"+showNum(eff.sub(1).times(100))+"%"
+		}()
+	}
 	
 	// Softcaps
 	
@@ -487,7 +508,9 @@ function updateHTML() {
 	tmp.el.frf.setTxt(showNum(tmp.tr.eff))
 	for (let i=1;i<=TR_UPG_AMT;i++) {
 		let upg = TR_UPGS[i]
-		tmp.el["tr"+i].setHTML(upg.desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
+		let desc = upg.desc
+		if (!tmp.pathogens[1].eff.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.pathogens[1].eff)+")</span>"
+		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
 	
@@ -506,6 +529,10 @@ function updateHTML() {
 	
 	// Pathogens
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
+	for (let i=1;i<=PTH_AMT;i++) {
+		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
+		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
+	}
 	
 	// Softcaps
 	for (let i=0;i<Object.keys(tmp.sc).length;i++) {

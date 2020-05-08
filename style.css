@@ -358,6 +358,13 @@ table { margin: auto; }
 	animation: grosstxt 4s ease infinite;
 }
 
+.grossminitxt {
+	font-size: 10px;
+	font-weight: bold;
+	text-shadow:0px 1px 0px #8da642;
+	animation: grosstxt 4s ease infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
