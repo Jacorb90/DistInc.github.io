@@ -224,10 +224,12 @@ function updateTemp() {
 	if (tmp.modes.hard.active) tmp.rockets.lrm = tmp.rockets.lrm.times(2)
 	tmp.rockets.sc = LAYER_SC["rockets"]
 	if (tmp.modes.hard.active) tmp.rockets.sc = new ExpantaNum(1)
+	if (tmp.pathogens && player.pathogens.unl) tmp.rockets.sc = tmp.rockets.sc.times(tmp.pathogens[7].eff)
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
 	tmp.rockets.esc = new ExpantaNum(5)
 	if (tmp.modes.hard.active) tmp.rockets.esc = tmp.rockets.esc.sub(0.5)
+	if (tmp.pathogens && player.pathogens.unl) tmp.rockets.esc = tmp.rockets.esc.plus(tmp.pathogens[8].eff)
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
@@ -424,6 +426,8 @@ function updateTemp() {
 			4: new ExpantaNum(16),
 			5: new ExpantaNum(6),
 			6: new ExpantaNum(6),
+			7: new ExpantaNum(4),
+			8: new ExpantaNum(4),
 		}
 		tmp.pathogens[i].eff = function() {
 			let bought = player.pathogens.upgrades[i]
@@ -434,6 +438,8 @@ function updateTemp() {
 			else if (i==4) return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9))
 			else if (i==5) return ExpantaNum.pow(3, bought.sqrt())
 			else if (i==6) return ExpantaNum.pow(1.4, bought.sqrt())
+			else if (i==7) return bought.plus(1).logBase(2).plus(1).pow(5)
+			else if (i==8) return bought.plus(1).logBase(2).plus(1).log10()
 			else return undefined
 		}()
 		tmp.pathogens[i].disp = function() {
@@ -444,6 +450,8 @@ function updateTemp() {
 			else if (i==4) return showNum(eff)+"x"
 			else if (i==5) return showNum(eff)+"x"
 			else if (i==6) return "+"+showNum(eff.sub(1).times(100))+"%"
+			else if (i==7) return showNum(eff)+"x later"
+			else if (i==8) return showNum(eff)+" later"
 			else return "???"
 		}()
 	}

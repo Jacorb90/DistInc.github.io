@@ -238,6 +238,7 @@ const ACH_DATA = {
 		63: "Time Doesn't Exist",
 		64: "Acceleration does nothing.",
 		65: "One Death",
+		66: "I thought that was a lot?",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -290,6 +291,7 @@ const ACH_DATA = {
 		63: "Reach 1e28 Time Cubes.",
 		64: "Reach Rank 50.",
 		65: "Reach 5e+7 Cadavers.",
+		66: "Get Fuelbot's interval less than or equal to 2 minutes.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -428,6 +430,8 @@ const PTH_UPGS = {
 	4: { start: new ExpantaNum(800), inc: new ExpantaNum(4), desc: "Maximum Velocity is boosted by your Pathogens." },
 	5: { start: new ExpantaNum(300), inc: new ExpantaNum(10/3), desc: "Boost Pathogen gain." },
 	6: { start: new ExpantaNum(800), inc: new ExpantaNum(12), desc: "The transfer from Cadavers to Life Essence is more efficient." },
+	7: { start: new ExpantaNum(3000), inc: new ExpantaNum(30), desc: "The rocket gain softcap starts later." },
+	8: { start: new ExpantaNum(4000), inc: new ExpantaNum(40), desc: "The rocket effect softcap starts later." },
 }
 const PTH_AMT = Object.keys(PTH_UPGS).length
 
