@@ -239,6 +239,8 @@ const ACH_DATA = {
 		64: "Acceleration does nothing.",
 		65: "One Death",
 		66: "I thought that was a lot?",
+		67: "Atoms in the universe, of universes.",
+		68: "Corvid Twenty",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -292,6 +294,8 @@ const ACH_DATA = {
 		64: "Reach Rank 50.",
 		65: "Reach 5e+7 Cadavers.",
 		66: "Get Fuelbot's interval less than or equal to 2 minutes.",
+		67: "Reach 1e80uni.",
+		68: "Get 1 of each of the 10 Pathogen upgrades.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -328,6 +332,8 @@ const ACH_DATA = {
 		61: "Maximum Velocity is 60% higher.",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
 		65: "Cadaver gain is increased by 40%.",
+		67: "Time goes by 11.11% faster.",
+		68: "Pathogen gain is 1% faster.",
 	},
 }
 
@@ -432,6 +438,8 @@ const PTH_UPGS = {
 	6: { start: new ExpantaNum(800), inc: new ExpantaNum(12), desc: "The transfer from Cadavers to Life Essence is more efficient." },
 	7: { start: new ExpantaNum(3000), inc: new ExpantaNum(30), desc: "The rocket gain softcap starts later." },
 	8: { start: new ExpantaNum(4000), inc: new ExpantaNum(40), desc: "The rocket effect softcap starts later." },
+	9: { start: new ExpantaNum(6000), inc: new ExpantaNum(60), desc: "The cadaver gain softcap starts later." },
+	10: { start: new ExpantaNum(8000), inc: new ExpantaNum(80), desc: "The cadaver effect softcap starts later." },
 }
 const PTH_AMT = Object.keys(PTH_UPGS).length
 

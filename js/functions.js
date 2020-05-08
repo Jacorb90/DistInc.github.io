@@ -162,6 +162,10 @@ function updateAchievements() {
 	if (player.rank.gte(50)) tmp.ach[64].grant()
 	if (player.collapse.cadavers.gte(5e7)) tmp.ach[65].grant()
 	if (tmp.auto.fuelbot.interval.lte(120)) tmp.ach[66].grant()
+	if (player.distance.gte(1e80*DISTANCES.uni)) tmp.ach[67].grant()
+	let bool = true
+	for (let i=1;i<=10;i++) if (player.pathogens.upgrades[i].eq(0)) bool = false
+	if (bool) tmp.ach[68].grant()
 }
 
 // Automation
