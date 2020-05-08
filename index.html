@@ -37,8 +37,8 @@
 		You have gone a total of <span id="distance"></span>.<br>
 		Your current velocity is <span id="velocity"></span>/s (maximum <span id="maxVel"></span>/s).<br>
 		Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup>.<br><br>
-		Rank <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
-		Tier <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+		<span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
+		<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
 	</div>
 	<div id="options" class="tab" style="display: none;">
 		<table>
@@ -75,7 +75,7 @@
 		<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
 		You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
 		<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
-		You have <span id="rf"></span> rocket fuel, which boosts the effect of rockets by <span id="rfEff"></span>%.
+		You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
 	</div>
 	<div id="auto" class="tab" style="display: none;">
 		<table>
@@ -156,6 +156,7 @@
 	<div id="pathogens" class="tab" style="display: none;">
 		<span id="tdeEff"></span>
 		You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens.<br><br>
+		<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
 		<table>
 			<tr>
 				<td><button id="pth1" class="btn locked" onclick="tmp.pathogens[1].buy()"></button></td>

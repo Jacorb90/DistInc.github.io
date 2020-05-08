@@ -58,6 +58,15 @@ function updateTemp() {
 	tmp.modes = {}
 	for (let i=0;i<Object.keys(MODES).length;i++) tmp.modes[Object.keys(MODES)[i]] = new Mode(Object.keys(MODES)[i])
 	
+	// Scalings
+	
+	tmp.scaling = {}
+	tmp.scaling.active = function(type, v, scaling) {
+		v = new ExpantaNum(v)
+		let k = Object.keys(SCALING_STARTS)
+		return v.gte(SCALING_STARTS[scaling][type])
+	}
+
 	// Rank Effects
 	
 	tmp.r2 = ExpantaNum.pow(1.1, player.rank)
@@ -80,7 +89,9 @@ function updateTemp() {
 	
 	// Achievement Effects 
 	
+	tmp.ach63sc = new ExpantaNum(1e25)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025)):new ExpantaNum(1)
+	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
 
 	// Time Reversal Upgrade Effects
 	
@@ -171,6 +182,10 @@ function updateTemp() {
 	if (tmp.modes.hard.active && player.rank<3) tmp.ranks.bc = tmp.ranks.bc.times(2)
 	tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
+	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, (player.rank.pow(2).div(SCALING_STARTS.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(SCALING_STARTS.scaled.rank).sqrt().plus(1)
+	}
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)?(RANK_DESCS[player.rank.toNumber()]?RANK_DESCS[player.rank.toNumber()]:DEFAULT_RANK_DESC):DEFAULT_RANK_DESC
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req)
@@ -182,14 +197,18 @@ function updateTemp() {
 			player.velocity = prev.velocity
 		}
 	}
-
+	
 	// Tiers
 	tmp.tiers = {}
 	tmp.tiers.fp = new ExpantaNum(1)
 	tmp.tiers.bc = new ExpantaNum(3)
 	if (tmp.modes.hard.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.plus(1)
-	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.times(tmp.tiers.fp).pow(2))
-	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().div(tmp.tiers.fp).add(1)
+	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2))
+	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).add(1)
+	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "scaled")) {
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus((player.tier.pow(2).div(SCALING_STARTS.scaled.tier)).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(SCALING_STARTS.scaled.tier).sqrt().add(1)
+	}
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req)
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced")
@@ -252,6 +271,10 @@ function updateTemp() {
 	tmp.rf.fp = new ExpantaNum(1)
 	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.div(tmp.rf.fp).pow(1.1))).round()
 	tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).add(1).floor()
+	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, (player.rf.pow(2).div(SCALING_STARTS.scaled.rf)).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(SCALING_STARTS.scaled.rf).sqrt().plus(1).floor()
+	}
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
 	tmp.rf.pow = new ExpantaNum(1)
@@ -379,13 +402,32 @@ function updateTemp() {
 	for (let i=1;i<=PTH_AMT;i++) {
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
+		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1)
+		if (tmp.scaling.active("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "scaled")) {
+			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, (player.pathogens.upgrades[i].pow(3).div(SCALING_STARTS.scaled.pathogenUpg.pow(2)))))
+			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(SCALING_STARTS.scaled.pathogenUpg.pow(2)).cbrt().add(1)
+		}
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
 			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
 			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
+		tmp.pathogens[i].max = function() {
+			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
+			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
+			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk.floor())
+		}
+		tmp.pathogens.sc = {
+			1: new ExpantaNum(8),
+			2: new ExpantaNum(10),
+			3: new ExpantaNum(7),
+			4: new ExpantaNum(16),
+			5: new ExpantaNum(6),
+			6: new ExpantaNum(6),
+		}
 		tmp.pathogens[i].eff = function() {
 			let bought = player.pathogens.upgrades[i]
+			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
 			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
 			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
@@ -405,6 +447,9 @@ function updateTemp() {
 			else return "???"
 		}()
 	}
+	tmp.pathogens.maxAll = function() {
+		for (let i=1;i<=PTH_AMT;i++) tmp.pathogens[i].max()
+	}
 	
 	// Softcaps
 	
@@ -414,6 +459,8 @@ function updateTemp() {
 	tmp.sc.timeCubeEff = player.tr.cubes.gte(tmp.tr.esc)
 	tmp.sc.cadaverGain = tmp.collapse.layer.gain.gte(tmp.collapse.sc)
 	tmp.sc.cadaverEff = tmp.collapse.eff.gte(tmp.collapse.esc)
+	/* Pathogen Upgrades are not included here due to their amount */
+	/* The 'Time Doesnt Exist' reward softcap is not included here because of a display bug :) */
 	
 	// Miscellaneous
 	
@@ -477,12 +524,14 @@ function updateHTML() {
 	tmp.el.rankUp.setClasses({btn: true, locked: !tmp.ranks.canRankUp})
 	tmp.el.rankDesc.setTxt(tmp.ranks.desc)
 	tmp.el.rankReq.setTxt(formatDistance(tmp.ranks.req))
+	tmp.el.rankName.setTxt((tmp.scaling.active("rank", player.rank, "scaled")?"Scaled ":"")+"Rank")
 	
 	// Tiers
 	tmp.el.tier.setTxt(showNum(player.tier))
 	tmp.el.tierUp.setClasses({btn: true, locked: !tmp.tiers.canTierUp})
 	tmp.el.tierDesc.setTxt(tmp.tiers.desc)
 	tmp.el.tierReq.setTxt(showNum(tmp.tiers.req))
+	tmp.el.tierName.setTxt((tmp.scaling.active("tier", player.tier, "scaled")?"Scaled ":"")+"Tier")
 	
 	// Rockets
 	tmp.el.rocketReset.setClasses({btn: true, locked: !tmp.rockets.canRocket, rckt: tmp.rockets.canRocket})
@@ -507,6 +556,7 @@ function updateHTML() {
 	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can})
 	tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
 	tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
+	tmp.el.rfName.setTxt((tmp.scaling.active("rf", player.rf, "scaled")?"Scaled ":"")+" Rocket Fuel")
 	
 	// Automation
 	tmp.el.scraps.setTxt(showNum(player.automation.scraps))
@@ -557,7 +607,7 @@ function updateHTML() {
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	for (let i=1;i<=PTH_AMT;i++) {
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
-		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
+		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
 	
 	// Softcaps
@@ -571,5 +621,5 @@ function updateHTML() {
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
-	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x<br><br>"):"")
+	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
 }
