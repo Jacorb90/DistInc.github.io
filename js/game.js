@@ -27,7 +27,7 @@ function gameLoop(diff) {
 	if (player.automation.unl) autoTick(diff)
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
-	if (player.collapse.cadavers.gte(PATHOGENS_UNL)) player.pathogens.unl = true
+	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()

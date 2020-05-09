@@ -244,7 +244,7 @@ function updateTemp() {
 		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl}),
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
 		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
-		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl}),
+		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {
@@ -398,6 +398,8 @@ function updateTemp() {
 	// Pathogens
 	
 	tmp.pathogens = {}
+	tmp.pathogens.lrm = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5)
 	tmp.pathogens.st = new ExpantaNum(1.25)
 	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1)
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
@@ -406,8 +408,10 @@ function updateTemp() {
 	tmp.pathogens.baseGain = new ExpantaNum(tmp.pathogens.gain)
 	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.ach63)
 	if (tmp.ach[68].has) tmp.pathogens.gain = tmp.pathogens.gain.times(1.01)
+	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	tmp.pathogens.upgPow = new ExpantaNum(1)
+	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
 		2: new ExpantaNum(10),
@@ -421,6 +425,7 @@ function updateTemp() {
 		10: new ExpantaNum(3),
 	}
 	for (let i=1;i<=PTH_AMT;i++) {
+		if (tmp.modes.hard.active) tmp.pathogens.sc[i] = new ExpantaNum(1)
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1)
@@ -633,7 +638,7 @@ function updateHTML() {
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
 		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
-	tmp.el.pthUpgPow.setHTML((!tmp.pathogens.upgPow.eq(1))?("Upgrade Power: "+showNum(tmp.pathogens.upgPow)+"x<br>"):"")
+	tmp.el.pthUpgPow.setHTML((!tmp.pathogens.upgPow.eq(1))?("Upgrade Power: "+showNum(tmp.pathogens.upgPow.times(100))+"%<br>"):"")
 	
 	// Softcaps
 	for (let i=0;i<Object.keys(tmp.sc).length;i++) {

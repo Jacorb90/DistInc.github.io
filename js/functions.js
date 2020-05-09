@@ -12,6 +12,7 @@ function showNum(val, places=5, locs=2) {
 	val = new ExpantaNum(val)
 	
 	// Also taken from ExpantaNum.js (but altered slightly)
+	if (val.eq(0)) return "0"
 	if (val.sign==-1) return "-"+val.abs();
     if (isNaN(val.array[0][1])) return "NaN";
     if (!isFinite(val.array[0][1])) return "Infinity";
