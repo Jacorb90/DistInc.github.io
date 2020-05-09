@@ -398,12 +398,16 @@ function updateTemp() {
 	// Pathogens
 	
 	tmp.pathogens = {}
+	tmp.pathogens.st = new ExpantaNum(1.25)
 	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1)
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1)
 	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart)
+	if (tmp.pathogens.gain.gte(tmp.pathogens.st)) tmp.pathogens.gain = tmp.pathogens.gain.sqrt().times(tmp.pathogens.st.sqrt())
+	tmp.pathogens.baseGain = new ExpantaNum(tmp.pathogens.gain)
 	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.ach63)
 	if (tmp.ach[68].has) tmp.pathogens.gain = tmp.pathogens.gain.times(1.01)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
+	tmp.pathogens.upgPow = new ExpantaNum(1)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
 		2: new ExpantaNum(10),
@@ -437,6 +441,7 @@ function updateTemp() {
 		tmp.pathogens[i].eff = function() {
 			let bought = player.pathogens.upgrades[i]
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
+			bought = bought.times(tmp.pathogens.upgPow)
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
 			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
 			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
@@ -478,6 +483,7 @@ function updateTemp() {
 	tmp.sc.cadaverEff = tmp.collapse.eff.gte(tmp.collapse.esc)
 	/* Pathogen Upgrades are not included here due to their amount */
 	/* The 'Time Doesnt Exist' reward softcap is not included here because of a display bug :) */
+	tmp.sc.pthGain = tmp.pathogens.baseGain.gte(tmp.pathogens.st)
 	
 	// Miscellaneous
 	
@@ -627,6 +633,7 @@ function updateHTML() {
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
 		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
+	tmp.el.pthUpgPow.setHTML((!tmp.pathogens.upgPow.eq(1))?("Upgrade Power: "+showNum(tmp.pathogens.upgPow)+"x<br>"):"")
 	
 	// Softcaps
 	for (let i=0;i<Object.keys(tmp.sc).length;i++) {
