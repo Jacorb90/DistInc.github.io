@@ -1,23 +1,60 @@
 // Formatting
 
-function showNum(x) {
-	x = new ExpantaNum(x)
-	let digits = 5
-	var r=x.toPrecision(digits,true);
-	for (var i=0;i<r.length;i++){
-		if ("0123456789.".indexOf(r[i])!=-1){
-			for (var j=i+1;j<=r.length;j++){
-				if ("0123456789.".indexOf(r[j])==-1||j==r.length){
-					var s=r.substring(i,j);
-					var n=String(Number(s));
-					r=r.substring(0,i)+n+r.substring(j);
-					i=i+n.length;
-					break;
-				}
-			}
-		}
-	}
-	return r;
+function decimalPlaces(value, places) {
+	// Taken from ExpantaNum.js
+	var len=places+1;
+    var numDigits=Math.ceil(Math.log10(Math.abs(value)));
+    var rounded=Math.round(value*Math.pow(10,len-numDigits))*Math.pow(10,numDigits-len);
+    return parseFloat(rounded.toFixed(Math.min(Math.max(len-numDigits,0), 100)));
+}
+
+function showNum(val, places=5, locs=2) {
+	val = new ExpantaNum(val)
+	
+	// Also taken from ExpantaNum.js (but altered slightly)
+	if (val.eq(0)) return "0"
+	if (val.sign==-1) return "-"+val.abs();
+    if (isNaN(val.array[0][1])) return "NaN";
+    if (!isFinite(val.array[0][1])) return "Infinity";
+    var b=0;
+    var s="";
+    var m=Math.pow(10,places);
+    if (!val.layer) s+="";
+    else if (val.layer<3) s+="J".repeat(val.layer);
+    else s+="J^"+val.layer+" ";
+    if (val.array.length>=3||val.array.length==2&&val.array[1][0]>=2){
+	  let iter = 0
+      for (var i=val.array.length-1;!b&&i>=2;--i){
+        var e=val.array[i];
+        var w=e[0];
+        var x=e[1];
+        if (x>=m){
+          ++w;
+          b=x;
+          x=1;
+        }else if (val.array[i-1][0]==w-1&&val.array[i-1][1]>=m){
+          ++x;
+          b=val.array[i-1][1];
+        }
+        var q=w>=5?"{"+w+"}":"^".repeat(w);
+        if (x>1) s+="10"+q+"^"+x+" ";
+        else if (x==1) s+="10"+q;
+		iter++;
+		if (iter>=locs) break;
+      }
+    }
+    var k=val.operator(0);
+    var l=val.operator(1);
+    if (k>m){
+      k=Math.log10(k);
+      ++l;
+    }
+    if (b) s+=decimalPlaces(b,places);
+    else if (!l) s+=String(decimalPlaces(k,places));
+    else if (l<3) s+="e".repeat(l-1)+decimalPlaces(Math.pow(10,k-Math.floor(k)),places)+"e"+decimalPlaces(Math.floor(k),places);
+    else if (l<8) s+="e".repeat(l)+decimalPlaces(k,places);
+    else if (val.array.length<3+locs) s+="10^^"+decimalPlaces(l,places)+" "+decimalPlaces(k,places);
+    return s;
 }
 
 function formatDistance(x) {
@@ -155,6 +192,17 @@ function updateAchievements() {
 	if (Object.keys(player.automation.robots).includes("fuelbot")) tmp.ach[56].grant()
 	if (player.tr.cubes.gte(9e15)) tmp.ach[57].grant()
 	if (player.distance.gte(2.22e22*DISTANCES.uni)) tmp.ach[58].grant()
+	
+	if (player.pathogens.unl) tmp.ach[61].grant()
+	if (player.collapse.lifeEssence.gte(1e6)) tmp.ach[62].grant()
+	if (player.tr.cubes.gte(1e28)) tmp.ach[63].grant()
+	if (player.rank.gte(50)) tmp.ach[64].grant()
+	if (player.collapse.cadavers.gte(5e7)) tmp.ach[65].grant()
+	if (tmp.auto.fuelbot.interval.lte(120)) tmp.ach[66].grant()
+	if (player.distance.gte(1e80*DISTANCES.uni)) tmp.ach[67].grant()
+	let bool = true
+	for (let i=1;i<=10;i++) if (player.pathogens.upgrades[i].eq(0)) bool = false
+	if (bool) tmp.ach[68].grant()
 }
 
 // Automation
@@ -221,12 +269,14 @@ function ENString(obj) {
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes).toString()
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers).toString()
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence).toString()
+	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount).toString()
+	for (let i=1;i<=Object.keys(ret.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]).toString()
 	return ret
 }
 
-function transformToEN(obj, sc) {
+function transformToEN(obj, sc=DEFAULT_START) {
     let ret = deepCopy(obj)
-    for (const key in sc) if (ret[key]===undefined) ret[key] = sc[key]
+    for (const key in sc) if (ret[key]===undefined) ret[key] = deepCopy(sc[key])
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -239,6 +289,8 @@ function transformToEN(obj, sc) {
 	ret.tr.cubes = new ExpantaNum(ret.tr.cubes)
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers)
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
+	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount)
+	for (let i=1;i<=Object.keys(sc.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
     return ret
 }
 

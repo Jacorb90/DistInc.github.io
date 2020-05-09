@@ -30,12 +30,28 @@ const DEFAULT_START = {
 		cadavers: new ExpantaNum(0),
 		lifeEssence: new ExpantaNum(0),
 	},
+	pathogens: {
+		unl: false,
+		amount: new ExpantaNum(0),
+		upgrades: {
+			1: new ExpantaNum(0),
+			2: new ExpantaNum(0),
+			3: new ExpantaNum(0),
+			4: new ExpantaNum(0),
+			5: new ExpantaNum(0),
+			6: new ExpantaNum(0),
+			7: new ExpantaNum(0),
+			8: new ExpantaNum(0),
+			9: new ExpantaNum(0),
+			10: new ExpantaNum(0),
+		},
+	},
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC"],
 }
 
 // Formatting Data
@@ -163,12 +179,13 @@ const TABBTN_SHOWN = {
 	auto: function() { return player.automation.unl },
 	tr: function() { return player.tr.unl },
 	collapse: function() { return player.collapse.unl },
+	pathogens: function() { return player.pathogens.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
-	rows: 5,
+	rows: 6,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -215,6 +232,15 @@ const ACH_DATA = {
 		56: "Auto-Gas",
 		57: "No More Thinking",
 		58: "The Multiverse is Ever-Expanding",
+		
+		61: "Jimmy the Crow's Debut",
+		62: "Alive Plus",
+		63: "Time Doesn't Exist",
+		64: "Acceleration does nothing.",
+		65: "One Death",
+		66: "I thought that was a lot?",
+		67: "Atoms in the universe, of universes.",
+		68: "Corvid Twenty",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -261,6 +287,15 @@ const ACH_DATA = {
 		56: "Unlock Fuelbot.",
 		57: "Reach 9e15 Time Cubes.",
 		58: "Go at least 2.22e22uni.",
+		
+		61: "Unlock Pathogens.",
+		62: "Reach 1e+6 Life Essence.",
+		63: "Reach 1e28 Time Cubes.",
+		64: "Reach Rank 50.",
+		65: "Reach 5e+7 Cadavers.",
+		66: "Get Fuelbot's interval less than or equal to 2 minutes.",
+		67: "Reach 1e80uni.",
+		68: "Get 1 of each of the 10 Pathogen upgrades.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -293,6 +328,12 @@ const ACH_DATA = {
 		55: "You gain 10% more Time Cubes.",
 		57: "Time goes by 10% faster.",
 		58: "The Rocket Fuel reset only resets Rockets to 50% of their current amount.",
+		
+		61: "Maximum Velocity is 60% higher.",
+		63: "Time Speed boosts Pathogen gain at a reduced rate.",
+		65: "Cadaver gain is increased by 40%.",
+		67: "Time goes by 11.11% faster.",
+		68: "Pathogen gain is 1% faster.",
 	},
 }
 
@@ -378,11 +419,35 @@ const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
 const MODES = {
 	hard: {
-		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, & makes the transfer from Cadavers to Life Essence 40% less efficient, but to compensate, Universal Collapse is unlocked 50x sooner.",
+		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, makes the transfer from Cadavers to Life Essence 40% less efficient, thirds Pathogen gain, makes Pathogen upgrades slightly weaker, & makes Pathogen upgrade effects softcap instantly, but to compensate, Universal Collapse is unlocked 50x sooner and Pathogens are unlocked 5x sooner.",
 		balancing: "completely balanced",
 		balanceCheck: false,
 		combos: {},
 	},
+}
+
+// Pathogens
+
+const PATHOGENS_UNL = new ExpantaNum(2.5e5)
+const PTH_UPGS = {
+	1: { start: new ExpantaNum(5), inc: new ExpantaNum(3.5), desc: "Time Reversal Upgrade 2 is boosted by your Pathogens." },
+	2: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Rocket gain is boosted by your Cadavers." },
+	3: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Time Cube gain is boosted by your Cadavers." },
+	4: { start: new ExpantaNum(800), inc: new ExpantaNum(4), desc: "Maximum Velocity is boosted by your Pathogens." },
+	5: { start: new ExpantaNum(300), inc: new ExpantaNum(10/3), desc: "Boost Pathogen gain." },
+	6: { start: new ExpantaNum(800), inc: new ExpantaNum(12), desc: "The transfer from Cadavers to Life Essence is more efficient." },
+	7: { start: new ExpantaNum(3000), inc: new ExpantaNum(30), desc: "The rocket gain softcap starts later." },
+	8: { start: new ExpantaNum(4000), inc: new ExpantaNum(40), desc: "The rocket effect softcap starts later." },
+	9: { start: new ExpantaNum(6000), inc: new ExpantaNum(60), desc: "The cadaver gain softcap starts later." },
+	10: { start: new ExpantaNum(8000), inc: new ExpantaNum(80), desc: "The cadaver effect softcap starts later." },
+}
+const PTH_AMT = Object.keys(PTH_UPGS).length
+
+// Scaling
+
+const SCALINGS = ["scaled"]
+const SCALING_STARTS = {
+	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(40) },
 }
 
 // Re-Update Temp Data
@@ -395,3 +460,4 @@ for (let r=1;r<=ACH_DATA.rows;r++) {
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
 for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)
 for (let i=0;i<Object.keys(MODES).length;i++) TMP_DATA.ELS.push(Object.keys(MODES)[i]+"Mode")
+for (let i=1;i<=PTH_AMT;i++) TMP_DATA.ELS.push("pth"+i)
