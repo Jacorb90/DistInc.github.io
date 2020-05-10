@@ -110,6 +110,15 @@ const RANK_DESCS = {
 	90: "time goes by 75% faster.",
 	100: "double rocket gain.",
 	111: "double intelligence gain for each rank up.",
+	125: "time goes by 50% faster.",
+	150: "time goes by 55% faster.",
+	175: "time goes by 60% faster.",
+	200: "time goes by 70% faster.",
+	250: "time goes by 80% faster.",
+	300: "time goes by 90% faster.",
+	500: "time goes by 95% faster.",
+	1000: "time goes by 98% faster.",
+	10000: "time goes by 100% faster.",
 }
 
 const DEFAULT_RANK_DESC = "rank up."
@@ -131,6 +140,9 @@ const TIER_DESCS = {
 	12: "triple intelligence gain.",
 	13: "quadruple intelligence gain.",
 	15: "multiply your acceleration by 25.",
+	16: "time goes by 60% faster.",
+	18: "time goes by 80% faster.",
+	20: "time goes by 100% faster.",
 }
 
 const DEFAULT_TIER_DESC = "tier up."
@@ -447,7 +459,8 @@ const PTH_AMT = Object.keys(PTH_UPGS).length
 
 const SCALINGS = ["scaled"]
 const SCALING_STARTS = {
-	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(40) },
+	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10) },
+	superscaled: { rank: new ExpantaNum(100), tier: new ExpantaNum(15), rf: new ExpantaNum(100), pathogenUpg: new ExpantaNum(40) },
 }
 
 // Re-Update Temp Data

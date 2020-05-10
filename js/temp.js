@@ -66,6 +66,19 @@ function updateTemp() {
 		let k = Object.keys(SCALING_STARTS)
 		return v.gte(SCALING_STARTS[scaling][type])
 	}
+	tmp.scaling.getName = function(name, x=0) {
+		let mx = Object.keys(SCALING_STARTS).length
+		let current = ""
+		let amt = new ExpantaNum(0)
+		if (name=="rank"||name=="tier"||name=="rf") amt = player[name]
+		else if (name=="pathogenUpg") amt = player.pathogens.upgrades[x]
+		else return ""
+		for (let n=mx-1;n>=0;n--) {
+			let scaling = SCALING_STARTS[Object.keys(SCALING_STARTS)[n]]
+			if (tmp.scaling.active(name, amt, Object.keys(SCALING_STARTS)[n])) return capitalFirst(Object.keys(SCALING_STARTS)[n])+" "
+		}
+		return current
+	}
 
 	// Rank Effects
 	
@@ -186,6 +199,11 @@ function updateTemp() {
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, (player.rank.pow(2).div(SCALING_STARTS.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(SCALING_STARTS.scaled.rank).sqrt().plus(1)
 	}
+	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "superscaled")) {
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((player.rank.pow(3).div(SCALING_STARTS.superscaled.rank.pow(2))).pow(2).div(SCALING_STARTS.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(SCALING_STARTS.scaled.rank).sqrt().times(SCALING_STARTS.superscaled.rank.pow(2)).cbrt().add(1)
+	}
+	
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)?(RANK_DESCS[player.rank.toNumber()]?RANK_DESCS[player.rank.toNumber()]:DEFAULT_RANK_DESC):DEFAULT_RANK_DESC
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req)
@@ -209,6 +227,11 @@ function updateTemp() {
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus((player.tier.pow(2).div(SCALING_STARTS.scaled.tier)).div(tmp.tiers.fp).pow(2))
 		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(SCALING_STARTS.scaled.tier).sqrt().add(1)
 	}
+	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "superscaled")) {
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((player.tier.pow(3).div(SCALING_STARTS.superscaled.tier.pow(2))).pow(2).div(SCALING_STARTS.scaled.tier)).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(SCALING_STARTS.scaled.tier).sqrt().times(SCALING_STARTS.superscaled.tier.pow(2)).cbrt().add(1)
+	}
+	
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req)
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced")
@@ -233,7 +256,7 @@ function updateTemp() {
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
-	if (tmp.rockets.eff.gte(tmp.rockets.esc)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(Math.sqrt(tmp.rockets.esc))
+	if (tmp.rockets.eff.gte(tmp.rockets.esc)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(ExpantaNum.sqrt(tmp.rockets.esc))
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	
@@ -276,6 +299,10 @@ function updateTemp() {
 	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
 		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, (player.rf.pow(2).div(SCALING_STARTS.scaled.rf)).div(tmp.rf.fp).pow(1.1))).round()
 		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(SCALING_STARTS.scaled.rf).sqrt().plus(1).floor()
+	}
+	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "superscaled")) {
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((player.rf.pow(3).div(SCALING_STARTS.superscaled.rf.pow(2))).pow(2).div(SCALING_STARTS.scaled.rf)).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(SCALING_STARTS.scaled.rf).sqrt().times(SCALING_STARTS.superscaled.rf.pow(2)).cbrt().plus(1).floor()
 	}
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
@@ -433,6 +460,10 @@ function updateTemp() {
 			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, (player.pathogens.upgrades[i].pow(3).div(SCALING_STARTS.scaled.pathogenUpg.pow(2)))))
 			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(SCALING_STARTS.scaled.pathogenUpg.pow(2)).cbrt().add(1)
 		}
+		if (tmp.scaling.active("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "superscaled")) {
+			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(5).div(SCALING_STARTS.superscaled.pathogenUpg.pow(4))).pow(3).div(SCALING_STARTS.scaled.pathogenUpg.pow(2)))))
+			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(SCALING_STARTS.scaled.pathogenUpg.pow(2)).cbrt().times(SCALING_STARTS.superscaled.pathogenUpg.pow(4)).pow(0.2).add(1)
+		}
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
 			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
@@ -509,8 +540,20 @@ function updateTemp() {
 	if (player.rank.gt(70)) tmp.timeSpeed = tmp.timeSpeed.times(1.4)
 	if (player.rank.gt(80)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
 	if (player.rank.gt(90)) tmp.timeSpeed = tmp.timeSpeed.times(1.75)
+	if (player.rank.gt(125)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
+	if (player.rank.gt(150)) tmp.timeSpeed = tmp.timeSpeed.times(1.55)
+	if (player.rank.gt(175)) tmp.timeSpeed = tmp.timeSpeed.times(1.6)
+	if (player.rank.gt(200)) tmp.timeSpeed = tmp.timeSpeed.times(1.7)
+	if (player.rank.gt(250)) tmp.timeSpeed = tmp.timeSpeed.times(1.8)
+	if (player.rank.gt(300)) tmp.timeSpeed = tmp.timeSpeed.times(1.9)
+	if (player.rank.gt(500)) tmp.timeSpeed = tmp.timeSpeed.times(1.95)
+	if (player.rank.gt(1000)) tmp.timeSpeed = tmp.timeSpeed.times(1.98)
+	if (player.rank.gt(10000)) tmp.timeSpeed = tmp.timeSpeed.times(2)
 	if (player.tier.gt(6)) tmp.timeSpeed = tmp.timeSpeed.times(1.5)
 	if (player.tier.gt(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.t7)
+	if (player.tier.gt(16)) tmp.timeSpeed = tmp.timeSpeed.times(1.6)
+	if (player.tier.gt(18)) tmp.timeSpeed = tmp.timeSpeed.times(1.8)
+	if (player.tier.gt(20)) tmp.timeSpeed = tmp.timeSpeed.times(2)
 	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff)
 	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1)
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5)
@@ -553,14 +596,14 @@ function updateHTML() {
 	tmp.el.rankUp.setClasses({btn: true, locked: !tmp.ranks.canRankUp})
 	tmp.el.rankDesc.setTxt(tmp.ranks.desc)
 	tmp.el.rankReq.setTxt(formatDistance(tmp.ranks.req))
-	tmp.el.rankName.setTxt((tmp.scaling.active("rank", player.rank, "scaled")?"Scaled ":"")+"Rank")
+	tmp.el.rankName.setTxt((tmp.scaling.getName("rank"))+"Rank")
 	
 	// Tiers
 	tmp.el.tier.setTxt(showNum(player.tier))
 	tmp.el.tierUp.setClasses({btn: true, locked: !tmp.tiers.canTierUp})
 	tmp.el.tierDesc.setTxt(tmp.tiers.desc)
 	tmp.el.tierReq.setTxt(showNum(tmp.tiers.req))
-	tmp.el.tierName.setTxt((tmp.scaling.active("tier", player.tier, "scaled")?"Scaled ":"")+"Tier")
+	tmp.el.tierName.setTxt((tmp.scaling.getName("tier"))+"Tier")
 	
 	// Rockets
 	tmp.el.rocketReset.setClasses({btn: true, locked: !tmp.rockets.canRocket, rckt: tmp.rockets.canRocket})
@@ -585,7 +628,7 @@ function updateHTML() {
 	tmp.el.rfReset.setClasses({btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can})
 	tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
 	tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
-	tmp.el.rfName.setTxt((tmp.scaling.active("rf", player.rf, "scaled")?"Scaled ":"")+" Rocket Fuel")
+	tmp.el.rfName.setTxt((tmp.scaling.getName("rf"))+"Rocket Fuel")
 	
 	// Automation
 	tmp.el.scraps.setTxt(showNum(player.automation.scraps))
@@ -636,7 +679,7 @@ function updateHTML() {
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	for (let i=1;i<=PTH_AMT;i++) {
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
-		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
+		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>"+(tmp.scaling.getName("pathogenUpg", i))+"Level: "+showNum(player.pathogens.upgrades[i])+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
 	tmp.el.pthUpgPow.setHTML((!tmp.pathogens.upgPow.eq(1))?("Upgrade Power: "+showNum(tmp.pathogens.upgPow.times(100))+"%<br>"):"")
 	
