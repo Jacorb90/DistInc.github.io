@@ -4,6 +4,8 @@ class Element {
 		this.el = document.getElementById(this.id)
 	}
 	
+	get style() { return this.el.style }
+	
 	setTxt(txt) { this.el.textContent = txt }
 	static setTxt(id, txt) { new Element(id).setTxt(txt) }
 	

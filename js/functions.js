@@ -1,5 +1,9 @@
 // Formatting
 
+function showNum(val) {
+	return disp(new ExpantaNum(val), player.options.sf-1, 2)
+}
+
 function decimalPlaces(value, places) {
 	// Taken from ExpantaNum.js
 	var len=places+1;
@@ -8,7 +12,7 @@ function decimalPlaces(value, places) {
     return parseFloat(rounded.toFixed(Math.min(Math.max(len-numDigits,0), 100)));
 }
 
-function showNum(val, places=5, locs=2) {
+function disp(val, places=5, locs=2) {
 	val = new ExpantaNum(val)
 	
 	// Also taken from ExpantaNum.js (but altered slightly)

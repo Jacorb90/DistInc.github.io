@@ -32,6 +32,24 @@ function updateTemp() {
 		tmp.options.save(s)
 		reload()
 	}
+	tmp.options.setDropdown = function(dropdown, els) {
+		let html=""
+		for (let i=0;i<Object.keys(els).length;i++) {
+			let el = els[Object.keys(els)[i]]
+			html+="<br>"
+			html+="<button class='btn tb opt' onclick='"+el.onclick+"'>"+el.txt+"</button>"
+		}
+		dropdown.setHTML(html+"<br><button class='btn tb opt' style='visibility: hidden;'></button>")
+	}
+	tmp.options.change = function(name) {
+		let max = OPT_CHNG_MAX[name]
+		let min = OPT_CHNG_MIN[name]
+		let dropdown = new Element("dropDown")
+		dropdown.changeStyle("display", dropdown.style.display=="block"?"none":"block")
+		let els = {}
+		for (x=min;x<=max;x++) els[x] = {txt: x.toString(), onclick:("player.options[&quot;"+name+"&quot;] = "+x+"; this.parentElement.style.display=&quot;none&quot;")}
+		tmp.options.setDropdown(dropdown, els)
+	}
 	tmp.options.modes = {}
 	tmp.options.modes.select = function(name) {
 		if (modesSelected.includes(name)) modesSelected = modesSelected.filter(x => x!=name)
@@ -584,6 +602,7 @@ function updateHTML() {
 	// Options
 	
 	for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
+	tmp.el.sf.setTxt("Significant Figures: "+player.options.sf.toString())
 	
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))

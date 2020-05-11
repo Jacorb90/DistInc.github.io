@@ -365,6 +365,28 @@ table { margin: auto; }
 	animation: grosstxt 4s ease infinite;
 }
 
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-height: 50px;
+	max-height: 150px;
+	min-width: 200px;
+	max-width: 200px;
+	background-color: grey;
+	z-index: 1;
+	overflow-y: auto;
+}
+
+.dropdown-content button {
+	display: block;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
