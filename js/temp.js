@@ -29,6 +29,7 @@ function updateTemp() {
 	tmp.options.startModes = function(modes) {
 		let s = transformToEN(DEFAULT_START)
 		s.modes = modes
+		if (s.modes.includes("aau")) s.achievements = getAllAchievements()
 		tmp.options.save(s)
 		reload()
 	}

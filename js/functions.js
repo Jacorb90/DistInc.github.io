@@ -245,10 +245,11 @@ function buyTRUpg(n) {
 function showModeDescs(modes) {
 	let d = ""
 	if (modes.length>1) {
-		for (let i=0;i<modes.length;i++) {
-			let mode = modes[i]
-			d += MODES[modes[i]].desc
-			if (i<modes.length-1) d += ","
+		let base = MODES[modes[0]]
+		for (let i=1;i<modes.length;i++) {
+			let mode = base.combos[modes[i]]
+			d += mode.desc
+			if (i<modes.length-1) d += ",\n\n\n"
 		}
 	} else if (modes.length==1) d = MODES[modes[0]].desc
 	else if (modes.length==0) d = "Just the main game."
@@ -318,3 +319,9 @@ function copyToClipboard(str) {
 function reload() { location.reload() }
 
 function getCurrentTime() { return new Date().getTime() }
+
+function getAllAchievements() {
+	let a = []
+	for (let r=1;r<=ACH_DATA.rows;r++) for (let c=1;c<=ACH_DATA.cols;c++) a.push(r*10+c)
+	return a
+}
