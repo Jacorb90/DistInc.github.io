@@ -434,10 +434,17 @@ const EM_AMT = Object.keys(ESSENCE_MILESTONES).length
 
 const COMBOS = {
 	hard_aau: {
-		desc: "Hard mode is active, and all achievements are unlocked.",
 		balancing: "only somewhat balanced (quite fast early-game, but quite slow late-game)",
 		balanceCheck: true,
-	}
+	},
+	hard_na: {
+		balancing: "completely balanced",
+		balanceCheck: false,
+	},
+	aau_na: {
+		balancing: "only somewhat balanced (quite fast early-game)",
+		balanceCheck: true,
+	},
 }
 
 const MODES = {
@@ -446,7 +453,8 @@ const MODES = {
 		balancing: "completely balanced (albeit quite slow)",
 		balanceCheck: false,
 		combos: {
-			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau))
+			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
+			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 		},
 	},
 	aau: {
@@ -454,7 +462,17 @@ const MODES = {
 		balancing: "only somewhat balanced (quite fast early-game)",
 		balanceCheck: true,
 		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau))
+			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
+			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
+		},
+	},
+	na: {
+		desc: "All unnecessary achievements are gone.",
+		balancing: "completely balanced (since gameplay is almost identical to normal mode)",
+		balanceCheck: false,
+		combos: {
+			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
+			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 		},
 	},
 }

@@ -245,11 +245,10 @@ function buyTRUpg(n) {
 function showModeDescs(modes) {
 	let d = ""
 	if (modes.length>1) {
-		let base = MODES[modes[0]]
-		for (let i=1;i<modes.length;i++) {
-			let mode = base.combos[modes[i]]
+		for (let i=0;i<modes.length;i++) {
+			let mode = MODES[modes[i]]
 			d += mode.desc
-			if (i<modes.length-1) d += ",\n\n\n"
+			if (i<modes.length-1) d += "\n\n\n"
 		}
 	} else if (modes.length==1) d = MODES[modes[0]].desc
 	else if (modes.length==0) d = "Just the main game."
@@ -323,5 +322,6 @@ function getCurrentTime() { return new Date().getTime() }
 function getAllAchievements() {
 	let a = []
 	for (let r=1;r<=ACH_DATA.rows;r++) for (let c=1;c<=ACH_DATA.cols;c++) a.push(r*10+c)
+	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()))
 	return a
 }
