@@ -29,6 +29,7 @@ function gameLoop(diff) {
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
+	if (player.distance.gte(DC_UNL)) player.dc.unl = true
 	if (tmp.modes.absurd.active && !reloaded) {
 		gameWindow.resizeTo(Math.random()*400, Math.random()*400)
 		gameWindow.moveTo(Math.random()*1000, Math.random()*200)

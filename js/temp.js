@@ -290,6 +290,7 @@ function updateTemp() {
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
 		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
 		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl}),
+		dc: new Feature({name: "dark circles", req: new ExpantaNum(DC_UNL), res: "distance", display: formatDistance, reached: player.dc.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {

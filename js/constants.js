@@ -49,6 +49,13 @@ const DEFAULT_START = {
 			10: new ExpantaNum(0),
 		},
 	},
+	dc: {
+		unl: false,
+		matter: new ExpantaNum(0),
+		energy: new ExpantaNum(0),
+		fluid: new ExpantaNum(0),
+		cores: new ExpantaNum(0),
+	},
 }
 
 // Temp Data
@@ -195,12 +202,13 @@ const TABBTN_SHOWN = {
 	tr: function() { return player.tr.unl },
 	collapse: function() { return player.collapse.unl },
 	pathogens: function() { return player.pathogens.unl },
+	dc: function() { return player.dc.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
-	rows: 6,
+	rows: 7,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -256,6 +264,8 @@ const ACH_DATA = {
 		66: "I thought that was a lot?",
 		67: "Atoms in the universe, of universes.",
 		68: "Corvid Twenty",
+		
+		71: "The Infinite Satanic Cult Of Orderly Layers",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -311,6 +321,8 @@ const ACH_DATA = {
 		66: "Get Fuelbot's interval less than or equal to 2 minutes.",
 		67: "Reach 1e80uni.",
 		68: "Get 1 of each of the 10 Pathogen upgrades.",
+		
+		71: "Unlock The Dark Circle.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -527,6 +539,10 @@ const OPT_CHNG_MAX = {
 const OPT_CHNG_MIN = {
 	sf: 3,
 }
+
+// Dark Circles
+
+const DC_UNL = new ExpantaNum(1e128).times(DISTANCES.uni)
 
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
