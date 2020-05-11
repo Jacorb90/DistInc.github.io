@@ -531,6 +531,21 @@ function updateTemp() {
 	tmp.pathogens.maxAll = function() {
 		for (let i=1;i<=PTH_AMT;i++) tmp.pathogens[i].max()
 	}
+
+	// The Dark Circle
+	
+	tmp.dc = {}
+	tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1)
+	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(10).plus(1))).times(10)
+	tmp.dc.buyCore = function() {
+		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
+		if (!player.dc.unl) return
+		player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
+		player.dc.cores = player.dc.cores.plus(1)
+	}
+	tmp.dc.tick = function(diff) {
+		player.dc.matter = player.dc.matter.plus(tmp.dc.dmGain.times(diff))
+	}
 	
 	// Softcaps
 	
@@ -715,6 +730,14 @@ function updateHTML() {
 		tmp.el[name+"SC"].setTxt(reached?("(softcapped)"):"")
 		tmp.el[name+"SC"].setClasses({sc: true})
 	}
+	
+	// The Dark Circle
+	tmp.el.darkMatter.setHTML("Dark Matter<br>Amount: "+showNum(player.dc.matter)+"<br>Effect: Nothing (yet)")
+	tmp.el.darkEnergy.setHTML("Dark Energy<br>Amount: "+showNum(player.dc.energy)+"<br>Effect: Nothing (yet)")
+	tmp.el.darkFluid.setHTML("Dark Fluid<br>Amount: "+showNum(player.dc.fluid)+"<br>Effect: Nothing (yet)")
+	tmp.el.darkCore.setHTML("Dark Cores<br>Amount: "+showNum(player.dc.cores)+"<br>Cost: "+showNum(tmp.dc.coreCost)+" Cadavers")
+	tmp.el.darkCore.setClasses({darkcore: true, locked: player.collapse.cadavers.lt(tmp.dc.coreCost), inactive: tmp.dc.dmGain.eq(0)})
+	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
