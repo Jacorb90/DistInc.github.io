@@ -398,3 +398,62 @@ table { margin: auto; }
 		color:#176648;
 	}
 }
+
+3 points
+·
+1 year ago
+·
+edited 1 year ago
+Sure thing. I started off by using the MaterialFox theme (https://github.com/muckSponge/MaterialFox), and edited it from there. In the userChrome.css file I added the following commands to change the buttons.
+
+#titlebar-buttonbox:-moz-window-inactive > * {
+ list-style-image: url(nofocus.png) !important;
+}
+
+#titlebar-min {
+padding: 0px  !important;
+	padding-left:  4px !important;
+	padding-right: 3px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+	margin-top: 4px  !important;
+	margin-bottom: 0px  !important;
+	background-color: transparent !important;
+  list-style-image: url(min-normal.png) !important;
+}
+
+#titlebar-min:hover {
+	list-style-image: url(min-hover.png) !important;
+}
+
+#titlebar-max {
+padding: 0px  !important;
+	padding-left:  4px !important;
+	padding-right: 3px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+	margin-top: 4px  !important;
+	margin-bottom: 0px  !important;
+	background-color: transparent !important;
+  list-style-image: url(max-normal.png) !important;
+}
+
+#titlebar-max:hover {
+	list-style-image: url(max-hover.png) !important;
+}
+
+#titlebar-close {
+padding: 0px  !important;
+	padding-left:  4px !important;
+	padding-right: 11px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+	margin-top: 4px  !important;
+	margin-bottom: 0px  !important;
+	background-color: transparent !important;
+  list-style-image: url(close-normal.png) !important;
+}
+
+#titlebar-close:hover {
+	list-style-image: url(close-hover.png) !important;
+} 

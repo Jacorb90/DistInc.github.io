@@ -445,6 +445,10 @@ const COMBOS = {
 		balancing: "only somewhat balanced (quite fast early-game)",
 		balanceCheck: true,
 	},
+	absurd: {
+		balancing: "completely impossible",
+		balanceCheck: true,
+	},
 }
 
 const MODES = {
@@ -455,6 +459,7 @@ const MODES = {
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		},
 	},
 	aau: {
@@ -464,6 +469,7 @@ const MODES = {
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		},
 	},
 	na: {
@@ -473,6 +479,17 @@ const MODES = {
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+		},
+	},
+	absurd: {
+		desc: "Ehehe... You'll see...",
+		balancing: "completely impossible",
+		balanceCheck: true,
+		combos: {
+			hard: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		},
 	},
 }
