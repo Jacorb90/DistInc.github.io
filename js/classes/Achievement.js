@@ -12,5 +12,5 @@ class Achievement {
 	
 	select() { tmp.selAch = this.name }
 	
-	grant() { if (!player.achievements.includes(this.name)) player.achievements.push(this.name) }
+	grant() { if (!player.achievements.includes(this.name) && getAllAchievements().includes(this.name)) player.achievements.push(this.name) }
 }

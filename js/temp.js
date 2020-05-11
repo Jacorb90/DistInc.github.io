@@ -29,6 +29,7 @@ function updateTemp() {
 	tmp.options.startModes = function(modes) {
 		let s = transformToEN(DEFAULT_START)
 		s.modes = modes
+		if (s.modes.includes("aau")) s.achievements = getAllAchievements()
 		tmp.options.save(s)
 		reload()
 	}
@@ -61,13 +62,16 @@ function updateTemp() {
 			let modeData = MODES[modesSelected[0]]
 			if (modeData.balanceCheck) if (!confirm("This mode is "+modeData.balancing+". Are you sure you want to enter this run?")) return
 			tmp.options.startModes(modesSelected)
-		} else {
+		} else if (modesSelected.length==2) {
 			let base = MODES[modesSelected[0]]
 			for (let i=1;i<modesSelected.length;i++) {
 				let mode = base.combos[modesSelected[i]]
 				if (mode.balanceCheck) if (!confirm("This mode combination is "+mode.balancing+". Are you sure you want to enter this mode combination?")) return
 				tmp.options.startModes(modesSelected)
 			}
+		} else {
+			if (!confirm("You have selected more than two modes. This may cause an unbalanced or even broken game mode. Are you sure you want to do this?")) return
+			tmp.options.startModes(modesSelected)
 		}
 	}
 	
@@ -306,7 +310,7 @@ function updateTemp() {
 	}
 	if (tmp.selAch===undefined||player.tab!=="achievements") tmp.selAch = 0
 	tmp.ga = player.achievements.length
-	tmp.ta = ACH_DATA.rows*ACH_DATA.cols
+	tmp.ta = getAllAchievements().length
 	
 	// Rocket Fuel
 	
@@ -639,6 +643,7 @@ function updateHTML() {
 		for (let c=1;c<=ACH_DATA.cols;c++) {
 			let id = r*10+c
 			tmp.el["ach"+id].setClasses({achCont: true, dgn: (player.achievements.includes(id)&&ACH_DATA.descs[id]!==undefined), blocked: ACH_DATA.descs[id]===undefined})
+			tmp.el["ach"+id].changeStyle("visibility", (getAllAchievements().includes(id)?"visible":"hidden"))
 		}
 	}
 	

@@ -1,0 +1,2 @@
+var gameWindow = window.location.href.includes("main.html") ? window.open("index.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no") : window;
+if (window.location.href.includes("main.html")) window.close()

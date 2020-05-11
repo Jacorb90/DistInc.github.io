@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="js/window.js"></script>
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
 	<script type="text/javascript" src="js/constants.js"></script>
 	<script type="text/javascript" src="js/classes/Element.js"></script>
@@ -62,6 +63,9 @@
 			<table>
 				<tr>
 					<td><button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">Hard</button></td>
+					<td><button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">AAU</button></td>
+					<td><button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button></td>
+					<td><button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button></td>
 				</tr>
 			</table><br><br>
 			<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
