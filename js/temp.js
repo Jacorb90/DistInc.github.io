@@ -112,6 +112,10 @@ function updateTemp() {
 		}
 	}
 	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff)
+	if (player.tr.upgrades.includes(11)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(10)
+	if (player.tr.upgrades.includes(15)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(32)
+	if (player.tr.upgrades.includes(12)) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2)
+	if (player.tr.upgrades.includes(14) && tmp.tr14) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(tmp.tr14["ss"])
 
 	// Rank Effects
 	
@@ -136,7 +140,9 @@ function updateTemp() {
 	// Achievement Effects 
 	
 	tmp.ach63sc = new ExpantaNum(1e25)
-	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025)):new ExpantaNum(1)
+	tmp.ach63pow = new ExpantaNum(1)
+	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
+	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
 
 	// Time Reversal Upgrade Effects
@@ -155,6 +161,18 @@ function updateTemp() {
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
+	tmp.tr11 = {
+		cg: tmp.dc ? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)) : new ExpantaNum(1),
+		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1),
+	}
+	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1)
+	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0)
+	tmp.tr14 = {
+		cd: player.tier.plus(1).pow(1.25),
+		ss: player.dc.cores.plus(1).log10().plus(1).log10().times(7.5),
+	}
+	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores)
+	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10)
 	
 	// Universal Collapse Milestone Effects
 	
@@ -236,8 +254,12 @@ function updateTemp() {
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((player.rank.pow(3).div(tmp.scalings.superscaled.rank.pow(2))).pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank).sqrt().times(tmp.scalings.superscaled.rank.pow(2)).cbrt().add(1)
 	}
+	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "hyper")) {
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((ExpantaNum.pow(1.25, player.rank.div(tmp.scalings.hyper.rank)).times(tmp.scalings.hyper.rank).pow(3).div(tmp.scalings.superscaled.rank.pow(2))).pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank).sqrt().times(tmp.scalings.superscaled.rank.pow(2)).cbrt().div(tmp.scalings.hyper.rank).max(1).logBase(1.25).times(tmp.scalings.hyper.rank).add(1)
+	}
 	
-	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.fp.plus(1)
+	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.bulk.max(tmp.ranks.fp.plus(1))
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)?(RANK_DESCS[player.rank.toNumber()]?RANK_DESCS[player.rank.toNumber()]:DEFAULT_RANK_DESC):DEFAULT_RANK_DESC
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req)
 	tmp.ranks.layer = new Layer("rank", tmp.ranks.canRankUp, "semi-forced")
@@ -264,6 +286,10 @@ function updateTemp() {
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((player.tier.pow(3).div(tmp.scalings.superscaled.tier.pow(2))).pow(2).div(tmp.scalings.scaled.tier)).div(tmp.tiers.fp).pow(2))
 		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier).sqrt().times(tmp.scalings.superscaled.tier.pow(2)).cbrt().add(1)
 	}
+	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "hyper")) {
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((ExpantaNum.pow(1.25, player.tier.div(tmp.scalings.hyper.tier)).times(tmp.scalings.hyper.tier).pow(3).div(tmp.scalings.superscaled.tier.pow(2))).pow(2).div(tmp.scalings.scaled.tier)).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier).sqrt().times(tmp.scalings.superscaled.tier.pow(2)).cbrt().div(tmp.scalings.hyper.tier).max(1).logBase(1.25).times(tmp.scalings.hyper.tier).add(1)
+	}
 	
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req)
@@ -271,6 +297,10 @@ function updateTemp() {
 	tmp.tier = {}
 	tmp.tier.onReset = function(prev) {
 		if (tmp.collapse) if (tmp.collapse.hasMilestone(11)) player.rank = prev.rank
+		if (player.tr.upgrades.includes(14)) {
+			player.distance = prev.distance
+			player.velocity = prev.velocity 
+		}
 	}
 	
 	// Rockets
@@ -405,6 +435,7 @@ function updateTemp() {
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
 	if (tmp.ach[65].has) tmp.lm.collapse = tmp.lm.collapse.times(1.4)
+	if (player.tr.upgrades.includes(14)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.tr14["cd"])
 	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {
 		tmp.lm.collapse = tmp.lm.collapse.div(2)
 		tmp.clghm = true
@@ -420,6 +451,7 @@ function updateTemp() {
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
 	if (tmp.pathogens && player.pathogens.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.pathogens[3].eff)
 	if (tmp.dc) if (player.dc.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.dc.deEff)
+	if (tmp.dc) if (player.tr.upgrades.includes(11)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr11["cg"])
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
 	tmp.tr.esc = new ExpantaNum(1e20)
 	cubes = player.tr.cubes
@@ -474,6 +506,7 @@ function updateTemp() {
 	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	tmp.pathogens.upgPow = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(13)) if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13)
 	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
@@ -551,11 +584,17 @@ function updateTemp() {
 	tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1).times(player.dc.fluid.plus(1).log10().plus(1)).max(0)
 	tmp.dc.deGain = player.dc.matter.plus(1).log10()
 	tmp.dc.dfGain = player.dc.energy.plus(1).log10()
-	tmp.dc.dmEff = player.dc.matter.plus(1).pow(0.1)
-	tmp.dc.deEff = player.dc.energy.plus(1).pow(0.125)
-	tmp.dc.dfEff = player.dc.fluid.plus(1).log10().plus(1).log10()
+	tmp.dc.allComp = player.dc.matter.plus(1).log10().plus(player.dc.energy.plus(1).log10()).plus(player.dc.fluid.plus(1).log10()).plus(player.dc.cores)
 	tmp.dc.flow = new ExpantaNum(1)
-	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(10).plus(1))).times(10)
+	if (tmp.ach[75].has) tmp.dc.flow = tmp.dc.flow.times(1.1)
+	if (player.tr.upgrades.includes(11)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr11["dcf"])
+	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr12)
+	tmp.dc.power = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(15)) tmp.dc.power = tmp.dc.power.times(tmp.tr15)
+	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power))
+	tmp.dc.deEff = player.dc.energy.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.125, tmp.dc.power))
+	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power)
+	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(10)
 	tmp.dc.buyCore = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
 		if (!player.dc.unl) return
@@ -722,6 +761,7 @@ function updateHTML() {
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
+	tmp.el.trRow3.changeStyle("display", player.dc.unl)
 	
 	// Universal Collapse
 	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
@@ -759,9 +799,6 @@ function updateHTML() {
 	tmp.el.darkCore.setHTML("Dark Cores<br>Amount: "+showNum(player.dc.cores)+"<br>Cost: "+showNum(tmp.dc.coreCost)+" Cadavers")
 	tmp.el.darkCore.setClasses({darkcore: true, locked: player.collapse.cadavers.lt(tmp.dc.coreCost), inactive: tmp.dc.dmGain.eq(0)})
 	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
-	tmp.el.dcArrow1.setHTML(tmp.dc.deGain.gt(0)?"&#10552;":"")
-	tmp.el.dcArrow2.setHTML(tmp.dc.deGain.gt(0)?"&#11104;":"")
-	tmp.el.dcArrow3.setHTML(tmp.dc.deGain.gt(0)?"&#8599;":"")
 	tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow))
 	
 	// Miscellaneous
