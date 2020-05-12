@@ -433,7 +433,7 @@ table { margin: auto; }
 	width: 100px;
 	height: 100px;
 	color: white !important;
-	font-size: 10px;
+	font-size: 9px;
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
@@ -450,7 +450,7 @@ table { margin: auto; }
 	height: 100px;
 	color: white !important;
 	cursor: pointer;
-	font-size: 10px;
+	font-size: 9px;
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
@@ -467,7 +467,7 @@ table { margin: auto; }
 	height: 100px;
 	color: white !important;
 	cursor: not-allowed;
-	font-size: 10px;
+	font-size: 9px;
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;

@@ -61,7 +61,7 @@ const DEFAULT_START = {
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "dcArrow1", "dcArrow2", "dcArrow3", "darkFlow"],
 }
 
 // Formatting Data
@@ -266,6 +266,8 @@ const ACH_DATA = {
 		68: "Corvid Twenty",
 		
 		71: "The Infinite Satanic Cult Of Orderly Layers",
+		72: "Darkness Grows",
+		73: "Too much for you",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -323,6 +325,8 @@ const ACH_DATA = {
 		68: "Get 1 of each of the 10 Pathogen upgrades.",
 		
 		71: "Unlock The Dark Circle.",
+		72: "Reach 50 Dark Matter.",
+		73: "Reach 1e140uni.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -361,6 +365,8 @@ const ACH_DATA = {
 		65: "Cadaver gain is increased by 40%.",
 		67: "Time goes by 11.11% faster.",
 		68: "Pathogen gain is 1% faster.",
+		
+		72: "You gain Time Cubes without Reversing Time, however only at half the rate.",
 	},
 }
 

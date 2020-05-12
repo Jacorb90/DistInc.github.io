@@ -22,7 +22,7 @@ function gameLoop(diff) {
 	if (player.tr.active) {
 		player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
 		diff = diff.times(-1)
-	}
+	} else if (tmp.ach[72].has) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff.div(2)))
 	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel).max(0)
 	player.distance = player.distance.plus(player.velocity.times(diff)).max(0)
 	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true

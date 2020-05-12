@@ -209,6 +209,8 @@ function updateAchievements() {
 	if (bool) tmp.ach[68].grant()
 	
 	if (player.dc.unl) tmp.ach[71].grant()
+	if (player.dc.matter.gte(50)) tmp.ach[72].grant()
+	if (player.distance.gte(ExpantaNum.mul(1e140, DISTANCES.uni))) tmp.ach[73].grant()
 }
 
 // Automation
