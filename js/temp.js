@@ -94,6 +94,7 @@ function updateTemp() {
 		let amt = new ExpantaNum(0)
 		if (name=="rank"||name=="tier"||name=="rf") amt = player[name]
 		else if (name=="pathogenUpg") amt = player.pathogens.upgrades[x]
+		else if (name=="darkCore") amt = player.dc.cores
 		else return ""
 		for (let n=mx-1;n>=0;n--) {
 			let scaling = SCALING_STARTS[Object.keys(SCALING_STARTS)[n]]
@@ -506,8 +507,9 @@ function updateTemp() {
 	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	tmp.pathogens.upgPow = new ExpantaNum(1)
-	if (player.tr.upgrades.includes(13)) if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13)
+	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13)
 	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8)
+	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
 		2: new ExpantaNum(10),
@@ -594,7 +596,13 @@ function updateTemp() {
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power))
 	tmp.dc.deEff = player.dc.energy.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.125, tmp.dc.power))
 	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power)
+	tmp.dc.coreEff = player.dc.cores.gte(12)?(player.dc.cores.pow(7).div(ExpantaNum.pow(12, 6).times(8)).plus(1).log10().plus(1).log10()):new ExpantaNum(0)
 	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(10)
+	tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).plus(1)
+	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
+		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(2).div(tmp.scalings.scaled.darkCore).div(50).plus(1))).times(10)
+		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore).sqrt().add(1)
+	}
 	tmp.dc.buyCore = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
 		if (!player.dc.unl) return
@@ -796,7 +804,7 @@ function updateHTML() {
 	tmp.el.darkMatter.setHTML("Dark Matter<br>Amount: "+showNum(player.dc.matter)+"<br>Effect: You gain "+showNum(tmp.dc.dmEff)+"x as many Rockets.")
 	tmp.el.darkEnergy.setHTML("Dark Energy<br>Amount: "+showNum(player.dc.energy)+"<br>Effect: You gain "+showNum(tmp.dc.deEff)+"x as many Time Cubes.")
 	tmp.el.darkFluid.setHTML("Dark Fluid<br>Amount: "+showNum(player.dc.fluid)+"<br>Effect: Scaled Rocket Fuel scaling starts "+showNum(tmp.dc.dfEff)+" Rocket Fuel later.")
-	tmp.el.darkCore.setHTML("Dark Cores<br>Amount: "+showNum(player.dc.cores)+"<br>Cost: "+showNum(tmp.dc.coreCost)+" Cadavers")
+	tmp.el.darkCore.setHTML(tmp.scaling.getName("darkCore")+"Dark Cores<br>Amount: "+showNum(player.dc.cores)+"<br>Cost: "+showNum(tmp.dc.coreCost)+" Cadavers"+(tmp.dc.coreEff.gt(0)?("<br>Effect: +"+showNum(tmp.dc.coreEff.times(100))+"% Pathogen Upgrade Power"):""))
 	tmp.el.darkCore.setClasses({darkcore: true, locked: player.collapse.cadavers.lt(tmp.dc.coreCost), inactive: tmp.dc.dmGain.eq(0)})
 	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
 	tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow))

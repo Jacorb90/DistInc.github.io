@@ -271,6 +271,8 @@ const ACH_DATA = {
 		74: "True Blast",
 		75: "Got nothin' but blank",
 		76: "They have space too??!!",
+		77: "Trash is life",
+		78: "Pew Pew Pew",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -333,6 +335,8 @@ const ACH_DATA = {
 		74: "Reach 1e60 Rockets.",
 		75: "Purchase 5 Dark Cores.",
 		76: "Reach 1e100 Rockets.",
+		77: "Reach 1e80 Scraps.",
+		78: "Reach 75 normal Rocket Fuel.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -545,7 +549,7 @@ const PTH_AMT = Object.keys(PTH_UPGS).length
 // Scaling
 
 const SCALING_STARTS = {
-	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10) },
+	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10), darkCore: new ExpantaNum(15) },
 	superscaled: { rank: new ExpantaNum(100), tier: new ExpantaNum(15), rf: new ExpantaNum(100), pathogenUpg: new ExpantaNum(40) },
 	hyper: { rank: new ExpantaNum(160), tier: new ExpantaNum(20)},
 }
