@@ -1,6 +1,7 @@
 // Formatting
 
 function showNum(val) {
+	val = new ExpantaNum(val)
 	if (isNaN(val.array[0][1])) return "NaN";
     if (!isFinite(val.array[0][1])) return "Infinity";
 	if (val.eq(0)) return "0"

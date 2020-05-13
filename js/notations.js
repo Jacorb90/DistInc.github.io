@@ -1,9 +1,7 @@
 var notations = {}
 
 notations.scientific = function(val, places, locs) {
-	val = new ExpantaNum(val)
-	
-	// Also taken from ExpantaNum.js (but altered slightly)
+	// Taken from ExpantaNum.js (but altered slightly)
     var b=0;
     var s="";
     var m=Math.pow(10,places);
@@ -46,8 +44,6 @@ notations.scientific = function(val, places, locs) {
 }
 
 notations.standard = function(val, places, locs) {
-	val = new ExpantaNum(val)
-	
 	if (val.lt(0.1)) return "1/"+notations.standard(val.pow(-1), places, locs)
 	else if (val.lt(1e3)) return decimalPlaces(val, places)
 	else if (val.lt(1e33)) {
@@ -90,5 +86,10 @@ notations.standard = function(val, places, locs) {
 		txt += STANDARD_DATA.ONES[val.log10().sub(3).div(3).mod(10).floor().toNumber()]+STANDARD_DATA.TENS[val.log10().sub(3).div(30).mod(10).floor().toNumber()]+STANDARD_DATA.HUNDREDS[val.log10().sub(3).div(300).mod(10).floor().toNumber()]
 		return txt
 	} else if (val.lt(STANDARD_DATA.SUPER_MS.length>val.div(1e3).log10().div(3).log10().sub(3).div(3).logBase(1000).floor().toNumber())) return STANDARD_DATA.SUPER_MS[val.div(1e3).log10().div(3).log10().sub(3).div(3).logBase(1000).floor().toNumber()]
+	else return notations.scientific(val, places, locs)
+}
+
+notations.mixed = function(val, places, locs) {
+	if (val.lt(1e33)) return notations.standard(val, places, locs)
 	else return notations.scientific(val, places, locs)
 }
