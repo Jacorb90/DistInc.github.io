@@ -42,14 +42,20 @@ function updateTemp() {
 		}
 		dropdown.setHTML(html+"<br><button class='btn tb opt' style='visibility: hidden;'></button>")
 	}
-	tmp.options.change = function(name) {
-		let max = OPT_CHNG_MAX[name]
-		let min = OPT_CHNG_MIN[name]
+	tmp.options.change = function(name, type) {
 		let dropdown = new Element("dropDown")
-		dropdown.changeStyle("display", dropdown.style.display=="block"?"none":"block")
+		dropdown.changeStyle("display", (dropdown.style.display=="block"&&name==ddState)?"none":"block")
 		let els = {}
-		for (x=min;x<=max;x++) els[x] = {txt: x.toString(), onclick:("player.options[&quot;"+name+"&quot;] = "+x+"; this.parentElement.style.display=&quot;none&quot;")}
+		if (type==1) {
+			let max = OPT_CHNG_MAX[name]
+			let min = OPT_CHNG_MIN[name]
+			for (x=min;x<=max;x++) els[x] = {txt: x.toString(), onclick:("player.options[&quot;"+name+"&quot;] = "+x+"; this.parentElement.style.display=&quot;none&quot;")}
+		} else if (type==2) {
+			let types = OPT_NAMES[name]
+			for (x=0;x<types.length;x++) els[types[x]] = {txt: capitalFirst(types[x]), onclick:("player.options[&quot;"+name+"&quot;] = &quot;"+types[x]+"&quot;; this.parentElement.style.display=&quot;none&quot;")}
+		}
 		tmp.options.setDropdown(dropdown, els)
+		ddState = name
 	}
 	tmp.options.modes = {}
 	tmp.options.modes.select = function(name) {
@@ -691,6 +697,7 @@ function updateHTML() {
 	
 	for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
 	tmp.el.sf.setTxt("Significant Figures: "+player.options.sf.toString())
+	tmp.el.not.setTxt("Notation: "+capitalFirst(player.options.not))
 	
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))

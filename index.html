@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="js/constants.js"></script>
 	<script type="text/javascript" src="js/classes/Element.js"></script>
 	<script type="text/javascript" src="js/classes/Mode.js"></script>
+	<script type="text/javascript" src="js/notations.js"></script>
 	<script type="text/javascript" src="js/functions.js"></script>
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
@@ -75,7 +76,8 @@
 		<div id="other" class="optionstab" style="display: none;">
 			<table>
 				<tr>
-					<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf')">Significant Figures: X</button></td>
+					<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
+					<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
 				</tr>
 			</table><br>
 			<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>

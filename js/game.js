@@ -9,6 +9,7 @@ var tmp = {}
 var last = getCurrentTime()
 var modesSelected = []
 var reloaded = false
+var ddState = "none"
 
 // Game Loop
 
