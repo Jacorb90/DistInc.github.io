@@ -1,6 +1,10 @@
 // Formatting
 
 function showNum(val) {
+	if (isNaN(val.array[0][1])) return "NaN";
+    if (!isFinite(val.array[0][1])) return "Infinity";
+	if (val.eq(0)) return "0"
+	if (val.sign==-1) return "-"+showNum(val.abs());
 	return notations[player.options.not](new ExpantaNum(val), player.options.sf-1, 2)
 }
 
@@ -18,7 +22,7 @@ function formatDistance(x) {
 		let name = Object.keys(DISTANCES)[i]
 		let val = DISTANCES[name]
 		if (x.lt(val) && i>0) continue
-		return showNum(x.div(val))+name
+		return showNum(x.div(val))+" "+name
 	}
 }
 
@@ -30,7 +34,7 @@ function formatTime(x) {
 		let name = Object.keys(TIMES)[i]
 		let val = TIMES[name]
 		if (x.lt(val) && i>0) continue
-		return showNum(x.div(val))+name
+		return showNum(x.div(val))+" "+name
 	}
 }
 
