@@ -387,6 +387,113 @@ table { margin: auto; }
 	display: block;
 }
 
+.btn.dark {
+	box-shadow: 3px 4px 0px 0px #1d0833;
+	background:repeating-linear-gradient(45deg, rgb(184, 0, 82) 0%, rgb(47, 0, 67) 15%, rgb(184, 0, 82) 30%);
+	background-position: 0% 0%;
+	background-size: 250% 200%;
+	border-radius:18px;
+	border:1px solid #380024;
+	display:inline-block;
+	cursor:pointer;
+	color:#9eaab0;
+	font-size:12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #380134;
+	transition-duration: 3s;
+	-webkit-transition-duration: 3s;
+	animation: darkbtn 6s ease infinite;
+}
+
+.btn.dark:hover {
+	background:repeating-linear-gradient(45deg, rgb(226, 0, 101) 0%, rgb(102, 0, 145) 15%, rgb(226, 0, 101) 30%);
+	background-position: 0% 0%;
+	background-size: 250% 200%;
+	transition-duration: 2s;
+	-webkit-transition-duration: 2s;
+	animation: darkbtn 4s ease infinite;
+}
+
+.btn.dark:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+.darkcircle {
+	box-shadow: 3px 4px 0px 0px #1d0833;
+	background:repeating-radial-gradient(circle farthest-corner at center center, rgb(184, 0, 82) 0%, rgb(47, 0, 67) 15%, rgb(184, 0, 82) 30%);
+	background-position: 0% 0%;
+	background-size: 100% 100%;
+	border-radius:100px;
+	width: 100px;
+	height: 100px;
+	color: white !important;
+	font-size: 9px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: center;
+	animation: darkcircle 1.5s ease infinite;
+}
+
+.darkcore {
+	box-shadow: 3px 4px 0px 0px #1d0833;
+	background:repeating-radial-gradient(circle farthest-corner at center center, #620173 0%, rgb(47, 0, 67) 15%, #620173 30%);
+	background-position: 0% 0%;
+	background-size: 100% 100%;
+	border-radius:100px;
+	width: 100px;
+	height: 100px;
+	color: white !important;
+	cursor: pointer;
+	font-size: 9px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: center;
+	animation: darkcore 0.7s ease infinite;
+}
+
+.darkcore.locked {
+	box-shadow: 3px 4px 0px 0px #3b3b3b;
+	background:repeating-radial-gradient(circle farthest-corner at center center, #787878 0%, rgb(73, 70, 74) 15%, #787878 30%);
+	background-position: 0% 0%;
+	background-size: 100% 100%;
+	border-radius:100px;
+	width: 100px;
+	height: 100px;
+	color: white !important;
+	cursor: not-allowed;
+	font-size: 9px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: center;
+}
+
+.darkcore.inactive { animation: darkcore 5s ease infinite; }
+
+.darkcircleHidden { 
+	width: 100px;
+	height: 100px;
+	border-radius:100px;
+}
+
+.dcArrow {
+	font-size: 60px;
+	font-weight: bold;
+}
+
+.dcArrowTxt {
+	background-image: repeating-linear-gradient(to top, #620173, #f000a8);
+	position: 0% 0%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: dcArrow 1s linear infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -399,61 +506,61 @@ table { margin: auto; }
 	}
 }
 
-3 points
-·
-1 year ago
-·
-edited 1 year ago
-Sure thing. I started off by using the MaterialFox theme (https://github.com/muckSponge/MaterialFox), and edited it from there. In the userChrome.css file I added the following commands to change the buttons.
-
-#titlebar-buttonbox:-moz-window-inactive > * {
- list-style-image: url(nofocus.png) !important;
+@keyframes darkbtn {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 100% 0%;
+	}
+	100% {
+		background-position: 200% 0%;
+		background-position: 0% 0%;
+	}
 }
 
-#titlebar-min {
-padding: 0px  !important;
-	padding-left:  4px !important;
-	padding-right: 3px !important;
-	margin-left: 0px !important;
-	margin-right: 0px !important;
-	margin-top: 4px  !important;
-	margin-bottom: 0px  !important;
-	background-color: transparent !important;
-  list-style-image: url(min-normal.png) !important;
+@keyframes darkcircle {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+	
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+	
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }
 
-#titlebar-min:hover {
-	list-style-image: url(min-hover.png) !important;
+@keyframes darkcore {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(47, 0, 74, 0.7);
+	}
+	
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(47, 0, 74, 0);
+	}
+	
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(47, 0, 74, 0);
+	}
 }
 
-#titlebar-max {
-padding: 0px  !important;
-	padding-left:  4px !important;
-	padding-right: 3px !important;
-	margin-left: 0px !important;
-	margin-right: 0px !important;
-	margin-top: 4px  !important;
-	margin-bottom: 0px  !important;
-	background-color: transparent !important;
-  list-style-image: url(max-normal.png) !important;
+@keyframes dcArrow {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 0% 100%;
+	}
+	100% {
+		background-position: 0% 200%;
+	}
 }
-
-#titlebar-max:hover {
-	list-style-image: url(max-hover.png) !important;
-}
-
-#titlebar-close {
-padding: 0px  !important;
-	padding-left:  4px !important;
-	padding-right: 11px !important;
-	margin-left: 0px !important;
-	margin-right: 0px !important;
-	margin-top: 4px  !important;
-	margin-bottom: 0px  !important;
-	background-color: transparent !important;
-  list-style-image: url(close-normal.png) !important;
-}
-
-#titlebar-close:hover {
-	list-style-image: url(close-hover.png) !important;
-} 

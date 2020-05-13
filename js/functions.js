@@ -207,6 +207,15 @@ function updateAchievements() {
 	let bool = true
 	for (let i=1;i<=10;i++) if (player.pathogens.upgrades[i].eq(0)) bool = false
 	if (bool) tmp.ach[68].grant()
+	
+	if (player.dc.unl) tmp.ach[71].grant()
+	if (player.dc.matter.gte(50)) tmp.ach[72].grant()
+	if (player.distance.gte(ExpantaNum.mul(1e140, DISTANCES.uni))) tmp.ach[73].grant()
+	if (player.rockets.gte(1e60)) tmp.ach[74].grant() 
+	if (player.dc.cores.gte(5)) tmp.ach[75].grant()
+	if (player.rockets.gte(1e100)) tmp.ach[76].grant()
+	if (player.automation.scraps.gte(1e80)) tmp.ach[77].grant()
+	if (player.rf.gte(75)) tmp.ach[78].grant()
 }
 
 // Automation
@@ -275,6 +284,10 @@ function ENString(obj) {
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence).toString()
 	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount).toString()
 	for (let i=1;i<=Object.keys(ret.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]).toString()
+	ret.dc.matter = new ExpantaNum(ret.dc.matter).toString()
+	ret.dc.energy = new ExpantaNum(ret.dc.energy).toString()
+	ret.dc.fluid = new ExpantaNum(ret.dc.fluid).toString()
+	ret.dc.cores = new ExpantaNum(ret.dc.cores).toString()
 	return ret
 }
 
@@ -295,6 +308,10 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
 	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount)
 	for (let i=1;i<=Object.keys(sc.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
+	ret.dc.matter = new ExpantaNum(ret.dc.matter)
+	ret.dc.energy = new ExpantaNum(ret.dc.energy)
+	ret.dc.fluid = new ExpantaNum(ret.dc.fluid)
+	ret.dc.cores = new ExpantaNum(ret.dc.cores)
     return ret
 }
 

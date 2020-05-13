@@ -49,12 +49,19 @@ const DEFAULT_START = {
 			10: new ExpantaNum(0),
 		},
 	},
+	dc: {
+		unl: false,
+		matter: new ExpantaNum(0),
+		energy: new ExpantaNum(0),
+		fluid: new ExpantaNum(0),
+		cores: new ExpantaNum(0),
+	},
 }
 
 // Temp Data
 
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "darkFlow", "trRow3"],
 }
 
 // Formatting Data
@@ -195,12 +202,13 @@ const TABBTN_SHOWN = {
 	tr: function() { return player.tr.unl },
 	collapse: function() { return player.collapse.unl },
 	pathogens: function() { return player.pathogens.unl },
+	dc: function() { return player.dc.unl },
 }
 
 // Achievements
 
 const ACH_DATA = {
-	rows: 6,
+	rows: 7,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -256,6 +264,15 @@ const ACH_DATA = {
 		66: "I thought that was a lot?",
 		67: "Atoms in the universe, of universes.",
 		68: "Corvid Twenty",
+		
+		71: "The Infinite Satanic Cult Of Orderly Layers",
+		72: "Darkness Grows",
+		73: "Too much for you",
+		74: "True Blast",
+		75: "Got nothin' but blank",
+		76: "They have space too??!!",
+		77: "Trash is life",
+		78: "Pew Pew Pew",
 	},
 	descs: {
 		11: "Go at least 100m.",
@@ -311,6 +328,15 @@ const ACH_DATA = {
 		66: "Get Fuelbot's interval less than or equal to 2 minutes.",
 		67: "Reach 1e80uni.",
 		68: "Get 1 of each of the 10 Pathogen upgrades.",
+		
+		71: "Unlock The Dark Circle.",
+		72: "Reach 50 Dark Matter.",
+		73: "Reach 1e140uni.",
+		74: "Reach 1e60 Rockets.",
+		75: "Purchase 5 Dark Cores.",
+		76: "Reach 1e100 Rockets.",
+		77: "Reach 1e80 Scraps.",
+		78: "Reach 75 normal Rocket Fuel.",
 	},
 	rewards: {
 		12: "Acceleration is 10% higher.",
@@ -349,6 +375,10 @@ const ACH_DATA = {
 		65: "Cadaver gain is increased by 40%.",
 		67: "Time goes by 11.11% faster.",
 		68: "Pathogen gain is 1% faster.",
+		
+		72: "You gain Time Cubes without Reversing Time, however only at half the rate.",
+		74: "The 'Time Doesnt Exist' reward is 75% stronger.",
+		75: "Dark Flow is 10% faster.",
 	},
 }
 
@@ -408,6 +438,11 @@ const TR_UPGS = {
 	8: { cost: new ExpantaNum(75000), desc: "Rankbot's interval boosts its magnitude." },
 	9: { cost: new ExpantaNum(1.2e5), desc: "Tierbot's interval boosts its magnitude, but not as strongly as the previous upgrade." },
 	10: { cost: new ExpantaNum(2e5), desc: "Rocket gain is increased by 10% for every OoM of Time Cubes (softcaps at 1e+10 Time Cubes)." },
+	11: { cost: new ExpantaNum(1e60), desc: "Time Cubes and Dark Flow boost each other, and Scaled Rank scaling starts 10 Ranks later." },
+	12: { cost: new ExpantaNum(1e70), desc: "Each component of The Dark Circle boosts Dark Flow, and Scaled Tier scaling starts 2 Tiers later." },
+	13: { cost: new ExpantaNum(1e105), desc: "Each component of The Dark Circle boosts Pathogen Upgrade efficiency." },
+	14: { cost: new ExpantaNum(1e115), desc: "Tiers do not reset anything, Scaled Tier scaling starts later based on your Dark Cores, and Tiers boost Cadaver gain." },
+	15: { cost: new ExpantaNum(4.56e123), desc: "Scaled Rank scaling starts 32 Ranks later, and all effects of The Dark Circle are stronger based on your Dark Cores." },
 }
 const TR_UPG_AMT = Object.keys(TR_UPGS).length
 	
@@ -513,10 +548,10 @@ const PTH_AMT = Object.keys(PTH_UPGS).length
 
 // Scaling
 
-const SCALINGS = ["scaled"]
 const SCALING_STARTS = {
-	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10) },
+	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10), darkCore: new ExpantaNum(15) },
 	superscaled: { rank: new ExpantaNum(100), tier: new ExpantaNum(15), rf: new ExpantaNum(100), pathogenUpg: new ExpantaNum(40) },
+	hyper: { rank: new ExpantaNum(160), tier: new ExpantaNum(20)},
 }
 
 // Options
@@ -527,6 +562,10 @@ const OPT_CHNG_MAX = {
 const OPT_CHNG_MIN = {
 	sf: 3,
 }
+
+// Dark Circles
+
+const DC_UNL = new ExpantaNum(1e128).times(DISTANCES.uni)
 
 // Re-Update Temp Data
 for (let r=1;r<=ACH_DATA.rows;r++) {
