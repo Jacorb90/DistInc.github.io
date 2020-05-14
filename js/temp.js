@@ -9,7 +9,10 @@ function updateTemp() {
 	// Options
 	
 	tmp.options = {}
-	tmp.options.save = function(sav=player) { localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav)))) }
+	tmp.options.save = function(sav=player) { 
+		localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav))))
+		notifier.success("Game saved!")
+	}
 	tmp.options.setSave = function(ns) {
 		tmp.options.save(ns)
 		reload()
@@ -20,10 +23,12 @@ function updateTemp() {
 	}
 	tmp.options.import = function() {
 		let sav = JSON.parse(atob(prompt("Paste your save here.")))
+		notifier.info("Save imported")
 		tmp.options.setSave(transformToEN(sav))
 	}
 	tmp.options.export = function() {
 		let toExport = btoa(JSON.stringify(ENString(player)))
+		notifier.info("Save exported")
 		copyToClipboard(toExport)
 	}
 	tmp.options.startModes = function(modes) {
@@ -46,7 +51,10 @@ function updateTemp() {
 		let dropdown = new Element("dropDown")
 		dropdown.changeStyle("display", (dropdown.style.display=="block"&&name==ddState)?"none":"block")
 		let els = {}
-		if (type==1) {
+		if (type==0) {
+			els["true"] = {txt: "ON", onclick:("player.options[&quot;"+name+"&quot;] = true; this.parentElement.style.display=&quot;none&quot;")}
+			els["false"] = {txt: "OFF", onclick:("player.options[&quot;"+name+"&quot;] = false; this.parentElement.style.display=&quot;none&quot;")}
+		} if (type==1) {
 			let max = OPT_CHNG_MAX[name]
 			let min = OPT_CHNG_MIN[name]
 			for (x=min;x<=max;x++) els[x] = {txt: x.toString(), onclick:("player.options[&quot;"+name+"&quot;] = "+x+"; this.parentElement.style.display=&quot;none&quot;")}
@@ -698,6 +706,7 @@ function updateHTML() {
 	for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
 	tmp.el.sf.setTxt("Significant Figures: "+player.options.sf.toString())
 	tmp.el.not.setTxt("Notation: "+capitalFirst(player.options.not))
+	tmp.el.autoSave.setTxt("Auto-Save: "+(player.options.autoSave?"ON":"OFF"))
 	
 	// Main
 	tmp.el.distance.setTxt(formatDistance(player.distance))

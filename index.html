@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="js/jQuery.min.js"></script>
+	<script type="text/javascript" src="js/notify.min.js"></script>
+	<script type="text/javascript" src="js/classes/Notifier.js"></script>
 	<script type="text/javascript" src="js/window.js"></script>
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
 	<script type="text/javascript" src="js/constants.js"></script>
@@ -78,6 +81,7 @@
 				<tr>
 					<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
 					<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
+					<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
 				</tr>
 			</table><br>
 			<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>

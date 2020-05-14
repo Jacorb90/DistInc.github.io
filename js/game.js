@@ -10,12 +10,15 @@ var last = getCurrentTime()
 var modesSelected = []
 var reloaded = false
 var ddState = "none"
+var notifier = new Notifier();
+var saveTimer = 0
 
 // Game Loop
 
 function gameLoop(diff) {
 	updateTemp()
 	updateHTML()
+	saveTimer += diff.toNumber()
 	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
@@ -32,6 +35,10 @@ function gameLoop(diff) {
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
 	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	if (player.options.autoSave && saveTimer>=AUTOSAVE_TIME) {
+		tmp.options.save()
+		saveTimer = 0
+	}
 	if (tmp.modes.absurd.active && !reloaded) {
 		gameWindow.resizeTo(Math.random()*400, Math.random()*400)
 		gameWindow.moveTo(Math.random()*1000, Math.random()*200)
