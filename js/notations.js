@@ -58,3 +58,7 @@ notations.mixed = function(val, places, locs) {
 notations.hexadecimal = function(val, places, locs) {
 	return disp(val, places, locs, 16)
 }
+
+notations.binary = function(val, places, locs) {
+	return disp(val, places, locs, 2)
+}
