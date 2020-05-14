@@ -564,7 +564,7 @@ const OPT_CHNG_MIN = {
 	sf: 3,
 }
 const OPT_NAMES = {
-	not: ["scientific", "standard", "mixed"],
+	not: ["scientific", "standard", "mixed", "hexadecimal"],
 }
 
 // Notations
