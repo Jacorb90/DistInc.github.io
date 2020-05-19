@@ -360,3 +360,5 @@ function getAllAchievements() {
 	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()))
 	return a
 }
+
+function reverseTri(n) { return Math.ceil(0.5*(Math.sqrt(8*n+1)-1)) }
