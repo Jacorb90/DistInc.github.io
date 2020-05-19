@@ -105,11 +105,7 @@ function updateTemp() {
 	tmp.scaling.getName = function(name, x=0) {
 		let mx = Object.keys(SCALING_STARTS).length
 		let current = ""
-		let amt = new ExpantaNum(0)
-		if (name=="rank"||name=="tier"||name=="rf") amt = player[name]
-		else if (name=="pathogenUpg") amt = player.pathogens.upgrades[x]
-		else if (name=="darkCore") amt = player.dc.cores
-		else return ""
+		let amt = SCALING_RES[name](x)
 		for (let n=mx-1;n>=0;n--) {
 			let scaling = SCALING_STARTS[Object.keys(SCALING_STARTS)[n]]
 			if (tmp.scaling.active(name, amt, Object.keys(SCALING_STARTS)[n])) return capitalFirst(Object.keys(SCALING_STARTS)[n])+" "
@@ -118,12 +114,15 @@ function updateTemp() {
 	}
 	
 	tmp.scalings = {}
+	tmp.scalingPower = {}
 	for (let t=0;t<Object.keys(SCALING_STARTS).length;t++) {
 		let name = Object.keys(SCALING_STARTS)[t]
 		tmp.scalings[name] = {}
+		tmp.scalingPower[name] = {}
 		for (let p=0;p<Object.keys(SCALING_STARTS[name]).length;p++) {
 			let name2 = Object.keys(SCALING_STARTS[name])[p]
 			tmp.scalings[name][name2] = new ExpantaNum(deepCopy(SCALING_STARTS[name][name2]))
+			tmp.scalingPower[name][name2] = new ExpantaNum(1)
 		}
 	}
 	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff)
@@ -262,16 +261,28 @@ function updateTemp() {
 	tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1)
 	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
-		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, (player.rank.pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
-		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank).sqrt().plus(1)
+		let power = tmp.scalingPower.scaled.rank
+		let exp = ExpantaNum.pow(2, power)
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, (player.rank.pow(exp).div(tmp.scalings.scaled.rank.pow(exp.sub(1)))).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1)
 	}
 	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "superscaled")) {
-		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((player.rank.pow(3).div(tmp.scalings.superscaled.rank.pow(2))).pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
-		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank).sqrt().times(tmp.scalings.superscaled.rank.pow(2)).cbrt().add(1)
+		let power2 = tmp.scalingPower.superscaled.rank
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.rank
+		let exp = ExpantaNum.pow(2, power)
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((player.rank.pow(exp2).div(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))).pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rank.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 	}
 	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "hyper")) {
-		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((ExpantaNum.pow(1.25, player.rank.div(tmp.scalings.hyper.rank)).times(tmp.scalings.hyper.rank).pow(3).div(tmp.scalings.superscaled.rank.pow(2))).pow(2).div(tmp.scalings.scaled.rank)).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
-		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank).sqrt().times(tmp.scalings.superscaled.rank.pow(2)).cbrt().div(tmp.scalings.hyper.rank).max(1).logBase(1.25).times(tmp.scalings.hyper.rank).add(1)
+		let power3 = tmp.scalingPower.hyper.rank
+		let base3 = ExpantaNum.pow(1.25, power3)
+		let power2 = tmp.scalingPower.superscaled.rank
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.rank
+		let exp = ExpantaNum.pow(2, power)
+		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, ((ExpantaNum.pow(base3, player.rank.div(tmp.scalings.hyper.rank)).times(tmp.scalings.hyper.rank).pow(exp2).div(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.rank.pow(exp.sub(1)))).div(tmp.ranks.fp).max(1).sub(1).pow(2)))
+		tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).max(1).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).times(tmp.scalings.scaled.rank.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rank.pow(exp2.sub(1))).pow(exp2.pow(-1)).div(tmp.scalings.hyper.rank).max(1).logBase(base3).times(tmp.scalings.hyper.rank).add(1)
 	}
 	
 	if (tmp.ranks.bulk.lt(tmp.ranks.fp.plus(1))) tmp.ranks.bulk = tmp.ranks.bulk.max(tmp.ranks.fp.plus(1))
@@ -294,16 +305,28 @@ function updateTemp() {
 	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2))
 	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).add(1)
 	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "scaled")) {
-		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus((player.tier.pow(2).div(tmp.scalings.scaled.tier)).div(tmp.tiers.fp).pow(2))
-		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier).sqrt().add(1)
+		let power = tmp.scalingPower.scaled.tier
+		let exp = ExpantaNum.pow(2, power)
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus((player.tier.pow(exp).div(tmp.scalings.scaled.tier.pow(exp.sub(1)))).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier.pow(exp.sub(1))).pow(exp.pow(-1)).add(1)
 	}
 	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "superscaled")) {
-		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((player.tier.pow(3).div(tmp.scalings.superscaled.tier.pow(2))).pow(2).div(tmp.scalings.scaled.tier)).div(tmp.tiers.fp).pow(2))
-		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier).sqrt().times(tmp.scalings.superscaled.tier.pow(2)).cbrt().add(1)
+		let power2 = tmp.scalingPower.superscaled.tier
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.tier
+		let exp = ExpantaNum.pow(2, power)
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((player.tier.pow(exp2).div(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.tier.pow(exp.sub(1)))).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.tier.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 	}
 	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "hyper")) {
-		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((ExpantaNum.pow(1.25, player.tier.div(tmp.scalings.hyper.tier)).times(tmp.scalings.hyper.tier).pow(3).div(tmp.scalings.superscaled.tier.pow(2))).pow(2).div(tmp.scalings.scaled.tier)).div(tmp.tiers.fp).pow(2))
-		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier).sqrt().times(tmp.scalings.superscaled.tier.pow(2)).cbrt().div(tmp.scalings.hyper.tier).max(1).logBase(1.25).times(tmp.scalings.hyper.tier).add(1)
+		let power3 = tmp.scalingPower.hyper.tier
+		let base3 = ExpantaNum.pow(1.25, power3)
+		let power2 = tmp.scalingPower.superscaled.tier
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.tier
+		let exp = ExpantaNum.pow(2, power)
+		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(((ExpantaNum.pow(base3, player.tier.div(tmp.scalings.hyper.tier)).times(tmp.scalings.hyper.tier).pow(exp2).div(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.tier.pow(exp.sub(1)))).div(tmp.tiers.fp).pow(2))
+		tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).times(tmp.scalings.scaled.tier.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.tier.pow(exp2.sub(1))).pow(exp2).div(tmp.scalings.hyper.tier).max(1).logBase(base3).times(tmp.scalings.hyper.tier).add(1)
 	}
 	
 	tmp.tiers.desc = player.tier.lt(Number.MAX_VALUE)?(TIER_DESCS[player.tier.toNumber()]?TIER_DESCS[player.tier.toNumber()]:DEFAULT_TIER_DESC):DEFAULT_TIER_DESC
@@ -376,12 +399,18 @@ function updateTemp() {
 	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.div(tmp.rf.fp).pow(1.1))).round()
 	tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).add(1).floor()
 	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
-		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, (player.rf.pow(2).div(tmp.scalings.scaled.rf)).div(tmp.rf.fp).pow(1.1))).round()
-		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf).sqrt().plus(1).floor()
+		let power = tmp.scalingPower.scaled.rf
+		let exp = ExpantaNum.pow(2, power)
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, (player.rf.pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
 	}
 	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "superscaled")) {
-		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((player.rf.pow(3).div(tmp.scalings.superscaled.rf.pow(2))).pow(2).div(tmp.scalings.scaled.rf)).div(tmp.rf.fp).pow(1.1))).round()
-		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf).sqrt().times(tmp.scalings.superscaled.rf.pow(2)).cbrt().plus(1).floor()
+		let power2 = tmp.scalingPower.superscaled.rf
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.rf
+		let exp = ExpantaNum.pow(2, power)
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((player.rf.pow(exp2).div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rf.pow(exp2.sub(1))).pow(exp2.pow(-1)).plus(1).floor()
 	}
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
@@ -542,12 +571,18 @@ function updateTemp() {
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1)
 		if (tmp.scaling.active("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "scaled")) {
-			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, (player.pathogens.upgrades[i].pow(3).div(tmp.scalings.scaled.pathogenUpg.pow(2)))))
-			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(2)).cbrt().add(1)
+			let power = tmp.scalingPower.scaled.pathogenUpg
+			let exp = ExpantaNum.pow(3, power)
+			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, (player.pathogens.upgrades[i].pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
+			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).add(1)
 		}
 		if (tmp.scaling.active("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "superscaled")) {
-			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(5).div(tmp.scalings.superscaled.pathogenUpg.pow(4))).pow(3).div(tmp.scalings.scaled.pathogenUpg.pow(2)))))
-			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(2)).cbrt().times(tmp.scalings.superscaled.pathogenUpg.pow(4)).pow(0.2).add(1)
+			let power2 = tmp.scalingPower.superscaled.pathogenUpg
+			let exp2 = ExpantaNum.pow(5, power2)
+			let power = tmp.scalingPower.scaled.pathogenUpg
+			let exp = ExpantaNum.pow(3, power)
+			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(exp2).div(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
+			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 		}
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
@@ -614,8 +649,10 @@ function updateTemp() {
 	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(10)
 	tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).plus(1)
 	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
-		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(2).div(tmp.scalings.scaled.darkCore).div(50).plus(1))).times(10)
-		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore).sqrt().add(1)
+		let power = tmp.scalingPower.scaled.darkCore
+		let exp = ExpantaNum.pow(2, power)
+		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(exp).div(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).div(50).plus(1))).times(10)
+		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).add(1)
 	}
 	tmp.dc.buyCore = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
