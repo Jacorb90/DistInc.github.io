@@ -52,7 +52,7 @@ function showNum(val) {
 	return notations[player.options.not](new ExpantaNum(val), player.options.sf-1, 2)
 }
 
-function decimalPlaces(value, places, base) {
+function decimalPlaces(value, places, base=10) {
 	// Taken from ExpantaNum.js
 	var len=places+1;
     var numDigits=Math.ceil(Math.log10(Math.abs(value)));
