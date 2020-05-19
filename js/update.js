@@ -830,3 +830,27 @@ function updateHTML() {
 	tmp.el.body.changeStyle("background", tmp.bc)
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
 }
+
+function updateBeforeTick() {
+	updateTemp()
+	updateHTML()
+}
+
+function updateAfterTick() {
+	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
+	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
+	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
+	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
+	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	if (player.options.autoSave && saveTimer>=AUTOSAVE_TIME) {
+		tmp.options.save()
+		saveTimer = 0
+	}
+	if (tmp.modes.absurd.active && !reloaded) {
+		gameWindow.resizeTo(Math.random()*400, Math.random()*400)
+		gameWindow.moveTo(Math.random()*1000, Math.random()*200)
+	}
+	updateTabs()
+	if (player.tab=="options") updateOptionsTabs()
+	updateAchievements()
+}
