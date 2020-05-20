@@ -41,7 +41,7 @@ function setupHTML() {
 		table+="<tr id='trRow"+r+"'>"
 		for (let c=1;c<=5;c++) {
 			let id=(r-1)*5+c
-			table+="<td><button id='tr"+id+"' class='btn locked' onclick='tmp.tr.upg["+id+"]()'></button></td>"
+			table+="<td><button id='tr"+id+"' class='btn locked' onclick='tmp.tr.upg["+id+"]()' style='height: 140px;'></button></td>"
 			table+="</td>"
 		}
 		table+="</tr>"
@@ -69,7 +69,7 @@ function setupHTML() {
 		data += "<table><tr>"
 		for (let c=1;c<=r;c++) {
 			pID++
-			data+="<td><button id='pth"+pID+"' class='btn locked' onclick='tmp.pathogens["+pID+"].buy()'></button></td>"
+			data+="<td><button id='pth"+pID+"' class='btn locked' onclick='tmp.pathogens["+pID+"].buy()' style='height: 150px;'></button></td>"
 		}
 		data += "</tr></table>"
 	}
