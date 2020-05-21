@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	
+	<!-- Initial Stuff -->
 	<script type="text/javascript" src="js/jQuery.min.js"></script>
 	<script type="text/javascript" src="js/notify.min.js"></script>
 	<script type="text/javascript" src="js/classes/Notifier.js"></script>
 	<script type="text/javascript" src="js/window.js"></script>
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
-	<script type="text/javascript" src="js/constants.js"></script>
+	
+	<!-- Constants -->
+	<script type="text/javascript" src="js/constants/default.js"></script>
+	<script type="text/javascript" src="js/constants/format.js"></script>
+	<script type="text/javascript" src="js/constants/rankTier.js"></script>
+	<script type="text/javascript" src="js/constants/layers.js"></script>
+	<script type="text/javascript" src="js/constants/tabs.js"></script>
+	<script type="text/javascript" src="js/constants/achievements.js"></script>
+	<script type="text/javascript" src="js/constants/automation.js"></script>
+	<script type="text/javascript" src="js/constants/tr.js"></script>
+	<script type="text/javascript" src="js/constants/collapse.js"></script>
+	<script type="text/javascript" src="js/constants/modes.js"></script>
+	<script type="text/javascript" src="js/constants/pathogens.js"></script>
+	<script type="text/javascript" src="js/constants/scaling.js"></script>
+	<script type="text/javascript" src="js/constants/options_notations.js"></script>
+	<script type="text/javascript" src="js/constants/dc.js"></script>
+	<script type="text/javascript" src="js/constants/temp_data.js"></script>
+	
+	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
 	<script type="text/javascript" src="js/classes/Mode.js"></script>
+	
+	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>
+	
+	<!-- Functions -->
 	<script type="text/javascript" src="js/functions/formatting.js"></script>
 	<script type="text/javascript" src="js/functions/tabs.js"></script>
 	<script type="text/javascript" src="js/functions/achievements.js"></script>
 	<script type="text/javascript" src="js/functions/important.js"></script>
 	<script type="text/javascript" src="js/functions/tr.js"></script>
 	<script type="text/javascript" src="js/functions/misc.js"></script>
+	
+	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
 	<script type="text/javascript" src="js/classes/Achievement.js"></script>
 	<script type="text/javascript" src="js/classes/Robot.js"></script>
+	
+	<!-- Main Game -->
 	<script type="text/javascript" src="js/game.js"></script>
+	
+	<!-- Temp Data -->
 	<script type="text/javascript" src="js/temp/elements.js"></script>
 	<script type="text/javascript" src="js/temp/options.js"></script>
 	<script type="text/javascript" src="js/temp/scaling.js"></script>
@@ -38,6 +68,8 @@
 	<script type="text/javascript" src="js/temp/dc.js"></script>
 	<script type="text/javascript" src="js/temp/misc.js"></script>
 	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
+	
+	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>
 	<title>Distance Incremental</title>
 	<link rel="icon" href="images/game_icon.ico" type="image/icon type">
@@ -159,14 +191,14 @@
 		You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
 		<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
 		You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
-		<table id="cmTable"></table>
+		<table id="cmTable"></table><br><br>
 	</div>
 	<div id="pathogens" class="tab" style="display: none;">
 		<span id="tdeEff"></span>
 		You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br><br>
 		<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
 		<span id="pthUpgPow" class="grosstxt"></span>
-		<div id="pthUpgs"></div>
+		<div id="pthUpgs"></div><br><br>
 	</div>
 	<div id="dc" class="tab" style="display: none;">
 		Dark Flow: <span id="darkFlow" style="font-weight: bold;"></span>x<br>
