@@ -13,37 +13,30 @@ var ddState = "none"
 var notifier = new Notifier();
 var saveTimer = 0
 
-// Game Loop
+// Game Loops
 
-function gameLoop(diff) {
-	updateTemp()
-	updateHTML()
+function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber()
 	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
-	diff = diff.times(tmp.timeSpeed)
-	if (player.tr.active) {
-		player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
-		diff = diff.times(-1)
-	} else if (tmp.ach[72].has && player.tr.unl) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff.div(2)))
+}
+
+function tickWithTR(diff) {
 	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel).max(0)
 	player.distance = player.distance.plus(player.velocity.times(diff)).max(0)
-	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
 	if (player.automation.unl) autoTick(diff)
-	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
-	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
-	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
-	if (player.distance.gte(DC_UNL)) player.dc.unl = true
-	if (player.options.autoSave && saveTimer>=AUTOSAVE_TIME) {
-		tmp.options.save()
-		saveTimer = 0
-	}
-	if (tmp.modes.absurd.active && !reloaded) {
-		gameWindow.resizeTo(Math.random()*400, Math.random()*400)
-		gameWindow.moveTo(Math.random()*1000, Math.random()*200)
-	}
-	updateTabs()
-	if (player.tab=="options") updateOptionsTabs()
-	updateAchievements()
+}
+
+function tickWithTS(diff) {
+	if (player.tr.active) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
+	else if (tmp.ach[72].has && player.tr.unl) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff.div(2)))
+	tickWithTR(diff.times(player.tr.active?(-1):1))
+}
+
+function gameLoop(diff) {
+	updateBeforeTick()
+	tickWithoutTS(diff)
+	tickWithTS(diff.times(tmp.timeSpeed))
+	updateAfterTick()
 }

@@ -1,0 +1,30 @@
+function updateTempRF() {
+	tmp.rf = {}
+	tmp.rf.fp = new ExpantaNum(1)
+	tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, player.rf.div(tmp.rf.fp).pow(1.1))).round()
+	tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).add(1).floor()
+	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
+		let power = tmp.scalingPower.scaled.rf
+		let exp = ExpantaNum.pow(2, power)
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, (player.rf.pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+	}
+	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "superscaled")) {
+		let power2 = tmp.scalingPower.superscaled.rf
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.rf
+		let exp = ExpantaNum.pow(2, power)
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((player.rf.pow(exp2).div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rf.pow(exp2.sub(1))).pow(exp2.pow(-1)).plus(1).floor()
+	}
+	tmp.rf.can = player.rockets.gte(tmp.rf.req)
+	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
+	tmp.rf.pow = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1)
+	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
+	if (tmp.modes.hard.active) tmp.rf.eff = tmp.rf.eff.sub(0.02)
+	tmp.rf.onReset = function(prev) {
+		if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10)
+		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)
+	}
+}

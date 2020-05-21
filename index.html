@@ -1,22 +1,76 @@
 <!DOCTYPE html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	
+	<!-- Initial Stuff -->
 	<script type="text/javascript" src="js/jQuery.min.js"></script>
 	<script type="text/javascript" src="js/notify.min.js"></script>
 	<script type="text/javascript" src="js/classes/Notifier.js"></script>
 	<script type="text/javascript" src="js/window.js"></script>
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
-	<script type="text/javascript" src="js/constants.js"></script>
+	
+	<!-- Constants -->
+	<script type="text/javascript" src="js/constants/default.js"></script>
+	<script type="text/javascript" src="js/constants/format.js"></script>
+	<script type="text/javascript" src="js/constants/rankTier.js"></script>
+	<script type="text/javascript" src="js/constants/layers.js"></script>
+	<script type="text/javascript" src="js/constants/tabs.js"></script>
+	<script type="text/javascript" src="js/constants/achievements.js"></script>
+	<script type="text/javascript" src="js/constants/automation.js"></script>
+	<script type="text/javascript" src="js/constants/tr.js"></script>
+	<script type="text/javascript" src="js/constants/collapse.js"></script>
+	<script type="text/javascript" src="js/constants/modes.js"></script>
+	<script type="text/javascript" src="js/constants/pathogens.js"></script>
+	<script type="text/javascript" src="js/constants/scaling.js"></script>
+	<script type="text/javascript" src="js/constants/options_notations.js"></script>
+	<script type="text/javascript" src="js/constants/dc.js"></script>
+	<script type="text/javascript" src="js/constants/temp_data.js"></script>
+	
+	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
 	<script type="text/javascript" src="js/classes/Mode.js"></script>
+	
+	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>
-	<script type="text/javascript" src="js/functions.js"></script>
+	
+	<!-- Functions -->
+	<script type="text/javascript" src="js/functions/formatting.js"></script>
+	<script type="text/javascript" src="js/functions/tabs.js"></script>
+	<script type="text/javascript" src="js/functions/achievements.js"></script>
+	<script type="text/javascript" src="js/functions/important.js"></script>
+	<script type="text/javascript" src="js/functions/tr.js"></script>
+	<script type="text/javascript" src="js/functions/misc.js"></script>
+	
+	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
 	<script type="text/javascript" src="js/classes/Achievement.js"></script>
 	<script type="text/javascript" src="js/classes/Robot.js"></script>
+	
+	<!-- Main Game -->
 	<script type="text/javascript" src="js/game.js"></script>
-	<script type="text/javascript" src="js/temp.js"></script>
+	
+	<!-- Temp Data -->
+	<script type="text/javascript" src="js/temp/elements.js"></script>
+	<script type="text/javascript" src="js/temp/options.js"></script>
+	<script type="text/javascript" src="js/temp/scaling.js"></script>
+	<script type="text/javascript" src="js/temp/effects.js"></script>
+	<script type="text/javascript" src="js/temp/early_game.js"></script>
+	<script type="text/javascript" src="js/temp/ranks.js"></script>
+	<script type="text/javascript" src="js/temp/tiers.js"></script>
+	<script type="text/javascript" src="js/temp/rockets.js"></script>
+	<script type="text/javascript" src="js/temp/special.js"></script>
+	<script type="text/javascript" src="js/temp/rf.js"></script>
+	<script type="text/javascript" src="js/temp/auto.js"></script>
+	<script type="text/javascript" src="js/temp/tr.js"></script>
+	<script type="text/javascript" src="js/temp/collapse.js"></script>
+	<script type="text/javascript" src="js/temp/pathogens.js"></script>
+	<script type="text/javascript" src="js/temp/dc.js"></script>
+	<script type="text/javascript" src="js/temp/misc.js"></script>
+	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
+	
+	<!-- Update -->
+	<script type="text/javascript" src="js/update.js"></script>
 	<title>Distance Incremental</title>
 	<link rel="icon" href="images/game_icon.ico" type="image/icon type">
 </head>
@@ -130,87 +184,21 @@
 	<div id="tr" class="tab" style="display: none;">
 		<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
 		You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
-		<table>
-			<tr>
-				<td><button id="tr1" class="btn locked" onclick="tmp.tr.upg[1]()"></button></td>
-				<td><button id="tr2" class="btn locked" onclick="tmp.tr.upg[2]()"></button></td>
-				<td><button id="tr3" class="btn locked" onclick="tmp.tr.upg[3]()"></button></td>
-				<td><button id="tr4" class="btn locked" onclick="tmp.tr.upg[4]()"></button></td>
-				<td><button id="tr5" class="btn locked" onclick="tmp.tr.upg[5]()"></button></td>
-			</tr>
-			<tr>
-				<td><button id="tr6" class="btn locked" onclick="tmp.tr.upg[6]()"></button></td>
-				<td><button id="tr7" class="btn locked" onclick="tmp.tr.upg[7]()"></button></td>
-				<td><button id="tr8" class="btn locked" onclick="tmp.tr.upg[8]()"></button></td>
-				<td><button id="tr9" class="btn locked" onclick="tmp.tr.upg[9]()"></button></td>
-				<td><button id="tr10" class="btn locked" onclick="tmp.tr.upg[10]()"></button></td>
-			</tr>
-			<tr id="trRow3">
-				<td><button id="tr11" class="btn locked" onclick="tmp.tr.upg[11]()"></button></td>
-				<td><button id="tr12" class="btn locked" onclick="tmp.tr.upg[12]()"></button></td>
-				<td><button id="tr13" class="btn locked" onclick="tmp.tr.upg[13]()"></button></td>
-				<td><button id="tr14" class="btn locked" onclick="tmp.tr.upg[14]()"></button></td>
-				<td><button id="tr15" class="btn locked" onclick="tmp.tr.upg[15]()"></button></td>
-			</tr>
-		</table>
+		<table id="trTable"></table>
 	</div>
 	<div id="collapse" class="tab" style="display: none;">
 		<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers <span id="cadaverGainSC"></span></button><br><br>
 		You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
 		<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
 		You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
-		<table>
-			<tr>
-				<td id="lem1" class="msCont r"></td>
-				<td id="lem2" class="msCont r"></td>
-				<td id="lem3" class="msCont r"></td>
-				<td id="lem4" class="msCont r"></td>
-			</tr>
-			<tr>
-				<td id="lem5" class="msCont r"></td>
-				<td id="lem6" class="msCont r"></td>
-				<td id="lem7" class="msCont r"></td>
-				<td id="lem8" class="msCont r"></td>
-			</tr>
-			<tr>
-				<td id="lem9" class="msCont r"></td>
-				<td id="lem10" class="msCont r"></td>
-				<td id="lem11" class="msCont r"></td>
-				<td id="lem12" class="msCont r"></td>
-			</tr>
-		</table>
+		<table id="cmTable"></table><br><br>
 	</div>
 	<div id="pathogens" class="tab" style="display: none;">
 		<span id="tdeEff"></span>
 		You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br><br>
 		<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
 		<span id="pthUpgPow" class="grosstxt"></span>
-		<table>
-			<tr>
-				<td><button id="pth1" class="btn locked" onclick="tmp.pathogens[1].buy()"></button></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td><button id="pth2" class="btn locked" onclick="tmp.pathogens[2].buy()"></button></td>
-				<td><button id="pth3" class="btn locked" onclick="tmp.pathogens[3].buy()"></button></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td><button id="pth4" class="btn locked" onclick="tmp.pathogens[4].buy()"></button></td>
-				<td><button id="pth5" class="btn locked" onclick="tmp.pathogens[5].buy()"></button></td>
-				<td><button id="pth6" class="btn locked" onclick="tmp.pathogens[6].buy()"></button></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td><button id="pth7" class="btn locked" onclick="tmp.pathogens[7].buy()"></button></td>
-				<td><button id="pth8" class="btn locked" onclick="tmp.pathogens[8].buy()"></button></td>
-				<td><button id="pth9" class="btn locked" onclick="tmp.pathogens[9].buy()"></button></td>
-				<td><button id="pth10" class="btn locked" onclick="tmp.pathogens[10].buy()"></button></td>
-			</tr>
-		</table>
+		<div id="pthUpgs"></div><br><br>
 	</div>
 	<div id="dc" class="tab" style="display: none;">
 		Dark Flow: <span id="darkFlow" style="font-weight: bold;"></span>x<br>
