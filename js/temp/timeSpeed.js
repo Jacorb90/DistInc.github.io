@@ -32,4 +32,5 @@ function updateTempTimeSpeed() {
 	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff)
 	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1)
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5)
+	if (tmp.inf.upgs.has("1;1")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["1;1"]())
 }

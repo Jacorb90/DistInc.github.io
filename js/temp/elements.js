@@ -89,7 +89,7 @@ function updateHTML() {
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
-	tmp.el.trRow3.changeStyle("display", player.dc.unl)
+	tmp.el.trRow3.setDisplay(player.dc.unl)
 	
 	// Universal Collapse
 	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
@@ -132,6 +132,20 @@ function updateHTML() {
 	// Infinity
 	tmp.el.endorsements.setTxt(showNum(player.inf.endorsements))
 	tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req))
+	tmp.el.knowledge.setTxt(showNum(player.inf.knowledge))
+	tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected))
+	for (let r=1;r<=INF_UPGS.rows;r++) {
+		for (let c=1;c<=INF_UPGS.cols;c++) {
+			let id=r+";"+c
+			let state = ""
+			if (INF_UPGS.repealed[id]?INF_UPGS.repealed[id].some(x => tmp.inf.upgs.has(x)):false) state="repealed"
+			else if (!tmp.inf.upgs.canBuy(id)) state="locked"
+			else if (tmp.inf.upgs.has(id)) state = "bought"
+			else if (player.inf.knowledge.gte(INF_UPGS.costs[id])) state="unbought"
+			else state="locked"
+			tmp.el["inf"+id].setClasses({btn: true, inf: state=="unbought", locked: state=="locked", bought: state=="bought", repealed: state=="repealed"})
+		}
+	}
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))

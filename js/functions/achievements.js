@@ -65,4 +65,5 @@ function updateAchievements() {
 	if (player.rf.gte(75)) tmp.ach[78].grant()
 		
 	if (player.inf.unl) tmp.ach[81].grant()
+	if (player.inf.knowledge.gte(9000.1)) tmp.ach[82].grant()
 }

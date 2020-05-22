@@ -66,6 +66,7 @@ const ACH_DATA = {
 		78: "Pew Pew Pew",
 		
 		81: "Beyond the World of Normality",
+		82: "HYAAAAA!",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -132,6 +133,7 @@ const ACH_DATA = {
 		78: "Reach showNum(75) normal Rocket Fuel.",
 		
 		81: "Get endorsed by Infinity.",
+		82: "Reach showNum(9000.1) knowledge.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

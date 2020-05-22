@@ -22,6 +22,7 @@ function tickWithoutTS(diff) {
 	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
+	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.inf.knowledgeGain.times(diff))
 }
 
 function tickWithTR(diff) {

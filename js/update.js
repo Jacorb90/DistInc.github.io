@@ -75,6 +75,19 @@ function setupHTML() {
 		data += "</tr></table>"
 	}
 	pthUpgs.setHTML(data)
+	
+	// Infinity Upgrade Table
+	let infTable = new Element("infUpgs")
+	table = ""
+	for (let r=1;r<=INF_UPGS.rows;r++) {
+		table+="<tr>"
+		for (let c=1;c<=INF_UPGS.cols;c++) {
+			let id=r+";"+c
+			table+="<td><button id='inf"+id+"' class='btn locked' onmouseover='tmp.inf.upgs.hover(&quot;"+id+"&quot;)' onclick='tmp.inf.upgs.buy(&quot;"+id+"&quot;)'>inf"+id+"</button></td>"
+		}
+		table+="</tr>"
+	}
+	infTable.setHTML(table)
 }
 
 function updateBeforeTick() {
