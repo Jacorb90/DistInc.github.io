@@ -4,6 +4,7 @@ class Layer {
 		this.avail = avail
 		this.type = type
 		this.spec = !(!spec)
+		this.addS = this.name=="rank"||this.name=="tier"
 	}
 	
 	get gain() {
@@ -23,7 +24,7 @@ class Layer {
 		if (!(this.type=="forced"||this.type=="semi-forced")) return new ExpantaNum(0)
 		if (!this.avail) return new ExpantaNum(0)
 		if (this.name=="rf") return tmp[this.name].bulk.floor()
-		else return tmp[this.name+"s"].bulk.floor()
+		else return tmp[this.name+(this.addS?"s":"")].bulk.floor()
 	}
 	
 	reset(force=false) {

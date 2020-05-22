@@ -63,4 +63,6 @@ function updateAchievements() {
 	if (player.rockets.gte(1e100)) tmp.ach[76].grant()
 	if (player.automation.scraps.gte(1e80)) tmp.ach[77].grant()
 	if (player.rf.gte(75)) tmp.ach[78].grant()
+		
+	if (player.inf.unl) tmp.ach[81].grant()
 }

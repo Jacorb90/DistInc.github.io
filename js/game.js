@@ -12,6 +12,8 @@ var reloaded = false
 var ddState = "none"
 var notifier = new Notifier();
 var saveTimer = 0
+var showContainer = true
+var infActive = false
 
 // Game Loops
 
@@ -36,7 +38,9 @@ function tickWithTS(diff) {
 
 function gameLoop(diff) {
 	updateBeforeTick()
-	tickWithoutTS(diff)
-	tickWithTS(diff.times(tmp.timeSpeed))
+	if (showContainer) {
+		tickWithoutTS(diff)
+		tickWithTS(diff.times(tmp.timeSpeed))
+	}
 	updateAfterTick()
 }

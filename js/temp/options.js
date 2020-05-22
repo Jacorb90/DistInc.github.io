@@ -1,6 +1,7 @@
 function updateTempOptions() {
 	tmp.options = {}
 	tmp.options.save = function(sav=player) { 
+		if (!showContainer) return
 		localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav))))
 		notifier.success("Game saved!")
 	}

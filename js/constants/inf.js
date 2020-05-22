@@ -1,0 +1,1 @@
+const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)

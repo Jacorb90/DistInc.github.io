@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 7,
+	rows: 8,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -64,6 +64,8 @@ const ACH_DATA = {
 		76: "They have space too??!!",
 		77: "Trash is life",
 		78: "Pew Pew Pew",
+		
+		81: "Beyond the World of Normality",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -128,6 +130,8 @@ const ACH_DATA = {
 		76: "Reach showNum(1e100) Rockets.",
 		77: "Reach showNum(1e80) Scraps.",
 		78: "Reach showNum(75) normal Rocket Fuel.",
+		
+		81: "Get endorsed by Infinity.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -170,5 +174,7 @@ const ACH_DATA = {
 		72: "You gain Time Cubes without Reversing Time, however only at half the rate.",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
+		
+		81: "Keep automation stuff on all resets.",
 	},
 }

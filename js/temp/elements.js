@@ -65,7 +65,7 @@ function updateHTML() {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
 	}
-	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5))
+	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5)||player.automation.robots.fuelbot[1].gt(0))
 	tmp.el.robotTab.setDisplay(player.automation.open!="none")
 	tmp.el.robotName.setTxt(capitalFirst(player.automation.open))
 	tmp.el.robotInterval.setTxt(player.automation.open=="none"?"":formatTime(tmp.auto[player.automation.open].interval))
@@ -129,8 +129,13 @@ function updateHTML() {
 	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
 	tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow))
 	
+	// Infinity
+	tmp.el.endorsements.setTxt(showNum(player.inf.endorsements))
+	tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req))
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
+	tmp.el.mainContainer.setDisplay(showContainer)
 }

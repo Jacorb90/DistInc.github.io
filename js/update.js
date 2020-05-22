@@ -14,6 +14,7 @@ function updateTemp() {
 	updateTempCollapse()
 	updateTempPathogens()
 	updateTempDC()
+	updateTempInf()
 	updateTempSC()
 	updateTempMisc()
 	updateTempTimeSpeed()
@@ -82,11 +83,7 @@ function updateBeforeTick() {
 }
 
 function updateAfterTick() {
-	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
-	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
-	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
-	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
-	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	updateUnlocks()
 	if (player.options.autoSave && saveTimer>=AUTOSAVE_TIME) {
 		tmp.options.save()
 		saveTimer = 0
@@ -98,4 +95,13 @@ function updateAfterTick() {
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()
+}
+
+function updateUnlocks() {
+	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
+	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
+	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
+	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
+	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	if (player.distance.gte(tmp.inf.req) && !infActive) tmp.inf.forceReset()
 }

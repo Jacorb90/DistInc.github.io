@@ -8,4 +8,5 @@ const TABBTN_SHOWN = {
 	collapse: function() { return player.collapse.unl },
 	pathogens: function() { return player.pathogens.unl },
 	dc: function() { return player.dc.unl },
+	inf: function() { return player.inf.unl },
 }
