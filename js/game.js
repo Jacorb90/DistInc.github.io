@@ -23,6 +23,7 @@ function tickWithoutTS(diff) {
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
 	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.inf.knowledgeGain.times(diff))
+	if (tmp.inf.upgs.has("2;4")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
 }
 
 function tickWithTR(diff) {

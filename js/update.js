@@ -88,6 +88,18 @@ function setupHTML() {
 		table+="</tr>"
 	}
 	infTable.setHTML(table)
+	
+	// Automators
+	let au = new Element("automator")
+	autos = ""
+	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
+		autos+="<div id='automatorDiv-"+Object.keys(AUTOMATORS)[i]+"'>"+capitalFirst(Object.keys(AUTOMATORS)[i])+": <input id='automator-"+Object.keys(AUTOMATORS)[i]+"' type='checkbox'></input></div><br>"
+	}
+	au.setHTML(autos)
+	for (let i=0;i<Object.keys(player.automators).length;i++) {
+		let el = new Element("automator-"+Object.keys(player.automators)[i])
+		el.el.checked = Object.values(player.automators)[i]
+	}
 }
 
 function updateBeforeTick() {

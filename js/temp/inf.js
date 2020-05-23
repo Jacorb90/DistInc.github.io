@@ -1,10 +1,31 @@
 function updateTempInf() {
 	if (tmp.inf) tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
 	
+	// Unrepealed Infinity Upgrades
+	tmp.infUr = []
+	if (tmp.inf) if (tmp.inf.upgs.has("4;4")) {
+		tmp.infUr.push("2;1")
+		tmp.infUr.push("2;2")
+		tmp.infUr.push("2;3")
+		tmp.infUr.push("3;2")
+	}
+	
 	tmp.inf = {}
 	
 	// Infinity Upgrades
 	tmp.inf.upgs = {}
+	tmp.inf.upgs.repealed = function(id) {
+		let rep = INF_UPGS.repealed[id]?INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)):false
+		if (tmp.infUr.includes(id)) rep = false
+		return rep
+	}
+	tmp.inf.upgs.shown = function(id) {
+		let r = parseInt(id.split(";")[0])
+		let c = parseInt(id.split(";")[1])
+		if (INF_UPGS.rowReqs[r]) if (!INF_UPGS.rowReqs[r]()) return false
+		if (INF_UPGS.colReqs[c]) if (!INF_UPGS.colReqs[c]()) return false
+		return true
+	}
 	tmp.inf.upgs.reset = function(force=false) {
 		if (player.inf.upgrades.length==0) return
 		if (!force) if (!confirm("Warning! Doing this will reset your Infinity Upgrades without giving you anything in return, and will force an Infinity reset! Are you sure you want to do this?")) return
@@ -12,7 +33,7 @@ function updateTempInf() {
 		tmp.forceInfReset()
 	}
 	tmp.inf.upgs.has = function(id) {
-		if (INF_UPGS.repealed[id]) if (INF_UPGS.repealed[id].some(x => tmp.inf.upgs.has(x))) return false
+		if (tmp.inf.upgs.repealed(id)) return false
 		return player.inf.upgrades.includes(id)
 	}	
 	tmp.inf.upgs.current = function(id) {
@@ -36,6 +57,7 @@ function updateTempInf() {
 	}
 	tmp.inf.upgs.buy = function(id) {
 		if (!tmp.inf.upgs.canBuy(id)) return
+		if (!tmp.inf.upgs.shown(id)) return
 		if (player.inf.upgrades.includes(id)) return
 		if (player.inf.knowledge.lt(INF_UPGS.costs[id])) return
 		player.inf.knowledge = player.inf.knowledge.sub(INF_UPGS.costs[id])
@@ -54,6 +76,12 @@ function updateTempInf() {
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()
+	if (tmp.scaling.active("endorsements", player.inf.endorsements.max(tmp.inf.bulk), "scaled")) {
+		let power = tmp.scalingPower.scaled.endorsements
+		let exp = ExpantaNum.pow(2, power)
+		tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements.pow(exp).div(tmp.scalings.scaled.endorsements.pow(exp.sub(1)))))
+		if (tmp.inf.bulk.gt(0)) tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).times(tmp.scalings.scaled.endorsements.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+	}
 	tmp.inf.can = player.distance.gte(tmp.inf.req)
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true)
 	tmp.inf.forceReset = function() {
@@ -73,7 +101,8 @@ function updateTempInf() {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
 		}
-		if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1,2,3,4,5,6,7,8,9,10]
+		if (tmp.inf.upgs.has("1;4")) player.tr.upgrades = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+		else if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1,2,3,4,5,6,7,8,9,10]
 		if (tmp.inf.upgs.has("3;1")) {
 			player.collapse.unl = true
 			player.collapse.lifeEssence = new ExpantaNum(10000)

@@ -33,4 +33,7 @@ class Element {
 	
 	changeStyle(type, input) { this.el.style[type] = input }
 	static changeStyle(id, type, input) { new Element(id).changeStyle(type, input) }
+	
+	isChecked() { return this.el.checked }
+	static isChecked(id) { return new Element(id).isChecked() }
 }

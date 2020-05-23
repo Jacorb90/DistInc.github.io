@@ -1,50 +1,80 @@
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
-	rows: 3,
-	cols: 3,
+	rows: 4,
+	cols: 4,
+	rowReqs: {
+		4: function() { return player.inf.endorsements.gte(3) },
+	},
+	colReqs: {
+		4: function() { return player.inf.endorsements.gte(3) },
+	},
 	costs: {
 		"1;1": new ExpantaNum(40),
 		"1;2": new ExpantaNum(200),
 		"1;3": new ExpantaNum(3.5e3),
+		"1;4": new ExpantaNum(1e4),
 		"2;1": new ExpantaNum(200),
 		"2;2": new ExpantaNum(400),
 		"2;3": new ExpantaNum(8e3),
+		"2;4": new ExpantaNum(5e4),
 		"3;1": new ExpantaNum(1e3),
 		"3;2": new ExpantaNum(8e3),
 		"3;3": new ExpantaNum(5e4),
+		"3;4": new ExpantaNum(1e5),
+		"4;1": new ExpantaNum(1e4),
+		"4;2": new ExpantaNum(5e4),
+		"4;3": new ExpantaNum(1e5),
+		"4;4": new ExpantaNum(2.5e5),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
 		"1;2": "Knowledge boosts Rocket gain.",
 		"1;3": "Start with the first 2 rows of Time Reversal upgrades on reset.",
+		"1;4": "Start with all Time Reversal upgrades on reset.",
 		"2;1": "Knowledge boosts the Rocket effect.",
 		"2;2": "Time Speed boosts Knowledge gain at a reduced rate.",
 		"2;3": "Knowledge & Time Cubes synergize with one another.",
+		"2;4": "Gain 1% of Cadaver gain every second.",
 		"3;1": "Start with 10000 Life Essence on reset.",
 		"3;2": "Knowledge & Cadavers synergize with one another.",
 		"3;3": "Pathogen Upgrades are 10% stronger.",
+		"3;4": "Unlock Auto-Pathogen upgrades.",
+		"4;1": "Dark Flow is twice as fast.", 
+		"4;2": "Unlock Auto-Dark Cores.",
+		"4;3": "Scaled Rank scaling is 50% weaker.", 
+		"4;4": "Inf2;1, inf2;2, inf2;3, & inf3;2 are brought back if repealed.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
 		"1;3": ["1;2"],
+		"1;4": ["2;3"],
 		"2;1": ["1;1"],
 		"2;2": ["1;2", "2;1"],
 		"2;3": ["2;2", "1;3"],
+		"2;4": ["1;4"],
 		"3;1": ["2;1"],
 		"3;2": ["2;2", "3;1"],
 		"3;3": ["2;3", "3;2"],
+		"3;4": ["2;4"],
+		"4;1": ["3;2"],
+		"4;2": ["4;1"],
+		"4;3": ["4;2"],
+		"4;4": ["4;3"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
 		"2;3": ["3;2"],
+		"2;4": ["3;2"],
 		"3;2": ["2;1"],
 		"3;3": ["2;2"],
+		"4;2": ["2;3"],
 	},
 	repealed: {
 		"1;2": ["2;2"],
 		"2;1": ["2;2", "3;2"],
 		"2;2": ["3;3"],
-		"3;2": ["2;3"],
+		"2;3": ["4;2"],
+		"3;2": ["2;3", "2;4"],
 	},
 	effects: {
 		"1;1": function() {
@@ -63,7 +93,7 @@ const INF_UPGS = {
 			return ret.max(1)
 		},
 		"2;2": function() {
-			let ret = tmp.timeSpeed.log10().plus(1)
+			let ret = tmp.timeSpeed?tmp.timeSpeed.log10().plus(1):new ExpantaNum(1)
 			return ret
 		},
 		"2;3": function() {

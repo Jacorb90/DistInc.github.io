@@ -62,4 +62,5 @@ const DEFAULT_START = {
 		knowledge: new ExpantaNum(0),
 		upgrades: [],
 	},
+	automators: {},
 }

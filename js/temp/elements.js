@@ -78,6 +78,13 @@ function updateHTML() {
 	}
 	tmp.el.robotMax.setDisplay(tmp.ach[48].has)
 	
+	// Automators
+	
+	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
+		tmp.el["automatorDiv-"+Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]())
+		player.automators[Object.keys(AUTOMATORS)[i]] = (tmp.el["automator-"+Object.keys(AUTOMATORS)[i]].isChecked()&&Object.values(AUTOMATORS)[i]())
+	}
+	
 	// Time Reversal
 	tmp.el.rt.setTxt(tmp.tr.txt)
 	tmp.el.tc.setTxt(showNum(player.tr.cubes))
@@ -89,7 +96,7 @@ function updateHTML() {
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
-	tmp.el.trRow3.setDisplay(player.dc.unl)
+	tmp.el.trRow3.setDisplay(player.dc.unl||tmp.inf.upgs.has("1;4"))
 	
 	// Universal Collapse
 	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
@@ -139,14 +146,16 @@ function updateHTML() {
 		for (let c=1;c<=INF_UPGS.cols;c++) {
 			let id=r+";"+c
 			let state = ""
-			if (INF_UPGS.repealed[id]?INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)):false) state="repealed"
+			if (tmp.inf.upgs.repealed(id)) state="repealed"
 			else if (!tmp.inf.upgs.canBuy(id)) state="locked"
 			else if (tmp.inf.upgs.has(id)) state = "bought"
 			else if (player.inf.knowledge.gte(INF_UPGS.costs[id])) state="unbought"
 			else state="locked"
+			tmp.el["inf"+id].setDisplay(tmp.inf.upgs.shown(id))
 			tmp.el["inf"+id].setClasses({btn: true, inf: state=="unbought", locked: state=="locked", bought: state=="bought", repealed: state=="repealed"})
 		}
 	}
+	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
