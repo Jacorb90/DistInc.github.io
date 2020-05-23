@@ -6,6 +6,7 @@ function updateTempDC() {
 	tmp.dc.allComp = player.dc.matter.plus(1).log10().plus(player.dc.energy.plus(1).log10()).plus(player.dc.fluid.plus(1).log10()).plus(player.dc.cores)
 	tmp.dc.flow = new ExpantaNum(1)
 	if (tmp.ach[75].has) tmp.dc.flow = tmp.dc.flow.times(1.1)
+	if (tmp.ach[83].has) tmp.dc.flow = tmp.dc.flow.times(1.2)
 	if (player.tr.upgrades.includes(11)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr11["dcf"])
 	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr12)
 	tmp.dc.power = new ExpantaNum(1)

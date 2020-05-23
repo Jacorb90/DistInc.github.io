@@ -67,6 +67,7 @@ const ACH_DATA = {
 		
 		81: "Beyond the World of Normality",
 		82: "HYAAAAA!",
+		83: "Infinite Love",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -134,6 +135,7 @@ const ACH_DATA = {
 		
 		81: "Get endorsed by Infinity.",
 		82: "Reach showNum(9000.1) knowledge.",
+		83: "Reach showNum(3) endorsements.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -178,5 +180,6 @@ const ACH_DATA = {
 		75: "Dark Flow is showNum(10)% faster.",
 		
 		81: "Keep automation stuff on all resets.",
+		83: "Dark Flow is showNum(20)% faster.",
 	},
 }

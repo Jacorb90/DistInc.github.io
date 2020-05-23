@@ -53,6 +53,7 @@ function updateLayerMults() {
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
 	if (tmp.ach[65].has) tmp.lm.collapse = tmp.lm.collapse.times(1.4)
 	if (player.tr.upgrades.includes(14)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.tr14["cd"])
+	if (tmp.inf) if (tmp.inf.upgs.has("3;2")) tmp.lm.collapse = tmp.lm.collapse.times(INF_UPGS.effects["3;2"]()["cadavers"])
 	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {
 		tmp.lm.collapse = tmp.lm.collapse.div(2)
 		tmp.clghm = true

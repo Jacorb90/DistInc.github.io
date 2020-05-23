@@ -131,6 +131,7 @@ function updateHTML() {
 	
 	// Infinity
 	tmp.el.endorsements.setTxt(showNum(player.inf.endorsements))
+	tmp.el.knowledgeBase.setTxt(showNum(tmp.inf.knowledgeBase))
 	tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req))
 	tmp.el.knowledge.setTxt(showNum(player.inf.knowledge))
 	tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected))
@@ -138,7 +139,7 @@ function updateHTML() {
 		for (let c=1;c<=INF_UPGS.cols;c++) {
 			let id=r+";"+c
 			let state = ""
-			if (INF_UPGS.repealed[id]?INF_UPGS.repealed[id].some(x => tmp.inf.upgs.has(x)):false) state="repealed"
+			if (INF_UPGS.repealed[id]?INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)):false) state="repealed"
 			else if (!tmp.inf.upgs.canBuy(id)) state="locked"
 			else if (tmp.inf.upgs.has(id)) state = "bought"
 			else if (player.inf.knowledge.gte(INF_UPGS.costs[id])) state="unbought"

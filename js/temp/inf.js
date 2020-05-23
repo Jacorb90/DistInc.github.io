@@ -1,18 +1,23 @@
 function updateTempInf() {
+	if (tmp.inf) tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
+	
 	tmp.inf = {}
 	
 	// Infinity Upgrades
 	tmp.inf.upgs = {}
 	tmp.inf.upgs.reset = function(force=false) {
 		if (player.inf.upgrades.length==0) return
-		if (!force) if (!confirm("Warning! Doing this will reset your Infinity Upgrades without giving you anything in return! Are you sure you want to do this?")) return
+		if (!force) if (!confirm("Warning! Doing this will reset your Infinity Upgrades without giving you anything in return, and will force an Infinity reset! Are you sure you want to do this?")) return
 		player.inf.upgrades = []
+		tmp.forceInfReset()
 	}
 	tmp.inf.upgs.has = function(id) {
 		if (INF_UPGS.repealed[id]) if (INF_UPGS.repealed[id].some(x => tmp.inf.upgs.has(x))) return false
 		return player.inf.upgrades.includes(id)
 	}	
 	tmp.inf.upgs.current = function(id) {
+		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
+		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -22,7 +27,7 @@ function updateTempInf() {
 		let reqData = INF_UPGS.reqs[id]
 		if (reqData === undefined) return true
 		let can = true
-		reqData.map(x => can=(can==true?tmp.inf.upgs.has(x):false))
+		reqData.map(x => can=(can==true?player.inf.upgrades.includes(x):false))
 		return can
 	}
 	tmp.inf.upgs.desc = function(sel) {
@@ -41,8 +46,11 @@ function updateTempInf() {
 	tmp.inf.fp = new ExpantaNum(1)
 	tmp.inf.bc = INF_UNL
 	tmp.inf.emPow = new ExpantaNum(1)
-	tmp.inf.knowledgeGain = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements)
+	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements)
+	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase))
 	if (tmp.inf.upgs.has("2;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;2"]())
+	if (tmp.inf.upgs.has("2;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;3"]()["knowledge"])
+	if (tmp.inf.upgs.has("3;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["3;2"]()["knowledge"])
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()
@@ -64,6 +72,11 @@ function updateTempInf() {
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
+		}
+		if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1,2,3,4,5,6,7,8,9,10]
+		if (tmp.inf.upgs.has("3;1")) {
+			player.collapse.unl = true
+			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
 	}
 }

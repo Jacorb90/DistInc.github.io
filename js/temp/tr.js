@@ -8,6 +8,7 @@ function updateTempTR() {
 	if (tmp.pathogens && player.pathogens.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.pathogens[3].eff)
 	if (tmp.dc) if (player.dc.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.dc.deEff)
 	if (tmp.dc) if (player.tr.upgrades.includes(11)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr11["cg"])
+	if (tmp.inf) if (tmp.inf.upgs.has("2;3")) tmp.tr.cg = tmp.tr.cg.times(INF_UPGS.effects["2;3"]()["cubes"])
 	tmp.tr.txt = player.tr.active?"Bring Time back to normal.":"Reverse Time."
 	tmp.tr.esc = new ExpantaNum(1e20)
 	cubes = player.tr.cubes
