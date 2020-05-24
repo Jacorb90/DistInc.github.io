@@ -71,7 +71,7 @@ function copyToClipboard(str) {
 
 function reload() { 
 	reloaded = true
-	gameWindow = window.open("index.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
+	gameWindow = window.open("main.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
 	gameWindow.location.reload()
 	window.close()
 }

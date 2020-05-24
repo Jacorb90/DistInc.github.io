@@ -51,6 +51,8 @@ function showNum(val) {
 }
 
 function decimalPlaces(value, places, base=10) {
+	if (value>=1e5) return showNum(value)
+	
 	// Taken from ExpantaNum.js
 	var len=places+1;
     var numDigits=Math.ceil(Math.log10(Math.abs(value)));

@@ -65,7 +65,7 @@ function updateHTML() {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
 	}
-	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5)||player.automation.robots.fuelbot[1].gt(0))
+	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5)||(player.automation.robots.fuelbot?player.automation.robots.fuelbot[1].gt(0):false))
 	tmp.el.robotTab.setDisplay(player.automation.open!="none")
 	tmp.el.robotName.setTxt(capitalFirst(player.automation.open))
 	tmp.el.robotInterval.setTxt(player.automation.open=="none"?"":formatTime(tmp.auto[player.automation.open].interval))

@@ -69,6 +69,10 @@ const ACH_DATA = {
 		82: "HYAAAAA!",
 		83: "Infinite Love",
 		84: "Pointless Automation",
+		85: "I is smort.",
+		86: "Infinity is Broke",
+		87: "No Thoughts",
+		88: "Infinity Likes You",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -138,6 +142,10 @@ const ACH_DATA = {
 		82: "Reach showNum(9000.1) knowledge.",
 		83: "Reach showNum(3) endorsements.",
 		84: "Have a magnitude above showNum(100) for Fuelbot.",
+		85: "Reach showNum(1.79e308) intelligence.",
+		86: "Reach formatDistance(4.4e1026).",
+		87: "Reach showNum(25e9) knowledge.",
+		88: "Reach 10 Endorsements.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -184,5 +192,6 @@ const ACH_DATA = {
 		81: "Keep automation stuff on all resets.",
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
+		88: "Buying Pathogen Upgrades does not spend your Pathogens.",
 	},
 }

@@ -20,6 +20,7 @@ function updateTempPathogens() {
 	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8)
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0))
 	if (tmp.inf) if (tmp.inf.upgs.has("3;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.1)
+	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
 		2: new ExpantaNum(10),
@@ -54,7 +55,7 @@ function updateTempPathogens() {
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
 			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
-			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
+			if (!tmp.ach[88].has) player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
 		tmp.pathogens[i].eff = function() {
 			let bought = player.pathogens.upgrades[i]
@@ -91,7 +92,7 @@ function updateTempPathogens() {
 		for (let i=1;i<=PTH_AMT;i++) {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) continue
 			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk.floor().max(player.pathogens.upgrades[i].plus(1)))
-			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
+			if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
 		}
 	}
 }

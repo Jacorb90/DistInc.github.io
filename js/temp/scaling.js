@@ -30,12 +30,18 @@ function updateTempScaling() {
 	}
 	
 	// Scaling Starts
-	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff)
 	if (player.tr.upgrades.includes(11)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(10)
 	if (player.tr.upgrades.includes(15)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(32)
 	if (player.tr.upgrades.includes(12)) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2)
 	if (player.tr.upgrades.includes(14) && tmp.tr14) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(tmp.tr14["ss"])
+	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff)
+	if (tmp.inf) if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2)
 		
 	// Scaling Strengths
-	if (tmp.inf) if (tmp.inf.upgs.has("4;3")) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.sub(0.5)
+	if (tmp.inf) {
+		if (tmp.inf.upgs.has("4;3")) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(0.5)
+		if (tmp.inf.upgs.has("2;5")) tmp.scalingPower.superscaled.rank = tmp.scalingPower.superscaled.rank.times(0.95)
+		if (tmp.inf.upgs.has("1;5")) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(0.8)
+		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75)
+	}
 }

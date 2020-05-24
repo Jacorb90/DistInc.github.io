@@ -10,6 +10,8 @@ function updateTempDC() {
 	if (player.tr.upgrades.includes(11)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr11["dcf"])
 	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr12)
 	if (tmp.inf) if (tmp.inf.upgs.has("4;1")) tmp.dc.flow = tmp.dc.flow.times(2)
+	if (tmp.inf) if (tmp.inf.upgs.has("5;1")) tmp.dc.flow = tmp.dc.flow.times(2)
+	if (tmp.inf) if (tmp.inf.upgs.has("5;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["5;5"]())
 	tmp.dc.power = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(15)) tmp.dc.power = tmp.dc.power.times(tmp.tr15)
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power))
@@ -42,7 +44,7 @@ function updateTempDC() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
 		if (!player.dc.unl) return
 		player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
-		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor())
+		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0))
 	}
 	tmp.dc.tick = function(diff) {
 		player.dc.matter = player.dc.matter.plus(tmp.dc.dmGain.times(diff).times(tmp.dc.flow))

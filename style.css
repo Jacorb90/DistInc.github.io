@@ -585,6 +585,10 @@ table { margin: auto; }
 	box-shadow: none;
 }
 
+#automator {
+	background-color: #a8a8a8;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;

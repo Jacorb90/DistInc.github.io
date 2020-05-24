@@ -68,4 +68,8 @@ function updateAchievements() {
 	if (player.inf.knowledge.gte(9000.1)) tmp.ach[82].grant()
 	if (player.inf.endorsements.gte(3)) tmp.ach[83].grant() 
 	if (tmp.auto.fuelbot.magnitude.gt(100)) tmp.ach[84].grant()
+	if (player.automation.intelligence.gte(1.79e308)) tmp.ach[85].grant()
+	if (player.distance.gte("4.4e1026")) tmp.ach[86].grant()
+	if (player.inf.knowledge.gte(25e9)) tmp.ach[87].grant()
+	if (player.inf.endorsements.gte(10)) tmp.ach[88].grant() 
 }
