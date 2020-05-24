@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 7,
+	rows: 8,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -64,6 +64,15 @@ const ACH_DATA = {
 		76: "They have space too??!!",
 		77: "Trash is life",
 		78: "Pew Pew Pew",
+		
+		81: "Beyond the World of Normality",
+		82: "HYAAAAA!",
+		83: "Infinite Love",
+		84: "Pointless Automation",
+		85: "I is smort.",
+		86: "Infinity is Broke",
+		87: "No Thoughts",
+		88: "Infinity Likes You",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -128,6 +137,15 @@ const ACH_DATA = {
 		76: "Reach showNum(1e100) Rockets.",
 		77: "Reach showNum(1e80) Scraps.",
 		78: "Reach showNum(75) normal Rocket Fuel.",
+		
+		81: "Get endorsed by Infinity.",
+		82: "Reach showNum(9000.1) knowledge.",
+		83: "Reach showNum(3) endorsements.",
+		84: "Have a magnitude above showNum(100) for Fuelbot.",
+		85: "Reach showNum(1.79e308) intelligence.",
+		86: "Reach formatDistance(4.4e1026).",
+		87: "Reach showNum(25e9) knowledge.",
+		88: "Reach 10 Endorsements.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -170,5 +188,10 @@ const ACH_DATA = {
 		72: "You gain Time Cubes without Reversing Time, however only at half the rate.",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
+		
+		81: "Keep automation stuff on all resets.",
+		83: "Dark Flow is showNum(20)% faster.",
+		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
+		88: "Buying Pathogen Upgrades does not spend your Pathogens.",
 	},
 }

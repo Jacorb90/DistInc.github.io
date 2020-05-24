@@ -4,6 +4,7 @@ const LAYER_RESETS = {
 	rockets: ["distance", "velocity", "rank", "tier"],
 	rf: ["rockets"],
 	collapse: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr"],
+	inf: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr", "automation", "collapse", "pathogens", "dc"],
 }
 
 const LAYER_REQS = {
@@ -12,6 +13,7 @@ const LAYER_REQS = {
 	rockets: ["distance", 5e7],
 	rf: ["rockets", 25],
 	collapse: ["distance", 50*DISTANCES.Mpc],
+	inf: ["distance", new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)]
 }
 
 const LAYER_FP = {
@@ -20,6 +22,7 @@ const LAYER_FP = {
 	rockets: 0.4,
 	rf: 1,
 	collapse: 0.1,
+	inf: 1,
 }
 
 const LAYER_SC = {
@@ -28,4 +31,5 @@ const LAYER_SC = {
 	rockets: new ExpantaNum(1e5),
 	rf: new ExpantaNum(1/0),
 	collapse: new ExpantaNum(100),
+	inf: new ExpantaNum(1/0),
 }

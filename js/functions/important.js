@@ -21,6 +21,7 @@ function simulateTime() {
 }
 
 function autoTick(diff) {
+	// Normal Automation
 	player.automation.scraps = player.automation.scraps.plus(tmp.auto.scrapGain.times(diff)).max(0)
 	player.automation.intelligence = player.automation.intelligence.plus(tmp.auto.intGain.times(diff)).max(0)
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) {
@@ -33,6 +34,10 @@ function autoTick(diff) {
 			}
 		}
 	}
+	
+	// Automators
+	if (player.automators["pathogens"]) tmp.pathogens.maxAll()
+	if (player.automators["cores"]) tmp.dc.maxCores()
 }
 
 function showModeDescs(modes) {

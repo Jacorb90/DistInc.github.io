@@ -20,6 +20,8 @@ function ENString(obj) {
 	ret.dc.energy = new ExpantaNum(ret.dc.energy).toString()
 	ret.dc.fluid = new ExpantaNum(ret.dc.fluid).toString()
 	ret.dc.cores = new ExpantaNum(ret.dc.cores).toString()
+	ret.inf.endorsements = new ExpantaNum(ret.inf.endorsements).toString()
+	ret.inf.knowledge = new ExpantaNum(ret.inf.knowledge).toString()
 	return ret
 }
 
@@ -45,6 +47,8 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.dc.energy = new ExpantaNum(ret.dc.energy)
 	ret.dc.fluid = new ExpantaNum(ret.dc.fluid)
 	ret.dc.cores = new ExpantaNum(ret.dc.cores)
+	ret.inf.endorsements = new ExpantaNum(ret.inf.endorsements)
+	ret.inf.knowledge = new ExpantaNum(ret.inf.knowledge)
     return ret
 }
 
@@ -67,7 +71,7 @@ function copyToClipboard(str) {
 
 function reload() { 
 	reloaded = true
-	gameWindow = window.open("index.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
+	gameWindow = window.open("main.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
 	gameWindow.location.reload()
 	window.close()
 }
@@ -82,3 +86,44 @@ function getAllAchievements() {
 }
 
 function reverseTri(n) { return Math.ceil(0.5*(Math.sqrt(8*n+1)-1)) }
+
+async function showHiddenDiv(data) {
+	if (!showContainer) closeHiddenDiv()
+	
+	showTab(data.tab)
+	showContainer = false
+	let reset = document.createElement("div")
+	reset.style.width = "1%"
+	reset.style.height = "1%"
+	reset.innerHTML = "<br><b>"+data.title+"</b><br><br><span id='resetContainerBody' style='display: none'>"+data.body+"</span>"
+	reset.style["background-color"] = data.color
+	reset.id = "reset"
+	reset.className = "hiddenDiv"
+	
+	let resetContainer = document.createElement("div")
+	resetContainer.style["text-align"] = "center"
+	resetContainer.style.position = "absolute"
+	resetContainer.style.width = "100%"
+	resetContainer.style.height = "100%"
+	resetContainer.id = "resetContainer"
+	resetContainer.appendChild(reset)
+	document.body.appendChild(resetContainer)
+	
+	await sleep(3);
+	document.getElementById("resetContainerBody").style.display = ""
+}
+
+async function closeHiddenDiv() {
+	let element = document.getElementById("resetContainer")
+	if (!element) return
+	document.getElementById("resetContainerBody").style.display = "none"
+	document.getElementById("reset").className = "hiddenDivShrink"
+	await sleep(1.4)
+	element.parentNode.removeChild(element)
+	showContainer = true
+	updateTemp()
+}
+
+function sleep(s) {
+	return new Promise(resolve => setTimeout(resolve, s*1000));
+}

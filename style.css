@@ -125,9 +125,17 @@ body {
 	text-align: center;
 }
 
+.bandBig {
+	width: 100%;
+	height: 95px;
+	text-align: center;
+}
+
 .lb { background-color: #03fcf0; }
 
 .gn { background-color: #4ceb34; }
+
+.or { background-color: #f29327; }
 
 .dgn { background-color: #029c04 !important; }
 
@@ -422,6 +430,9 @@ table { margin: auto; }
 	top:3px;
 	left:2px;
 	box-shadow: none;
+	animation: none;
+	transition-duration: 0s;
+	-webkit-transition-duration: 0s;
 }
 
 .darkcircle {
@@ -494,6 +505,90 @@ table { margin: auto; }
 	animation: dcArrow 1s linear infinite;
 }
 
+.btn.inf {
+	box-shadow: 3px 4px 0px 0px #947435;
+	background: none;
+	background-color:#fac882;
+	border-radius:18px;
+	border:1px solid #c9b29b;
+	display:inline-block;
+	cursor:pointer;
+	color:#6e6657;
+	font-size:12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+	animation: grosstxt 4s ease infinite;
+}
+
+.btn.inf:hover {
+	background: none;
+	background-color:#ffcc5e;
+	color:#6e6657;
+}
+
+.btn.inf:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+.hiddenDiv {
+	text-align: center;
+	vertical-align: center;
+	animation: hiddenDiv 4s ease 1;
+	animation-fill-mode: forwards;
+	margin: 0;
+}
+
+.hiddenDivShrink {
+	text-align: center;
+	vertical-align: center;
+	animation: hiddenDivShrink 2s ease 1;
+	animation-fill-mode: forwards;
+	margin: 0;
+}
+
+.infinity {
+	color: #5e4909;
+	font-weight: bold;
+}
+
+.btn.repealed {
+	box-shadow: 3px 4px 0px 0px #000000;
+	background:linear-gradient(to bottom, black 5%, black 100%);
+	background-color:black;
+	border-radius:18px;
+	border:1px solid #666666;
+	display:inline-block;
+	cursor:not-allowed;
+	color:#ffffff;
+	font-size:12px;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #000000;
+}
+
+.btn.repealed:hover {
+	background:linear-gradient(to bottom, black 5%, black 100%);
+	background-color:black;
+}
+
+.btn.repealed:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+#automator {
+	background-color: #a8a8a8;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -562,5 +657,31 @@ table { margin: auto; }
 	}
 	100% {
 		background-position: 0% 200%;
+	}
+}
+
+@keyframes hiddenDiv {
+	0% {
+		width: 1%;
+		height: 1%;
+		font-size: 0px;
+	}
+	100% {
+		width: 100%;
+		height: 100%;
+		font-size: 30px;
+	}
+}
+
+@keyframes hiddenDivShrink {
+	0% {
+		width: 100%;
+		height: 100%;
+		font-size: 30px;
+	}
+	100% {
+		width: 1%;
+		height: 1%;
+		font-size: 0px;
 	}
 }

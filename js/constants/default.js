@@ -56,4 +56,11 @@ const DEFAULT_START = {
 		fluid: new ExpantaNum(0),
 		cores: new ExpantaNum(0),
 	},
+	inf: {
+		unl: false,
+		endorsements: new ExpantaNum(0),
+		knowledge: new ExpantaNum(0),
+		upgrades: [],
+	},
+	automators: {},
 }

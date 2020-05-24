@@ -51,7 +51,8 @@ notations.standard = function(val, places, locs) {
 }
 
 notations.mixed = function(val, places, locs) {
-	if (val.lt(1e33)) return notations.standard(val, places, locs)
+	if (val.lt(0.1)) return "1/"+notations.mixed(val.pow(-1), places, locs)
+	else if (val.lt(1e33)) return notations.standard(val, places, locs)
 	else return notations.scientific(val, places, locs)
 }
 

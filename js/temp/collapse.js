@@ -18,7 +18,7 @@ function updateTempCollapse() {
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)) return
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff))
-		player.collapse.cadavers = new ExpantaNum(0)
+		if (tmp.inf?!tmp.inf.upgs.has("2;4"):true) player.collapse.cadavers = new ExpantaNum(0)
 	}
 	tmp.collapse.hasMilestone = function(n) { return player.collapse.lifeEssence.gte(ESSENCE_MILESTONES[n].req) }
 	tmp.collapse.onReset = function(prev) {

@@ -38,3 +38,7 @@ const ROBOT_FL = {
 	tierbot: "tiers",
 	fuelbot: "rf",
 }
+const AUTOMATORS = {
+	pathogens: function() { return tmp.inf.upgs.has("3;4") },
+	cores: function() { return tmp.inf.upgs.has("4;2") },
+}

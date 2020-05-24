@@ -14,6 +14,7 @@ function updateTemp() {
 	updateTempCollapse()
 	updateTempPathogens()
 	updateTempDC()
+	updateTempInf()
 	updateTempSC()
 	updateTempMisc()
 	updateTempTimeSpeed()
@@ -74,6 +75,31 @@ function setupHTML() {
 		data += "</tr></table>"
 	}
 	pthUpgs.setHTML(data)
+	
+	// Infinity Upgrade Table
+	let infTable = new Element("infUpgs")
+	table = ""
+	for (let r=1;r<=INF_UPGS.rows;r++) {
+		table+="<tr>"
+		for (let c=1;c<=INF_UPGS.cols;c++) {
+			let id=r+";"+c
+			table+="<td><button id='inf"+id+"' class='btn locked' onmouseover='tmp.inf.upgs.hover(&quot;"+id+"&quot;)' onclick='tmp.inf.upgs.buy(&quot;"+id+"&quot;)'>inf"+id+"</button></td>"
+		}
+		table+="</tr>"
+	}
+	infTable.setHTML(table)
+	
+	// Automators
+	let au = new Element("automator")
+	autos = ""
+	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
+		autos+="<div id='automatorDiv-"+Object.keys(AUTOMATORS)[i]+"'>"+capitalFirst(Object.keys(AUTOMATORS)[i])+": <input id='automator-"+Object.keys(AUTOMATORS)[i]+"' type='checkbox'></input></div><br>"
+	}
+	au.setHTML(autos)
+	for (let i=0;i<Object.keys(player.automators).length;i++) {
+		let el = new Element("automator-"+Object.keys(player.automators)[i])
+		el.el.checked = Object.values(player.automators)[i]
+	}
 }
 
 function updateBeforeTick() {
@@ -82,11 +108,7 @@ function updateBeforeTick() {
 }
 
 function updateAfterTick() {
-	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
-	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
-	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
-	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
-	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	updateUnlocks()
 	if (player.options.autoSave && saveTimer>=AUTOSAVE_TIME) {
 		tmp.options.save()
 		saveTimer = 0
@@ -98,4 +120,13 @@ function updateAfterTick() {
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()
+}
+
+function updateUnlocks() {
+	if (player.distance.gte(ExpantaNum.mul(AUTO_UNL, tmp.auto.lrm))) player.automation.unl = true
+	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
+	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
+	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
+	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	if (player.distance.gte(tmp.inf.req) && !infActive) tmp.inf.forceReset()
 }

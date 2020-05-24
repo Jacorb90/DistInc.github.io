@@ -65,7 +65,7 @@ function updateHTML() {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
 	}
-	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5))
+	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5)||(player.automation.robots.fuelbot?player.automation.robots.fuelbot[1].gt(0):false))
 	tmp.el.robotTab.setDisplay(player.automation.open!="none")
 	tmp.el.robotName.setTxt(capitalFirst(player.automation.open))
 	tmp.el.robotInterval.setTxt(player.automation.open=="none"?"":formatTime(tmp.auto[player.automation.open].interval))
@@ -78,6 +78,13 @@ function updateHTML() {
 	}
 	tmp.el.robotMax.setDisplay(tmp.ach[48].has)
 	
+	// Automators
+	
+	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
+		tmp.el["automatorDiv-"+Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]())
+		player.automators[Object.keys(AUTOMATORS)[i]] = (tmp.el["automator-"+Object.keys(AUTOMATORS)[i]].isChecked()&&Object.values(AUTOMATORS)[i]())
+	}
+	
 	// Time Reversal
 	tmp.el.rt.setTxt(tmp.tr.txt)
 	tmp.el.tc.setTxt(showNum(player.tr.cubes))
@@ -89,7 +96,7 @@ function updateHTML() {
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
-	tmp.el.trRow3.changeStyle("display", player.dc.unl)
+	tmp.el.trRow3.setDisplay(player.dc.unl||tmp.inf.upgs.has("1;4"))
 	
 	// Universal Collapse
 	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
@@ -129,8 +136,30 @@ function updateHTML() {
 	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
 	tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow))
 	
+	// Infinity
+	tmp.el.endorsements.setTxt(showNum(player.inf.endorsements))
+	tmp.el.knowledgeBase.setTxt(showNum(tmp.inf.knowledgeBase))
+	tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req))
+	tmp.el.knowledge.setTxt(showNum(player.inf.knowledge))
+	tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected))
+	for (let r=1;r<=INF_UPGS.rows;r++) {
+		for (let c=1;c<=INF_UPGS.cols;c++) {
+			let id=r+";"+c
+			let state = ""
+			if (tmp.inf.upgs.repealed(id)) state="repealed"
+			else if (!tmp.inf.upgs.canBuy(id)) state="locked"
+			else if (tmp.inf.upgs.has(id)) state = "bought"
+			else if (player.inf.knowledge.gte(INF_UPGS.costs[id])) state="unbought"
+			else state="locked"
+			tmp.el["inf"+id].setDisplay(tmp.inf.upgs.shown(id))
+			tmp.el["inf"+id].setClasses({btn: true, inf: state=="unbought", locked: state=="locked", bought: state=="bought", repealed: state=="repealed"})
+		}
+	}
+	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
+	tmp.el.mainContainer.setDisplay(showContainer)
 }

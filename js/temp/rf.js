@@ -17,6 +17,16 @@ function updateTempRF() {
 		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((player.rf.pow(exp2).div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
 		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rf.pow(exp2.sub(1))).pow(exp2.pow(-1)).plus(1).floor()
 	}
+	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "hyper")) {
+		let power3 = tmp.scalingPower.hyper.rf
+		let base3 = ExpantaNum.pow(1.25, power3)
+		let power2 = tmp.scalingPower.superscaled.rf
+		let exp2 = ExpantaNum.pow(3, power2)
+		let power = tmp.scalingPower.scaled.rf
+		let exp = ExpantaNum.pow(2, power)
+		tmp.rf.req = new ExpantaNum(25).times(ExpantaNum.pow(5, ((ExpantaNum.pow(base3, player.rf.div(tmp.scalings.hyper.rf).sub(1)).times(tmp.scalings.hyper.rf).pow(exp2).div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.rf.pow(exp.sub(1)))).div(tmp.rf.fp).pow(1.1))).round()
+		tmp.rf.bulk = player.rockets.div(25).max(1).logBase(5).pow(1/1.1).times(tmp.rf.fp).times(tmp.scalings.scaled.rf.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.rf.pow(exp2.sub(1))).pow(exp2.pow(-1)).div(tmp.scalings.hyper.rf).max(1).logBase(base3).add(1).times(tmp.scalings.hyper.rf).plus(1).floor()
+	}
 	tmp.rf.can = player.rockets.gte(tmp.rf.req)
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced")
 	tmp.rf.pow = new ExpantaNum(1)
