@@ -589,6 +589,25 @@ table { margin: auto; }
 	background-color: #a8a8a8;
 }
 
+.btn.perk {
+	box-shadow: 3px 4px 0px 0px #d4d137;
+	background:repeating-radial-gradient(circle farthest-corner at center center, #d1e000 0%, #8f8c00 15%, #cae000 30%);
+	background-color:#ffff5c;
+	border-radius:18px;
+	border:1px solid #f5ee76;
+	display:inline-block;
+	cursor:pointer;
+	color:black;
+	font-size:12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+	transition-duration: 5s;
+	animation: perk 6s ease infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -683,5 +702,20 @@ table { margin: auto; }
 		width: 1%;
 		height: 1%;
 		font-size: 0px;
+	}
+}
+
+@keyframes perk {
+	0% {
+		background-size: 100% 100%;
+	}
+	25% {
+		background-size: 110% 110%;
+	}
+	75% {
+		background-size: 90% 90%;
+	}
+	100% {
+		background-size: 100% 100%;
 	}
 }

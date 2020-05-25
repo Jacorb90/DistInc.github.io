@@ -32,7 +32,7 @@ function ENString(obj) {
 
 function transformToEN(obj, sc=DEFAULT_START) {
     let ret = deepCopy(obj)
-	if (ret.version === undefined) ret.inf.ascension = sc.inf.ascension
+	if (ret.version === undefined) ret.inf.ascension = deepCopy(sc.inf.ascension)
     for (const key in sc) if (ret[key]===undefined) ret[key] = deepCopy(sc[key])
 	for (const key in sc.options) if (ret.options[key]===undefined) ret.options[key] = deepCopy(sc.options[key])
 	ret.distance = new ExpantaNum(ret.distance)

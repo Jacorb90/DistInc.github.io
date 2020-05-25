@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 8,
+	rows: 9,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -73,6 +73,8 @@ const ACH_DATA = {
 		86: "Infinity is Broke",
 		87: "No Thoughts",
 		88: "Infinity Likes You",
+		
+		91: "Dark Plus",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -146,6 +148,8 @@ const ACH_DATA = {
 		86: "Reach formatDistance(4.4e1026).",
 		87: "Reach showNum(25e9) knowledge.",
 		88: "Reach 10 Endorsements.",
+		
+		91: "Have a Dark Flow of at least showNum(8e3)x.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

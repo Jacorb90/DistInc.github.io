@@ -72,4 +72,6 @@ function updateAchievements() {
 	if (player.distance.gte("4.4e1026")) tmp.ach[86].grant()
 	if (player.inf.knowledge.gte(25e9)) tmp.ach[87].grant()
 	if (player.inf.endorsements.gte(10)) tmp.ach[88].grant() 
+		
+	if (tmp.dc.flow.gte(8e3)) tmp.ach[91].grant()
 }

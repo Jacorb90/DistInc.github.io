@@ -168,3 +168,4 @@ const INF_TABS = {
 
 // Ascension
 const BASE_PERK_TIME = new ExpantaNum(4)
+const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]

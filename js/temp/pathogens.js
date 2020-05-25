@@ -52,13 +52,18 @@ function updateTempPathogens() {
 			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(exp2).div(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
 			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 		}
+		tmp.pathogens[i].extra = function() {
+			let extra = new ExpantaNum(0)
+			if (tmp.inf) extra = extra.plus(tmp.inf.asc.perkEff(2))
+			return extra
+		}()
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
 			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
 			if (!tmp.ach[88].has) player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
 		tmp.pathogens[i].eff = function() {
-			let bought = player.pathogens.upgrades[i]
+			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra)
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			bought = bought.times(tmp.pathogens.upgPow)
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))

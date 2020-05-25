@@ -130,11 +130,28 @@ function updateTempInf() {
 	// Ascension
 	tmp.inf.asc = {}
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
+	tmp.inf.asc.powerGain = new ExpantaNum(1)
+	tmp.inf.asc.perkStrength = new ExpantaNum(1)
+	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
 	tmp.inf.asc.anyPerkActive = function() { return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0)) }
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
+		if (tmp.inf.asc.perkActive(n)) {
+			player.inf.ascension.time[n-1] = new ExpantaNum(0)
+			return
+		}
 		if (tmp.inf.asc.anyPerkActive()) return
 		player.inf.ascension.time[n-1] = new ExpantaNum(tmp.inf.asc.perkTime)
+	}
+	tmp.inf.asc.perkEff = function(n) {
+		let base = new ExpantaNum([null, 1, 0, 1, 1][n])
+		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)) return base
+		let pow = tmp.inf.asc.perkPower[n]
+		if (n==1) return ExpantaNum.pow(10, pow)
+		else if (n==2) return pow
+		else if (n==3) return ExpantaNum.pow(1e15, pow)
+		else if (n==4) return ExpantaNum.pow(1e10, pow)
+		return undefined
 	}
 }
