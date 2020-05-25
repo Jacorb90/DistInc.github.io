@@ -14,6 +14,7 @@ var notifier = new Notifier();
 var saveTimer = 0
 var showContainer = true
 var infActive = false
+var infTab = "infinity"
 
 // Game Loops
 

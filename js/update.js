@@ -128,5 +128,5 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
 	if (player.distance.gte(DC_UNL)) player.dc.unl = true
-	if (player.distance.gte(tmp.inf.req) && !infActive) tmp.inf.forceReset()
+	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset()
 }

@@ -1,5 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
+	version: 1.0,
 	optionsTab: "saving",
 	achievements: [],
 	options: {

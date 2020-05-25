@@ -240,12 +240,25 @@
 			</table>
 		</div>
 		<div id="inf" class="tab" style="display: none;">
-			<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
-			Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
-			You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
-			<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
-			<div id="infUpgData" class="bandBig or"></div><br><br>
-			<table id="infUpgs"></table>
+			<div class="band or">
+				<table>
+					<tr>
+						<td><button class="btn tb inf" style="visibility: hidden"></button></td>
+					</tr>
+					<tr>
+						<td><button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
+					</tr>
+				</table>
+			</div>
+			<div id="infinity" class="inftab">
+				<div id="endorsementManual"><button class="btn inf" onclick="tmp.inf.layer.reset()">Allow <span class="infinity">Infinity</span> to endorse you.</button><br><br></div>
+				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
+				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
+				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
+				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
+				<div id="infUpgData" class="bandBig or"></div><br><br>
+				<table id="infUpgs"></table>
+			</div>
 		</div>
 	</div>
 </body>

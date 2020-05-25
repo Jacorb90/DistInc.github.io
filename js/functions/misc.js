@@ -49,6 +49,7 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.dc.cores = new ExpantaNum(ret.dc.cores)
 	ret.inf.endorsements = new ExpantaNum(ret.inf.endorsements)
 	ret.inf.knowledge = new ExpantaNum(ret.inf.knowledge)
+	ret.version = Math.max(ret.version, sc.version)
     return ret
 }
 

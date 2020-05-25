@@ -160,3 +160,7 @@ const INF_UPGS = {
 		},
 	},
 }
+
+const INF_TABS = {
+	infinity: function() { return true },
+}

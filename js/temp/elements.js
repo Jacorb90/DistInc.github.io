@@ -156,6 +156,7 @@ function updateHTML() {
 		}
 	}
 	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
+	tmp.el.endorsementManual.setDisplay(player.inf.endorsements.gte(10)&&tmp.inf.can)
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))

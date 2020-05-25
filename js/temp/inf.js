@@ -87,7 +87,10 @@ function updateTempInf() {
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true)
 	tmp.inf.forceReset = function() {
 		infActive = true
-		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>", tab: "inf"})
+		let amActive = player.inf.endorsements.eq(9)
+		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
+		if (amActive) message = "The High God <span class='infinity'>Infinity</span> has amired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>"
+		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: message, tab: "inf"})
 		player.inf.unl = true
 	}
 	tmp.inf.doGain = function() { 
@@ -96,8 +99,8 @@ function updateTempInf() {
 		player.inf.endorsements = player.inf.endorsements.max(m)
 	}
 	tmp.inf.onReset = function(prev) {
-		closeHiddenDiv()
-		infActive = false
+		infActive = true
+		if (!showContainer) closeHiddenDiv()
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
@@ -108,5 +111,18 @@ function updateTempInf() {
 			player.collapse.unl = true
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
+		infActive = false
+	}
+	tmp.inf.updateTabs = function() {
+		let tabs = Element.allFromClass("inftab")
+		for (let i=0;i<tabs.length;i++) {
+			tabs[i].setDisplay(infTab==tabs[i].id)
+			new Element(tabs[i].id+"tabbtn").setDisplay(INF_TABS[tabs[i]]())
+		}
+	}
+	tmp.inf.showTab = function(name) {
+		if (infTab==name) return
+		infTab = name
+		tmp.inf.updateTabs()
 	}
 }
