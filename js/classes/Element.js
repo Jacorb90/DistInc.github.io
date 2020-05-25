@@ -37,5 +37,5 @@ class Element {
 	isChecked() { return this.el.checked }
 	static isChecked(id) { return new Element(id).isChecked() }
 	
-	static allFromClass(name) { return document.getElementsByClassName(name).map(x => new Element(x.id)) }
+	static allFromClass(name) { return Array.from(document.getElementsByClassName(name)).map(x => new Element(x.id)) }
 }

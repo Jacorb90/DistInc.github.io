@@ -1,3 +1,4 @@
+// Infinity
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
 	rows: 5,
@@ -160,7 +161,10 @@ const INF_UPGS = {
 		},
 	},
 }
-
 const INF_TABS = {
 	infinity: function() { return true },
+	ascension: function() { return player.inf.endorsements.gte(10) },
 }
+
+// Ascension
+const BASE_PERK_TIME = new ExpantaNum(4)

@@ -117,12 +117,24 @@ function updateTempInf() {
 		let tabs = Element.allFromClass("inftab")
 		for (let i=0;i<tabs.length;i++) {
 			tabs[i].setDisplay(infTab==tabs[i].id)
-			new Element(tabs[i].id+"tabbtn").setDisplay(INF_TABS[tabs[i]]())
+			new Element(tabs[i].id+"tabbtn").setDisplay(INF_TABS[tabs[i].id]())
 		}
 	}
 	tmp.inf.showTab = function(name) {
 		if (infTab==name) return
 		infTab = name
 		tmp.inf.updateTabs()
+	}
+	tmp.inf.updateTabs()
+	
+	// Ascension
+	tmp.inf.asc = {}
+	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
+	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
+	tmp.inf.asc.anyPerkActive = function() { return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0)) }
+	tmp.inf.asc.activatePerk = function(n) {
+		if (player.inf.endorsements.lt(10)) return
+		if (tmp.inf.asc.anyPerkActive()) return
+		player.inf.ascension.time[n-1] = new ExpantaNum(tmp.inf.asc.perkTime)
 	}
 }
