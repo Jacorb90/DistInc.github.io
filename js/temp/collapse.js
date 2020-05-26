@@ -2,6 +2,7 @@ function updateTempCollapse() {
 	tmp.collapse = {}
 	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"])
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sc = tmp.collapse.sc.times(tmp.pathogens[9].eff)
+	if (tmp.inf) tmp.collapse.sc = tmp.collapse.sc.times(tmp.inf.asc.perkEff(4))
 	tmp.collapse.lrm = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.lrm = tmp.collapse.lrm.div(50)
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
@@ -10,6 +11,7 @@ function updateTempCollapse() {
 	tmp.collapse.esc = new ExpantaNum(1e12)
 	if (tmp.modes.hard.active) tmp.collapse.esc = tmp.collapse.esc.div(100)
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.esc = tmp.collapse.esc.times(tmp.pathogens[10].eff)
+	if (tmp.inf) tmp.collapse.esc = tmp.collapse.esc.times(tmp.inf.asc.perkEff(3))
 	if (tmp.collapse.eff.gte(tmp.collapse.esc)) tmp.collapse.eff = tmp.collapse.eff.log10().times(tmp.collapse.esc.div(tmp.collapse.esc.log10()))
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
 	tmp.collapse.sacEff = new ExpantaNum(1)

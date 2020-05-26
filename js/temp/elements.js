@@ -115,7 +115,7 @@ function updateHTML() {
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	for (let i=1;i<=PTH_AMT;i++) {
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
-		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>"+(tmp.scaling.getName("pathogenUpg", i))+"Level: "+showNum(player.pathogens.upgrades[i])+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
+		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>"+(tmp.scaling.getName("pathogenUpg", i))+"Level: "+showNum(player.pathogens.upgrades[i])+(tmp.pathogens[i].extra.gt(0)?(" + "+showNum(tmp.pathogens[i].extra)):"")+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
 	tmp.el.pthUpgPow.setHTML((!tmp.pathogens.upgPow.eq(1))?("Upgrade Power: "+showNum(tmp.pathogens.upgPow.times(100))+"%<br>"):"")
 	
@@ -156,6 +156,22 @@ function updateHTML() {
 		}
 	}
 	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
+	tmp.el.endorsementManual.setDisplay(player.inf.endorsements.gte(10)&&tmp.inf.can)
+	tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10))
+	
+	// Ascension
+	for (let i=1;i<=4;i++) {
+		tmp.el["perk"+i].setClasses({btn: true, perk: tmp.inf.asc.perkActive(i), inf: (!(tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i)), locked: ((tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i))})
+		tmp.el["perk"+i].setTxt(capitalFirst(PERK_NAMES[i-1])+" Perk"+(tmp.inf.asc.perkActive(i)?(": "+formatTime(player.inf.ascension.time[i-1])):""))
+		tmp.el["perkEff"+i].setTxt(showNum(tmp.inf.asc.perkEff(i)))
+		tmp.el["enl"+i].setTxt(showNum(player.inf.ascension.enlightenments[i-1]))
+		tmp.el["enleff"+i].setTxt(showNum(tmp.inf.asc.enlEff(i).times(100)))
+		tmp.el["buyEnl"+i].setTxt("Cost: "+showNum(tmp.inf.asc.enlCost(i))+" Ascension Power")
+		tmp.el["buyEnl"+i].setClasses({btn: true, inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)), locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))})
+	}
+	tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.times(100))+"%")
+	tmp.el.perkPower.setDisplay(!tmp.inf.asc.perkStrength.eq(1))
+	tmp.el.ascPower.setHTML("Ascension Power: <span style='font-size: 25px; color: red;'>"+showNum(player.inf.ascension.power)+"</span>")
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))

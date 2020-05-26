@@ -87,7 +87,10 @@ function updateTempInf() {
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true)
 	tmp.inf.forceReset = function() {
 		infActive = true
-		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>", tab: "inf"})
+		let amActive = player.inf.endorsements.eq(9)
+		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
+		if (amActive) message = "The High God <span class='infinity'>Infinity</span> has amired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>"
+		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: message, tab: "inf"})
 		player.inf.unl = true
 	}
 	tmp.inf.doGain = function() { 
@@ -96,8 +99,8 @@ function updateTempInf() {
 		player.inf.endorsements = player.inf.endorsements.max(m)
 	}
 	tmp.inf.onReset = function(prev) {
-		closeHiddenDiv()
-		infActive = false
+		infActive = true
+		if (!showContainer) closeHiddenDiv()
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
@@ -108,5 +111,85 @@ function updateTempInf() {
 			player.collapse.unl = true
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
+		infActive = false
+	}
+	tmp.inf.updateTabs = function() {
+		let tabs = Element.allFromClass("inftab")
+		for (let i=0;i<tabs.length;i++) {
+			tabs[i].setDisplay(infTab==tabs[i].id)
+			new Element(tabs[i].id+"tabbtn").setDisplay(INF_TABS[tabs[i].id]())
+		}
+	}
+	tmp.inf.showTab = function(name) {
+		if (infTab==name) return
+		infTab = name
+		tmp.inf.updateTabs()
+	}
+	tmp.inf.updateTabs()
+	
+	// Ascension
+	tmp.inf.asc = {}
+	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
+	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
+	tmp.inf.asc.maxPerks = 1
+	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
+	tmp.inf.asc.powerEff = function() {
+		let power = player.inf.ascension.power
+		let eff = power.plus(1).log10().plus(1).log10().div(10)
+		return eff
+	}()
+	tmp.inf.asc.enlEff = function(n) {
+		let enl = player.inf.ascension.enlightenments[n-1]
+		let eff = enl.pow(0.8).times(0.8)
+		return eff
+	}
+	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
+	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
+	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
+	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
+	tmp.inf.asc.anyPerkActive = function() { return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0)) }
+	tmp.inf.asc.perksActive = function() {
+		let perks = 0
+		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) perks++
+		return perks
+	}
+	tmp.inf.asc.powerGain = new ExpantaNum(tmp.inf.asc.perksActive()).max(1)
+	if (tmp.inf.upgs.has("6;5")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["6;5"]())
+	tmp.inf.asc.activatePerk = function(n) {
+		if (player.inf.endorsements.lt(10)) return
+		if (tmp.inf.asc.perkActive(n)) {
+			player.inf.ascension.time[n-1] = new ExpantaNum(0)
+			return
+		}
+		if (tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks) return
+		player.inf.ascension.time[n-1] = new ExpantaNum(tmp.inf.asc.perkTime)
+	}
+	tmp.inf.asc.perkEff = function(n) {
+		let base = new ExpantaNum([null, 1, 0, 1, 1][n])
+		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)) return base
+		let pow = tmp.inf.asc.perkPower[n]
+		if (n==1) return ExpantaNum.pow(10, pow)
+		else if (n==2) return pow
+		else if (n==3) return ExpantaNum.pow(1e15, pow)
+		else if (n==4) return ExpantaNum.pow(1e10, pow)
+		return undefined
+	}
+	tmp.inf.asc.costData = {base: new ExpantaNum(2.5), start: new ExpantaNum(500), exp: new ExpantaNum(1.5)}
+	tmp.inf.asc.enlCost = function(n) {
+		let enl = player.inf.ascension.enlightenments[n-1]
+		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		return cost
+	}
+	tmp.inf.asc.enlBulk = function(n) {
+		let ap = player.inf.ascension.power
+		let bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).plus(1).floor()
+		return bulk
+	}
+	tmp.inf.asc.buyEnl = function(n) {
+		let ap = player.inf.ascension.power
+		let cost = tmp.inf.asc.enlCost(n)
+		if (ap.lt(cost)) return
+		player.inf.ascension.power = ap.sub(cost)
+		player.inf.ascension.enlightenments[n-1] = player.inf.ascension.enlightenments[n-1].plus(1)
 	}
 }

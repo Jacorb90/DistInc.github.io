@@ -21,6 +21,7 @@ function updateTempPathogens() {
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0))
 	if (tmp.inf) if (tmp.inf.upgs.has("3;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.1)
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
+	if (tmp.inf) if (tmp.inf.upgs.has("6;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.025)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
 		2: new ExpantaNum(10),
@@ -34,6 +35,7 @@ function updateTempPathogens() {
 		10: new ExpantaNum(3),
 	}
 	for (let i=1;i<=PTH_AMT;i++) {
+		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1)
 		if (tmp.modes.hard.active) tmp.pathogens.sc[i] = new ExpantaNum(1)
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
@@ -52,13 +54,18 @@ function updateTempPathogens() {
 			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(exp2).div(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
 			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 		}
+		tmp.pathogens[i].extra = function() {
+			let extra = new ExpantaNum(0)
+			if (tmp.inf) extra = extra.plus(tmp.inf.asc.perkEff(2))
+			return extra
+		}()
 		tmp.pathogens[i].buy = function() {
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
 			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
 			if (!tmp.ach[88].has) player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
 		tmp.pathogens[i].eff = function() {
-			let bought = player.pathogens.upgrades[i]
+			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra)
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			bought = bought.times(tmp.pathogens.upgPow)
 			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))

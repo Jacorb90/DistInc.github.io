@@ -14,17 +14,25 @@ var notifier = new Notifier();
 var saveTimer = 0
 var showContainer = true
 var infActive = false
+var infTab = "infinity"
 
 // Game Loops
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber()
-	if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
+	if (tmp.ach[95].has) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff))
+	else if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
 	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.inf.knowledgeGain.times(diff))
-	if (tmp.inf.upgs.has("5;3")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff.div(10)))
-	if (tmp.inf.upgs.has("2;4")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
+	if (tmp.ach[97].has) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff))
+	else if (tmp.inf.upgs.has("5;3")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff.div(10)))
+	if (tmp.ach[96].has) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff))
+	else if (tmp.inf.upgs.has("2;4")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
+	if (player.inf.endorsements.gte(10)) {
+		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) player.inf.ascension.time[i-1] = player.inf.ascension.time[i-1].sub(diff).max(0)
+		if (tmp.inf.asc.anyPerkActive()) player.inf.ascension.power = player.inf.ascension.power.plus(tmp.inf.asc.powerGain.times(diff))
+	}
 }
 
 function tickWithTR(diff) {

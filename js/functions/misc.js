@@ -22,11 +22,17 @@ function ENString(obj) {
 	ret.dc.cores = new ExpantaNum(ret.dc.cores).toString()
 	ret.inf.endorsements = new ExpantaNum(ret.inf.endorsements).toString()
 	ret.inf.knowledge = new ExpantaNum(ret.inf.knowledge).toString()
+	for (let i=0;i<4;i++) {
+		ret.inf.ascension.time[i] = new ExpantaNum(ret.inf.ascension.time[i]).toString()
+		ret.inf.ascension.enlightenments[i] = new ExpantaNum(ret.inf.ascension.enlightenments[i]).toString()
+	}
+	ret.inf.ascension.power = new ExpantaNum(ret.inf.ascension.power).toString()
 	return ret
 }
 
 function transformToEN(obj, sc=DEFAULT_START) {
     let ret = deepCopy(obj)
+	if (ret.version === undefined) ret.inf.ascension = deepCopy(sc.inf.ascension)
     for (const key in sc) if (ret[key]===undefined) ret[key] = deepCopy(sc[key])
 	for (const key in sc.options) if (ret.options[key]===undefined) ret.options[key] = deepCopy(sc.options[key])
 	ret.distance = new ExpantaNum(ret.distance)
@@ -49,6 +55,12 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.dc.cores = new ExpantaNum(ret.dc.cores)
 	ret.inf.endorsements = new ExpantaNum(ret.inf.endorsements)
 	ret.inf.knowledge = new ExpantaNum(ret.inf.knowledge)
+	for (let i=0;i<4;i++) {
+		ret.inf.ascension.time[i] = new ExpantaNum(ret.inf.ascension.time[i])
+		ret.inf.ascension.enlightenments[i] = new ExpantaNum(ret.inf.ascension.enlightenments[i])
+	}
+	ret.inf.ascension.power = new ExpantaNum(ret.inf.ascension.power)
+	ret.version = Math.max(ret.version, sc.version)
     return ret
 }
 

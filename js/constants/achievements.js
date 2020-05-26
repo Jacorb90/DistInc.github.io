@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 8,
+	rows: 9,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -73,6 +73,15 @@ const ACH_DATA = {
 		86: "Infinity is Broke",
 		87: "No Thoughts",
 		88: "Infinity Likes You",
+		
+		91: "Dark Plus",
+		92: "Universe of Death",
+		93: "Well that was a grind...",
+		94: "No, it's not special",
+		95: "Too Bright",
+		96: "This'll never matter",
+		97: "Clean as a Whistle",
+		98: "Feel The Heat",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -145,7 +154,16 @@ const ACH_DATA = {
 		85: "Reach showNum(1.79e308) intelligence.",
 		86: "Reach formatDistance(4.4e1026).",
 		87: "Reach showNum(25e9) knowledge.",
-		88: "Reach 10 Endorsements.",
+		88: "Reach showNum(10) Endorsements.",
+		
+		91: "Have a Dark Flow of at least showNum(8e3)x.",
+		92: "Reach showNum(1e80) Cadavers.",
+		93: "Reach showNum(666) Ascension Power.",
+		94: "Reach showNum(14) Endorsements.",
+		95: "Purchase 1 of each Enlightenment.",
+		96: "Have a magnitude above showNum(1e33) for Rankbot.",
+		97: "Reach formatDistance(4.4e416) without any Pathogen Upgrades.",
+		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -193,5 +211,10 @@ const ACH_DATA = {
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
 		88: "Buying Pathogen Upgrades does not spend your Pathogens.",
+		
+		92: "When buying Dark Cores, your Cadavers do not decrease.",
+		95: "Gain showNum(100)% of Rocket gain every second.",
+		96: "Gain showNum(100)% of Cadaver gain every second.",
+		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
 	},
 }

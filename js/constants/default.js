@@ -1,5 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
+	version: 1.0,
 	optionsTab: "saving",
 	achievements: [],
 	options: {
@@ -61,6 +62,11 @@ const DEFAULT_START = {
 		endorsements: new ExpantaNum(0),
 		knowledge: new ExpantaNum(0),
 		upgrades: [],
+		ascension: {
+			time: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			enlightenments: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			power: new ExpantaNum(0),
+		},
 	},
 	automators: {},
 }

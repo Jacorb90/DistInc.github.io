@@ -52,7 +52,10 @@ function updateAchievements() {
 	if (tmp.auto.fuelbot.interval.lte(120)) tmp.ach[66].grant()
 	if (player.distance.gte(1e80*DISTANCES.uni)) tmp.ach[67].grant()
 	let bool = true
-	for (let i=1;i<=10;i++) if (player.pathogens.upgrades[i].eq(0)) bool = false
+	let antiBool = true
+	for (let i=1;i<=10;i++) if (player.pathogens.upgrades[i].eq(0)) {
+		bool = false
+	} else antiBool = false
 	if (bool) tmp.ach[68].grant()
 	
 	if (player.dc.unl) tmp.ach[71].grant()
@@ -72,4 +75,13 @@ function updateAchievements() {
 	if (player.distance.gte("4.4e1026")) tmp.ach[86].grant()
 	if (player.inf.knowledge.gte(25e9)) tmp.ach[87].grant()
 	if (player.inf.endorsements.gte(10)) tmp.ach[88].grant() 
+		
+	if (tmp.dc.flow.gte(8e3)) tmp.ach[91].grant()
+	if (player.collapse.cadavers.gte(1e80)) tmp.ach[92].grant()
+	if (player.inf.ascension.power.gte(666)) tmp.ach[93].grant()
+	if (player.inf.endorsements.gte(14)) tmp.ach[94].grant()
+	if (player.inf.ascension.enlightenments.every(x => new ExpantaNum(x).gte(1))) tmp.ach[95].grant() 
+	if (tmp.auto.rankbot.magnitude.gt(1e33)) tmp.ach[96].grant() 
+	if (player.distance.gte("4.4e416")&&antiBool) tmp.ach[97].grant() 
+	if (player.distance.gte("4.4e786")&&player.dc.cores.eq(0)) tmp.ach[98].grant()
 }
