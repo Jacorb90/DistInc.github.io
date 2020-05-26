@@ -130,18 +130,32 @@ function updateTempInf() {
 	// Ascension
 	tmp.inf.asc = {}
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
-	tmp.inf.asc.powerGain = new ExpantaNum(1)
-	tmp.inf.asc.perkStrength = new ExpantaNum(1)
+	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
+	tmp.inf.asc.maxPerks = 1
+	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
+	tmp.inf.asc.powerEff = function() {
+		let power = player.inf.ascension.power
+		let eff = power.plus(1).log10().plus(1).log10().div(10)
+		return eff
+	}()
+	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
 	tmp.inf.asc.anyPerkActive = function() { return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0)) }
+	tmp.inf.asc.perksActive = function() {
+		let perks = 0
+		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) perks++
+		return perks
+	}
+	tmp.inf.asc.powerGain = new ExpantaNum(tmp.inf.asc.perksActive()).max(1)
+	if (tmp.inf.upgs.has("6;5")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["6;5"]())
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
 		if (tmp.inf.asc.perkActive(n)) {
 			player.inf.ascension.time[n-1] = new ExpantaNum(0)
 			return
 		}
-		if (tmp.inf.asc.anyPerkActive()) return
+		if (tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks) return
 		player.inf.ascension.time[n-1] = new ExpantaNum(tmp.inf.asc.perkTime)
 	}
 	tmp.inf.asc.perkEff = function(n) {

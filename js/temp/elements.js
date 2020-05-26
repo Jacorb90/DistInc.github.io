@@ -160,11 +160,11 @@ function updateHTML() {
 	
 	// Ascension
 	for (let i=1;i<=4;i++) {
-		tmp.el["perk"+i].setClasses({btn: true, perk: tmp.inf.asc.perkActive(i), inf: !tmp.inf.asc.anyPerkActive(i), locked: (tmp.inf.asc.anyPerkActive()&&!tmp.inf.asc.perkActive(i))})
+		tmp.el["perk"+i].setClasses({btn: true, perk: tmp.inf.asc.perkActive(i), inf: (!(tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i)), locked: ((tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i))})
 		tmp.el["perk"+i].setTxt(capitalFirst(PERK_NAMES[i-1])+" Perk"+(tmp.inf.asc.perkActive(i)?(": "+formatTime(player.inf.ascension.time[i-1])):""))
 		tmp.el["perkEff"+i].setTxt(showNum(tmp.inf.asc.perkEff(i)))
 	}
-	tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.sub(1).times(100))+"%")
+	tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.times(100))+"%")
 	tmp.el.perkPower.setDisplay(!tmp.inf.asc.perkStrength.eq(1))
 	tmp.el.ascPower.setHTML("Ascension Power: <span style='font-size: 25px; color: red;'>"+showNum(player.inf.ascension.power)+"</span>")
 	

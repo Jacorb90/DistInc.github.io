@@ -35,7 +35,17 @@ function updateTempScaling() {
 	if (player.tr.upgrades.includes(12)) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2)
 	if (player.tr.upgrades.includes(14) && tmp.tr14) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(tmp.tr14["ss"])
 	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff)
-	if (tmp.inf) if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2)
+	if (tmp.inf) {
+		if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2)
+		if (tmp.inf.upgs.has("1;6")) {
+			tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(2)
+			tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2)
+		}
+		if (tmp.inf.upgs.has("2;6")) tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(5)
+		if (tmp.inf.upgs.has("6;1")) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(10)
+		if (tmp.inf.upgs.has("6;2")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(5)
+		if (tmp.inf.upgs.has("6;4")) tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(2)
+	}
 		
 	// Scaling Strengths
 	if (tmp.inf) {

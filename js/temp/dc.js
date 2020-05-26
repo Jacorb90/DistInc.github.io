@@ -11,6 +11,7 @@ function updateTempDC() {
 	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tmp.tr12)
 	if (tmp.inf) if (tmp.inf.upgs.has("4;1")) tmp.dc.flow = tmp.dc.flow.times(2)
 	if (tmp.inf) if (tmp.inf.upgs.has("5;1")) tmp.dc.flow = tmp.dc.flow.times(2)
+	if (tmp.inf) if (tmp.inf.upgs.has("4;6")) tmp.dc.flow = tmp.dc.flow.times(2)
 	if (tmp.inf) if (tmp.inf.upgs.has("5;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["5;5"]())
 	if (tmp.inf) tmp.dc.flow = tmp.dc.flow.times(tmp.inf.asc.perkEff(1))
 	tmp.dc.power = new ExpantaNum(1)
@@ -38,13 +39,13 @@ function updateTempDC() {
 	tmp.dc.buyCore = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
 		if (!player.dc.unl) return
-		player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
+		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
 		player.dc.cores = player.dc.cores.plus(1)
 	}
 	tmp.dc.maxCores = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
 		if (!player.dc.unl) return
-		player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
+		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
 		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0))
 	}
 	tmp.dc.tick = function(diff) {

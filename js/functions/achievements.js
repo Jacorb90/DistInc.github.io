@@ -74,4 +74,7 @@ function updateAchievements() {
 	if (player.inf.endorsements.gte(10)) tmp.ach[88].grant() 
 		
 	if (tmp.dc.flow.gte(8e3)) tmp.ach[91].grant()
+	if (player.collapse.cadavers.gte(1e80)) tmp.ach[92].grant()
+	if (player.inf.ascension.power.gte(666)) tmp.ach[93].grant()
+	if (player.inf.endorsements.gte(14)) tmp.ach[94].grant()
 }
