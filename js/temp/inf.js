@@ -138,8 +138,14 @@ function updateTempInf() {
 		let eff = power.plus(1).log10().plus(1).log10().div(10)
 		return eff
 	}()
+	tmp.inf.asc.enlEff = function(n) {
+		let enl = player.inf.ascension.enlightenments[n-1]
+		let eff = enl.pow(0.8).times(0.8)
+		return eff
+	}
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
+	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
 	tmp.inf.asc.anyPerkActive = function() { return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0)) }
 	tmp.inf.asc.perksActive = function() {
@@ -167,5 +173,23 @@ function updateTempInf() {
 		else if (n==3) return ExpantaNum.pow(1e15, pow)
 		else if (n==4) return ExpantaNum.pow(1e10, pow)
 		return undefined
+	}
+	tmp.inf.asc.costData = {base: new ExpantaNum(2.5), start: new ExpantaNum(500), exp: new ExpantaNum(1.5)}
+	tmp.inf.asc.enlCost = function(n) {
+		let enl = player.inf.ascension.enlightenments[n-1]
+		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		return cost
+	}
+	tmp.inf.asc.enlBulk = function(n) {
+		let ap = player.inf.ascension.power
+		let bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).plus(1).floor()
+		return bulk
+	}
+	tmp.inf.asc.buyEnl = function(n) {
+		let ap = player.inf.ascension.power
+		let cost = tmp.inf.asc.enlCost(n)
+		if (ap.lt(cost)) return
+		player.inf.ascension.power = ap.sub(cost)
+		player.inf.ascension.enlightenments[n-1] = player.inf.ascension.enlightenments[n-1].plus(1)
 	}
 }

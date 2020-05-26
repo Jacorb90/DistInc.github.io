@@ -240,6 +240,7 @@
 			</table>
 		</div>
 		<div id="inf" class="tab" style="display: none;">
+			<div id="forceInf"><button class="btn inf" onclick="tmp.inf.layer.reset(true)">Get <span class="infinity">Infinity</span> to reset you for no reward.</button><br><br></div>
 			<div id="endorsementManual"><button class="btn inf" onclick="tmp.inf.layer.reset()">Allow <span class="infinity">Infinity</span> to endorse you.</button><br><br></div>
 			<div class="band or">
 				<table>
@@ -277,7 +278,21 @@
 						<td>Cadaver gain softcaps <span id="perkEff4" style="font-size: 25px;"></span>x later.</td>
 					</tr>
 				</table><br><br>
-				<span id="ascPower"></span>
+				<span id="ascPower"></span><br><br><br><br>
+				<table>
+					<tr>
+						<td>You have <span id="enl1" style="font-size: 25px;"></span> Godhood Enlightenments, translated to a <span id="enleff1" style="font-size: 25px;"></span>% increase in Godhood Perk power.</td>
+						<td>You have <span id="enl2" style="font-size: 25px;"></span> Holy Enlightenments, translated to a <span id="enleff2" style="font-size: 25px;"></span>% increase in Holy Perk power.</td>
+						<td>You have <span id="enl3" style="font-size: 25px;"></span> Sainthood Enlightenments, translated to a <span id="enleff3" style="font-size: 25px;"></span>% increase in Sainthood Perk power.</td>
+						<td>You have <span id="enl4" style="font-size: 25px;"></span> Glory Enlightenments, translated to a <span id="enleff4" style="font-size: 25px;"></span>% increase in Glory Perk power.</td>
+					</tr>
+					<tr>
+						<td><button id="buyEnl1" class="btn locked" onclick="tmp.inf.asc.buyEnl(1)"></button></td>
+						<td><button id="buyEnl2" class="btn locked" onclick="tmp.inf.asc.buyEnl(2)"></button></td>
+						<td><button id="buyEnl3" class="btn locked" onclick="tmp.inf.asc.buyEnl(3)"></button></td>
+						<td><button id="buyEnl4" class="btn locked" onclick="tmp.inf.asc.buyEnl(4)"></button></td>
+					</tr>
+				</table><br><br>
 			</div>
 		</div>
 	</div>

@@ -157,12 +157,17 @@ function updateHTML() {
 	}
 	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
 	tmp.el.endorsementManual.setDisplay(player.inf.endorsements.gte(10)&&tmp.inf.can)
+	tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10))
 	
 	// Ascension
 	for (let i=1;i<=4;i++) {
 		tmp.el["perk"+i].setClasses({btn: true, perk: tmp.inf.asc.perkActive(i), inf: (!(tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i)), locked: ((tmp.inf.asc.perksActive()>=tmp.inf.asc.maxPerks)&&!tmp.inf.asc.perkActive(i))})
 		tmp.el["perk"+i].setTxt(capitalFirst(PERK_NAMES[i-1])+" Perk"+(tmp.inf.asc.perkActive(i)?(": "+formatTime(player.inf.ascension.time[i-1])):""))
 		tmp.el["perkEff"+i].setTxt(showNum(tmp.inf.asc.perkEff(i)))
+		tmp.el["enl"+i].setTxt(showNum(player.inf.ascension.enlightenments[i-1]))
+		tmp.el["enleff"+i].setTxt(showNum(tmp.inf.asc.enlEff(i).times(100)))
+		tmp.el["buyEnl"+i].setTxt("Cost: "+showNum(tmp.inf.asc.enlCost(i))+" Ascension Power")
+		tmp.el["buyEnl"+i].setClasses({btn: true, inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)), locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))})
 	}
 	tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.times(100))+"%")
 	tmp.el.perkPower.setDisplay(!tmp.inf.asc.perkStrength.eq(1))

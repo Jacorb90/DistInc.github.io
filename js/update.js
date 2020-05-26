@@ -91,7 +91,7 @@ function setupHTML() {
 	
 	// Automators
 	let au = new Element("automator")
-	autos = ""
+	autos = "<br>"
 	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
 		autos+="<div id='automatorDiv-"+Object.keys(AUTOMATORS)[i]+"'>"+capitalFirst(Object.keys(AUTOMATORS)[i])+": <input id='automator-"+Object.keys(AUTOMATORS)[i]+"' type='checkbox'></input></div><br>"
 	}
