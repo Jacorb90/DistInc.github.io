@@ -38,4 +38,10 @@ class Element {
 	static isChecked(id) { return new Element(id).isChecked() }
 	
 	static allFromClass(name) { return Array.from(document.getElementsByClassName(name)).map(x => new Element(x.id)) }
+	
+	setAttr(name, input) { this.el.setAttribute(name, input) }
+	static setAttr(id, name, input) { new Element(id).setAttribute(name, input) }
+	
+	setTooltip(input) { this.setAttr("tooltip", input) }
+	static setTooltip(id, input) { new Element(id).setAttr("tooltip", input) }
 }

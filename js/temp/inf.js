@@ -101,6 +101,7 @@ function updateTempInf() {
 	tmp.inf.onReset = function(prev) {
 		infActive = true
 		if (!showContainer) closeHiddenDiv()
+		player.inf.stadium.current = ""
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
@@ -191,5 +192,14 @@ function updateTempInf() {
 		if (ap.lt(cost)) return
 		player.inf.ascension.power = ap.sub(cost)
 		player.inf.ascension.enlightenments[n-1] = player.inf.ascension.enlightenments[n-1].plus(1)
+	}
+	
+	// Stadium
+	tmp.inf.stadium = {}
+	tmp.inf.stadium.reset = function() {
+		if (player.inf.endorsements.lt(15)) return
+		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return
+		player.inf.stadium.completions = []
+		tmp.inf.layer.reset(true)
 	}
 }

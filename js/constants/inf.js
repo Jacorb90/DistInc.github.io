@@ -214,6 +214,7 @@ const INF_UPGS = {
 const INF_TABS = {
 	infinity: function() { return true },
 	ascension: function() { return player.inf.endorsements.gte(10) },
+	stadium: function() { return player.inf.endorsements.gte(15) },
 }
 
 // Ascension
