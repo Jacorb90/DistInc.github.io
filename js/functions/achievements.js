@@ -84,4 +84,6 @@ function updateAchievements() {
 	if (tmp.auto.rankbot.magnitude.gt(1e33)) tmp.ach[96].grant() 
 	if (player.distance.gte("4.4e416")&&antiBool) tmp.ach[97].grant() 
 	if (player.distance.gte("4.4e786")&&player.dc.cores.eq(0)) tmp.ach[98].grant()
+	
+	if (player.inf.stadium.completions.length>0) tmp.ach[101].grant()
 }

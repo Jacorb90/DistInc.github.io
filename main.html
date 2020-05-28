@@ -54,6 +54,7 @@
 	<!-- Temp Data -->
 	<script type="text/javascript" src="js/temp/elements.js"></script>
 	<script type="text/javascript" src="js/temp/options.js"></script>
+	<script type="text/javascript" src="js/temp/nerfs.js"></script>
 	<script type="text/javascript" src="js/temp/scaling.js"></script>
 	<script type="text/javascript" src="js/temp/effects.js"></script>
 	<script type="text/javascript" src="js/temp/early_game.js"></script>
@@ -241,7 +242,7 @@
 		</div>
 		<div id="inf" class="tab" style="display: none;">
 			<div id="forceInf"><button class="btn inf" onclick="tmp.inf.layer.reset(true)">Get <span class="infinity">Infinity</span> to reset you for no reward.</button><br><br></div>
-			<div id="endorsementManual"><button class="btn inf" onclick="tmp.inf.layer.reset()">Allow <span class="infinity">Infinity</span> to endorse you.</button><br><br></div>
+			<div id="endorsementManual"><button id="emInner" class="btn inf" onclick="tmp.inf.manualReset()">Allow <span class="infinity">Infinity</span> to endorse you.</button><br><br></div>
 			<div class="band or">
 				<table>
 					<tr>
@@ -282,10 +283,10 @@
 				<span id="ascPower"></span><br><br><br><br>
 				<table>
 					<tr>
-						<td>You have <span id="enl1" style="font-size: 25px;"></span> Godhood Enlightenments, translated to a <span id="enleff1" style="font-size: 25px;"></span>% increase in Godhood Perk power.</td>
-						<td>You have <span id="enl2" style="font-size: 25px;"></span> Holy Enlightenments, translated to a <span id="enleff2" style="font-size: 25px;"></span>% increase in Holy Perk power.</td>
-						<td>You have <span id="enl3" style="font-size: 25px;"></span> Sainthood Enlightenments, translated to a <span id="enleff3" style="font-size: 25px;"></span>% increase in Sainthood Perk power.</td>
-						<td>You have <span id="enl4" style="font-size: 25px;"></span> Glory Enlightenments, translated to a <span id="enleff4" style="font-size: 25px;"></span>% increase in Glory Perk power.</td>
+						<td>You have <span id="enl1" style="font-size: 25px;"></span> <span id="enlScale1"></span>Godhood Enlightenments, translated to a <span id="enleff1" style="font-size: 25px;"></span>% increase in Godhood Perk power.</td>
+						<td>You have <span id="enl2" style="font-size: 25px;"></span> <span id="enlScale2"></span>Holy Enlightenments, translated to a <span id="enleff2" style="font-size: 25px;"></span>% increase in Holy Perk power.</td>
+						<td>You have <span id="enl3" style="font-size: 25px;"></span> <span id="enlScale3"></span>Sainthood Enlightenments, translated to a <span id="enleff3" style="font-size: 25px;"></span>% increase in Sainthood Perk power.</td>
+						<td>You have <span id="enl4" style="font-size: 25px;"></span> <span id="enlScale4"></span>Glory Enlightenments, translated to a <span id="enleff4" style="font-size: 25px;"></span>% increase in Glory Perk power.</td>
 					</tr>
 					<tr>
 						<td><button id="buyEnl1" class="btn locked" onclick="tmp.inf.asc.buyEnl(1)"></button></td>
@@ -297,14 +298,16 @@
 			</div>
 			<div id="stadium" class="inftab">
 				<br><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button><br><br>
+				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button><br><br>
+				Note: Perks do nothing in Stadium Challenges.<br><br>
 				<table>
 					<tr>
-						<td class="stadiumChall" tooltip="Spaceon Challenge Description"><span class="spaceon">Spaceon</span><br><button class="btn locked">Start</button></td>
-						<td class="stadiumChall" tooltip="Solaris Challenge Description"><span class="solaris">Solaris</span><br><button class="btn locked">Start</button></td>
-						<td class="stadiumChall" tooltip="Infinity Challenge Description"><span class="infinity">Infinity</span><br><button class="btn locked">Start</button></td>
-						<td class="stadiumChall" tooltip="Eternity Challenge Description"><span class="eternity">Eternity</span><br><button class="btn locked">Start</button></td>
-						<td class="stadiumChall" tooltip="Reality Challenge Description"><span class="reality">Reality</span><br><button class="btn locked">Start</button></td>
-						<td class="stadiumChall" tooltip="Drigganiz Challenge Description"><span class="drigganiz">Drigganiz</span><br><button class="btn locked">Start</button></td>
+						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description"><span class="spaceon">Spaceon</span><br><button id="spaceonChall" class="btn locked" onclick="tmp.inf.stadium.start('spaceon')">Start</button><br><br><span id="spaceonBtm" class="stadiumDesc"></span></td>
+						<td id="solarisDiv" class="stadiumChall" tooltip="Solaris Challenge Description"><span class="solaris">Solaris</span><br><button id="solarisChall" class="btn locked" onclick="tmp.inf.stadium.start('solaris')">Start</button><br><br><span id="solarisBtm" class="stadiumDesc"></span></td>
+						<td id="infinityDiv" class="stadiumChall" tooltip="Infinity Challenge Description"><span class="infinity">Infinity</span><br><button id="infinityChall" class="btn locked" onclick="tmp.inf.stadium.start('infinity')">Start</button><br><br><span id="infinityBtm" class="stadiumDesc"></span></td>
+						<td id="eternityDiv" class="stadiumChall" tooltip="Eternity Challenge Description"><span class="eternity">Eternity</span><br><button id="eternityChall" class="btn locked" onclick="tmp.inf.stadium.start('eternity')">Start</button><br><br><span id="eternityBtm" class="stadiumDesc"></span></td>
+						<td id="realityDiv" class="stadiumChall" tooltip="Reality Challenge Description"><span class="reality">Reality</span><br><button id="realityChall" class="btn locked" onclick="tmp.inf.stadium.start('reality')">Start</button><br><br><span id="realityBtm" class="stadiumDesc"></span></td>
+						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description"><span class="drigganiz">Drigganiz</span><br><button id="drigganizChall" class="btn locked" onclick="tmp.inf.stadium.start('drigganiz')">Start</button><br><br><span id="drigganizBtm" class="stadiumDesc"></span></td>
 					</tr>
 				</table>
 			</div>

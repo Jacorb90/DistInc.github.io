@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 9,
+	rows: 10,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -82,6 +82,8 @@ const ACH_DATA = {
 		96: "This'll never matter",
 		97: "Clean as a Whistle",
 		98: "Feel The Heat",
+		
+		101: "Stronger than a High God",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -160,10 +162,12 @@ const ACH_DATA = {
 		92: "Reach showNum(1e80) Cadavers.",
 		93: "Reach showNum(666) Ascension Power.",
 		94: "Reach showNum(14) Endorsements.",
-		95: "Purchase 1 of each Enlightenment.",
+		95: "Purchase one of each Enlightenment.",
 		96: "Have a magnitude above showNum(1e33) for Rankbot.",
 		97: "Reach formatDistance(4.4e416) without any Pathogen Upgrades.",
 		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
+		
+		101: "Complete one Stadium Challenge.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

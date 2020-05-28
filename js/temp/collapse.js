@@ -6,6 +6,7 @@ function updateTempCollapse() {
 	tmp.collapse.lrm = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.lrm = tmp.collapse.lrm.div(50)
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm))
+	if (tmp.nerfs.active("noCadavers")) tmp.collapse.can = false
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true)
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1)).pow(player.collapse.cadavers.plus(1).logBase(2)).plus(player.collapse.cadavers.sqrt())
 	tmp.collapse.esc = new ExpantaNum(1e12)

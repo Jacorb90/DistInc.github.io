@@ -1,0 +1,57 @@
+function updateTempNerfs() {
+	tmp.nerfs = {}
+	tmp.nerfs.active = function(name) {
+		if (name=="noRank") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("infinity"):true)
+			return active
+		}
+		if (name=="noTier") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("infinity"):true)
+			return active
+		}
+		if (name=="nerfTS") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("drigganiz"):true)
+			return active
+		}
+		if (name=="noTS") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("eternity"):true)
+			return active
+		}
+		if (name=="noRockets") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("spaceon"):true)
+			return active
+		}
+		if (name=="noCadavers") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("solaris"):true)
+			return active
+		}
+		if (name=="noPathogenUpgs") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("drigganiz"):true)
+			return active
+		}
+		if (name=="preInf.1") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("reality"):true)
+			return active
+		}
+		if (name=="noPerks") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.anyActive():true)
+			return active
+		}
+	}
+	tmp.nerfs.adjust = function(val, type) {
+		let preinf = (type=="vel"||type=="dist"||type=="scraps"||type=="intel"||type=="tc"||type=="rockets"||type=="pathogens"||type=="dc"||type=="lifeEssence"||type=="cadavers")
+		let postinf = (type=="knowledge"||type=="ascension")
+		let exp = new ExpantaNum(1)
+		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10)
+		return val.pow(exp)
+	}
+}

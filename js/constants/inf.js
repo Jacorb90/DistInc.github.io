@@ -64,7 +64,7 @@ const INF_UPGS = {
 		"2;4": "Gain 1% of Cadaver gain every second.",
 		"2;5": "Superscaled Rank scaling is 5% weaker.",
 		"2;6": "Superscaled Rocket Fuel scaling starts 5 later.",
-		"3;1": "Start with 10000 Life Essence on reset.",
+		"3;1": "Start with all Collapse Milestones on reset.",
 		"3;2": "Knowledge & Cadavers synergize with one another.",
 		"3;3": "Pathogen Upgrades are 10% stronger.",
 		"3;4": "Unlock Auto-Pathogen upgrades.",
@@ -147,7 +147,9 @@ const INF_UPGS = {
 	effects: {
 		"1;1": function() {
 			let total = player.rank.plus(player.tier.pow(2))
-			let ret = total.plus(1).pow(3)
+			let exp = new ExpantaNum(3)
+			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon())
+			let ret = total.plus(1).pow(exp)
 			return ret
 		},
 		"1;2": function() {
@@ -220,3 +222,59 @@ const INF_TABS = {
 // Ascension
 const BASE_PERK_TIME = new ExpantaNum(4)
 const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]
+
+// The Stadium
+const STADIUM_DESCS = {
+	spaceon: ["You cannot gain Rockets"],
+	solaris: ["You cannot gain Cadavers"],
+	infinity: ["You cannot Rank or Tier up"],
+	eternity: ["Time Speed does nothing"],
+	reality: ["All resource gain before Infinity is raised to the power of 0.1"],
+	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1"],
+}
+const STADIUM_REWARDS = {
+	spaceon: "inf1;1 is stronger based on your Rockets.",
+	solaris: "Superscaled Rank scaling starts later based on your Cadavers.",
+	infinity: "The Rocket Fuel effect is twice as powerful.",
+	eternity: "Endorsements & Ascension Power make Ranks boost Time Speed.",
+	reality: "Time Cubes are thrice as powerful.",
+	drigganiz: "Pathogen Upgrades are 0.75% stronger for every achievement you have.",
+	effects: {
+		spaceon: function() {
+			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1)
+			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret)
+			return ret
+		},
+		solaris: function() {
+			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25)
+			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret)
+			return ret
+		},
+		eternity: function() {
+			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1))
+			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7)
+			let totalExp = base.pow(exp)
+			if (totalExp.gte(Number.MAX_VALUE)) totalExp = totalExp.log10().times(Number.MAX_VALUE/Math.log10(Number.MAX_VALUE))
+			let ret = player.rank.pow(totalExp.log10().div(2))
+			return ret.max(1)
+		},
+		drigganiz: function() {
+			let ret = ExpantaNum.mul(0.0075, player.achievements.length)
+			return ret
+		},
+	},
+	disp: {
+		spaceon: function() { return "^"+showNum(STADIUM_REWARDS.effects.spaceon()) },
+		solaris: function() { return "+"+showNum(STADIUM_REWARDS.effects.solaris()) },
+		eternity: function() { return "x"+showNum(STADIUM_REWARDS.effects.eternity()) },
+		drigganiz: function() { return "+"+showNum(STADIUM_REWARDS.effects.drigganiz().times(100))+"%" },
+	},
+}
+const STADIUM_GOALS = {
+	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni)],
+	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni)],
+	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni)],
+	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni)],
+	reality: [new ExpantaNum(10).times(DISTANCES.uni)],
+	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni)],
+}

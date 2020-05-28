@@ -49,8 +49,8 @@ function updateTempDC() {
 		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0))
 	}
 	tmp.dc.tick = function(diff) {
-		player.dc.matter = player.dc.matter.plus(tmp.dc.dmGain.times(diff).times(tmp.dc.flow))
-		player.dc.energy = player.dc.energy.plus(tmp.dc.deGain.times(diff).times(tmp.dc.flow))
-		player.dc.fluid = player.dc.fluid.plus(tmp.dc.dfGain.times(diff).times(tmp.dc.flow))
+		player.dc.matter = player.dc.matter.plus(tmp.nerfs.adjust(tmp.dc.dmGain, "dc").times(diff).times(tmp.dc.flow))
+		player.dc.energy = player.dc.energy.plus(tmp.nerfs.adjust(tmp.dc.deGain, "dc").times(diff).times(tmp.dc.flow))
+		player.dc.fluid = player.dc.fluid.plus(tmp.nerfs.adjust(tmp.dc.dfGain, "dc").times(diff).times(tmp.dc.flow))
 	}
 }

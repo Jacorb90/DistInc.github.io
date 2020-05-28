@@ -20,30 +20,30 @@ var infTab = "infinity"
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber()
-	if (tmp.ach[95].has) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff))
-	else if (tmp.collapse.hasMilestone(9)) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
-	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.pathogens.gain.times(diff))
+	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.nerfs.adjust(tmp.rockets.layer.gain, "rockets").times(diff))
+	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.nerfs.adjust(tmp.rockets.layer.gain, "rockets").times(diff.div(100)))
+	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
-	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.inf.knowledgeGain.times(diff))
-	if (tmp.ach[97].has) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff))
-	else if (tmp.inf.upgs.has("5;3")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff.div(10)))
-	if (tmp.ach[96].has) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff))
-	else if (tmp.inf.upgs.has("2;4")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
+	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff))
+	if (tmp.ach[97].has) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(tmp.nerfs.adjust(player.collapse.cadavers.times(tmp.collapse.sacEff), "lifeEssence").times(diff))
+	else if (tmp.inf.upgs.has("5;3")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(tmp.nerfs.adjust(player.collapse.cadavers.times(tmp.collapse.sacEff), "lifeEssence").times(diff.div(10)))
+	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.nerfs.adjust(tmp.collapse.layer.gain, "cadavers").times(diff))
+	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.nerfs.adjust(tmp.collapse.layer.gain, "cadavers").times(diff.div(100)))
 	if (player.inf.endorsements.gte(10)) {
 		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) player.inf.ascension.time[i-1] = player.inf.ascension.time[i-1].sub(diff).max(0)
-		if (tmp.inf.asc.anyPerkActive()) player.inf.ascension.power = player.inf.ascension.power.plus(tmp.inf.asc.powerGain.times(diff))
+		if (tmp.inf.asc.anyPerkActive()) player.inf.ascension.power = player.inf.ascension.power.plus(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension").times(diff))
 	}
 }
 
 function tickWithTR(diff) {
-	player.velocity = player.velocity.plus(tmp.acc.times(diff)).min(tmp.maxVel).max(0)
-	player.distance = player.distance.plus(player.velocity.times(diff)).max(0)
+	player.velocity = player.velocity.plus(tmp.nerfs.adjust(tmp.acc, "vel").times(diff)).min(tmp.maxVel).max(0)
+	player.distance = player.distance.plus(tmp.nerfs.adjust(player.velocity, "dist").times(diff)).max(0)
 	if (player.automation.unl) autoTick(diff)
 }
 
 function tickWithTS(diff) {
-	if (player.tr.active) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff))
-	else if (tmp.ach[72].has && player.tr.unl) player.tr.cubes = player.tr.cubes.plus(tmp.tr.cg.times(diff.div(2)))
+	if (player.tr.active) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff))
+	else if (tmp.ach[72].has && player.tr.unl) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff.div(2)))
 	tickWithTR(diff.times(player.tr.active?(-1):1))
 }
 
@@ -51,7 +51,7 @@ function gameLoop(diff) {
 	updateBeforeTick()
 	if (showContainer) {
 		tickWithoutTS(diff)
-		tickWithTS(diff.times(tmp.timeSpeed))
+		tickWithTS(diff.times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed))
 	}
 	updateAfterTick()
 }

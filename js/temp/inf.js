@@ -1,5 +1,8 @@
 function updateTempInf() {
-	if (tmp.inf) tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
+	if (tmp.inf) {
+		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
+		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
+	}
 	
 	// Unrepealed Infinity Upgrades
 	tmp.infUr = []
@@ -127,6 +130,13 @@ function updateTempInf() {
 		tmp.inf.updateTabs()
 	}
 	tmp.inf.updateTabs()
+	tmp.inf.manualReset = function() {
+		if (tmp.canCompleteStadium) {
+			if (!player.inf.stadium.completions.includes(player.inf.stadium.current)) player.inf.stadium.completions.push(player.inf.stadium.current)
+			player.inf.stadium.current = ""
+			tmp.inf.layer.reset(true)
+		} else tmp.inf.layer.reset()
+	}
 	
 	// Ascension
 	tmp.inf.asc = {}
@@ -167,7 +177,7 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.perkEff = function(n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n])
-		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)) return base
+		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)||tmp.nerfs.active("noPerks")) return base
 		let pow = tmp.inf.asc.perkPower[n]
 		if (n==1) return ExpantaNum.pow(10, pow)
 		else if (n==2) return pow
@@ -179,11 +189,21 @@ function updateTempInf() {
 	tmp.inf.asc.enlCost = function(n) {
 		let enl = player.inf.ascension.enlightenments[n-1]
 		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		if (tmp.scaling.active("enlightenments", enl, "scaled")) {
+			let power = tmp.scalingPower.scaled.endorsements
+			let exp = ExpantaNum.pow(2, power)
+			cost = tmp.inf.asc.costData.base.pow(enl.pow(exp).div(tmp.scalings.scaled.endorsements.pow(exp.sub(1))).pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		}
 		return cost
 	}
 	tmp.inf.asc.enlBulk = function(n) {
 		let ap = player.inf.ascension.power
 		let bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).plus(1).floor()
+		if (tmp.scaling.active("enlightenments", player.inf.ascension.enlightenments[n-1].max(bulk), "scaled")) {
+			let power = tmp.scalingPower.scaled.endorsements
+			let exp = ExpantaNum.pow(2, power)
+			bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).times(tmp.scalings.scaled.endorsements.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+		}
 		return bulk
 	}
 	tmp.inf.asc.buyEnl = function(n) {
@@ -197,9 +217,49 @@ function updateTempInf() {
 	// Stadium
 	tmp.inf.stadium = {}
 	tmp.inf.stadium.reset = function() {
-		if (player.inf.endorsements.lt(15)) return
 		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return
 		player.inf.stadium.completions = []
 		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.stadium.exit = function() {
+		if (player.inf.stadium.current=="") return
+		player.inf.stadium.current = ""
+		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.stadium.active = function(name) {
+		let active = player.inf.stadium.current == name
+		return active
+	}
+	tmp.inf.stadium.anyActive = function() {
+		let active = player.inf.stadium.current != ""
+		return active
+	}
+	tmp.inf.stadium.goal = function(name) {
+		let goal_data = STADIUM_GOALS[name]
+		let l = player.inf.stadium.completions.length+1
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		let goal = goal_data[l-1]?goal_data[l-1]:new ExpantaNum(1/0)
+		return goal
+	}
+	tmp.inf.stadium.canComplete = player.inf.endorsements.gte(15) && player.inf.stadium.current != "" && player.distance.gte(tmp.inf.stadium.goal(player.inf.stadium.current))
+	tmp.inf.stadium.start = function(name) {
+		if (tmp.inf.stadium.active(name)) return
+		if (player.inf.stadium.current != "") return
+		tmp.inf.layer.reset(true)
+		player.inf.stadium.current = name
+	}
+	tmp.inf.stadium.tooltip = function(name) {
+		let descs = STADIUM_DESCS[name]
+		let l = Math.min(player.inf.stadium.completions.length+1, descs.length)
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		let tooltip = ""
+		for (let i=0;i<l;i++) {
+			tooltip += descs[i]
+			if (i<l-1) tooltip+=", "
+		}
+		return tooltip
+	}
+	tmp.inf.stadium.completed = function(name) {
+		return player.inf.endorsements.gte(15)&&player.inf.stadium.completions.includes(name)
 	}
 }

@@ -643,6 +643,16 @@ table { margin: auto; }
 	background-color: #bdd4de;
 }
 
+.stadiumChall.comp {
+	border: 2px solid #5f7d66;
+	background-color: #72db80;
+}
+
+.stadiumDesc {
+	font-size: 9px;
+	color: black;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
