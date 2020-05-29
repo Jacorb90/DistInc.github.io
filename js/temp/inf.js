@@ -42,6 +42,7 @@ function updateTempInf() {
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
+		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -115,6 +116,7 @@ function updateTempInf() {
 			player.collapse.unl = true
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
+		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -142,6 +144,7 @@ function updateTempInf() {
 	tmp.inf.asc = {}
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
+	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
 	tmp.inf.asc.powerEff = function() {
@@ -155,6 +158,7 @@ function updateTempInf() {
 		return eff
 	}
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
+	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
@@ -166,6 +170,7 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.powerGain = new ExpantaNum(tmp.inf.asc.perksActive()).max(1)
 	if (tmp.inf.upgs.has("6;5")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["6;5"]())
+	if (tmp.inf.upgs.has("7;2")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["7;2"]()["power"])
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
 		if (tmp.inf.asc.perkActive(n)) {
@@ -226,8 +231,11 @@ function updateTempInf() {
 		player.inf.stadium.current = ""
 		tmp.inf.layer.reset(true)
 	}
-	tmp.inf.stadium.active = function(name) {
+	tmp.inf.stadium.active = function(name, rank=1) {
 		let active = player.inf.stadium.current == name
+		let l = player.inf.stadium.completions.length+1
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		if (rank>1) active = active&&(l>=rank)
 		return active
 	}
 	tmp.inf.stadium.anyActive = function() {

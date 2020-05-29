@@ -14,6 +14,8 @@ function updateTempDC() {
 	if (tmp.inf) if (tmp.inf.upgs.has("4;6")) tmp.dc.flow = tmp.dc.flow.times(2)
 	if (tmp.inf) if (tmp.inf.upgs.has("5;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["5;5"]())
 	if (tmp.inf) tmp.dc.flow = tmp.dc.flow.times(tmp.inf.asc.perkEff(1))
+	if (tmp.inf) if (tmp.inf.upgs.has("7;2")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;2"]()["flow"])
+	if (tmp.nerfs.active("noDarkFlow")) tmp.dc.flow = new ExpantaNum(0)
 	tmp.dc.power = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(15)) tmp.dc.power = tmp.dc.power.times(tmp.tr15)
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power))

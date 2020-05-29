@@ -1,12 +1,13 @@
 // Infinity
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
-	rows: 6,
+	rows: 7,
 	cols: 6,
 	rowReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
 		5: function() { return player.inf.endorsements.gte(6) },
 		6: function() { return player.inf.endorsements.gte(10) },
+		7: function() { return player.inf.endorsements.gte(15) },
 	},
 	colReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
@@ -50,6 +51,12 @@ const INF_UPGS = {
 		"6;4": new ExpantaNum(5.4e11),
 		"6;5": new ExpantaNum(1e12),
 		"6;6": new ExpantaNum(2e12),
+		"7;1": new ExpantaNum(1e13),
+		"7;2": new ExpantaNum(2e13),
+		"7;3": new ExpantaNum(5e13),
+		"7;4": new ExpantaNum(1/0),
+		"7;5": new ExpantaNum(1/0),
+		"7;6": new ExpantaNum(1/0),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -88,6 +95,12 @@ const INF_UPGS = {
 		"6;4": "Dark Cores scale 2 later.", 
 		"6;5": "Knowledge boosts Ascension Power gain.", 
 		"6;6": "Maximum Velocity boosts Acceleration, and you can activate 2 perks at once.",
+		"7;1": "Stadium Challenge completions boost perks & make them last longer.",
+		"7;2": "Ascension Power & Dark Flow have synergy.",
+		"7;3": "Start Infinities with Dark Circles unlocked.",
+		"7;4": "???",
+		"7;5": "???",
+		"7;6": "???",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -125,6 +138,12 @@ const INF_UPGS = {
 		"6;4": ["4;4"],
 		"6;5": ["4;4"],
 		"6;6": ["5;6", "6;5"],
+		"7;1": ["6;6"],
+		"7;2": ["7;1"],
+		"7;3": ["7;2"],
+		"7;4": ["7;3"],
+		"7;5": ["7;4"],
+		"7;6": ["7;5"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -211,6 +230,18 @@ const INF_UPGS = {
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000/3)
 			return ret
 		},
+		"7;1": function() {
+			let ret = ExpantaNum.mul(0.2, player.inf.stadium.completions.length).add(1)
+			return ret
+		},
+		"7;2": function() {
+			let pow = player.inf.ascension.power
+			let flow = tmp.dc?tmp.dc.flow:new ExpantaNum(1)
+			return {
+				power: flow.plus(1).log10().sqrt().plus(1),
+				flow: pow.plus(1).log10().sqrt().plus(1),
+			}
+		},
 	},
 }
 const INF_TABS = {
@@ -225,12 +256,12 @@ const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]
 
 // The Stadium
 const STADIUM_DESCS = {
-	spaceon: ["You cannot gain Rockets"],
-	solaris: ["You cannot gain Cadavers"],
-	infinity: ["You cannot Rank or Tier up"],
-	eternity: ["Time Speed does nothing"],
-	reality: ["All resource gain before Infinity is raised to the power of 0.1"],
-	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1"],
+	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1"],
+	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly"],
+	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1"],
+	eternity: ["Time Speed does nothing", "Dark Flow is always 0x"],
+	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing"],
+	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly"],
 }
 const STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets.",
@@ -271,10 +302,10 @@ const STADIUM_REWARDS = {
 	},
 }
 const STADIUM_GOALS = {
-	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni)],
-	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni)],
-	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni)],
-	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni)],
-	reality: [new ExpantaNum(10).times(DISTANCES.uni)],
-	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni)],
+	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni)],
+	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni)],
+	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni)],
+	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni)],
+	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc)],
+	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni)],
 }

@@ -10,7 +10,7 @@ function updateTempPathogens() {
 	tmp.pathogens.baseGain = new ExpantaNum(tmp.pathogens.gain)
 	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.ach63)
 	if (tmp.ach[68].has) tmp.pathogens.gain = tmp.pathogens.gain.times(1.01)
-	let a84 = tmp.dc?tmp.dc.flow:new ExpantaNum(1)
+	let a84 = tmp.dc?tmp.dc.flow.max(1):new ExpantaNum(1)
 	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)))
 	if (tmp.ach[84].has) tmp.pathogens.gain = tmp.pathogens.gain.times(a84)
 	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3)

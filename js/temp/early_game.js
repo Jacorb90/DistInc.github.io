@@ -46,4 +46,5 @@ function updateTempEarlyGame() {
 	if (tmp.ach) if (tmp.ach[51].has) tmp.maxVel = tmp.maxVel.times(1.5)
 	if (tmp.ach) if (tmp.ach[61].has) tmp.maxVel = tmp.maxVel.times(1.6)
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow)
+	if (tmp.nerfs.active("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1)
 }

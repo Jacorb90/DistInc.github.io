@@ -84,6 +84,7 @@ const ACH_DATA = {
 		98: "Feel The Heat",
 		
 		101: "Stronger than a High God",
+		102: "Kinda Grindy",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -168,6 +169,7 @@ const ACH_DATA = {
 		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
 		
 		101: "Complete one Stadium Challenge.",
+		102: "Purchase showNum(2) of each Enlightenment.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

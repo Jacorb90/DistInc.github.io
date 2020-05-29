@@ -46,6 +46,8 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("6;2")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(5)
 		if (tmp.inf.upgs.has("6;4")) tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(2)
 		if (tmp.inf.stadium.completed("solaris")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(STADIUM_REWARDS.effects.solaris())
+		if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1)
+		if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1)
 	}
 		
 	// Scaling Strengths

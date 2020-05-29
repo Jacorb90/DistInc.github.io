@@ -86,4 +86,5 @@ function updateAchievements() {
 	if (player.distance.gte("4.4e786")&&player.dc.cores.eq(0)) tmp.ach[98].grant()
 	
 	if (player.inf.stadium.completions.length>0) tmp.ach[101].grant()
+	if (player.inf.ascension.enlightenments.every(x => new ExpantaNum(x).gte(2))) tmp.ach[102].grant() 
 }
