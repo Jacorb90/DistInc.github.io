@@ -23,6 +23,7 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
 	if (tmp.inf) if (tmp.inf.upgs.has("6;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.025)
 	if (tmp.inf) if (tmp.inf.stadium.completed("drigganiz")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(STADIUM_REWARDS.effects.drigganiz())
+	if (tmp.nerfs.active("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10)
 	if (tmp.nerfs.active("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0)
 	tmp.pathogens.sc = {
 		1: new ExpantaNum(8),
@@ -74,7 +75,11 @@ function updateTempPathogens() {
 			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
 			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
 			else if (i==4) return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9))
-			else if (i==5) return ExpantaNum.pow(3, bought.sqrt())
+			else if (i==5) {
+				let exp = new ExpantaNum(1)
+				if (tmp.inf) if (tmp.inf.upgs.has("7;5")) exp = exp.times(INF_UPGS.effects["7;5"]())
+				return ExpantaNum.pow(3, bought.sqrt()).pow(exp)
+			}
 			else if (i==6) return ExpantaNum.pow(1.4, bought.sqrt())
 			else if (i==7) return bought.plus(1).logBase(2).plus(1).pow(5)
 			else if (i==8) return bought.plus(1).logBase(2).plus(1).log10()

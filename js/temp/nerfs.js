@@ -3,17 +3,22 @@ function updateTempNerfs() {
 	tmp.nerfs.active = function(name) {
 		if (name=="nerfMaxVel") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("infinity", 2):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("infinity", 2)||tmp.inf.stadium.active("reality", 3)):true)
 			return active
 		}
 		if (name=="scaledRank") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("drigganiz", 2):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("drigganiz", 2)||tmp.inf.stadium.active("solaris", 3)):true)
 			return active
 		}
 		if (name=="noRank") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("infinity"):true)
+			return active
+		}
+		if (name=="scaledTier") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("drigganiz", 3):true)
 			return active
 		}
 		if (name=="noTier") {
@@ -31,6 +36,11 @@ function updateTempNerfs() {
 			active = active||(tmp.inf?tmp.inf.stadium.active("solaris", 2):true)
 			return active
 		}
+		if (name=="noRF") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("infinity", 3):true)
+			return active
+		}
 		if (name=="nerfTS") {
 			let active = false
 			active = active||(tmp.inf?(tmp.inf.stadium.active("drigganiz")||tmp.inf.stadium.active("spaceon", 2)):true)
@@ -44,6 +54,16 @@ function updateTempNerfs() {
 		if (name=="noCadavers") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("solaris"):true)
+			return active
+		}
+		if (name=="noLifeEssence") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("spaceon", 3):true)
+			return active
+		}
+		if (name=="weakPathogenUpgs") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 3):true)
 			return active
 		}
 		if (name=="noPathogenUpgs") {

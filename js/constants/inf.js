@@ -53,10 +53,10 @@ const INF_UPGS = {
 		"6;6": new ExpantaNum(2e12),
 		"7;1": new ExpantaNum(1e13),
 		"7;2": new ExpantaNum(2e13),
-		"7;3": new ExpantaNum(5e13),
-		"7;4": new ExpantaNum(1/0),
-		"7;5": new ExpantaNum(1/0),
-		"7;6": new ExpantaNum(1/0),
+		"7;3": new ExpantaNum(4e13),
+		"7;4": new ExpantaNum(5e13),
+		"7;5": new ExpantaNum(1e18),
+		"7;6": new ExpantaNum(1e20),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -98,9 +98,9 @@ const INF_UPGS = {
 		"7;1": "Stadium Challenge completions boost perks & make them last longer.",
 		"7;2": "Ascension Power & Dark Flow have synergy.",
 		"7;3": "Start Infinities with Dark Circles unlocked.",
-		"7;4": "???",
-		"7;5": "???",
-		"7;6": "???",
+		"7;4": "inf2;3 & inf3;2 are stronger based on your Pathogens.",
+		"7;5": "The fifth Pathogen Upgrade boosts itself.",
+		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -186,9 +186,11 @@ const INF_UPGS = {
 			return ret
 		},
 		"2;3": function() {
+			let exp = new ExpantaNum(1)
+			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]())
 			let pow = {
-				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10(),
-				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10(),
+				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10().times(exp),
+				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp),
 			}
 			return {
 				knowledge: player.tr.cubes.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
@@ -196,9 +198,11 @@ const INF_UPGS = {
 			}
 		},
 		"3;2": function() {
+			let exp = new ExpantaNum(1)
+			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]())
 			let pow = {
-				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10(),
-				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10(),
+				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10().times(exp),
+				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp),
 			}
 			return {
 				knowledge: player.collapse.cadavers.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
@@ -242,6 +246,18 @@ const INF_UPGS = {
 				flow: pow.plus(1).log10().sqrt().plus(1),
 			}
 		},
+		"7;4": function() {
+			let exp = player.pathogens.amount.plus(1).slog(10)
+			let base = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1)
+			let ret = base.pow(exp)
+			if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret)
+			return ret
+		},
+		"7;5": function() {
+			let ret = player.pathogens.upgrades[5].plus(1).sqrt()
+			return ret
+		}, 
+		"7;6": function() { return ExpantaNum.pow(1.2, player.dc.cores) },
 	},
 }
 const INF_TABS = {
@@ -256,12 +272,12 @@ const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]
 
 // The Stadium
 const STADIUM_DESCS = {
-	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1"],
-	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly"],
-	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1"],
-	eternity: ["Time Speed does nothing", "Dark Flow is always 0x"],
-	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing"],
-	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly"],
+	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1", "You cannot gain Life Essence"],
+	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly", "Scaled Rank scaling starts instantly"],
+	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1", "Rocket Fuel does nothing"],
+	eternity: ["Time Speed does nothing", "Dark Flow is always 0x", "Pathogen Upgrades are 90% weaker"],
+	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing", "Maximum Velocity is raised to the power of 0.1"],
+	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly", "Scaled Tier scaling starts instantly"],
 }
 const STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets.",
@@ -302,10 +318,10 @@ const STADIUM_REWARDS = {
 	},
 }
 const STADIUM_GOALS = {
-	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni)],
-	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni)],
-	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni)],
-	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni)],
-	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc)],
-	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni)],
+	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni)],
+	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni)],
+	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni)],
+	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni)],
+	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(1000).times(DISTANCES.uni)],
+	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni)],
 }

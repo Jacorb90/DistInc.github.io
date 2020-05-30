@@ -43,6 +43,7 @@ function updateTempInf() {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
+		else if (id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -147,6 +148,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
+	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
 	tmp.inf.asc.powerEff = function() {
 		let power = player.inf.ascension.power
 		let eff = power.plus(1).log10().plus(1).log10().div(10)

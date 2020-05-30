@@ -34,6 +34,7 @@ function updateTempRF() {
 	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
 	if (tmp.modes.hard.active) tmp.rf.eff = tmp.rf.eff.sub(0.02)
 	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) tmp.rf.eff = tmp.rf.eff.sub(1).times(2).add(1)
+	if (tmp.nerfs.active("noRF")) tmp.rf.eff = new ExpantaNum(1)
 	tmp.rf.onReset = function(prev) {
 		if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10)
 		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)

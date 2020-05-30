@@ -85,6 +85,8 @@ const ACH_DATA = {
 		
 		101: "Stronger than a High God",
 		102: "Kinda Grindy",
+		103: "I Live In Darkness",
+		104: "Roman Conqueror",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -170,6 +172,8 @@ const ACH_DATA = {
 		
 		101: "Complete one Stadium Challenge.",
 		102: "Purchase showNum(2) of each Enlightenment.",
+		103: "Reach showNum(1e18) Dark Matter.",
+		104: "Complete three Stadium Challenges.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -222,5 +226,7 @@ const ACH_DATA = {
 		95: "Gain showNum(100)% of Rocket gain every second.",
 		96: "Gain showNum(100)% of Cadaver gain every second.",
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
+		
+		103: "You can activate 1 extra perk at any given time.",
 	},
 }
