@@ -1,6 +1,11 @@
 function updateTempNerfs() {
 	tmp.nerfs = {}
 	tmp.nerfs.active = function(name) {
+		if (name=="nerfAccel") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("reality", 4):true)
+			return active
+		}
 		if (name=="nerfMaxVel") {
 			let active = false
 			active = active||(tmp.inf?(tmp.inf.stadium.active("infinity", 2)||tmp.inf.stadium.active("reality", 3)):true)
@@ -74,6 +79,11 @@ function updateTempNerfs() {
 		if (name=="noDarkFlow") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 2):true)
+			return active
+		}
+		if (name=="noInf1;1") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("spaceon", 4):true)
 			return active
 		}
 		if (name=="preInf.1") {

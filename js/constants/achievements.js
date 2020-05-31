@@ -87,6 +87,7 @@ const ACH_DATA = {
 		102: "Kinda Grindy",
 		103: "I Live In Darkness",
 		104: "Roman Conqueror",
+		105: "Ruined Society",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -174,6 +175,7 @@ const ACH_DATA = {
 		102: "Purchase showNum(2) of each Enlightenment.",
 		103: "Reach showNum(1e18) Dark Matter.",
 		104: "Complete three Stadium Challenges.",
+		105: "Reach a Time Speed of showNum(2.22e2222)x.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -227,6 +229,7 @@ const ACH_DATA = {
 		96: "Gain showNum(100)% of Cadaver gain every second.",
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
 		
-		103: "You can activate 1 extra perk at any given time.",
+		103: "You can activate one extra perk at any given time.",
+		105: "Acceleration is showNum(300)% faster.",
 	},
 }

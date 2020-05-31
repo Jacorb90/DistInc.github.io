@@ -23,8 +23,10 @@ function updateTempEarlyGame() {
 	if (tmp.ach) if (tmp.ach[14].has) tmp.acc = tmp.acc.times(1.5)
 	if (tmp.ach) if (tmp.ach[32].has) tmp.acc = tmp.acc.times(1.8)
 	if (tmp.ach) if (tmp.ach[35].has) tmp.acc = tmp.acc.times(1.8)
+	if (tmp.ach) if (tmp.ach[105].has) tmp.acc = tmp.acc.times(4)
 	if (tmp.maxVel && tmp.inf) if (tmp.inf.upgs.has("6;6")) tmp.acc = tmp.acc.times(INF_UPGS.effects["6;6"]())
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow)
+	if (tmp.nerfs.active("nerfAccel")) tmp.acc = tmp.acc.pow(0.1)
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)
