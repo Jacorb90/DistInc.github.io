@@ -40,13 +40,13 @@ function updateTempDC() {
 		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 	}
 	tmp.dc.buyCore = function() {
-		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
+		if (player.collapse.cadavers.lt(tmp.dc.coreCost)||tmp.nerfs.active("noDarkCores")) return
 		if (!player.dc.unl) return
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
 		player.dc.cores = player.dc.cores.plus(1)
 	}
 	tmp.dc.maxCores = function() {
-		if (player.collapse.cadavers.lt(tmp.dc.coreCost)) return
+		if (player.collapse.cadavers.lt(tmp.dc.coreCost)||tmp.nerfs.active("noDarkCores")) return
 		if (!player.dc.unl) return
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost)
 		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0))

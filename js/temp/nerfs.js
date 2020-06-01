@@ -33,7 +33,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noRockets") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("spaceon"):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("spaceon")||tmp.inf.stadium.active("drigganiz", 5)):true)
 			return active
 		}
 		if (name=="scaledRF") {
@@ -44,6 +44,11 @@ function updateTempNerfs() {
 		if (name=="noRF") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("infinity", 3):true)
+			return active
+		}
+		if (name=="noTimeCubes") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 5):true)
 			return active
 		}
 		if (name=="nerfTS") {
@@ -58,7 +63,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noCadavers") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("solaris"):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("solaris")||tmp.inf.stadium.active("drigganiz", 5)):true)
 			return active
 		}
 		if (name=="noLifeEssence") {
@@ -68,7 +73,7 @@ function updateTempNerfs() {
 		}
 		if (name=="weakPathogenUpgs") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 3):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("eternity", 3)||tmp.inf.stadium.active("infinity", 5)):true)
 			return active
 		}
 		if (name=="noPathogenUpgs") {
@@ -79,6 +84,11 @@ function updateTempNerfs() {
 		if (name=="noDarkFlow") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 2):true)
+			return active
+		}
+		if (name=="noDarkCores") {
+			let active = false
+			active = active||(tmp.inf?tmp.inf.stadium.active("reality", 5):true)
 			return active
 		}
 		if (name=="noInf1;1") {

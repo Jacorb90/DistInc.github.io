@@ -88,6 +88,7 @@ const ACH_DATA = {
 		103: "I Live In Darkness",
 		104: "Roman Conqueror",
 		105: "Ruined Society",
+		106: "Anti-Automation",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -176,6 +177,7 @@ const ACH_DATA = {
 		103: "Reach showNum(1e18) Dark Matter.",
 		104: "Complete three Stadium Challenges.",
 		105: "Reach a Time Speed of showNum(2.22e2222)x.",
+		106: "Reach showNum(20) Endorsements.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

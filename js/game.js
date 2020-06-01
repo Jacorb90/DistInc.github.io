@@ -42,8 +42,8 @@ function tickWithTR(diff) {
 }
 
 function tickWithTS(diff) {
-	if (player.tr.active) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff))
-	else if (tmp.ach[72].has && player.tr.unl) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff.div(2)))
+	if (player.tr.active && !tmp.nerfs.active("noTimeCubes")) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff))
+	else if (tmp.ach[72].has && player.tr.unl && !tmp.nerfs.active("noTimeCubes")) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff.div(2)))
 	tickWithTR(diff.times(player.tr.active?(-1):1))
 }
 

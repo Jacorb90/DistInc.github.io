@@ -29,21 +29,21 @@ const INF_UPGS = {
 		"2;4": new ExpantaNum(5e4),
 		"2;5": new ExpantaNum(1e8),
 		"2;6": new ExpantaNum(5e10),
-		"2;7": new ExpantaNum(1e21), // INFINITE
+		"2;7": new ExpantaNum(1e21),
 		"3;1": new ExpantaNum(1e3),
 		"3;2": new ExpantaNum(8e3),
 		"3;3": new ExpantaNum(5e4),
 		"3;4": new ExpantaNum(1e5),
 		"3;5": new ExpantaNum(2.5e8),
 		"3;6": new ExpantaNum(1e11),
-		"3;7": new ExpantaNum(1/0), // INFINITE
+		"3;7": new ExpantaNum(4e21),
 		"4;1": new ExpantaNum(1e4),
 		"4;2": new ExpantaNum(5e4),
 		"4;3": new ExpantaNum(1e5),
 		"4;4": new ExpantaNum(2.5e5),
 		"4;5": new ExpantaNum(4e8),
 		"4;6": new ExpantaNum(2e11),
-		"4;7": new ExpantaNum(1/0), // INFINITE
+		"4;7": new ExpantaNum(7.5e21),
 		"5;1": new ExpantaNum(1e7),
 		"5;2": new ExpantaNum(1e8),
 		"5;3": new ExpantaNum(2.5e7),
@@ -87,14 +87,14 @@ const INF_UPGS = {
 		"3;4": "Unlock Auto-Pathogen upgrades.",
 		"3;5": "Scaled Rocket Fuel scaling is 25% weaker.",
 		"3;6": "Pathogen Upgrades softcap 1 later.",
-		"3;7": "???", // Unknown
+		"3;7": "Enlightenments boost Ascension Power gain.", 
 		"4;1": "Dark Flow is twice as fast.", 
 		"4;2": "Unlock Auto-Dark Cores.",
 		"4;3": "Scaled Rank scaling is 50% weaker.", 
 		"4;4": "Inf2;1, inf2;2, inf2;3, & inf3;2 are brought back if repealed.",
 		"4;5": "Scaled Pathogen Upgrade scaling starts 2 later.",
 		"4;6": "Dark Flow is twice as fast.",
-		"4;7": "???", // Unknown
+		"4;7": "Time Speed boosts Acceleration & Maximum Velocity.", 
 		"5;1": "Dark Flow is twice as fast.", 
 		"5;2": "Pathogen Upgrades are 5% stronger.", 
 		"5;3": "Gain 10% of Life Essence gain every second.", 
@@ -237,6 +237,17 @@ const INF_UPGS = {
 				cadavers: player.inf.knowledge.plus(1).pow(pow.cadavers),
 			}
 		},
+		"3;7": function() {
+			let enl = player.inf.ascension.enlightenments.reduce((x,y) => ExpantaNum.add(x, y))
+			let ret = ExpantaNum.pow(1.5, enl.sqrt())
+			return ret
+		},
+		"4;7": function() {
+			let speed = tmp.timeSpeed
+			let ret = speed.pow(0.3)
+			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000/3))
+			return ret
+		},
 		"5;4": function() {
 			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt()
 			return ret
@@ -300,12 +311,12 @@ const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]
 
 // The Stadium
 const STADIUM_DESCS = {
-	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1", "You cannot gain Life Essence", "inf1;1 does nothing"],
-	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly", "Scaled Rank scaling starts instantly", "Scaled Rank scaling is 500% stronger"],
-	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1", "Rocket Fuel does nothing", "Scaled Pathogen Upgrade scaling is 500% stronger"],
-	eternity: ["Time Speed does nothing", "Dark Flow is always 0x", "Pathogen Upgrades are 90% weaker", "Scaled Tier scaling is 500% stronger"],
-	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing", "Maximum Velocity is raised to the power of 0.1", "Acceleration is raised to the power of 0.1"],
-	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly", "Scaled Tier scaling starts instantly", "Scaled Rank & Scaled Tier scalings are 500% stronger"],
+	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1", "You cannot gain Life Essence", "inf1;1 does nothing", "The base cost of Ranks is much higher"],
+	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly", "Scaled Rank scaling starts instantly", "Scaled Rank scaling is 500% stronger", "The base cost of Tiers is much higher"],
+	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1", "Rocket Fuel does nothing", "Scaled Pathogen Upgrade scaling is 500% stronger", "Pathogen Upgrades are 90% weaker"],
+	eternity: ["Time Speed does nothing", "Dark Flow is always 0x", "Pathogen Upgrades are 90% weaker", "Scaled Tier scaling is 500% stronger", "You do not gain Time Cubes"],
+	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing", "Maximum Velocity is raised to the power of 0.1", "Acceleration is raised to the power of 0.1", "You cannot buy Dark Cores"],
+	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly", "Scaled Tier scaling starts instantly", "Scaled Rank & Scaled Tier scalings are 500% stronger", "You do not gain Rockets or Cadavers"],
 }
 const STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets.",
@@ -346,10 +357,10 @@ const STADIUM_REWARDS = {
 	},
 }
 const STADIUM_GOALS = {
-	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni), new ExpantaNum(1e128).times(DISTANCES.uni)],
-	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni), new ExpantaNum("1e500").times(DISTANCES.uni)],
-	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni), new ExpantaNum("1e640").times(DISTANCES.uni)],
-	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni)],
-	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(1000).times(DISTANCES.uni), new ExpantaNum(1e4).times(DISTANCES.uni)],
-	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni), new ExpantaNum(1e40).times(DISTANCES.uni)],
+	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni), new ExpantaNum(1e128).times(DISTANCES.uni), new ExpantaNum(1e240).times(DISTANCES.uni)],
+	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni), new ExpantaNum("1e500").times(DISTANCES.uni), new ExpantaNum("1.11e111").times(DISTANCES.uni)],
+	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni), new ExpantaNum("1e640").times(DISTANCES.uni), new ExpantaNum("1e1000").times(DISTANCES.uni)],
+	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni), new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)],
+	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(1000).times(DISTANCES.uni), new ExpantaNum(1e4).times(DISTANCES.uni), new ExpantaNum(1e5).times(DISTANCES.uni)],
+	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni), new ExpantaNum(1e40).times(DISTANCES.uni), new ExpantaNum(1e150).times(DISTANCES.uni)],
 }

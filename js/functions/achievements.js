@@ -90,4 +90,5 @@ function updateAchievements() {
 	if (player.dc.matter.gte(1e18)) tmp.ach[103].grant()
 	if (player.inf.stadium.completions.length>=3) tmp.ach[104].grant()
 	if (tmp.timeSpeed.gte(new ExpantaNum("2.22e2222"))) tmp.ach[105].grant()
+	if (player.inf.endorsements.gte(20)) tmp.ach[106].grant()
 }
