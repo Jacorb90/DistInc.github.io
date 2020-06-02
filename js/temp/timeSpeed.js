@@ -33,6 +33,7 @@ function updateTempTimeSpeed() {
 	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1)
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5)
 	if (tmp.inf.upgs.has("1;1")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["1;1"]())
+	if (tmp.inf.upgs.has("7;7")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["7;7"]()["ts"])
 	if (tmp.inf.stadium.completed("eternity")) tmp.timeSpeed = tmp.timeSpeed.times(STADIUM_REWARDS.effects.eternity())
 	if (tmp.nerfs.active("nerfTS")) tmp.timeSpeed = tmp.timeSpeed.pow(0.1)
 }

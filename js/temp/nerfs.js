@@ -1,6 +1,11 @@
 function updateTempNerfs() {
 	tmp.nerfs = {}
 	tmp.nerfs.active = function(name) {
+		if (name=="maxVelActive") {
+			let active = true
+			if (tmp.inf) if (tmp.inf.upgs.has("6;7")) active = false
+			return active
+		}
 		if (name=="nerfAccel") {
 			let active = false
 			active = active||(tmp.inf?tmp.inf.stadium.active("reality", 4):true)
@@ -48,7 +53,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noTimeCubes") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("eternity", 5):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("eternity", 5)||tmp.inf.stadium.active("infinity", 6)):true)
 			return active
 		}
 		if (name=="nerfTS") {
@@ -78,7 +83,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noPathogenUpgs") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("drigganiz"):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("drigganiz")||tmp.inf.stadium.active("eternity", 6)||tmp.inf.stadium.active("reality", 6)):true)
 			return active
 		}
 		if (name=="noDarkFlow") {
@@ -88,7 +93,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noDarkCores") {
 			let active = false
-			active = active||(tmp.inf?tmp.inf.stadium.active("reality", 5):true)
+			active = active||(tmp.inf?(tmp.inf.stadium.active("reality", 5)||tmp.inf.stadium.active("drigganiz", 6)):true)
 			return active
 		}
 		if (name=="noInf1;1") {

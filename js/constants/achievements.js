@@ -89,6 +89,8 @@ const ACH_DATA = {
 		104: "Roman Conqueror",
 		105: "Ruined Society",
 		106: "Anti-Automation",
+		107: "You are challenged?",
+		108: "True Innovation",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -178,6 +180,8 @@ const ACH_DATA = {
 		104: "Complete three Stadium Challenges.",
 		105: "Reach a Time Speed of showNum(2.22e2222)x.",
 		106: "Reach showNum(20) Endorsements.",
+		107: "Complete six Stadium Challenges.",
+		108: "Unlock Velocital Energy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -233,5 +237,6 @@ const ACH_DATA = {
 		
 		103: "You can activate one extra perk at any given time.",
 		105: "Acceleration is showNum(300)% faster.",
+		108: "Knowledge gain is showNum(50)% faster.",
 	},
 }

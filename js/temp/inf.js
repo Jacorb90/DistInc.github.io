@@ -43,8 +43,10 @@ function updateTempInf() {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="2;7") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
+		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
 		else if (id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
+		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -82,6 +84,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("2;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;3"]()["knowledge"])
 	if (tmp.inf.upgs.has("3;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["3;2"]()["knowledge"])
 	if (tmp.inf.upgs.has("5;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["5;4"]())
+	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()

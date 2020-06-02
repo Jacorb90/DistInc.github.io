@@ -36,7 +36,7 @@ function tickWithoutTS(diff) {
 }
 
 function tickWithTR(diff) {
-	player.velocity = player.velocity.plus(tmp.nerfs.adjust(tmp.acc, "vel").times(diff)).min(tmp.maxVel).max(0)
+	player.velocity = player.velocity.plus(tmp.nerfs.adjust(tmp.acc, "vel").times(diff)).min(tmp.nerfs.active("maxVelActive")?tmp.maxVel:1/0).max(0)
 	player.distance = player.distance.plus(tmp.nerfs.adjust(player.velocity, "dist").times(diff)).max(0)
 	if (player.automation.unl) autoTick(diff)
 }
