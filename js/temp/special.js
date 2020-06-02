@@ -11,6 +11,7 @@ function updateTempSpecial() {
 		infinity: new Feature({name: "infinity", req: new ExpantaNum(INF_UNL), res: "distance", display: formatDistance, reached: player.inf.unl}),
 		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10)}),
 		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium"}),
+		pantheon: new Feature({name: "pantheon", req: new ExpantaNum(21), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(21), displayName: "the pantheon"}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {

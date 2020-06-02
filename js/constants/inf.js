@@ -317,6 +317,7 @@ const INF_TABS = {
 	infinity: function() { return true },
 	ascension: function() { return player.inf.endorsements.gte(10) },
 	stadium: function() { return player.inf.endorsements.gte(15) },
+	pantheon: function() { return player.inf.endorsements.gte(21) },
 }
 
 // Ascension

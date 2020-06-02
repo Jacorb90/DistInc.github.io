@@ -191,6 +191,12 @@ function updateHTML() {
 	}
 	tmp.el.exitStad.setDisplay(player.inf.stadium.current!="")
 	
+	// The Pantheon
+	tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems))
+	tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next))
+	let name = tmp.scaling.getName("spectralGems")
+	tmp.el.spectralGemName.setTxt(name==""?"":(name+" "))
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)

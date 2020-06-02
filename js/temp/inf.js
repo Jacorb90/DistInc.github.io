@@ -279,4 +279,22 @@ function updateTempInf() {
 	tmp.inf.stadium.completed = function(name) {
 		return player.inf.endorsements.gte(15)&&player.inf.stadium.completions.includes(name)
 	}
+	
+	// The Pantheon
+	tmp.inf.pantheon = {}
+	tmp.inf.pantheon.totalGems = function() { return player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons) }()
+	tmp.inf.pantheon.bc = new ExpantaNum(21)
+	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
+	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor()
+	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems, "scaled")) {
+		let power = tmp.scalingPower.scaled.spectralGems
+		let exp = ExpantaNum.pow(2, power)
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.pow(exp).div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
+		tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().sub(1).times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).pow(exp.pow(-1)).add(1).floor()
+	}
+	tmp.inf.pantheon.collect = function() {
+		let diff = tmp.inf.pantheon.bulk.sub(tmp.inf.pantheon.totalGems)
+		if (diff.lt(1)) return
+		player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff)
+	}
 }

@@ -653,6 +653,13 @@ table { margin: auto; }
 	color: black;
 }
 
+.spectral {
+	color: #9fc4bc;
+	font-weight: bold;
+	font-size: 25px;
+	animation: spectral 4s ease infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -762,6 +769,21 @@ table { margin: auto; }
 	}
 	100% {
 		background-size: 100% 100%;
+	}
+}
+
+@keyframes spectral {
+	0% {
+		color: #9fc4bc;
+		text-shadow:0px 1px 0px #49f2a0;
+	}
+	50% {
+		color: #49f2a0;
+		text-shadow:0px 1px 0px #9fc4bc;
+	}
+	100% {
+		color: #9fc4bc;
+		text-shadow:0px 1px 0px #49f2a0;
 	}
 }
 
