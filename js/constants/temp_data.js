@@ -1,5 +1,5 @@
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "not", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "darkFlow", "trRow3", "autoSave", "mainContainer", "endorsements", "nextEndorsement", "knowledge", "infUpgData", "knowledgeBase", "endorsementName", "endorsementManual", "perkPower", "ascPower", "forceInf"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "not", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "darkFlow", "trRow3", "autoSave", "mainContainer", "endorsements", "nextEndorsement", "knowledge", "infUpgData", "knowledgeBase", "endorsementName", "endorsementManual", "perkPower", "ascPower", "forceInf", "exitStad", "emInner", "mvName", "accEn"],
 }
 for (let r=1;r<=ACH_DATA.rows;r++) {
 	for (let c=1;c<=ACH_DATA.cols;c++) {
@@ -22,4 +22,10 @@ for (let i=1;i<=4;i++) {
 	TMP_DATA.ELS.push("enl"+i)
 	TMP_DATA.ELS.push("enleff"+i)
 	TMP_DATA.ELS.push("buyEnl"+i)
+	TMP_DATA.ELS.push("enlScale"+i)
+}
+for (let i=0;i<Object.keys(STADIUM_DESCS).length;i++) {
+	TMP_DATA.ELS.push(Object.keys(STADIUM_DESCS)[i]+"Div")
+	TMP_DATA.ELS.push(Object.keys(STADIUM_DESCS)[i]+"Chall")
+	TMP_DATA.ELS.push(Object.keys(STADIUM_DESCS)[i]+"Btm")
 }

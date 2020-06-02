@@ -156,7 +156,8 @@ function updateHTML() {
 		}
 	}
 	tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements")+" ")
-	tmp.el.endorsementManual.setDisplay(player.inf.endorsements.gte(10)&&tmp.inf.can)
+	tmp.el.endorsementManual.setDisplay(player.inf.endorsements.gte(10)&&(tmp.inf.can||tmp.inf.stadium.canComplete))
+	tmp.el.emInner.setHTML(tmp.inf.stadium.canComplete?('Complete this Stadium challenge.'):('Allow <span class="infinity">Infinity</span> to endorse you.'))
 	tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10))
 	
 	// Ascension
@@ -168,14 +169,33 @@ function updateHTML() {
 		tmp.el["enleff"+i].setTxt(showNum(tmp.inf.asc.enlEff(i).times(100)))
 		tmp.el["buyEnl"+i].setTxt("Cost: "+showNum(tmp.inf.asc.enlCost(i))+" Ascension Power")
 		tmp.el["buyEnl"+i].setClasses({btn: true, inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)), locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))})
+		let name = tmp.scaling.getName("enlightenments", i)
+		tmp.el["enlScale"+i].setTxt(name==""?"":(name+" "))
 	}
 	tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.times(100))+"%")
 	tmp.el.perkPower.setDisplay(!tmp.inf.asc.perkStrength.eq(1))
 	tmp.el.ascPower.setHTML("Ascension Power: <span style='font-size: 25px; color: red;'>"+showNum(player.inf.ascension.power)+"</span>")
 	
+	// The Stadium
+	for (let i=0;i<Object.keys(STADIUM_DESCS).length;i++) {
+		let name = Object.keys(STADIUM_DESCS)[i]
+		tmp.el[name+"Div"].setTooltip(tmp.inf.stadium.tooltip(name))
+		tmp.el[name+"Div"].setClasses({stadiumChall: true, comp: player.inf.stadium.completions.includes(name)})
+		let active = player.inf.stadium.current==name
+		let trapped = !active && tmp.inf.stadium.active(name)
+		let comp = player.inf.stadium.completions.includes(name)
+		tmp.el[name+"Chall"].setTxt(trapped?"Trapped":(active?"Active":(comp?"Completed":"Start")))
+		tmp.el[name+"Chall"].setClasses({btn: true, bought: (trapped||active), locked: (player.inf.stadium.current!=""&&!(trapped||active)), inf: !(trapped||active||player.inf.stadium.current!="")})
+		let showCurrent = STADIUM_REWARDS.effects[name]!==undefined
+		tmp.el[name+"Btm"].setHTML("Goal: "+formatDistance(tmp.inf.stadium.goal(name))+"<br>Reward: "+STADIUM_REWARDS[name]+"<br>"+(showCurrent?("Currently: "+STADIUM_REWARDS.disp[name]()):""))
+	}
+	tmp.el.exitStad.setDisplay(player.inf.stadium.current!="")
+	
 	// Miscellaneous
-	tmp.el.ts.setHTML(tmp.timeSpeed.eq(1)?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
+	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
 	tmp.el.mainContainer.setDisplay(showContainer)
+	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive")?"Maximum Velocity:":"Velocital Energy:")
+	tmp.el.accEn.setHTML(tmp.accEn.gt(0)?(" (Accelerational Energy: "+formatDistance(tmp.accEn)+"/s<sup>2</sup>)"):"")
 }

@@ -1,5 +1,6 @@
 function updateTemp() {
 	updateTempOptions()
+	updateTempNerfs()
 	updateTempScaling()
 	updateTempEffects()
 	updateTempEarlyGame()

@@ -84,4 +84,13 @@ function updateAchievements() {
 	if (tmp.auto.rankbot.magnitude.gt(1e33)) tmp.ach[96].grant() 
 	if (player.distance.gte("4.4e416")&&antiBool) tmp.ach[97].grant() 
 	if (player.distance.gte("4.4e786")&&player.dc.cores.eq(0)) tmp.ach[98].grant()
+	
+	if (player.inf.stadium.completions.length>0) tmp.ach[101].grant()
+	if (player.inf.ascension.enlightenments.every(x => new ExpantaNum(x).gte(2))) tmp.ach[102].grant() 
+	if (player.dc.matter.gte(1e18)) tmp.ach[103].grant()
+	if (player.inf.stadium.completions.length>=3) tmp.ach[104].grant()
+	if (tmp.timeSpeed.gte(new ExpantaNum("2.22e2222"))) tmp.ach[105].grant()
+	if (player.inf.endorsements.gte(20)) tmp.ach[106].grant()
+	if (player.inf.stadium.completions.length>=6) tmp.ach[107].grant()
+	if (!tmp.nerfs.active("maxVelActive")) tmp.ach[108].grant()
 }

@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 9,
+	rows: 10,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -82,6 +82,15 @@ const ACH_DATA = {
 		96: "This'll never matter",
 		97: "Clean as a Whistle",
 		98: "Feel The Heat",
+		
+		101: "Stronger than a High God",
+		102: "Kinda Grindy",
+		103: "I Live In Darkness",
+		104: "Roman Conqueror",
+		105: "Ruined Society",
+		106: "Anti-Automation",
+		107: "You are challenged?",
+		108: "True Innovation",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -160,10 +169,19 @@ const ACH_DATA = {
 		92: "Reach showNum(1e80) Cadavers.",
 		93: "Reach showNum(666) Ascension Power.",
 		94: "Reach showNum(14) Endorsements.",
-		95: "Purchase 1 of each Enlightenment.",
+		95: "Purchase one of each Enlightenment.",
 		96: "Have a magnitude above showNum(1e33) for Rankbot.",
 		97: "Reach formatDistance(4.4e416) without any Pathogen Upgrades.",
 		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
+		
+		101: "Complete one Stadium Challenge.",
+		102: "Purchase showNum(2) of each Enlightenment.",
+		103: "Reach showNum(1e18) Dark Matter.",
+		104: "Complete three Stadium Challenges.",
+		105: "Reach a Time Speed of showNum(2.22e2222)x.",
+		106: "Reach showNum(20) Endorsements.",
+		107: "Complete six Stadium Challenges.",
+		108: "Unlock Velocital Energy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -216,5 +234,9 @@ const ACH_DATA = {
 		95: "Gain showNum(100)% of Rocket gain every second.",
 		96: "Gain showNum(100)% of Cadaver gain every second.",
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
+		
+		103: "You can activate one extra perk at any given time.",
+		105: "Acceleration is showNum(300)% faster.",
+		108: "Knowledge gain is showNum(50)% faster.",
 	},
 }

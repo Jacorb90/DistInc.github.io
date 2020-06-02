@@ -6,6 +6,7 @@ function updateTempRockets() {
 	if (tmp.modes.hard.active) tmp.rockets.sc = new ExpantaNum(1)
 	if (tmp.pathogens && player.pathogens.unl) tmp.rockets.sc = tmp.rockets.sc.times(tmp.pathogens[7].eff)
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
+	if (tmp.nerfs.active("noRockets")) tmp.rockets.canRocket = false
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal")
 	tmp.rockets.esc = new ExpantaNum(5)
 	if (tmp.modes.hard.active) tmp.rockets.esc = tmp.rockets.esc.sub(0.5)

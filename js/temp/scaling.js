@@ -2,8 +2,8 @@ function updateTempScaling() {
 	tmp.scaling = {}
 	tmp.scaling.active = function(type, v, scaling) {
 		v = new ExpantaNum(v)
-		let k = Object.keys(SCALING_STARTS)
-		return v.gte(SCALING_STARTS[scaling][type])
+		let sd = tmp.scalings?tmp.scalings:SCALING_STARTS
+		return v.gte(sd[scaling][type])
 	}
 	tmp.scaling.getName = function(name, x=0) {
 		let mx = Object.keys(SCALING_STARTS).length
@@ -45,13 +45,24 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("6;1")) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(10)
 		if (tmp.inf.upgs.has("6;2")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(5)
 		if (tmp.inf.upgs.has("6;4")) tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(2)
+		if (tmp.inf.stadium.completed("solaris")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(STADIUM_REWARDS.effects.solaris())
+		if (tmp.inf.upgs.has("5;7")) tmp.scalings.superscaled.tier = tmp.scalings.superscaled.tier.plus(INF_UPGS.effects["5;7"]())
+		if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1)
+		if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1)
+		if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1)
 	}
 		
 	// Scaling Strengths
 	if (tmp.inf) {
 		if (tmp.inf.upgs.has("4;3")) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(0.5)
+		if (tmp.inf.stadium.active("solaris", 4)) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(6)
+		if (tmp.inf.stadium.active("drigganiz", 4)) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(6)
 		if (tmp.inf.upgs.has("2;5")) tmp.scalingPower.superscaled.rank = tmp.scalingPower.superscaled.rank.times(0.95)
 		if (tmp.inf.upgs.has("1;5")) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(0.8)
+		if (tmp.inf.upgs.has("2;7")) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(ExpantaNum.sub(1, INF_UPGS.effects["2;7"]()))
+		if (tmp.inf.stadium.active("eternity", 4)) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(6)
+		if (tmp.inf.stadium.active("drigganiz", 4)) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(6)
 		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75)
+		if (tmp.inf.stadium.active("infinity", 4)) tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6)
 	}
 }

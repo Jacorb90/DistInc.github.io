@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.0,
+	version: 1.1,
 	optionsTab: "saving",
 	achievements: [],
 	options: {
@@ -66,6 +66,10 @@ const DEFAULT_START = {
 			time: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			enlightenments: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			power: new ExpantaNum(0),
+		},
+		stadium: {
+			current: "",
+			completions: [],
 		},
 	},
 	automators: {},

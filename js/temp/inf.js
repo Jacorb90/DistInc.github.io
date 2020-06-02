@@ -1,5 +1,8 @@
 function updateTempInf() {
-	if (tmp.inf) tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
+	if (tmp.inf) {
+		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
+		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
+	}
 	
 	// Unrepealed Infinity Upgrades
 	tmp.infUr = []
@@ -38,7 +41,12 @@ function updateTempInf() {
 	}	
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
+		else if (id=="2;7") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
+		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
+		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
+		else if (id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
+		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -69,11 +77,14 @@ function updateTempInf() {
 	tmp.inf.bc = INF_UNL
 	tmp.inf.emPow = new ExpantaNum(1)
 	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements)
-	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase))
+	tmp.inf.knowledgeExp = new ExpantaNum(1)
+	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25)
+	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase)).pow(tmp.inf.knowledgeExp)
 	if (tmp.inf.upgs.has("2;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;2"]())
 	if (tmp.inf.upgs.has("2;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;3"]()["knowledge"])
 	if (tmp.inf.upgs.has("3;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["3;2"]()["knowledge"])
 	if (tmp.inf.upgs.has("5;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["5;4"]())
+	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()
@@ -101,6 +112,7 @@ function updateTempInf() {
 	tmp.inf.onReset = function(prev) {
 		infActive = true
 		if (!showContainer) closeHiddenDiv()
+		player.inf.stadium.current = ""
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl
 			player.automation.robots = prev.automation.robots
@@ -111,6 +123,7 @@ function updateTempInf() {
 			player.collapse.unl = true
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
+		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -126,13 +139,22 @@ function updateTempInf() {
 		tmp.inf.updateTabs()
 	}
 	tmp.inf.updateTabs()
+	tmp.inf.manualReset = function() {
+		if (tmp.canCompleteStadium) {
+			if (!player.inf.stadium.completions.includes(player.inf.stadium.current)) player.inf.stadium.completions.push(player.inf.stadium.current)
+			player.inf.stadium.current = ""
+			tmp.inf.layer.reset(true)
+		} else tmp.inf.layer.reset()
+	}
 	
 	// Ascension
 	tmp.inf.asc = {}
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
+	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
+	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
 	tmp.inf.asc.powerEff = function() {
 		let power = player.inf.ascension.power
 		let eff = power.plus(1).log10().plus(1).log10().div(10)
@@ -144,6 +166,7 @@ function updateTempInf() {
 		return eff
 	}
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
+	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
@@ -155,6 +178,8 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.powerGain = new ExpantaNum(tmp.inf.asc.perksActive()).max(1)
 	if (tmp.inf.upgs.has("6;5")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["6;5"]())
+	if (tmp.inf.upgs.has("7;2")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["7;2"]()["power"])
+	if (tmp.inf.upgs.has("3;7")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["3;7"]())
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
 		if (tmp.inf.asc.perkActive(n)) {
@@ -166,7 +191,7 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.perkEff = function(n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n])
-		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)) return base
+		if (!tmp.inf.asc.perkActive(n)||player.inf.endorsements.lt(10)||tmp.nerfs.active("noPerks")) return base
 		let pow = tmp.inf.asc.perkPower[n]
 		if (n==1) return ExpantaNum.pow(10, pow)
 		else if (n==2) return pow
@@ -178,11 +203,21 @@ function updateTempInf() {
 	tmp.inf.asc.enlCost = function(n) {
 		let enl = player.inf.ascension.enlightenments[n-1]
 		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		if (tmp.scaling.active("enlightenments", enl, "scaled")) {
+			let power = tmp.scalingPower.scaled.endorsements
+			let exp = ExpantaNum.pow(2, power)
+			cost = tmp.inf.asc.costData.base.pow(enl.pow(exp).div(tmp.scalings.scaled.endorsements.pow(exp.sub(1))).pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start)
+		}
 		return cost
 	}
 	tmp.inf.asc.enlBulk = function(n) {
 		let ap = player.inf.ascension.power
 		let bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).plus(1).floor()
+		if (tmp.scaling.active("enlightenments", player.inf.ascension.enlightenments[n-1].max(bulk), "scaled")) {
+			let power = tmp.scalingPower.scaled.endorsements
+			let exp = ExpantaNum.pow(2, power)
+			bulk = ap.div(tmp.inf.asc.costData.start).max(1).logBase(tmp.inf.asc.costData.base).pow(tmp.inf.asc.costData.exp.pow(-1)).times(tmp.scalings.scaled.endorsements.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+		}
 		return bulk
 	}
 	tmp.inf.asc.buyEnl = function(n) {
@@ -191,5 +226,57 @@ function updateTempInf() {
 		if (ap.lt(cost)) return
 		player.inf.ascension.power = ap.sub(cost)
 		player.inf.ascension.enlightenments[n-1] = player.inf.ascension.enlightenments[n-1].plus(1)
+	}
+	
+	// Stadium
+	tmp.inf.stadium = {}
+	tmp.inf.stadium.reset = function() {
+		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return
+		player.inf.stadium.completions = []
+		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.stadium.exit = function() {
+		if (player.inf.stadium.current=="") return
+		player.inf.stadium.current = ""
+		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.stadium.active = function(name, rank=1) {
+		let active = player.inf.stadium.current == name
+		let l = player.inf.stadium.completions.length+1
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		if (rank>1) active = active&&(l>=rank)
+		return active
+	}
+	tmp.inf.stadium.anyActive = function() {
+		let active = player.inf.stadium.current != ""
+		return active
+	}
+	tmp.inf.stadium.goal = function(name) {
+		let goal_data = STADIUM_GOALS[name]
+		let l = player.inf.stadium.completions.length+1
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		let goal = goal_data[l-1]?goal_data[l-1]:new ExpantaNum(1/0)
+		return goal
+	}
+	tmp.inf.stadium.canComplete = player.inf.endorsements.gte(15) && player.inf.stadium.current != "" && player.distance.gte(tmp.inf.stadium.goal(player.inf.stadium.current))
+	tmp.inf.stadium.start = function(name) {
+		if (tmp.inf.stadium.active(name)) return
+		if (player.inf.stadium.current != "") return
+		tmp.inf.layer.reset(true)
+		player.inf.stadium.current = name
+	}
+	tmp.inf.stadium.tooltip = function(name) {
+		let descs = STADIUM_DESCS[name]
+		let l = Math.min(player.inf.stadium.completions.length+1, descs.length)
+		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
+		let tooltip = ""
+		for (let i=0;i<l;i++) {
+			tooltip += descs[i]
+			if (i<l-1) tooltip+=", "
+		}
+		return tooltip
+	}
+	tmp.inf.stadium.completed = function(name) {
+		return player.inf.endorsements.gte(15)&&player.inf.stadium.completions.includes(name)
 	}
 }
