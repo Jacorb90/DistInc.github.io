@@ -2,6 +2,7 @@ function updateTempInf() {
 	if (tmp.inf) {
 		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
+		tmp.soulBoost = tmp.inf.pantheon.soulBoost
 	}
 	
 	// Unrepealed Infinity Upgrades
@@ -155,6 +156,7 @@ function updateTempInf() {
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
+	if (tmp.ach[111].has) tmp.inf.asc.maxPerks = 4
 	tmp.inf.asc.powerEff = function() {
 		let power = player.inf.ascension.power
 		let eff = power.plus(1).log10().plus(1).log10().div(10)
@@ -167,6 +169,7 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]())
+	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost?tmp.soulBoost:1)
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
@@ -297,4 +300,28 @@ function updateTempInf() {
 		if (diff.lt(1)) return
 		player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff)
 	}
+	tmp.inf.pantheon.transfer = function(type) {
+		if (player.inf.pantheon.gems.lt(1)) return
+		player.inf.pantheon[type] = player.inf.pantheon[type].plus(1)
+		player.inf.pantheon.gems = player.inf.pantheon.gems.sub(1)
+	}
+	tmp.inf.pantheon.respec = function() {
+		if (!player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0)) return
+		if (!confirm("Respeccing your Angels & Demons will reset your Angels, Demons, Heavenly Chips, and Demonic Souls, and will perform an Infinity reset. Are you sure you want to do this?")) return
+		player.inf.pantheon.gems = new ExpantaNum(tmp.inf.pantheon.totalGems)
+		player.inf.pantheon.angels = new ExpantaNum(0)
+		player.inf.pantheon.demons = new ExpantaNum(0)
+		player.inf.pantheon.heavenlyChips = new ExpantaNum(0)
+		player.inf.pantheon.demonicSouls = new ExpantaNum(0)
+		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1)
+	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1)
+	let h = player.inf.pantheon.heavenlyChips
+	let d = player.inf.pantheon.demonicSouls
+	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
+	tmp.inf.pantheon.chipBoost = h.div(d.pow(p.div(10).plus(1).pow(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2)
+	tmp.inf.pantheon.soulBoost = d.div(h.pow(p.div(10).plus(1).pow(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2)
 }

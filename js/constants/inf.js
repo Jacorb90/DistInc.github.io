@@ -342,21 +342,27 @@ const STADIUM_REWARDS = {
 	drigganiz: "Pathogen Upgrades are 0.75% stronger for every achievement you have.",
 	effects: {
 		spaceon: function() {
+			let mult = tmp.inf.pantheon.chipBoost
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1)
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret)
+			ret = ret.times(mult)
 			return ret
 		},
 		solaris: function() {
+			let mult = tmp.inf.pantheon.chipBoost
 			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25)
 			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret)
+			ret = ret.times(mult)
 			return ret
 		},
 		eternity: function() {
+			let mult = tmp.inf.pantheon.chipBoost
 			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1))
 			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7)
 			let totalExp = base.pow(exp)
 			if (totalExp.gte(Number.MAX_VALUE)) totalExp = totalExp.log10().times(Number.MAX_VALUE/Math.log10(Number.MAX_VALUE))
 			let ret = player.rank.pow(totalExp.log10().div(2))
+			ret = ret.pow(mult)
 			return ret.max(1)
 		},
 		drigganiz: function() {

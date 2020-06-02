@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 10,
+	rows: 11,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -91,6 +91,9 @@ const ACH_DATA = {
 		106: "Anti-Automation",
 		107: "You are challenged?",
 		108: "True Innovation",
+		
+		111: "Why do you even try?",
+		112: "The Universe Doesn't Exist",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -182,6 +185,9 @@ const ACH_DATA = {
 		106: "Reach showNum(20) Endorsements.",
 		107: "Complete six Stadium Challenges.",
 		108: "Unlock Velocital Energy.",
+		
+		111: "Have an interval below 1s for Fuelbot.",
+		112: "Reach formatDistance(2.2e10022)/s^2 of acceleration.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -238,5 +244,8 @@ const ACH_DATA = {
 		103: "You can activate one extra perk at any given time.",
 		105: "Acceleration is showNum(300)% faster.",
 		108: "Knowledge gain is showNum(50)% faster.",
+		
+		111: "You can activate all four perks at once.",
+		112: "Time Speed boosts Knowledge gain at a reduced rate.",
 	},
 }

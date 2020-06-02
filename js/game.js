@@ -33,7 +33,11 @@ function tickWithoutTS(diff) {
 		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) player.inf.ascension.time[i-1] = player.inf.ascension.time[i-1].sub(diff).max(0)
 		if (tmp.inf.asc.anyPerkActive()) player.inf.ascension.power = player.inf.ascension.power.plus(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension").times(diff))
 	}
-	if (player.inf.endorsements.gte(21)) tmp.inf.pantheon.collect()
+	if (player.inf.endorsements.gte(21)) {
+		tmp.inf.pantheon.collect()
+		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(diff.times(tmp.inf.pantheon.chipGain))
+		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.inf.pantheon.soulGain))
+	}
 }
 
 function tickWithTR(diff) {

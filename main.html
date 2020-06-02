@@ -259,6 +259,7 @@
 			<div id="infinity" class="inftab">
 				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
+				<span id="tudeEff"></span>
 				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
 				<div id="infUpgData" class="bandBig or"></div><br><br>
@@ -313,7 +314,20 @@
 				</table>
 			</div>
 			<div id="pantheon" class="inftab">
-				You have <span id="spectralGems" class="spectral"></span> <span id="spectralGemName"></span> Spectral Gems. Next at <span id="nextSpectralGem" class="spectral"></span> Endorsements.
+				You have <span id="spectralGems" class="spectral"></span> <span id="spectralGemName"></span> Spectral Gems. Next at <span id="nextSpectralGem" class="spectral"></span> Endorsements.<br><br>
+				<button id="respecSpectralGems" class="btn locked" onclick="tmp.inf.pantheon.respec()">Respec Angels & Demons back into Spectral Gems</button><br><br>
+				<div style="background-color: pink;">
+					<br><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">Transform one Spectral Gem into an Angel</button><br><br>
+					You have <span id="angels" class="spectral"></span> Angels.<br><br>
+					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					<br><br><br>
+				</div>
+				<div style="background-color: #a31414;">
+					<br><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">Transform one Spectral Gem into a Demon</button><br><br>
+					You have <span id="demons" class="spectral"></span> Demons.<br><br>
+					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
+					<br><br><br>
+				</div>
 			</div>
 		</div>
 	</div>

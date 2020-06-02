@@ -27,6 +27,8 @@ function updateTempEffects() {
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
+	tmp.ach112pow = new ExpantaNum(1)
+	tmp.ach112 = tmp.timeSpeed?tmp.timeSpeed.log10().plus(1).log10().plus(1).pow(0.1):new ExpantaNum(1)
 
 	// Time Reversal Upgrade Effects
 	
