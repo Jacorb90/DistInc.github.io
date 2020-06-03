@@ -98,4 +98,5 @@ function updateAchievements() {
 	if (tmp.acc.gte("2.2e10022")) tmp.ach[112].grant()
 	if (tmp.pathogens.upgPow.gte(2.5)) tmp.ach[113].grant()
 	if (tmp.accEn.gte(4.4e26)) tmp.ach[114].grant()
+	if (player.inf.pantheon.purge.power.gt(0)) tmp.ach[115].grant()
 }

@@ -245,6 +245,7 @@ function updateTempInf() {
 		tmp.inf.layer.reset(true)
 	}
 	tmp.inf.stadium.active = function(name, rank=1) {
+		if (player.inf.pantheon.purge.active && name!="reality" && rank==1) return true
 		let active = player.inf.stadium.current == name
 		let l = player.inf.stadium.completions.length+1
 		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
@@ -252,6 +253,7 @@ function updateTempInf() {
 		return active
 	}
 	tmp.inf.stadium.anyActive = function() {
+		if (player.inf.pantheon.purge.active) return true
 		let active = player.inf.stadium.current != ""
 		return active
 	}
@@ -321,9 +323,24 @@ function updateTempInf() {
 	let h = player.inf.pantheon.heavenlyChips
 	let d = player.inf.pantheon.demonicSouls
 	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
-	tmp.inf.pantheon.ppe = p.div(25).plus(1).log10().plus(1).pow(-1)
+	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1)
 	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2)
 	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
 	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2)
+	if (player.inf.pantheon.purge.active) {
+		tmp.inf.pantheon.chipBoost = new ExpantaNum(1)
+		tmp.inf.pantheon.soulBoost = new ExpantaNum(1)
+	}
+	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni)
+	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5)
+	tmp.inf.pantheon.purgeExp = new ExpantaNum(1/2)
+	tmp.inf.pantheon.purgeGain = player.distance.div(tmp.inf.pantheon.purgeStart).plus(1).logBase(tmp.inf.pantheon.purgeBase).pow(tmp.inf.pantheon.purgeExp).sub(player.inf.pantheon.purge.power).floor().max(0)
+	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(tmp.inf.pantheon.purgeBase, player.inf.pantheon.purge.power.plus(1).pow(tmp.inf.pantheon.purgeExp.pow(-1))).sub(1).times(tmp.inf.pantheon.purgeStart)
+	tmp.inf.pantheon.startPurge = function() {
+		if (!player.inf.pantheon.purge.unl) return
+		if (player.inf.pantheon.purge.active) player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain)
+		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active
+		tmp.inf.layer.reset(true)
+	}
 }

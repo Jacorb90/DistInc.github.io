@@ -117,6 +117,7 @@ function updateTempNerfs() {
 		let postinf = (type=="knowledge"||type=="ascension")
 		let exp = new ExpantaNum(1)
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10)
+		if (player.inf.pantheon.purge.active && type=="vel") exp = exp.div(3)
 		return val.pow(exp)
 	}
 }

@@ -206,6 +206,10 @@ function updateHTML() {
 	tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)))
 	tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls))
 	tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)))
+	tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl)
+	tmp.el.purgeBtn.setTxt(player.inf.pantheon.purge.active?("Exit Purge run"+(tmp.inf.pantheon.purgeGain.gt(0)?(" for "+showNum(tmp.inf.pantheon.purgeGain)+" Purge Power."):(". You need "+formatDistance(tmp.inf.pantheon.purgeNext)+" to gain more Purge Power."))):"Start Purge run")
+	tmp.el.purgePower.setTxt(showNum(player.inf.pantheon.purge.power))
+	tmp.el.purgePowerEff.setTxt(showNum(tmp.inf.pantheon.ppe))
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
