@@ -93,6 +93,7 @@ function updateHTML() {
 		let upg = TR_UPGS[i]
 		let desc = upg.desc
 		if (!tmp.tr2e.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr2e)+")</span>"
+		if (!tmp.tr11pow.eq(1)&&i==11) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr11pow)+")</span>"
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}

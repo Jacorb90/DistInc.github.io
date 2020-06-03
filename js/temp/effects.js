@@ -46,9 +46,11 @@ function updateTempEffects() {
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
+	tmp.tr11pow = new ExpantaNum(1)
+	if (tmp.inf) if (tmp.inf.upgs.has("1;8")) tmp.tr11pow = tmp.tr11pow.times(INF_UPGS.effects["1;8"]())
 	tmp.tr11 = {
-		cg: tmp.dc ? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)) : new ExpantaNum(1),
-		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1),
+		cg: tmp.dc ? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)).pow(tmp.tr11pow) : new ExpantaNum(1),
+		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow),
 	}
 	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1)
 	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0)

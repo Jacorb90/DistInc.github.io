@@ -94,6 +94,8 @@ const ACH_DATA = {
 		
 		111: "Why do you even try?",
 		112: "The Universe Doesn't Exist",
+		113: "Outbreak 76",
+		114: "ZOOM",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -188,6 +190,8 @@ const ACH_DATA = {
 		
 		111: "Have an interval below 1s for Fuelbot.",
 		112: "Reach formatDistance(2.2e10022)/s^2 of acceleration.",
+		113: "Reach showNum(250)% of Pathogen Upgrade power.",
+		114: "Reach formatDistance(4.4e26)/s^2 of Accelerational Energy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

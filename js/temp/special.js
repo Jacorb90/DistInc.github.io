@@ -50,6 +50,7 @@ function updateLayerMults() {
 	if (tmp.pathogens && player.pathogens.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.pathogens[2].eff)
 	if (tmp.dc) if (player.dc.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.dc.dmEff)
 	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) tmp.lm.rockets = tmp.lm.rockets.times(INF_UPGS.effects["1;2"]())
+	if (tmp.inf) if (tmp.inf.upgs.has("4;8")) tmp.lm.rockets = tmp.lm.rockets.times(player.collapse.lifeEssence.max(1))
 	tmp.lm.collapse = new ExpantaNum(1)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)

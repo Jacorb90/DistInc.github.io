@@ -2,7 +2,7 @@
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
 	rows: 7,
-	cols: 7,
+	cols: 8,
 	rowReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
 		5: function() { return player.inf.endorsements.gte(6) },
@@ -14,6 +14,7 @@ const INF_UPGS = {
 		5: function() { return player.inf.endorsements.gte(6) },
 		6: function() { return player.inf.endorsements.gte(10) },
 		7: function() { return player.inf.endorsements.gte(15) },
+		8: function() { return player.inf.endorsements.gte(21) },
 	},
 	costs: {
 		"1;1": new ExpantaNum(40),
@@ -23,6 +24,7 @@ const INF_UPGS = {
 		"1;5": new ExpantaNum(1e7),
 		"1;6": new ExpantaNum(2.5e10),
 		"1;7": new ExpantaNum(5e19),
+		"1;8": new ExpantaNum(2e23),
 		"2;1": new ExpantaNum(200),
 		"2;2": new ExpantaNum(400),
 		"2;3": new ExpantaNum(8e3),
@@ -30,6 +32,7 @@ const INF_UPGS = {
 		"2;5": new ExpantaNum(1e8),
 		"2;6": new ExpantaNum(5e10),
 		"2;7": new ExpantaNum(1e21),
+		"2;8": new ExpantaNum(2.5e23),
 		"3;1": new ExpantaNum(1e3),
 		"3;2": new ExpantaNum(8e3),
 		"3;3": new ExpantaNum(5e4),
@@ -37,6 +40,7 @@ const INF_UPGS = {
 		"3;5": new ExpantaNum(2.5e8),
 		"3;6": new ExpantaNum(1e11),
 		"3;7": new ExpantaNum(4e21),
+		"3;8": new ExpantaNum(4e23),
 		"4;1": new ExpantaNum(1e4),
 		"4;2": new ExpantaNum(5e4),
 		"4;3": new ExpantaNum(1e5),
@@ -44,6 +48,7 @@ const INF_UPGS = {
 		"4;5": new ExpantaNum(4e8),
 		"4;6": new ExpantaNum(2e11),
 		"4;7": new ExpantaNum(7.5e21),
+		"4;8": new ExpantaNum(1e24),
 		"5;1": new ExpantaNum(1e7),
 		"5;2": new ExpantaNum(1e8),
 		"5;3": new ExpantaNum(2.5e7),
@@ -51,6 +56,7 @@ const INF_UPGS = {
 		"5;5": new ExpantaNum(1e9),
 		"5;6": new ExpantaNum(1e12),
 		"5;7": new ExpantaNum(1.5e22),
+		"5;8": new ExpantaNum(2.5e24),
 		"6;1": new ExpantaNum(2e10),
 		"6;2": new ExpantaNum(6e10),
 		"6;3": new ExpantaNum(1.8e11),
@@ -58,6 +64,7 @@ const INF_UPGS = {
 		"6;5": new ExpantaNum(1e12),
 		"6;6": new ExpantaNum(2e12),
 		"6;7": new ExpantaNum(2e22),
+		"6;8": new ExpantaNum(6e24),
 		"7;1": new ExpantaNum(1e13),
 		"7;2": new ExpantaNum(2e13),
 		"7;3": new ExpantaNum(4e13),
@@ -65,6 +72,7 @@ const INF_UPGS = {
 		"7;5": new ExpantaNum(1e18),
 		"7;6": new ExpantaNum(1e20),
 		"7;7": new ExpantaNum(5e22),
+		"7;8": new ExpantaNum(1e25),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -74,6 +82,7 @@ const INF_UPGS = {
 		"1;5": "Scaled Tier scaling is 20% weaker.",
 		"1;6": "Scaled Rank & Tier scaling starts 2 later.",
 		"1;7": "Before any other boosts, Knowledge gain is raised to the power of 1.25.", 
+		"1;8": "Time Reversal Upgrade 11 is stronger based on your Accelerational Energy.",
 		"2;1": "Knowledge boosts the Rocket effect.",
 		"2;2": "Time Speed boosts Knowledge gain at a reduced rate.",
 		"2;3": "Knowledge & Time Cubes synergize with one another.",
@@ -81,13 +90,15 @@ const INF_UPGS = {
 		"2;5": "Superscaled Rank scaling is 5% weaker.",
 		"2;6": "Superscaled Rocket Fuel scaling starts 5 later.",
 		"2;7": "Scaled Tier scaling is weaker based on your Stadium Challenge completions.", 
+		"2;8": "Base Knowledge gain is boosted by Heavenly Chips & Demonic Souls.",
 		"3;1": "Start with all Collapse Milestones on reset.",
 		"3;2": "Knowledge & Cadavers synergize with one another.",
 		"3;3": "Pathogen Upgrades are 10% stronger.",
 		"3;4": "Unlock Auto-Pathogen upgrades.",
 		"3;5": "Scaled Rocket Fuel scaling is 25% weaker.",
 		"3;6": "Pathogen Upgrades softcap 1 later.",
-		"3;7": "Enlightenments boost Ascension Power gain.", 
+		"3;7": "Enlightenments boost Ascension Power gain.",
+		"3;8": "Pathogen Upgrades 6-10 use better formulas.",
 		"4;1": "Dark Flow is twice as fast.", 
 		"4;2": "Unlock Auto-Dark Cores.",
 		"4;3": "Scaled Rank scaling is 50% weaker.", 
@@ -95,6 +106,7 @@ const INF_UPGS = {
 		"4;5": "Scaled Pathogen Upgrade scaling starts 2 later.",
 		"4;6": "Dark Flow is twice as fast.",
 		"4;7": "Time Speed boosts Acceleration & Maximum Velocity.", 
+		"4;8": "Life Essence multiplies Rocket gain.",
 		"5;1": "Dark Flow is twice as fast.", 
 		"5;2": "Pathogen Upgrades are 5% stronger.", 
 		"5;3": "Gain 10% of Life Essence gain every second.", 
@@ -102,6 +114,7 @@ const INF_UPGS = {
 		"5;5": "Knowledge & Endorsements boost Dark Flow.",
 		"5;6": "Perks last longer based on your Knowledge.", 
 		"5;7": "Superscaled Tier scaling starts later based on your Maximum Velocity.",
+		"5;8": "Rockets also boost Accelerational Energy.",
 		"6;1": "Scaled Rocket Fuel scaling starts 10 later.",
 		"6;2": "Superscaled Rank scaling starts 5 later.", 
 		"6;3": "Pathogen Upgrades are 2.5% stronger.",
@@ -109,6 +122,7 @@ const INF_UPGS = {
 		"6;5": "Knowledge boosts Ascension Power gain.", 
 		"6;6": "Maximum Velocity boosts Acceleration, and you can activate 2 perks at once.",
 		"6;7": "Maximum Velocity is replaced by Velocital Energy.",
+		"6;8": "Dark Matter & Dark Energy use better formulas.",
 		"7;1": "Stadium Challenge completions boost perks & make them last longer.",
 		"7;2": "Ascension Power & Dark Flow have synergy.",
 		"7;3": "Start Infinities with Dark Circles unlocked.",
@@ -116,6 +130,7 @@ const INF_UPGS = {
 		"7;5": "The fifth Pathogen Upgrade boosts itself.",
 		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
 		"7;7": "Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
+		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -124,6 +139,7 @@ const INF_UPGS = {
 		"1;5": ["4;4"],
 		"1;6": ["5;5"],
 		"1;7": ["6;6"],
+		"1;8": ["7;7"],
 		"2;1": ["1;1"],
 		"2;2": ["1;2", "2;1"],
 		"2;3": ["2;2", "1;3"],
@@ -131,6 +147,7 @@ const INF_UPGS = {
 		"2;5": ["4;4"],
 		"2;6": ["5;5"],
 		"2;7": ["1;7"],
+		"2;8": ["1;8"],
 		"3;1": ["2;1"],
 		"3;2": ["2;2", "3;1"],
 		"3;3": ["2;3", "3;2"],
@@ -138,6 +155,7 @@ const INF_UPGS = {
 		"3;5": ["4;4"],
 		"3;6": ["5;5"],
 		"3;7": ["2;7"],
+		"3;8": ["2;8"],
 		"4;1": ["3;2"],
 		"4;2": ["4;1"],
 		"4;3": ["4;2"],
@@ -145,6 +163,7 @@ const INF_UPGS = {
 		"4;5": ["4;4"],
 		"4;6": ["5;5"],
 		"4;7": ["3;7"],
+		"4;8": ["3;8"],
 		"5;1": ["4;4"],
 		"5;2": ["4;4"],
 		"5;3": ["4;4"],
@@ -152,6 +171,7 @@ const INF_UPGS = {
 		"5;5": ["4;5", "5;4",],
 		"5;6": ["4;6"],
 		"5;7": ["4;7"],
+		"5;8": ["4;8"],
 		"6;1": ["4;4"],
 		"6;2": ["4;4"],
 		"6;3": ["4;4"],
@@ -159,6 +179,7 @@ const INF_UPGS = {
 		"6;5": ["4;4"],
 		"6;6": ["5;6", "6;5"],
 		"6;7": ["5;7"],
+		"6;8": ["5;8"],
 		"7;1": ["6;6"],
 		"7;2": ["7;1"],
 		"7;3": ["7;2"],
@@ -166,6 +187,7 @@ const INF_UPGS = {
 		"7;5": ["7;4"],
 		"7;6": ["7;5"],
 		"7;7": ["6;7", "7;6"],
+		"7;8": ["6;8"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -199,6 +221,12 @@ const INF_UPGS = {
 			let ret = player.inf.knowledge.plus(1).log10().plus(1).pow(exp)
 			return ret
 		},
+		"1;8": function() {
+			let e = tmp.accEn?tmp.accEn:new ExpantaNum(0)
+			let ret = e.plus(1).pow(0.08)
+			if (ret.gte(2)) ret = ret.logBase(2).times(2).min(ret)
+			return ret
+		},
 		"2;1": function() {
 			let ret = player.inf.knowledge.plus(1).slog(10).sqrt()
 			if (ret.gte(1.1)) ret = ret.pow(0.001).times(ExpantaNum.pow(1.1, 0.999))
@@ -223,6 +251,11 @@ const INF_UPGS = {
 		"2;7": function() {
 			let ret = ExpantaNum.pow(player.inf.stadium.completions.length, 0.8).div(4)
 			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+			return ret
+		},
+		"2;8": function() {
+			let v = [player.inf.pantheon.heavenlyChips, player.inf.pantheon.demonicSouls]
+			let ret = v[0].plus(1).times(v[1].plus(1)).log10().plus(1)
 			return ret
 		},
 		"3;2": function() {
@@ -309,6 +342,12 @@ const INF_UPGS = {
 				ve: (tmp.accEn?tmp.accEn:new ExpantaNum(0)).plus(1).pow(240),
 				ts: (tmp.maxVel?tmp.maxVel:new ExpantaNum(0)).plus(1).pow(0.06)
 			}
+			return ret
+		},
+		"7;8": function() {
+			let amt = new ExpantaNum(0)
+			if (tmp.inf) amt = tmp.inf.pantheon.totalGems
+			let ret = ExpantaNum.pow(1e25, amt.sqrt())
 			return ret
 		},
 	},

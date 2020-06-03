@@ -46,7 +46,7 @@ function updateTempInf() {
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
-		else if (id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
+		else if (id=="1;8"||id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
@@ -78,6 +78,7 @@ function updateTempInf() {
 	tmp.inf.bc = INF_UNL
 	tmp.inf.emPow = new ExpantaNum(1)
 	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements)
+	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]())
 	tmp.inf.knowledgeExp = new ExpantaNum(1)
 	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25)
 	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase)).pow(tmp.inf.knowledgeExp)
@@ -289,11 +290,11 @@ function updateTempInf() {
 	tmp.inf.pantheon.bc = new ExpantaNum(21)
 	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
 	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor()
-	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems, "scaled")) {
+	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
 		let power = tmp.scalingPower.scaled.spectralGems
 		let exp = ExpantaNum.pow(2, power)
 		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.pow(exp).div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
-		tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().sub(1).times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).pow(exp.pow(-1)).add(1).floor()
+		tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().sub(1).times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).pow(exp.pow(-1)).floor()
 	}
 	tmp.inf.pantheon.collect = function() {
 		let diff = tmp.inf.pantheon.bulk.sub(tmp.inf.pantheon.totalGems)
@@ -320,8 +321,9 @@ function updateTempInf() {
 	let h = player.inf.pantheon.heavenlyChips
 	let d = player.inf.pantheon.demonicSouls
 	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
-	tmp.inf.pantheon.chipBoost = h.div(d.pow(p.div(10).plus(1).pow(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	tmp.inf.pantheon.ppe = p.div(25).plus(1).log10().plus(1).pow(-1)
+	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2)
-	tmp.inf.pantheon.soulBoost = d.div(h.pow(p.div(10).plus(1).pow(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
 	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2)
 }

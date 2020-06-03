@@ -18,4 +18,5 @@ function updateTempRockets() {
 	if (tmp.inf) if (tmp.inf.upgs.has("2;1")) tmp.rockets.eff = tmp.rockets.eff.times(INF_UPGS.effects["2;1"]())
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
+	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(tmp.rockets.eff).plus(1)
 }

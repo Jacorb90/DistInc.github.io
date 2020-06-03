@@ -96,4 +96,6 @@ function updateAchievements() {
 	
 	if (tmp.auto.fuelbot.interval.lt(1)) tmp.ach[111].grant()
 	if (tmp.acc.gte("2.2e10022")) tmp.ach[112].grant()
+	if (tmp.pathogens.upgPow.gte(2.5)) tmp.ach[113].grant()
+	if (tmp.accEn.gte(4.4e26)) tmp.ach[114].grant()
 }

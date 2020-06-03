@@ -56,4 +56,5 @@ function updateTempEarlyGame() {
 	// Accelerational Energy
 	tmp.accEn = new ExpantaNum(0)
 	if (tmp.inf) if (tmp.inf.upgs.has("7;7")) tmp.accEn = tmp.accEn.plus(1).times(INF_UPGS.effects["7;7"]()["ae"])
+	if (tmp.inf && tmp.rockets) if (tmp.inf.upgs.has("5;8")) tmp.accEn = tmp.accEn.times(tmp.rockets.accEnPow)
 }
