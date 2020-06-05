@@ -99,4 +99,7 @@ function updateAchievements() {
 	if (tmp.pathogens.upgPow.gte(2.5)) tmp.ach[113].grant()
 	if (tmp.accEn.gte(4.4e26)) tmp.ach[114].grant()
 	if (player.inf.pantheon.purge.power.gt(0)) tmp.ach[115].grant()
+	if (player.inf.endorsements.gte(25)) tmp.ach[116].grant() 
+	if (player.collapse.cadavers.gte("1e3000")) tmp.ach[117].grant()
+	if (player.distance.gte("1e33600") && tmp.inf.stadium.active("eternity")) tmp.ach[118].grant()
 }

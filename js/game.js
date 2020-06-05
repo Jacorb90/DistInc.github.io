@@ -35,8 +35,8 @@ function tickWithoutTS(diff) {
 	}
 	if (player.inf.endorsements.gte(21)) {
 		tmp.inf.pantheon.collect()
-		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(diff.times(tmp.inf.pantheon.chipGain))
-		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.inf.pantheon.soulGain))
+		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips")))
+		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true
 	}
 }

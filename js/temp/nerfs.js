@@ -114,7 +114,7 @@ function updateTempNerfs() {
 	}
 	tmp.nerfs.adjust = function(val, type) {
 		let preinf = (type=="vel"||type=="dist"||type=="scraps"||type=="intel"||type=="tc"||type=="rockets"||type=="pathogens"||type=="dc"||type=="lifeEssence"||type=="cadavers")
-		let postinf = (type=="knowledge"||type=="ascension")
+		let postinf = (type=="knowledge"||type=="ascension"||type=="heavenlyChips"||type=="demonicSouls")
 		let exp = new ExpantaNum(1)
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10)
 		if (player.inf.pantheon.purge.active && type=="vel") exp = exp.div(3)

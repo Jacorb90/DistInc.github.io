@@ -42,12 +42,14 @@ function updateTempInf() {
 	}	
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="2;7") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
+		else if (id=="2;7"||id=="8;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
 		else if (id=="1;8"||id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
+		else if (id=="8;2") return "Purge Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["energy"])+"x"
+		else if (id=="8;8") return "+"+showNum(INF_UPGS.effects[id]().sub(1).times(100))+"%"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -320,6 +322,14 @@ function updateTempInf() {
 	}
 	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1)
 	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1)
+	if (tmp.ach[116].has) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(2)
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(2)
+	}
+	if (tmp.inf.upgs.has("8;3")) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["8;3"]())
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["8;3"]())
+	}
 	let h = player.inf.pantheon.heavenlyChips
 	let d = player.inf.pantheon.demonicSouls
 	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
@@ -332,11 +342,13 @@ function updateTempInf() {
 		tmp.inf.pantheon.chipBoost = new ExpantaNum(1)
 		tmp.inf.pantheon.soulBoost = new ExpantaNum(1)
 	}
+	tmp.inf.pantheon.purgeMult = new ExpantaNum(1)
+	if (tmp.inf.upgs.has("8;2")) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"])
 	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni)
 	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5)
 	tmp.inf.pantheon.purgeExp = new ExpantaNum(1/2)
-	tmp.inf.pantheon.purgeGain = player.distance.div(tmp.inf.pantheon.purgeStart).plus(1).logBase(tmp.inf.pantheon.purgeBase).pow(tmp.inf.pantheon.purgeExp).sub(player.inf.pantheon.purge.power).floor().max(0)
-	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(tmp.inf.pantheon.purgeBase, player.inf.pantheon.purge.power.plus(1).pow(tmp.inf.pantheon.purgeExp.pow(-1))).sub(1).times(tmp.inf.pantheon.purgeStart)
+	tmp.inf.pantheon.purgeGain = player.distance.div(tmp.inf.pantheon.purgeStart).plus(1).logBase(tmp.inf.pantheon.purgeBase).pow(tmp.inf.pantheon.purgeExp).times(tmp.inf.pantheon.purgeMult).sub(player.inf.pantheon.purge.power).floor().max(0)
+	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(tmp.inf.pantheon.purgeBase, player.inf.pantheon.purge.power.plus(1).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))).sub(1).times(tmp.inf.pantheon.purgeStart)
 	tmp.inf.pantheon.startPurge = function() {
 		if (!player.inf.pantheon.purge.unl) return
 		if (player.inf.pantheon.purge.active) player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain)

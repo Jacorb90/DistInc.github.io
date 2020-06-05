@@ -3,6 +3,13 @@ function updateTempDC() {
 	tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1).times(player.dc.fluid.plus(1).log10().plus(1)).max(0)
 	tmp.dc.deGain = player.dc.matter.plus(1).log10()
 	tmp.dc.dfGain = player.dc.energy.plus(1).log10()
+	if (tmp.inf) if (tmp.inf.upgs.has("8;1")) {
+		let fp = new ExpantaNum(1)
+		if (tmp.inf.upgs.has("8;8")) fp = fp.times(INF_UPGS.effects["8;8"]())
+		tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1).times(player.dc.fluid.plus(1).log10().plus(1).times(player.dc.fluid.plus(1).pow(ExpantaNum.mul(1/5, fp)))).max(0)
+		tmp.dc.deGain = player.dc.matter.plus(1).log10().times(player.dc.matter.plus(1).pow(ExpantaNum.mul(1/5, fp)))
+		tmp.dc.dfGain = player.dc.energy.plus(1).log10().times(player.dc.energy.plus(1).pow(ExpantaNum.mul(1/5, fp)))
+	}
 	tmp.dc.allComp = player.dc.matter.plus(1).log10().plus(player.dc.energy.plus(1).log10()).plus(player.dc.fluid.plus(1).log10()).plus(player.dc.cores)
 	tmp.dc.flow = new ExpantaNum(1)
 	if (tmp.ach[75].has) tmp.dc.flow = tmp.dc.flow.times(1.1)

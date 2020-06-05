@@ -1,13 +1,14 @@
 // Infinity
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
-	rows: 7,
+	rows: 8,
 	cols: 8,
 	rowReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
 		5: function() { return player.inf.endorsements.gte(6) },
 		6: function() { return player.inf.endorsements.gte(10) },
 		7: function() { return player.inf.endorsements.gte(15) },
+		8: function() { return player.inf.endorsements.gte(21) },
 	},
 	colReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
@@ -73,6 +74,14 @@ const INF_UPGS = {
 		"7;6": new ExpantaNum(1e20),
 		"7;7": new ExpantaNum(5e22),
 		"7;8": new ExpantaNum(1e25),
+		"8;1": new ExpantaNum(1.5e26),
+		"8;2": new ExpantaNum(2e26),
+		"8;3": new ExpantaNum(3.2e26),
+		"8;4": new ExpantaNum(4.8e26),
+		"8;5": new ExpantaNum(1.2e27),
+		"8;6": new ExpantaNum(5e27),
+		"8;7": new ExpantaNum(7.5e27),
+		"8;8": new ExpantaNum(4e28),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -131,6 +140,14 @@ const INF_UPGS = {
 		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
 		"7;7": "Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
 		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
+		"8;1": "The Dark Circle cycle reduction uses a much weaker formula.",
+		"8;2": "Accelerational Energy & Purge Power gain are synergized.",
+		"8;3": "Heavenly Chip & Demonic Soul gain are boosted by Endorsements.",
+		"8;4": "The Time Doesn't Exist reward softcap start is multiplied by your Purge Power ^17.",
+		"8;5": "The Cadaver effect softcap is 80% weaker.",
+		"8;6": "Scaled Dark Core & Hyper Rank scaling is weaker based on Endorsements.",
+		"8;7": "Scaled Pathogen Upgrade scaling is 84% weaker.",
+		"8;8": "inf8;1 & inf3;8 are stronger based on your Purge Power.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -188,6 +205,14 @@ const INF_UPGS = {
 		"7;6": ["7;5"],
 		"7;7": ["6;7", "7;6"],
 		"7;8": ["6;8"],
+		"8;1": ["7;7"],
+		"8;2": ["8;1"],
+		"8;3": ["8;2"],
+		"8;4": ["8;3"],
+		"8;5": ["8;4"],
+		"8;6": ["8;5"],
+		"8;7": ["8;6"],
+		"8;8": ["7;8", "8;7"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -225,6 +250,7 @@ const INF_UPGS = {
 			let e = tmp.accEn?tmp.accEn:new ExpantaNum(0)
 			let ret = e.plus(1).pow(0.08)
 			if (ret.gte(2)) ret = ret.logBase(2).times(2).min(ret)
+			if (ret.gte(14)) ret = ret.sub(4).slog(10).plus(13).min(ret)
 			return ret
 		},
 		"2;1": function() {
@@ -342,12 +368,37 @@ const INF_UPGS = {
 				ve: (tmp.accEn?tmp.accEn:new ExpantaNum(0)).plus(1).pow(240),
 				ts: (tmp.maxVel?tmp.maxVel:new ExpantaNum(0)).plus(1).pow(0.06)
 			}
+			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve)
 			return ret
 		},
 		"7;8": function() {
 			let amt = new ExpantaNum(0)
 			if (tmp.inf) amt = tmp.inf.pantheon.totalGems
 			let ret = ExpantaNum.pow(1e25, amt.sqrt())
+			return ret
+		},
+		"8;2": function() {
+			let e = tmp.accEn?tmp.accEn:new Expantanum(0)
+			let ret = {
+				energy: player.inf.pantheon.purge.power.plus(1).pow(10),
+				power: e.plus(2).slog(2),
+			}
+			return ret
+		},
+		"8;3": function() {
+			let ret = player.inf.endorsements.plus(1).pow(0.45)
+			return ret
+		},
+		"8;6": function() {
+			let ret = player.inf.endorsements.div(100)
+			if (ret.gte(0.5)) ret = ret.pow(2).times(2)
+			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+			return ret
+		},
+		"8;8": function() {
+			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10)
+			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1))
+			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5))
 			return ret
 		},
 	},

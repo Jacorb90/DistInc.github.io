@@ -23,6 +23,7 @@ function updateTempEffects() {
 	// Achievement Effects 
 	
 	tmp.ach63sc = new ExpantaNum(1e25)
+	if (tmp.inf) if (tmp.inf.upgs.has("8;4")) tmp.ach63sc = tmp.ach63sc.times(player.inf.pantheon.purge.power.plus(1).pow(17))
 	tmp.ach63pow = new ExpantaNum(1)
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
