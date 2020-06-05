@@ -68,6 +68,8 @@ function updateTempPathogens() {
 			if (!tmp.ach[88].has) player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
 		tmp.pathogens[i].eff = function() {
+			let fp = new ExpantaNum(1)
+			if (tmp.inf) if (tmp.inf.upgs.has("8;8")) fp = fp.times(INF_UPGS.effects["8;8"]())
 			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra)
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			bought = bought.times(tmp.pathogens.upgPow)
@@ -80,12 +82,18 @@ function updateTempPathogens() {
 				if (tmp.inf) if (tmp.inf.upgs.has("7;5")) exp = exp.times(INF_UPGS.effects["7;5"]())
 				return ExpantaNum.pow(3, bought.sqrt()).pow(exp)
 			}
-			else if (i==6) return ExpantaNum.pow(1.4, bought.sqrt())
+			else if (tmp.inf?tmp.inf.upgs.has("3;8"):false) {
+				if (i==6) return ExpantaNum.pow(1.4, bought.sqrt()).times(ExpantaNum.pow(2, bought.pow(ExpantaNum.mul(2.5, fp))).pow(0.2))
+				else if (i==7) return bought.plus(1).logBase(2).plus(1).pow(5).times(bought.plus(1).pow(bought.plus(1).logBase(2).plus(1)).pow(ExpantaNum.mul(30, fp)))
+				else if (i==8) return bought.plus(1).logBase(2).plus(1).log10().times(bought.plus(1).logBase(2).plus(1).pow(ExpantaNum.mul(2.75, fp)))
+				else if (i==9) return bought.plus(1).logBase(4).plus(1).pow(1.25).times(bought.plus(1).pow(bought.plus(1).log10().plus(1)).pow(ExpantaNum.mul(100, fp)))
+				else if (i==10) return bought.plus(1).logBase(4).plus(1).sqrt().times(bought.plus(1).pow(ExpantaNum.mul(10, fp)))
+			} else if (i==6) return ExpantaNum.pow(1.4, bought.sqrt())
 			else if (i==7) return bought.plus(1).logBase(2).plus(1).pow(5)
 			else if (i==8) return bought.plus(1).logBase(2).plus(1).log10()
 			else if (i==9) return bought.plus(1).logBase(4).plus(1).pow(1.25)
 			else if (i==10) return bought.plus(1).logBase(4).plus(1).sqrt()
-			else return undefined
+			return undefined
 		}()
 		tmp.pathogens[i].disp = function() {
 			let eff = tmp.pathogens[i].eff

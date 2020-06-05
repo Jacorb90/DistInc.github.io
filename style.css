@@ -653,6 +653,44 @@ table { margin: auto; }
 	color: black;
 }
 
+.spectral {
+	color: #9fc4bc;
+	font-weight: bold;
+	font-size: 25px;
+	animation: spectral 4s ease infinite;
+}
+
+.btn.purge {
+	box-shadow: 3px 4px 0px 0px #379992;
+	background: none;
+	background-color:#5c9194;
+	border-radius:18px;
+	border:1px solid #9dcccb;
+	display:inline-block;
+	cursor:pointer;
+	color:#9fc4bc;
+	font-size:12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+	animation: spectral 4s ease infinite;
+}
+
+.btn.purge:hover {
+	background: none;
+	background-color:#5dfcf2;
+	color:#9fc4bc;
+}
+
+.btn.purge:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -762,6 +800,21 @@ table { margin: auto; }
 	}
 	100% {
 		background-size: 100% 100%;
+	}
+}
+
+@keyframes spectral {
+	0% {
+		color: #9fc4bc;
+		text-shadow:0px 1px 0px #49f2a0;
+	}
+	50% {
+		color: #49f2a0;
+		text-shadow:0px 1px 0px #9fc4bc;
+	}
+	100% {
+		color: #9fc4bc;
+		text-shadow:0px 1px 0px #49f2a0;
 	}
 }
 

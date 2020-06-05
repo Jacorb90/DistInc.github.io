@@ -13,7 +13,9 @@ function updateTempCollapse() {
 	if (tmp.modes.hard.active) tmp.collapse.esc = tmp.collapse.esc.div(100)
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.esc = tmp.collapse.esc.times(tmp.pathogens[10].eff)
 	if (tmp.inf) tmp.collapse.esc = tmp.collapse.esc.times(tmp.inf.asc.perkEff(3))
-	if (tmp.collapse.eff.gte(tmp.collapse.esc)) tmp.collapse.eff = tmp.collapse.eff.log10().times(tmp.collapse.esc.div(tmp.collapse.esc.log10()))
+	tmp.collapse.escp = new ExpantaNum(1)
+	if (tmp.inf) if (tmp.inf.upgs.has("8;5")) tmp.collapse.escp = tmp.collapse.escp.times(0.2)
+	if (tmp.collapse.eff.gte(tmp.collapse.esc) && tmp.collapse.escp.gt(0)) tmp.collapse.eff = tmp.collapse.eff.log10().pow(tmp.collapse.escp.pow(-1)).times(tmp.collapse.esc.div(tmp.collapse.esc.log10().pow(tmp.collapse.escp.pow(-1))))
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
 	tmp.collapse.sacEff = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)

@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.1,
+	version: 1.2,
 	optionsTab: "saving",
 	achievements: [],
 	options: {
@@ -70,6 +70,18 @@ const DEFAULT_START = {
 		stadium: {
 			current: "",
 			completions: [],
+		},
+		pantheon: {
+			gems: new ExpantaNum(0),
+			angels: new ExpantaNum(0),
+			demons: new ExpantaNum(0),
+			heavenlyChips: new ExpantaNum(0),
+			demonicSouls: new ExpantaNum(0),
+			purge: {
+				unl: false,
+				active: false,
+				power: new ExpantaNum(0),
+			},
 		},
 	},
 	automators: {},

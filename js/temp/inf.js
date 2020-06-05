@@ -2,6 +2,7 @@ function updateTempInf() {
 	if (tmp.inf) {
 		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
+		tmp.soulBoost = tmp.inf.pantheon.soulBoost
 	}
 	
 	// Unrepealed Infinity Upgrades
@@ -41,12 +42,14 @@ function updateTempInf() {
 	}	
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="2;7") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
+		else if (id=="2;7"||id=="8;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
 		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
-		else if (id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
+		else if (id=="1;8"||id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
+		else if (id=="8;2") return "Purge Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["energy"])+"x"
+		else if (id=="8;8") return "+"+showNum(INF_UPGS.effects[id]().sub(1).times(100))+"%"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -77,6 +80,7 @@ function updateTempInf() {
 	tmp.inf.bc = INF_UNL
 	tmp.inf.emPow = new ExpantaNum(1)
 	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements)
+	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]())
 	tmp.inf.knowledgeExp = new ExpantaNum(1)
 	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25)
 	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase)).pow(tmp.inf.knowledgeExp)
@@ -155,6 +159,7 @@ function updateTempInf() {
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
+	if (tmp.ach[111].has) tmp.inf.asc.maxPerks = 4
 	tmp.inf.asc.powerEff = function() {
 		let power = player.inf.ascension.power
 		let eff = power.plus(1).log10().plus(1).log10().div(10)
@@ -167,6 +172,7 @@ function updateTempInf() {
 	}
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]())
+	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost?tmp.soulBoost:1)
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
@@ -241,6 +247,7 @@ function updateTempInf() {
 		tmp.inf.layer.reset(true)
 	}
 	tmp.inf.stadium.active = function(name, rank=1) {
+		if (player.inf.pantheon.purge.active && name!="reality" && rank==1) return true
 		let active = player.inf.stadium.current == name
 		let l = player.inf.stadium.completions.length+1
 		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
@@ -248,6 +255,7 @@ function updateTempInf() {
 		return active
 	}
 	tmp.inf.stadium.anyActive = function() {
+		if (player.inf.pantheon.purge.active) return true
 		let active = player.inf.stadium.current != ""
 		return active
 	}
@@ -278,5 +286,73 @@ function updateTempInf() {
 	}
 	tmp.inf.stadium.completed = function(name) {
 		return player.inf.endorsements.gte(15)&&player.inf.stadium.completions.includes(name)
+	}
+	
+	// The Pantheon
+	tmp.inf.pantheon = {}
+	tmp.inf.pantheon.totalGems = function() { return player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons) }()
+	tmp.inf.pantheon.bc = new ExpantaNum(21)
+	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
+	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor()
+	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
+		let power = tmp.scalingPower.scaled.spectralGems
+		let exp = ExpantaNum.pow(2, power)
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.pow(exp).div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
+		tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().sub(1).times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1))).pow(exp.pow(-1)).floor()
+	}
+	tmp.inf.pantheon.collect = function() {
+		let diff = tmp.inf.pantheon.bulk.sub(tmp.inf.pantheon.totalGems)
+		if (diff.lt(1)) return
+		player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff)
+	}
+	tmp.inf.pantheon.transfer = function(type) {
+		if (player.inf.pantheon.gems.lt(1)) return
+		player.inf.pantheon[type] = player.inf.pantheon[type].plus(1)
+		player.inf.pantheon.gems = player.inf.pantheon.gems.sub(1)
+	}
+	tmp.inf.pantheon.respec = function() {
+		if (!player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0)) return
+		if (!confirm("Respeccing your Angels & Demons will reset your Angels, Demons, Heavenly Chips, and Demonic Souls, and will perform an Infinity reset. Are you sure you want to do this?")) return
+		player.inf.pantheon.gems = new ExpantaNum(tmp.inf.pantheon.totalGems)
+		player.inf.pantheon.angels = new ExpantaNum(0)
+		player.inf.pantheon.demons = new ExpantaNum(0)
+		player.inf.pantheon.heavenlyChips = new ExpantaNum(0)
+		player.inf.pantheon.demonicSouls = new ExpantaNum(0)
+		tmp.inf.layer.reset(true)
+	}
+	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1)
+	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1)
+	if (tmp.ach[116].has) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(2)
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(2)
+	}
+	if (tmp.inf.upgs.has("8;3")) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["8;3"]())
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["8;3"]())
+	}
+	let h = player.inf.pantheon.heavenlyChips
+	let d = player.inf.pantheon.demonicSouls
+	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
+	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1)
+	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2)
+	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1)
+	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2)
+	if (player.inf.pantheon.purge.active) {
+		tmp.inf.pantheon.chipBoost = new ExpantaNum(1)
+		tmp.inf.pantheon.soulBoost = new ExpantaNum(1)
+	}
+	tmp.inf.pantheon.purgeMult = new ExpantaNum(1)
+	if (tmp.inf.upgs.has("8;2")) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"])
+	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni)
+	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5)
+	tmp.inf.pantheon.purgeExp = new ExpantaNum(1/2)
+	tmp.inf.pantheon.purgeGain = player.distance.div(tmp.inf.pantheon.purgeStart).plus(1).logBase(tmp.inf.pantheon.purgeBase).pow(tmp.inf.pantheon.purgeExp).times(tmp.inf.pantheon.purgeMult).sub(player.inf.pantheon.purge.power).floor().max(0)
+	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(tmp.inf.pantheon.purgeBase, player.inf.pantheon.purge.power.plus(1).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))).sub(1).times(tmp.inf.pantheon.purgeStart)
+	tmp.inf.pantheon.startPurge = function() {
+		if (!player.inf.pantheon.purge.unl) return
+		if (player.inf.pantheon.purge.active) player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain)
+		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active
+		tmp.inf.layer.reset(true)
 	}
 }

@@ -23,10 +23,13 @@ function updateTempEffects() {
 	// Achievement Effects 
 	
 	tmp.ach63sc = new ExpantaNum(1e25)
+	if (tmp.inf) if (tmp.inf.upgs.has("8;4")) tmp.ach63sc = tmp.ach63sc.times(player.inf.pantheon.purge.power.plus(1).pow(17))
 	tmp.ach63pow = new ExpantaNum(1)
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
+	tmp.ach112pow = new ExpantaNum(1)
+	tmp.ach112 = tmp.timeSpeed?tmp.timeSpeed.log10().plus(1).log10().plus(1).pow(0.1):new ExpantaNum(1)
 
 	// Time Reversal Upgrade Effects
 	
@@ -44,9 +47,11 @@ function updateTempEffects() {
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())
+	tmp.tr11pow = new ExpantaNum(1)
+	if (tmp.inf) if (tmp.inf.upgs.has("1;8")) tmp.tr11pow = tmp.tr11pow.times(INF_UPGS.effects["1;8"]())
 	tmp.tr11 = {
-		cg: tmp.dc ? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)) : new ExpantaNum(1),
-		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1),
+		cg: tmp.dc ? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)).pow(tmp.tr11pow) : new ExpantaNum(1),
+		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow),
 	}
 	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1)
 	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0)

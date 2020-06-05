@@ -93,6 +93,7 @@ function updateHTML() {
 		let upg = TR_UPGS[i]
 		let desc = upg.desc
 		if (!tmp.tr2e.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr2e)+")</span>"
+		if (!tmp.tr11pow.eq(1)&&i==11) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr11pow)+")</span>"
 		tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
@@ -191,10 +192,30 @@ function updateHTML() {
 	}
 	tmp.el.exitStad.setDisplay(player.inf.stadium.current!="")
 	
+	// The Pantheon
+	tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems))
+	tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next))
+	let name = tmp.scaling.getName("spectralGems")
+	tmp.el.spectralGemName.setTxt(name==""?"":(name+" "))
+	tmp.el.respecSpectralGems.setClasses({btn: true, inf: player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0), locked: !player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0)})
+	tmp.el.angels.setTxt(showNum(player.inf.pantheon.angels))
+	tmp.el.demons.setTxt(showNum(player.inf.pantheon.demons))
+	tmp.el.transferAngels.setClasses({btn: true, inf: player.inf.pantheon.gems.gte(1), locked: player.inf.pantheon.gems.lt(1)})
+	tmp.el.transferDemons.setClasses({btn: true, inf: player.inf.pantheon.gems.gte(1), locked: player.inf.pantheon.gems.lt(1)})
+	tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips))
+	tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)))
+	tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls))
+	tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)))
+	tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl)
+	tmp.el.purgeBtn.setTxt(player.inf.pantheon.purge.active?("Exit Purge run"+(tmp.inf.pantheon.purgeGain.gt(0)?(" for "+showNum(tmp.inf.pantheon.purgeGain)+" Purge Power."):(". You need "+formatDistance(tmp.inf.pantheon.purgeNext)+" to gain more Purge Power."))):"Start Purge run")
+	tmp.el.purgePower.setTxt(showNum(player.inf.pantheon.purge.power))
+	tmp.el.purgePowerEff.setTxt(showNum(tmp.inf.pantheon.ppe))
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
+	tmp.el.tudeEff.setHTML(tmp.ach[112].has?("The Universe Doesn't Exist multiplier: "+showNum(tmp.ach112)+"x<br><br>"):"")
 	tmp.el.mainContainer.setDisplay(showContainer)
 	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive")?"Maximum Velocity:":"Velocital Energy:")
 	tmp.el.accEn.setHTML(tmp.accEn.gt(0)?(" (Accelerational Energy: "+formatDistance(tmp.accEn)+"/s<sup>2</sup>)"):"")

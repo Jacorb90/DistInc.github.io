@@ -27,6 +27,12 @@ function ENString(obj) {
 		ret.inf.ascension.enlightenments[i] = new ExpantaNum(ret.inf.ascension.enlightenments[i]).toString()
 	}
 	ret.inf.ascension.power = new ExpantaNum(ret.inf.ascension.power).toString()
+	ret.inf.pantheon.gems = new ExpantaNum(ret.inf.pantheon.gems).toString()
+	ret.inf.pantheon.angels = new ExpantaNum(ret.inf.pantheon.angels).toString()
+	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons).toString()
+	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips).toString()
+	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls).toString()
+	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power).toString()
 	return ret
 }
 
@@ -39,6 +45,7 @@ function transformToEN(obj, sc=DEFAULT_START) {
 		ret.version = 1.0
 	}
 	if (ret.version < 1.1) ret.inf.stadium = deepCopy(sc.inf.stadium)
+	if (ret.version < 1.2) ret.inf.pantheon = deepCopy(sc.inf.pantheon)
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -64,6 +71,12 @@ function transformToEN(obj, sc=DEFAULT_START) {
 		ret.inf.ascension.enlightenments[i] = new ExpantaNum(ret.inf.ascension.enlightenments[i])
 	}
 	ret.inf.ascension.power = new ExpantaNum(ret.inf.ascension.power)
+	ret.inf.pantheon.gems = new ExpantaNum(ret.inf.pantheon.gems)
+	ret.inf.pantheon.angels = new ExpantaNum(ret.inf.pantheon.angels)
+	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons)
+	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips)
+	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls)
+	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power)
 	ret.version = Math.max(ret.version, sc.version)
     return ret
 }

@@ -252,12 +252,14 @@
 						<td><button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
 						<td><button id="ascensiontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
 						<td><button id="stadiumtabbtn" class="btn tb inf" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
+						<td><button id="pantheontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
 					</tr>
 				</table>
 			</div>
 			<div id="infinity" class="inftab">
 				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
+				<span id="tudeEff"></span>
 				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
 				<div id="infUpgData" class="bandBig or"></div><br><br>
@@ -310,6 +312,27 @@
 						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description"><span class="drigganiz">Drigganiz</span><br><button id="drigganizChall" class="btn locked" onclick="tmp.inf.stadium.start('drigganiz')">Start</button><br><br><span id="drigganizBtm" class="stadiumDesc"></span></td>
 					</tr>
 				</table>
+			</div>
+			<div id="pantheon" class="inftab">
+				You have <span id="spectralGems" class="spectral"></span> <span id="spectralGemName"></span> Spectral Gems. Next at <span id="nextSpectralGem" class="spectral"></span> Endorsements.<br><br>
+				<button id="respecSpectralGems" class="btn locked" onclick="tmp.inf.pantheon.respec()">Respec Angels & Demons back into Spectral Gems</button><br><br>
+				<div style="background-color: pink;">
+					<br><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">Transform one Spectral Gem into an Angel</button><br><br>
+					You have <span id="angels" class="spectral"></span> Angels.<br><br>
+					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					<br><br><br>
+				</div>
+				<div style="background-color: #a31414;">
+					<br><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">Transform one Spectral Gem into a Demon</button><br><br>
+					You have <span id="demons" class="spectral"></span> Demons.<br><br>
+					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
+					<br><br><br>
+				</div>
+				<div id="purgeDiv" style="background-color: #259199">
+					<br><button id="purgeBtn" class="btn purge" onclick="tmp.inf.pantheon.startPurge()" tooltip="Starting a Purge run performs an Infinity reset, disables Pantheon features, and traps you in all Stadium Challenges except Reality (at tier 1). In addition, velocity gain is raised to the power of 0.333."></button><br><br>
+					You have <span id="purgePower" class="spectral"></span> Purge Power, which makes the cancelling out of Heavenly Chips & Demonic Souls raised to the power of <span id="purgePowerEff" class="spectral"></span>.
+					<br><br><br><br>
+				</div>
 			</div>
 		</div>
 	</div>
