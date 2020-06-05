@@ -14,9 +14,17 @@ function updateTempOptions() {
 		tmp.options.setSave(DEFAULT_START)
 	}
 	tmp.options.import = function() {
-		let sav = JSON.parse(atob(prompt("Paste your save here.")))
-		notifier.info("Save imported")
-		tmp.options.setSave(transformToEN(sav))
+		let prmpt = prompt("Paste your save here.")
+		let sav;
+		if (prmpt) {
+			try {
+				sav = JSON.parse(atob(prmpt))
+				notifier.info("Save imported")
+				tmp.options.setSave(transformToEN(sav))
+			} catch(e) {
+				notifier.error("Invalid Save")
+			}
+		}
 	}
 	tmp.options.export = function() {
 		let toExport = btoa(JSON.stringify(ENString(player)))
