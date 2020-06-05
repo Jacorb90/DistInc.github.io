@@ -3,7 +3,6 @@ function updateTempInf() {
 		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
 		tmp.soulBoost = tmp.inf.pantheon.soulBoost
-		tmp.doDervReset = tmp.inf.derv.resetDervs
 	}
 	
 	// Unrepealed Infinity Upgrades
@@ -129,7 +128,6 @@ function updateTempInf() {
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
-		tmp.doDervReset()
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -360,53 +358,15 @@ function updateTempInf() {
 	
 	// Derivatives
 	tmp.inf.derv = {}
-	tmp.inf.derv.maxShifts = new ExpantaNum(2)
 	tmp.inf.derv.unlocked = function(name) {
 		if (name=="distance"||name=="velocity"||name=="acceleration") return true
-		if (name=="jerk"&&player.inf.derivatives.unlocks.gte(1)) return true
-		if (name=="snap"&&player.inf.derivatives.unlocks.gte(2)) return true
 		return false
 	}
 	tmp.inf.derv.amt = function(name) {
 		if (!player.inf.derivatives.unl) return new ExpantaNum(0)
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0)
 		if (name=="distance"||name=="velocity") return player[name]
-		if (name=="acceleration") return tmp.acc
+		if (name=="acceleration") return tmp.acc.times((player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(1))
 		return player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)
-	}
-	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29)
-	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor()
-	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.dervBoost
-		let exp = ExpantaNum.pow(2, power)
-		tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(exp).div(tmp.scalings.scaled.dervBoost.pow(exp.sub(1))).pow(3)).times(2.5e29)
-		tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().times(tmp.scalings.scaled.dervBoost.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
-	}
-	tmp.inf.derv.doUnl = function() {
-		if (player.inf.knowledge.lt(tmp.inf.derv.unlCost)) return
-		player.inf.knowledge = player.inf.knowledge.sub(tmp.inf.derv.unlCost)
-		player.inf.derivatives.unlocks = player.inf.derivatives.unlocks.plus(1)
-	}
-	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE)
-	tmp.inf.derv.mult = function(name) {
-		let mult = tmp.timeSpeed?tmp.timeSpeed:new ExpantaNum(1)
-		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
-		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts))
-		return mult
-	}
-	tmp.inf.derv.tick = function(diff) {
-		if (!player.inf.derivatives.unl) return 
-		for (let i=0;i<DERV_INCR.length;i++) {
-			let name = DERV_INCR[i]
-			let next = DERV_INCR[i+1]
-			if (!tmp.inf.derv.unlocked(name)) continue
-			if (i==DERV_INCR.length-1?true:(!tmp.inf.derv.unlocked(next))) player.inf.derivatives.amts[name] = new ExpantaNum(1)
-			else player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff))
-		}
-	}
-	tmp.inf.derv.resetDervs = function() {
-		for (key in player.inf.derivatives.amts) {
-			player.inf.derivatives.amts[key] = tmp.inf.derv.unlocked(key)?new ExpantaNum(1):new ExpantaNum(0)
-		}
 	}
 }

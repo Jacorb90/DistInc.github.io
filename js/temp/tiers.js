@@ -42,6 +42,5 @@ function updateTempTiers() {
 			player.distance = prev.distance
 			player.velocity = prev.velocity 
 		}
-		tmp.inf.derv.resetDervs()
 	}
 }

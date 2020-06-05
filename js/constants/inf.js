@@ -408,7 +408,7 @@ const INF_TABS = {
 	ascension: function() { return player.inf.endorsements.gte(10) },
 	stadium: function() { return player.inf.endorsements.gte(15) },
 	pantheon: function() { return player.inf.endorsements.gte(21) },
-	derivatives: function() { return player.inf.derivatives.unl },
+	derivatives: function() { return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000")) },
 }
 
 // Ascension
@@ -480,4 +480,3 @@ const STADIUM_GOALS = {
 // Derivatives
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"]
-const DERV_INCR = ["acceleration", "jerk", "snap"]

@@ -39,7 +39,6 @@ function tickWithoutTS(diff) {
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true
 	}
-	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff)
 }
 
 function tickWithTR(diff) {
