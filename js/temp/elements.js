@@ -211,6 +211,13 @@ function updateHTML() {
 	tmp.el.purgePower.setTxt(showNum(player.inf.pantheon.purge.power))
 	tmp.el.purgePowerEff.setTxt(showNum(tmp.inf.pantheon.ppe))
 	
+	// Derivatives
+	for (let i=0;i<DERV.length;i++) {
+		let name = DERV[i]
+		tmp.el["dervDiv"+name].setDisplay(tmp.inf.derv.unlocked(name))
+		tmp.el["derv"+name].setTxt(formatDistance(tmp.inf.derv.amt(name)))
+	}
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)

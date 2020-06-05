@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.2,
+	version: 1.3,
 	optionsTab: "saving",
 	achievements: [],
 	options: {
@@ -82,6 +82,11 @@ const DEFAULT_START = {
 				active: false,
 				power: new ExpantaNum(0),
 			},
+		},
+		derivatives: {
+			unl: false,
+			amts: {},
+			unlocks: new ExpantaNum(0),
 		},
 	},
 	automators: {},

@@ -33,6 +33,8 @@ function ENString(obj) {
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips).toString()
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls).toString()
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power).toString()
+	if (Object.keys(ret.inf.derivatives.amts).length>0) for (const key in ret.inf.derivatives.amts) ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]).toString()
+	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks).toString()
 	return ret
 }
 
@@ -46,6 +48,7 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	}
 	if (ret.version < 1.1 || !ret.inf.stadium) ret.inf.stadium = deepCopy(sc.inf.stadium)
 	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon)
+	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives)
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -77,6 +80,8 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips)
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls)
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power)
+	if (Object.keys(ret.inf.derivatives.amts).length>0) for (const key in ret.inf.derivatives.amts) ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key])
+	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks)
 	ret.version = Math.max(ret.version, sc.version)
     return ret
 }

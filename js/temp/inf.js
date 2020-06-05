@@ -355,4 +355,18 @@ function updateTempInf() {
 		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active
 		tmp.inf.layer.reset(true)
 	}
+	
+	// Derivatives
+	tmp.inf.derv = {}
+	tmp.inf.derv.unlocked = function(name) {
+		if (name=="distance"||name=="velocity"||name=="acceleration") return true
+		return false
+	}
+	tmp.inf.derv.amt = function(name) {
+		if (!player.inf.derivatives.unl) return new ExpantaNum(0)
+		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0)
+		if (name=="distance"||name=="velocity") return player[name]
+		if (name=="acceleration") return tmp.acc.times((player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(1))
+		return player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)
+	}
 }

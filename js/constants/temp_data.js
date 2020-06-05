@@ -29,3 +29,8 @@ for (let i=0;i<Object.keys(STADIUM_DESCS).length;i++) {
 	TMP_DATA.ELS.push(Object.keys(STADIUM_DESCS)[i]+"Chall")
 	TMP_DATA.ELS.push(Object.keys(STADIUM_DESCS)[i]+"Btm")
 }
+for (let i=0;i<DERV.length;i++) {
+	let name = DERV[i]
+	TMP_DATA.ELS.push("dervDiv"+name)
+	TMP_DATA.ELS.push("derv"+name)
+}
