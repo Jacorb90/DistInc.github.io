@@ -40,12 +40,12 @@ function transformToEN(obj, sc=DEFAULT_START) {
     let ret = deepCopy(obj)
 	for (const key in sc) if (ret[key]===undefined) ret[key] = deepCopy(sc[key])
 	for (const key in sc.options) if (ret.options[key]===undefined) ret.options[key] = deepCopy(sc.options[key])
-	if (ret.version === undefined) {
+	if (ret.version === undefined || !ret.inf.ascension) {
 		ret.inf.ascension = deepCopy(sc.inf.ascension)
 		ret.version = 1.0
 	}
-	if (ret.version < 1.1) ret.inf.stadium = deepCopy(sc.inf.stadium)
-	if (ret.version < 1.2) ret.inf.pantheon = deepCopy(sc.inf.pantheon)
+	if (ret.version < 1.1 || !ret.inf.stadium) ret.inf.stadium = deepCopy(sc.inf.stadium)
+	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon)
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
