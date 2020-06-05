@@ -30,5 +30,6 @@ function updateTempCollapse() {
 		if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)
 		if (tmp.collapse.hasMilestone(4)) player.rf = new ExpantaNum(1)
 		if (tmp.collapse.hasMilestone(7)) player.tr.upgrades = prev.tr.upgrades
+		tmp.inf.derv.resetDervs()
 	}
 }

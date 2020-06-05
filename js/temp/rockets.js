@@ -19,4 +19,7 @@ function updateTempRockets() {
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets)
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(tmp.rockets.eff).plus(1)
+	tmp.rockets.onReset = function(prev) {
+		tmp.inf.derv.resetDervs()
+	}
 }

@@ -28,6 +28,7 @@ function updateTempEarlyGame() {
 	if (tmp.inf && tmp.timeSpeed) if (tmp.inf.upgs.has("4;7")) tmp.acc = tmp.acc.times(INF_UPGS.effects["4;7"]())
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow)
 	if (tmp.nerfs.active("nerfAccel")) tmp.acc = tmp.acc.pow(0.1)
+	if (tmp.inf && player.inf.derivatives.unl) tmp.acc = tmp.acc.times((player.inf.derivatives.amts.acceleration?player.inf.derivatives.amts.acceleration:new ExpantaNum(0)).max(1))
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1)

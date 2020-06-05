@@ -217,6 +217,9 @@ function updateHTML() {
 		tmp.el["dervDiv"+name].setDisplay(tmp.inf.derv.unlocked(name))
 		tmp.el["derv"+name].setTxt(formatDistance(tmp.inf.derv.amt(name)))
 	}
+	let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts)?"Boosts":"Shifts"
+	tmp.el.dervUnlock.setHTML(tmp.scaling.getName("dervBoost")+" Derivative "+dervName+" ("+showNum(player.inf.derivatives.unlocks)+")<br>Cost: "+showNum(tmp.inf.derv.unlCost)+" Knowledge")
+	tmp.el.dervUnlock.setClasses({btn: true, locked: player.inf.knowledge.lt(tmp.inf.derv.unlCost), inf: player.inf.knowledge.gte(tmp.inf.derv.unlCost)})
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
