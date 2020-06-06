@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 11,
+	rows: 12,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -100,6 +100,9 @@ const ACH_DATA = {
 		116: "Cubic Infinity",
 		117: "The Dead Have Risen",
 		118: "The True Challenge?",
+		
+		121: "Why?!??!???!?!??",
+		122: "Off the Rails",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -200,6 +203,9 @@ const ACH_DATA = {
 		116: "Reach showNum(25) Endorsements.",
 		117: "Reach showNum(1e3000) Cadavers.",
 		118: "Reach formatDistance(1e33600) while in Eternity's Stadium challenge.",
+		
+		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Tier 6.",
+		122: "Purchase two Derivative Shifts.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",

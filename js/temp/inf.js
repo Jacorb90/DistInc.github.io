@@ -389,7 +389,7 @@ function updateTempInf() {
 	}
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE)
 	tmp.inf.derv.mult = function(name) {
-		let mult = tmp.timeSpeed?tmp.timeSpeed:new ExpantaNum(1)
+		let mult = new ExpantaNum(1)
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
 		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts))
 		return mult

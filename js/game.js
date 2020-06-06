@@ -39,7 +39,6 @@ function tickWithoutTS(diff) {
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true
 	}
-	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff)
 }
 
 function tickWithTR(diff) {
@@ -51,6 +50,7 @@ function tickWithTR(diff) {
 function tickWithTS(diff) {
 	if (player.tr.active && !tmp.nerfs.active("noTimeCubes")) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff))
 	else if (tmp.ach[72].has && player.tr.unl && !tmp.nerfs.active("noTimeCubes")) player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff.div(2)))
+	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff)
 	tickWithTR(diff.times(player.tr.active?(-1):1))
 }
 

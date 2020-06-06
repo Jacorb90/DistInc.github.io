@@ -102,4 +102,7 @@ function updateAchievements() {
 	if (player.inf.endorsements.gte(25)) tmp.ach[116].grant() 
 	if (player.collapse.cadavers.gte("1e3000")) tmp.ach[117].grant()
 	if (player.distance.gte("1e33600") && tmp.inf.stadium.active("eternity")) tmp.ach[118].grant()
+		
+	if (player.distance.gte(2.5e4) && tmp.inf.stadium.active("reality", 6)) tmp.ach[121].grant()
+	if (player.inf.derivatives.unlocks.gte(2)) tmp.ach[122].grant()
 }
