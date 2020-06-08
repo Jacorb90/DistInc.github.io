@@ -23,6 +23,8 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
 	if (tmp.inf) if (tmp.inf.upgs.has("6;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.025)
 	if (tmp.inf) if (tmp.inf.stadium.completed("drigganiz")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(STADIUM_REWARDS.effects.drigganiz())
+	if (tmp.inf) if (tmp.inf.upgs.has("9;5")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(ExpantaNum.mul(0.01, player.inf.endorsements))
+	if (tmp.ach) if (tmp.ach[125].has) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
 	if (tmp.nerfs.active("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10)
 	if (tmp.nerfs.active("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0)
 	tmp.pathogens.sc = {
@@ -73,9 +75,20 @@ function updateTempPathogens() {
 			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra)
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			bought = bought.times(tmp.pathogens.upgPow)
-			if (i==1) return player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
-			else if (i==2) return player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
-			else if (i==3) return player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
+			if (i==1) {
+				let ret = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
+				if (ret.gte(2e3)) ret = ret.sqrt().times(Math.sqrt(2e3))
+				if (ret.gte(1e4)) ret = ret.log10().times(1e4/4)
+				return ret
+			} else if (i==2) {
+				let ret = player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3))
+				if (ret.gte("1e100000")) ret = ret.log10().pow(1e5/5).min(ret)
+				return ret
+			} else if (i==3) {
+				let ret = player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4))
+				if (ret.gte("1e100000")) ret = ret.log10().pow(1e5/5).min(ret)
+				return ret
+			}
 			else if (i==4) return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9))
 			else if (i==5) {
 				let exp = new ExpantaNum(1)

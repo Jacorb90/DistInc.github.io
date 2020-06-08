@@ -103,6 +103,9 @@ const ACH_DATA = {
 		
 		121: "Why?!??!???!?!??",
 		122: "Off the Rails",
+		123: "Into the Next Century",
+		124: "9 o'clock blues",
+		125: "What a waste of time...",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -206,6 +209,9 @@ const ACH_DATA = {
 		
 		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Tier 6.",
 		122: "Purchase two Derivative Shifts.",
+		123: "Reach showNum(2.5e5) Ascension Power.",
+		124: "Reach showNum(30) Purge Power.",
+		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Tier 6.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -266,5 +272,9 @@ const ACH_DATA = {
 		111: "You can activate all four perks at once.",
 		112: "Time Speed boosts Knowledge gain at a reduced rate.",
 		116: "You gain twice as many Heavenly Chips & Demonic Souls.",
+		
+		123: "The Universe Doesn't Exist uses a slightly better formula.",
+		124: "All Perks last twice as long.",
+		125: "Pathogen Upgrades are showNum(5)% stronger.",
 	},
 }

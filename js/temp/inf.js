@@ -27,8 +27,8 @@ function updateTempInf() {
 	tmp.inf.upgs.shown = function(id) {
 		let r = parseInt(id.split(";")[0])
 		let c = parseInt(id.split(";")[1])
-		if (INF_UPGS.rowReqs[r]) if (!INF_UPGS.rowReqs[r]()) return false
-		if (INF_UPGS.colReqs[c]) if (!INF_UPGS.colReqs[c]()) return false
+		if (INF_UPGS.rowReqs[r]) if (!INF_UPGS.rowReqs[r]()||(r==1?false:!tmp.inf.upgs.shown((r-1)+";"+c))) return false
+		if (INF_UPGS.colReqs[c]) if (!INF_UPGS.colReqs[c]()||(c==1?false:!tmp.inf.upgs.shown(r+";"+(c-1)))) return false
 		return true
 	}
 	tmp.inf.upgs.reset = function(force=false) {
@@ -43,14 +43,15 @@ function updateTempInf() {
 	}	
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="2;7"||id=="8;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
+		else if (id=="2;7"||id=="8;6"||id=="9;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
+		else if (id=="5;7"||id=="9;2") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
 		else if (id=="1;8"||id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
 		else if (id=="8;2") return "Purge Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["energy"])+"x"
 		else if (id=="8;8") return "+"+showNum(INF_UPGS.effects[id]().sub(1).times(100))+"%"
+		else if (id=="9;3") return "Angels: "+showNum(INF_UPGS.effects[id]()["angels"])+"x, Demons: "+showNum(INF_UPGS.effects[id]()["demons"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -89,6 +90,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("2;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;3"]()["knowledge"])
 	if (tmp.inf.upgs.has("3;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["3;2"]()["knowledge"])
 	if (tmp.inf.upgs.has("5;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["5;4"]())
+	if (tmp.inf.upgs.has("9;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["9;1"]())
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
@@ -158,6 +160,7 @@ function updateTempInf() {
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]())
+	if (tmp.ach[124].has) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(2)
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
@@ -332,6 +335,10 @@ function updateTempInf() {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["8;3"]())
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["8;3"]())
 	}
+	if (tmp.inf.upgs.has("9;3")) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["9;3"]()["angels"])
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["9;3"]()["demons"])
+	}
 	let h = player.inf.pantheon.heavenlyChips
 	let d = player.inf.pantheon.demonicSouls
 	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
@@ -388,6 +395,7 @@ function updateTempInf() {
 		player.inf.derivatives.unlocks = player.inf.derivatives.unlocks.plus(1)
 	}
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE)
+	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]())
 	tmp.inf.derv.mult = function(name) {
 		let mult = new ExpantaNum(1)
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)

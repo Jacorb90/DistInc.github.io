@@ -52,6 +52,11 @@ function updateLayerMults() {
 	if (tmp.dc) if (player.dc.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.dc.dmEff)
 	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) tmp.lm.rockets = tmp.lm.rockets.times(INF_UPGS.effects["1;2"]())
 	if (tmp.inf) if (tmp.inf.upgs.has("4;8")) tmp.lm.rockets = tmp.lm.rockets.times(player.collapse.lifeEssence.max(1))
+	if (tmp.inf) if (tmp.inf.upgs.has("9;8")) {
+		let c = player.tr.cubes.max(1).pow(0.1)
+		if (c.gte("1e100000")) c = c.log10().pow(20000)
+		tmp.lm.rockets = tmp.lm.rockets.times(c)
+	}
 	tmp.lm.collapse = new ExpantaNum(1)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)

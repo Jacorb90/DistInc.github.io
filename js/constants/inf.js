@@ -1,7 +1,7 @@
 // Infinity
 const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
 const INF_UPGS = {
-	rows: 8,
+	rows: 9,
 	cols: 8,
 	rowReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
@@ -9,6 +9,7 @@ const INF_UPGS = {
 		6: function() { return player.inf.endorsements.gte(10) },
 		7: function() { return player.inf.endorsements.gte(15) },
 		8: function() { return player.inf.endorsements.gte(21) },
+		9: function() { return player.inf.endorsements.gte(28) },
 	},
 	colReqs: {
 		4: function() { return player.inf.endorsements.gte(3) },
@@ -82,6 +83,14 @@ const INF_UPGS = {
 		"8;6": new ExpantaNum(5e27),
 		"8;7": new ExpantaNum(7.5e27),
 		"8;8": new ExpantaNum(4e28),
+		"9;1": new ExpantaNum(2.5e30),
+		"9;2": new ExpantaNum(3e31),
+		"9;3": new ExpantaNum(6.4e31),
+		"9;4": new ExpantaNum(2.5e32),
+		"9;5": new ExpantaNum(4e32),
+		"9;6": new ExpantaNum(3.33e33),
+		"9;7": new ExpantaNum(1e34),
+		"9;8": new ExpantaNum(1.5e34),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -148,6 +157,14 @@ const INF_UPGS = {
 		"8;6": "Scaled Dark Core & Hyper Rank scaling is weaker based on Endorsements.",
 		"8;7": "Scaled Pathogen Upgrade scaling is 84% weaker.",
 		"8;8": "inf8;1 & inf3;8 are stronger based on your Purge Power.",
+		"9;1": "Jerk boosts Accelerational Energy & Knowledge gain.",
+		"9;2": "Derivative Shifts & Boosts add to the Rocket effect.",
+		"9;3": "Angels & Demons are synergized, and Scaled Endorsement scaling starts 1 later.",
+		"9;4": "Derivative Boosts boost Time Speed.",
+		"9;5": "Pathogen Upgrades are 1% stronger for every Endorsement you have.",
+		"9;6": "Superscaled Rank & Tier scalings are weaker based on your Demonic Souls.",
+		"9;7": "Derivative Boosts give a better boost to Derivatives based on your Rank.",
+		"9;8": "Rocket gain is multiplied by (n+1)^0.1, where n is your Time Cubes (softcaps at higher values).",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -213,6 +230,14 @@ const INF_UPGS = {
 		"8;6": ["8;5"],
 		"8;7": ["8;6"],
 		"8;8": ["7;8", "8;7"],
+		"9;1": ["8;8"],
+		"9;2": ["9;1"],
+		"9;3": ["9;2"],
+		"9;4": ["9;3"],
+		"9;5": ["9;4"],
+		"9;6": ["9;5"],
+		"9;7": ["9;6"],
+		"9;8": ["9;7"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -399,6 +424,47 @@ const INF_UPGS = {
 			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10)
 			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1))
 			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5))
+			return ret
+		},
+		"9;1": function() {
+			let jerk = player.inf.derivatives.amts.jerk?player.inf.derivatives.amts.jerk:new ExpantaNum(0)
+			let ret = jerk.plus(1).pow(0.0001)
+			if (ret.gte(1e100)) ret = ret.log10().pow(50)
+			return ret
+		},
+		"9;2": function() {
+			let u = player.inf.derivatives.unlocks
+			let ret = u.sqrt().div(2)
+			if (ret.gte(10)) ret = ret.log10().times(10).min(ret)
+			return ret.times(10)
+		},
+		"9;3": function() {
+			let a = player.inf.pantheon.angels
+			let d = player.inf.pantheon.demons
+			let ret = {
+				angels: d.plus(1).logBase(1.5).pow(3).plus(1),
+				demons: a.plus(1).logBase(1.5).pow(3).plus(1),
+			}
+			return ret
+		},
+		"9;4": function() {
+			let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
+			let ret = ExpantaNum.pow(tmp.inf.derv.boostMult, boosts)
+			return ret
+		},
+		"9;6": function() {
+			let d = player.inf.pantheon.demonicSouls
+			let ret = d.plus(1).times(10).slog(10).div(10)
+			if (ret.gte(0.5)) ret = ret.div(10).plus(0.45)
+			if (ret.gte(0.75)) ret = ret.pow(2).div(0.75)
+			if (ret.gte(0.9)) ret = ExpantaNum.sub(1, ExpantaNum.div(1, ret.times(10).plus(1)))
+			return ret
+		},
+		"9;7": function() {
+			let rank = player.rank
+			if (rank.gte(308)) rank = rank.sqrt().times(Math.sqrt(308))
+			if (rank.gte(400)) rank = ExpantaNum.pow(10, rank.log10().sqrt()).times(9.75)
+			let ret = ExpantaNum.pow(1.02, rank.pow(2))
 			return ret
 		},
 	},
