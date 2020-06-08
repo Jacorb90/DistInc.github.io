@@ -38,6 +38,11 @@ function updateTempPathogens() {
 		8: new ExpantaNum(4),
 		9: new ExpantaNum(3),
 		10: new ExpantaNum(3),
+		11: new ExpantaNum(5),
+		12: new ExpantaNum(4),
+		13: new ExpantaNum(10),
+		14: new ExpantaNum(4),
+		15: new ExpantaNum(5),
 	}
 	for (let i=1;i<=PTH_AMT;i++) {
 		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1)
@@ -62,12 +67,14 @@ function updateTempPathogens() {
 		tmp.pathogens[i].extra = function() {
 			let extra = new ExpantaNum(0)
 			if (tmp.inf) extra = extra.plus(tmp.inf.asc.perkEff(2))
+			if (tmp.pth13 && i==5) extra = extra.plus(tmp.pth13)
 			return extra
 		}()
 		tmp.pathogens[i].buy = function() {
+			if (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false) return
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return
-			player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
-			if (!tmp.ach[88].has) player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
+			if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)
+			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1)
 		}
 		tmp.pathogens[i].eff = function() {
 			let fp = new ExpantaNum(1)
@@ -75,6 +82,7 @@ function updateTempPathogens() {
 			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra)
 			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt())
 			bought = bought.times(tmp.pathogens.upgPow)
+			if (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false) bought = new ExpantaNum(0)
 			if (i==1) {
 				let ret = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).pow(bought.plus(1).logBase(2).plus(bought.gt(0)?1:0))
 				if (ret.gte(2e3)) ret = ret.sqrt().times(Math.sqrt(2e3))
@@ -95,7 +103,7 @@ function updateTempPathogens() {
 				if (tmp.inf) if (tmp.inf.upgs.has("7;5")) exp = exp.times(INF_UPGS.effects["7;5"]())
 				return ExpantaNum.pow(3, bought.sqrt()).pow(exp)
 			}
-			else if (tmp.inf?tmp.inf.upgs.has("3;8"):false) {
+			else if (tmp.inf?(tmp.inf.upgs.has("3;8")&&i>=6&&i<=10):false) {
 				if (i==6) return ExpantaNum.pow(1.4, bought.sqrt()).times(ExpantaNum.pow(2, bought.pow(ExpantaNum.mul(2.5, fp))).pow(0.2))
 				else if (i==7) return bought.plus(1).logBase(2).plus(1).pow(5).times(bought.plus(1).pow(bought.plus(1).logBase(2).plus(1)).pow(ExpantaNum.mul(30, fp)))
 				else if (i==8) return bought.plus(1).logBase(2).plus(1).log10().times(bought.plus(1).logBase(2).plus(1).pow(ExpantaNum.mul(2.75, fp)))
@@ -106,6 +114,11 @@ function updateTempPathogens() {
 			else if (i==8) return bought.plus(1).logBase(2).plus(1).log10()
 			else if (i==9) return bought.plus(1).logBase(4).plus(1).pow(1.25)
 			else if (i==10) return bought.plus(1).logBase(4).plus(1).sqrt()
+			else if (i==11) return player.pathogens.amount.plus(1).times(10).slog(10).times(bought.sqrt().times(2.5))
+			else if (i==12) return player.rf.plus(1).log10().plus(1).log10().times(bought.cbrt().times(1.5))
+			else if (i==13) return ExpantaNum.mul(2, bought)
+			else if (i==14) return ExpantaNum.sub(1, ExpantaNum.div(1, player.dc.cores.plus(1).log10().times(bought).plus(1)))
+			else if (i==15) return ExpantaNum.sub(1, ExpantaNum.div(1, bought.plus(1).log10().plus(1).pow(0.1)))
 			return undefined
 		}()
 		tmp.pathogens[i].disp = function() {
@@ -120,11 +133,15 @@ function updateTempPathogens() {
 			else if (i==8) return showNum(eff)+" later"
 			else if (i==9) return showNum(eff)+"x later"
 			else if (i==10) return showNum(eff)+"x later"
+			else if (i==11||i==12) return showNum(eff)+" later"
+			else if (i==13) return "+"+showNum(eff)+" Levels"
+			else if (i==14||i==15) return showNum(eff.times(100))+"% weaker"
 			else return "???"
 		}()
 	}
 	tmp.pathogens.maxAll = function() {
 		for (let i=1;i<=PTH_AMT;i++) {
+			if (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false) continue
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) continue
 			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk.floor().max(player.pathogens.upgrades[i].plus(1)))
 			if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost)

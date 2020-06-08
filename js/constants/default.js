@@ -48,6 +48,11 @@ const DEFAULT_START = {
 			8: new ExpantaNum(0),
 			9: new ExpantaNum(0),
 			10: new ExpantaNum(0),
+			11: new ExpantaNum(0),
+			12: new ExpantaNum(0),
+			13: new ExpantaNum(0),
+			14: new ExpantaNum(0),
+			15: new ExpantaNum(0),
 		},
 	},
 	dc: {

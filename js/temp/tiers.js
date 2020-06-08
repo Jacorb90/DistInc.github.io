@@ -42,6 +42,6 @@ function updateTempTiers() {
 			player.distance = prev.distance
 			player.velocity = prev.velocity 
 		}
-		tmp.inf.derv.resetDervs()
+		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs()
 	}
 }

@@ -62,7 +62,7 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.collapse.cadavers = new ExpantaNum(ret.collapse.cadavers)
 	ret.collapse.lifeEssence = new ExpantaNum(ret.collapse.lifeEssence)
 	ret.pathogens.amount = new ExpantaNum(ret.pathogens.amount)
-	for (let i=1;i<=Object.keys(sc.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i])
+	for (let i=1;i<=Object.keys(sc.pathogens.upgrades).length;i++) ret.pathogens.upgrades[i] = new ExpantaNum(ret.pathogens.upgrades[i]||0)
 	ret.dc.matter = new ExpantaNum(ret.dc.matter)
 	ret.dc.energy = new ExpantaNum(ret.dc.energy)
 	ret.dc.fluid = new ExpantaNum(ret.dc.fluid)

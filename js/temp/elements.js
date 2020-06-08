@@ -115,6 +115,8 @@ function updateHTML() {
 	// Pathogens
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	for (let i=1;i<=PTH_AMT;i++) {
+		let hidden = (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false)
+		tmp.el["pth"+i].setDisplay(!hidden)
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
 		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>"+(tmp.scaling.getName("pathogenUpg", i))+"Level: "+showNum(player.pathogens.upgrades[i])+(tmp.pathogens[i].extra.gt(0)?(" + "+showNum(tmp.pathogens[i].extra)):"")+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}

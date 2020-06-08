@@ -76,4 +76,5 @@ function updateTempEffects() {
 	// Pathogen Upgrade Effects
 	
 	tmp.pth5 = (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens[5].eff : new ExpantaNum(1)
+	tmp.pth13 = (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens[13].eff : new ExpantaNum(1)
 }
