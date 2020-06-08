@@ -101,6 +101,16 @@ function setupHTML() {
 		let el = new Element("automator-"+Object.keys(player.automators)[i])
 		el.el.checked = Object.values(player.automators)[i]
 	}
+	
+	// Derivatives
+	let dv = new Element("derivs")
+	data = "<br>"
+	for (let i=0;i<DERV.length;i++) {
+		let name = DERV[i]
+		let suffix = i==0?"":("/s"+(i==1?"":("<sup>"+i+"</sup>")))
+		data+="<div id='dervDiv"+name+"' style='display: none;'><b>"+capitalFirst(name)+"</b>: <span id='derv"+name+"'></span>"+suffix+"</div><br>"
+	}
+	dv.setHTML(data)
 }
 
 function updateBeforeTick() {
@@ -130,4 +140,5 @@ function updateUnlocks() {
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
 	if (player.distance.gte(DC_UNL)) player.dc.unl = true
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset()
+	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true
 }

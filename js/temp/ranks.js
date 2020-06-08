@@ -47,5 +47,6 @@ function updateTempRanks() {
 			player.distance = prev.distance
 			player.velocity = prev.velocity
 		}
+		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs()
 	}
 }

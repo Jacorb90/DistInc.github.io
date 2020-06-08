@@ -10,5 +10,10 @@ const PTH_UPGS = {
 	8: { start: new ExpantaNum(4000), inc: new ExpantaNum(40), desc: "The rocket effect softcap starts later." },
 	9: { start: new ExpantaNum(6000), inc: new ExpantaNum(60), desc: "The cadaver gain softcap starts later." },
 	10: { start: new ExpantaNum(8000), inc: new ExpantaNum(80), desc: "The cadaver effect softcap starts later." },
+	11: { start: new ExpantaNum(1e75), inc: new ExpantaNum(1e5), desc: "Superscaled Rocket Fuel scaling starts later based on your Pathogens.", unl: function() { return tmp.inf?tmp.inf.upgs.has("2;9"):false } },
+	12: { start: new ExpantaNum(1e80), inc: new ExpantaNum(1e3), desc: "Scaled Dark Core scaling starts later based on your Rocket Fuel.", unl: function() { return tmp.inf?tmp.inf.upgs.has("2;9"):false } },
+	13: { start: new ExpantaNum(1e80), inc: new ExpantaNum(10), desc: "Pathogen Upgrade 5 gets 2 extra Levels.", unl: function() { return tmp.inf?tmp.inf.upgs.has("2;9"):false } },
+	14: { start: new ExpantaNum(1e85), inc: new ExpantaNum(1e5), desc: "Scaled & Superscaled Rank scalings are weaker based on your Dark Cores.", unl: function() { return tmp.inf?tmp.inf.upgs.has("2;9"):false } },
+	15: { start: new ExpantaNum(1e85), inc: new ExpantaNum(1e15), desc: "Scaled Endorsement scaling is slightly weaker.", unl: function() { return tmp.inf?tmp.inf.upgs.has("2;9"):false } },
 }
 const PTH_AMT = Object.keys(PTH_UPGS).length

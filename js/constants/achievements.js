@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 11,
+	rows: 12,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -100,6 +100,15 @@ const ACH_DATA = {
 		116: "Cubic Infinity",
 		117: "The Dead Have Risen",
 		118: "The True Challenge?",
+		
+		121: "Why?!??!???!?!??",
+		122: "Off the Rails",
+		123: "Into the Next Century",
+		124: "9 o'clock blues",
+		125: "What a waste of time...",
+		126: "Quick Repair",
+		127: "False Purge",
+		128: "Truly Nerfed",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -200,6 +209,15 @@ const ACH_DATA = {
 		116: "Reach showNum(25) Endorsements.",
 		117: "Reach showNum(1e3000) Cadavers.",
 		118: "Reach formatDistance(1e33600) while in Eternity's Stadium challenge.",
+		
+		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Tier 6.",
+		122: "Purchase two Derivative Shifts.",
+		123: "Reach showNum(2.5e5) Ascension Power.",
+		124: "Reach showNum(30) Purge Power.",
+		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Tier 6.",
+		126: "Have a magnitude of showNum(1e200) for Rankbot.",
+		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
+		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -260,5 +278,9 @@ const ACH_DATA = {
 		111: "You can activate all four perks at once.",
 		112: "Time Speed boosts Knowledge gain at a reduced rate.",
 		116: "You gain twice as many Heavenly Chips & Demonic Souls.",
+		
+		123: "The Universe Doesn't Exist uses a slightly better formula.",
+		124: "All Perks last twice as long.",
+		125: "Pathogen Upgrades are showNum(5)% stronger.",
 	},
 }

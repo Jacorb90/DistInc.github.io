@@ -3,6 +3,7 @@ function updateTempInf() {
 		tmp.forceInfReset = function() { tmp.inf.layer.reset(true) }
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete
 		tmp.soulBoost = tmp.inf.pantheon.soulBoost
+		tmp.doDervReset = tmp.inf.derv.resetDervs
 	}
 	
 	// Unrepealed Infinity Upgrades
@@ -26,8 +27,8 @@ function updateTempInf() {
 	tmp.inf.upgs.shown = function(id) {
 		let r = parseInt(id.split(";")[0])
 		let c = parseInt(id.split(";")[1])
-		if (INF_UPGS.rowReqs[r]) if (!INF_UPGS.rowReqs[r]()) return false
-		if (INF_UPGS.colReqs[c]) if (!INF_UPGS.colReqs[c]()) return false
+		if (INF_UPGS.rowReqs[r]) if (!INF_UPGS.rowReqs[r]()||(r==1?false:!tmp.inf.upgs.shown((r-1)+";"+c))) return false
+		if (INF_UPGS.colReqs[c]) if (!INF_UPGS.colReqs[c]()||(c==1?false:!tmp.inf.upgs.shown(r+";"+(c-1)))) return false
 		return true
 	}
 	tmp.inf.upgs.reset = function(force=false) {
@@ -42,14 +43,15 @@ function updateTempInf() {
 	}	
 	tmp.inf.upgs.current = function(id) {
 		if (id=="2;3") return "Time Cubes: "+showNum(INF_UPGS.effects[id]()["cubes"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="2;7"||id=="8;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
+		else if (id=="2;7"||id=="8;6"||id=="9;6") return showNum(INF_UPGS.effects[id]().times(100))+"% weaker"
 		else if (id=="3;2") return "Cadavers: "+showNum(INF_UPGS.effects[id]()["cadavers"])+"x, Knowledge: "+showNum(INF_UPGS.effects[id]()["knowledge"])+"x"
-		else if (id=="5;7") return "+"+showNum(INF_UPGS.effects[id]())
+		else if (id=="5;7"||id=="9;2") return "+"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;2") return "Ascension Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Dark Flow: "+showNum(INF_UPGS.effects[id]()["flow"])+"x"
 		else if (id=="1;8"||id=="7;4"||id=="7;5") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id=="7;7") return "Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["ae"])+"x, Velocital Energy: "+showNum(INF_UPGS.effects[id]()["ve"])+"x, Time Speed: "+showNum(INF_UPGS.effects[id]()["ts"])+"x"
 		else if (id=="8;2") return "Purge Power: "+showNum(INF_UPGS.effects[id]()["power"])+"x, Accelerational Energy: "+showNum(INF_UPGS.effects[id]()["energy"])+"x"
 		else if (id=="8;8") return "+"+showNum(INF_UPGS.effects[id]().sub(1).times(100))+"%"
+		else if (id=="9;3") return "Angels: "+showNum(INF_UPGS.effects[id]()["angels"])+"x, Demons: "+showNum(INF_UPGS.effects[id]()["demons"])+"x"
 		return showNum(INF_UPGS.effects[id]())+"x"
 	}
 	tmp.inf.upgs.hover = function(id) {
@@ -88,6 +90,8 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("2;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;3"]()["knowledge"])
 	if (tmp.inf.upgs.has("3;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["3;2"]()["knowledge"])
 	if (tmp.inf.upgs.has("5;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["5;4"]())
+	if (tmp.inf.upgs.has("9;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["9;1"]())
+	if (tmp.inf.upgs.has("9;9")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2))
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
@@ -128,6 +132,7 @@ function updateTempInf() {
 			player.collapse.lifeEssence = new ExpantaNum(10000)
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
+		tmp.doDervReset()
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -156,6 +161,7 @@ function updateTempInf() {
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME)
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]())
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]())
+	if (tmp.ach[124].has) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(2)
 	tmp.inf.asc.maxPerks = 1
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++
@@ -186,6 +192,8 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("6;5")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["6;5"]())
 	if (tmp.inf.upgs.has("7;2")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["7;2"]()["power"])
 	if (tmp.inf.upgs.has("3;7")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["3;7"]())
+	if (tmp.inf.upgs.has("3;9")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["3;9"]())
+	if (tmp.inf.upgs.has("8;9")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(10)
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
 		if (tmp.inf.asc.perkActive(n)) {
@@ -292,6 +300,7 @@ function updateTempInf() {
 	tmp.inf.pantheon = {}
 	tmp.inf.pantheon.totalGems = function() { return player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons) }()
 	tmp.inf.pantheon.bc = new ExpantaNum(21)
+	if (tmp.inf.upgs.has("5;9")) tmp.inf.pantheon.bc = new ExpantaNum(16)
 	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1)
 	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor()
 	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
@@ -330,6 +339,10 @@ function updateTempInf() {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["8;3"]())
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["8;3"]())
 	}
+	if (tmp.inf.upgs.has("9;3")) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["9;3"]()["angels"])
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["9;3"]()["demons"])
+	}
 	let h = player.inf.pantheon.heavenlyChips
 	let d = player.inf.pantheon.demonicSouls
 	let p = player.inf.pantheon.purge.unl?player.inf.pantheon.purge.power:new ExpantaNum(0)
@@ -354,5 +367,59 @@ function updateTempInf() {
 		if (player.inf.pantheon.purge.active) player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain)
 		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active
 		tmp.inf.layer.reset(true)
+	}
+	
+	// Derivatives
+	tmp.inf.derv = {}
+	tmp.inf.derv.maxShifts = new ExpantaNum(2)
+	tmp.inf.derv.unlocked = function(name) {
+		if (name=="distance"||name=="velocity"||name=="acceleration") return true
+		if (name=="jerk"&&player.inf.derivatives.unlocks.gte(1)) return true
+		if (name=="snap"&&player.inf.derivatives.unlocks.gte(2)) return true
+		return false
+	}
+	tmp.inf.derv.amt = function(name) {
+		if (!player.inf.derivatives.unl) return new ExpantaNum(0)
+		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0)
+		if (name=="distance"||name=="velocity") return player[name]
+		if (name=="acceleration") return tmp.acc
+		return player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)
+	}
+	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29)
+	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor()
+	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
+		let power = tmp.scalingPower.scaled.dervBoost
+		let exp = ExpantaNum.pow(2, power)
+		tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(exp).div(tmp.scalings.scaled.dervBoost.pow(exp.sub(1))).pow(3)).times(2.5e29)
+		tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().times(tmp.scalings.scaled.dervBoost.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+	}
+	tmp.inf.derv.doUnl = function() {
+		if (player.inf.knowledge.lt(tmp.inf.derv.unlCost)) return
+		player.inf.knowledge = player.inf.knowledge.sub(tmp.inf.derv.unlCost)
+		player.inf.derivatives.unlocks = player.inf.derivatives.unlocks.plus(1)
+	}
+	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE)
+	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]())
+	tmp.inf.derv.mult = function(name) {
+		let mult = new ExpantaNum(1)
+		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
+		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts))
+		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4)
+		return mult
+	}
+	tmp.inf.derv.tick = function(diff) {
+		if (!player.inf.derivatives.unl) return 
+		for (let i=0;i<DERV_INCR.length;i++) {
+			let name = DERV_INCR[i]
+			let next = DERV_INCR[i+1]
+			if (!tmp.inf.derv.unlocked(name)) continue
+			if (i==DERV_INCR.length-1?true:(!tmp.inf.derv.unlocked(next))) player.inf.derivatives.amts[name] = new ExpantaNum(1)
+			else player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff))
+		}
+	}
+	tmp.inf.derv.resetDervs = function() {
+		for (key in player.inf.derivatives.amts) {
+			player.inf.derivatives.amts[key] = tmp.inf.derv.unlocked(key)?new ExpantaNum(1):new ExpantaNum(0)
+		}
 	}
 }

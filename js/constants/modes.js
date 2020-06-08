@@ -4,8 +4,8 @@ const COMBOS = {
 		balanceCheck: true,
 	},
 	hard_na: {
-		balancing: "completely balanced",
-		balanceCheck: false,
+		balancing: "almost balanced (late game is quite slow)",
+		balanceCheck: true,
 	},
 	aau_na: {
 		balancing: "only somewhat balanced (quite fast early-game)",
@@ -40,8 +40,8 @@ const MODES = {
 	},
 	na: {
 		desc: "All unnecessary achievements are gone.",
-		balancing: "completely balanced (since gameplay is almost identical to normal mode)",
-		balanceCheck: false,
+		balancing: "almost balanced (late game is slow)",
+		balanceCheck: true,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),

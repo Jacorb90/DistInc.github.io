@@ -12,6 +12,7 @@ function updateTempSpecial() {
 		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10)}),
 		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium"}),
 		pantheon: new Feature({name: "pantheon", req: new ExpantaNum(21), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(21), displayName: "the pantheon"}),
+		derivatives: new Feature({name: "derivatives", req: ExpantaNum.mul(DISTANCES.uni, "1e90000"), res: "distance", display: formatDistance, reached: player.inf.derivatives.unl}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {
@@ -51,6 +52,11 @@ function updateLayerMults() {
 	if (tmp.dc) if (player.dc.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.dc.dmEff)
 	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) tmp.lm.rockets = tmp.lm.rockets.times(INF_UPGS.effects["1;2"]())
 	if (tmp.inf) if (tmp.inf.upgs.has("4;8")) tmp.lm.rockets = tmp.lm.rockets.times(player.collapse.lifeEssence.max(1))
+	if (tmp.inf) if (tmp.inf.upgs.has("9;8")) {
+		let c = player.tr.cubes.max(1).pow(0.1)
+		if (c.gte("1e100000")) c = c.log10().pow(20000)
+		tmp.lm.rockets = tmp.lm.rockets.times(c)
+	}
 	tmp.lm.collapse = new ExpantaNum(1)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)

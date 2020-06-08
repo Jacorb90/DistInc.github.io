@@ -115,6 +115,8 @@ function updateHTML() {
 	// Pathogens
 	tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
 	for (let i=1;i<=PTH_AMT;i++) {
+		let hidden = (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false)
+		tmp.el["pth"+i].setDisplay(!hidden)
 		tmp.el["pth"+i].setClasses({btn: true, locked: player.pathogens.amount.lt(tmp.pathogens[i].cost), gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)})
 		tmp.el["pth"+i].setHTML(PTH_UPGS[i].desc+"<br>"+(tmp.scaling.getName("pathogenUpg", i))+"Level: "+showNum(player.pathogens.upgrades[i])+(tmp.pathogens[i].extra.gt(0)?(" + "+showNum(tmp.pathogens[i].extra)):"")+"<br>Currently: "+tmp.pathogens[i].disp+(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])?("<span class='sc'>(softcapped)</span>"):"")+"<br>Cost: "+showNum(tmp.pathogens[i].cost)+" Pathogens.")
 	}
@@ -210,6 +212,16 @@ function updateHTML() {
 	tmp.el.purgeBtn.setTxt(player.inf.pantheon.purge.active?("Exit Purge run"+(tmp.inf.pantheon.purgeGain.gt(0)?(" for "+showNum(tmp.inf.pantheon.purgeGain)+" Purge Power."):(". You need "+formatDistance(tmp.inf.pantheon.purgeNext)+" to gain more Purge Power."))):"Start Purge run")
 	tmp.el.purgePower.setTxt(showNum(player.inf.pantheon.purge.power))
 	tmp.el.purgePowerEff.setTxt(showNum(tmp.inf.pantheon.ppe))
+	
+	// Derivatives
+	for (let i=0;i<DERV.length;i++) {
+		let name = DERV[i]
+		tmp.el["dervDiv"+name].setDisplay(tmp.inf.derv.unlocked(name))
+		tmp.el["derv"+name].setTxt(formatDistance(tmp.inf.derv.amt(name)))
+	}
+	let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts)?"Boosts":"Shifts"
+	tmp.el.dervUnlock.setHTML(tmp.scaling.getName("dervBoost")+" Derivative "+dervName+" ("+showNum(player.inf.derivatives.unlocks)+")<br>Cost: "+showNum(tmp.inf.derv.unlCost)+" Knowledge")
+	tmp.el.dervUnlock.setClasses({btn: true, locked: player.inf.knowledge.lt(tmp.inf.derv.unlCost), inf: player.inf.knowledge.gte(tmp.inf.derv.unlCost)})
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
