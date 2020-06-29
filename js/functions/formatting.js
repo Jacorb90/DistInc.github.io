@@ -35,7 +35,7 @@ function disp(val, places, locs, base) {
     }
     if (b) s+=decimalPlaces(b,places,base);
     else if (l<1) s+=String(decimalPlaces(k,places,base));
-    else if (l<3||s.contains("undefined")) s+="e".repeat(l-1)+decimalPlaces(Math.pow(base,k-Math.floor(k)),places,base)+"e"+decimalPlaces(Math.floor(k),places,base);
+    else if (l<3||s.includes("undefined")) s+="e".repeat(l-1)+decimalPlaces(Math.pow(base,k-Math.floor(k)),places,base)+"e"+decimalPlaces(Math.floor(k),places,base);
     else if (l<8) s+="e".repeat(l)+decimalPlaces(k,places,base);
     else if (val.array.length<3+locs) s+="10^^"+decimalPlaces(l,places,base)+" "+decimalPlaces(k,places,base);
     return s;

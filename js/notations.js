@@ -73,3 +73,12 @@ notations.tetrational = function(val, places, locs) {
 	else if (val.lt("10^^1000")) return "10^^"+disp(val.slog(10), places, locs)
 	else return notations.scientific(val, places, locs)
 }
+
+notations.symbols = function(val, places, locs) {
+	let r = disp(val, places, locs, 26)
+	let c = ""
+	for (let i=0;i<r.length;i++) {
+		c += String.fromCharCode(r[i].charCodeAt(0)+10000)
+	}
+	return c
+}
