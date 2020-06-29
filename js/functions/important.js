@@ -7,6 +7,10 @@ function loadGame() {
 		player.tab = DEFAULT_START.tab
 		player.optionsTab = DEFAULT_START.optionsTab
 	}
+	if (player.modes.includes("absurd")) if (!confirm("Are you sure you want to continue playing in Absurd Mode?")) {
+		player.modes = []
+		player = transformToEN(DEFAULT_START, DEFAULT_START)
+	}
 	setupHTML()
 	interval = setInterval(function() {
 		simulateTime()

@@ -49,7 +49,7 @@ const MODES = {
 		},
 	},
 	absurd: {
-		desc: "Ehehe... You'll see... (by the way, if you enter this mode and need to reset your save, close the game tab, enter the console on any website with the same browser that you played this game on, and type in the following: localStorage.clear(). Then re-open the game tab, and your save should be wiped completely (maybe export first).)",
+		desc: "Ehehe... You'll see...",
 		balancing: "completely impossible",
 		balanceCheck: true,
 		combos: {
