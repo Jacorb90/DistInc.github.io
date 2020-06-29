@@ -17,7 +17,7 @@ function updateTempPathogens() {
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	tmp.pathogens.upgPow = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13.max(0))
-	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8)
+	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.98)
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0))
 	if (tmp.inf) if (tmp.inf.upgs.has("3;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.1)
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
@@ -46,7 +46,10 @@ function updateTempPathogens() {
 	}
 	for (let i=1;i<=PTH_AMT;i++) {
 		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1)
-		if (tmp.modes.hard.active) tmp.pathogens.sc[i] = new ExpantaNum(1)
+		if (tmp.modes.hard.active) {
+			tmp.pathogens.sc[i] = new ExpantaNum(1)
+			if (tmp.ach[65].has) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(5)
+		}
 		let upg = PTH_UPGS[i]
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) }
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1)

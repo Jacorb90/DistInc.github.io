@@ -107,7 +107,7 @@ function updateTempInf() {
 	tmp.inf.forceReset = function() {
 		infActive = true
 		let amActive = player.inf.endorsements.eq(9)
-		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
+		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you"+(tmp.modes.hard.active?", however you need to exit Hard Mode to do so":"")+".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
 		if (amActive) message = "The High God <span class='infinity'>Infinity</span> has amired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>"
 		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: message, tab: "inf"})
 		player.inf.unl = true
@@ -133,6 +133,7 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
 		tmp.doDervReset()
+		if (player.modes.includes("hard")) player.modes = player.modes.filter(x => x!="hard")
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {

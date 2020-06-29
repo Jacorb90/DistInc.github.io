@@ -253,7 +253,7 @@ const ACH_DATA = {
 		
 		61: "Maximum Velocity is showNum(60)% higher.",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
-		65: "Cadaver gain is increased by showNum(40)%.",
+		65: "Cadaver gain is increased by showNum(40)%boolean(hard, and Pathogen Upgrades softcap five later).",
 		67: "Time goes by showNum(11.11)% faster.",
 		68: "Pathogen gain is showNum(1)% faster.",
 		

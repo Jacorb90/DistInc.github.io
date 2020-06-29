@@ -5,6 +5,14 @@ class Achievement {
 	}
 	
 	parse(txt) {
+		if (txt.indexOf("boolean")!=-1) {
+			let txt2 = txt.split("boolean")[1]
+			let content = txt2.slice(1, txt2.indexOf(")")).split(",")
+			let newTxt = txt.split("boolean")[0]
+			if (tmp.modes[content[0]].active) newTxt+=content[1]
+			newTxt+=txt2.split(")")[1]
+			txt = newTxt
+		}
 		if (txt.indexOf("showNum")!=-1) {
 			let txt2 = txt.split("showNum")[1]
 			return txt.split("showNum")[0]+showNum(txt2.slice(1, txt2.indexOf(")")))+txt2.split(")")[1]

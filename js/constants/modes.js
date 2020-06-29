@@ -19,8 +19,8 @@ const COMBOS = {
 
 const MODES = {
 	hard: {
-		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, makes the transfer from Cadavers to Life Essence 40% less efficient, thirds Pathogen gain, makes Pathogen upgrades slightly weaker, & makes Pathogen upgrade effects softcap instantly, but to compensate, Universal Collapse is unlocked 50x sooner and Pathogens are unlocked 5x sooner.",
-		balancing: "completely balanced (albeit quite slow)",
+		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, makes the transfer from Cadavers to Life Essence 40% less efficient, thirds Pathogen gain, makes Pathogen upgrades slightly weaker, & makes Pathogen upgrade effects softcap instantly, but to compensate, Universal Collapse is unlocked 50x sooner, Pathogens are unlocked 5x sooner, and one of the achievements now has a new reward.",
+		balancing: "balanced up to Infinity.",
 		balanceCheck: false,
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
