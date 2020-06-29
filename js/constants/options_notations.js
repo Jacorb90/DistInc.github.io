@@ -7,7 +7,7 @@ const OPT_CHNG_MIN = {
 	sf: 3,
 }
 const OPT_NAMES = {
-	not: ["scientific", "standard", "mixed", "hexadecimal", "binary"],
+	not: ["scientific", "standard", "mixed", "hexadecimal", "binary", "tetrational"],
 }
 const AUTOSAVE_TIME = 10
 

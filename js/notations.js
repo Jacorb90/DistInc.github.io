@@ -65,3 +65,11 @@ notations.hexadecimal = function(val, places, locs) {
 notations.binary = function(val, places, locs) {
 	return disp(val, places, locs, 2)
 }
+
+notations.tetrational = function(val, places, locs) {
+	if (val.eq(0)) return "0"
+	else if (val.lt(1)) return "1/"+notations.tetrational(val.pow(-1), places, locs)
+	else if (val.eq(1)) return "10^^0"
+	else if (val.lt("10^^1000")) return "10^^"+disp(val.slog(10), places, locs)
+	else return notations.scientific(val, places, locs)
+}
