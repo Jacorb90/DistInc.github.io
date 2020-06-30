@@ -3,6 +3,7 @@ function updateTempTiers() {
 	tmp.tiers.fp = new ExpantaNum(1)
 	tmp.tiers.bc = new ExpantaNum(3)
 	if (tmp.modes.hard.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.plus(1)
+	if (tmp.modes.easy.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.sub(1)
 	if (tmp.inf) if (tmp.inf.stadium.active("solaris", 5)||tmp.inf.stadium.active("spaceon", 6)) tmp.tiers.bc = tmp.tiers.bc.plus(25)
 	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2))
 	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).add(1).round()

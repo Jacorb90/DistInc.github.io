@@ -68,6 +68,7 @@ function updateLayerMults() {
 		tmp.lm.collapse = tmp.lm.collapse.div(2)
 		tmp.clghm = true
 	}
+	if (tmp.collapse) if (tmp.modes.easy.active) tmp.lm.collapse = tmp.lm.collapse.times(3)
 }
 
 function updateTempSC() {

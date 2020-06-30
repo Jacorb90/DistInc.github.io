@@ -1,6 +1,7 @@
 function updateTempTimeSpeed() {
 	tmp.timeSpeed = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.timeSpeed = tmp.timeSpeed.times(0.75)
+	if (tmp.modes.easy.active) tmp.timeSpeed = tmp.timeSpeed.times(2.5)
 	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2)
 	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7)
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01)

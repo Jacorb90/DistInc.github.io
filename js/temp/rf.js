@@ -33,6 +33,7 @@ function updateTempRF() {
 	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1)
 	tmp.rf.eff = player.rf.plus(tmp.freeRF?tmp.freeRF:0).times(tmp.rf.pow).plus(1).logBase(2).plus(1).pow(0.05)
 	if (tmp.modes.hard.active) tmp.rf.eff = tmp.rf.eff.sub(0.02)
+	if (tmp.modes.easy.active) tmp.rf.eff = tmp.rf.eff.plus(0.012)
 	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) tmp.rf.eff = tmp.rf.eff.sub(1).times(2).add(1)
 	if (tmp.nerfs.active("noRF")) tmp.rf.eff = new ExpantaNum(1)
 	tmp.rf.onReset = function(prev) {

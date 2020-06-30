@@ -2,6 +2,7 @@ function updateTempTR() {
 	tmp.tr = {}
 	tmp.tr.cg = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.tr.cg = tmp.tr.cg.div(3)
+	if (tmp.modes.easy.active) tmp.tr.cg = tmp.tr.cg.times(5).times(player.pathogens.amount.plus(1))
 	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)

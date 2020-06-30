@@ -11,6 +11,7 @@ function updateTempCollapse() {
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1)).pow(player.collapse.cadavers.plus(1).logBase(2)).plus(player.collapse.cadavers.sqrt())
 	tmp.collapse.esc = new ExpantaNum(1e12)
 	if (tmp.modes.hard.active) tmp.collapse.esc = tmp.collapse.esc.div(100)
+	if (tmp.modes.easy.active) tmp.collapse.esc = tmp.collapse.esc.times(80)
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.esc = tmp.collapse.esc.times(tmp.pathogens[10].eff)
 	if (tmp.inf) tmp.collapse.esc = tmp.collapse.esc.times(tmp.inf.asc.perkEff(3))
 	tmp.collapse.escp = new ExpantaNum(1)
@@ -19,6 +20,7 @@ function updateTempCollapse() {
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
 	tmp.collapse.sacEff = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)
+	if (tmp.modes.easy.active) tmp.collapse.sacEff = tmp.collapse.sacEff.times(1.6)
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff)
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)||tmp.nerfs.active("noLifeEssence")) return

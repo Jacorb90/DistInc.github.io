@@ -7,6 +7,7 @@ function updateTempRanks() {
 	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1)
 	tmp.ranks.bc = new ExpantaNum(10)
 	if (tmp.modes.hard.active && player.rank<3) tmp.ranks.bc = tmp.ranks.bc.times(2)
+	if (tmp.modes.easy.active && player.rank<3) tmp.ranks.bc = tmp.ranks.bc.div(3)
 	if (tmp.inf) if (tmp.inf.stadium.active("spaceon", 5)||tmp.inf.stadium.active("solaris", 6)) tmp.ranks.bc = tmp.ranks.bc.times(1e10)
 	tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2)))
 	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1).round()

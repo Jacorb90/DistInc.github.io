@@ -1,51 +1,62 @@
 const COMBOS = {
 	hard_aau: {
-		balancing: "only somewhat balanced (quite fast early-game, but quite slow late-game)",
-		balanceCheck: true,
+		balancing: "same as hard mode, but faster",
+		balanceCheck: false,
 	},
 	hard_na: {
 		balancing: "almost balanced (late game is quite slow)",
-		balanceCheck: true,
+		balanceCheck: false,
 	},
 	aau_na: {
-		balancing: "only somewhat balanced (quite fast early-game)",
-		balanceCheck: true,
+		balancing: "slightly faster than normal",
+		balanceCheck: false,
 	},
 	absurd: {
 		balancing: "completely impossible",
 		balanceCheck: true,
 	},
+	easy: {
+		balancing: "balanced up to Infinity",
+		balanceCheck: false,
+	},
+	easy_hard: {
+		balancing: "balanced up to Infinity",
+		balanceCheck: false,
+	},
 }
 
 const MODES = {
 	hard: {
-		desc: "Time goes by 25% slower, the first two Ranks are twice as expensive, the first two Tiers require 1 extra Rank, halves maximum velocity, thirds acceleration, makes Rockets unlock 100% later, makes Rocket gain softcap instantly, makes the Rocket effect softcap sooner (^5 -> ^4.5), makes the Rocket Fuel effect weaker by 2%, makes Automation unlock 900% later, makes Scrap/Intelligence gain half as fast, makes Interval/Magnitude upgrades 33.33% weaker, makes Time Cube gain 3x slower, makes those 'Interval boosts Magnitude' upgrades 50% weaker, halves Cadaver gain after 10, makes the Cadaver effect softcap 100x sooner, makes the transfer from Cadavers to Life Essence 40% less efficient, thirds Pathogen gain, makes Pathogen upgrades slightly weaker, & makes Pathogen upgrade effects softcap instantly, but to compensate, Universal Collapse is unlocked 50x sooner, Pathogens are unlocked 5x sooner, and one of the achievements now has a new reward.",
-		balancing: "balanced up to Infinity.",
+		desc: "The game is harder & slower, with slight compensation to help you slowly grind to the end (this mode does have an ending).",
+		balancing: "balanced up to Infinity",
 		balanceCheck: false,
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
 		},
 	},
 	aau: {
 		desc: "Start with all achievements unlocked.",
-		balancing: "only somewhat balanced (quite fast early-game)",
-		balanceCheck: true,
+		balancing: "same as normal, but faster.",
+		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
 		},
 	},
 	na: {
 		desc: "All unnecessary achievements are gone.",
 		balancing: "almost balanced (late game is slow)",
-		balanceCheck: true,
+		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
 		},
 	},
 	absurd: {
@@ -56,6 +67,18 @@ const MODES = {
 			hard: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.absurd)),
+		},
+	},
+	easy: {
+		desc: "This mode is easier & faster to help you reach the end faster (this mode does have an ending).",
+		balancing: "balanced up to Infinity",
+		balanceCheck: false,
+		combos: {
+			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
+			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
+			na: JSON.parse(JSON.stringify(COMBOS.easy)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		},
 	},
 }

@@ -26,6 +26,7 @@ function updateTempEffects() {
 	if (tmp.inf) if (tmp.inf.upgs.has("8;4")) tmp.ach63sc = tmp.ach63sc.times(player.inf.pantheon.purge.power.plus(1).pow(17))
 	tmp.ach63pow = new ExpantaNum(1)
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
+	if (tmp.modes.easy.active) tmp.ach63pow = tmp.ach63pow.times(2)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
 	tmp.ach112pow = new ExpantaNum(1)
@@ -43,8 +44,11 @@ function updateTempEffects() {
 	tmp.tr4 = ExpantaNum.pow(1.33, rockets.plus(1).log10())
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10())
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length)
-	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).pow(1/3*(tmp.modes.hard.active?0.5:1)).max(1)
-	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2*(tmp.modes.hard.active?0.5:1)).max(1)
+	let tr89mod = 1
+	if (tmp.modes.hard.active) tr89mod /= 2
+	if (tmp.modes.easy.active) tr89mod *= 3
+	tmp.tr8 = ExpantaNum.div(4, (tmp.auto?tmp.auto.rankbot.interval.max(1e-10):1)).pow(1/3*tr89mod).max(1)
+	tmp.tr9 = ExpantaNum.div(5, (tmp.auto?tmp.auto.tierbot.interval.max(1e-10):1)).pow(0.2*tr89mod).max(1)
 	let cubes = player.tr.cubes
 	if (cubes.gte(1e10)) cubes = cubes.pow(0.1).times(1e9)
 	tmp.tr10 = ExpantaNum.pow(1.1, cubes.plus(1).log10())

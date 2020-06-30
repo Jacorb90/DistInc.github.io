@@ -2,6 +2,7 @@ function updateTempEarlyGame() {
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1)
 	if (tmp.modes.hard.active) tmp.acc = tmp.acc.div(3)
+	if (tmp.modes.easy.active) tmp.acc = tmp.acc.times(2)
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(tmp.r2)
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2)
@@ -34,6 +35,7 @@ function updateTempEarlyGame() {
 	tmp.maxVel = new ExpantaNum(1)
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1)
 	if (tmp.modes.hard.active) tmp.maxVel = tmp.maxVel.div(2)
+	if (tmp.modes.easy.active) tmp.maxVel = tmp.maxVel.times(3)
 	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(tmp.r2)
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5)
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(tmp.r4)
