@@ -72,6 +72,11 @@
 	<script type="text/javascript" src="js/temp/misc.js"></script>
 	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
 	
+	<!-- Extreme Mode Temp Data -->
+	
+	<script type="text/javascript" src="js/temp/extreme/rankCheap.js"></script>
+	<script type="text/javascript" src="js/temp/extreme/fn.js"></script>
+	
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>
 	<title>Distance Incremental</title>
@@ -86,6 +91,7 @@
 					<td><button id="optionstabbtn" class="btn tb" onclick="showTab('options')">Options</button></td>
 					<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
 					<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
+					<td><button id="furnacetabbtn" class="btn tb fn" onclick="showTab('furnace')">The Furnace</button></td>
 					<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
 					<td><button id="trtabbtn" class="btn tb rt" onclick="showTab('tr')">Time Reversal</button></td>
 					<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
@@ -102,7 +108,12 @@
 			You have gone a total of <span id="distance"></span>.<br>
 			Your current velocity is <span id="velocity"></span>/s (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
 			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup><span id="accEn"></span>.<br><br>
-			<span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
+			<table>
+				<tr>
+					<td><span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button></td>
+					<td id="rankCheapDiv">&nbsp;&nbsp;&nbsp;<span id="rankCheapName"></span> <span id="rankCheap"></span>: <button id="rankCheapUp" class="btn locked" onclick="tmp.rankCheap.layer.reset()">Reset your journey, but weaken the rank requirement formula.<br>Req: <span id="rankCheapReq"></span>.</button></td>
+				</tr>
+			</table><br><br>
 			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
 		</div>
 		<div id="options" class="tab" style="display: none;">
@@ -132,7 +143,7 @@
 						<td><button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td><button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')">Extreme</button></td>
 						<td><button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')">Easy</button></td>
 					</tr>
 				</table><br><br>
@@ -149,8 +160,8 @@
 				</table><br>
 				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
 			</div><br><br>
-			Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a> by Hevipelle, and it uses <a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and <a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I take credit for. If you would like to create a mod of this game, that's fine, just give credit and name it something slightly different (like Distance Incremental NG+ or something of the sort)...<br><br>
-			<a href="https://docs.google.com/document/d/1Xd8v3Mc2BHo_cbfWgws0d2qrQME8YJC0DGbMyn3HYs0/edit?usp=sharing">Changelog & Future Plans</a>
+			Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a> by Hevipelle, and it uses <a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and <a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I take credit for. If you would like to create a mod of this game, that's fine, just give credit, let me know in the discord (preferrably with a game link), and name it something slightly different (like Distance Incremental NG+ or something of the sort)...<br><br>
+			<a href="https://docs.google.com/document/d/1Xd8v3Mc2BHo_cbfWgws0d2qrQME8YJC0DGbMyn3HYs0/edit?usp=sharing">Changelog & Future Plans</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
 			<div id="achDesc" class="band gn"></div>
@@ -162,6 +173,18 @@
 			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
 			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
 		</div>
+		<div id="furnace" class="tab" style="display: none;">
+			You have <span id="coal" class="char"></span> Coal, translated to <span id="coalEff" class="char"></span> added Rocket effect.<br><br>
+			<table>
+				<tr>
+					<td><button id="fnu1" class="btn locked" onclick="tmp.fn.upgs[1].buy()" style="min-height: 100px; max-height: 100px;">Triple Coal gain (before Extreme Mode reduction)<br>Cost: <span id="fnu1cost"></span> Coal<br><span id="fnu1name"></span>Level: <span id="fnu1lvl"></span></button></td>
+					<td><button id="fnu2" class="btn locked" onclick="tmp.fn.upgs[2].buy()" style="min-height: 100px; max-height: 100px;">Gain an extra Rank Cheapener<br>Cost: <span id="fnu2cost"></span> Coal<br><span id="fnu2name"></span>Level: <span id="fnu2lvl"></span></button></td>
+					<td><button id="fnu3" class="btn locked" onclick="tmp.fn.upgs[3].buy()" style="min-height: 100px; max-height: 100px;">Double Rocket gain<br>Cost: <span id="fnu3cost"></span> Coal<br><span id="fnu3name"></span>Level: <span id="fnu3lvl"></span></button></td>
+				</tr>
+			</table><br><br><br>
+			<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">Reset all Furnace progress to gain a Blue Flame<br>Req: <span id="bfReq"></span> Coal</button><br><br>
+			You have <span id="bfAmt" class="blfl"></span> Blue Flame, which makes the cost of all Furnace Upgrades scale <span id="bfEff" class="blfl"></span>% slower.
+		</div>
 		<div id="auto" class="tab" style="display: none;">
 			<table>
 				<tr>
@@ -172,6 +195,7 @@
 			</table><table>
 				<tr>
 					<td><button id="rankbot" class="btn locked" onclick="tmp.auto['rankbot'].btn()"></button></td>
+					<td><button id="rankCheapbot" class="btn locked" onclick="tmp.auto['rankCheapbot'].btn()"></button></td>
 					<td><button id="tierbot" class="btn locked" onclick="tmp.auto['tierbot'].btn()"></button></td>
 					<td><button id="fuelbot" class="btn locked" onclick="tmp.auto['fuelbot'].btn()"></button></td>
 				</tr>

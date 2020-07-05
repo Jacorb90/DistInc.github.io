@@ -1,11 +1,17 @@
 const TMP_DATA = {
-	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "not", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "darkFlow", "trRow3", "autoSave", "mainContainer", "endorsements", "nextEndorsement", "knowledge", "infUpgData", "knowledgeBase", "endorsementName", "endorsementManual", "perkPower", "ascPower", "forceInf", "exitStad", "emInner", "mvName", "accEn", "spectralGems", "spectralGemName", "nextSpectralGem", "angels", "demons", "transferAngels", "transferDemons", "respecSpectralGems", "chips", "chipBoost", "souls", "soulBoost", "tudeEff", "purgeDiv", "purgeBtn", "purgePower", "purgePowerEff", "dervUnlock"],
+	ELS: ["distance", "velocity", "maxVel", "acceleration", "rank", "rankUp", "rankDesc", "rankReq", "tier", "tierUp", "tierDesc", "tierReq", "rocketReset", "rocketGain", "rocketsAmt", "rocketsEff", "nextFeature", "achDesc", "rf", "rfReset", "rfReq", "rfEff", "scraps", "intAmt", "rankbot", "rankCheapbot", "tierbot", "fuelbot", "robotTab", "robotName", "robotInterval", "robotMagnitude", "buyRobotInterval", "buyRobotMagnitude", "rt", "tc", "frf", "ts", "collapseReset", "cadaverGain", "cadavers", "cadaverEff", "sacrificeCadavers", "lifeEssence", "robotMax", "body", "rocketGainSC", "rocketEffSC", "timeCubeEffSC", "cadaverGainSC", "cadaverEffSC", "pathogensAmt", "tdeEff", "rankName", "tierName", "rfName", "pthUpgPow", "pthGainSC", "sf", "not", "darkMatter", "darkEnergy", "darkFluid", "darkCore", "arrowToDarkMatter", "darkFlow", "trRow3", "trRow4", "trRow5", "trRow6", "autoSave", "mainContainer", "endorsements", "nextEndorsement", "knowledge", "infUpgData", "knowledgeBase", "endorsementName", "endorsementManual", "perkPower", "ascPower", "forceInf", "exitStad", "emInner", "mvName", "accEn", "spectralGems", "spectralGemName", "nextSpectralGem", "angels", "demons", "transferAngels", "transferDemons", "respecSpectralGems", "chips", "chipBoost", "souls", "soulBoost", "tudeEff", "purgeDiv", "purgeBtn", "purgePower", "purgePowerEff", "dervUnlock", "rankCheapDiv", "rankCheapName", "rankCheap", "rankCheapUp", "rankCheapReq", "furnacetabbtn", "coal", "coalEff", "bf", "bfReq", "bfAmt", "bfEff"],
 }
 for (let r=1;r<=ACH_DATA.rows;r++) {
 	for (let c=1;c<=ACH_DATA.cols;c++) {
 		let id = r*10+c
 		TMP_DATA.ELS.push("ach"+id)
 	}
+}
+for (let i=1;i<=3;i++) {
+	TMP_DATA.ELS.push("fnu"+i)
+	TMP_DATA.ELS.push("fnu"+i+"cost")
+	TMP_DATA.ELS.push("fnu"+i+"name")
+	TMP_DATA.ELS.push("fnu"+i+"lvl")
 }
 for (let i=1;i<=TR_UPG_AMT;i++) TMP_DATA.ELS.push("tr"+i)
 for (let i=1;i<=EM_AMT;i++) TMP_DATA.ELS.push("lem"+i)

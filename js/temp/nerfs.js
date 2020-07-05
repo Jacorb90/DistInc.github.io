@@ -68,7 +68,7 @@ function updateTempNerfs() {
 		}
 		if (name=="noCadavers") {
 			let active = false
-			active = active||(tmp.inf?(tmp.inf.stadium.active("solaris")||tmp.inf.stadium.active("drigganiz", 5)):true)
+			active = active||(tmp.inf?((tmp.inf.stadium.active("solaris")&&!tmp.modes.extreme.active)||tmp.inf.stadium.active("drigganiz", 5)):true)
 			return active
 		}
 		if (name=="noLifeEssence") {
@@ -113,11 +113,12 @@ function updateTempNerfs() {
 		}
 	}
 	tmp.nerfs.adjust = function(val, type) {
-		let preinf = (type=="vel"||type=="dist"||type=="scraps"||type=="intel"||type=="tc"||type=="rockets"||type=="pathogens"||type=="dc"||type=="lifeEssence"||type=="cadavers")
+		let preinf = (type=="vel"||type=="dist"||type=="fn"||type=="scraps"||type=="intel"||type=="tc"||type=="rockets"||type=="pathogens"||type=="dc"||type=="lifeEssence"||type=="cadavers")
 		let postinf = (type=="knowledge"||type=="ascension"||type=="heavenlyChips"||type=="demonicSouls"||type=="derv")
 		let exp = new ExpantaNum(1)
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10)
 		if (player.inf.pantheon.purge.active && type=="vel") exp = exp.div(3)
+		if (tmp.modes.extreme.active && preinf) exp = exp.times(0.75)
 		return val.pow(exp)
 	}
 }

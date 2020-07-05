@@ -42,4 +42,5 @@ function updateTempAuto() {
 	for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) tmp.rd.mp[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(8)) tmp.rd.mp.rankbot = tmp.rd.mp.rankbot.times(tmp.tr8)
 	if (player.tr.upgrades.includes(9)) tmp.rd.mp.tierbot = tmp.rd.mp.tierbot.times(tmp.tr9)
+	if (player.tr.upgrades.includes(19) && tmp.modes.extreme.active) tmp.rd.mp.rankCheapbot = tmp.rd.mp.rankCheapbot.times(tmp.tr19)
 }

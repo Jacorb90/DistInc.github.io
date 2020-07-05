@@ -27,6 +27,7 @@ function updateTempEffects() {
 	tmp.ach63pow = new ExpantaNum(1)
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75)
 	if (tmp.modes.easy.active) tmp.ach63pow = tmp.ach63pow.times(2)
+	if (player.tr.upgrades.includes(24) && tmp.modes.extreme.active) tmp.ach63pow = tmp.ach63pow.times(1.4)
 	tmp.ach63 = tmp.timeSpeed?(tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow)):new ExpantaNum(1)
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()))
 	tmp.ach112pow = new ExpantaNum(1)
@@ -66,6 +67,7 @@ function updateTempEffects() {
 	}
 	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores)
 	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10)
+	if (tmp.modes.extreme.active) tmp.tr19 = ExpantaNum.pow(4.5, (tmp.auto?tmp.auto.rankCheapbot.interval.max(1e-10):1)).pow(0.3*tr89mod).max(1)
 	
 	// Universal Collapse Milestone Effects
 	

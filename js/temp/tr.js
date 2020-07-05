@@ -6,6 +6,11 @@ function updateTempTR() {
 	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr1)
 	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr4)
 	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1)
+	if (tmp.ach[72].has && tmp.modes.extreme.active) {
+		let exp = ExpantaNum.add(5, player.dc.cores.sqrt().times(5))
+		tmp.tr.cg = tmp.tr.cg.times(player.furnace.coal.plus(1).log10().plus(1).pow(exp))
+	}
+	if (player.tr.upgrades.includes(16) && tmp.modes.extreme.active) tmp.tr.cg = tmp.tr.cg.times(player.furnace.coal.plus(1).log10().sqrt().plus(1))
 	if (tmp.pathogens && player.pathogens.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.pathogens[3].eff)
 	if (tmp.dc) if (player.dc.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.dc.deEff)
 	if (tmp.dc) if (player.tr.upgrades.includes(11)) tmp.tr.cg = tmp.tr.cg.times(tmp.tr11["cg"])

@@ -1,5 +1,7 @@
 function updateTempDC() {
 	tmp.dc = {}
+	tmp.dc.lrm = new ExpantaNum(1)
+	if (tmp.modes.extreme.active) tmp.dc.lrm = tmp.dc.lrm.times(1e-28)
 	tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1).times(player.dc.fluid.plus(1).log10().plus(1)).max(0)
 	tmp.dc.deGain = player.dc.matter.plus(1).log10()
 	tmp.dc.dfGain = player.dc.energy.plus(1).log10()
@@ -32,22 +34,22 @@ function updateTempDC() {
 	tmp.dc.deEff = player.dc.energy.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.125, tmp.dc.power))
 	if (tmp.inf) if (tmp.inf.upgs.has("6;8")) tmp.dc.deEff = tmp.dc.deEff.max(player.dc.energy.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(ExpantaNum.pow(2, player.dc.energy.plus(10).slog(10).sub(1)).div(8), tmp.dc.power)).pow(10))
 	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power)
-	tmp.dc.coreEff = player.dc.cores.gte(12)?(player.dc.cores.pow(7).div(ExpantaNum.pow(12, 6).times(8)).plus(1).log10().plus(1).log10()):new ExpantaNum(0)
-	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(10)
-	tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).plus(1)
+	tmp.dc.coreEff = (player.dc.cores.gte(12) && !tmp.modes.extreme.active)?(player.dc.cores.pow(7).div(ExpantaNum.pow(12, 6).times(8)).plus(1).log10().plus(1).log10()):new ExpantaNum(0)
+	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(tmp.modes.extreme.active?0.25:10)
+	tmp.dc.bulk = player.collapse.cadavers.div(tmp.modes.extreme.active?0.25:10).max(1).log10().max(1).log10().sub(1).times(50).plus(1)
 	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
 		let power = tmp.scalingPower.scaled.darkCore
 		let exp = ExpantaNum.pow(2, power)
-		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(exp).div(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).div(50).plus(1))).times(10)
-		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).add(1)
+		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(exp).div(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).div(50).plus(1))).times(tmp.modes.extreme.active?0.25:10)
+		tmp.dc.bulk = player.collapse.cadavers.div(tmp.modes.extreme.active?0.25:10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).add(1)
 	}
 	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "superscaled")) {
 		let power2 = tmp.scalingPower.superscaled.darkCore
 		let exp2 = ExpantaNum.pow(3, power2)
 		let power = tmp.scalingPower.scaled.darkCore
 		let exp = ExpantaNum.pow(2, power)
-		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(exp2).div(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1))).pow(exp).div(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).div(50).plus(1))).times(10)
-		tmp.dc.bulk = player.collapse.cadavers.div(10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
+		tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.pow(exp2).div(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1))).pow(exp).div(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).div(50).plus(1))).times(tmp.modes.extreme.active?0.25:10)
+		tmp.dc.bulk = player.collapse.cadavers.div(tmp.modes.extreme.active?0.25:10).max(1).log10().max(1).log10().sub(1).times(50).times(tmp.scalings.scaled.darkCore.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 	}
 	tmp.dc.buyCore = function() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost)||tmp.nerfs.active("noDarkCores")) return

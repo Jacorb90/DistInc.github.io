@@ -36,6 +36,7 @@ class Layer {
 		let prev = transformToEN(player, DEFAULT_START)
 		for (let i=0;i<LAYER_RESETS[this.name].length;i++) player[LAYER_RESETS[this.name][i]] = ((DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object && !(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)) ? JSON.parse(JSON.stringify(DEFAULT_START[LAYER_RESETS[this.name][i]])) : DEFAULT_START[LAYER_RESETS[this.name][i]])
 		player = transformToEN(player, DEFAULT_START)
+		modeLoad(LAYER_RESETS_EXTRA[this.name])
 		if (tmp[this.name]) if (tmp[this.name].onReset !== undefined) tmp[this.name].onReset(prev)
 		updateTemp()
 	}

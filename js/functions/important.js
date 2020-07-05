@@ -11,6 +11,7 @@ function loadGame() {
 		player.modes = []
 		player = transformToEN(DEFAULT_START, DEFAULT_START)
 	}
+	modeLoad([])
 	setupHTML()
 	interval = setInterval(function() {
 		simulateTime()
@@ -40,6 +41,10 @@ function autoTick(diff) {
 	}
 	
 	// Automators
+	if (player.automators["furnace"] && tmp.modes.extreme.active) {
+		for (let i=1;i<=3;i++) tmp.fn.upgs[i].max()
+		player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor())
+	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll()
 	if (player.automators["cores"]) tmp.dc.maxCores()
 }
@@ -55,4 +60,16 @@ function showModeDescs(modes) {
 	} else if (modes.length==1) d = MODES[modes[0]].desc
 	else if (modes.length==0) d = "Just the main game."
 	alert(d)
+}
+
+function modeLoad(resetted) {
+	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
+		player.modes.filter(x => Object.keys(MODE_VARS).includes(x)).forEach(x => function() {
+			let data = MODE_VARS[x]
+			for (let i=0;i<Object.keys(data).length;i++) {
+				if (player[Object.keys(data)[i]]===undefined||resetted.includes(Object.keys(data)[i])) player[Object.keys(data)[i]] = deepCopy(Object.values(data)[i])
+			}
+			player = MODE_EX[x](player)
+		}())
+	}
 }

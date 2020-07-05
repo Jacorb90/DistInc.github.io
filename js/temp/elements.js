@@ -65,9 +65,10 @@ function updateHTML() {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
 	}
+	tmp.el.rankCheapbot.setDisplay(tmp.modes.extreme.active)
 	tmp.el.fuelbot.setDisplay(tmp.collapse.hasMilestone(5)||(player.automation.robots.fuelbot?player.automation.robots.fuelbot[1].gt(0):false))
 	tmp.el.robotTab.setDisplay(player.automation.open!="none")
-	tmp.el.robotName.setTxt(capitalFirst(player.automation.open))
+	tmp.el.robotName.setTxt(capitalFirst(player.automation.open=="rankCheapbot"?"Rank Cheapener-bot":player.automation.open))
 	tmp.el.robotInterval.setTxt(player.automation.open=="none"?"":formatTime(tmp.auto[player.automation.open].interval))
 	tmp.el.robotMagnitude.setTxt(player.automation.open=="none"?"":showNum(tmp.auto[player.automation.open].magnitude))
 	tmp.el.buyRobotInterval.setHTML(player.automation.open=="none"?"":("Upgrade Interval<br>Cost: "+showNum(tmp.auto[player.automation.open].intCost)+" intelligence."))
@@ -98,6 +99,9 @@ function updateHTML() {
 		tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 	}
 	tmp.el.trRow3.setDisplay(player.dc.unl||tmp.inf.upgs.has("1;4"))
+	tmp.el.trRow4.setDisplay(tmp.modes.extreme.active)
+	tmp.el.trRow5.setDisplay(tmp.modes.extreme.active&&player.collapse.unl)
+	tmp.el.trRow6.setDisplay(tmp.modes.extreme.active&&player.dc.unl)
 	
 	// Universal Collapse
 	tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
@@ -222,6 +226,30 @@ function updateHTML() {
 	let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts)?"Boosts":"Shifts"
 	tmp.el.dervUnlock.setHTML(tmp.scaling.getName("dervBoost")+" Derivative "+dervName+" ("+showNum(player.inf.derivatives.unlocks)+")<br>Cost: "+showNum(tmp.inf.derv.unlCost)+" Knowledge")
 	tmp.el.dervUnlock.setClasses({btn: true, locked: player.inf.knowledge.lt(tmp.inf.derv.unlCost), inf: player.inf.knowledge.gte(tmp.inf.derv.unlCost)})
+	
+	// Extreme Mode
+	tmp.el.rankCheapDiv.setDisplay(tmp.modes.extreme.active)
+	if (tmp.modes.extreme.active) {
+		// Rank Cheapeners
+		tmp.el.rankCheap.setTxt(showNum(player.rankCheap)+(tmp.rankCheap.free.eq(0)?"":(" + "+showNum(tmp.rankCheap.free))))
+		tmp.el.rankCheapUp.setClasses({btn: true, locked: !tmp.rankCheap.can})
+		tmp.el.rankCheapReq.setTxt(formatDistance(tmp.rankCheap.req))
+		tmp.el.rankCheapName.setTxt((tmp.scaling.getName("rankCheap"))+"Rank Cheapener")
+		
+		// The Furnace
+		tmp.el.coal.setTxt(showNum(player.furnace.coal))
+		tmp.el.coalEff.setTxt(showNum(tmp.fn.eff))
+		for (let i=1;i<=3;i++) {
+			tmp.el["fnu"+i].setClasses({btn: true, locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost), fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)})
+			tmp.el["fnu"+i+"cost"].setTxt(showNum(tmp.fn.upgs[i].cost))
+			tmp.el["fnu"+i+"name"].setTxt(tmp.scaling.getName("fn", i))
+			tmp.el["fnu"+i+"lvl"].setTxt(showNum(player.furnace.upgrades[i-1]))
+		}
+		tmp.el.bf.setClasses({btn: true, locked: player.furnace.coal.lt(tmp.fn.bfReq), fn: player.furnace.coal.gte(tmp.fn.bfReq)})
+		tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq))
+		tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame))
+		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)))
+	}
 	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))

@@ -1,6 +1,7 @@
 function updateTempTiers() {
 	tmp.tiers = {}
 	tmp.tiers.fp = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(20) && tmp.modes.extreme.active) tmp.tiers.fp = tmp.tiers.fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1))
 	tmp.tiers.bc = new ExpantaNum(3)
 	if (tmp.modes.hard.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.plus(1)
 	if (tmp.modes.easy.active && player.tier<2) tmp.tiers.bc = tmp.tiers.bc.sub(1)

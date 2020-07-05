@@ -133,7 +133,15 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
 		tmp.doDervReset()
-		if (player.modes.includes("hard")||player.modes.includes("easy")) player.modes = player.modes.filter(x => (x!="hard"&&x!="easy"))
+		if (player.modes.includes("hard")||player.modes.includes("easy")||player.modes.includes("extreme")) {
+			if (tmp.modes.extreme.active) {
+				player.furnace = undefined
+				player.rankCheap = undefined
+			}
+			player.modes = player.modes.filter(x => (x!="hard"&&x!="easy"&&x!="extreme"))
+			tmp.options.save(player, true)
+			reload()
+		}
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -257,6 +265,7 @@ function updateTempInf() {
 	}
 	tmp.inf.stadium.active = function(name, rank=1) {
 		if (player.inf.pantheon.purge.active && name!="reality" && rank==1) return true
+		if (tmp.modes.extreme.active && name=="solaris" && rank<=4) return true
 		let active = player.inf.stadium.current == name
 		let l = player.inf.stadium.completions.length+1
 		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)

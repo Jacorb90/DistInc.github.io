@@ -23,6 +23,10 @@ const COMBOS = {
 		balancing: "balanced up to Infinity",
 		balanceCheck: false,
 	},
+	extreme: {
+		balancing: "balanced up to Infinity",
+		balanceCheck: false,
+	},
 }
 
 const MODES = {
@@ -35,7 +39,9 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
 		},
+		dis: ["extreme"],
 	},
 	aau: {
 		desc: "Start with all achievements unlocked.",
@@ -46,6 +52,7 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
 		},
 	},
 	na: {
@@ -57,6 +64,7 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
 		},
 	},
 	absurd: {
@@ -68,6 +76,7 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		},
 	},
 	easy: {
@@ -79,6 +88,41 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
 			na: JSON.parse(JSON.stringify(COMBOS.easy)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
 		},
+	},
+	extreme: {
+		desc: "This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
+		balancing: "balanced up to Infinity",
+		balanceCheck: false,
+		combos: {
+			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
+			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
+			na: JSON.parse(JSON.stringify(COMBOS.easy)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.extreme)),
+		},
+		ext: ["hard"],
+	},
+}
+
+const MODE_VARS = {
+	extreme: {
+		rankCheap: new ExpantaNum(0),
+		furnace: {
+			coal: new ExpantaNum(0),
+			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			blueFlame: new ExpantaNum(0),
+		},
+	},
+}
+
+const MODE_EX = {
+	extreme: function(source) {
+		source.rankCheap = new ExpantaNum(source.rankCheap)
+		source.furnace.coal = new ExpantaNum(source.furnace.coal)
+		source.furnace.upgrades = [new ExpantaNum(source.furnace.upgrades[0]), new ExpantaNum(source.furnace.upgrades[1]), new ExpantaNum(source.furnace.upgrades[2])]
+		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame)
+		return source
 	},
 }

@@ -10,6 +10,7 @@ class Achievement {
 			let content = txt2.slice(1, txt2.indexOf(")")).split(",")
 			let newTxt = txt.split("boolean")[0]
 			if (tmp.modes[content[0]].active) newTxt+=content[1]
+			else if (content.length>2) newTxt+=content[2]
 			newTxt+=txt2.split(")")[1]
 			txt = newTxt
 		}

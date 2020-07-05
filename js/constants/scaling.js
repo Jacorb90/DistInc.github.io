@@ -1,12 +1,14 @@
 const SCALING_STARTS = {
-	scaled: { rank: new ExpantaNum(50), tier: new ExpantaNum(8), rf: new ExpantaNum(35), pathogenUpg: new ExpantaNum(10), darkCore: new ExpantaNum(15), endorsements: new ExpantaNum(5), enlightenments: new ExpantaNum(6), spectralGems: new ExpantaNum(5), dervBoost: new ExpantaNum(10) },
-	superscaled: { rank: new ExpantaNum(100), tier: new ExpantaNum(12), rf: new ExpantaNum(75), pathogenUpg: new ExpantaNum(40), darkCore: new ExpantaNum(20) },
-	hyper: { rank: new ExpantaNum(160), tier: new ExpantaNum(16), rf: new ExpantaNum(120)},
+	scaled: { rank: new ExpantaNum(50), rankCheap: new ExpantaNum(10), tier: new ExpantaNum(8), rf: new ExpantaNum(35), fn: new ExpantaNum(6), pathogenUpg: new ExpantaNum(10), darkCore: new ExpantaNum(15), endorsements: new ExpantaNum(5), enlightenments: new ExpantaNum(6), spectralGems: new ExpantaNum(5), dervBoost: new ExpantaNum(10) },
+	superscaled: { rank: new ExpantaNum(100), rankCheap: new ExpantaNum(20), tier: new ExpantaNum(12), rf: new ExpantaNum(75), fn: new ExpantaNum(15), pathogenUpg: new ExpantaNum(40), darkCore: new ExpantaNum(20) },
+	hyper: { rank: new ExpantaNum(160), rankCheap: new ExpantaNum(35), tier: new ExpantaNum(16), rf: new ExpantaNum(120), fn: new ExpantaNum(25)},
 }
 const SCALING_RES = {
 	rank: function(n=0) { return player.rank },
+	rankCheap: function(n=0) { return tmp.modes?(tmp.modes.extreme.active?player.rankCheap:new ExpantaNum(1/0)):new ExpantaNum(1/0) },
 	tier: function(n=0) { return player.tier },
 	rf: function(n=0) { return player.rf },
+	fn: function(n=0) { return tmp.modes?(tmp.modes.extreme.active?player.furnace.upgrades[n-1]:new ExpantaNum(1/0)):new ExpantaNum(1/0) },
 	pathogenUpg: function(n=0) { return player.pathogens.upgrades[n] },
 	darkCore: function(n=0) { return player.dc.cores },
 	endorsements: function(n=0) { return player.inf.endorsements },

@@ -7,7 +7,7 @@ function updateTempSpecial() {
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
 		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
 		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl}),
-		dc: new Feature({name: "dc", req: new ExpantaNum(DC_UNL), res: "distance", display: formatDistance, reached: player.dc.unl, displayName: "dark circles"}),
+		dc: new Feature({name: "dc", req: new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1), res: "distance", display: formatDistance, reached: player.dc.unl, displayName: "dark circles"}),
 		infinity: new Feature({name: "infinity", req: new ExpantaNum(INF_UNL), res: "distance", display: formatDistance, reached: player.inf.unl}),
 		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10)}),
 		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium"}),
@@ -44,8 +44,11 @@ function updateLayerMults() {
 	if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
 	if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
 	if (tmp.ach[44].has) tmp.lm.rockets = tmp.lm.rockets.times(1.15)
+	if (tmp.modes.extreme.active && player.rf.gt(0)) tmp.lm.rockets = tmp.lm.rockets.times(ExpantaNum.pow(2, player.furnace.upgrades[2]))
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)
 	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10)
+	if (player.tr.upgrades.includes(28) && tmp.modes.extreme.active) tmp.lm.rockets = tmp.lm.rockets.times(player.furnace.coal.plus(1).pow(0.15))
+	if (player.tr.upgrades.includes(29) && tmp.modes.extreme.active) tmp.lm.rockets = tmp.lm.rockets.times(player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2)))
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(6)) tmp.lm.rockets = tmp.lm.rockets.times(10)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(8)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.ucme8)
 	if (tmp.pathogens && player.pathogens.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.pathogens[2].eff)
@@ -68,6 +71,7 @@ function updateLayerMults() {
 		tmp.lm.collapse = tmp.lm.collapse.div(2)
 		tmp.clghm = true
 	}
+	if (tmp.ach[68].has && tmp.modes.extreme.active) tmp.lm.collapse = tmp.lm.collapse.times(5)
 	if (tmp.collapse) if (tmp.modes.easy.active) tmp.lm.collapse = tmp.lm.collapse.times(3)
 }
 

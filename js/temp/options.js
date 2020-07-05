@@ -1,7 +1,7 @@
 function updateTempOptions() {
 	tmp.options = {}
-	tmp.options.save = function(sav=player) { 
-		if (!showContainer) return
+	tmp.options.save = function(sav=player, force=false) { 
+		if (!showContainer&&!force) return
 		localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav))))
 		notifier.success("Game saved!")
 	}
@@ -67,8 +67,17 @@ function updateTempOptions() {
 	}
 	tmp.options.modes = {}
 	tmp.options.modes.select = function(name) {
-		if (modesSelected.includes(name)) modesSelected = modesSelected.filter(x => x!=name)
-		else modesSelected.push(name)
+		if (modesSelected.includes(name)) {
+			modesSelected = modesSelected.filter(x => x!=name)
+			if (MODES[name].dis) MODES[name].dis.map(x => function() {
+				if (modesSelected.includes(x)) modesSelected = modesSelected.filter(n => n!=x)
+			}())
+		} else {
+			modesSelected.push(name)
+			if (MODES[name].ext) MODES[name].ext.map(x => function() {
+				if (!modesSelected.includes(x)) modesSelected.push(x)
+			}())
+		}
 	}
 	tmp.options.modes.confirm = function() {
 		if (modesSelected.length==0) tmp.options.startModes([])

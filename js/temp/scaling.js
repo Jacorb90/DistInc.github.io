@@ -56,6 +56,7 @@ function updateTempScaling() {
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1)
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1)
 	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1)
+	if (tmp.modes.extreme.active) tmp.scalings.hyper.rf = new ExpantaNum(1)
 		
 	// Scaling Start Bugfix
 	
@@ -91,5 +92,8 @@ function updateTempScaling() {
 		if (tmp.inf.stadium.active("infinity", 4)) tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6)
 		if (tmp.inf.upgs.has("8;7")) tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(0.16)
 		if (tmp.inf.upgs.has("8;6")) tmp.scalingPower.scaled.darkCore = tmp.scalingPower.scaled.darkCore.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
+	}
+	if (tmp.modes.extreme.active) {
+		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6)
 	}
 }

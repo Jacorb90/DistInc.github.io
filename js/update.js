@@ -19,6 +19,11 @@ function updateTemp() {
 	updateTempSC()
 	updateTempMisc()
 	updateTempTimeSpeed()
+	
+	if (tmp.modes.extreme.active) {
+		updateTempRankCheap()
+		updateTempFurnace()
+	}
 }
 
 function setupHTML() {
@@ -94,7 +99,8 @@ function setupHTML() {
 	let au = new Element("automator")
 	autos = "<br>"
 	for (let i=0;i<Object.keys(AUTOMATORS).length;i++) {
-		autos+="<div id='automatorDiv-"+Object.keys(AUTOMATORS)[i]+"'>"+capitalFirst(Object.keys(AUTOMATORS)[i])+": <input id='automator-"+Object.keys(AUTOMATORS)[i]+"' type='checkbox'></input></div><br>"
+		let dp = capitalFirst(Object.keys(AUTOMATORS)[i])
+		autos+="<div id='automatorDiv-"+Object.keys(AUTOMATORS)[i]+"'>"+(dp.includes("auto")||dp.includes("Auto")?dp:"Auto-"+dp)+": <input id='automator-"+Object.keys(AUTOMATORS)[i]+"' type='checkbox'></input></div><br>"
 	}
 	au.setHTML(autos)
 	for (let i=0;i<Object.keys(player.automators).length;i++) {
@@ -138,7 +144,7 @@ function updateUnlocks() {
 	if (player.distance.gte(DISTANCES.ly)) player.tr.unl = true
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true
-	if (player.distance.gte(DC_UNL)) player.dc.unl = true
+	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset()
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true
 }
