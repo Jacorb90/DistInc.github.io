@@ -110,11 +110,11 @@
 			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup><span id="accEn"></span>.<br><br>
 			<table>
 				<tr>
-					<td><span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button></td>
-					<td id="rankCheapDiv">&nbsp;&nbsp;&nbsp;<span id="rankCheapName"></span> <span id="rankCheap"></span>: <button id="rankCheapUp" class="btn locked" onclick="tmp.rankCheap.layer.reset()">Reset your journey, but weaken the rank requirement formula.<br>Req: <span id="rankCheapReq"></span>.</button></td>
+					<td><span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc" class="based"></span><br>Req: <span id="rankReq" class="based"></span>.</button></td>
+					<td id="rankCheapDiv">&nbsp;&nbsp;&nbsp;<span id="rankCheapName"></span> <span id="rankCheap"></span>: <button id="rankCheapUp" class="btn locked" onclick="tmp.rankCheap.layer.reset()">Reset your journey, but weaken the rank requirement formula.<br>Req: <span id="rankCheapReq" class="based"></span>.</button></td>
 				</tr>
 			</table><br><br>
-			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc" class="based"></span><br>Req: Rank <span id="tierReq" class="based"></span>.</button>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -155,6 +155,7 @@
 					<tr>
 						<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
 						<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
+						<td><button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">Theme: X</button></td>
 						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
 					</tr>
 				</table><br>
@@ -168,9 +169,9 @@
 			<table id="achTable"></table>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
-			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
+			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain" class="based2"></span> rockets <span id="rocketGainSC"></span></button><br><br>
 			You have <span id="rocketsAmt"></span>, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
-			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
+			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq" class="based"></span> rockets.</button><br><br>
 			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
 		</div>
 		<div id="furnace" class="tab" style="display: none;">

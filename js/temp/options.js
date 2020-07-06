@@ -7,7 +7,14 @@ function updateTempOptions() {
 	}
 	tmp.options.setSave = function(ns) {
 		tmp.options.save(ns)
-		reload()
+		reloadFail = true
+		if (reloadFail) {
+			notifier.error("Could not open new window.")
+			let el = document.createElement("a")
+			el.href = "main.html"
+			el.click()
+			window.location.reload()
+		}
 	}
 	tmp.options.hardReset = function(force=false) {
 		if (!force) if (!confirm("Are you sure you want to reset? You will lose all of your progress if you do this!!!")) return

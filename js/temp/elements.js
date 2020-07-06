@@ -11,6 +11,7 @@ function updateHTML() {
 		for (let i=0;i<Object.keys(MODES).length;i++) tmp.el[Object.keys(MODES)[i]+"Mode"].setClasses({btn: true, tb: true, opt: (!modesSelected.includes(Object.keys(MODES)[i])), optSelected: modesSelected.includes(Object.keys(MODES)[i])})
 		tmp.el.sf.setTxt("Significant Figures: "+player.options.sf.toString())
 		tmp.el.not.setTxt("Notation: "+capitalFirst(player.options.not))
+		tmp.el.theme.setTxt("Theme: "+capitalFirst(player.options.theme))
 		tmp.el.autoSave.setTxt("Auto-Save: "+(player.options.autoSave?"ON":"OFF"))
 	}
 	
@@ -292,6 +293,12 @@ function updateHTML() {
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
+	let root = document.documentElement
+	root.style.setProperty("--plaintxt", player.options.theme=="dark"?"white":'black')
+	root.style.setProperty("--tb", player.options.theme=="dark"?"#00968f":"#03fcf0")
+	root.style.setProperty("--ach", player.options.theme=="dark"?"#287d1b":"#4ceb34")
+	root.style.setProperty("--rbt", player.options.theme=="dark"?"#666666":"#c9c9c9")
+	
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
 	tmp.el.tudeEff.setHTML(tmp.ach[112].has?("The Universe Doesn't Exist multiplier: "+showNum(tmp.ach112)+"x<br><br>"):"")
 	tmp.el.mainContainer.setDisplay(showContainer)

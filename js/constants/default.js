@@ -6,6 +6,7 @@ const DEFAULT_START = {
 	options: {
 		sf: 5,
 		not: "scientific",
+		theme: "normal",
 		autoSave: true,
 	},
 	modes: [],

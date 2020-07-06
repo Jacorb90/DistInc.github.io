@@ -13,6 +13,7 @@ var ddState = "none"
 var notifier = new Notifier();
 var saveTimer = 0
 var showContainer = true
+var reloadFail = false
 var infActive = false
 var infTab = "infinity"
 
