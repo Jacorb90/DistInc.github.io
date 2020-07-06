@@ -87,17 +87,17 @@
 		<div class="band lb">
 			<table>
 				<tr>
-					<td><button id="maintabbtn" class="btn tb" onclick="showTab('main')">Main</button></td>
-					<td><button id="optionstabbtn" class="btn tb" onclick="showTab('options')">Options</button></td>
-					<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
-					<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
-					<td><button id="furnacetabbtn" class="btn tb fn" onclick="showTab('furnace')">The Furnace</button></td>
-					<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
-					<td><button id="trtabbtn" class="btn tb rt" onclick="showTab('tr')">Time Reversal</button></td>
-					<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
-					<td><button id="pathogenstabbtn" class="btn tb gross" onclick="showTab('pathogens')">Pathogens</button></td>
-					<td><button id="dctabbtn" class="btn tb dark" onclick="showTab('dc')">Dark Circle</button></td>
-					<td><button id="inftabbtn" class="btn tb inf" onclick="showTab('inf')">Infinity</button></td>
+					<td><button id="maintabbtn" class="btn tb main" onclick="showTab('main')">Main</button></td>
+					<td><button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button></td>
+					<td><button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">Achievements</button></td>
+					<td><button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">Rockets</button></td>
+					<td><button id="furnacetabbtn" class="btn tb fn main" onclick="showTab('furnace')">The Furnace</button></td>
+					<td><button id="autotabbtn" class="btn tb rckt main" onclick="showTab('auto')">Automation</button></td>
+					<td><button id="trtabbtn" class="btn tb rt main" onclick="showTab('tr')">Time Reversal</button></td>
+					<td><button id="collapsetabbtn" class="btn tb btndd main" onclick="showTab('collapse')">Universal Collapse</button></td>
+					<td><button id="pathogenstabbtn" class="btn tb gross main" onclick="showTab('pathogens')">Pathogens</button></td>
+					<td><button id="dctabbtn" class="btn tb dark main" onclick="showTab('dc')">Dark Circle</button></td>
+					<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
 				</tr>
 			</table>
 			<span id="nextFeature"></span><br>
@@ -119,9 +119,9 @@
 		<div id="options" class="tab" style="display: none;">
 			<table>
 				<tr>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('saving')">Saving</button></td>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('modes')">Modes</button></td>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('other')">Other</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('saving')">Saving</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('modes')">Modes</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('other')">Other</button></td>
 				</tr>
 			</table><br><br>
 			<div id="saving" class="optionstab">
@@ -278,11 +278,11 @@
 						<td><button class="btn tb inf" style="visibility: hidden"></button></td>
 					</tr>
 					<tr>
-						<td><button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
-						<td><button id="ascensiontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
-						<td><button id="stadiumtabbtn" class="btn tb inf" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
-						<td><button id="pantheontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
-						<td><button id="derivativestabbtn" class="btn tb inf" onclick="tmp.inf.showTab('derivatives')">Derivatives</button></td>
+						<td><button id="infinitytabbtn" class="btn tb inf main" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
+						<td><button id="ascensiontabbtn" class="btn tb asc main" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
+						<td><button id="stadiumtabbtn" class="btn tb std main" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
+						<td><button id="pantheontabbtn" class="btn tb pnth main" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
+						<td><button id="derivativestabbtn" class="btn tb drv main" onclick="tmp.inf.showTab('derivatives')">Derivatives</button></td>
 					</tr>
 				</table>
 			</div>
