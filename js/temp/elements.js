@@ -17,8 +17,8 @@ function updateHTML() {
 	// Main
 	if (player.tab=="main") {
 		// Pre-Ranks
-		tmp.el.distance.setTxt(formatDistance(player.distance))
-		tmp.el.velocity.setTxt(formatDistance(player.velocity))
+		tmp.el.distance.setTxt(formatDistance(player.distance)+" (+"+formatDistance((tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)))+"/sec)")
+		tmp.el.velocity.setTxt(formatDistance(player.velocity)+"/s (+"+formatDistance((tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)))+"/sec)")
 		tmp.el.maxVel.setTxt(formatDistance(tmp.maxVel))
 		tmp.el.acceleration.setTxt(formatDistance(tmp.acc))
 		
@@ -42,7 +42,7 @@ function updateHTML() {
 		// Rockets
 		tmp.el.rocketReset.setClasses({btn: true, locked: !tmp.rockets.canRocket, rckt: tmp.rockets.canRocket})
 		tmp.el.rocketGain.setTxt(showNum(tmp.rockets.layer.gain))
-		tmp.el.rocketsAmt.setTxt(showNum(player.rockets))
+		tmp.el.rocketsAmt.setTxt(showNum(player.rockets)+" rockets"+((tmp.ach[95].has && !tmp.nerfs.active("noRockets"))?(" (+"+showNum(tmp.rockets.layer.gain)+"/sec)"):(tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets"))?(" (+"+showNum(tmp.rockets.layer.gain.div(100))+"/sec)"):""))
 		tmp.el.rocketsEff.setTxt(showNum(tmp.rockets.eff))
 		
 		// Rocket Fuel
@@ -59,10 +59,11 @@ function updateHTML() {
 	// Achievements
 	if (player.tab=="achievements") {
 		tmp.el.achDesc.setHTML(tmp.ga+"/"+tmp.ta+"<br>"+(tmp.selAch==0?"":tmp.ach[tmp.selAch].desc))
+		let all = tmp.ga==tmp.ta&&!tmp.modes.aau.active
 		for (let r=1;r<=ACH_DATA.rows;r++) {
 			for (let c=1;c<=ACH_DATA.cols;c++) {
 				let id = r*10+c
-				tmp.el["ach"+id].setClasses({achCont: true, dgn: (player.achievements.includes(id)&&ACH_DATA.descs[id]!==undefined), blocked: ACH_DATA.descs[id]===undefined})
+				tmp.el["ach"+id].setClasses({achCont: true, gld: (all), dgn: (player.achievements.includes(id)&&ACH_DATA.descs[id]!==undefined&&!all), blocked: ACH_DATA.descs[id]===undefined})
 				tmp.el["ach"+id].changeStyle("visibility", (getAllAchievements().includes(id)?"visible":"hidden"))
 			}
 		}
@@ -71,8 +72,8 @@ function updateHTML() {
 	// Automation
 	if (player.tab=="auto") {
 		// Robots
-		tmp.el.scraps.setTxt(showNum(player.automation.scraps))
-		tmp.el.intAmt.setTxt(showNum(player.automation.intelligence))
+		tmp.el.scraps.setTxt(showNum(player.automation.scraps)+" scraps"+(" (+"+showNum(tmp.nerfs.adjust(tmp.auto.scrapGain, "scraps").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed))+"/sec)"))
+		tmp.el.intAmt.setTxt(showNum(player.automation.intelligence)+" intelligence"+(" (+"+showNum(tmp.nerfs.adjust(tmp.auto.intGain, "intel").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed))+"/sec)"))
 		for (let i=0;i<Object.keys(ROBOT_REQS).length;i++) {
 			tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt)
 			tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({btn: true, locked: (player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])), rckt: (!(player.automation.scraps.lt(Object.values(ROBOT_REQS)[i])&&!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])))})
@@ -101,7 +102,7 @@ function updateHTML() {
 	// Time Reversal
 	if (player.tab=="tr") {
 		tmp.el.rt.setTxt(tmp.tr.txt)
-		tmp.el.tc.setTxt(showNum(player.tr.cubes))
+		tmp.el.tc.setTxt(showNum(player.tr.cubes)+" Time Cubes"+(" (+"+showNum(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed))+"/sec)"))
 		tmp.el.frf.setTxt(showNum(tmp.tr.eff))
 		for (let i=1;i<=TR_UPG_AMT;i++) {
 			let upg = TR_UPGS[i]
@@ -121,10 +122,10 @@ function updateHTML() {
 	if (player.tab=="collapse") {
 		tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
 		tmp.el.cadaverGain.setTxt(showNum(tmp.collapse.layer.gain))
-		tmp.el.cadavers.setTxt(showNum(player.collapse.cadavers))
+		tmp.el.cadavers.setHTML("<span class='dead'>"+showNum(player.collapse.cadavers)+"</span> cadavers<span class='dead'>"+((tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain.div(100))+"/sec)"):(tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain)+"/sec)"):"")+"</span>")
 		tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff))
 		tmp.el.sacrificeCadavers.setClasses({btn: true, locked: player.collapse.cadavers.eq(0), btndd: player.collapse.cadavers.gt(0)})
-		tmp.el.lifeEssence.setTxt(showNum(player.collapse.lifeEssence))
+		tmp.el.lifeEssence.setHTML("<span class='alive'>"+showNum(player.collapse.lifeEssence)+"</span> life essence<span class='alive'>"+((tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff))+"/sec)"):(tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).div(10))+"/sec)"):""))
 		for (let i=1;i<=EM_AMT;i++) {
 			let ms = ESSENCE_MILESTONES[i]
 			tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
@@ -134,7 +135,7 @@ function updateHTML() {
 	
 	// Pathogens
 	if (player.tab=="pathogens") {
-		tmp.el.pathogensAmt.setTxt(showNum(player.pathogens.amount))
+		tmp.el.pathogensAmt.setHTML("<span class='grosstxt'>"+showNum(player.pathogens.amount)+"</span> Pathogens<span class='grosstxt'>"+(" (+"+showNum(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens"))+"/sec)")+"</span>")
 		for (let i=1;i<=PTH_AMT;i++) {
 			let hidden = (PTH_UPGS[i].unl?(!PTH_UPGS[i].unl()):false)
 			tmp.el["pth"+i].setDisplay(!hidden)
@@ -154,9 +155,9 @@ function updateHTML() {
 	
 	// The Dark Circle
 	if (player.tab=="dc") {
-		tmp.el.darkMatter.setHTML("Dark Matter<br>Amount: "+showNum(player.dc.matter)+"<br>Effect: You gain "+showNum(tmp.dc.dmEff)+"x as many Rockets.")
-		tmp.el.darkEnergy.setHTML("Dark Energy<br>Amount: "+showNum(player.dc.energy)+"<br>Effect: You gain "+showNum(tmp.dc.deEff)+"x as many Time Cubes.")
-		tmp.el.darkFluid.setHTML("Dark Fluid<br>Amount: "+showNum(player.dc.fluid)+"<br>Effect: Scaled Rocket Fuel scaling starts "+showNum(tmp.dc.dfEff)+" Rocket Fuel later.")
+		tmp.el.darkMatter.setHTML("Dark Matter<br>Amount: "+showNum(player.dc.matter)+"<br>Gain: +"+showNum(tmp.nerfs.adjust(tmp.dc.dmGain, "dc").times(tmp.dc.flow))+"/s<br>Effect: You gain "+showNum(tmp.dc.dmEff)+"x as many Rockets.")
+		tmp.el.darkEnergy.setHTML("Dark Energy<br>Amount: "+showNum(player.dc.energy)+"<br>Gain: +"+showNum(tmp.nerfs.adjust(tmp.dc.deGain, "dc").times(tmp.dc.flow))+"/s<br>Effect: You gain "+showNum(tmp.dc.deEff)+"x as many Time Cubes.")
+		tmp.el.darkFluid.setHTML("Dark Fluid<br>Amount: "+showNum(player.dc.fluid)+"<br>Gain: +"+showNum(tmp.nerfs.adjust(tmp.dc.dfGain, "dc").times(tmp.dc.flow))+"/s<br>Effect: Scaled Rocket Fuel scaling starts "+showNum(tmp.dc.dfEff)+" Rocket Fuel later.")
 		tmp.el.darkCore.setHTML(tmp.scaling.getName("darkCore")+"Dark Cores<br>Amount: "+showNum(player.dc.cores)+"<br>Cost: "+showNum(tmp.dc.coreCost)+" Cadavers"+(tmp.dc.coreEff.gt(0)?("<br>Effect: +"+showNum(tmp.dc.coreEff.times(100))+"% Pathogen Upgrade Power"):""))
 		tmp.el.darkCore.setClasses({darkcore: true, locked: player.collapse.cadavers.lt(tmp.dc.coreCost), inactive: tmp.dc.dmGain.eq(0)})
 		tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0)?"&#8593;":"")
@@ -174,6 +175,7 @@ function updateHTML() {
 			tmp.el.knowledgeBase.setTxt(showNum(tmp.inf.knowledgeBase))
 			tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req))
 			tmp.el.knowledge.setTxt(showNum(player.inf.knowledge))
+			tmp.el.knowledgeGain.setTxt(showNum(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge")))
 			tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected))
 			for (let r=1;r<=INF_UPGS.rows;r++) {
 				for (let c=1;c<=INF_UPGS.cols;c++) {
@@ -206,7 +208,7 @@ function updateHTML() {
 			}
 			tmp.el.perkPower.setTxt("Perk Strength: "+showNum(tmp.inf.asc.perkStrength.times(100))+"%")
 			tmp.el.perkPower.setDisplay(!tmp.inf.asc.perkStrength.eq(1))
-			tmp.el.ascPower.setHTML("Ascension Power: <span style='font-size: 25px; color: red;'>"+showNum(player.inf.ascension.power)+"</span>")
+			tmp.el.ascPower.setHTML("Ascension Power: <span style='font-size: 25px; color: red;'>"+showNum(player.inf.ascension.power)+"</span> (+"+showNum(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension"))+"/sec)")
 		}
 		
 		// The Stadium
@@ -238,8 +240,10 @@ function updateHTML() {
 			tmp.el.transferAngels.setClasses({btn: true, inf: player.inf.pantheon.gems.gte(1), locked: player.inf.pantheon.gems.lt(1)})
 			tmp.el.transferDemons.setClasses({btn: true, inf: player.inf.pantheon.gems.gte(1), locked: player.inf.pantheon.gems.lt(1)})
 			tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips))
+			tmp.el.chipGain.setTxt("(+"+showNum(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips"))+"/sec)")
 			tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)))
 			tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls))
+			tmp.el.soulGain.setTxt("(+"+showNum(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls"))+"/sec)")
 			tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)))
 			tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl)
 			tmp.el.purgeBtn.setTxt(player.inf.pantheon.purge.active?("Exit Purge run"+(tmp.inf.pantheon.purgeGain.gt(0)?(" for "+showNum(tmp.inf.pantheon.purgeGain)+" Purge Power."):(". You need "+formatDistance(tmp.inf.pantheon.purgeNext)+" to gain more Purge Power."))):"Start Purge run")
@@ -253,6 +257,7 @@ function updateHTML() {
 				let name = DERV[i]
 				tmp.el["dervDiv"+name].setDisplay(tmp.inf.derv.unlocked(name))
 				tmp.el["derv"+name].setTxt(formatDistance(tmp.inf.derv.amt(name)))
+				tmp.el["dervgain"+name].setTxt("(+"+formatDistance(tmp.inf.derv.gain(name))+"/sec)")
 			}
 			let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts)?"Boosts":"Shifts"
 			tmp.el.dervUnlock.setHTML(tmp.scaling.getName("dervBoost")+" Derivative "+dervName+" ("+showNum(player.inf.derivatives.unlocks)+")<br>Cost: "+showNum(tmp.inf.derv.unlCost)+" Knowledge")
@@ -270,7 +275,7 @@ function updateHTML() {
 		tmp.el.rankCheapName.setTxt((tmp.scaling.getName("rankCheap"))+"Rank Cheapener")
 		
 		// The Furnace
-		tmp.el.coal.setTxt(showNum(player.furnace.coal))
+		tmp.el.coal.setTxt(showNum(player.furnace.coal)+" Coal"+(" (+"+showNum(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed))+"/sec)"))
 		tmp.el.coalEff.setTxt(showNum(tmp.fn.eff))
 		for (let i=1;i<=3;i++) {
 			tmp.el["fnu"+i].setClasses({btn: true, locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost), fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)})

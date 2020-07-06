@@ -106,7 +106,7 @@
 		<div id="main" class="tab">
 			<span id="ts"></span>
 			You have gone a total of <span id="distance"></span>.<br>
-			Your current velocity is <span id="velocity"></span>/s (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
+			Your current velocity is <span id="velocity"></span> (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
 			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup><span id="accEn"></span>.<br><br>
 			<table>
 				<tr>
@@ -169,12 +169,12 @@
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
-			You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
+			You have <span id="rocketsAmt"></span>, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
 			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
 			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
 		</div>
 		<div id="furnace" class="tab" style="display: none;">
-			You have <span id="coal" class="char"></span> Coal, translated to <span id="coalEff" class="char"></span> added Rocket effect.<br><br>
+			You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added Rocket effect.<br><br>
 			<table>
 				<tr>
 					<td><button id="fnu1" class="btn locked" onclick="tmp.fn.upgs[1].buy()" style="min-height: 100px; max-height: 100px;">Triple Coal gain (before Extreme Mode reduction)<br>Cost: <span id="fnu1cost"></span> Coal<br><span id="fnu1name"></span>Level: <span id="fnu1lvl"></span></button></td>
@@ -188,9 +188,9 @@
 		<div id="auto" class="tab" style="display: none;">
 			<table>
 				<tr>
-					<td>You have <span id="scraps"></span> scraps.</td>
+					<td>You have <span id="scraps"></span>.</td>
 					<td>&emsp;</td>
-					<td>You have <span id="intAmt"></span> intelligence.</td>
+					<td>You have <span id="intAmt"></span>.</td>
 				</tr>
 			</table><table>
 				<tr>
@@ -219,19 +219,19 @@
 		</div>
 		<div id="tr" class="tab" style="display: none;">
 			<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
-			You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
+			You have <span id="tc"></span>, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
 			<table id="trTable"></table>
 		</div>
 		<div id="collapse" class="tab" style="display: none;">
 			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers <span id="cadaverGainSC"></span></button><br><br>
-			You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
+			You have <span id="cadavers"></span>, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
 			<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
-			You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
+			You have <span id="lifeEssence"></span>.<br><br>
 			<table id="cmTable"></table><br><br>
 		</div>
 		<div id="pathogens" class="tab" style="display: none;">
 			<span id="tdeEff"></span>
-			You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br><br>
+			You have <span id="pathogensAmt"></span> <span id="pthGainSC"></span><br><br>
 			<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
 			<span id="pthUpgPow" class="grosstxt"></span>
 			<div id="pthUpgs"></div><br><br>
@@ -290,7 +290,7 @@
 				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
 				<span id="tudeEff"></span>
-				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
+				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge <span style="font-size: 25px;">(+<span id="knowledgeGain"></span>/sec)</span>.<br><br>
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
 				<div id="infUpgData" class="bandBig or"></div><br><br>
 				<table id="infUpgs"></table><br><br>
@@ -349,13 +349,13 @@
 				<div style="background-color: pink;">
 					<br><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">Transform one Spectral Gem into an Angel</button><br><br>
 					You have <span id="angels" class="spectral"></span> Angels.<br><br>
-					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					You have <span id="chips" class="spectral"></span> Heavenly Chips <span id="chipGain" style="color: #9fc4bc; font-weight: bold"></span>, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
 					<br><br><br>
 				</div>
 				<div style="background-color: #a31414;">
 					<br><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">Transform one Spectral Gem into a Demon</button><br><br>
 					You have <span id="demons" class="spectral"></span> Demons.<br><br>
-					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
+					You have <span id="souls" class="spectral"></span> Demonic Souls <span id="soulGain" style="color: #9fc4bc; font-weight: bold"></span>, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
 					<br><br><br>
 				</div>
 				<div id="purgeDiv" style="background-color: #259199">

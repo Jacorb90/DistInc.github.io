@@ -114,7 +114,7 @@ function setupHTML() {
 	for (let i=0;i<DERV.length;i++) {
 		let name = DERV[i]
 		let suffix = i==0?"":("/s"+(i==1?"":("<sup>"+i+"</sup>")))
-		data+="<div id='dervDiv"+name+"' style='display: none;'><b>"+capitalFirst(name)+"</b>: <span id='derv"+name+"'></span>"+suffix+"</div><br>"
+		data+="<div id='dervDiv"+name+"' style='display: none;'><b>"+capitalFirst(name)+"</b>: <span id='derv"+name+"'></span>"+suffix+" <span id='dervgain"+name+"'></span>"+"</div><br>"
 	}
 	dv.setHTML(data)
 }

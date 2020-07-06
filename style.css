@@ -139,6 +139,10 @@ body {
 
 .dgn { background-color: #029c04 !important; }
 
+.gld {
+	background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+}
+
 .r {
 	background-color: #730e0e !important;
 	color: white !important;
@@ -405,7 +409,7 @@ table { margin: auto; }
 	display:inline-block;
 	cursor:pointer;
 	color:#9eaab0;
-	font-size:12px;
+	font-size:9px;
 	font-weight: bold;
 	max-width: 200px;
 	padding:7px 25px;
@@ -817,7 +821,7 @@ table { margin: auto; }
 	padding:7px 25px;
 	text-decoration:none;
 	text-shadow:none;
-	transition-duration: 1s;
+	transition-duration: 0.4s;
 }
 
 .btn.pnth:hover {

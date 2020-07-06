@@ -395,6 +395,17 @@ function updateTempInf() {
 		if (name=="acceleration") return tmp.acc
 		return player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)
 	}
+	tmp.inf.derv.gain = function(name) {
+		if (!player.inf.derivatives.unl) return new ExpantaNum(0)
+		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0)
+		if (name=="distance") return tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+		if (name=="velocity") return tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+		let next = DERV_INCR[DERV_INCR.indexOf(name)+1]
+		if (next===undefined) return new ExpantaNum(0)
+		let gain = tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv")
+		if (name=="acceleration") return gain.times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed).times(tmp.acc.div((player.inf.derivatives.amts.acceleration?player.inf.derivatives.amts.acceleration:new ExpantaNum(0)).max(1)))
+		return gain.times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+	}
 	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29)
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor()
 	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
@@ -414,14 +425,14 @@ function updateTempInf() {
 		let mult = new ExpantaNum(1)
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
 		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts))
-		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4)
+		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4) // NICE
 		return mult
 	}
 	tmp.inf.derv.tick = function(diff) {
 		if (!player.inf.derivatives.unl) return 
 		for (let i=0;i<DERV_INCR.length;i++) {
 			let name = DERV_INCR[i]
-			let next = DERV_INCR[i+1]
+			let next = DERV_INCR[i+1] 
 			if (!tmp.inf.derv.unlocked(name)) continue
 			if (i==DERV_INCR.length-1?true:(!tmp.inf.derv.unlocked(next))) player.inf.derivatives.amts[name] = new ExpantaNum(1)
 			else player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff))
