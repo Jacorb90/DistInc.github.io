@@ -3,7 +3,7 @@ const PTH_UPGS = {
 	1: {
 		start: new ExpantaNum(5),
 		inc: new ExpantaNum(3.5),
-		desc: "Time Reversal Upgrade 2 is boosted by your Pathogens.",
+		desc: "Time Reversal Upgrade 2 is boosted by your Pathogens."
 	},
 	2: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Rocket gain is boosted by your Cadavers." },
 	3: { start: new ExpantaNum(100), inc: new ExpantaNum(10), desc: "Time Cube gain is boosted by your Cadavers." },
@@ -12,7 +12,7 @@ const PTH_UPGS = {
 	6: {
 		start: new ExpantaNum(800),
 		inc: new ExpantaNum(12),
-		desc: "The transfer from Cadavers to Life Essence is more efficient.",
+		desc: "The transfer from Cadavers to Life Essence is more efficient."
 	},
 	7: { start: new ExpantaNum(3000), inc: new ExpantaNum(30), desc: "The rocket gain softcap starts later." },
 	8: { start: new ExpantaNum(4000), inc: new ExpantaNum(40), desc: "The rocket effect softcap starts later." },
@@ -24,7 +24,7 @@ const PTH_UPGS = {
 		desc: "Superscaled Rocket Fuel scaling starts later based on your Pathogens.",
 		unl: function () {
 			return tmp.inf ? tmp.inf.upgs.has("2;9") : false;
-		},
+		}
 	},
 	12: {
 		start: new ExpantaNum(1e80),
@@ -32,7 +32,7 @@ const PTH_UPGS = {
 		desc: "Scaled Dark Core scaling starts later based on your Rocket Fuel.",
 		unl: function () {
 			return tmp.inf ? tmp.inf.upgs.has("2;9") : false;
-		},
+		}
 	},
 	13: {
 		start: new ExpantaNum(1e80),
@@ -40,7 +40,7 @@ const PTH_UPGS = {
 		desc: "Pathogen Upgrade 5 gets 2 extra Levels.",
 		unl: function () {
 			return tmp.inf ? tmp.inf.upgs.has("2;9") : false;
-		},
+		}
 	},
 	14: {
 		start: new ExpantaNum(1e85),
@@ -48,7 +48,7 @@ const PTH_UPGS = {
 		desc: "Scaled & Superscaled Rank scalings are weaker based on your Dark Cores.",
 		unl: function () {
 			return tmp.inf ? tmp.inf.upgs.has("2;9") : false;
-		},
+		}
 	},
 	15: {
 		start: new ExpantaNum(1e85),
@@ -56,7 +56,7 @@ const PTH_UPGS = {
 		desc: "Scaled Endorsement scaling is slightly weaker.",
 		unl: function () {
 			return tmp.inf ? tmp.inf.upgs.has("2;9") : false;
-		},
-	},
+		}
+	}
 };
 const PTH_AMT = Object.keys(PTH_UPGS).length;

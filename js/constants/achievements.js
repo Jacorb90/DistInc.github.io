@@ -108,7 +108,7 @@ const ACH_DATA = {
 		125: "What a waste of time...",
 		126: "Quick Repair",
 		127: "False Purge",
-		128: "Truly Nerfed",
+		128: "Truly Nerfed"
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -217,7 +217,7 @@ const ACH_DATA = {
 		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Tier 6.",
 		126: "Have a magnitude of showNum(1e200) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
-		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
+		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run."
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higher.",
@@ -281,6 +281,6 @@ const ACH_DATA = {
 
 		123: "The Universe Doesn't Exist uses a slightly better formula.",
 		124: "All Perks last twice as long.",
-		125: "Pathogen Upgrades are showNum(5)% stronger.",
-	},
+		125: "Pathogen Upgrades are showNum(5)% stronger."
+	}
 };

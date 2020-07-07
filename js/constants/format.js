@@ -11,7 +11,7 @@ const DISTANCES = {
 	kpc: 3.086e19,
 	Mpc: 3.086e22,
 	Gpc: 3.086e25,
-	uni: 4.4e26,
+	uni: 4.4e26
 };
 
 const TIMES = {
@@ -22,5 +22,5 @@ const TIMES = {
 	d: 86400,
 	w: 604800,
 	y: 31556736,
-	mil: 31556736000,
+	mil: 31556736000
 };

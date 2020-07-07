@@ -8,16 +8,16 @@ const SCALING_STARTS = {
 		endorsements: new ExpantaNum(5),
 		enlightenments: new ExpantaNum(6),
 		spectralGems: new ExpantaNum(5),
-		dervBoost: new ExpantaNum(10),
+		dervBoost: new ExpantaNum(10)
 	},
 	superscaled: {
 		rank: new ExpantaNum(100),
 		tier: new ExpantaNum(12),
 		rf: new ExpantaNum(75),
 		pathogenUpg: new ExpantaNum(40),
-		darkCore: new ExpantaNum(20),
+		darkCore: new ExpantaNum(20)
 	},
-	hyper: { rank: new ExpantaNum(160), tier: new ExpantaNum(16), rf: new ExpantaNum(120) },
+	hyper: { rank: new ExpantaNum(160), tier: new ExpantaNum(16), rf: new ExpantaNum(120) }
 };
 const SCALING_RES = {
 	rank: function (n = 0) {
@@ -46,5 +46,5 @@ const SCALING_RES = {
 	},
 	dervBoost: function (n = 0) {
 		return player.inf.derivatives.unlocks;
-	},
+	}
 };

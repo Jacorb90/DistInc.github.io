@@ -1,21 +1,21 @@
 class Notifier {
-	doNotify = function (txt, type, id = "none") {
+	doNotify(txt, type, id = "none") {
 		id !== "none" ? $("#" + id).notify(txt, type) : $.notify(txt, type);
-	};
+	}
 
-	success = function (txt, id = "none") {
+	success(txt, id = "none") {
 		this.doNotify(txt, "success", id);
-	};
+	}
 
-	info = function (txt, id = "none") {
+	info(txt, id = "none") {
 		this.doNotify(txt, "info", id);
-	};
+	}
 
-	warn = function (txt, id = "none") {
+	warn(txt, id = "none") {
 		this.doNotify(txt, "warn", id);
-	};
+	}
 
-	error = function (txt, id = "none") {
+	error(txt, id = "none") {
 		this.doNotify(txt, "error", id);
-	};
+	}
 }

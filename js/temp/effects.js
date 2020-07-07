@@ -60,13 +60,13 @@ function updateTempEffects() {
 		cg: tmp.dc
 			? tmp.dc.flow.pow(tmp.dc.flow.plus(1).slog(2).times(10).plus(1)).pow(tmp.tr11pow)
 			: new ExpantaNum(1),
-		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow),
+		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow)
 	};
 	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1);
 	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0);
 	tmp.tr14 = {
 		cd: player.tier.plus(1).pow(1.25),
-		ss: player.dc.cores.plus(1).log10().plus(1).log10().times(7.5),
+		ss: player.dc.cores.plus(1).log10().plus(1).log10().times(7.5)
 	};
 	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores);
 	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10);

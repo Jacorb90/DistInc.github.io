@@ -28,5 +28,5 @@ const TABBTN_SHOWN = {
 	},
 	inf: function () {
 		return player.inf.unl;
-	},
+	}
 };

@@ -1,13 +1,13 @@
 // Options
 
 const OPT_CHNG_MAX = {
-	sf: 8,
+	sf: 8
 };
 const OPT_CHNG_MIN = {
-	sf: 3,
+	sf: 3
 };
 const OPT_NAMES = {
-	not: ["scientific", "standard", "mixed", "hexadecimal", "binary"],
+	not: ["scientific", "standard", "mixed", "hexadecimal", "binary"]
 };
 const AUTOSAVE_TIME = 10;
 
@@ -40,9 +40,9 @@ const STANDARD_DATA = {
 		"HPE",
 		"OE",
 		"EE",
-		"IC",
+		"IC"
 	],
 	MILESTONE_TENS: ["", "CO", "VCO", "TECO", "PCO", "HXCO", "HPCO", "OCCO", "ENCO"],
 	MILESTONE_HUNDREDS: ["", "HC", "DUHC", "TUHC", "QAHC", "QIHC", "SXHC", "SPHC", "OCHC", "NOHC"],
-	SUPER_MS: ["KL", "MG", "GG", "TR", "PT", "EX", "ZT", "YT", "XEN", "VK"],
+	SUPER_MS: ["KL", "MG", "GG", "TR", "PT", "EX", "ZT", "YT", "XEN", "VK"]
 };

@@ -99,8 +99,8 @@ const TMP_DATA = {
 		"purgeBtn",
 		"purgePower",
 		"purgePowerEff",
-		"dervUnlock",
-	],
+		"dervUnlock"
+	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
 	for (let c = 1; c <= ACH_DATA.cols; c++) {

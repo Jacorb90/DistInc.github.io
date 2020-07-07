@@ -6,7 +6,7 @@ const DEFAULT_START = {
 	options: {
 		sf: 5,
 		not: "scientific",
-		autoSave: true,
+		autoSave: true
 	},
 	modes: [],
 	time: new Date().getTime(),
@@ -21,18 +21,18 @@ const DEFAULT_START = {
 		scraps: new ExpantaNum(0),
 		intelligence: new ExpantaNum(0),
 		robots: {},
-		open: "none",
+		open: "none"
 	},
 	tr: {
 		unl: false,
 		active: false,
 		cubes: new ExpantaNum(0),
-		upgrades: [],
+		upgrades: []
 	},
 	collapse: {
 		unl: false,
 		cadavers: new ExpantaNum(0),
-		lifeEssence: new ExpantaNum(0),
+		lifeEssence: new ExpantaNum(0)
 	},
 	pathogens: {
 		unl: false,
@@ -52,15 +52,15 @@ const DEFAULT_START = {
 			12: new ExpantaNum(0),
 			13: new ExpantaNum(0),
 			14: new ExpantaNum(0),
-			15: new ExpantaNum(0),
-		},
+			15: new ExpantaNum(0)
+		}
 	},
 	dc: {
 		unl: false,
 		matter: new ExpantaNum(0),
 		energy: new ExpantaNum(0),
 		fluid: new ExpantaNum(0),
-		cores: new ExpantaNum(0),
+		cores: new ExpantaNum(0)
 	},
 	inf: {
 		unl: false,
@@ -70,11 +70,11 @@ const DEFAULT_START = {
 		ascension: {
 			time: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			enlightenments: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
-			power: new ExpantaNum(0),
+			power: new ExpantaNum(0)
 		},
 		stadium: {
 			current: "",
-			completions: [],
+			completions: []
 		},
 		pantheon: {
 			gems: new ExpantaNum(0),
@@ -85,14 +85,14 @@ const DEFAULT_START = {
 			purge: {
 				unl: false,
 				active: false,
-				power: new ExpantaNum(0),
-			},
+				power: new ExpantaNum(0)
+			}
 		},
 		derivatives: {
 			unl: false,
 			amts: {},
-			unlocks: new ExpantaNum(0),
-		},
+			unlocks: new ExpantaNum(0)
+		}
 	},
-	automators: {},
+	automators: {}
 };

@@ -1,20 +1,20 @@
 const COMBOS = {
 	hard_aau: {
 		balancing: "only somewhat balanced (quite fast early-game, but quite slow late-game)",
-		balanceCheck: true,
+		balanceCheck: true
 	},
 	hard_na: {
 		balancing: "almost balanced (late game is quite slow)",
-		balanceCheck: true,
+		balanceCheck: true
 	},
 	aau_na: {
 		balancing: "only somewhat balanced (quite fast early-game)",
-		balanceCheck: true,
+		balanceCheck: true
 	},
 	absurd: {
 		balancing: "completely impossible",
-		balanceCheck: true,
-	},
+		balanceCheck: true
+	}
 };
 
 const MODES = {
@@ -26,8 +26,8 @@ const MODES = {
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		},
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd))
+		}
 	},
 	aau: {
 		desc: "Start with all achievements unlocked.",
@@ -36,8 +36,8 @@ const MODES = {
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		},
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd))
+		}
 	},
 	na: {
 		desc: "All unnecessary achievements are gone.",
@@ -46,8 +46,8 @@ const MODES = {
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		},
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd))
+		}
 	},
 	absurd: {
 		desc:
@@ -57,7 +57,7 @@ const MODES = {
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		},
-	},
+			na: JSON.parse(JSON.stringify(COMBOS.absurd))
+		}
+	}
 };

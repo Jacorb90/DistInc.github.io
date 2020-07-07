@@ -57,16 +57,14 @@ function updateTempOptions() {
 			els["true"] = {
 				txt: "ON",
 				onclick:
-					"player.options[&quot;" +
-					name +
-					"&quot;] = true; this.parentElement.style.display=&quot;none&quot;",
+					"player.options[&quot;" + name + "&quot;] = true; this.parentElement.style.display=&quot;none&quot;"
 			};
 			els["false"] = {
 				txt: "OFF",
 				onclick:
 					"player.options[&quot;" +
 					name +
-					"&quot;] = false; this.parentElement.style.display=&quot;none&quot;",
+					"&quot;] = false; this.parentElement.style.display=&quot;none&quot;"
 			};
 		}
 		if (type == 1) {
@@ -80,7 +78,7 @@ function updateTempOptions() {
 						name +
 						"&quot;] = " +
 						x +
-						"; this.parentElement.style.display=&quot;none&quot;",
+						"; this.parentElement.style.display=&quot;none&quot;"
 				};
 		} else if (type == 2) {
 			let types = OPT_NAMES[name];
@@ -92,7 +90,7 @@ function updateTempOptions() {
 						name +
 						"&quot;] = &quot;" +
 						types[x] +
-						"&quot;; this.parentElement.style.display=&quot;none&quot;",
+						"&quot;; this.parentElement.style.display=&quot;none&quot;"
 				};
 		}
 		tmp.options.setDropdown(dropdown, els);

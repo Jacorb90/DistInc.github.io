@@ -21,7 +21,7 @@ const INF_UPGS = {
 		},
 		9: function () {
 			return player.inf.endorsements.gte(28);
-		},
+		}
 	},
 	colReqs: {
 		4: function () {
@@ -41,7 +41,7 @@ const INF_UPGS = {
 		},
 		9: function () {
 			return player.inf.endorsements.gte(28);
-		},
+		}
 	},
 	costs: {
 		"1;1": new ExpantaNum(40),
@@ -124,7 +124,7 @@ const INF_UPGS = {
 		"9;6": new ExpantaNum(3.33e33),
 		"9;7": new ExpantaNum(1e34),
 		"9;8": new ExpantaNum(1.5e34),
-		"9;9": new ExpantaNum(2e44),
+		"9;9": new ExpantaNum(2e44)
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -208,7 +208,7 @@ const INF_UPGS = {
 		"9;6": "Superscaled Rank & Tier scalings are weaker based on your Demonic Souls.",
 		"9;7": "Derivative Boosts give a better boost to Derivatives based on your Rank.",
 		"9;8": "Rocket gain is multiplied by (n+1)^0.1, where n is your Time Cubes (softcaps at higher values).",
-		"9;9": "Knowledge gain is multiplied by (n+1)^0.2, where n is your Ascension Power.",
+		"9;9": "Knowledge gain is multiplied by (n+1)^0.2, where n is your Ascension Power."
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -290,7 +290,7 @@ const INF_UPGS = {
 		"9;6": ["9;5"],
 		"9;7": ["9;6"],
 		"9;8": ["9;7"],
-		"9;9": ["8;9", "9;8"],
+		"9;9": ["8;9", "9;8"]
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -299,7 +299,7 @@ const INF_UPGS = {
 		"3;2": ["2;1"],
 		"3;3": ["2;2"],
 		"4;2": ["2;3"],
-		"5;5": ["4;1", "5;1"],
+		"5;5": ["4;1", "5;1"]
 	},
 	repealed: {
 		"1;2": ["2;2"],
@@ -308,7 +308,7 @@ const INF_UPGS = {
 		"2;3": ["4;2"],
 		"3;2": ["2;3", "2;4"],
 		"4;1": ["5;5"],
-		"5;1": ["5;5"],
+		"5;1": ["5;5"]
 	},
 	effects: {
 		"1;1": function () {
@@ -349,11 +349,11 @@ const INF_UPGS = {
 			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
 				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10().times(exp),
-				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp),
+				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp)
 			};
 			return {
 				knowledge: player.tr.cubes.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
-				cubes: player.inf.knowledge.plus(1).pow(pow.cubes),
+				cubes: player.inf.knowledge.plus(1).pow(pow.cubes)
 			};
 		},
 		"2;7": function () {
@@ -371,11 +371,11 @@ const INF_UPGS = {
 			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
 				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10().times(exp),
-				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp),
+				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp)
 			};
 			return {
 				knowledge: player.collapse.cadavers.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
-				cadavers: player.inf.knowledge.plus(1).pow(pow.cadavers),
+				cadavers: player.inf.knowledge.plus(1).pow(pow.cadavers)
 			};
 		},
 		"3;7": function () {
@@ -433,7 +433,7 @@ const INF_UPGS = {
 			let flow = tmp.dc ? tmp.dc.flow : new ExpantaNum(1);
 			return {
 				power: flow.plus(1).log10().sqrt().plus(1),
-				flow: pow.plus(1).log10().sqrt().plus(1),
+				flow: pow.plus(1).log10().sqrt().plus(1)
 			};
 		},
 		"7;4": function () {
@@ -454,7 +454,7 @@ const INF_UPGS = {
 			let ret = {
 				ae: ExpantaNum.pow(1.025, player.rank.plus(player.tier.pow(2))),
 				ve: (tmp.accEn ? tmp.accEn : new ExpantaNum(0)).plus(1).pow(240),
-				ts: (tmp.maxVel ? tmp.maxVel : new ExpantaNum(0)).plus(1).pow(0.06),
+				ts: (tmp.maxVel ? tmp.maxVel : new ExpantaNum(0)).plus(1).pow(0.06)
 			};
 			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve);
 			return ret;
@@ -469,7 +469,7 @@ const INF_UPGS = {
 			let e = tmp.accEn ? tmp.accEn : new Expantanum(0);
 			let ret = {
 				energy: player.inf.pantheon.purge.power.plus(1).pow(10),
-				power: e.plus(2).slog(2),
+				power: e.plus(2).slog(2)
 			};
 			return ret;
 		},
@@ -506,7 +506,7 @@ const INF_UPGS = {
 			let d = player.inf.pantheon.demons;
 			let ret = {
 				angels: d.plus(1).logBase(1.5).pow(3).plus(1),
-				demons: a.plus(1).logBase(1.5).pow(3).plus(1),
+				demons: a.plus(1).logBase(1.5).pow(3).plus(1)
 			};
 			return ret;
 		},
@@ -531,8 +531,8 @@ const INF_UPGS = {
 			if (rank.gte(400)) rank = ExpantaNum.pow(10, rank.log10().sqrt()).times(9.75);
 			let ret = ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.02, power)), rank.pow(2));
 			return ret;
-		},
-	},
+		}
+	}
 };
 const INF_TABS = {
 	infinity: function () {
@@ -549,7 +549,7 @@ const INF_TABS = {
 	},
 	derivatives: function () {
 		return player.inf.derivatives.unl;
-	},
+	}
 };
 
 // Ascension
@@ -564,7 +564,7 @@ const STADIUM_DESCS = {
 		"You cannot gain Life Essence",
 		"inf1;1 does nothing",
 		"The base cost of Ranks is much higher",
-		"The base cost of Tiers is much higher",
+		"The base cost of Tiers is much higher"
 	],
 	solaris: [
 		"You cannot gain Cadavers",
@@ -572,7 +572,7 @@ const STADIUM_DESCS = {
 		"Scaled Rank scaling starts instantly",
 		"Scaled Rank scaling is 500% stronger",
 		"The base cost of Tiers is much higher",
-		"The base cost of Ranks is much higher",
+		"The base cost of Ranks is much higher"
 	],
 	infinity: [
 		"You cannot Rank or Tier up",
@@ -580,7 +580,7 @@ const STADIUM_DESCS = {
 		"Rocket Fuel does nothing",
 		"Scaled Pathogen Upgrade scaling is 500% stronger",
 		"Pathogen Upgrades are 90% weaker",
-		"You do not gain Time Cubes",
+		"You do not gain Time Cubes"
 	],
 	eternity: [
 		"Time Speed does nothing",
@@ -588,7 +588,7 @@ const STADIUM_DESCS = {
 		"Pathogen Upgrades are 90% weaker",
 		"Scaled Tier scaling is 500% stronger",
 		"You do not gain Time Cubes",
-		"Pathogen Upgrades do nothing",
+		"Pathogen Upgrades do nothing"
 	],
 	reality: [
 		"All resource gain before Infinity is raised to the power of 0.1",
@@ -596,7 +596,7 @@ const STADIUM_DESCS = {
 		"Maximum Velocity is raised to the power of 0.1",
 		"Acceleration is raised to the power of 0.1",
 		"You cannot buy Dark Cores",
-		"Pathogen Upgrades do nothing",
+		"Pathogen Upgrades do nothing"
 	],
 	drigganiz: [
 		"Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1",
@@ -604,8 +604,8 @@ const STADIUM_DESCS = {
 		"Scaled Tier scaling starts instantly",
 		"Scaled Rank & Scaled Tier scalings are 500% stronger",
 		"You do not gain Rockets or Cadavers",
-		"You cannot buy Dark Cores",
-	],
+		"You cannot buy Dark Cores"
+	]
 };
 const STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets.",
@@ -643,7 +643,7 @@ const STADIUM_REWARDS = {
 		drigganiz: function () {
 			let ret = ExpantaNum.mul(0.0075, player.achievements.length);
 			return ret;
-		},
+		}
 	},
 	disp: {
 		spaceon: function () {
@@ -657,8 +657,8 @@ const STADIUM_REWARDS = {
 		},
 		drigganiz: function () {
 			return "+" + showNum(STADIUM_REWARDS.effects.drigganiz().times(100)) + "%";
-		},
-	},
+		}
+	}
 };
 const STADIUM_GOALS = {
 	spaceon: [
@@ -667,7 +667,7 @@ const STADIUM_GOALS = {
 		new ExpantaNum(1e96).times(DISTANCES.uni),
 		new ExpantaNum(1e128).times(DISTANCES.uni),
 		new ExpantaNum(1e240).times(DISTANCES.uni),
-		new ExpantaNum("1e400").times(DISTANCES.uni),
+		new ExpantaNum("1e400").times(DISTANCES.uni)
 	],
 	solaris: [
 		new ExpantaNum(1e20).times(DISTANCES.uni),
@@ -675,7 +675,7 @@ const STADIUM_GOALS = {
 		new ExpantaNum("1e450").times(DISTANCES.uni),
 		new ExpantaNum("1e500").times(DISTANCES.uni),
 		new ExpantaNum(1.11e111).times(DISTANCES.uni),
-		new ExpantaNum(1e200).times(DISTANCES.uni),
+		new ExpantaNum(1e200).times(DISTANCES.uni)
 	],
 	infinity: [
 		new ExpantaNum("1e1500").times(DISTANCES.uni),
@@ -683,14 +683,14 @@ const STADIUM_GOALS = {
 		new ExpantaNum("1e480").times(DISTANCES.uni),
 		new ExpantaNum("1e640").times(DISTANCES.uni),
 		new ExpantaNum("1e1000").times(DISTANCES.uni),
-		new ExpantaNum("1e1500").times(DISTANCES.uni),
+		new ExpantaNum("1e1500").times(DISTANCES.uni)
 	],
 	eternity: [
 		new ExpantaNum("1e260").times(DISTANCES.uni),
 		new ExpantaNum("1e250").times(DISTANCES.uni),
 		new ExpantaNum("1e295").times(DISTANCES.uni),
 		new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni),
-		new ExpantaNum("1e350").times(DISTANCES.uni),
+		new ExpantaNum("1e350").times(DISTANCES.uni)
 	],
 	reality: [
 		new ExpantaNum(10).times(DISTANCES.uni),
@@ -698,7 +698,7 @@ const STADIUM_GOALS = {
 		new ExpantaNum(1000).times(DISTANCES.uni),
 		new ExpantaNum(1e4).times(DISTANCES.uni),
 		new ExpantaNum(1e5).times(DISTANCES.uni),
-		new ExpantaNum(150),
+		new ExpantaNum(150)
 	],
 	drigganiz: [
 		new ExpantaNum(1e16).times(DISTANCES.uni),
@@ -706,8 +706,8 @@ const STADIUM_GOALS = {
 		new ExpantaNum(1e25).times(DISTANCES.uni),
 		new ExpantaNum(1e40).times(DISTANCES.uni),
 		new ExpantaNum(1e150).times(DISTANCES.uni),
-		new ExpantaNum(1e240).times(DISTANCES.uni),
-	],
+		new ExpantaNum(1e240).times(DISTANCES.uni)
+	]
 };
 
 // Derivatives

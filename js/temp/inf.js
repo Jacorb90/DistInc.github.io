@@ -220,7 +220,7 @@ function updateTempInf() {
 			color: "orange",
 			title: "You have reached <span class='infinity'>Infinity</span>!",
 			body: message,
-			tab: "inf",
+			tab: "inf"
 		});
 		player.inf.unl = true;
 	};
@@ -297,7 +297,7 @@ function updateTempInf() {
 		tmp.inf.asc.perkStrength,
 		tmp.inf.asc.perkStrength,
 		tmp.inf.asc.perkStrength,
-		tmp.inf.asc.perkStrength,
+		tmp.inf.asc.perkStrength
 	];
 	for (let i = 1; i <= 4; i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i));
 	tmp.inf.asc.perkActive = function (n) {

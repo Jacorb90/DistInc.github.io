@@ -12,7 +12,7 @@ function updateHTML() {
 			btn: true,
 			tb: true,
 			opt: !modesSelected.includes(Object.keys(MODES)[i]),
-			optSelected: modesSelected.includes(Object.keys(MODES)[i]),
+			optSelected: modesSelected.includes(Object.keys(MODES)[i])
 		});
 	tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 	tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
@@ -55,7 +55,7 @@ function updateHTML() {
 			tmp.el["ach" + id].setClasses({
 				achCont: true,
 				dgn: player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined,
-				blocked: ACH_DATA.descs[id] === undefined,
+				blocked: ACH_DATA.descs[id] === undefined
 			});
 			tmp.el["ach" + id].changeStyle("visibility", getAllAchievements().includes(id) ? "visible" : "hidden");
 		}
@@ -81,7 +81,7 @@ function updateHTML() {
 			rckt: !(
 				player.automation.scraps.lt(Object.values(ROBOT_REQS)[i]) &&
 				!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])
-			),
+			)
 		});
 	}
 	tmp.el.fuelbot.setDisplay(
@@ -110,12 +110,12 @@ function updateHTML() {
 		tmp.el.buyRobotInterval.setClasses({
 			btn: true,
 			locked: player.automation.intelligence.lt(tmp.auto[player.automation.open].intCost),
-			rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].intCost),
+			rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].intCost)
 		});
 		tmp.el.buyRobotMagnitude.setClasses({
 			btn: true,
 			locked: player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost),
-			rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].magCost),
+			rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].magCost)
 		});
 	}
 	tmp.el.robotMax.setDisplay(tmp.ach[48].has);
@@ -142,7 +142,7 @@ function updateHTML() {
 			btn: true,
 			locked: !player.tr.upgrades.includes(i) && player.tr.cubes.lt(upg.cost),
 			bought: player.tr.upgrades.includes(i),
-			rt: !player.tr.upgrades.includes(i) && player.tr.cubes.gte(upg.cost),
+			rt: !player.tr.upgrades.includes(i) && player.tr.cubes.gte(upg.cost)
 		});
 	}
 	tmp.el.trRow3.setDisplay(player.dc.unl || tmp.inf.upgs.has("1;4"));
@@ -155,7 +155,7 @@ function updateHTML() {
 	tmp.el.sacrificeCadavers.setClasses({
 		btn: true,
 		locked: player.collapse.cadavers.eq(0),
-		btndd: player.collapse.cadavers.gt(0),
+		btndd: player.collapse.cadavers.gt(0)
 	});
 	tmp.el.lifeEssence.setTxt(showNum(player.collapse.lifeEssence));
 	for (let i = 1; i <= EM_AMT; i++) {
@@ -172,7 +172,7 @@ function updateHTML() {
 		tmp.el["pth" + i].setClasses({
 			btn: true,
 			locked: player.pathogens.amount.lt(tmp.pathogens[i].cost),
-			gross: player.pathogens.amount.gte(tmp.pathogens[i].cost),
+			gross: player.pathogens.amount.gte(tmp.pathogens[i].cost)
 		});
 		tmp.el["pth" + i].setHTML(
 			PTH_UPGS[i].desc +
@@ -237,7 +237,7 @@ function updateHTML() {
 	tmp.el.darkCore.setClasses({
 		darkcore: true,
 		locked: player.collapse.cadavers.lt(tmp.dc.coreCost),
-		inactive: tmp.dc.dmGain.eq(0),
+		inactive: tmp.dc.dmGain.eq(0)
 	});
 	tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0) ? "&#8593;" : "");
 	tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow));
@@ -263,7 +263,7 @@ function updateHTML() {
 				inf: state == "unbought",
 				locked: state == "locked",
 				bought: state == "bought",
-				repealed: state == "repealed",
+				repealed: state == "repealed"
 			});
 		}
 	}
@@ -284,7 +284,7 @@ function updateHTML() {
 			btn: true,
 			perk: tmp.inf.asc.perkActive(i),
 			inf: !(tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks) && !tmp.inf.asc.perkActive(i),
-			locked: tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks && !tmp.inf.asc.perkActive(i),
+			locked: tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks && !tmp.inf.asc.perkActive(i)
 		});
 		tmp.el["perk" + i].setTxt(
 			capitalFirst(PERK_NAMES[i - 1]) +
@@ -298,7 +298,7 @@ function updateHTML() {
 		tmp.el["buyEnl" + i].setClasses({
 			btn: true,
 			inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)),
-			locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i)),
+			locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))
 		});
 		let name = tmp.scaling.getName("enlightenments", i);
 		tmp.el["enlScale" + i].setTxt(name == "" ? "" : name + " ");
@@ -322,7 +322,7 @@ function updateHTML() {
 			btn: true,
 			bought: trapped || active,
 			locked: player.inf.stadium.current != "" && !(trapped || active),
-			inf: !(trapped || active || player.inf.stadium.current != ""),
+			inf: !(trapped || active || player.inf.stadium.current != "")
 		});
 		let showCurrent = STADIUM_REWARDS.effects[name] !== undefined;
 		tmp.el[name + "Btm"].setHTML(
@@ -344,19 +344,19 @@ function updateHTML() {
 	tmp.el.respecSpectralGems.setClasses({
 		btn: true,
 		inf: player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0),
-		locked: !player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0),
+		locked: !player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0)
 	});
 	tmp.el.angels.setTxt(showNum(player.inf.pantheon.angels));
 	tmp.el.demons.setTxt(showNum(player.inf.pantheon.demons));
 	tmp.el.transferAngels.setClasses({
 		btn: true,
 		inf: player.inf.pantheon.gems.gte(1),
-		locked: player.inf.pantheon.gems.lt(1),
+		locked: player.inf.pantheon.gems.lt(1)
 	});
 	tmp.el.transferDemons.setClasses({
 		btn: true,
 		inf: player.inf.pantheon.gems.gte(1),
-		locked: player.inf.pantheon.gems.lt(1),
+		locked: player.inf.pantheon.gems.lt(1)
 	});
 	tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips));
 	tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
@@ -394,7 +394,7 @@ function updateHTML() {
 	tmp.el.dervUnlock.setClasses({
 		btn: true,
 		locked: player.inf.knowledge.lt(tmp.inf.derv.unlCost),
-		inf: player.inf.knowledge.gte(tmp.inf.derv.unlCost),
+		inf: player.inf.knowledge.gte(tmp.inf.derv.unlCost)
 	});
 
 	// Miscellaneous

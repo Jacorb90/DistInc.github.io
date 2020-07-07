@@ -47,7 +47,7 @@ function updateTempPathogens() {
 		12: new ExpantaNum(4),
 		13: new ExpantaNum(10),
 		14: new ExpantaNum(4),
-		15: new ExpantaNum(5),
+		15: new ExpantaNum(5)
 	};
 	for (let i = 1; i <= PTH_AMT; i++) {
 		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1);
