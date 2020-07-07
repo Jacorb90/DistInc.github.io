@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <head>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
 	<!-- Initial Stuff -->
 	<script type="text/javascript" src="js/jQuery.min.js"></script>
 	<script type="text/javascript" src="js/notify.min.js"></script>
 	<script type="text/javascript" src="js/classes/Notifier.js"></script>
 	<script type="text/javascript" src="js/window.js"></script>
 	<script type="text/javascript" src="js/classes/ExpantaNum.js"></script>
-	
+
 	<!-- Constants -->
 	<script type="text/javascript" src="js/constants/default.js"></script>
 	<script type="text/javascript" src="js/constants/format.js"></script>
@@ -26,14 +26,14 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/temp_data.js"></script>
-	
+
 	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
 	<script type="text/javascript" src="js/classes/Mode.js"></script>
-	
+
 	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>
-	
+
 	<!-- Functions -->
 	<script type="text/javascript" src="js/functions/formatting.js"></script>
 	<script type="text/javascript" src="js/functions/tabs.js"></script>
@@ -41,16 +41,16 @@
 	<script type="text/javascript" src="js/functions/important.js"></script>
 	<script type="text/javascript" src="js/functions/tr.js"></script>
 	<script type="text/javascript" src="js/functions/misc.js"></script>
-	
+
 	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
 	<script type="text/javascript" src="js/classes/Feature.js"></script>
 	<script type="text/javascript" src="js/classes/Achievement.js"></script>
 	<script type="text/javascript" src="js/classes/Robot.js"></script>
-	
+
 	<!-- Main Game -->
 	<script type="text/javascript" src="js/game.js"></script>
-	
+
 	<!-- Temp Data -->
 	<script type="text/javascript" src="js/temp/elements.js"></script>
 	<script type="text/javascript" src="js/temp/options.js"></script>
@@ -71,11 +71,11 @@
 	<script type="text/javascript" src="js/temp/inf.js"></script>
 	<script type="text/javascript" src="js/temp/misc.js"></script>
 	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
-	
+
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>
 	<title>Distance Incremental</title>
-	<link rel="icon" href="images/game_icon.ico" type="image/icon type">
+	<link rel="icon" href="images/game_icon.ico" type="image/icon type" />
 </head>
 <body id="body" onload="loadGame()">
 	<div id="mainContainer">
@@ -84,26 +84,48 @@
 				<tr>
 					<td><button id="maintabbtn" class="btn tb" onclick="showTab('main')">Main</button></td>
 					<td><button id="optionstabbtn" class="btn tb" onclick="showTab('options')">Options</button></td>
-					<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
-					<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
+					<td>
+						<button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">
+							Achievements
+						</button>
+					</td>
+					<td>
+						<button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button>
+					</td>
 					<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
 					<td><button id="trtabbtn" class="btn tb rt" onclick="showTab('tr')">Time Reversal</button></td>
-					<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
-					<td><button id="pathogenstabbtn" class="btn tb gross" onclick="showTab('pathogens')">Pathogens</button></td>
+					<td>
+						<button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">
+							Universal Collapse
+						</button>
+					</td>
+					<td>
+						<button id="pathogenstabbtn" class="btn tb gross" onclick="showTab('pathogens')">
+							Pathogens
+						</button>
+					</td>
 					<td><button id="dctabbtn" class="btn tb dark" onclick="showTab('dc')">Dark Circle</button></td>
 					<td><button id="inftabbtn" class="btn tb inf" onclick="showTab('inf')">Infinity</button></td>
 				</tr>
 			</table>
-			<span id="nextFeature"></span><br>
+			<span id="nextFeature"></span><br />
 		</div>
-		<br>
+		<br />
 		<div id="main" class="tab">
 			<span id="ts"></span>
-			You have gone a total of <span id="distance"></span>.<br>
-			Your current velocity is <span id="velocity"></span>/s (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
-			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup><span id="accEn"></span>.<br><br>
-			<span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
-			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+			You have gone a total of <span id="distance"></span>.<br />
+			Your current velocity is <span id="velocity"></span>/s (<span id="mvName"></span>
+			<span id="maxVel"></span>/s).<br />
+			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup
+			><span id="accEn"></span>.<br /><br />
+			<span id="rankName"></span> <span id="rank"></span>:
+			<button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">
+				Reset your journey, but <span id="rankDesc"></span><br />Req: <span id="rankReq"></span>.</button
+			><br /><br />
+			<span id="tierName"></span> <span id="tier"></span>:
+			<button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">
+				Reset your ranks, but <span id="tierDesc"></span><br />Req: Rank <span id="tierReq"></span>.
+			</button>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -112,7 +134,8 @@
 					<td><button class="btn tb rckt" onclick="showOptionsTab('modes')">Modes</button></td>
 					<td><button class="btn tb rckt" onclick="showOptionsTab('other')">Other</button></td>
 				</tr>
-			</table><br><br>
+			</table>
+			<br /><br />
 			<div id="saving" class="optionstab">
 				<table>
 					<tr>
@@ -126,36 +149,76 @@
 			<div id="modes" class="optionstab" style="display: none;">
 				<table>
 					<tr>
-						<td><button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">Hard</button></td>
-						<td><button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">AAU</button></td>
-						<td><button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button></td>
-						<td><button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button></td>
+						<td>
+							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">
+								Hard
+							</button>
+						</td>
+						<td>
+							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">
+								AAU
+							</button>
+						</td>
+						<td>
+							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button>
+						</td>
+						<td>
+							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">
+								Absurd
+							</button>
+						</td>
 					</tr>
-				</table><br><br>
+				</table>
+				<br /><br />
 				<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
 				<button class="btn tb opt" onclick="showModeDescs(modesSelected)">Show Description</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
 				<table>
 					<tr>
-						<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
-						<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
-						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
+						<td>
+							<button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">
+								Significant Figures: X
+							</button>
+						</td>
+						<td>
+							<button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">
+								Notation: X
+							</button>
+						</td>
+						<td>
+							<button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">
+								Auto-Save: ON
+							</button>
+						</td>
 					</tr>
-				</table><br>
+				</table>
+				<br />
 				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
-			</div><br><br>
-			Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a>, and it uses <a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and <a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I created. If you would like to create a mod of this game, that's fine, just give credit and name it something slightly different (like Distance Incremental NG+ or something of the sort)...
+			</div>
+			<br /><br />
+			Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a>, and it uses
+			<a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and
+			<a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I created. If you would
+			like to create a mod of this game, that's fine, just give credit and name it something slightly different
+			(like Distance Incremental NG+ or something of the sort)...
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
 			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
-			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
-			You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
-			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
-			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
+			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">
+				Reset all previous progress to gain <span id="rocketGain"></span> rockets
+				<span id="rocketGainSC"></span></button
+			><br /><br />
+			You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost
+			themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br /><br />
+			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">
+				Reset your rockets to get 1 rocket fuel<br />Req: <span id="rfReq"></span> rockets.</button
+			><br /><br />
+			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by
+			<span id="rfEff"></span>%.
 		</div>
 		<div id="auto" class="tab" style="display: none;">
 			<table>
@@ -164,51 +227,76 @@
 					<td>&emsp;</td>
 					<td>You have <span id="intAmt"></span> intelligence.</td>
 				</tr>
-			</table><table>
+			</table>
+			<table>
 				<tr>
 					<td><button id="rankbot" class="btn locked" onclick="tmp.auto['rankbot'].btn()"></button></td>
 					<td><button id="tierbot" class="btn locked" onclick="tmp.auto['tierbot'].btn()"></button></td>
 					<td><button id="fuelbot" class="btn locked" onclick="tmp.auto['fuelbot'].btn()"></button></td>
 				</tr>
 			</table>
-			<br><br>
+			<br /><br />
 			<div id="robotTab">
-				<br><b><span id="robotName"></span></b><br><br>
-				<button id="robotMax" class="btn rckt" onclick="tmp.auto[player.automation.open].maxAll()">Max All</button>
+				<br /><b><span id="robotName"></span></b><br /><br />
+				<button id="robotMax" class="btn rckt" onclick="tmp.auto[player.automation.open].maxAll()">
+					Max All
+				</button>
 				<table>
 					<tr>
 						<td><b>Interval</b>: <span id="robotInterval"></span></td>
 						<td><b>Magnitude</b>: <span id="robotMagnitude"></span></td>
 					</tr>
 					<tr>
-						<td><button id="buyRobotInterval" class="btn locked" onclick="tmp.auto[player.automation.open].buy(0)"></button></td>
-						<td><button id="buyRobotMagnitude" class="btn locked" onclick="tmp.auto[player.automation.open].buy(1)"></button></td>
+						<td>
+							<button
+								id="buyRobotInterval"
+								class="btn locked"
+								onclick="tmp.auto[player.automation.open].buy(0)"
+							></button>
+						</td>
+						<td>
+							<button
+								id="buyRobotMagnitude"
+								class="btn locked"
+								onclick="tmp.auto[player.automation.open].buy(1)"
+							></button>
+						</td>
 					</tr>
 				</table>
-			</div><br>
+			</div>
+			<br />
 			<div id="automator"></div>
 		</div>
 		<div id="tr" class="tab" style="display: none;">
-			<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
-			You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
+			<br /><button id="rt" class="btn rt" onclick="reverseTime()"></button><br /><br />
+			You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel
+			<span id="timeCubeEffSC"></span><br /><br />
 			<table id="trTable"></table>
 		</div>
 		<div id="collapse" class="tab" style="display: none;">
-			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers <span id="cadaverGainSC"></span></button><br><br>
-			You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
-			<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
-			You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
-			<table id="cmTable"></table><br><br>
+			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">
+				Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers
+				<span id="cadaverGainSC"></span></button
+			><br /><br />
+			You have <span id="cadavers" class="dead"></span> cadavers, which make time go
+			<span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br /><br />
+			<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">
+				Sacrifice all your cadavers into life essence.</button
+			><br /><br />
+			You have <span id="lifeEssence" class="alive"></span> life essence.<br /><br />
+			<table id="cmTable"></table>
+			<br /><br />
 		</div>
 		<div id="pathogens" class="tab" style="display: none;">
 			<span id="tdeEff"></span>
-			You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br><br>
-			<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
+			You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br /><br />
+			<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br /><br />
 			<span id="pthUpgPow" class="grosstxt"></span>
-			<div id="pthUpgs"></div><br><br>
+			<div id="pthUpgs"></div>
+			<br /><br />
 		</div>
 		<div id="dc" class="tab" style="display: none;">
-			Dark Flow: <span id="darkFlow" style="font-weight: bold;"></span>x<br>
+			Dark Flow: <span id="darkFlow" style="font-weight: bold;"></span>x<br />
 			<table>
 				<tr>
 					<td class="darkcircleHidden"></td>
@@ -234,62 +322,129 @@
 				<tr>
 					<td id="darkFluid" class="darkcircle" style="font-size: 8px;"></td>
 					<td class="darkcircleHidden"></td>
-					<td class="darkcircleHidden"</td>
+					<td class="darkcircleHidden"></td>
 					<td class="darkcircleHidden"></td>
 					<td id="darkEnergy" class="darkcircle"></td>
 				</tr>
 			</table>
 		</div>
 		<div id="inf" class="tab" style="display: none;">
-			<div id="forceInf"><button class="btn inf" onclick="tmp.inf.layer.reset(true)">Get <span class="infinity">Infinity</span> to reset you for no reward.</button><br><br></div>
-			<div id="endorsementManual"><button id="emInner" class="btn inf" onclick="tmp.inf.manualReset()">Allow <span class="infinity">Infinity</span> to endorse you.</button><br><br></div>
+			<div id="forceInf">
+				<button class="btn inf" onclick="tmp.inf.layer.reset(true)">
+					Get <span class="infinity">Infinity</span> to reset you for no reward.</button
+				><br /><br />
+			</div>
+			<div id="endorsementManual">
+				<button id="emInner" class="btn inf" onclick="tmp.inf.manualReset()">
+					Allow <span class="infinity">Infinity</span> to endorse you.</button
+				><br /><br />
+			</div>
 			<div class="band or">
 				<table>
 					<tr>
-						<td><button class="btn tb inf" style="visibility: hidden"></button></td>
+						<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
 					</tr>
 					<tr>
-						<td><button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
-						<td><button id="ascensiontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
-						<td><button id="stadiumtabbtn" class="btn tb inf" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
-						<td><button id="pantheontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
-						<td><button id="derivativestabbtn" class="btn tb inf" onclick="tmp.inf.showTab('derivatives')">Derivatives</button></td>
+						<td>
+							<button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">
+								Infinity
+							</button>
+						</td>
+						<td>
+							<button id="ascensiontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('ascension')">
+								Ascension
+							</button>
+						</td>
+						<td>
+							<button id="stadiumtabbtn" class="btn tb inf" onclick="tmp.inf.showTab('stadium')">
+								The Stadium
+							</button>
+						</td>
+						<td>
+							<button id="pantheontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('pantheon')">
+								The Pantheon
+							</button>
+						</td>
+						<td>
+							<button id="derivativestabbtn" class="btn tb inf" onclick="tmp.inf.showTab('derivatives')">
+								Derivatives
+							</button>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="infinity" class="inftab">
-				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
-				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
+				<span id="endorsementName"></span>Endorsements:
+				<span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of
+				<span id="knowledgeBase" style="font-size: 25px;"></span>.<br />
+				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br /><br />
 				<span id="tudeEff"></span>
-				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
-				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
-				<div id="infUpgData" class="bandBig or"></div><br><br>
-				<table id="infUpgs"></table><br><br>
+				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br /><br />
+				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br /><br />
+				<div id="infUpgData" class="bandBig or"></div>
+				<br /><br />
+				<table id="infUpgs"></table>
+				<br /><br />
 			</div>
 			<div id="ascension" class="inftab">
-				<br>
-				<span id="perkPower"></span><br>
+				<br />
+				<span id="perkPower"></span><br />
 				<table>
 					<tr>
-						<td><button id="perk1" class="btn perk" onclick="tmp.inf.asc.activatePerk(1)">Godhood Perk</button></td>
-						<td><button id="perk2" class="btn perk" onclick="tmp.inf.asc.activatePerk(2)">Holy Perk</button></td>
-						<td><button id="perk3" class="btn perk" onclick="tmp.inf.asc.activatePerk(3)">Sainthood Perk</button></td>
-						<td><button id="perk4" class="btn perk" onclick="tmp.inf.asc.activatePerk(4)">Glory Perk</button></td>
+						<td>
+							<button id="perk1" class="btn perk" onclick="tmp.inf.asc.activatePerk(1)">
+								Godhood Perk
+							</button>
+						</td>
+						<td>
+							<button id="perk2" class="btn perk" onclick="tmp.inf.asc.activatePerk(2)">Holy Perk</button>
+						</td>
+						<td>
+							<button id="perk3" class="btn perk" onclick="tmp.inf.asc.activatePerk(3)">
+								Sainthood Perk
+							</button>
+						</td>
+						<td>
+							<button id="perk4" class="btn perk" onclick="tmp.inf.asc.activatePerk(4)">
+								Glory Perk
+							</button>
+						</td>
 					</tr>
 					<tr>
 						<td>Dark Flow is <span id="perkEff1" style="font-size: 25px;"></span>x as fast.</td>
-						<td>Get <span id="perkEff2" style="font-size: 25px;"></span> of each Pathogen upgrade for free.</td>
-						<td>The Cadaver effect softcaps <span id="perkEff3" style="font-size: 25px;"></span>x later.</td>
+						<td>
+							Get <span id="perkEff2" style="font-size: 25px;"></span> of each Pathogen upgrade for free.
+						</td>
+						<td>
+							The Cadaver effect softcaps <span id="perkEff3" style="font-size: 25px;"></span>x later.
+						</td>
 						<td>Cadaver gain softcaps <span id="perkEff4" style="font-size: 25px;"></span>x later.</td>
 					</tr>
-				</table><br><br>
-				<span id="ascPower"></span><br><br><br><br>
+				</table>
+				<br /><br />
+				<span id="ascPower"></span><br /><br /><br /><br />
 				<table>
 					<tr>
-						<td>You have <span id="enl1" style="font-size: 25px;"></span> <span id="enlScale1"></span>Godhood Enlightenments, translated to a <span id="enleff1" style="font-size: 25px;"></span>% increase in Godhood Perk power.</td>
-						<td>You have <span id="enl2" style="font-size: 25px;"></span> <span id="enlScale2"></span>Holy Enlightenments, translated to a <span id="enleff2" style="font-size: 25px;"></span>% increase in Holy Perk power.</td>
-						<td>You have <span id="enl3" style="font-size: 25px;"></span> <span id="enlScale3"></span>Sainthood Enlightenments, translated to a <span id="enleff3" style="font-size: 25px;"></span>% increase in Sainthood Perk power.</td>
-						<td>You have <span id="enl4" style="font-size: 25px;"></span> <span id="enlScale4"></span>Glory Enlightenments, translated to a <span id="enleff4" style="font-size: 25px;"></span>% increase in Glory Perk power.</td>
+						<td>
+							You have <span id="enl1" style="font-size: 25px;"></span>
+							<span id="enlScale1"></span>Godhood Enlightenments, translated to a
+							<span id="enleff1" style="font-size: 25px;"></span>% increase in Godhood Perk power.
+						</td>
+						<td>
+							You have <span id="enl2" style="font-size: 25px;"></span> <span id="enlScale2"></span>Holy
+							Enlightenments, translated to a <span id="enleff2" style="font-size: 25px;"></span>%
+							increase in Holy Perk power.
+						</td>
+						<td>
+							You have <span id="enl3" style="font-size: 25px;"></span>
+							<span id="enlScale3"></span>Sainthood Enlightenments, translated to a
+							<span id="enleff3" style="font-size: 25px;"></span>% increase in Sainthood Perk power.
+						</td>
+						<td>
+							You have <span id="enl4" style="font-size: 25px;"></span> <span id="enlScale4"></span>Glory
+							Enlightenments, translated to a <span id="enleff4" style="font-size: 25px;"></span>%
+							increase in Glory Perk power.
+						</td>
 					</tr>
 					<tr>
 						<td><button id="buyEnl1" class="btn locked" onclick="tmp.inf.asc.buyEnl(1)"></button></td>
@@ -297,46 +452,113 @@
 						<td><button id="buyEnl3" class="btn locked" onclick="tmp.inf.asc.buyEnl(3)"></button></td>
 						<td><button id="buyEnl4" class="btn locked" onclick="tmp.inf.asc.buyEnl(4)"></button></td>
 					</tr>
-				</table><br><br>
+				</table>
+				<br /><br />
 			</div>
 			<div id="stadium" class="inftab">
-				<br><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button><br><br>
-				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button><br><br>
-				Note: Perks do nothing in Stadium Challenges.<br><br>
+				<br /><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button
+				><br /><br />
+				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button
+				><br /><br />
+				Note: Perks do nothing in Stadium Challenges.<br /><br />
 				<table>
 					<tr>
-						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description"><span class="spaceon">Spaceon</span><br><button id="spaceonChall" class="btn locked" onclick="tmp.inf.stadium.start('spaceon')">Start</button><br><br><span id="spaceonBtm" class="stadiumDesc"></span></td>
-						<td id="solarisDiv" class="stadiumChall" tooltip="Solaris Challenge Description"><span class="solaris">Solaris</span><br><button id="solarisChall" class="btn locked" onclick="tmp.inf.stadium.start('solaris')">Start</button><br><br><span id="solarisBtm" class="stadiumDesc"></span></td>
-						<td id="infinityDiv" class="stadiumChall" tooltip="Infinity Challenge Description"><span class="infinity">Infinity</span><br><button id="infinityChall" class="btn locked" onclick="tmp.inf.stadium.start('infinity')">Start</button><br><br><span id="infinityBtm" class="stadiumDesc"></span></td>
-						<td id="eternityDiv" class="stadiumChall" tooltip="Eternity Challenge Description"><span class="eternity">Eternity</span><br><button id="eternityChall" class="btn locked" onclick="tmp.inf.stadium.start('eternity')">Start</button><br><br><span id="eternityBtm" class="stadiumDesc"></span></td>
-						<td id="realityDiv" class="stadiumChall" tooltip="Reality Challenge Description"><span class="reality">Reality</span><br><button id="realityChall" class="btn locked" onclick="tmp.inf.stadium.start('reality')">Start</button><br><br><span id="realityBtm" class="stadiumDesc"></span></td>
-						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description"><span class="drigganiz">Drigganiz</span><br><button id="drigganizChall" class="btn locked" onclick="tmp.inf.stadium.start('drigganiz')">Start</button><br><br><span id="drigganizBtm" class="stadiumDesc"></span></td>
+						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description">
+							<span class="spaceon">Spaceon</span><br /><button
+								id="spaceonChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('spaceon')"
+							>
+								Start</button
+							><br /><br /><span id="spaceonBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="solarisDiv" class="stadiumChall" tooltip="Solaris Challenge Description">
+							<span class="solaris">Solaris</span><br /><button
+								id="solarisChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('solaris')"
+							>
+								Start</button
+							><br /><br /><span id="solarisBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="infinityDiv" class="stadiumChall" tooltip="Infinity Challenge Description">
+							<span class="infinity">Infinity</span><br /><button
+								id="infinityChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('infinity')"
+							>
+								Start</button
+							><br /><br /><span id="infinityBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="eternityDiv" class="stadiumChall" tooltip="Eternity Challenge Description">
+							<span class="eternity">Eternity</span><br /><button
+								id="eternityChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('eternity')"
+							>
+								Start</button
+							><br /><br /><span id="eternityBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="realityDiv" class="stadiumChall" tooltip="Reality Challenge Description">
+							<span class="reality">Reality</span><br /><button
+								id="realityChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('reality')"
+							>
+								Start</button
+							><br /><br /><span id="realityBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description">
+							<span class="drigganiz">Drigganiz</span><br /><button
+								id="drigganizChall"
+								class="btn locked"
+								onclick="tmp.inf.stadium.start('drigganiz')"
+							>
+								Start</button
+							><br /><br /><span id="drigganizBtm" class="stadiumDesc"></span>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="pantheon" class="inftab">
-				You have <span id="spectralGems" class="spectral"></span> <span id="spectralGemName"></span> Spectral Gems. Next at <span id="nextSpectralGem" class="spectral"></span> Endorsements.<br><br>
-				<button id="respecSpectralGems" class="btn locked" onclick="tmp.inf.pantheon.respec()">Respec Angels & Demons back into Spectral Gems</button><br><br>
+				You have <span id="spectralGems" class="spectral"></span> <span id="spectralGemName"></span> Spectral
+				Gems. Next at <span id="nextSpectralGem" class="spectral"></span> Endorsements.<br /><br />
+				<button id="respecSpectralGems" class="btn locked" onclick="tmp.inf.pantheon.respec()">
+					Respec Angels & Demons back into Spectral Gems</button
+				><br /><br />
 				<div style="background-color: pink;">
-					<br><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">Transform one Spectral Gem into an Angel</button><br><br>
-					You have <span id="angels" class="spectral"></span> Angels.<br><br>
-					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
-					<br><br><br>
+					<br /><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">
+						Transform one Spectral Gem into an Angel</button
+					><br /><br />
+					You have <span id="angels" class="spectral"></span> Angels.<br /><br />
+					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a
+					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					<br /><br /><br />
 				</div>
 				<div style="background-color: #a31414;">
-					<br><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">Transform one Spectral Gem into a Demon</button><br><br>
-					You have <span id="demons" class="spectral"></span> Demons.<br><br>
-					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
-					<br><br><br>
+					<br /><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">
+						Transform one Spectral Gem into a Demon</button
+					><br /><br />
+					You have <span id="demons" class="spectral"></span> Demons.<br /><br />
+					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a
+					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength. <br /><br /><br />
 				</div>
-				<div id="purgeDiv" style="background-color: #259199">
-					<br><button id="purgeBtn" class="btn purge" onclick="tmp.inf.pantheon.startPurge()" tooltip="Starting a Purge run performs an Infinity reset, disables Pantheon features, and traps you in all Stadium Challenges except Reality (at tier 1). In addition, velocity gain is raised to the power of 0.333."></button><br><br>
-					You have <span id="purgePower" class="spectral"></span> Purge Power, which makes the cancelling out of Heavenly Chips & Demonic Souls raised to the power of <span id="purgePowerEff" class="spectral"></span>.
-					<br><br><br><br>
+				<div id="purgeDiv" style="background-color: #259199;">
+					<br /><button
+						id="purgeBtn"
+						class="btn purge"
+						onclick="tmp.inf.pantheon.startPurge()"
+						tooltip="Starting a Purge run performs an Infinity reset, disables Pantheon features, and traps you in all Stadium Challenges except Reality (at tier 1). In addition, velocity gain is raised to the power of 0.333."
+					></button
+					><br /><br />
+					You have <span id="purgePower" class="spectral"></span> Purge Power, which makes the cancelling out
+					of Heavenly Chips & Demonic Souls raised to the power of
+					<span id="purgePowerEff" class="spectral"></span>. <br /><br /><br /><br />
 				</div>
 			</div>
 			<div id="derivatives" class="inftab">
-				<div id="derivs"></div><br><br>
+				<div id="derivs"></div>
+				<br /><br />
 				<button id="dervUnlock" class="btn locked" onclick="tmp.inf.derv.doUnl()"></button>
 			</div>
 		</div>

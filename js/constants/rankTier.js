@@ -34,9 +34,9 @@ const RANK_DESCS = {
 	500: "time goes by 95% faster.",
 	1000: "time goes by 98% faster.",
 	10000: "time goes by 100% faster.",
-}
+};
 
-const DEFAULT_RANK_DESC = "rank up."
+const DEFAULT_RANK_DESC = "rank up.";
 
 // Tiers
 
@@ -58,6 +58,6 @@ const TIER_DESCS = {
 	16: "time goes by 60% faster.",
 	18: "time goes by 80% faster.",
 	20: "time goes by 100% faster.",
-}
+};
 
-const DEFAULT_TIER_DESC = "tier up."
+const DEFAULT_TIER_DESC = "tier up.";

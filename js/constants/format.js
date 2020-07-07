@@ -1,10 +1,10 @@
 const DISTANCES = {
-	cm: 1/100,
+	cm: 1 / 100,
 	m: 1,
 	km: 1e3,
 	Mm: 1e6,
 	Gm: 1e9,
-	Tm: 1e12, 
+	Tm: 1e12,
 	Pm: 1e15,
 	ly: 9.461e15,
 	pc: 3.086e16,
@@ -12,10 +12,10 @@ const DISTANCES = {
 	Mpc: 3.086e22,
 	Gpc: 3.086e25,
 	uni: 4.4e26,
-}
+};
 
 const TIMES = {
-	ms: 1/1000,
+	ms: 1 / 1000,
 	s: 1,
 	m: 60,
 	h: 3600,
@@ -23,4 +23,4 @@ const TIMES = {
 	w: 604800,
 	y: 31556736,
 	mil: 31556736000,
-}
+};

@@ -95,4 +95,4 @@ const DEFAULT_START = {
 		},
 	},
 	automators: {},
-}
+};
