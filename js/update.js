@@ -134,7 +134,12 @@ function updateAfterTick() {
 		gameWindow.resizeTo(Math.random()*400, Math.random()*400)
 		gameWindow.moveTo(Math.random()*1000, Math.random()*200)
 		const bufhiesibvfib = document.body.querySelectorAll("*")
-		for (const i in bufhiesibvfib) if (bufhiesibvfib[i].style !== undefined) bufhiesibvfib[i].style.transform = `rotate(${Math.random() * 360}deg)`
+		for (const i in bufhiesibvfib) if (bufhiesibvfib[i].style !== undefined) {
+			let t = `rotate(${Math.random() * 360}deg) `
+			t += "skew("+(Math.random() * 360)+"deg) "
+			t += "scale("+((Math.random() * 3) ** 2 / 8)+") "
+			bufhiesibvfib[i].style.transform = t
+		}
 	}
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()

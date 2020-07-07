@@ -47,6 +47,10 @@ function updateTempOptions() {
 				let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
 				if (all.indexOf(null)>-1) s.savePos = all.indexOf(null)+1
 				else s.savePos = all.length+1
+				if (s.savePos>MAX_SAVES) {
+					alert("This save was not created properly (it has a position greater than the limit!)")
+					return
+				}
 				tmp.options.setSave(s)
 			} catch(e) {
 				notifier.error("Invalid Save")
@@ -63,8 +67,12 @@ function updateTempOptions() {
 		s.modes = modes
 		if (s.modes.includes("aau")) s.achievements = getAllAchievements()
 		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
-		if (all.indexOf(null)>-1) s.savePos = all.indexOf(null)+1
+		if (all.indexOf(null)>-1 && all[all.indexOf(null)] === null) s.savePos = all.indexOf(null)+1
 		else s.savePos = all.length+1
+		if (s.savePos>MAX_SAVES) {
+			alert("You have too many saves! You need to delete one in order to make a new one!")
+			return
+		}
 		tmp.options.save(s)
 		reload()
 	}
@@ -145,7 +153,7 @@ function updateTempOptions() {
 			if (all[x]===undefined || all[x]===null) continue
 			let active = player.saveID==all[x].saveID
 			let name = (all[x].options.name=="Save #")?("Save #"+(all[x].savePos?all[x].savePos:"???")):all[x].options.name
-			els[x] = {name: name, info: tmp.options.getInfo(all[x]), onclick1: "tmp.options.setSave(&quot;"+btoa(JSON.stringify(all[x]))+"&quot;, true)", txt1: "Load", onclick2: "tmp.options.deleteSave("+x+")", txt2: "Delete", buttons: 2}
+			els[x] = {name: name+(active?" (Active)":""), info: tmp.options.getInfo(all[x]), onclick1: "tmp.options.setSave(&quot;"+btoa(JSON.stringify(all[x]))+"&quot;, true)", txt1: "Load", onclick2: "tmp.options.deleteSave("+x+")", txt2: "Delete", buttons: 2}
 		}
 		tmp.options.setDropdown(dropdown, els, true)
 	}
@@ -166,7 +174,7 @@ function updateTempOptions() {
 	}
 	tmp.options.modes.confirm = function() {
 		if (modesSelected.length==0) tmp.options.startModes([])
-		if (modesSelected.length==1) {
+		else if (modesSelected.length==1) {
 			let modeData = MODES[modesSelected[0]]
 			if (modeData.balanceCheck) if (!confirm("This mode is "+modeData.balancing+". Are you sure you want to enter this run?")) return
 			tmp.options.startModes(modesSelected)

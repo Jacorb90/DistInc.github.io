@@ -126,7 +126,7 @@ function updateHTML() {
 		tmp.el.cadavers.setHTML("<span class='dead'>"+showNum(player.collapse.cadavers)+"</span> cadavers<span class='dead'>"+((tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain.div(100))+"/sec)"):(tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain)+"/sec)"):"")+"</span>")
 		tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff))
 		tmp.el.sacrificeCadavers.setClasses({btn: true, locked: player.collapse.cadavers.eq(0), btndd: player.collapse.cadavers.gt(0)})
-		tmp.el.lifeEssence.setHTML("<span class='alive'>"+showNum(player.collapse.lifeEssence)+"</span> life essence<span class='alive'>"+((tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff))+"/sec)"):(tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).div(10))+"/sec)"):""))
+		tmp.el.lifeEssence.setHTML("<span class='alive'>"+showNum(player.collapse.lifeEssence)+"</span> life essence<span class='alive'>"+((tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1))+"/sec)"):(tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).div(10))+"/sec)"):""))
 		for (let i=1;i<=EM_AMT;i++) {
 			let ms = ESSENCE_MILESTONES[i]
 			tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
@@ -298,6 +298,7 @@ function updateHTML() {
 	root.style.setProperty("--tb", player.options.theme=="dark"?"#00968f":"#03fcf0")
 	root.style.setProperty("--ach", player.options.theme=="dark"?"#287d1b":"#4ceb34")
 	root.style.setProperty("--rbt", player.options.theme=="dark"?"#666666":"#c9c9c9")
+	root.style.setProperty("--threeArrows", player.options.theme=="dark"?'url("images/threeArrows2.jpg")':'url("images/threeArrows.jpg")')
 	
 	tmp.el.tdeEff.setHTML(tmp.ach[63].has?("Time Doesn't Exist multiplier: "+showNum(tmp.ach63)+"x "+(tmp.ach63.gte(tmp.ach63sc)?("<span class='sc'>(softcapped)</span>"):"")+"<br><br>"):"")
 	tmp.el.tudeEff.setHTML(tmp.ach[112].has?("The Universe Doesn't Exist multiplier: "+showNum(tmp.ach112)+"x<br><br>"):"")

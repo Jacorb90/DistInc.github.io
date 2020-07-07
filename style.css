@@ -4,6 +4,7 @@
 	--tb: #03fcf0;
 	--ach: #4ceb34;
 	--rbt: #c9c9c9;
+	--threeArrows: url("images/threeArrows.jpg");
 }
 
 * {
@@ -527,7 +528,7 @@ table { margin: auto; }
 }
 
 .dcArrow {
-	font-size: 60px;
+	font-size: 100px;
 	font-weight: bold;
 }
 
@@ -818,7 +819,6 @@ table { margin: auto; }
 	text-decoration:none;
 	text-shadow:none;
 	animation: darkbtn 4s ease infinite;
-	transition-duration: 0.2s;
 }
 
 .btn.std:hover {
@@ -851,7 +851,6 @@ table { margin: auto; }
 	padding:7px 25px;
 	text-decoration:none;
 	text-shadow:none;
-	transition-duration: 0.4s;
 }
 
 .btn.pnth:hover {
@@ -886,7 +885,6 @@ table { margin: auto; }
 	text-decoration:none;
 	text-shadow:none;
 	animation: darkbtn 4s ease infinite;
-	transition-duration: 0.2s;
 }
 
 .btn.drv:hover {
@@ -900,6 +898,13 @@ table { margin: auto; }
 	top:3px;
 	left:2px;
 	box-shadow: none;
+}
+
+#dc {
+	background-image: var(--threeArrows);
+	background-repeat: no-repeat;
+	background-size: 45% 90%;
+	background-position: 47.5% 85%;
 }
 
 @keyframes grosstxt {
@@ -1082,6 +1087,65 @@ table { margin: auto; }
 
 [tooltip]:hover:before,
 [tooltip]:hover:after {
+    visibility: visible;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+}
+
+[widetooltip] {
+    position: relative;
+    z-index: 2;
+}
+
+[widetooltip]:before,
+[widetooltip]:after {
+    visibility: hidden;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+[widetooltip]:before {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-bottom: 5px;
+    margin-left: -200px;
+    padding: 7px;
+    width: 400px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #000;
+    background-color: hsla(0, 0%, 5%, 0.9);
+    color: #fff;
+    content: attr(widetooltip);
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.2;
+    transition-duration: .5s;
+}
+
+[widetooltip]:after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    width: 0;
+    border-top: 5px solid #000;
+    border-top: 5px solid hsla(0, 0%, 5%, 0.9);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+    transition-duration: .5s;
+}
+
+[widetooltip]:hover:before,
+[widetooltip]:hover:after {
     visibility: visible;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);

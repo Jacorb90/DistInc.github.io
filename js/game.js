@@ -26,8 +26,8 @@ function tickWithoutTS(diff) {
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
 	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff))
-	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff))
-	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).times(diff.div(10)))
+	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff))
+	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff.div(10)))
 	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff))
 	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
 	if (player.inf.endorsements.gte(10)) {

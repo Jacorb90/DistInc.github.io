@@ -25,7 +25,7 @@ function updateTempCollapse() {
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff)
 	tmp.collapse.sacrifice = function() {
 		if (player.collapse.cadavers.eq(0)||tmp.nerfs.active("noLifeEssence")) return
-		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff))
+		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1))
 		if (tmp.inf?!tmp.inf.upgs.has("2;4"):true) player.collapse.cadavers = new ExpantaNum(0)
 	}
 	tmp.collapse.hasMilestone = function(n) { return player.collapse.lifeEssence.gte(ESSENCE_MILESTONES[n].req) }

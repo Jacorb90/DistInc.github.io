@@ -11,6 +11,7 @@ const OPT_NAMES = {
 	theme: ["normal", "dark"],
 }
 const AUTOSAVE_TIME = 10
+const MAX_SAVES = 5
 
 // Notations
 
