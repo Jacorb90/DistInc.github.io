@@ -3,10 +3,13 @@ const DEFAULT_START = {
 	version: 1.4,
 	optionsTab: "saving",
 	achievements: [],
+	savePos: 1,
+	saveID: Math.floor(Math.random()*9000000000000+1000000000000), // I know this might cause a problem since two save IDs might be the same, but there is a 1 in 10 trillion chance of it happening per save, so whatever
 	options: {
 		sf: 5,
 		not: "scientific",
 		theme: "normal",
+		name: "Save #",
 		autoSave: true,
 	},
 	modes: [],

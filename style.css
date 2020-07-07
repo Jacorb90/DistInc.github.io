@@ -419,6 +419,22 @@ table { margin: auto; }
 	display: block;
 }
 
+.dropdown-content2 {
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-height: 400px;
+	max-height: 400px;
+	width: 100%;
+	background-color: grey;
+	z-index: 1;
+	overflow-y: auto;
+}
+
+.dropdown-content2 button {
+	display: block;
+}
+
 .btn.dark {
 	box-shadow: 3px 4px 0px 0px #1d0833;
 	background:repeating-linear-gradient(45deg, rgb(184, 0, 82) 0%, rgb(47, 0, 67) 15%, rgb(184, 0, 82) 30%);

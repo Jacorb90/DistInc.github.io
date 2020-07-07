@@ -44,4 +44,10 @@ class Element {
 	
 	setTooltip(input) { this.setAttr("tooltip", input) }
 	static setTooltip(id, input) { new Element(id).setAttr("tooltip", input) }
+	
+	setSize(h,w) {
+		this.el.style["min-height"] = h+"px"
+		this.el.style["min-width"] = w+"px"
+	}
+	static setSize(id, h,w) { new Element(id).setSize(h,w) }
 }

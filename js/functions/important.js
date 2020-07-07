@@ -11,6 +11,10 @@ function loadGame() {
 		player.modes = []
 		player = transformToEN(DEFAULT_START, DEFAULT_START)
 	}
+	let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+	let c = 1
+	for (let i=0;i<all.length;i++) if (all[i] !== null) if (all[i].saveID==player.saveID) c = i+1
+	player.savePos = c
 	modeLoad([])
 	setupHTML()
 	interval = setInterval(function() {

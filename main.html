@@ -128,11 +128,13 @@
 				<table>
 					<tr>
 						<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
+						<td><button class="btn tb opt" onclick="tmp.options.loads()">Load</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
 					</tr>
-				</table>
+				</table><br>
+				<div class="dropdown" style="width: 100%; min-height: 600px; max-height: 600px; left: 0%; position: absolute"><div id="dropDown2" class="dropdown-content2"></div></div>
 			</div>
 			<div id="modes" class="optionstab" style="display: none;">
 				<table>
@@ -156,6 +158,7 @@
 						<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
 						<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
 						<td><button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">Theme: X</button></td>
+						<td><button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">Rename Save</button></td>
 						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
 					</tr>
 				</table><br>
