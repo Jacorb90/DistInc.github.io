@@ -8,14 +8,14 @@ function updateAchievements() {
 	if (player.tr.unl) tmp.ach[17].grant()
 	if (player.collapse.cadavers.gt(0)) tmp.ach[18].grant()
 	
-	if (player.distance.gte(5e5)) tmp.ach[21].grant()
-	if (player.rank.gte(8)) tmp.ach[22].grant()
+	if (player.distance.gte(tmp.modes.extreme.active?3e4:5e5)) tmp.ach[21].grant()
+	if (player.rank.gte(tmp.modes.extreme.active?6:8)) tmp.ach[22].grant()
 	if (player.tier.gte(3)) tmp.ach[23].grant()
 	if (player.rockets.gte(2)) tmp.ach[24].grant()
 	if (player.rf.gte(2)) tmp.ach[25].grant()
 	if (Object.keys(player.automation.robots).includes("rankbot")) tmp.ach[26].grant()
 	if (player.tr.cubes.gte(1000)) tmp.ach[27].grant()
-	if (player.collapse.cadavers.gte(1000)) tmp.ach[28].grant()
+	if (player.collapse.cadavers.gte(66)) tmp.ach[28].grant()
 		
 	if (player.distance.gte(1e12)) tmp.ach[31].grant()
 	if (player.rank.gte(12)) tmp.ach[32].grant()
@@ -54,7 +54,7 @@ function updateAchievements() {
 	let bool = true
 	let antiBool = true
 	for (let i=1;i<=PTH_AMT;i++) if (player.pathogens.upgrades[i].eq(0)) {
-		bool = false
+		if (i<=10) bool = false
 	} else antiBool = false
 	if (bool) tmp.ach[68].grant()
 	

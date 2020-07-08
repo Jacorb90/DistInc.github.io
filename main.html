@@ -26,6 +26,7 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/temp_data.js"></script>
+	<script type="text/javascript" src="js/constants/news.js"></script>
 	
 	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
@@ -41,6 +42,7 @@
 	<script type="text/javascript" src="js/functions/important.js"></script>
 	<script type="text/javascript" src="js/functions/tr.js"></script>
 	<script type="text/javascript" src="js/functions/misc.js"></script>
+	<script type="text/javascript" src="js/functions/news.js"></script>
 	
 	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
@@ -72,6 +74,11 @@
 	<script type="text/javascript" src="js/temp/misc.js"></script>
 	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
 	
+	<!-- Extreme Mode Temp Data -->
+	
+	<script type="text/javascript" src="js/temp/extreme/rankCheap.js"></script>
+	<script type="text/javascript" src="js/temp/extreme/fn.js"></script>
+	
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>
 	<title>Distance Incremental</title>
@@ -79,49 +86,58 @@
 </head>
 <body id="body" onload="loadGame()">
 	<div id="mainContainer">
-		<div class="band lb">
+		<div class="band lb" style="min-height: 100px;">
 			<table>
 				<tr>
-					<td><button id="maintabbtn" class="btn tb" onclick="showTab('main')">Main</button></td>
-					<td><button id="optionstabbtn" class="btn tb" onclick="showTab('options')">Options</button></td>
-					<td><button id="achievementstabbtn" class="btn tb" onclick="showTab('achievements')">Achievements</button></td>
-					<td><button id="rocketstabbtn" class="btn tb rckt" onclick="showTab('rockets')">Rockets</button></td>
-					<td><button id="autotabbtn" class="btn tb rckt" onclick="showTab('auto')">Automation</button></td>
-					<td><button id="trtabbtn" class="btn tb rt" onclick="showTab('tr')">Time Reversal</button></td>
-					<td><button id="collapsetabbtn" class="btn tb btndd" onclick="showTab('collapse')">Universal Collapse</button></td>
-					<td><button id="pathogenstabbtn" class="btn tb gross" onclick="showTab('pathogens')">Pathogens</button></td>
-					<td><button id="dctabbtn" class="btn tb dark" onclick="showTab('dc')">Dark Circle</button></td>
-					<td><button id="inftabbtn" class="btn tb inf" onclick="showTab('inf')">Infinity</button></td>
+					<td><button id="maintabbtn" class="btn tb main" onclick="showTab('main')">Main</button></td>
+					<td><button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button></td>
+					<td><button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">Achievements</button></td>
+					<td><button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">Rockets</button></td>
+					<td><button id="furnacetabbtn" class="btn tb fn main" onclick="showTab('furnace')">The Furnace</button></td>
+					<td><button id="autotabbtn" class="btn tb rckt main" onclick="showTab('auto')">Automation</button></td>
+					<td><button id="trtabbtn" class="btn tb rt main" onclick="showTab('tr')">Time Reversal</button></td>
+					<td><button id="collapsetabbtn" class="btn tb btndd main" onclick="showTab('collapse')">Universal Collapse</button></td>
+					<td><button id="pathogenstabbtn" class="btn tb gross main" onclick="showTab('pathogens')">Pathogens</button></td>
+					<td><button id="dctabbtn" class="btn tb dark main" onclick="showTab('dc')">Dark Circle</button></td>
+					<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
 				</tr>
 			</table>
-			<span id="nextFeature"></span><br>
+			<span id="nextFeature"></span><br><br>
+			<div id="newsticker"><div id="news"></div></div>
 		</div>
 		<br>
 		<div id="main" class="tab">
 			<span id="ts"></span>
 			You have gone a total of <span id="distance"></span>.<br>
-			Your current velocity is <span id="velocity"></span>/s (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
+			Your current velocity is <span id="velocity"></span> (<span id="mvName"></span> <span id="maxVel"></span>/s).<br>
 			Your current acceleration is <span id="acceleration"></span>/s<sup>2</sup><span id="accEn"></span>.<br><br>
-			<span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc"></span><br>Req: <span id="rankReq"></span>.</button><br><br>
-			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc"></span><br>Req: Rank <span id="tierReq"></span>.</button>
+			<table>
+				<tr>
+					<td><span id="rankName"></span> <span id="rank"></span>: <button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">Reset your journey, but <span id="rankDesc" class="based"></span><br>Req: <span id="rankReq" class="based"></span>.</button></td>
+					<td id="rankCheapDiv">&nbsp;&nbsp;&nbsp;<span id="rankCheapName"></span> <span id="rankCheap"></span>: <button id="rankCheapUp" class="btn locked" onclick="tmp.rankCheap.layer.reset()">Reset your journey, but weaken the rank requirement formula.<br>Req: <span id="rankCheapReq" class="based"></span>.</button></td>
+				</tr>
+			</table><br><br>
+			<span id="tierName"></span> <span id="tier"></span>: <button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">Reset your ranks, but <span id="tierDesc" class="based"></span><br>Req: Rank <span id="tierReq" class="based"></span>.</button>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
 				<tr>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('saving')">Saving</button></td>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('modes')">Modes</button></td>
-					<td><button class="btn tb rckt" onclick="showOptionsTab('other')">Other</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('saving')">Saving</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('modes')">Modes</button></td>
+					<td><button class="btn tb rckt main" onclick="showOptionsTab('other')">Other</button></td>
 				</tr>
 			</table><br><br>
 			<div id="saving" class="optionstab">
 				<table>
 					<tr>
 						<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
+						<td><button class="btn tb opt" onclick="tmp.options.loads()">Load</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
 					</tr>
-				</table>
+				</table><br>
+				<div class="dropdown" style="width: 100%; min-height: 600px; max-height: 600px; left: 0%; position: absolute"><div id="dropDown2" class="dropdown-content2"></div></div>
 			</div>
 			<div id="modes" class="optionstab" style="display: none;">
 				<table>
@@ -130,6 +146,10 @@
 						<td><button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">AAU</button></td>
 						<td><button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button></td>
 						<td><button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button></td>
+					</tr>
+					<tr>
+						<td><button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')">Extreme</button></td>
+						<td><button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')">Easy</button></td>
 					</tr>
 				</table><br><br>
 				<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
@@ -140,33 +160,51 @@
 					<tr>
 						<td><button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">Significant Figures: X</button></td>
 						<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
+						<td><button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">Theme: X</button></td>
+						<td><button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">Rename Save</button></td>
 						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
 					</tr>
 				</table><br>
 				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
 			</div><br><br>
-			Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a>, and it uses <a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and <a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I created. If you would like to create a mod of this game, that's fine, just give credit and name it something slightly different (like Distance Incremental NG+ or something of the sort)...
+			<div id="footer">
+				Notice: This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a> by Hevipelle, and it uses <a href="https://jquery.com/">jQuery.js</a>, <a href="https://notifyjs.jpillora.com/">notify.js</a>, and <a href="https://github.com/Naruyoko/ExpantaNum.js">ExpantaNum.js</a>, none of which I take credit for. If you would like to create a mod of this game, that's fine, just give credit, let me know in the discord (preferrably with a game link), and name it something slightly different (like Distance Incremental NG+ or something of the sort)...<br><br>
+				<a href="changelog.html" target="_blank">Changelog</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="key.html" target="_blank">Distances</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
-			<div id="achDesc" class="band gn"></div>
+			<div id="achDesc" class="band gn" style="position: sticky; top: 0px; min-height: 100px"></div>
 			<table id="achTable"></table>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
-			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain"></span> rockets <span id="rocketGainSC"></span></button><br><br>
-			You have <span id="rocketsAmt"></span> rockets, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
-			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq"></span> rockets.</button><br><br>
-			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%.
+			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">Reset all previous progress to gain <span id="rocketGain" class="based2"></span> rockets <span id="rocketGainSC"></span></button><br><br>
+			You have <span id="rocketsAmt"></span>, which are making your acceleration & maximum velocity boost themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br><br>
+			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset()">Reset your rockets to get 1 rocket fuel<br>Req: <span id="rfReq" class="based"></span> rockets.</button><br><br>
+			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by <span id="rfEff"></span>%, and adds <span id="rf2"></span> additional rockets to their effect.
+		</div>
+		<div id="furnace" class="tab" style="display: none;">
+			You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added Rocket effect.<br><br>
+			<table>
+				<tr>
+					<td><button id="fnu1" class="btn locked" onclick="tmp.fn.upgs[1].buy()" style="min-height: 100px; max-height: 100px;">Triple Coal gain (before Extreme Mode reduction)<br>Cost: <span id="fnu1cost"></span> Coal<br><span id="fnu1name"></span>Level: <span id="fnu1lvl"></span></button></td>
+					<td><button id="fnu2" class="btn locked" onclick="tmp.fn.upgs[2].buy()" style="min-height: 100px; max-height: 100px;">Gain an extra Rank Cheapener<br>Cost: <span id="fnu2cost"></span> Coal<br><span id="fnu2name"></span>Level: <span id="fnu2lvl"></span></button></td>
+					<td><button id="fnu3" class="btn locked" onclick="tmp.fn.upgs[3].buy()" style="min-height: 100px; max-height: 100px;">Double Rocket gain<br>Cost: <span id="fnu3cost"></span> Coal<br><span id="fnu3name"></span>Level: <span id="fnu3lvl"></span></button></td>
+				</tr>
+			</table><br><br><br>
+			<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">Reset all Furnace progress to gain a Blue Flame<br>Req: <span id="bfReq"></span> Coal</button><br><br>
+			You have <span id="bfAmt" class="blfl"></span> Blue Flame, which makes the cost of all Furnace Upgrades scale <span id="bfEff" class="blfl"></span>% slower.
 		</div>
 		<div id="auto" class="tab" style="display: none;">
 			<table>
 				<tr>
-					<td>You have <span id="scraps"></span> scraps.</td>
+					<td>You have <span id="scraps"></span>.</td>
 					<td>&emsp;</td>
-					<td>You have <span id="intAmt"></span> intelligence.</td>
+					<td>You have <span id="intAmt"></span>.</td>
 				</tr>
 			</table><table>
 				<tr>
 					<td><button id="rankbot" class="btn locked" onclick="tmp.auto['rankbot'].btn()"></button></td>
+					<td><button id="rankCheapbot" class="btn locked" onclick="tmp.auto['rankCheapbot'].btn()"></button></td>
 					<td><button id="tierbot" class="btn locked" onclick="tmp.auto['tierbot'].btn()"></button></td>
 					<td><button id="fuelbot" class="btn locked" onclick="tmp.auto['fuelbot'].btn()"></button></td>
 				</tr>
@@ -181,28 +219,28 @@
 						<td><b>Magnitude</b>: <span id="robotMagnitude"></span></td>
 					</tr>
 					<tr>
-						<td><button id="buyRobotInterval" class="btn locked" onclick="tmp.auto[player.automation.open].buy(0)"></button></td>
-						<td><button id="buyRobotMagnitude" class="btn locked" onclick="tmp.auto[player.automation.open].buy(1)"></button></td>
+						<td><button id="buyRobotInterval" class="btn locked" onclick="tmp.auto[player.automation.open].buy(0)" tooltip="The interval is how quickly the robot can purchase their designated upgrade."></button></td>
+						<td><button id="buyRobotMagnitude" class="btn locked" onclick="tmp.auto[player.automation.open].buy(1)" tooltip="The magnitude is how many the robot can purchase at once."></button></td>
 					</tr>
 				</table>
 			</div><br>
 			<div id="automator"></div>
 		</div>
 		<div id="tr" class="tab" style="display: none;">
-			<br><button id="rt" class="btn rt" onclick="reverseTime()"></button><br><br>
-			You have <span id="tc"></span> Time Cubes, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
+			<br><button id="rt" class="btn rt" onclick="reverseTime()" widetooltip="Once you reverse time, all previous resources will be lost over time instead of being generated! In return, you gain Time Cubes over time."></button><br><br>
+			You have <span id="tc"></span>, translated to <span id="frf"></span> free rocket fuel <span id="timeCubeEffSC"></span><br><br>
 			<table id="trTable"></table>
 		</div>
 		<div id="collapse" class="tab" style="display: none;">
 			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">Reset all previous progress to gain <span id="cadaverGain" class="dead"></span> cadavers <span id="cadaverGainSC"></span></button><br><br>
-			You have <span id="cadavers" class="dead"></span> cadavers, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
+			You have <span id="cadavers"></span>, which make time go <span id="cadaverEff" class="dead"></span>x faster <span id="cadaverEffSC"></span><br><br>
 			<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">Sacrifice all your cadavers into life essence.</button><br><br>
-			You have <span id="lifeEssence" class="alive"></span> life essence.<br><br>
+			You have <span id="lifeEssence"></span>.<br><br>
 			<table id="cmTable"></table><br><br>
 		</div>
 		<div id="pathogens" class="tab" style="display: none;">
 			<span id="tdeEff"></span>
-			You have <span id="pathogensAmt" class="grosstxt"></span> Pathogens <span id="pthGainSC"></span><br><br>
+			You have <span id="pathogensAmt"></span> <span id="pthGainSC"></span><br><br>
 			<button class="btn gross" onclick="tmp.pathogens.maxAll()">Max All</button><br><br>
 			<span id="pthUpgPow" class="grosstxt"></span>
 			<div id="pthUpgs"></div><br><br>
@@ -220,14 +258,14 @@
 				<tr>
 					<td class="darkcircleHidden"></td>
 					<td class="darkcircleHidden"></td>
-					<td class="darkcircleHidden dcArrow"><div id="arrowToDarkMatter" class="dcArrowTxt"></div></td>
+					<td class="darkcircleHidden dcArrow"><div style="position: relative; top: -15px;" id="arrowToDarkMatter" class="dcArrowTxt"></div></td>
 					<td class="darkcircleHidden"></td>
 					<td class="darkcircleHidden"></td>
 				</tr>
 				<tr>
 					<td class="darkcircleHidden"></td>
 					<td class="darkcircleHidden"></td>
-					<td id="darkCore" class="darkcore locked inactive" onclick="tmp.dc.buyCore()"></td>
+					<td id="darkCore" class="darkcore locked inactive" onclick="tmp.dc.buyCore()" widetooltip="Generation in the Dark Circle is shown by the arrows. For example, Dark Cores generate Dark Matter, which is indicated by the above arrow."></td>
 					<td class="darkcircleHidden"></td>
 					<td class="darkcircleHidden"></td>
 				</tr>
@@ -239,6 +277,7 @@
 					<td id="darkEnergy" class="darkcircle"></td>
 				</tr>
 			</table>
+			<br><br><br><br><br><br>
 		</div>
 		<div id="inf" class="tab" style="display: none;">
 			<div id="forceInf"><button class="btn inf" onclick="tmp.inf.layer.reset(true)">Get <span class="infinity">Infinity</span> to reset you for no reward.</button><br><br></div>
@@ -249,11 +288,11 @@
 						<td><button class="btn tb inf" style="visibility: hidden"></button></td>
 					</tr>
 					<tr>
-						<td><button id="infinitytabbtn" class="btn tb inf" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
-						<td><button id="ascensiontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
-						<td><button id="stadiumtabbtn" class="btn tb inf" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
-						<td><button id="pantheontabbtn" class="btn tb inf" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
-						<td><button id="derivativestabbtn" class="btn tb inf" onclick="tmp.inf.showTab('derivatives')">Derivatives</button></td>
+						<td><button id="infinitytabbtn" class="btn tb inf main" onclick="tmp.inf.showTab('infinity')">Infinity</button></td>
+						<td><button id="ascensiontabbtn" class="btn tb asc main" onclick="tmp.inf.showTab('ascension')">Ascension</button></td>
+						<td><button id="stadiumtabbtn" class="btn tb std main" onclick="tmp.inf.showTab('stadium')">The Stadium</button></td>
+						<td><button id="pantheontabbtn" class="btn tb pnth main" onclick="tmp.inf.showTab('pantheon')">The Pantheon</button></td>
+						<td><button id="derivativestabbtn" class="btn tb drv main" onclick="tmp.inf.showTab('derivatives')">Derivatives</button></td>
 					</tr>
 				</table>
 			</div>
@@ -261,7 +300,7 @@
 				<span id="endorsementName"></span>Endorsements: <span id="endorsements" style="font-size: 25px;"></span>, which has created a base knowledge gain of <span id="knowledgeBase" style="font-size: 25px;"></span>.<br>
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br><br>
 				<span id="tudeEff"></span>
-				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge.<br><br>
+				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge <span style="font-size: 25px;">(+<span id="knowledgeGain"></span>/sec)</span>.<br><br>
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br><br>
 				<div id="infUpgData" class="bandBig or"></div><br><br>
 				<table id="infUpgs"></table><br><br>
@@ -271,10 +310,10 @@
 				<span id="perkPower"></span><br>
 				<table>
 					<tr>
-						<td><button id="perk1" class="btn perk" onclick="tmp.inf.asc.activatePerk(1)">Godhood Perk</button></td>
-						<td><button id="perk2" class="btn perk" onclick="tmp.inf.asc.activatePerk(2)">Holy Perk</button></td>
-						<td><button id="perk3" class="btn perk" onclick="tmp.inf.asc.activatePerk(3)">Sainthood Perk</button></td>
-						<td><button id="perk4" class="btn perk" onclick="tmp.inf.asc.activatePerk(4)">Glory Perk</button></td>
+						<td><button id="perk1" class="btn perk" onclick="tmp.inf.asc.activatePerk(1)" style="min-height: 40px !important;">Godhood Perk</button></td>
+						<td><button id="perk2" class="btn perk" onclick="tmp.inf.asc.activatePerk(2)" style="min-height: 40px !important;">Holy Perk</button></td>
+						<td><button id="perk3" class="btn perk" onclick="tmp.inf.asc.activatePerk(3)" style="min-height: 40px !important;">Sainthood Perk</button></td>
+						<td><button id="perk4" class="btn perk" onclick="tmp.inf.asc.activatePerk(4)" style="min-height: 40px !important;">Glory Perk</button></td>
 					</tr>
 					<tr>
 						<td>Dark Flow is <span id="perkEff1" style="font-size: 25px;"></span>x as fast.</td>
@@ -302,7 +341,8 @@
 			<div id="stadium" class="inftab">
 				<br><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button><br><br>
 				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button><br><br>
-				Note: Perks do nothing in Stadium Challenges.<br><br>
+				Note: Perks do nothing in Stadium Challenges<br>
+				Note 2: Each Challenge completion makes the others harder, with the exception being Reality, which actually gets easier.<br><br>
 				<table>
 					<tr>
 						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description"><span class="spaceon">Spaceon</span><br><button id="spaceonChall" class="btn locked" onclick="tmp.inf.stadium.start('spaceon')">Start</button><br><br><span id="spaceonBtm" class="stadiumDesc"></span></td>
@@ -320,13 +360,13 @@
 				<div style="background-color: pink;">
 					<br><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">Transform one Spectral Gem into an Angel</button><br><br>
 					You have <span id="angels" class="spectral"></span> Angels.<br><br>
-					You have <span id="chips" class="spectral"></span> Heavenly Chips, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					You have <span id="chips" class="spectral"></span> Heavenly Chips <span id="chipGain" style="color: #9fc4bc; font-weight: bold"></span>, translated to a <span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
 					<br><br><br>
 				</div>
 				<div style="background-color: #a31414;">
 					<br><button id="transferDemons" class="btn locked" onclick="tmp.inf.pantheon.transfer('demons')">Transform one Spectral Gem into a Demon</button><br><br>
 					You have <span id="demons" class="spectral"></span> Demons.<br><br>
-					You have <span id="souls" class="spectral"></span> Demonic Souls, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
+					You have <span id="souls" class="spectral"></span> Demonic Souls <span id="soulGain" style="color: #9fc4bc; font-weight: bold"></span>, translated to a <span id="soulBoost" class="spectral"></span>% increase to Perk Strength.
 					<br><br><br>
 				</div>
 				<div id="purgeDiv" style="background-color: #259199">

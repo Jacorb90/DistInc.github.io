@@ -7,6 +7,15 @@ function loadGame() {
 		player.tab = DEFAULT_START.tab
 		player.optionsTab = DEFAULT_START.optionsTab
 	}
+	if (player.modes.includes("absurd")) if (!confirm("Are you sure you want to continue playing in Absurd Mode?")) {
+		player.modes = []
+		player = transformToEN(DEFAULT_START, DEFAULT_START)
+	}
+	let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+	let c = 1
+	for (let i=0;i<all.length;i++) if (all[i] !== null) if (all[i].saveID==player.saveID) c = i+1
+	player.savePos = c
+	modeLoad([])
 	setupHTML()
 	interval = setInterval(function() {
 		simulateTime()
@@ -14,10 +23,10 @@ function loadGame() {
 }
 
 function simulateTime() {
-	player.time = getCurrentTime()
-	let time = new ExpantaNum(player.time).sub(last).max(1000*1/33)
+	if (player.time===undefined) player.time = getCurrentTime()
+	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time))
 	gameLoop(time.div(1000))
-	last = getCurrentTime()
+	player.time = getCurrentTime()
 }
 
 function autoTick(diff) {
@@ -36,8 +45,12 @@ function autoTick(diff) {
 	}
 	
 	// Automators
+	if (player.automators["furnace"] && tmp.modes.extreme.active) {
+		for (let i=1;i<=3;i++) tmp.fn.upgs[i].max()
+		player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor())
+	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll()
-	if (player.automators["cores"]) tmp.dc.maxCores()
+	if (player.automators["cores"] && player.collapse.cadavers.gt(tmp.dc.coreCost)) tmp.dc.maxCores()
 }
 
 function showModeDescs(modes) {
@@ -51,4 +64,16 @@ function showModeDescs(modes) {
 	} else if (modes.length==1) d = MODES[modes[0]].desc
 	else if (modes.length==0) d = "Just the main game."
 	alert(d)
+}
+
+function modeLoad(resetted) {
+	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
+		player.modes.filter(x => Object.keys(MODE_VARS).includes(x)).forEach(x => function() {
+			let data = MODE_VARS[x]
+			for (let i=0;i<Object.keys(data).length;i++) {
+				if (player[Object.keys(data)[i]]===undefined||resetted.includes(Object.keys(data)[i])) player[Object.keys(data)[i]] = deepCopy(Object.values(data)[i])
+			}
+			player = MODE_EX[x](player)
+		}())
+	}
 }

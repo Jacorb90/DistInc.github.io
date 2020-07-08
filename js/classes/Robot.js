@@ -17,9 +17,9 @@ class Robot {
 	get magCost() { return ExpantaNum.pow(ROBOT_COST_INC.magnitude[this.name], this.m.plus(1).pow(2)).times(ROBOT_COST_START.magnitude[this.name]) }
 	
 	get btnTxt() {
-		if (!this.unl) return "Purchase the "+capitalFirst(this.name)+" for "+showNum(ROBOT_REQS[this.name])+" scraps."
+		if (!this.unl) return "Purchase the "+capitalFirst(this.name=="rankCheapbot"?"Rank Cheapener-bot":this.name)+" for "+showNum(ROBOT_REQS[this.name])+" scraps."
 		if (this.tabOpen) return "Close up this robot."
-		return "Open up "+capitalFirst(this.name)+" for improvements."
+		return "Open up "+capitalFirst(this.name=="rankCheapbot"?"Rank Cheapener-bot":this.name)+" for improvements."
 	}
 	
 	btn() {

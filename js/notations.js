@@ -53,6 +53,8 @@ notations.standard = function(val, places, locs) {
 notations.mixed = function(val, places, locs) {
 	if (val.lt(0.1)) return "1/"+notations.mixed(val.pow(-1), places, locs)
 	else if (val.lt(1e33)) return notations.standard(val, places, locs)
+	else if (val.lt(ExpantaNum.pow(10, ExpantaNum.pow(10, places-1)))) return notations.scientific(val, places, locs)
+	else if (val.lt("ee33")) return "e"+notations.standard(val.log10(), places, locs)
 	else return notations.scientific(val, places, locs)
 }
 
@@ -62,4 +64,21 @@ notations.hexadecimal = function(val, places, locs) {
 
 notations.binary = function(val, places, locs) {
 	return disp(val, places, locs, 2)
+}
+
+notations.tetrational = function(val, places, locs) {
+	if (val.eq(0)) return "0"
+	else if (val.lt(1)) return "1/"+notations.tetrational(val.pow(-1), places, locs)
+	else if (val.eq(1)) return "10^^0"
+	else if (val.lt("10^^1000")) return "10^^"+disp(val.slog(10), places, locs)
+	else return notations.scientific(val, places, locs)
+}
+
+notations.symbols = function(val, places, locs) {
+	let r = disp(val, places, locs, 26)
+	let c = ""
+	for (let i=0;i<r.length;i++) {
+		c += String.fromCharCode(r[i].charCodeAt(0)+10000)
+	}
+	return c
 }

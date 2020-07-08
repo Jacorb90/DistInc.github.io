@@ -573,12 +573,12 @@ const STADIUM_REWARDS = {
 	},
 }
 const STADIUM_GOALS = {
-	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni), new ExpantaNum(1e128).times(DISTANCES.uni), new ExpantaNum(1e240).times(DISTANCES.uni), new ExpantaNum("1e400").times(DISTANCES.uni)],
-	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni), new ExpantaNum("1e500").times(DISTANCES.uni), new ExpantaNum(1.11e111).times(DISTANCES.uni), new ExpantaNum(1e200).times(DISTANCES.uni)],
-	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni), new ExpantaNum("1e640").times(DISTANCES.uni), new ExpantaNum("1e1000").times(DISTANCES.uni), new ExpantaNum("1e1500").times(DISTANCES.uni)],
-	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni), new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni), new ExpantaNum("1e350").times(DISTANCES.uni)],
-	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(1000).times(DISTANCES.uni), new ExpantaNum(1e4).times(DISTANCES.uni), new ExpantaNum(1e5).times(DISTANCES.uni), new ExpantaNum(150)],
-	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni), new ExpantaNum(1e40).times(DISTANCES.uni), new ExpantaNum(1e150).times(DISTANCES.uni), new ExpantaNum(1e240).times(DISTANCES.uni)],
+	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni), new ExpantaNum(1e128).times(DISTANCES.uni), new ExpantaNum(1e240).times(DISTANCES.uni), new ExpantaNum("1e300").times(DISTANCES.uni)],
+	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni), new ExpantaNum("1e500").times(DISTANCES.uni), new ExpantaNum(1.11e111).times(DISTANCES.uni), new ExpantaNum(1e180).times(DISTANCES.uni)],
+	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni), new ExpantaNum("1e640").times(DISTANCES.uni), new ExpantaNum("1e1000").times(DISTANCES.uni), new ExpantaNum("1e1200").times(DISTANCES.uni)],
+	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni), new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni), new ExpantaNum("1e350").times(DISTANCES.uni), new ExpantaNum("1e375").times(DISTANCES.uni)],
+	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(3).times(DISTANCES.ly), new ExpantaNum(800).times(DISTANCES.Gm), new ExpantaNum(250), new ExpantaNum(150)],
+	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni), new ExpantaNum(1e40).times(DISTANCES.uni), new ExpantaNum(1e150).times(DISTANCES.uni), new ExpantaNum(1e200).times(DISTANCES.uni)],
 }
 
 // Derivatives

@@ -105,8 +105,10 @@ function copyToClipboard(str) {
 
 function reload() { 
 	reloaded = true
+	reloadFail = true
 	gameWindow = window.open("main.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
 	gameWindow.location.reload()
+	reloadFail = false
 	window.close()
 }
 
@@ -115,6 +117,7 @@ function getCurrentTime() { return new Date().getTime() }
 function getAllAchievements() {
 	let a = []
 	for (let r=1;r<=ACH_DATA.rows;r++) for (let c=1;c<=ACH_DATA.cols;c++) a.push(r*10+c)
+	if (tmp.modes.hard.active||tmp.modes.easy.active) a = a.filter(x => x/10<=8)
 	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()))
 	return a
 }
@@ -160,4 +163,11 @@ async function closeHiddenDiv() {
 
 function sleep(s) {
 	return new Promise(resolve => setTimeout(resolve, s*1000));
+}
+
+function nerfOfflineProg(time) {
+	time = new ExpantaNum(time).div(1000)
+	if (time.gt(60)) time = time.sqrt().times(Math.sqrt(60))
+	if (time.gt(3600*24)) time = time.cbrt().times(Math.pow(3600*24, 2/3))
+	return time.times(1000)
 }

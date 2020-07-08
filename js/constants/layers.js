@@ -1,10 +1,21 @@
 const LAYER_RESETS = {
 	rank: ["distance", "velocity"],
+	rankCheap: ["distance", "velocity"],
 	tier: ["distance", "velocity", "rank"],
 	rockets: ["distance", "velocity", "rank", "tier"],
 	rf: ["rockets"],
 	collapse: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr"],
 	inf: ["distance", "velocity", "rank", "tier", "rockets", "rf", "tr", "automation", "collapse", "pathogens", "dc"],
+}
+
+const LAYER_RESETS_EXTRA = {
+	rank: [],
+	rankCheap: [],
+	tier: ["rankCheap"],
+	rockets: ["rankCheap"],
+	rf: [],
+	collapse: ["rankCheap", "furnace"],
+	inf: ["rankCheap", "furnace"],
 }
 
 const LAYER_REQS = {

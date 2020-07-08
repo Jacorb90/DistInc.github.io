@@ -13,6 +13,7 @@ var ddState = "none"
 var notifier = new Notifier();
 var saveTimer = 0
 var showContainer = true
+var reloadFail = false
 var infActive = false
 var infTab = "infinity"
 
@@ -20,15 +21,15 @@ var infTab = "infinity"
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber()
-	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.nerfs.adjust(tmp.rockets.layer.gain, "rockets").times(diff))
-	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.nerfs.adjust(tmp.rockets.layer.gain, "rockets").times(diff.div(100)))
+	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff))
+	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
 	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff))
-	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(tmp.nerfs.adjust(player.collapse.cadavers.times(tmp.collapse.sacEff), "lifeEssence").times(diff))
-	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(tmp.nerfs.adjust(player.collapse.cadavers.times(tmp.collapse.sacEff), "lifeEssence").times(diff.div(10)))
-	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.nerfs.adjust(tmp.collapse.layer.gain, "cadavers").times(diff))
-	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.nerfs.adjust(tmp.collapse.layer.gain, "cadavers").times(diff.div(100)))
+	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff))
+	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff.div(10)))
+	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff))
+	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
 	if (player.inf.endorsements.gte(10)) {
 		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) player.inf.ascension.time[i-1] = player.inf.ascension.time[i-1].sub(diff).max(0)
 		if (tmp.inf.asc.anyPerkActive()) player.inf.ascension.power = player.inf.ascension.power.plus(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension").times(diff))
@@ -45,6 +46,11 @@ function tickWithTR(diff) {
 	player.velocity = player.velocity.plus(tmp.nerfs.adjust(tmp.acc, "vel").times(diff)).min(tmp.nerfs.active("maxVelActive")?tmp.maxVel:1/0).max(0)
 	player.distance = player.distance.plus(tmp.nerfs.adjust(player.velocity, "dist").times(diff)).max(0)
 	if (player.automation.unl) autoTick(diff)
+	if (tmp.modes.extreme.active) {
+		if (player.rf.gt(0)) {
+			player.furnace.coal = player.furnace.coal.plus(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(diff)).max(0)
+		}
+	}
 }
 
 function tickWithTS(diff) {

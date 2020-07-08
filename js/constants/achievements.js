@@ -120,8 +120,8 @@ const ACH_DATA = {
 		17: "Unlock Time Reversal.",
 		18: "Perform a Universal Collapse reset.",
 		
-		21: "Go at least formatDistance(500000).",
-		22: "Reach Rank showNum(8).",
+		21: "Go at least boolean(extreme,thirty,five hundred) km.",
+		22: "Reach Rank boolean(extreme, six, eight).",
 		23: "Reach Tier showNum(3).",
 		24: "Reach showNum(2) Rockets.",
 		25: "Get at least showNum(2) rocket fuel.",
@@ -220,21 +220,21 @@ const ACH_DATA = {
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 	},
 	rewards: {
-		12: "Acceleration is showNum(10)% higher.",
+		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
 		14: "Acceleration & Maximum Velocity are showNum(50)% higher.",
 		15: "Rocket gain is increased by showNum(5)%.",
 		17: "Time goes by showNum(1)% faster.",
 		18: "Time goes by showNum(50)% faster.",
 		
-		21: "Maximum Velocity is showNum(10)% higher.",
+		21: "Maximum Velocity is showNum(10)% higherboolean(extreme, and you get one extra Rank Cheapener for every Tier).",
 		23: "Acceleration is showNum(20)% higher.",
-		24: "Maximum Velocity is showNum(25)% higher.",
+		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is ten times as fast).",
 		26: "Rocket gain is increased by showNum(10)%.",
 		27: "Time goes by showNum(10)% faster.",
 		
 		32: "Acceleration is showNum(80)% higher.",
-		34: "Rocket gain is increased by showNum(10)%.",
-		35: "Acceleration is showNum(80)% higher.",
+		34: "Rocket gain is increased by showNum(10)%boolean(extreme, and you get another extra Rank Cheapener).",
+		35: "Acceleration is showNum(80)% higherboolean(extreme, and the Coal effect is doubled).",
 		36: "Scrap & intelligence gain are increased by showNum(50)%.",
 		38: "Cadaver gain is doubled.",
 		
@@ -253,11 +253,11 @@ const ACH_DATA = {
 		
 		61: "Maximum Velocity is showNum(60)% higher.",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
-		65: "Cadaver gain is increased by showNum(40)%.",
+		65: "Cadaver gain is increased by showNum(40)%boolean(hard, and Pathogen Upgrades softcap five later).",
 		67: "Time goes by showNum(11.11)% faster.",
-		68: "Pathogen gain is showNum(1)% faster.",
+		68: "Pathogen gain is showNum(1)% fasterboolean(extreme, and Cadaver gain is quintupled).",
 		
-		72: "You gain Time Cubes without Reversing Time, however only at half the rate.",
+		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
 		

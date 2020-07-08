@@ -107,7 +107,7 @@ function updateTempInf() {
 	tmp.inf.forceReset = function() {
 		infActive = true
 		let amActive = player.inf.endorsements.eq(9)
-		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
+		let message = "The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you"+((tmp.modes.hard.active||tmp.modes.easy.active)?", however you need to exit your current mode to do so":"")+".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>"
 		if (amActive) message = "The High God <span class='infinity'>Infinity</span> has amired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>"
 		showHiddenDiv({color: "orange", title: "You have reached <span class='infinity'>Infinity</span>!", body: message, tab: "inf"})
 		player.inf.unl = true
@@ -133,6 +133,15 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true
 		tmp.doDervReset()
+		if (player.modes.includes("hard")||player.modes.includes("easy")||player.modes.includes("extreme")) {
+			if (tmp.modes.extreme.active) {
+				player.furnace = undefined
+				player.rankCheap = undefined
+			}
+			player.modes = player.modes.filter(x => (x!="hard"&&x!="easy"&&x!="extreme"))
+			tmp.options.save(player, true)
+			reload()
+		}
 		infActive = false
 	}
 	tmp.inf.updateTabs = function() {
@@ -256,6 +265,7 @@ function updateTempInf() {
 	}
 	tmp.inf.stadium.active = function(name, rank=1) {
 		if (player.inf.pantheon.purge.active && name!="reality" && rank==1) return true
+		if (tmp.modes.extreme.active && name=="solaris" && rank<=4) return true
 		let active = player.inf.stadium.current == name
 		let l = player.inf.stadium.completions.length+1
 		if (player.inf.stadium.completions.includes(name)) l = Math.min(player.inf.stadium.completions.indexOf(name)+1, l)
@@ -385,6 +395,17 @@ function updateTempInf() {
 		if (name=="acceleration") return tmp.acc
 		return player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)
 	}
+	tmp.inf.derv.gain = function(name) {
+		if (!player.inf.derivatives.unl) return new ExpantaNum(0)
+		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0)
+		if (name=="distance") return tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+		if (name=="velocity") return tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+		let next = DERV_INCR[DERV_INCR.indexOf(name)+1]
+		if (next===undefined) return new ExpantaNum(0)
+		let gain = tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv")
+		if (name=="acceleration") return gain.times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed).times(tmp.acc.div((player.inf.derivatives.amts.acceleration?player.inf.derivatives.amts.acceleration:new ExpantaNum(0)).max(1)))
+		return gain.times(tmp.nerfs.active("noTS")?1:tmp.timeSpeed)
+	}
 	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29)
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor()
 	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
@@ -404,14 +425,14 @@ function updateTempInf() {
 		let mult = new ExpantaNum(1)
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
 		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts))
-		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4)
+		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4) // NICE
 		return mult
 	}
 	tmp.inf.derv.tick = function(diff) {
 		if (!player.inf.derivatives.unl) return 
 		for (let i=0;i<DERV_INCR.length;i++) {
 			let name = DERV_INCR[i]
-			let next = DERV_INCR[i+1]
+			let next = DERV_INCR[i+1] 
 			if (!tmp.inf.derv.unlocked(name)) continue
 			if (i==DERV_INCR.length-1?true:(!tmp.inf.derv.unlocked(next))) player.inf.derivatives.amts[name] = new ExpantaNum(1)
 			else player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]?player.inf.derivatives.amts[name]:new ExpantaNum(0)).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff))
