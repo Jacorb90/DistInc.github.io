@@ -45,4 +45,7 @@ function updateTempRF() {
 		else if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10)
 		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10)
 	}
+	tmp.rf.eff2 = player.rf.sqrt().div(2)
+	if (tmp.rf.eff2.gt(player.rockets.plus(1).times(10))) tmp.rf.eff2 = player.rockets.plus(1).times(10)
+	if (tmp.nerfs.active("noRF")) tmp.rf.eff2 = new ExpantaNum(0)
 }

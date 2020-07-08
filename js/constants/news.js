@@ -26,6 +26,7 @@ const NEWS_DATA = {
 	d2: ["The world is your pebble", function() {return player.distance.gte(DISTANCES.ly)}],
 	d3: ["I guess multiple universes exist then", function() {return player.distance.gte(DISTANCES.uni)}],
 	d4: ["To Infinity and beyond!", function() {return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, Number.MAX_VALUE))}],
+	d5: ["You are a very dedicated addict", function() { return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e100000"))}],
 	
 	// Mode-based Conditions
 	mod1: ["How could you do this to yourself??", function() {return player.modes.includes("hard")}],

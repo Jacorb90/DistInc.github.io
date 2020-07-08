@@ -52,6 +52,7 @@ function updateHTML() {
 		tmp.el.rfReq.setTxt(showNum(tmp.rf.req))
 		tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)))
 		tmp.el.rfName.setTxt((tmp.scaling.getName("rf"))+"Rocket Fuel")
+		tmp.el.rf2.setTxt(showNum(tmp.rf.eff2))
 	}
 	
 	// Features
@@ -64,6 +65,7 @@ function updateHTML() {
 		for (let r=1;r<=ACH_DATA.rows;r++) {
 			for (let c=1;c<=ACH_DATA.cols;c++) {
 				let id = r*10+c
+				tmp.el["ach"+id].setTxt(id)
 				tmp.el["ach"+id].setClasses({achCont: true, gld: (all), dgn: (player.achievements.includes(id)&&ACH_DATA.descs[id]!==undefined&&!all), blocked: ACH_DATA.descs[id]===undefined})
 				tmp.el["ach"+id].changeStyle("visibility", (getAllAchievements().includes(id)?"visible":"hidden"))
 			}

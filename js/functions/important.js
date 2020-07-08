@@ -50,7 +50,7 @@ function autoTick(diff) {
 		player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor())
 	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll()
-	if (player.automators["cores"]) tmp.dc.maxCores()
+	if (player.automators["cores"] && player.collapse.cadavers.gt(tmp.dc.coreCost)) tmp.dc.maxCores()
 }
 
 function showModeDescs(modes) {

@@ -16,6 +16,7 @@ function updateTempRockets() {
 	if (tmp.pathogens && player.pathogens.unl) tmp.rockets.esc = tmp.rockets.esc.plus(tmp.pathogens[8].eff)
 	let r = player.rockets
 	if (r.gte(10)) r = r.log10().times(10)
+	if (tmp.rf && player.rf.gt(0)) r = r.plus(tmp.rf.eff2)
 	tmp.rockets.eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1)
 	if (tmp.modes.easy.active) tmp.rockets.eff = tmp.rockets.eff.times(2).plus(1)
 	if (tmp.rockets.eff.gte(tmp.rockets.esc)) tmp.rockets.eff = tmp.rockets.eff.sqrt().times(ExpantaNum.sqrt(tmp.rockets.esc))
