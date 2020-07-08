@@ -17,6 +17,7 @@ var reloadFail = false
 var infActive = false
 var infTab = "infinity"
 var elmTab = "fermions"
+var bosTab = "gauge"
 var betaID = "beta1.5"
 
 // Game Loops
@@ -41,6 +42,12 @@ function tickWithoutTS(diff) {
 		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips")))
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true
+	}
+	if (player.elementary.times.gt(0)) {
+		player.elementary.fermions.quarks.amount = new ExpantaNum(player.elementary.fermions.quarks.amount).plus(tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks").times(diff))
+		player.elementary.fermions.leptons.amount = new ExpantaNum(player.elementary.fermions.leptons.amount).plus(tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons").times(diff))
+		player.elementary.bosons.gauge.amount = new ExpantaNum(player.elementary.bosons.gauge.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge").times(diff))
+		player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff))
 	}
 }
 

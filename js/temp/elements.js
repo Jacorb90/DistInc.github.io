@@ -309,6 +309,10 @@ function updateHTML() {
 			tmp.el.transfer10pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(10), elm: player.elementary.particles.gt(9)})
 			tmp.el.transfer50pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(2), elm: player.elementary.particles.gt(1)})
 			tmp.el.transfer100pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(1), elm: player.elementary.particles.gt(0)})
+			tmp.el.quarks.setTxt(showNum(player.elementary.fermions.quarks.amount))
+			tmp.el.quarkGain.setTxt(showNum(tmp.elm.ferm.quarkGain))
+			tmp.el.leptons.setTxt(showNum(player.elementary.fermions.leptons.amount))
+			tmp.el.leptonGain.setTxt(showNum(tmp.elm.ferm.leptonGain))
 		}
 		if (elmTab=="bosons") {
 			// Bosons
@@ -317,6 +321,16 @@ function updateHTML() {
 			tmp.el.transfer10pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(10), elm: player.elementary.particles.gt(9)})
 			tmp.el.transfer50pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(2), elm: player.elementary.particles.gt(1)})
 			tmp.el.transfer100pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(1), elm: player.elementary.particles.gt(0)})
+			if (bosTab=="gauge") {
+				// Gauge Bosons
+				tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount))
+				tmp.el.gaugeGain.setTxt(showNum(tmp.elm.bos.gaugeGain))
+			}
+			if (bosTab=="scalar") {
+				// Scalar Bosons
+				tmp.el.scalarAmt.setTxt(showNum(player.elementary.bosons.scalar.amount))
+				tmp.el.scalarGain.setTxt(showNum(tmp.elm.bos.scalarGain))
+			}
 		}
 	}
 	

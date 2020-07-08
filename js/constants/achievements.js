@@ -286,5 +286,7 @@ const ACH_DATA = {
 		123: "The Universe Doesn't Exist uses a slightly better formula.",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
+		
+		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
 	},
 }

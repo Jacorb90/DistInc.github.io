@@ -971,6 +971,30 @@ table { margin: auto; }
 	font-size: 24px;
 }
 
+.quark {
+	font-weight: bold; 
+	color: #5db531; 
+	font-size: 24px;
+}
+
+.lepton {
+	font-weight: bold; 
+	color: #d136a5; 
+	font-size: 24px;
+}
+
+.gauge {
+	font-weight: bold; 
+	color: #cc951f; 
+	font-size: 24px;
+}
+
+.scalar {
+	font-weight: bold; 
+	color: #f2ea4b; 
+	font-size: 24px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;

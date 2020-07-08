@@ -94,7 +94,7 @@
 					<td><button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button></td>
 					<td><button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">Achievements</button></td>
 					<td><button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">Rockets</button></td>
-					<td><button id="furnacetabbtn" class="btn tb fn main" onclick="showTab('furnace')">The Furnace</button></td>
+					<td><button id="furnacetabbtn" class="btn tb fn main" onclick="showTab('furnace')" style="display: none">The Furnace</button></td>
 					<td><button id="autotabbtn" class="btn tb rckt main" onclick="showTab('auto')">Automation</button></td>
 					<td><button id="trtabbtn" class="btn tb rt main" onclick="showTab('tr')">Time Reversal</button></td>
 					<td><button id="collapsetabbtn" class="btn tb btndd main" onclick="showTab('collapse')">Universal Collapse</button></td>
@@ -408,15 +408,42 @@
 				<button id="transfer10pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(0.1)">Transform 10% of your Elementary Particles into Fermions</button>
 				<button id="transfer50pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(0.5)">Transform 50% of your Elementary Particles into Fermions</button>
 				<button id="transfer100pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(1)">Transform 100% of your Elementary Particles into Fermions</button>
-				<br><br>You have <span id="fermionsamt" class="elmp"></span> Fermions.
+				<br><br>You have <span id="fermionsamt" class="elmp"></span> Fermions.<br><br>
+				<div style="width: 50%; min-height: 300px; background-color: #f5429b; float: left;">
+					Your Fermions & Endorsements are generating you <span id="quarkGain" class="quark"></span> Quarks/sec.<br>
+					You have <span id="quarks" class="quark"></span> Quarks.
+				</div>
+				<div style="width: 50%; min-height: 300px; background-color: #9ef542; float: right; color: black;">
+					Your Fermions & Total Spectral Gems are generating you <span id="leptonGain" class="lepton"></span> Leptons/sec.<br>
+					You have <span id="leptons" class="lepton"></span> Leptons.
+				</div>
 			</div>
-			<div id="bosons" class="elmtab">
+			<div id="bosons" class="elmtab" style="display: none;">
 				<br>
 				<button id="transfer1Bosons" class="btn locked" onclick="tmp.elm.bos.transfer1()">Transform one of your Elementary Particles into a Boson</button>
 				<button id="transfer10pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(0.1)">Transform 10% of your Elementary Particles into Bosons</button>
 				<button id="transfer50pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(0.5)">Transform 50% of your Elementary Particles into Bosons</button>
 				<button id="transfer100pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(1)">Transform 100% of your Elementary Particles into Bosons</button>
-				<br><br>You have <span id="bosonsamt" class="elmp"></span> Bosons.
+				<br><br>You have <span id="bosonsamt" class="elmp"></span> Bosons.<br><br>
+				<div class="band or">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden"></button></td>
+						</tr>
+						<tr>
+							<td><button id="gaugetabbtn" class="btn tb elm" onclick="tmp.elm.bos.showTab('gauge')">Gauge Bosons</button></td>
+							<td><button id="scalartabbtn" class="btn tb elm" onclick="tmp.elm.bos.showTab('scalar')">Scalar Bosons</button></td>
+						</tr>
+					</table>
+				</div>
+				<div id="gauge" class="bostab" style="min-height: 400px">
+					Your Bosons & Ascension Power are generating you <span id="gaugeGain" class="gauge"></span> Gauge Bosons/sec.<br>
+					You have <span id="gaugeAmt" class="gauge"></span> Gauge Bosons.
+				</div>
+				<div id="scalar" class="bostab" style="display: none; min-height: 400px;">
+					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br>
+					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.
+				</div>
 			</div>
 		</div>
 	</div>

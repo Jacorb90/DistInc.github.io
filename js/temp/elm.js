@@ -70,6 +70,8 @@ function updateTempElementary() {
 		player.elementary.particles = player.elementary.particles.sub(toSub)
 		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub)
 	}
+	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount.times(player.inf.endorsements.plus(1).sqrt())
+	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount.times(tmp.inf.pantheon.totalGems.plus(1)).div(2.5)
 	
 	// Bosons
 	tmp.elm.bos = {}
@@ -84,4 +86,16 @@ function updateTempElementary() {
 		player.elementary.particles = player.elementary.particles.sub(toSub)
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub)
 	}
+	tmp.elm.bos.updateTabs = function() {
+		let tabs = Element.allFromClass("bostab")
+		for (let i=0;i<tabs.length;i++) tabs[i].setDisplay(bosTab==tabs[i].id)
+	}
+	tmp.elm.bos.showTab = function(name) {
+		if (bosTab==name) return
+		bosTab = name
+		tmp.elm.bos.updateTabs()
+	}
+	tmp.elm.bos.updateTabs()
+	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1))
+	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().div(1.8)
 }

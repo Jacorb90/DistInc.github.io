@@ -45,6 +45,7 @@ function updateLayerMults() {
 	if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
 	if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
 	if (tmp.ach[44].has) tmp.lm.rockets = tmp.lm.rockets.times(1.15)
+	if (tmp.ach[131].has) tmp.lm.rockets = tmp.lm.rockets.times(2)
 	if (tmp.modes.extreme.active && player.rf.gt(0)) tmp.lm.rockets = tmp.lm.rockets.times(ExpantaNum.pow(2, player.furnace.upgrades[2]))
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)
 	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10)
@@ -66,6 +67,7 @@ function updateLayerMults() {
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
 	if (tmp.ach[38].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
 	if (tmp.ach[65].has) tmp.lm.collapse = tmp.lm.collapse.times(1.4)
+	if (tmp.ach[131].has) tmp.lm.collapse = tmp.lm.collapse.times(2)
 	if (player.tr.upgrades.includes(14)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.tr14["cd"])
 	if (tmp.inf) if (tmp.inf.upgs.has("3;2")) tmp.lm.collapse = tmp.lm.collapse.times(INF_UPGS.effects["3;2"]()["cadavers"])
 	if (tmp.collapse) if (tmp.modes.hard.active && (tmp.collapse.layer.gain.gte(10)||(tmp.clghm&&tmp.collapse.layer.gain.gte(5)))) {

@@ -14,6 +14,7 @@ function updateTempPathogens() {
 	let a84 = tmp.dc?tmp.dc.flow.max(1):new ExpantaNum(1)
 	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)))
 	if (tmp.ach[84].has) tmp.pathogens.gain = tmp.pathogens.gain.times(a84)
+	if (tmp.ach[131].has) tmp.pathogens.gain = tmp.pathogens.gain.times(2)
 	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3)
 	if (tmp.modes.easy.active) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
