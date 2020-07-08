@@ -15,7 +15,7 @@ function updateAchievements() {
 	if (player.rf.gte(2)) tmp.ach[25].grant()
 	if (Object.keys(player.automation.robots).includes("rankbot")) tmp.ach[26].grant()
 	if (player.tr.cubes.gte(1000)) tmp.ach[27].grant()
-	if (player.collapse.cadavers.gte(1000)) tmp.ach[28].grant()
+	if (player.collapse.cadavers.gte(66)) tmp.ach[28].grant()
 		
 	if (player.distance.gte(1e12)) tmp.ach[31].grant()
 	if (player.rank.gte(12)) tmp.ach[32].grant()
@@ -54,7 +54,7 @@ function updateAchievements() {
 	let bool = true
 	let antiBool = true
 	for (let i=1;i<=PTH_AMT;i++) if (player.pathogens.upgrades[i].eq(0)) {
-		bool = false
+		if (i<=10) bool = false
 	} else antiBool = false
 	if (bool) tmp.ach[68].grant()
 	

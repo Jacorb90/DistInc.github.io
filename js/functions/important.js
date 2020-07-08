@@ -23,10 +23,10 @@ function loadGame() {
 }
 
 function simulateTime() {
-	player.time = getCurrentTime()
-	let time = new ExpantaNum(player.time).sub(last).max(1000*1/33)
+	if (player.time===undefined) player.time = getCurrentTime()
+	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time))
 	gameLoop(time.div(1000))
-	last = getCurrentTime()
+	player.time = getCurrentTime()
 }
 
 function autoTick(diff) {

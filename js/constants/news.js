@@ -15,6 +15,9 @@ const NEWS_DATA = {
 	m13: ["5 lighthours until the update"],
 	m14: ["You should try Absurd Mode, you might have fun"],
 	m15: ["Never gonna give you down, never gonna let you up - Ack Ristley"],
+	m16: ["We report that there is a very fast man Naruto-running towards Area 51, but 5 months too late"],
+	m17: ["This game was inspired by Antimatter Dimensions by Hevipelle (and its mods, especially NG+++)"],
+	m18: ["Offline progression is weak here, but only because we don't want you to leave :("],
 	
 	// Distance-based Conditions
 	d1: ["You've travelled more than me today", function() {return player.distance.gte(500)}],
