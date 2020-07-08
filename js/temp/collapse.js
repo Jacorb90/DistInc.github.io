@@ -18,6 +18,7 @@ function updateTempCollapse() {
 	tmp.collapse.escp = new ExpantaNum(1)
 	if (tmp.inf) if (tmp.inf.upgs.has("8;5")) tmp.collapse.escp = tmp.collapse.escp.times(0.2)
 	if (tmp.collapse.eff.gte(tmp.collapse.esc) && tmp.collapse.escp.gt(0)) tmp.collapse.eff = tmp.collapse.eff.log10().pow(tmp.collapse.escp.pow(-1)).times(tmp.collapse.esc.div(tmp.collapse.esc.log10().pow(tmp.collapse.escp.pow(-1))))
+	tmp.collapse.eff = tmp.collapse.eff.pow((tmp.elm&&player.elementary.times.gt(0))?tmp.elm.ferm.leptonR("muon").max(1):1)
 	tmp.collapse.doGain = function() { player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain) }
 	tmp.collapse.sacEff = new ExpantaNum(1)
 	if (tmp.modes.hard.active) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4)

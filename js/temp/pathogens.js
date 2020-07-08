@@ -32,6 +32,7 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.stadium.completed("drigganiz")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(STADIUM_REWARDS.effects.drigganiz())
 	if (tmp.inf) if (tmp.inf.upgs.has("9;5")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(ExpantaNum.mul(0.01, player.inf.endorsements))
 	if (tmp.ach) if (tmp.ach[125].has) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05)
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.elm.ferm.leptonR("netrion"))
 	if (tmp.nerfs.active("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10)
 	if (tmp.nerfs.active("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0)
 	tmp.pathogens.sc = {

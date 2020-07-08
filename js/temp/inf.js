@@ -94,6 +94,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("9;9")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2))
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
 	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1))
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.leptonR("tau").max(1))
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()
@@ -197,6 +198,7 @@ function updateTempInf() {
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]())
 	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost?tmp.soulBoost:1)
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1))
 	tmp.inf.asc.perkPower = [null, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength, tmp.inf.asc.perkStrength]
 	for (let i=1;i<=4;i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i))
 	tmp.inf.asc.perkActive = function(n) { return player.inf.ascension.time[n-1].gt(0) }
@@ -461,6 +463,7 @@ function updateTempInf() {
 	}
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]())
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.elm.ferm.leptonR("vibrino").plus(1))
 	tmp.inf.derv.mult = function(name) {
 		let mult = new ExpantaNum(1)
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)

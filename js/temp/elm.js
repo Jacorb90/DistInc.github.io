@@ -1,12 +1,16 @@
 function updateTempElementary() {
+	if (tmp.elm) {
+		tmp.psiEff = tmp.elm.ferm.leptonR("psi")
+	}
+	
 	// Elementary Layer
 	tmp.elm = {}
 	tmp.elm.can = player.rockets.gte(LAYER_REQS.elementary[0][1])&&player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1])&&player.inf.endorsements.gte(LAYER_REQS.elementary[2][1])
 	tmp.elm.gain = function() {
 		if (!tmp.elm.can) return new ExpantaNum(0)
-		let f1 = player.rockets.max(1).log10().div(LAYER_REQS.elementary[0][1].log10()).pow(2)
-		let f2 = player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10()).pow(2)
-		let f3 = ExpantaNum.pow(10, player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).sub(1))
+		let f1 = player.rockets.max(1).log10().div(LAYER_REQS.elementary[0][1].log10()).sqrt()
+		let f2 = player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10())
+		let f3 = ExpantaNum.pow(2, player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).sub(1))
 		let gain = f1.times(f2).times(f3)
 		return gain.floor()
 	}()
@@ -71,16 +75,17 @@ function updateTempElementary() {
 		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub)
 	}
 	// Quarks
-	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount.times(player.inf.endorsements.plus(1).sqrt())
-	tmp.elm.ferm.rewards = player.elementary.fermions.quarks.amount.max(1).logBase(50).floor()
+	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount.times(player.inf.endorsements.plus(1).sqrt()).times((tmp.psiEff?tmp.psiEff:new ExpantaNum(0)).max(1))
+	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor()
 	tmp.elm.ferm.quarkName = function(noExp=false) {
 		let name = QUARK_NAMES[player.elementary.fermions.quarks.type-1]
-		let stacks = tmp.elm.ferm.rewards.sub(player.elementary.fermions.quarks.type).div(QUARK_NAMES.length).plus(1).ceil()
+		let stacks = tmp.elm.ferm.quarkRewards.sub(player.elementary.fermions.quarks.type).div(QUARK_NAMES.length).plus(1).ceil()
 		return capitalFirst(name)+(noExp?"":(stacks.gt(1)?("<sup>"+stacks+"</sup>"):""))
 	}
 	tmp.elm.ferm.quarkEff = function(name) {
 		let qks = player.elementary.fermions.quarks.amount
-		let stacks = tmp.elm.ferm.rewards.sub(QUARK_NAMES.indexOf(name)+1).div(QUARK_NAMES.length).plus(1).ceil() // NEEDS SOFTCAP LATER IN GAME
+		let stacks = tmp.elm.ferm.quarkRewards.sub(QUARK_NAMES.indexOf(name)+1).div(QUARK_NAMES.length).plus(1).ceil()
+		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8))
 		if (name=="up") return qks.plus(1).pow(ExpantaNum.mul(5, stacks))
 		else if (name=="down") return qks.plus(1).pow(ExpantaNum.mul(Math.sqrt(2), stacks.sqrt()))
 		else if (name=="charm") return qks.plus(1).pow(ExpantaNum.mul(0.1, stacks.cbrt()))
@@ -101,6 +106,36 @@ function updateTempElementary() {
 	
 	// Leptons
 	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount.times(tmp.inf.pantheon.totalGems.plus(1)).div(2.5).times(tmp.elm.ferm.quarkR("top").max(1))
+	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor()
+	tmp.elm.ferm.leptonName = function(noExp=false) {
+		let name = LEPTON_NAMES[player.elementary.fermions.leptons.type-1]
+		let stacks = tmp.elm.ferm.leptonRewards.sub(player.elementary.fermions.leptons.type).div(LEPTON_NAMES.length).plus(1).ceil()
+		return capitalFirst(name)+(noExp?"":(stacks.gt(1)?("<sup>"+stacks+"</sup>"):""))
+	}
+	tmp.elm.ferm.leptonEff = function(name) {
+		let lpts = player.elementary.fermions.leptons.amount
+		let stacks = tmp.elm.ferm.leptonRewards.sub(LEPTON_NAMES.indexOf(name)+1).div(LEPTON_NAMES.length).plus(1).ceil()
+		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8))
+		if (name=="electron") return lpts.plus(1).times(10).slog(10).pow(ExpantaNum.mul(0.1, stacks.plus(1).log10().plus(1))).sub(1).div(10).max(0)
+		else if (name=="muon") return lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).sqrt()
+		else if (name=="tau") return ExpantaNum.pow(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1), lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).div(5))
+		else if (name=="netrion") return lpts.times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).sub(1).div(100).max(0)
+		else if (name=="vibrino") return lpts.times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).sub(1).div(250).max(0)
+		else if (name=="psi") return lpts.plus(1).log10().plus(1).pow(stacks.plus(0.5))
+	}
+	tmp.elm.ferm.leptonR = function(name) {
+		if (name==LEPTON_NAMES[player.elementary.fermions.leptons.type-1]) return tmp.elm.ferm.leptonEff(name)
+		else return new ExpantaNum(1)
+	}
+	tmp.elm.ferm.leptonDesc = function(name) {
+		let desc = LEPTON_DESCS[name]+"      Currently: "
+		let eff = tmp.elm.ferm.leptonEff(name)
+		if (name=="electron"||name=="netrion"||name=="vibrino") desc+="+"+showNum(eff.times(100))+"%"
+		else if (name=="muon") desc += "^"+showNum(eff)
+		else desc += showNum(eff)+"x" 
+		return desc
+	}
+	tmp.elm.ferm.changeLepton = function() { player.elementary.fermions.leptons.type=player.elementary.fermions.leptons.type%6+1 }
 	
 	// Bosons
 	tmp.elm.bos = {}

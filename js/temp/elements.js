@@ -316,8 +316,9 @@ function updateHTML() {
 			tmp.el.quarkRewards.setTooltip(tmp.elm.ferm.quarkName(true)+" Quarks: "+tmp.elm.ferm.quarkDesc(QUARK_NAMES[player.elementary.fermions.quarks.type-1]))
 			
 			// Leptons
-			tmp.el.leptons.setTxt(showNum(player.elementary.fermions.leptons.amount))
+			tmp.el.leptons.setTxt(showNum(player.elementary.fermions.leptons.amount)+" "+tmp.elm.ferm.leptonName()+" Leptons")
 			tmp.el.leptonGain.setTxt(showNum(tmp.elm.ferm.leptonGain))
+			tmp.el.leptonRewards.setTooltip(tmp.elm.ferm.leptonName(true)+" Leptons: "+tmp.elm.ferm.leptonDesc(LEPTON_NAMES[player.elementary.fermions.leptons.type-1]))
 		}
 		if (elmTab=="bosons") {
 			// Bosons

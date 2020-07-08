@@ -12,3 +12,13 @@ const QUARK_DESCS = {
 	top: "Lepton gain is faster.",
 	bottom: "Ascension Power gain is faster.",
 }
+
+const LEPTON_NAMES = ["electron", "muon", "tau", "netrion", "vibrino", "psi"]
+const LEPTON_DESCS = {
+	electron: "Perks are stronger.",
+	muon: "The Cadaver effect is boosted.",
+	tau: "Knowledge boosts Knowledge gain.",
+	netrion: "Pathogen Upgrades are stronger.",
+	vibrino: "Derivative Boosts are stronger.",
+	psi: "Quark gain is faster.",
+}
