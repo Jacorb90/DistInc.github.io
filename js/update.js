@@ -144,6 +144,7 @@ function updateAfterTick() {
 	updateTabs()
 	if (player.tab=="options") updateOptionsTabs()
 	updateAchievements()
+	updateNews()
 }
 
 function updateUnlocks() {

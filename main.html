@@ -26,6 +26,7 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/temp_data.js"></script>
+	<script type="text/javascript" src="js/constants/news.js"></script>
 	
 	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
@@ -41,6 +42,7 @@
 	<script type="text/javascript" src="js/functions/important.js"></script>
 	<script type="text/javascript" src="js/functions/tr.js"></script>
 	<script type="text/javascript" src="js/functions/misc.js"></script>
+	<script type="text/javascript" src="js/functions/news.js"></script>
 	
 	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
@@ -84,7 +86,7 @@
 </head>
 <body id="body" onload="loadGame()">
 	<div id="mainContainer">
-		<div class="band lb">
+		<div class="band lb" style="min-height: 100px;">
 			<table>
 				<tr>
 					<td><button id="maintabbtn" class="btn tb main" onclick="showTab('main')">Main</button></td>
@@ -100,7 +102,8 @@
 					<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
 				</tr>
 			</table>
-			<span id="nextFeature"></span><br>
+			<span id="nextFeature"></span><br><br>
+			<div id="newsticker"><div id="news"></div></div>
 		</div>
 		<br>
 		<div id="main" class="tab">
