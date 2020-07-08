@@ -109,6 +109,8 @@ const ACH_DATA = {
 		126: "Quick Repair",
 		127: "False Purge",
 		128: "Truly Nerfed",
+		
+		131: "Shrinking the Multiverse"
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -218,6 +220,8 @@ const ACH_DATA = {
 		126: "Have a magnitude of showNum(1e200) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
+		
+		131: "Perform an Elementary reset."
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

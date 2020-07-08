@@ -111,4 +111,6 @@ function updateAchievements() {
 	if (tmp.auto.rankbot.magnitude.gte(1e200)) tmp.ach[126].grant()
 	if (player.tr.cubes.gte("1e100000") && antiBool && player.dc.cores.eq(0)) tmp.ach[127].grant()
 	if (tmp.acc.gte("5.55e5555") && player.inf.pantheon.purge.active) tmp.ach[128].grant()
+		
+	if (player.elementary.times.gt(0)) tmp.ach[131].grant()
 }

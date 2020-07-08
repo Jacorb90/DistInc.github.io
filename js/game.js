@@ -16,6 +16,7 @@ var showContainer = true
 var reloadFail = false
 var infActive = false
 var infTab = "infinity"
+var elmTab = "fermions"
 var betaID = "beta1.5"
 
 // Game Loops

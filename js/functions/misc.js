@@ -2,6 +2,7 @@ function deepCopy(obj) { return JSON.parse(JSON.stringify(obj)) }
 
 function ENString(obj) {
 	let ret = deepCopy(obj)
+	if (ret.elementary===undefined) ret.elementary = deepCopy(DEFAULT_START.elementary)
 	ret.distance = new ExpantaNum(ret.distance).toString()
 	ret.velocity = new ExpantaNum(ret.velocity).toString()
 	ret.rank = new ExpantaNum(ret.rank).toString()

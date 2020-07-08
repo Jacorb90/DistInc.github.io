@@ -302,6 +302,22 @@ function updateHTML() {
 		tmp.el.elmReset.setClasses({btn: true, locked: !tmp.elm.can, elm: tmp.elm.can})
 		tmp.el.elmt.setTxt(showNum(player.elementary.times))
 		tmp.el.elmp.setTxt(showNum(player.elementary.particles))
+		if (elmTab=="fermions") {
+			// Fermions
+			tmp.el.fermionsamt.setTxt(showNum(player.elementary.fermions.amount))
+			tmp.el.transfer1Fermions.setClasses({btn: true, locked: player.elementary.particles.lte(0), elm: player.elementary.particles.gt(0)})
+			tmp.el.transfer10pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(10), elm: player.elementary.particles.gt(9)})
+			tmp.el.transfer50pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(2), elm: player.elementary.particles.gt(1)})
+			tmp.el.transfer100pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(1), elm: player.elementary.particles.gt(0)})
+		}
+		if (elmTab=="bosons") {
+			// Bosons
+			tmp.el.bosonsamt.setTxt(showNum(player.elementary.bosons.amount))
+			tmp.el.transfer1Bosons.setClasses({btn: true, locked: player.elementary.particles.lte(0), elm: player.elementary.particles.gt(0)})
+			tmp.el.transfer10pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(10), elm: player.elementary.particles.gt(9)})
+			tmp.el.transfer50pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(2), elm: player.elementary.particles.gt(1)})
+			tmp.el.transfer100pBosons.setClasses({btn: true, locked: player.elementary.particles.lte(1), elm: player.elementary.particles.gt(0)})
+		}
 	}
 	
 	// Miscellaneous

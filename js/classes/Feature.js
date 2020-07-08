@@ -24,7 +24,7 @@ class Feature {
 	get reached() { 
 		if (this.res_amt>1) {
 			let bool = true
-			for (let i=1;i<=this.res_amt;i++) bool = bool&&this.amt(i).gte(this.req[i-1])||this.r[x-1]
+			for (let i=1;i<=this.res_amt;i++) bool = bool&&this.amt(i).gte(this.req[i-1])||this.r[i-1]
 			return bool
 		} else return this.amt().gte(this.req)||this.r 
 	}
@@ -32,13 +32,14 @@ class Feature {
 	get desc() { 
 		if (this.res_amt>1) {
 			let desc = "Reach "
-			if (this.reached) {
+			if (!this.reached) {
 				for (let i=1;i<=this.res_amt;i++) {
-					desc += this.display[x-1](this.req[x-1])+" "+(this.res[x-1]=="distance"?"":this.dispAmt(i))
+					desc += this.display[i-1](this.req[i-1])+" "+(this.res[i-1]=="distance"?"":this.dispAmt(i))
 					if (i==this.res_amt-1) desc+=", and "
 					else if (i<this.res_amt-1) desc+=", "
 				}
-				desc += "to unlock "+this.disp+" ("+showNum(new ExpantaNum(this.progress()||0).times(100))+"%)"
+				desc += " to unlock "+this.disp+" ("+showNum(new ExpantaNum(this.progress()||0).times(100))+"%)"
+				return desc
 			} else return ""
 		} else return this.reached ? "" : ("Reach "+this.display(this.req)+" "+(this.res=="distance"?"":this.dispAmt())+" to unlock "+this.disp+" ("+showNum(new ExpantaNum(this.progress()||0).times(100))+"%)") 
 	}

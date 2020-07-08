@@ -164,8 +164,12 @@
 						<td><button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">Notation: X</button></td>
 						<td><button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">Theme: X</button></td>
 						<td><button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">Rename Save</button></td>
+					</tr>
+					<tr>
+						<td></td>
 						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
 						<td><button id="newst" class="btn tb opt" onclick="tmp.options.change('newst', 0)">News Ticker: ON</button></td>
+						<td></td>
 					</tr>
 				</table><br>
 				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
@@ -386,7 +390,34 @@
 		<div id="elementary" class="tab" style="display: none;">
 			<button id="elmReset" class="btn locked" onclick="tmp.elm.layer.reset()"></button><br><br>
 			You have <span id="elmp" class="elmp"></span> Elementary Particles.<br>
-			You have performed an Elementary reset <span id="elmt" style="font-weight: bold;"></span> times.
+			You have performed an Elementary reset <span id="elmt" style="font-weight: bold;"></span> times.<br><br>
+			<div class="band r">
+				<table>
+					<tr>
+						<td><button class="btn tb inf" style="visibility: hidden"></button></td>
+					</tr>
+					<tr>
+						<td><button id="fermionstabbtn" class="btn tb elm" onclick="tmp.elm.showTab('fermions')">Fermions</button></td>
+						<td><button id="bosonstabbtn" class="btn tb elm" onclick="tmp.elm.showTab('bosons')">Bosons</button></td>
+					</tr>
+				</table>
+			</div>
+			<div id="fermions" class="elmtab">
+				<br>
+				<button id="transfer1Fermions" class="btn locked" onclick="tmp.elm.ferm.transfer1()">Transform one of your Elementary Particles into a Fermion</button>
+				<button id="transfer10pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(0.1)">Transform 10% of your Elementary Particles into Fermions</button>
+				<button id="transfer50pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(0.5)">Transform 50% of your Elementary Particles into Fermions</button>
+				<button id="transfer100pFermions" class="btn locked" onclick="tmp.elm.ferm.transfer(1)">Transform 100% of your Elementary Particles into Fermions</button>
+				<br><br>You have <span id="fermionsamt" class="elmp"></span> Fermions.
+			</div>
+			<div id="bosons" class="elmtab">
+				<br>
+				<button id="transfer1Bosons" class="btn locked" onclick="tmp.elm.bos.transfer1()">Transform one of your Elementary Particles into a Boson</button>
+				<button id="transfer10pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(0.1)">Transform 10% of your Elementary Particles into Bosons</button>
+				<button id="transfer50pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(0.5)">Transform 50% of your Elementary Particles into Bosons</button>
+				<button id="transfer100pBosons" class="btn locked" onclick="tmp.elm.bos.transfer(1)">Transform 100% of your Elementary Particles into Bosons</button>
+				<br><br>You have <span id="bosonsamt" class="elmp"></span> Bosons.
+			</div>
 		</div>
 	</div>
 </body>

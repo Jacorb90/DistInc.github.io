@@ -73,6 +73,16 @@ function updateTempPathogens() {
 			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((player.pathogens.upgrades[i].pow(exp2).div(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
 			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1))).pow(exp2.pow(-1)).add(1)
 		}
+		if (tmp.scaling.active("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "hyper")) {
+			let power3 = tmp.scalingPower.hyper.pathogenUpg
+			let base3 = ExpantaNum.pow(1.025, power3)
+			let power2 = tmp.scalingPower.superscaled.pathogenUpg
+			let exp2 = ExpantaNum.pow(5, power2)
+			let power = tmp.scalingPower.scaled.pathogenUpg
+			let exp = ExpantaNum.pow(3, power)
+			tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, ((ExpantaNum.pow(base3, player.pathogens.upgrades[i].sub(tmp.scalings.hyper.pathogenUpg)).times(tmp.scalings.hyper.pathogenUpg).pow(exp2).div(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1)))).pow(exp).div(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))))))
+			tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).times(tmp.scalings.scaled.pathogenUpg.pow(exp.sub(1))).pow(exp.pow(-1)).times(tmp.scalings.superscaled.pathogenUpg.pow(exp2.sub(1))).pow(exp2.pow(-1)).div(tmp.scalings.hyper.pathogenUpg).max(1).logBase(base3).plus(tmp.scalings.hyper.pathogenUpg).add(1)
+		}
 		tmp.pathogens[i].extra = function() {
 			let extra = new ExpantaNum(0)
 			if (tmp.inf) extra = extra.plus(tmp.inf.asc.perkEff(2))

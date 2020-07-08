@@ -41,4 +41,47 @@ function updateTempElementary() {
 		player.elementary.bosons.scalar.amount = new ExpantaNum(0)
 		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(0)
 	}
+	
+	// Elementary Tab System
+	tmp.elm.updateTabs = function() {
+		let tabs = Element.allFromClass("elmtab")
+		for (let i=0;i<tabs.length;i++) {
+			tabs[i].setDisplay(elmTab==tabs[i].id)
+			new Element(tabs[i].id+"tabbtn").setDisplay(ELM_TABS[tabs[i].id]())
+		}
+	}
+	tmp.elm.showTab = function(name) {
+		if (elmTab==name) return
+		elmTab = name
+		tmp.elm.updateTabs()
+	}
+	tmp.elm.updateTabs()
+	
+	// Fermions
+	tmp.elm.ferm = {}
+	tmp.elm.ferm.transfer1 = function() {
+		if (player.elementary.particles.lt(1)) return
+		player.elementary.particles = player.elementary.particles.sub(1)
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1)
+	}
+	tmp.elm.ferm.transfer = function(ratio) {
+		if (player.elementary.particles.times(ratio).floor().lt(1)) return
+		let toSub = player.elementary.particles.times(ratio).floor()
+		player.elementary.particles = player.elementary.particles.sub(toSub)
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub)
+	}
+	
+	// Bosons
+	tmp.elm.bos = {}
+	tmp.elm.bos.transfer1 = function() {
+		if (player.elementary.particles.lt(1)) return
+		player.elementary.particles = player.elementary.particles.sub(1)
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(1)
+	}
+	tmp.elm.bos.transfer = function(ratio) {
+		if (player.elementary.particles.times(ratio).floor().lt(1)) return
+		let toSub = player.elementary.particles.times(ratio).floor()
+		player.elementary.particles = player.elementary.particles.sub(toSub)
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub)
+	}
 }
