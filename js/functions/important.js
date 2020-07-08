@@ -13,7 +13,11 @@ function loadGame() {
 	}
 	let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
 	let c = 1
-	for (let i=0;i<all.length;i++) if (all[i] !== null) if (all[i].saveID==player.saveID) c = i+1
+	for (let i=0;i<all.length;i++) if (all[i] !== null) {
+		if (all[i].saveID==player.saveID&&i<MAX_SAVES) c = i+1
+		if (i>=MAX_SAVES) all[i] = undefined
+	}
+	localStorage.setItem("dist-inc-saves", btoa(JSON.stringify(all)))
 	player.savePos = c
 	modeLoad([])
 	setupHTML()

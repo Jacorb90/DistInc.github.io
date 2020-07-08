@@ -105,11 +105,10 @@ function copyToClipboard(str) {
 
 function reload() { 
 	reloaded = true
-	reloadFail = true
-	gameWindow = window.open("main.html", "", "width="+screen.width+", height="+screen.height+", fullscreen=yes, titlebar=no, dialog=no, resizable=no, toolbar=no, menubar=no, frame=no")
-	gameWindow.location.reload()
-	reloadFail = false
-	window.close()
+	let el = document.createElement("a")
+	el.href = "main.html"
+	el.click()
+	window.location.reload()
 }
 
 function getCurrentTime() { return new Date().getTime() }

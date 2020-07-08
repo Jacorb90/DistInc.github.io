@@ -7,7 +7,7 @@ class Feature {
 		this.r = data.reached||false
 		this.spec = data.spec?data.spec:Array.isArray(data.res)
 		this.disp = data.displayName?data.displayName:data.name
-		this.progress = data.progress||(function() { return 0 })
+		this.progress = data.progress?data.progress:(function() { return 0 })
 		this.res_amt = data.res_amt||1
 	}
 	
@@ -38,8 +38,8 @@ class Feature {
 					if (i==this.res_amt-1) desc+=", and "
 					else if (i<this.res_amt-1) desc+=", "
 				}
-				desc += "to unlock "+this.disp+" ("+showNum(this.progress().times(100))+"%)"
+				desc += "to unlock "+this.disp+" ("+showNum(new ExpantaNum(this.progress()||0).times(100))+"%)"
 			} else return ""
-		} else return this.reached ? "" : ("Reach "+this.display(this.req)+" "+(this.res=="distance"?"":this.dispAmt())+" to unlock "+this.disp+" ("+showNum(this.progress().times(100))+"%)") 
+		} else return this.reached ? "" : ("Reach "+this.display(this.req)+" "+(this.res=="distance"?"":this.dispAmt())+" to unlock "+this.disp+" ("+showNum(new ExpantaNum(this.progress()||0).times(100))+"%)") 
 	}
 }

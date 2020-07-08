@@ -138,7 +138,7 @@ function updateTempOptions() {
 		} else if (new ExpantaNum(sav.rockets).gt(0)) info += "Rockets: "+showNum(new ExpantaNum(sav.rockets))+", "
 		else {
 			info += "Tier "+showNum(new ExpantaNum(sav.tier))+", "
-			if (sav.modes.includes("extreme")) info += "Rank Cheapener "+showNum(new ExpantaNum(sav.rankCheap))+", "
+			if (sav.modes.includes("extreme")) info += "Rank Cheapener "+showNum(new ExpantaNum(sav.rankCheap||0))+", "
 			info += "Rank "+showNum(new ExpantaNum(sav.rank))+", "
 		}
 		info += "Distance: "+formatDistance(new ExpantaNum(sav.distance))
