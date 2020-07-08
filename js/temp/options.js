@@ -2,11 +2,11 @@ function updateTempOptions() {
 	tmp.options = {}
 	tmp.options.save = function(sav=player, force=false) { 
 		if (!showContainer&&!force) return
-		localStorage.setItem("dist-inc", btoa(JSON.stringify(ENString(sav))))
-		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+		localStorage.setItem("dist-inc"+betaID, btoa(JSON.stringify(ENString(sav))))
+		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 		if ((all.includes(null) || all[sav.savePos-1]===undefined || all[sav.savePos-1].savePos==sav.savePos)&&all.length>=sav.savePos) all[sav.savePos-1] = ENString(sav)
 		else all.push(ENString(sav))
-		localStorage.setItem("dist-inc-saves", btoa(JSON.stringify(all)))
+		localStorage.setItem("dist-inc-saves"+betaID, btoa(JSON.stringify(all)))
 		notifier.success("Game saved!")
 	}
 	tmp.options.setSave = function(ns, cod=false) {
@@ -22,10 +22,10 @@ function updateTempOptions() {
 	}
 	tmp.options.deleteSave = function(loc) {
 		if (!confirm("Are you sure you want to delete this save? You will not be able to undo this!")) return
-		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 		let isCurrent = all[loc].saveID==player.saveID
 		all[loc] = null
-		localStorage.setItem("dist-inc-saves", btoa(JSON.stringify(all)))
+		localStorage.setItem("dist-inc-saves"+betaID, btoa(JSON.stringify(all)))
 		if (isCurrent) tmp.options.startModes([])
 		else {
 			tmp.options.loads()
@@ -44,7 +44,7 @@ function updateTempOptions() {
 				sav = JSON.parse(atob(prmpt))
 				notifier.info("Save imported")
 				let s = transformToEN(sav)
-				let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+				let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 				if (all.indexOf(null)>-1) s.savePos = all.indexOf(null)+1
 				else s.savePos = all.length+1
 				if (s.savePos>MAX_SAVES) {
@@ -66,7 +66,7 @@ function updateTempOptions() {
 		let s = transformToEN(DEFAULT_START)
 		s.modes = modes
 		if (s.modes.includes("aau")) s.achievements = getAllAchievements()
-		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 		if (all.indexOf(null)>-1 && all[all.indexOf(null)] === null) s.savePos = all.indexOf(null)+1
 		else s.savePos = all.length+1
 		if (s.savePos>MAX_SAVES) {
@@ -145,7 +145,7 @@ function updateTempOptions() {
 		return info
 	}
 	tmp.options.loads = function() {
-		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves")?localStorage.getItem("dist-inc-saves"):btoa(JSON.stringify([]))))
+		let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 		let dropdown = new Element("dropDown2")
 		dropdown.changeStyle("display", dropdown.style.display=="block"?"none":"block")
 		let els = {}
