@@ -309,8 +309,13 @@ function updateHTML() {
 			tmp.el.transfer10pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(10), elm: player.elementary.particles.gt(9)})
 			tmp.el.transfer50pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(2), elm: player.elementary.particles.gt(1)})
 			tmp.el.transfer100pFermions.setClasses({btn: true, locked: player.elementary.particles.lte(1), elm: player.elementary.particles.gt(0)})
-			tmp.el.quarks.setTxt(showNum(player.elementary.fermions.quarks.amount))
+			
+			// Quarks
+			tmp.el.quarks.setHTML(showNum(player.elementary.fermions.quarks.amount)+" "+tmp.elm.ferm.quarkName()+" Quarks")
 			tmp.el.quarkGain.setTxt(showNum(tmp.elm.ferm.quarkGain))
+			tmp.el.quarkRewards.setTooltip(tmp.elm.ferm.quarkName(true)+" Quarks: "+tmp.elm.ferm.quarkDesc(QUARK_NAMES[player.elementary.fermions.quarks.type-1]))
+			
+			// Leptons
 			tmp.el.leptons.setTxt(showNum(player.elementary.fermions.leptons.amount))
 			tmp.el.leptonGain.setTxt(showNum(tmp.elm.ferm.leptonGain))
 		}

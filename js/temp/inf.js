@@ -93,6 +93,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("9;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["9;1"]())
 	if (tmp.inf.upgs.has("9;9")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2))
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5)
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1))
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements))
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0)
 	else tmp.inf.bulk = player.distance.plus(1).logBase(tmp.inf.bc).logBase(ExpantaNum.pow(1.1, tmp.inf.fp)).plus(1).floor()
@@ -211,6 +212,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("3;7")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["3;7"]())
 	if (tmp.inf.upgs.has("3;9")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(INF_UPGS.effects["3;9"]())
 	if (tmp.inf.upgs.has("8;9")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(10)
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.ferm.quarkR("bottom").max(1))
 	tmp.inf.asc.activatePerk = function(n) {
 		if (player.inf.endorsements.lt(10)) return
 		if (tmp.inf.asc.perkActive(n)) {

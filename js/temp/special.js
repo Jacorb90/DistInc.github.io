@@ -62,6 +62,7 @@ function updateLayerMults() {
 		if (c.gte("1e100000")) c = c.log10().pow(20000)
 		tmp.lm.rockets = tmp.lm.rockets.times(c)
 	}
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.elm.ferm.quarkR("up").max(1))
 	tmp.lm.collapse = new ExpantaNum(1)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5)
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10)
@@ -76,6 +77,7 @@ function updateLayerMults() {
 	}
 	if (tmp.ach[68].has && tmp.modes.extreme.active) tmp.lm.collapse = tmp.lm.collapse.times(5)
 	if (tmp.collapse) if (tmp.modes.easy.active) tmp.lm.collapse = tmp.lm.collapse.times(3)
+	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.elm.ferm.quarkR("down").max(1))
 }
 
 function updateTempSC() {

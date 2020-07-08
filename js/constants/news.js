@@ -58,6 +58,7 @@ const NEWS_DATA = {
 	s1: ["Patcail thought Jacorb took his collapse feature. But if he did then I guess Patcail should name his game Ordinal dimensions. - NiceManKSP.", function() {return player.collapse.unl}],
 	s2: ["Pathogens more like coronavirus", function() {return player.pathogens.unl}],
 	s3: ["The universe was calm, but then the Pathogen Nation attacked.", function() {return player.elementary.times.gt(0)}],
+	s4: ["Leptons sound like a soft drink - Mark's Rival's Rival", function() { return player.elementary.times.gt(0)}],
 }
 
 const NEWS_ADJ = 110

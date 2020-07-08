@@ -70,8 +70,37 @@ function updateTempElementary() {
 		player.elementary.particles = player.elementary.particles.sub(toSub)
 		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub)
 	}
+	// Quarks
 	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount.times(player.inf.endorsements.plus(1).sqrt())
-	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount.times(tmp.inf.pantheon.totalGems.plus(1)).div(2.5)
+	tmp.elm.ferm.rewards = player.elementary.fermions.quarks.amount.max(1).logBase(50).floor()
+	tmp.elm.ferm.quarkName = function(noExp=false) {
+		let name = QUARK_NAMES[player.elementary.fermions.quarks.type-1]
+		let stacks = tmp.elm.ferm.rewards.sub(player.elementary.fermions.quarks.type).div(QUARK_NAMES.length).plus(1).ceil()
+		return capitalFirst(name)+(noExp?"":(stacks.gt(1)?("<sup>"+stacks+"</sup>"):""))
+	}
+	tmp.elm.ferm.quarkEff = function(name) {
+		let qks = player.elementary.fermions.quarks.amount
+		let stacks = tmp.elm.ferm.rewards.sub(QUARK_NAMES.indexOf(name)+1).div(QUARK_NAMES.length).plus(1).ceil() // NEEDS SOFTCAP LATER IN GAME
+		if (name=="up") return qks.plus(1).pow(ExpantaNum.mul(5, stacks))
+		else if (name=="down") return qks.plus(1).pow(ExpantaNum.mul(Math.sqrt(2), stacks.sqrt()))
+		else if (name=="charm") return qks.plus(1).pow(ExpantaNum.mul(0.1, stacks.cbrt()))
+		else if (name=="strange") return player.elementary.fermions.amount.plus(1).times(qks.plus(1).sqrt().log10().plus(1)).pow(ExpantaNum.mul(0.2, stacks.sqrt())).times(qks.eq(0)?0:1).plus(1)
+		else if (name=="top") return ExpantaNum.pow(ExpantaNum.mul(2, qks.plus(1).log10().div(100).plus(1)), stacks.pow(0.8)).times(qks.eq(0)?0:1).plus(1)
+		else if (name=="bottom") return ExpantaNum.pow(ExpantaNum.mul(0.4, qks.plus(1).log10()).plus(1), stacks.plus(1))
+	}
+	tmp.elm.ferm.quarkR = function(name) {
+		if (name==QUARK_NAMES[player.elementary.fermions.quarks.type-1]) return tmp.elm.ferm.quarkEff(name)
+		else return new ExpantaNum(1)
+	}
+	tmp.elm.ferm.quarkDesc = function(name) {
+		let desc = QUARK_DESCS[name]+"     "
+		desc += "Currently: "+showNum(tmp.elm.ferm.quarkEff(name))+"x"
+		return desc
+	}
+	tmp.elm.ferm.changeQuark = function() { player.elementary.fermions.quarks.type=player.elementary.fermions.quarks.type%6+1 }
+	
+	// Leptons
+	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount.times(tmp.inf.pantheon.totalGems.plus(1)).div(2.5).times(tmp.elm.ferm.quarkR("top").max(1))
 	
 	// Bosons
 	tmp.elm.bos = {}
@@ -97,5 +126,5 @@ function updateTempElementary() {
 	}
 	tmp.elm.bos.updateTabs()
 	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1))
-	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().div(1.8)
+	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6)
 }
