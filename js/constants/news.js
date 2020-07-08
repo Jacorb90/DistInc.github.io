@@ -14,6 +14,7 @@ const NEWS_DATA = {
 	m12: ["If you can see this, you are officially Canadian"],
 	m13: ["5 lighthours until the update"],
 	m14: ["You should try Absurd Mode, you might have fun"],
+	m15: ["Never gonna give you down, never gonna let you up - Ack Ristley"],
 	
 	// Distance-based Conditions
 	d1: ["You've travelled more than me today", function() {return player.distance.gte(500)}],

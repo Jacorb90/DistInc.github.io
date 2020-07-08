@@ -111,6 +111,7 @@ function updateHTML() {
 			if (!tmp.tr2e.eq(1)&&i==2) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr2e)+")</span>"
 			if (!tmp.tr11pow.eq(1)&&i==11) desc+="<span class='grossminitxt'>(^"+showNum(tmp.tr11pow)+")</span>"
 			tmp.el["tr"+i].setHTML(desc+"<br>Cost: "+showNum(upg.cost)+" Time Cubes.")
+			if (upg.current!==undefined && (i>15?tmp.modes.extreme.active:true)) tmp.el["tr"+i].setTooltip("Currently: "+upg.disp(upg.current()))
 			tmp.el["tr"+i].setClasses({btn: true, locked: (!player.tr.upgrades.includes(i)&&player.tr.cubes.lt(upg.cost)), bought: player.tr.upgrades.includes(i), rt: (!player.tr.upgrades.includes(i)&&player.tr.cubes.gte(upg.cost))})
 		}
 		tmp.el.trRow3.setDisplay(player.dc.unl||tmp.inf.upgs.has("1;4"))
@@ -130,6 +131,7 @@ function updateHTML() {
 		for (let i=1;i<=EM_AMT;i++) {
 			let ms = ESSENCE_MILESTONES[i]
 			tmp.el["lem"+i].setHTML(ms.desc+"<br>Req: "+showNum(ms.req)+" Life Essence.")
+			if (ms.disp!==undefined) tmp.el["lem"+i].setTooltip("Currently: "+ms.disp())
 			tmp.el["lem"+i].setClasses({msCont: true, r: !tmp.collapse.hasMilestone(i)})
 		}
 	}
@@ -305,4 +307,5 @@ function updateHTML() {
 	tmp.el.mainContainer.setDisplay(showContainer)
 	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive")?"Maximum Velocity:":"Velocital Energy:")
 	tmp.el.accEn.setHTML(tmp.accEn.gt(0)?(" (Accelerational Energy: "+formatDistance(tmp.accEn)+"/s<sup>2</sup>)"):"")
+	tmp.el.footer.setDisplay(player.tab=="options"&&player.optionsTab!=="saving")
 }

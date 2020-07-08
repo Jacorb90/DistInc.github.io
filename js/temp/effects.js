@@ -67,7 +67,10 @@ function updateTempEffects() {
 	}
 	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores)
 	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10)
-	if (tmp.modes.extreme.active) tmp.tr19 = ExpantaNum.pow(4.5, (tmp.auto?tmp.auto.rankCheapbot.interval.max(1e-10):1)).pow(0.3*tr89mod).max(1)
+	if (tmp.modes.extreme.active) {
+		tmp.tr19 = ExpantaNum.pow(4.5, (tmp.auto?tmp.auto.rankCheapbot.interval.max(1e-10):1)).pow(0.3*tr89mod).max(1)
+		if (showNum(tmp.tr19)===undefined||!tmp.tr19.isFinite()) tmp.tr19 = new ExpantaNum(1)
+	}
 	
 	// Universal Collapse Milestone Effects
 	
