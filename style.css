@@ -760,7 +760,7 @@ table { margin: auto; }
 
 .char {
 	font-size: 20px;
-	color: black;
+	color: var(--plaintxt);
 	font-weight: bold;
 }
 
@@ -924,6 +924,7 @@ table { margin: auto; }
     display: inline-block;
 	white-space: nowrap;
 	right: 100%; 
+	color: black !important;
 	min-height:18px; 
 	max-height: 18px; 
 	position: relative
