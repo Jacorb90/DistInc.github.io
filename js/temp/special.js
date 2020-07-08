@@ -2,17 +2,17 @@ function updateTempSpecial() {
 	// Features
 	
 	tmp.features = {
-		rockets: new Feature({name: "rockets", req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm), res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0)}),
-		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl}),
-		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl}),
-		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl}),
-		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl}),
-		dc: new Feature({name: "dc", req: new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1), res: "distance", display: formatDistance, reached: player.dc.unl, displayName: "dark circles"}),
-		infinity: new Feature({name: "infinity", req: new ExpantaNum(INF_UNL), res: "distance", display: formatDistance, reached: player.inf.unl}),
-		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10)}),
-		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium"}),
-		pantheon: new Feature({name: "pantheon", req: new ExpantaNum(21), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(21), displayName: "the pantheon"}),
-		derivatives: new Feature({name: "derivatives", req: ExpantaNum.mul(DISTANCES.uni, "1e90000"), res: "distance", display: formatDistance, reached: player.inf.derivatives.unl}),
+		rockets: new Feature({name: "rockets", req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm), res: "distance", display: formatDistance, reached: player.rockets.gt(0)||player.rf.gt(0), progress: function() { return player.distance.max(1).log10().div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm).log10()) }}),
+		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl,  progress: function() { return player.distance.max(1).log10().div(ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)).log10()) }}),
+		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10()) } }),
+		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1).log10()) }}),
+		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl, progress: function() { player.collapse.cadavers.max(1).log10().div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1).log10()) } }),
+		dc: new Feature({name: "dc", req: new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1), res: "distance", display: formatDistance, reached: player.dc.unl, displayName: "dark circles", progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1).log10()) }}),
+		infinity: new Feature({name: "infinity", req: new ExpantaNum(INF_UNL), res: "distance", display: formatDistance, reached: player.inf.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(INF_UNL).log10()) }}),
+		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10), progress: function() { return player.inf.endorsements.div(10) }}),
+		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium", progress: function() { return player.inf.endorsements.div(15) }}),
+		pantheon: new Feature({name: "pantheon", req: new ExpantaNum(21), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(21), displayName: "the pantheon", progress: function() { return player.inf.endorsements.div(21) }}),
+		derivatives: new Feature({name: "derivatives", req: ExpantaNum.mul(DISTANCES.uni, "1e90000"), res: "distance", display: formatDistance, reached: player.inf.derivatives.unl, progress: function() { return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, "1e90000").log10()) }}),
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {

@@ -18,6 +18,8 @@ const NEWS_DATA = {
 	m16: ["We report that there is a very fast man Naruto-running towards Area 51, but 5 months too late"],
 	m17: ["This game was inspired by Antimatter Dimensions by Hevipelle (and its mods, especially NG+++)"],
 	m18: ["Offline progression is weak here, but only because we don't want you to leave :("],
+	m19: ["People say that this is unbalanced, but really it's just that all the other games are too balanced."],
+	m20: ["The mysterious virus of Corvid Twenty has been dealt with (at least for now)"],
 	
 	// Distance-based Conditions
 	d1: ["You've travelled more than me today", function() {return player.distance.gte(500)}],
