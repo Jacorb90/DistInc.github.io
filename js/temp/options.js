@@ -47,10 +47,7 @@ function updateTempOptions() {
 				let all = JSON.parse(atob(localStorage.getItem("dist-inc-saves"+betaID)?localStorage.getItem("dist-inc-saves"+betaID):btoa(JSON.stringify([]))))
 				if (all.indexOf(null)>-1) s.savePos = all.indexOf(null)+1
 				else s.savePos = all.length+1
-				if (s.savePos>MAX_SAVES) {
-					alert("This save was not created properly (it has a position greater than the limit!)")
-					return
-				}
+				if (s.savePos>MAX_SAVES) s.savePos = MAX_SAVES
 				tmp.options.setSave(s)
 			} catch(e) {
 				notifier.error("Invalid Save")

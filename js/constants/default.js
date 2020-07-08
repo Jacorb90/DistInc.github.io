@@ -11,6 +11,7 @@ const DEFAULT_START = {
 		theme: "normal",
 		name: "Save #",
 		autoSave: true,
+		newst: true,
 	},
 	modes: [],
 	time: new Date().getTime(),
@@ -99,4 +100,48 @@ const DEFAULT_START = {
 		},
 	},
 	automators: {},
+	elementary: {
+		times: new ExpantaNum(0),
+		particles: new ExpantaNum(0),
+		fermions: {
+			amount: new ExpantaNum(0),
+			quarks: {
+				amount: new ExpantaNum(0),
+				type: 1,
+			},
+			leptons: {
+				amount: new ExpantaNum(0),
+				type: 1,
+			},
+		},
+		bosons: {
+			amount: new ExpantaNum(0),
+			gauge: {
+				amount: new ExpantaNum(0),
+				force: new ExpantaNum(0),
+				photons: {
+					amount: new ExpantaNum(0),
+					upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+				},
+				w: new ExpantaNum(0),
+				z: new ExpantaNum(0),
+				gluons: {
+					r: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+					g: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+					b: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+					ar: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+					ag: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+					ab: {amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)]},
+				},
+				gravitons: new ExpantaNum(0),
+			},
+			scalar: {
+				amount: new ExpantaNum(0),
+				higgs: {
+					amount: new ExpantaNum(0),
+					upgrades: [],
+				},
+			},
+		},
+	},
 }

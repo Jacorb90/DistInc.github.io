@@ -13,6 +13,7 @@ function updateTempSpecial() {
 		stadium: new Feature({name: "stadium", req: new ExpantaNum(15), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(15), displayName: "the stadium", progress: function() { return player.inf.endorsements.div(15) }}),
 		pantheon: new Feature({name: "pantheon", req: new ExpantaNum(21), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(21), displayName: "the pantheon", progress: function() { return player.inf.endorsements.div(21) }}),
 		derivatives: new Feature({name: "derivatives", req: ExpantaNum.mul(DISTANCES.uni, "1e90000"), res: "distance", display: formatDistance, reached: player.inf.derivatives.unl, progress: function() { return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, "1e90000").log10()) }}),
+		elementary: new Feature({name: "elementary", res_amt: 3, req: [new ExpantaNum(LAYER_REQS.elementary[0][1]),new ExpantaNum(LAYER_REQS.elementary[1][1]),new ExpantaNum(LAYER_REQS.elementary[2][1])], res: ["rockets", ["collapse", "cadavers"], ["inf", "endorsements"]], display: [showNum, showNum, showNum], reached: player.elementary.times.gt(0), progress: function() { return player.rockets.max(1).log10().div(LAYER_REQS.elementary[0][1].log10()).min(1).times(player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10()).min(1)).times(player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).min(1)) }, spec: [false, true, true]})
 	}
 	tmp.nf = "none"
 	for (let i=0;i<Object.keys(tmp.features).length;i++) {

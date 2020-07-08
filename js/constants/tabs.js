@@ -10,4 +10,5 @@ const TABBTN_SHOWN = {
 	pathogens: function() { return player.pathogens.unl },
 	dc: function() { return player.dc.unl },
 	inf: function() { return player.inf.unl },
+	elementary: function() { return (tmp.elm?tmp.elm.can:false)||player.elementary.times.gt(0) },
 }

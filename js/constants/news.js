@@ -20,6 +20,7 @@ const NEWS_DATA = {
 	m18: ["Offline progression is weak here, but only because we don't want you to leave :("],
 	m19: ["People say that this is unbalanced, but really it's just that all the other games are too balanced."],
 	m20: ["The mysterious virus of Corvid Twenty has been dealt with (at least for now)"],
+	m21: ["Why progress when you can revert back to square one?"],
 	
 	// Distance-based Conditions
 	d1: ["You've travelled more than me today", function() {return player.distance.gte(500)}],
@@ -59,4 +60,4 @@ const NEWS_DATA = {
 }
 
 const NEWS_ADJ = 110
-const NEWS_TIME = 6
+const NEWS_TIME = 8

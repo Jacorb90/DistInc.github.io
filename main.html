@@ -24,6 +24,7 @@
 	<script type="text/javascript" src="js/constants/options_notations.js"></script>
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
+	<script type="text/javascript" src="js/constants/elm.js"></script>
 	<script type="text/javascript" src="js/constants/temp_data.js"></script>
 	<script type="text/javascript" src="js/constants/news.js"></script>
 	
@@ -70,6 +71,7 @@
 	<script type="text/javascript" src="js/temp/pathogens.js"></script>
 	<script type="text/javascript" src="js/temp/dc.js"></script>
 	<script type="text/javascript" src="js/temp/inf.js"></script>
+	<script type="text/javascript" src="js/temp/elm.js"></script>
 	<script type="text/javascript" src="js/temp/misc.js"></script>
 	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
 	
@@ -99,6 +101,7 @@
 					<td><button id="pathogenstabbtn" class="btn tb gross main" onclick="showTab('pathogens')">Pathogens</button></td>
 					<td><button id="dctabbtn" class="btn tb dark main" onclick="showTab('dc')">Dark Circle</button></td>
 					<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
+					<td><button id="elementarytabbtn" class="btn tb elm eltxt main" onclick="showTab('elementary')">Elementary</button></td>
 				</tr>
 			</table>
 			<span id="nextFeature"></span><br><br>
@@ -162,6 +165,7 @@
 						<td><button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">Theme: X</button></td>
 						<td><button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">Rename Save</button></td>
 						<td><button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">Auto-Save: ON</button></td>
+						<td><button id="newst" class="btn tb opt" onclick="tmp.options.change('newst', 0)">News Ticker: ON</button></td>
 					</tr>
 				</table><br>
 				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
@@ -378,6 +382,11 @@
 				<div id="derivs"></div><br><br>
 				<button id="dervUnlock" class="btn locked" onclick="tmp.inf.derv.doUnl()"></button>
 			</div>
+		</div>
+		<div id="elementary" class="tab" style="display: none;">
+			<button id="elmReset" class="btn locked" onclick="tmp.elm.layer.reset()"></button><br><br>
+			You have <span id="elmp" class="elmp"></span> Elementary Particles.<br>
+			You have performed an Elementary reset <span id="elmt" style="font-weight: bold;"></span> times.
 		</div>
 	</div>
 </body>

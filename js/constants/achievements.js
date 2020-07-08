@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 12,
+	rows: 13,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -255,7 +255,7 @@ const ACH_DATA = {
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
 		65: "Cadaver gain is increased by showNum(40)%boolean(hard, and Pathogen Upgrades softcap five later).",
 		67: "Time goes by showNum(11.11)% faster.",
-		68: "Pathogen gain is showNum(1)% fasterboolean(extreme, and Cadaver gain is quintupled).",
+		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme, and Cadaver gain is quintupled).",
 		
 		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",

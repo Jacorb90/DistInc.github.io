@@ -13,6 +13,7 @@ function updateHTML() {
 		tmp.el.not.setTxt("Notation: "+capitalFirst(player.options.not))
 		tmp.el.theme.setTxt("Theme: "+capitalFirst(player.options.theme))
 		tmp.el.autoSave.setTxt("Auto-Save: "+(player.options.autoSave?"ON":"OFF"))
+		tmp.el.newst.setTxt("News Ticker: "+(player.options.newst?"ON":"OFF"))
 	}
 	
 	// Main
@@ -126,7 +127,7 @@ function updateHTML() {
 	if (player.tab=="collapse") {
 		tmp.el.collapseReset.setClasses({btn: true, locked: !tmp.collapse.can, btndd: tmp.collapse.can})
 		tmp.el.cadaverGain.setTxt(showNum(tmp.collapse.layer.gain))
-		tmp.el.cadavers.setHTML("<span class='dead'>"+showNum(player.collapse.cadavers)+"</span> cadavers<span class='dead'>"+((tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain.div(100))+"/sec)"):(tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain)+"/sec)"):"")+"</span>")
+		tmp.el.cadavers.setHTML("<span class='dead'>"+showNum(player.collapse.cadavers)+"</span> cadavers<span class='dead'>"+((tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain)+"/sec)"):(tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))?(" (+"+showNum(tmp.collapse.layer.gain.div(100))+"/sec)"):"")+"</span>")
 		tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff))
 		tmp.el.sacrificeCadavers.setClasses({btn: true, locked: player.collapse.cadavers.eq(0), btndd: player.collapse.cadavers.gt(0)})
 		tmp.el.lifeEssence.setHTML("<span class='alive'>"+showNum(player.collapse.lifeEssence)+"</span> life essence<span class='alive'>"+((tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1))+"/sec)"):(tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence"))?(" (+"+showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).div(10))+"/sec)"):""))
@@ -294,6 +295,15 @@ function updateHTML() {
 		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)))
 	}
 	
+	// Elementary 
+	if (player.tab=="elementary") {
+		// Elementary
+		tmp.el.elmReset.setHTML("Reset all previous progress to gain <span class='eltxt'>"+showNum(tmp.elm.layer.gain)+"</span> Elementary Particles.")
+		tmp.el.elmReset.setClasses({btn: true, locked: !tmp.elm.can, elm: tmp.elm.can})
+		tmp.el.elmt.setTxt(showNum(player.elementary.times))
+		tmp.el.elmp.setTxt(showNum(player.elementary.particles))
+	}
+	
 	// Miscellaneous
 	tmp.el.ts.setHTML((tmp.timeSpeed.eq(1)||tmp.nerfs.active("noTS"))?"":("Time Speed: "+showNum(tmp.timeSpeed)+"x<br>"))
 	tmp.el.body.changeStyle("background", tmp.bc)
@@ -310,4 +320,5 @@ function updateHTML() {
 	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive")?"Maximum Velocity:":"Velocital Energy:")
 	tmp.el.accEn.setHTML(tmp.accEn.gt(0)?(" (Accelerational Energy: "+formatDistance(tmp.accEn)+"/s<sup>2</sup>)"):"")
 	tmp.el.footer.setDisplay(player.tab=="options"&&player.optionsTab!=="saving")
+	tmp.el.newsticker.setDisplay(player.options.newst)
 }

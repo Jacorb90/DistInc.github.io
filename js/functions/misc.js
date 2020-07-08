@@ -35,6 +35,26 @@ function ENString(obj) {
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power).toString()
 	if (Object.keys(ret.inf.derivatives.amts).length>0) for (const key in ret.inf.derivatives.amts) ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]).toString()
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks).toString()
+	ret.elementary.times = new ExpantaNum(ret.elementary.times).toString()
+	ret.elementary.particles = new ExpantaNum(ret.elementary.particles).toString()
+	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount).toString()
+	ret.elementary.fermions.quarks.amount = new ExpantaNum(ret.elementary.fermions.quarks.amount).toString()
+	ret.elementary.bosons.amount = new ExpantaNum(ret.elementary.bosons.amount).toString()
+	ret.elementary.bosons.gauge.amount = new ExpantaNum(ret.elementary.bosons.gauge.amount).toString()
+	ret.elementary.bosons.gauge.force = new ExpantaNum(ret.elementary.bosons.gauge.force).toString()
+	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount).toString()
+	for (let i=0;i<4;i++) ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(ret.elementary.bosons.gauge.photons.upgrades[i]).toString()
+	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w).toString()
+	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z).toString()
+	ret.elementary.bosons.gauge.gluons.r = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gluons.g = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gluons.b = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gluons.ar = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gluons.ag = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gluons.ab = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.amount).toString(), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[0]).toString(), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1]).toString()]}
+	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons).toString()
+	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount).toString()
+	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount).toString()
 	return ret
 }
 
@@ -49,6 +69,7 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	if (ret.version < 1.1 || !ret.inf.stadium) ret.inf.stadium = deepCopy(sc.inf.stadium)
 	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon)
 	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives)
+	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary)
 	ret.distance = new ExpantaNum(ret.distance)
 	ret.velocity = new ExpantaNum(ret.velocity)
 	ret.rank = new ExpantaNum(ret.rank)
@@ -82,6 +103,26 @@ function transformToEN(obj, sc=DEFAULT_START) {
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power)
 	if (Object.keys(ret.inf.derivatives.amts).length>0) for (const key in ret.inf.derivatives.amts) ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key])
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks)
+	ret.elementary.times = new ExpantaNum(ret.elementary.times)
+	ret.elementary.particles = new ExpantaNum(ret.elementary.particles)
+	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount)
+	ret.elementary.fermions.quarks.amount = new ExpantaNum(ret.elementary.fermions.quarks.amount)
+	ret.elementary.bosons.amount = new ExpantaNum(ret.elementary.bosons.amount)
+	ret.elementary.bosons.gauge.amount = new ExpantaNum(ret.elementary.bosons.gauge.amount)
+	ret.elementary.bosons.gauge.force = new ExpantaNum(ret.elementary.bosons.gauge.force)
+	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount)
+	for (let i=0;i<4;i++) ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(ret.elementary.bosons.gauge.photons.upgrades[i])
+	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w)
+	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z)
+	ret.elementary.bosons.gauge.gluons.r = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1])]}
+	ret.elementary.bosons.gauge.gluons.g = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1])]}
+	ret.elementary.bosons.gauge.gluons.b = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1])]}
+	ret.elementary.bosons.gauge.gluons.ar = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1])]}
+	ret.elementary.bosons.gauge.gluons.ag = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1])]}
+	ret.elementary.bosons.gauge.gluons.ab = {amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.amount), upgrades: [new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[0]), new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1])]}
+	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons)
+	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount)
+	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount)
 	ret.version = Math.max(ret.version, sc.version)
     return ret
 }

@@ -930,6 +930,47 @@ table { margin: auto; }
 	position: relative
 }
 
+.btn.elm {
+	box-shadow: 3px 4px 0px 0px #308a88;
+	background: none;
+	background-color:#83f7ee;
+	border-radius:18px;
+	border:1px solid #9dccca;
+	display:inline-block;
+	cursor:pointer;
+	color:#586770;
+	font-size:12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+
+.btn.elm:hover {
+	background: none;
+	background-color:#5efffa;
+	color:#586770;
+}
+
+.btn.elm:active {
+	position:relative;
+	top:3px;
+	left:2px;
+	box-shadow: none;
+}
+
+.eltxt {
+	font-size: 16px;
+	animation: eltxt 16s ease infinite;
+}
+
+.elmp {
+	font-weight: bold; 
+	color: #586770; 
+	font-size: 24px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color:#176648;
@@ -1054,6 +1095,29 @@ table { margin: auto; }
 	100% {
 		color: #9fc4bc;
 		text-shadow:0px 1px 0px #49f2a0;
+	}
+}
+
+@keyframes eltxt {
+	0% {
+		color: #9dc4c4;
+		text-shadow:0px -1px 0px #46b9f2;
+	}
+	25% {
+		color: #9dc4c4;
+		text-shadow:0px -5px 0px #46b9f2;
+	}
+	50% {
+		color: #9dc4c4;
+		text-shadow:0px 5px 0px #46b9f2;
+	}
+	75% {
+		color: #9dc4c4;
+		text-shadow:0px -5px 0px #46b9f2;
+	}
+	100% {
+		color: #9dc4c4;
+		text-shadow:0px -1px 0px #46b9f2;
 	}
 }
 
