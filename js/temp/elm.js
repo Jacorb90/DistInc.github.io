@@ -27,6 +27,8 @@ function updateTempElementary() {
 	};
 	tmp.elm.onReset = function (prev) {
 		player.elementary.times = player.elementary.times.plus(1);
+		
+		// Reset Quarks, Leptons, & Gauge Boson sub-resources
 		player.elementary.fermions.quarks.amount = new ExpantaNum(0);
 		player.elementary.fermions.leptons.amount = new ExpantaNum(0);
 		player.elementary.bosons.gauge = {
@@ -50,6 +52,16 @@ function updateTempElementary() {
 		};
 		player.elementary.bosons.scalar.amount = new ExpantaNum(0);
 		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(0);
+		
+		// Keep stuff on Elementary reset
+		if (tmp.elm.bos.hasHiggs("0;0;0")) {
+			player.tr.upgrades = prev.tr.upgrades
+			player.automation.unl = true
+		}
+		if (tmp.elm.bos.hasHiggs("0;0;1")) {
+			player.inf.endorsements = new ExpantaNum(10)
+			player.inf.unl = true
+		}
 	};
 
 	// Elementary Tab System
@@ -223,6 +235,7 @@ function updateTempElementary() {
 	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
 	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
 	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
+	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
 	// Photons
@@ -309,4 +322,12 @@ function updateTempElementary() {
 
 	// Scalar Bosons
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
+	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
+	tmp.elm.bos.buyHiggs = function(id) {
+		let data = HIGGS_UPGS[id]
+		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
+		player.elementary.bosons.scalar.higgs.amount = player.elementary.bosons.scalar.higgs.amount.sub(data.cost)
+		player.elementary.bosons.scalar.higgs.upgrades.push(id)
+	}
+	tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
 }

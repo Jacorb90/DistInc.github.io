@@ -119,7 +119,7 @@ function setupHTML() {
 	let au = new Element("automator");
 	autos = "<br>";
 	for (let i = 0; i < Object.keys(AUTOMATORS).length; i++) {
-		let dp = capitalFirst(Object.keys(AUTOMATORS)[i]);
+		let dp = capitalFirst(Object.keys(AUTOMATORS)[i].replace("_", " "));
 		autos +=
 			"<div id='automatorDiv-" +
 			Object.keys(AUTOMATORS)[i] +

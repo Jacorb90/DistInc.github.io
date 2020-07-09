@@ -19,6 +19,7 @@ var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
 var gluonTab = "r";
+var autoRobotTarget = 0
 var betaID = "beta1.5";
 
 // Game Loops
@@ -100,6 +101,9 @@ function tickWithoutTS(diff) {
 		);
 		player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(
 			tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff)
+		);
+		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(player.elementary.bosons.scalar.higgs.amount).plus(
+			tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar").times(diff)
 		);
 	}
 }

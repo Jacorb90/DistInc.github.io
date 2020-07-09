@@ -162,7 +162,9 @@ const TMP_DATA = {
 		"gravGain",
 		"gravMult",
 		"scalarAmt",
-		"scalarGain"
+		"scalarGain",
+		"higgs",
+		"higgsGain",
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -222,4 +224,8 @@ for (let i = 0; i < GLUON_COLOURS.length; i++) {
 		TMP_DATA.ELS.push(col + "Eff" + x);
 		TMP_DATA.ELS.push(col + "Cost" + x);
 	}
+}
+for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
+	let name = Object.keys(HIGGS_UPGS)[i]
+	TMP_DATA.ELS.push("higgs"+name)
 }

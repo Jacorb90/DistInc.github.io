@@ -50,9 +50,15 @@ const AUTOMATORS = {
 		return player.tr.upgrades.includes(21) && tmp.modes.extreme.active;
 	},
 	pathogens: function () {
-		return tmp.inf.upgs.has("3;4");
+		return tmp.inf.upgs.has("3;4")||tmp.elm.bos.hasHiggs("0;0;0");
 	},
 	cores: function () {
-		return tmp.inf.upgs.has("4;2");
+		return tmp.inf.upgs.has("4;2")||tmp.elm.bos.hasHiggs("0;0;0");
+	},
+	robots: function() {
+		return tmp.elm.bos.hasHiggs("1;0;0")
+	},
+	infinity_upgrades: function() {
+		return tmp.elm.bos.hasHiggs("0;1;0")
 	}
 };

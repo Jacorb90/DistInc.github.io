@@ -30,3 +30,22 @@ const LEPTON_DESCS = {
 const PHOTON_UPGS = 4;
 
 const GLUON_COLOURS = ["r", "g", "b", "ar", "ag", "ab"];
+
+const HIGGS_UPGS = {
+	"0;0;0": {
+		cost: new ExpantaNum(4e4),
+		desc: "Always keep TR Upgrades, the Pathogen Upgrade automator, & the Dark Core automator. You also start with Automation unlocked.",
+	},
+	"1;0;0": {
+		cost: new ExpantaNum(1e5),
+		desc: "Unlock Auto-Robots.",
+	},
+	"0;1;0": {
+		cost: new ExpantaNum(1e5),
+		desc: "Unlock Auto-Infinity Upgrades, and Infinity Upgrades are never repealed.",
+	},
+	"0;0;1": {
+		cost: new ExpantaNum(1e5),
+		desc: "You start with 10 Endorsements on reset.",
+	},
+}

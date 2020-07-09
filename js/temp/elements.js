@@ -629,7 +629,7 @@ function updateHTML() {
 			);
 
 			// Leptons
-			tmp.el.leptons.setTxt(
+			tmp.el.leptons.setHTML(
 				showNum(player.elementary.fermions.leptons.amount) + " " + tmp.elm.ferm.leptonName() + " Leptons"
 			);
 			tmp.el.leptonGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons")));
@@ -723,6 +723,14 @@ function updateHTML() {
 				// Scalar Bosons
 				tmp.el.scalarAmt.setTxt(showNum(player.elementary.bosons.scalar.amount));
 				tmp.el.scalarGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar")));
+				tmp.el.higgs.setTxt(showNum(player.elementary.bosons.scalar.higgs.amount))
+				tmp.el.higgsGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar")))
+				for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
+					let name = Object.keys(HIGGS_UPGS)[i]
+					let data = Object.values(HIGGS_UPGS)[i]
+					tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)})
+					tmp.el["higgs"+name].setHTML(data.desc+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
+				}
 			}
 		}
 	}

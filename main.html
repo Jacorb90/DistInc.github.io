@@ -1005,7 +1005,26 @@
 				</div>
 				<div id="scalar" class="bostab" style="display: none; min-height: 400px;">
 					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br />
-					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.
+					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.<br><br>
+					You have <span id="higgs" class="scalar"></span> Higgs Bosons (+<span id="higgsGain"></span>/sec).<br><br>
+					<table>
+						<tr>
+							<td><button id="higgs0;1;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;1;0')"></button></td>
+						</tr>
+						<tr>
+							<td class="btn" style="visibility: hidden;"></td>
+						</tr>
+						<tr>
+							<td><button id="higgs0;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;0')"></button></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td><button id="higgs1;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;0;0')"></button></td>
+							<td class="btn higgsL" style="visibility: hidden;"></td>
+							<td><button id="higgs0;0;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;1')"></button></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>

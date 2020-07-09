@@ -22,6 +22,7 @@ const NEWS_DATA = {
 	m20: ["The mysterious virus of Corvid Twenty has been dealt with (at least for now)"],
 	m21: ["Why progress when you can revert back to square one?"],
 	m22: ["The high gods are looking down at you (or up, maybe you're further than I thought)"],
+	m23: ["If I'm not mistaken, the current date is "+new Date().toISOString().substring(0, 10)+"."],
 
 	// Distance-based Conditions
 	d1: [

@@ -66,6 +66,23 @@ function autoTick(diff) {
 	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();
 	if (player.automators["cores"] && player.collapse.cadavers.gt(tmp.dc.coreCost)) tmp.dc.maxCores();
+	if (player.automators["robots"]) {
+		if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
+		let robot = tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]]
+		if (!robot.unl && player.automation.scraps.gte(ROBOT_REQS[robot.name])) robot.btn()
+		if (robot.unl) tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]].maxAll(true)
+		autoRobotTarget = (autoRobotTarget+1)%Object.keys(ROBOT_REQS).length
+	}
+	if (player.automators["infinity_upgrades"]) {
+		for (let r=1;r<=INF_UPGS.rows;r++) {
+			if (r>3) if (!INF_UPGS.rowReqs[r]()) continue
+			for (let c=1;c<=INF_UPGS.cols;c++) {
+				if (c>3) if (!INF_UPGS.colReqs[c]()) continue
+				let id=r+";"+c
+				tmp.inf.upgs.buy(id)
+			}
+		}
+	}
 }
 
 function showModeDescs(modes) {

@@ -74,7 +74,7 @@ class Robot {
 		player.automation.robots[this.name][v] = player.automation.robots[this.name][v].plus(1);
 	}
 
-	maxAll() {
+	maxAll(keep=false) {
 		if (!this.unl) return;
 		if (!tmp.ach) return;
 		if (!tmp.ach[48].has) return;
@@ -85,7 +85,7 @@ class Robot {
 				.logBase(ROBOT_COST_INC.interval[this.name])
 				.plus(1)
 				.floor();
-			player.automation.intelligence = player.automation.intelligence.sub(this.intCost);
+			if (!keep) player.automation.intelligence = player.automation.intelligence.sub(this.intCost);
 			player.automation.robots[this.name][0] = player.automation.robots[this.name][0].max(maxI);
 		}
 		if (player.automation.intelligence.gte(this.magCost)) {
@@ -95,7 +95,7 @@ class Robot {
 				.logBase(ROBOT_COST_INC.magnitude[this.name])
 				.sqrt()
 				.floor();
-			player.automation.intelligence = player.automation.intelligence.sub(this.magCost);
+			if (!keep) player.automation.intelligence = player.automation.intelligence.sub(this.magCost);
 			player.automation.robots[this.name][1] = player.automation.robots[this.name][1].max(maxM);
 		}
 	}

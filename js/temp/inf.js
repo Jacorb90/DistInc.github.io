@@ -23,6 +23,7 @@ function updateTempInf() {
 	// Infinity Upgrades
 	tmp.inf.upgs = {};
 	tmp.inf.upgs.repealed = function (id) {
+		if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
 		let rep = INF_UPGS.repealed[id] ? INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)) : false;
 		if (tmp.infUr.includes(id)) rep = false;
 		return rep;
@@ -276,7 +277,7 @@ function updateTempInf() {
 			player.automation.unl = prev.automation.unl;
 			player.automation.robots = prev.automation.robots;
 		}
-		if (tmp.inf.upgs.has("1;4")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 		else if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		if (tmp.inf.upgs.has("3;1")) {
 			player.collapse.unl = true;

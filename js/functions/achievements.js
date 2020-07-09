@@ -115,4 +115,5 @@ function updateAchievements() {
 	if (tmp.acc.gte("5.55e5555") && player.inf.pantheon.purge.active) tmp.ach[128].grant();
 
 	if (player.elementary.times.gt(0)) tmp.ach[131].grant();
+	if (player.distance.gte(1e15)&&player.inf.pantheon.purge.active&&!player.inf.upgrades.includes('8;8')&&tmp.inf.stadium.active("reality", 6)) tmp.ach[132].grant()
 }

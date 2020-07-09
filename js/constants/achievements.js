@@ -110,7 +110,8 @@ const ACH_DATA = {
 		127: "False Purge",
 		128: "Truly Nerfed",
 
-		131: "Shrinking the Multiverse"
+		131: "Shrinking the Multiverse",
+		132: "What's the point of even stopping you?",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -221,7 +222,8 @@ const ACH_DATA = {
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 
-		131: "Perform an Elementary reset."
+		131: "Perform an Elementary reset.",
+		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8, & while in Reality's Stadium challenge at Tier 6.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -288,6 +290,7 @@ const ACH_DATA = {
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
-		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster."
+		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
+		132: "The Gauge Force Effect is doubled.",
 	}
 };
