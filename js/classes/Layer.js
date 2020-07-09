@@ -1,56 +1,61 @@
 class Layer {
 	constructor(name, avail, type, spec, tName) {
-		this.name = name
-		this.tName = tName||name
-		this.avail = avail
-		this.type = type
-		this.spec = !(!spec)
-		this.addS = this.name=="rank"||this.name=="tier"
+		this.name = name;
+		this.tName = tName || name;
+		this.avail = avail;
+		this.type = type;
+		this.spec = !!spec;
+		this.addS = this.name == "rank" || this.name == "tier";
 	}
-	
+
 	get gain() {
-		if (this.type=="multi-res") return tmp[this.tName].gain
-		if (this.type=="forced"||this.type=="semi-forced") return new ExpantaNum(1)
-		let req = LAYER_REQS[this.name]
-		let nr = req[1]
-		if (tmp[this.tName].lrm !== undefined) nr = new ExpantaNum(req[1]).times(tmp[this.tName].lrm)
-		let gain = player[req[0]].div(nr).pow(LAYER_FP[this.name])
-		let sc = new ExpantaNum(LAYER_SC[this.name])
-		if (tmp[this.tName].sc !== undefined) sc = tmp[this.tName].sc
-		if (gain.gte(sc)) gain = gain.sqrt().times(ExpantaNum.sqrt(sc))
-		if (tmp.lm) if (tmp.lm[this.name]) gain = gain.times(tmp.lm[this.name])
-		return gain.floor()
+		if (this.type == "multi-res") return tmp[this.tName].gain;
+		if (this.type == "forced" || this.type == "semi-forced") return new ExpantaNum(1);
+		let req = LAYER_REQS[this.name];
+		let nr = req[1];
+		if (tmp[this.tName].lrm !== undefined) nr = new ExpantaNum(req[1]).times(tmp[this.tName].lrm);
+		let gain = player[req[0]].div(nr).pow(LAYER_FP[this.name]);
+		let sc = new ExpantaNum(LAYER_SC[this.name]);
+		if (tmp[this.tName].sc !== undefined) sc = tmp[this.tName].sc;
+		if (gain.gte(sc)) gain = gain.sqrt().times(ExpantaNum.sqrt(sc));
+		if (tmp.lm) if (tmp.lm[this.name]) gain = gain.times(tmp.lm[this.name]);
+		return gain.floor();
 	}
-	
+
 	get fcBulk() {
-		if (!(this.type=="forced"||this.type=="semi-forced")) return new ExpantaNum(0)
-		if (!this.avail) return new ExpantaNum(0)
-		if (this.name=="rf") return tmp[this.tName].bulk.floor()
-		else return tmp[this.tName+(this.addS?"s":"")].bulk.floor()
+		if (!(this.type == "forced" || this.type == "semi-forced")) return new ExpantaNum(0);
+		if (!this.avail) return new ExpantaNum(0);
+		if (this.name == "rf") return tmp[this.tName].bulk.floor();
+		else return tmp[this.tName + (this.addS ? "s" : "")].bulk.floor();
 	}
-	
-	reset(force=false) {
+
+	reset(force = false) {
 		if (!force) {
-			if (!this.avail || this.gain.lt(1)) return
-			if (!this.spec) player[this.name] = player[this.name].plus(this.gain)
+			if (!this.avail || this.gain.lt(1)) return;
+			if (!this.spec) player[this.name] = player[this.name].plus(this.gain);
 			else {
-				let gc = tmp[this.tName].doGain()
-				if (gc=="NO") return
+				let gc = tmp[this.tName].doGain();
+				if (gc == "NO") return;
 			}
 		}
-		let prev = transformToEN(player, DEFAULT_START)
-		for (let i=0;i<LAYER_RESETS[this.name].length;i++) player[LAYER_RESETS[this.name][i]] = ((DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object && !(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)) ? JSON.parse(JSON.stringify(DEFAULT_START[LAYER_RESETS[this.name][i]])) : DEFAULT_START[LAYER_RESETS[this.name][i]])
-		player = transformToEN(player, DEFAULT_START)
-		modeLoad(LAYER_RESETS_EXTRA[this.name])
-		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev)
-		updateTemp()
+		let prev = transformToEN(player, DEFAULT_START);
+		for (let i = 0; i < LAYER_RESETS[this.name].length; i++)
+			player[LAYER_RESETS[this.name][i]] =
+				DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object &&
+				!(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)
+					? JSON.parse(JSON.stringify(DEFAULT_START[LAYER_RESETS[this.name][i]]))
+					: DEFAULT_START[LAYER_RESETS[this.name][i]];
+		player = transformToEN(player, DEFAULT_START);
+		modeLoad(LAYER_RESETS_EXTRA[this.name]);
+		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev);
+		updateTemp();
 	}
-	
-	bulk(mag=new ExpantaNum(1)) {
-		if (!this.avail) return
-		if (!(this.type=="forced"||this.type=="semi-forced")) return
-		let m = player[this.name].plus(mag).min(this.fcBulk).floor()
-		player[this.name] = player[this.name].max(m)
-		this.reset(true)
+
+	bulk(mag = new ExpantaNum(1)) {
+		if (!this.avail) return;
+		if (!(this.type == "forced" || this.type == "semi-forced")) return;
+		let m = player[this.name].plus(mag).min(this.fcBulk).floor();
+		player[this.name] = player[this.name].max(m);
+		this.reset(true);
 	}
 }
