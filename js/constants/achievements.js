@@ -264,6 +264,7 @@ const ACH_DATA = {
 		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
+		76: "Rocket gain is increased by showNum(2)%",
 		
 		81: "Keep automation stuff on all resets.",
 		83: "Dark Flow is showNum(20)% faster.",

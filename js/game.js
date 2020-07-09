@@ -47,6 +47,10 @@ function tickWithoutTS(diff) {
 		player.elementary.fermions.quarks.amount = new ExpantaNum(player.elementary.fermions.quarks.amount).plus(tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks").times(diff))
 		player.elementary.fermions.leptons.amount = new ExpantaNum(player.elementary.fermions.leptons.amount).plus(tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons").times(diff))
 		player.elementary.bosons.gauge.amount = new ExpantaNum(player.elementary.bosons.gauge.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge").times(diff))
+		player.elementary.bosons.gauge.force = new ExpantaNum(player.elementary.bosons.gauge.force).plus(tmp.nerfs.adjust(tmp.elm.bos.forceGain, "gauge").times(diff))
+		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(player.elementary.bosons.gauge.photons.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge").times(diff))
+		player.elementary.bosons.gauge.w = new ExpantaNum(player.elementary.bosons.gauge.w).plus(tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge").times(diff))
+		player.elementary.bosons.gauge.z = new ExpantaNum(player.elementary.bosons.gauge.z).plus(tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge").times(diff))
 		player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff))
 	}
 }

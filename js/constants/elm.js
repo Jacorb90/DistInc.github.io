@@ -22,3 +22,5 @@ const LEPTON_DESCS = {
 	vibrino: "Derivative Boosts are stronger.",
 	psi: "Quark gain is faster.",
 }
+
+const PHOTON_UPGS = 4

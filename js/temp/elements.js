@@ -331,6 +331,29 @@ function updateHTML() {
 				// Gauge Bosons
 				tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount))
 				tmp.el.gaugeGain.setTxt(showNum(tmp.elm.bos.gaugeGain))
+				tmp.el.gaugeForce.setTxt(showNum(player.elementary.bosons.gauge.force))
+				tmp.el.gaugeForceGain.setTxt(showNum(tmp.elm.bos.forceGain))
+				tmp.el.gaugeForceEff.setTxt(showNum(tmp.elm.bos.forceEff))
+				
+				// Photons
+				tmp.el.photons.setTxt(showNum(player.elementary.bosons.gauge.photons.amount))
+				tmp.el.photonGain.setTxt(showNum(tmp.elm.bos.photonGain))
+				for (let i=1;i<=PHOTON_UPGS;i++) {
+					tmp.el["photon"+i].setClasses({btn: true, locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]), light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])})
+					tmp.el["photonLvl"+i].setTxt(showNum(player.elementary.bosons.gauge.photons.upgrades[i-1]))
+					tmp.el["photonDesc"+i].setTxt(showNum(tmp.elm.bos.photonEff(i))+"x")
+					tmp.el["photonCost"+i].setTxt(showNum(tmp.elm.bos.photonCost[i]))
+				}
+				
+				// W & Z Bosons
+				tmp.el.w.setTxt(showNum(player.elementary.bosons.gauge.w))
+				tmp.el.wg.setTxt(showNum(tmp.elm.bos.wg))
+				tmp.el.w1.setTxt(showNum(tmp.elm.bos.w1))
+				tmp.el.w2.setTxt(showNum(tmp.elm.bos.w2))
+				tmp.el.z.setTxt(showNum(player.elementary.bosons.gauge.z))
+				tmp.el.zg.setTxt(showNum(tmp.elm.bos.zg))
+				tmp.el.z1.setTxt(showNum(tmp.elm.bos.z1))
+				tmp.el.z2.setTxt(showNum(tmp.elm.bos.z2))
 			}
 			if (bosTab=="scalar") {
 				// Scalar Bosons

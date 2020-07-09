@@ -6,7 +6,7 @@ function updateTempSpecial() {
 		automation: new Feature({name: "automation", req: ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)), res: "distance", display: formatDistance, reached: player.automation.unl,  progress: function() { return player.distance.max(1).log10().div(ExpantaNum.mul(AUTO_UNL, (tmp.auto?tmp.auto.lrm:10)).log10()) }}),
 		"time reversal": new Feature({name: "time reversal", req: new ExpantaNum(DISTANCES.ly), res: "distance", display: formatDistance, reached: player.tr.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10()) } }),
 		"collapse": new Feature({name: "collapse", req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1), res: "distance", display: formatDistance, reached: player.collapse.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse?tmp.collapse.lrm:1).log10()) }}),
-		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl, progress: function() { player.collapse.cadavers.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1)) } }),
+		pathogens: new Feature({name: "pathogens", req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1), res: ["collapse", "cadavers"], display: showNum, reached: player.pathogens.unl, progress: function() { return player.collapse.cadavers.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens?tmp.pathogens.lrm:1)) } }),
 		dc: new Feature({name: "dc", req: new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1), res: "distance", display: formatDistance, reached: player.dc.unl, displayName: "dark circles", progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(DC_UNL).mul(tmp.dc?tmp.dc.lrm:1).log10()) }}),
 		infinity: new Feature({name: "infinity", req: new ExpantaNum(INF_UNL), res: "distance", display: formatDistance, reached: player.inf.unl, progress: function() { return player.distance.max(1).log10().div(new ExpantaNum(INF_UNL).log10()) }}),
 		ascension: new Feature({name: "ascension", req: new ExpantaNum(10), res: ["inf", "endorsements"], display: showNum, reached: player.inf.endorsements.gte(10), progress: function() { return player.inf.endorsements.div(10) }}),
@@ -45,6 +45,7 @@ function updateLayerMults() {
 	if (tmp.ach[15].has) tmp.lm.rockets = tmp.lm.rockets.times(1.05)
 	if (tmp.ach[26].has) tmp.lm.rockets = tmp.lm.rockets.times(1.1)
 	if (tmp.ach[44].has) tmp.lm.rockets = tmp.lm.rockets.times(1.15)
+	if (tmp.ach[76].has) tmp.lm.rockets = tmp.lm.rockets.times(1.02)
 	if (tmp.ach[131].has) tmp.lm.rockets = tmp.lm.rockets.times(2)
 	if (tmp.modes.extreme.active && player.rf.gt(0)) tmp.lm.rockets = tmp.lm.rockets.times(ExpantaNum.pow(2, player.furnace.upgrades[2]))
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2)

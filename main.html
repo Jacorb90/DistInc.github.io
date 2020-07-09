@@ -440,7 +440,33 @@
 				</div>
 				<div id="gauge" class="bostab" style="min-height: 400px">
 					Your Bosons & Ascension Power are generating you <span id="gaugeGain" class="gauge"></span> Gauge Bosons/sec.<br>
-					You have <span id="gaugeAmt" class="gauge"></span> Gauge Bosons.
+					You have <span id="gaugeAmt" class="gauge"></span> Gauge Bosons.<br>
+					You have <span id="gaugeForce" class="gauge"></span> Gauge Force (+<span id="gaugeForceGain"></span>/sec), which is making the below resources generate at <span id="gaugeForceEff" class="gauge"></span>x speed.<br><br>
+					<div style="width: 50%; min-height: 300px; background-color: #f9ff8f; float: left; color: black;">
+						<br>
+						You have <span id="photons" class="gauge"></span> Photons (+<span id="photonGain" style="color: black"></span>/sec)<br><br>
+						<table>
+							<tr>
+								<td><button id="photon1" class="btn locked" onclick="tmp.elm.bos.buyLU(1)">Triple Pathogen gain<br>Level: <span id="photonLvl1" style="color: white"></span><br>Currently: <span id="photonDesc1" style="color: white"></span><br>Cost: <span id="photonCost1" style="color: white"></span> Photons</button></td>
+								<td><button id="photon2" class="btn locked" onclick="tmp.elm.bos.buyLU(2)">Boost Knowledge gain by 50%<br>Level: <span id="photonLvl2" style="color: white"></span><br>Currently: <span id="photonDesc2" style="color: white"></span><br>Cost: <span id="photonCost2" style="color: white"></span> Photons</button></td>
+							</tr>
+							<tr>
+								<td><button id="photon3" class="btn locked" onclick="tmp.elm.bos.buyLU(3)">???<br>Level: <span id="photonLvl3" style="color: white"></span><br>Currently: <span id="photonDesc3" style="color: white"></span><br>Cost: <span id="photonCost3" style="color: white"></span> Photons</button></td>
+								<td><button id="photon4" class="btn locked" onclick="tmp.elm.bos.buyLU(4)">???<br>Level: <span id="photonLvl4" style="color: white"></span><br>Currently: <span id="photonDesc4" style="color: white"></span><br>Cost: <span id="photonCost4" style="color: white"></span> Photons</button></td>
+							</tr>
+						</table>
+					</div>
+					<div style="width: 50%; min-height: 300px; background-color: #42ffa7; float: right; color: black;">
+						<br>
+						You have <span id="w" class="gauge"></span> W Bosons (+<span id="wg" style="color: black;"></span>/sec), translated to a <span id="w1" class="gauge"></span>x multiplier to Z Boson gain and a <span id="w2" class="gauge"></span>x multiplier to Ascension Power gain.<br><br>
+						You have <span id="z" class="gauge"></span> Z Bosons (+<span id="zg" style="color: black;"></span>/sec), translated to a <span id="z1" class="gauge"></span>x multiplier to W Boson gain and a <span id="z2" class="gauge"></span>x multiplier to Dark Flow.
+					</div><br>
+					<div style="width: 50%; min-height: 300px; background-color: #e3b988; float: left; color: black;">
+						Gluons (NOT IMPLEMENTED)
+					</div>
+					<div style="width: 50%; min-height: 300px; background-color: #838584; float: right; color: white;">
+						Gravitons (NOT IMPLEMENTED)
+					</div>
 				</div>
 				<div id="scalar" class="bostab" style="display: none; min-height: 400px;">
 					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br>

@@ -19,6 +19,7 @@ function updateTempPathogens() {
 	if (tmp.modes.easy.active) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4)
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5)
 	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1))
+	if (tmp.elm) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.bos.photonEff(1).max(1))
 	tmp.pathogens.upgPow = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13.max(0))
 	if (tmp.modes.extreme.active && player.tr.upgrades.includes(27)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(player.furnace.coal.plus(1).times(10).slog(10).sub(1).div(5).max(0))

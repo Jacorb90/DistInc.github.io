@@ -1,6 +1,7 @@
 function updateTempElementary() {
 	if (tmp.elm) {
 		tmp.psiEff = tmp.elm.ferm.leptonR("psi")
+		tmp.z1 = tmp.elm.bos.z1
 	}
 	
 	// Elementary Layer
@@ -160,6 +161,42 @@ function updateTempElementary() {
 		tmp.elm.bos.updateTabs()
 	}
 	tmp.elm.bos.updateTabs()
+	
+	// Gauge Bosons
 	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1))
+	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75)
+	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2)
+	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff)
+	
+	// Photons
+	tmp.elm.bos.photonGain = gaugeSpeed
+	tmp.elm.bos.photonCost = {
+		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
+		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
+		3: new ExpantaNum(1/0),
+		4: new ExpantaNum(1/0),
+	}
+	tmp.elm.bos.photonEff = function(x) {
+		let bought = player.elementary.bosons.gauge.photons.upgrades[x-1]
+		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0)
+		if (x==1) return ExpantaNum.pow(3, bought)
+		if (x==2) return ExpantaNum.pow(1.5, bought)
+		if (x==3||x==4) return new ExpantaNum(0)
+	}
+	tmp.elm.bos.buyLU = function(x) {
+		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return
+		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(player.elementary.bosons.gauge.photons.amount).sub(tmp.elm.bos.photonCost[x])
+		player.elementary.bosons.gauge.photons.upgrades[x-1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x-1]).plus(1)
+	}
+	
+	// W & Z Bosons
+	tmp.elm.bos.wg = gaugeSpeed.times(0.4).times(tmp.z1||1)
+	tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).log10().div(10).plus(1)
+	tmp.elm.bos.w2 = player.elementary.bosons.gauge.w.plus(1).log10().sqrt().plus(1)
+	tmp.elm.bos.zg = gaugeSpeed.times(0.1).times(tmp.elm.bos.w1)
+	tmp.elm.bos.z1 = player.elementary.bosons.gauge.z.plus(1).pow(0.04)
+	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2)
+	
+	// Scalar Bosons
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6)
 }

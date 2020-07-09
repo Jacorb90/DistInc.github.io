@@ -21,6 +21,7 @@ const NEWS_DATA = {
 	m19: ["People say that this is unbalanced, but really it's just that all the other games are too balanced."],
 	m20: ["The mysterious virus of Corvid Twenty has been dealt with (at least for now)"],
 	m21: ["Why progress when you can revert back to square one?"],
+	m22: ["The high gods are looking down at you (or up, maybe you're further than I thought)"],
 	
 	// Distance-based Conditions
 	d1: ["You've travelled more than me today", function() {return player.distance.gte(500)}],
@@ -59,6 +60,7 @@ const NEWS_DATA = {
 	s2: ["Pathogens more like coronavirus", function() {return player.pathogens.unl}],
 	s3: ["The universe was calm, but then the Pathogen Nation attacked.", function() {return player.elementary.times.gt(0)}],
 	s4: ["Leptons sound like a soft drink - Mark's Rival's Rival", function() { return player.elementary.times.gt(0)}],
+	s5: ["The Bosons will Gauge out your eyes", function() { return player.elementary.times.gt(0)}],
 }
 
 const NEWS_ADJ = 110
