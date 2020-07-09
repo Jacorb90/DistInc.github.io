@@ -18,6 +18,7 @@ var infActive = false
 var infTab = "infinity"
 var elmTab = "fermions"
 var bosTab = "gauge"
+var gluonTab = "r"
 var betaID = "beta1.5"
 
 // Game Loops
@@ -28,10 +29,10 @@ function tickWithoutTS(diff) {
 	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets")) player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)))
 	if (player.pathogens.unl) player.pathogens.amount = player.pathogens.amount.plus(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff))
 	if (player.dc.unl) tmp.dc.tick(diff)
-	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff))
 	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff))
 	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")) player.collapse.lifeEssence = player.collapse.lifeEssence.plus(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff.div(10)))
 	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff))
+	if (player.inf.unl) player.inf.knowledge = player.inf.knowledge.plus(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff))
 	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")) player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)))
 	if (player.inf.endorsements.gte(10)) {
 		for (let i=1;i<=4;i++) if (tmp.inf.asc.perkActive(i)) player.inf.ascension.time[i-1] = player.inf.ascension.time[i-1].sub(diff).max(0)
@@ -51,7 +52,10 @@ function tickWithoutTS(diff) {
 		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(player.elementary.bosons.gauge.photons.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge").times(diff))
 		player.elementary.bosons.gauge.w = new ExpantaNum(player.elementary.bosons.gauge.w).plus(tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge").times(diff))
 		player.elementary.bosons.gauge.z = new ExpantaNum(player.elementary.bosons.gauge.z).plus(tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge").times(diff))
+		for (let i=0;i<GLUON_COLOURS.length;i++) player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount = new ExpantaNum(player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount).plus(tmp.nerfs.adjust(tmp.elm.bos[GLUON_COLOURS[i]+"g"], "gauge").times(diff))
+		player.elementary.bosons.gauge.gravitons = new ExpantaNum(player.elementary.bosons.gauge.gravitons).plus(tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge").times(diff))
 		player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff))
+		
 	}
 }
 

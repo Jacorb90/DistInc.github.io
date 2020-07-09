@@ -2,6 +2,8 @@ function updateTempElementary() {
 	if (tmp.elm) {
 		tmp.psiEff = tmp.elm.ferm.leptonR("psi")
 		tmp.z1 = tmp.elm.bos.z1
+		tmp.glu2 = tmp.elm.bos.gluon2total
+		tmp.gravEff = tmp.elm.bos.gravEff
 	}
 	
 	// Elementary Layer
@@ -77,6 +79,7 @@ function updateTempElementary() {
 	}
 	// Quarks
 	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount.times(player.inf.endorsements.plus(1).sqrt()).times((tmp.psiEff?tmp.psiEff:new ExpantaNum(0)).max(1))
+	if (tmp.glu2) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.glu2.max(1))
 	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor()
 	tmp.elm.ferm.quarkName = function(noExp=false) {
 		let name = QUARK_NAMES[player.elementary.fermions.quarks.type-1]
@@ -107,6 +110,7 @@ function updateTempElementary() {
 	
 	// Leptons
 	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount.times(tmp.inf.pantheon.totalGems.plus(1)).div(2.5).times(tmp.elm.ferm.quarkR("top").max(1))
+	if (tmp.glu2) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.glu2.max(1))
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor()
 	tmp.elm.ferm.leptonName = function(noExp=false) {
 		let name = LEPTON_NAMES[player.elementary.fermions.leptons.type-1]
@@ -151,20 +155,21 @@ function updateTempElementary() {
 		player.elementary.particles = player.elementary.particles.sub(toSub)
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub)
 	}
-	tmp.elm.bos.updateTabs = function() {
-		let tabs = Element.allFromClass("bostab")
-		for (let i=0;i<tabs.length;i++) tabs[i].setDisplay(bosTab==tabs[i].id)
+	tmp.elm.bos.updateGluonTabs = function() {
+		let tabs = Element.allFromClass("gluontab")
+		for (let i=0;i<tabs.length;i++) tabs[i].setDisplay(gluonTab==tabs[i].id)
 	}
-	tmp.elm.bos.showTab = function(name) {
-		if (bosTab==name) return
-		bosTab = name
-		tmp.elm.bos.updateTabs()
+	tmp.elm.bos.showGluonTab = function(name) {
+		if (gluonTab==name) return
+		gluonTab = name
+		tmp.elm.bos.updateGluonTabs()
 	}
-	tmp.elm.bos.updateTabs()
+	tmp.elm.bos.updateGluonTabs()
 	
 	// Gauge Bosons
 	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1))
 	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75)
+	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff)
 	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2)
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff)
 	
@@ -196,6 +201,46 @@ function updateTempElementary() {
 	tmp.elm.bos.zg = gaugeSpeed.times(0.1).times(tmp.elm.bos.w1)
 	tmp.elm.bos.z1 = player.elementary.bosons.gauge.z.plus(1).pow(0.04)
 	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2)
+	
+	// Gluons
+	tmp.elm.bos.updateTabs = function() {
+		let tabs = Element.allFromClass("bostab")
+		for (let i=0;i<tabs.length;i++) tabs[i].setDisplay(bosTab==tabs[i].id)
+	}
+	tmp.elm.bos.showTab = function(name) {
+		if (bosTab==name) return
+		bosTab = name
+		tmp.elm.bos.updateTabs()
+	}
+	tmp.elm.bos.updateTabs()
+	tmp.elm.bos.gluonEff = function(col, x) {
+		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x-1]
+		if (x==1) return ExpantaNum.pow(2, bought)
+		else return ExpantaNum.pow(1.1, bought)
+	}
+	tmp.elm.bos.rg = gaugeSpeed.div(2.5).times(tmp.elm.bos.gluonEff("ar", 1))
+	tmp.elm.bos.gg = gaugeSpeed.div(2.6).times(tmp.elm.bos.gluonEff("ag", 1))
+	tmp.elm.bos.bg = gaugeSpeed.div(2.4).times(tmp.elm.bos.gluonEff("ab", 1))
+	tmp.elm.bos.arg = gaugeSpeed.div(10).times(tmp.elm.bos.gluonEff("r", 1))
+	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1))
+	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1))
+	tmp.elm.bos.gluonCost = function(col, x) {
+		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x-1]
+		if (x==1) return ExpantaNum.pow(2, bought.pow(2.5).times(2)).times(100)
+		else return ExpantaNum.pow(3, ExpantaNum.pow(3, bought)).times(1e3/3)
+	}
+	tmp.elm.bos.buy = function(col, x) {
+		let amt = player.elementary.bosons.gauge.gluons[col].amount
+		if (amt.lt(tmp.elm.bos.gluonCost(col, x))) return
+		player.elementary.bosons.gauge.gluons[col].amount = amt.sub(tmp.elm.bos.gluonCost(col, x))
+		player.elementary.bosons.gauge.gluons[col].upgrades[x-1] = player.elementary.bosons.gauge.gluons[col].upgrades[x-1].plus(1)
+	}
+	tmp.elm.bos.gluon2total = new ExpantaNum(1)
+	for (let i=0;i<GLUON_COLOURS.length;i++) tmp.elm.bos.gluon2total = tmp.elm.bos.gluon2total.times(tmp.elm.bos.gluonEff(GLUON_COLOURS[i], 2))
+	
+	// Gravitons
+	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75)
+	tmp.elm.bos.gravEff = player.elementary.bosons.gauge.gravitons.times(player.elementary.times.plus(1)).plus(1).log10().div(10).plus(1).pow(2.25)
 	
 	// Scalar Bosons
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6)

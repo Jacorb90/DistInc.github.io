@@ -263,7 +263,7 @@ function updateHTML() {
 				let name = DERV[i]
 				tmp.el["dervDiv"+name].setDisplay(tmp.inf.derv.unlocked(name))
 				tmp.el["derv"+name].setTxt(formatDistance(tmp.inf.derv.amt(name)))
-				tmp.el["dervgain"+name].setTxt("(+"+formatDistance(tmp.inf.derv.gain(name))+"/sec)")
+				tmp.el["dervgain"+name].setTxt("(+"+formatDistance(tmp.nerfs.adjust(tmp.inf.derv.gain(name), "derv"))+"/sec)")
 			}
 			let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts)?"Boosts":"Shifts"
 			tmp.el.dervUnlock.setHTML(tmp.scaling.getName("dervBoost")+" Derivative "+dervName+" ("+showNum(player.inf.derivatives.unlocks)+")<br>Cost: "+showNum(tmp.inf.derv.unlCost)+" Knowledge")
@@ -312,12 +312,12 @@ function updateHTML() {
 			
 			// Quarks
 			tmp.el.quarks.setHTML(showNum(player.elementary.fermions.quarks.amount)+" "+tmp.elm.ferm.quarkName()+" Quarks")
-			tmp.el.quarkGain.setTxt(showNum(tmp.elm.ferm.quarkGain))
+			tmp.el.quarkGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks")))
 			tmp.el.quarkRewards.setTooltip(tmp.elm.ferm.quarkName(true)+" Quarks: "+tmp.elm.ferm.quarkDesc(QUARK_NAMES[player.elementary.fermions.quarks.type-1]))
 			
 			// Leptons
 			tmp.el.leptons.setTxt(showNum(player.elementary.fermions.leptons.amount)+" "+tmp.elm.ferm.leptonName()+" Leptons")
-			tmp.el.leptonGain.setTxt(showNum(tmp.elm.ferm.leptonGain))
+			tmp.el.leptonGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons")))
 			tmp.el.leptonRewards.setTooltip(tmp.elm.ferm.leptonName(true)+" Leptons: "+tmp.elm.ferm.leptonDesc(LEPTON_NAMES[player.elementary.fermions.leptons.type-1]))
 		}
 		if (elmTab=="bosons") {
@@ -330,14 +330,14 @@ function updateHTML() {
 			if (bosTab=="gauge") {
 				// Gauge Bosons
 				tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount))
-				tmp.el.gaugeGain.setTxt(showNum(tmp.elm.bos.gaugeGain))
+				tmp.el.gaugeGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge")))
 				tmp.el.gaugeForce.setTxt(showNum(player.elementary.bosons.gauge.force))
 				tmp.el.gaugeForceGain.setTxt(showNum(tmp.elm.bos.forceGain))
 				tmp.el.gaugeForceEff.setTxt(showNum(tmp.elm.bos.forceEff))
 				
 				// Photons
 				tmp.el.photons.setTxt(showNum(player.elementary.bosons.gauge.photons.amount))
-				tmp.el.photonGain.setTxt(showNum(tmp.elm.bos.photonGain))
+				tmp.el.photonGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge")))
 				for (let i=1;i<=PHOTON_UPGS;i++) {
 					tmp.el["photon"+i].setClasses({btn: true, locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]), light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])})
 					tmp.el["photonLvl"+i].setTxt(showNum(player.elementary.bosons.gauge.photons.upgrades[i-1]))
@@ -347,18 +347,37 @@ function updateHTML() {
 				
 				// W & Z Bosons
 				tmp.el.w.setTxt(showNum(player.elementary.bosons.gauge.w))
-				tmp.el.wg.setTxt(showNum(tmp.elm.bos.wg))
+				tmp.el.wg.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge")))
 				tmp.el.w1.setTxt(showNum(tmp.elm.bos.w1))
 				tmp.el.w2.setTxt(showNum(tmp.elm.bos.w2))
 				tmp.el.z.setTxt(showNum(player.elementary.bosons.gauge.z))
-				tmp.el.zg.setTxt(showNum(tmp.elm.bos.zg))
+				tmp.el.zg.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge")))
 				tmp.el.z1.setTxt(showNum(tmp.elm.bos.z1))
 				tmp.el.z2.setTxt(showNum(tmp.elm.bos.z2))
+				
+				// Gluons
+				for (let i=0;i<GLUON_COLOURS.length;i++) {
+					let col = GLUON_COLOURS[i]
+					let amt = player.elementary.bosons.gauge.gluons[col].amount
+					tmp.el[col+"g"].setTxt(showNum(amt))
+					tmp.el[col+"gg"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos[col+"g"], "gauge")))
+					for (let x=1;x<=2;x++) {
+						tmp.el[col+"Upg"+x].setClasses({btn: true, locked: amt.lt(tmp.elm.bos.gluonCost(col, x)), elm: amt.gte(tmp.elm.bos.gluonCost(col, x))})
+						tmp.el[col+"Lvl"+x].setTxt(showNum(player.elementary.bosons.gauge.gluons[col].upgrades[x-1]))
+						tmp.el[col+"Eff"+x].setTxt(showNum(tmp.elm.bos.gluonEff(col, x)))
+						tmp.el[col+"Cost"+x].setTxt(showNum(tmp.elm.bos.gluonCost(col, x)))
+					}
+				}
+				
+				// Gravitons
+				tmp.el.grav.setTxt(showNum(player.elementary.bosons.gauge.gravitons))
+				tmp.el.gravGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge")))
+				tmp.el.gravMult.setTxt(showNum(tmp.elm.bos.gravEff))
 			}
 			if (bosTab=="scalar") {
 				// Scalar Bosons
 				tmp.el.scalarAmt.setTxt(showNum(player.elementary.bosons.scalar.amount))
-				tmp.el.scalarGain.setTxt(showNum(tmp.elm.bos.scalarGain))
+				tmp.el.scalarGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar")))
 			}
 		}
 	}

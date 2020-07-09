@@ -155,7 +155,7 @@ function reload() {
 	window.location.reload()
 }
 
-function getCurrentTime() { return new Date().getTime() }
+function getCurrentTime() { return Date.now() }
 
 function getAllAchievements() {
 	let a = []

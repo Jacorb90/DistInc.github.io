@@ -23,14 +23,13 @@ function loadGame() {
 	setupHTML()
 	interval = setInterval(function() {
 		simulateTime()
-	}, 33)
+	}, 50)
 }
 
 function simulateTime() {
-	if (player.time===undefined) player.time = getCurrentTime()
-	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time))
-	gameLoop(time.div(1000))
+	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time||getCurrentTime()))
 	player.time = getCurrentTime()
+	gameLoop(time.div(1000))
 }
 
 function autoTick(diff) {

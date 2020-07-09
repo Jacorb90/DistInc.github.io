@@ -118,6 +118,15 @@ function setupHTML() {
 		data+="<div id='dervDiv"+name+"' style='display: none;'><b>"+capitalFirst(name)+"</b>: <span id='derv"+name+"'></span>"+suffix+" <span id='dervgain"+name+"'></span>"+"</div><br>"
 	}
 	dv.setHTML(data)
+	
+	// Gluon Upgrades
+	for (let i=0;i<GLUON_COLOURS.length;i++) {
+		let col = GLUON_COLOURS[i]
+		let tbl = new Element(col+"_table")
+		let data = "<tr><td><button id='"+col+"Upg1' class='btn locked' onclick='tmp.elm.bos.buy(&quot;"+col+"&quot;, 1)'>Double gain of the anti version of this colour.<br>Level: <span id='"+col+"Lvl1'></span><br>Currently: <span id='"+col+"Eff1'></span>x<br>Cost: <span id='"+col+"Cost1'></span> of these Gluons.</button></td>"
+		data += "<tr><td><button id='"+col+"Upg2' class='btn locked' onclick='tmp.elm.bos.buy(&quot;"+col+"&quot;, 2)'>Increase Quark & Lepton gain by "+showNum(10)+"%.<br>Level: <span id='"+col+"Lvl2'></span><br>Currently: <span id='"+col+"Eff2'></span>x<br>Cost: <span id='"+col+"Cost2'></span> of these Gluons.</button></td></tr>"
+		tbl.setHTML(data)
+	}
 }
 
 function updateBeforeTick() {

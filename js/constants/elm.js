@@ -24,3 +24,5 @@ const LEPTON_DESCS = {
 }
 
 const PHOTON_UPGS = 4
+
+const GLUON_COLOURS = ["r","g","b","ar","ag","ab"]
