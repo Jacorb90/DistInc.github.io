@@ -89,11 +89,19 @@ const HIGGS_UPGS = {
 		desc: "Derivative Boosts are stronger based on your Higgs Bosons.",
 	},
 	"4;0;0": {
-		cost: new ExpantaNum(1e10),
+		cost: new ExpantaNum(2e9),
 		desc: "Unlock 1 new row & column of Infinity Upgrades.",
 	},
 	"0;0;4": {
-		cost: new ExpantaNum(1e10),
+		cost: new ExpantaNum(2e9),
 		desc: "Knowledge gain & Ascension Power gain are faster based on the Perk Accelerator's speed.",
+	},
+	"1;3;0": {
+		cost: new ExpantaNum(1e13),
+		desc: "Angels & Demons boost the Gauge Force effect.",
+	},
+	"0;3;1": {
+		cost: new ExpantaNum(1e13),
+		desc: "Purge Power boosts Quark & Lepton gain.",
 	},
 }

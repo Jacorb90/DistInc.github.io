@@ -757,6 +757,8 @@ function updateHTML() {
 				tmp.el["higgs3;0;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_3;0;0"](true))+"x")
 				tmp.el["higgs0;2;1"].setTooltip("Currently: +"+showNum(tmp.elm.bos["higgs_0;2;1"](true))+"%")
 				tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
+				tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x")
+				tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x")
 			}
 		}
 	}

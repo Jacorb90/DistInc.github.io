@@ -54,7 +54,8 @@ function updateTempInf() {
 		return player.inf.upgrades.includes(id);
 	};
 	tmp.inf.upgs.current = function (id) {
-		if (id == "2;3")
+		if (id=="4;10") return "^"+showNum(INF_UPGS.effects[id]())
+		else if (id == "2;3")
 			return (
 				"Time Cubes: " +
 				showNum(INF_UPGS.effects[id]()["cubes"]) +
@@ -110,6 +111,7 @@ function updateTempInf() {
 				showNum(INF_UPGS.effects[id]()["demons"]) +
 				"x"
 			);
+		else if (id=="5;10") return "Pathogens: "+showNum(INF_UPGS.effects[id]().pth)+"x, Higgs Bosons: "+showNum(INF_UPGS.effects[id]().hb)+"x"
 		return showNum(INF_UPGS.effects[id]()) + "x";
 	};
 	tmp.inf.upgs.hover = function (id) {
@@ -191,6 +193,7 @@ function updateTempInf() {
 	if (tmp.elm) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos.photonEff(2).max(1));
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3)
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
+	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.ach112)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
@@ -654,10 +657,13 @@ function updateTempInf() {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["9;3"]()["angels"]);
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["9;3"]()["demons"]);
 	}
+	if (tmp.inf.upgs.has("3;10")) tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["3;10"]())
+	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["10;4"]())
 	let h = player.inf.pantheon.heavenlyChips;
 	let d = player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
 	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
+	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
 	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);

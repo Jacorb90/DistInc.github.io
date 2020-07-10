@@ -23,6 +23,8 @@ function updateTempPathogens() {
 		if (player.elementary.times.gt(0))
 			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
 	if (tmp.elm) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.bos.photonEff(1).max(1));
+	if (tmp.inf) if (tmp.inf.upgs.has("5;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["5;10"]().pth)
+	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;5"]())
 	tmp.pathogens.upgPow = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13.max(0));
 	if (tmp.modes.extreme.active && player.tr.upgrades.includes(27))

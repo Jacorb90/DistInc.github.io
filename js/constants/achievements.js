@@ -113,6 +113,7 @@ const ACH_DATA = {
 		131: "Shrinking the Multiverse",
 		132: "What's the point of even stopping you?",
 		133: "It's Elementary, my dear Watson.",
+		134: "Why use the features I give you?",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -226,6 +227,7 @@ const ACH_DATA = {
 		131: "Perform an Elementary reset.",
 		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8, & while in Reality's Stadium challenge at Tier 6.",
 		133: "Reach showNum(1e3) Fermions & Bosons.",
+		134: "Reach formatDistance(4.4e1100026) without Pathogens & Dark Cores.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

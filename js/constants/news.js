@@ -25,6 +25,7 @@ const NEWS_DATA = {
 	m23: ["If I'm not mistaken, the current date is "+new Date().toISOString().substring(0, 10)+"."],
 	m24: ["Egg is the next mechanic"],
 	m25: ["This game doesn't lag, your eyeballs are just too dilated."],
+	m26: ["Please don't disable the news, it's my only way to get my voice heard..."],
 
 	// Distance-based Conditions
 	d1: [

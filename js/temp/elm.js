@@ -7,6 +7,9 @@ function updateTempElementary() {
 		tmp.higgs110 = tmp.elm.bos["higgs_1;1;0"]()
 		tmp.higgs011 = tmp.elm.bos["higgs_0;1;1"]()
 		tmp.higgs300 = tmp.elm.bos["higgs_3;0;0"]()
+		tmp.higgs130 = tmp.elm.bos["higgs_1;3;0"]()
+		tmp.higgs031 = tmp.elm.bos["higgs_0;3;1"]()
+		tmp.inf510 = tmp.inf.upgs.has("5;10")
 	}
 
 	// Elementary Layer
@@ -107,7 +110,9 @@ function updateTempElementary() {
 		.times(player.inf.endorsements.plus(1).sqrt())
 		.times((tmp.psiEff ? tmp.psiEff : new ExpantaNum(0)).max(1));
 	if (tmp.glu2) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.glu2.max(1));
+	if (tmp.higgs031) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.higgs031)
 	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor();
+	if (tmp.elm.ferm.quarkRewards.gte(10)) tmp.elm.ferm.quarkRewards = tmp.elm.ferm.quarkRewards.sqrt().times(Math.sqrt(10))
 	tmp.elm.ferm.quarkName = function (noExp = false) {
 		let name = QUARK_NAMES[player.elementary.fermions.quarks.type - 1];
 		let stacks = tmp.elm.ferm.quarkRewards
@@ -161,7 +166,9 @@ function updateTempElementary() {
 		.div(2.5)
 		.times(tmp.elm.ferm.quarkR("top").max(1));
 	if (tmp.glu2) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.glu2.max(1));
+	if (tmp.higgs031) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.higgs031)
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor();
+	if (tmp.elm.ferm.leptonRewards.gte(7)) tmp.elm.ferm.leptonRewards = tmp.elm.ferm.leptonRewards.sqrt().times(Math.sqrt(7))
 	tmp.elm.ferm.leptonName = function (noExp = false) {
 		let name = LEPTON_NAMES[player.elementary.fermions.leptons.type - 1];
 		let stacks = tmp.elm.ferm.leptonRewards
@@ -246,6 +253,7 @@ function updateTempElementary() {
 	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
 	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
 	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
+	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
 	// Photons
@@ -334,6 +342,7 @@ function updateTempElementary() {
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
 	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
 	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
+	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
 	tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
@@ -369,6 +378,17 @@ function updateTempElementary() {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;0;4")) return new ExpantaNum(1)
 		let ret = tmp.elm.pa.active?tmp.elm.pa.speedBoost.plus(1):new ExpantaNum(1)
 		if (ret.gte(1e3)) ret = ret.pow(0.95).times(Math.pow(1e3, 0.05))
+		return ret
+	}
+	tmp.elm.bos["higgs_1;3;0"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("1;3;0")) return new ExpantaNum(1)
+		let amt = player.inf.pantheon.angels.plus(player.inf.pantheon.demons)
+		let ret = ExpantaNum.pow(10, amt.sqrt()).pow(0.2)
+		return ret
+	}
+	tmp.elm.bos["higgs_0;3;1"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("0;3;1")) return new ExpantaNum(1)
+		let ret = player.inf.pantheon.purge.power.plus(1).pow(0.9)
 		return ret
 	}
 	

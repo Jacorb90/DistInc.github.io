@@ -35,6 +35,7 @@ function updateTempEffects() {
 	if (tmp.ach)
 		if (tmp.ach[123].has)
 			tmp.ach112 = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1).pow(0.02).max(tmp.ach112) : new ExpantaNum(1);
+	if (tmp.inf) if (tmp.inf.upgs.has("4;10")) tmp.ach112 = tmp.ach112.pow(INF_UPGS.effects["4;10"]().max(1))
 
 	// Time Reversal Upgrade Effects
 

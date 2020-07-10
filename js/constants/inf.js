@@ -79,7 +79,7 @@ const INF_UPGS = {
 		"3;7": new ExpantaNum(4e21),
 		"3;8": new ExpantaNum(4e23),
 		"3;9": new ExpantaNum(1e39),
-		"3;10": new ExpantaNum(1/0), // INFINITY
+		"3;10": new ExpantaNum(1.2e120),
 		"4;1": new ExpantaNum(1e4),
 		"4;2": new ExpantaNum(5e4),
 		"4;3": new ExpantaNum(1e5),
@@ -89,7 +89,7 @@ const INF_UPGS = {
 		"4;7": new ExpantaNum(7.5e21),
 		"4;8": new ExpantaNum(1e24),
 		"4;9": new ExpantaNum(2e39),
-		"4;10": new ExpantaNum(1/0), // INFINITY
+		"4;10": new ExpantaNum(1.23e123),
 		"5;1": new ExpantaNum(1e7),
 		"5;2": new ExpantaNum(1e8),
 		"5;3": new ExpantaNum(2.5e7),
@@ -99,7 +99,7 @@ const INF_UPGS = {
 		"5;7": new ExpantaNum(1.5e22),
 		"5;8": new ExpantaNum(2.5e24),
 		"5;9": new ExpantaNum(2.5e39),
-		"5;10": new ExpantaNum(1/0), // INFINITY
+		"5;10": new ExpantaNum(1e138),
 		"6;1": new ExpantaNum(2e10),
 		"6;2": new ExpantaNum(6e10),
 		"6;3": new ExpantaNum(1.8e11),
@@ -143,8 +143,8 @@ const INF_UPGS = {
 		"10;1": new ExpantaNum(4e76),
 		"10;2": new ExpantaNum(1.5e118),
 		"10;3": new ExpantaNum(4e119),
-		"10;4": new ExpantaNum(1/0), // INFINITY
-		"10;5": new ExpantaNum(1/0), // INFINITY
+		"10;4": new ExpantaNum(1.22e122),
+		"10;5": new ExpantaNum(1e140),
 		"10;6": new ExpantaNum(1/0), // INFINITY
 		"10;7": new ExpantaNum(1/0), // INFINITY
 		"10;8": new ExpantaNum(1/0), // INFINITY
@@ -181,7 +181,7 @@ const INF_UPGS = {
 		"3;7": "Enlightenments boost Ascension Power gain.",
 		"3;8": "Pathogen Upgrades 6-10 use better formulas.",
 		"3;9": "Ascension Power gain is boosted by your Rocket Fuel.",
-		"3;10": "???", // UNKNOWN
+		"3;10": "Robot Intervals boost Heavenly Chip gain.",
 		"4;1": "Dark Flow is twice as fast.",
 		"4;2": "Unlock Auto-Dark Cores.",
 		"4;3": "Scaled Rank scaling is 50% weaker.",
@@ -191,7 +191,7 @@ const INF_UPGS = {
 		"4;7": "Time Speed boosts Acceleration & Maximum Velocity.",
 		"4;8": "Life Essence multiplies Rocket gain.",
 		"4;9": "Ranks & Tiers do not reset Derivatives beyond Acceleration.",
-		"4;10": "???", // UNKNOWN
+		"4;10": "'The Universe Doesnt Exist' reward is stronger based on your Elementaries.",
 		"5;1": "Dark Flow is twice as fast.",
 		"5;2": "Pathogen Upgrades are 5% stronger.",
 		"5;3": "Gain 10% of Life Essence gain every second.",
@@ -201,7 +201,7 @@ const INF_UPGS = {
 		"5;7": "Superscaled Tier scaling starts later based on your Maximum Velocity.",
 		"5;8": "Rockets also boost Accelerational Energy.",
 		"5;9": "The Spectral Gem requirement starts earlier.",
-		"5;10": "???", // UNKNOWN
+		"5;10": "Higgs Bosons & Pathogen gain are synergized.",
 		"6;1": "Scaled Rocket Fuel scaling starts 10 later.",
 		"6;2": "Superscaled Rank scaling starts 5 later.",
 		"6;3": "Pathogen Upgrades are 2.5% stronger.",
@@ -246,8 +246,8 @@ const INF_UPGS = {
 		"10;1": "Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces Snap at a reduced rate (unaffected by Time Speed).",
 		"10;2": "Velocital Energy boosts your Accelerational Energy at a reduced rate, and inf7;7's boost to Velocital Energy uses a better formula.",
 		"10;3": "The Rocket effect also affects Time Speed.",
-		"10;4": "???", // UNKNOWN
-		"10;5": "???", // UNKNOWN
+		"10;4": "Robot Magnitudes boost Demonic Soul gain, and the Purge Power effect exponent is halved.",
+		"10;5": "Quarks boost Dark Flow & Pathogen gain.",
 		"10;6": "???", // UNKNOWN
 		"10;7": "???", // UNKNOWN
 		"10;8": "???", // UNKNOWN
@@ -456,11 +456,23 @@ const INF_UPGS = {
 			let ret = ExpantaNum.pow(1.01, player.rf);
 			return ret;
 		},
+		"3;10": function() {
+			if (!tmp.auto) return new ExpantaNum(1)
+			let f1 = tmp.auto.rankbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
+			let f2 = tmp.auto.tierbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
+			let f3 = tmp.auto.fuelbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).sqrt()
+			return f1.times(f2).times(f3).cbrt()
+		},
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
 			let ret = speed.pow(0.3);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
+		},
+		"4;10": function() {
+			let times = player.elementary.times
+			let ret = times.plus(1).log10().plus(1).pow(5)
+			return ret
 		},
 		"5;4": function () {
 			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt();
@@ -483,6 +495,11 @@ const INF_UPGS = {
 			let ret = mv.plus(1).slog(10);
 			if (ret.gte(4)) ret = ret.sqrt().times(2);
 			return ret;
+		},
+		"5;10": function() {
+			let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).pow(2)
+			let ret2 = player.pathogens.amount.plus(1).log10().plus(1)
+			return {pth: ret, hb: ret2}
 		},
 		"6;5": function () {
 			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1);
@@ -611,6 +628,17 @@ const INF_UPGS = {
 			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1)
 			let exp = tmp.maxVel.plus(1).times(10).slog(10)
 			return base.pow(exp).pow(12)
+		},
+		"10;4": function() {
+			if (!tmp.auto) return new ExpantaNum(1)
+			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt()
+			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt()
+			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75)
+			return f1.times(f2).times(f3).cbrt()
+		},
+		"10;5": function() {
+			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
+			return ret
 		},
 	}
 };
