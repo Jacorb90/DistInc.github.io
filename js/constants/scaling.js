@@ -77,5 +77,5 @@ const SCALING_RES = {
 	},
 	dervBoost: function (n = 0) {
 		return player.inf.derivatives.unlocks;
-	}
+	},
 };

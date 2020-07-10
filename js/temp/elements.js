@@ -20,6 +20,8 @@ function updateHTML() {
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
 		tmp.el.autoSave.setTxt("Auto-Save: " + (player.options.autoSave ? "ON" : "OFF"));
 		tmp.el.newst.setTxt("News Ticker: " + (player.options.newst ? "ON" : "OFF"));
+		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"))
+		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 	}
 
 	// Main
@@ -734,6 +736,8 @@ function updateHTML() {
 				}
 				tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x")
 				tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")
+				tmp.el["higgs3;0;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_3;0;0"](true))+"x")
+				tmp.el["higgs0;2;1"].setTooltip("Currently: +"+showNum(tmp.elm.bos["higgs_0;2;1"](true))+"%")
 			}
 		}
 	}
@@ -766,6 +770,7 @@ function updateHTML() {
 		tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
 	);
 	tmp.el.mainContainer.setDisplay(showContainer);
+	tmp.el.loading.setDisplay(false)
 	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 	tmp.el.accEn.setHTML(
 		tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : ""

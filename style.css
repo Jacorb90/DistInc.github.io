@@ -1233,6 +1233,19 @@ table {
 	box-shadow: none;
 }
 
+#loading {
+	text-align: center;
+	position: relative;
+	font-size: 25px;
+}
+
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

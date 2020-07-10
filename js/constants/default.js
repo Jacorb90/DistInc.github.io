@@ -11,7 +11,8 @@ const DEFAULT_START = {
 		theme: "normal",
 		name: "Save #",
 		autoSave: true,
-		newst: true
+		newst: true,
+		elc: true,
 	},
 	modes: [],
 	time: new Date().getTime(),

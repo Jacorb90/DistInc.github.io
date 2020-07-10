@@ -70,4 +70,10 @@ const AUTOMATORS = {
 	enlightenments: function() {
 		return tmp.elm.bos.hasHiggs("0;2;0")
 	},
+	derivative_boosts: function() {
+		return tmp.elm.bos.hasHiggs("0;0;3")
+	},
+	spectral_gems: function() {
+		return tmp.elm.bos.hasHiggs("1;2;0")
+	},
 };

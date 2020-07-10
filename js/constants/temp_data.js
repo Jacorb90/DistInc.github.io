@@ -128,6 +128,7 @@ const TMP_DATA = {
 		"elmp",
 		"newsticker",
 		"newst",
+		"elc",
 		"fermionsamt",
 		"bosonsamt",
 		"transfer1Fermions",
@@ -166,6 +167,7 @@ const TMP_DATA = {
 		"scalarGain",
 		"higgs",
 		"higgsGain",
+		"loading"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

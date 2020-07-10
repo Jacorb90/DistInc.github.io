@@ -83,9 +83,25 @@ function autoTick(diff) {
 			}
 		}
 	}
-	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) tmp.inf.manualReset(true) 
+	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) {
+		if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.maxEndorse()
+		else tmp.inf.manualReset(true) 
+	}
 	if (player.automators["perks"]) for (let i=1;i<=4;i++) if (player.inf.ascension.time[i-1].eq(0)) tmp.inf.asc.activatePerk(i)
-	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.buyEnl(i)
+	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.maxEnl(i)
+	if (player.automators["derivative_boosts"]) tmp.inf.derv.maxBoosts()
+	if (player.automators["spectral_gems"]) {
+		if (player.inf.pantheon.gems.eq(0)) return
+		let types = ["angels", "demons"]
+		let taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
+		if (taken[0].gt(taken[1])) tmp.inf.pantheon.transfer("demons", taken[0].sub(taken[1]).min(player.inf.pantheon.gems))
+		else if (taken[1].gt(taken[0])) tmp.inf.pantheon.transfer("angels", taken[1].sub(taken[0]).min(player.inf.pantheon.gems))
+		if (player.inf.pantheon.gems.gt(0)) {
+			taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
+			tmp.inf.pantheon.transfer("demons", player.inf.pantheon.gems.div(2).floor())
+			tmp.inf.pantheon.transfer("angels", player.inf.pantheon.gems)
+		}
+	}
 }
 
 function showModeDescs(modes) {

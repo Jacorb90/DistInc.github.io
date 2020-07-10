@@ -6,6 +6,7 @@ function updateTempElementary() {
 		tmp.gravEff = tmp.elm.bos.gravEff;
 		tmp.higgs110 = tmp.elm.bos["higgs_1;1;0"]()
 		tmp.higgs011 = tmp.elm.bos["higgs_0;1;1"]()
+		tmp.higgs300 = tmp.elm.bos["higgs_3;0;0"]()
 	}
 
 	// Elementary Layer
@@ -21,11 +22,12 @@ function updateTempElementary() {
 		let f3 = ExpantaNum.pow(2, player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).sub(1));
 		let gain = f1.times(f2).times(f3);
 		gain = gain.times(tmp.higgs110?tmp.higgs110:1)
+		gain = gain.times(tmp.higgs300?tmp.higgs300:1)
 		return gain.floor();
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
 	tmp.elm.doGain = function () {
-		if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
+		if (player.options.elc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
 		player.elementary.particles = player.elementary.particles.plus(tmp.elm.layer.gain);
 	};
 	tmp.elm.onReset = function (prev) {
@@ -65,6 +67,8 @@ function updateTempElementary() {
 			player.inf.endorsements = new ExpantaNum(10)
 			player.inf.unl = true
 		}
+		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
+		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
 		
 		// Bugfixes
 		infTab = "infinity"
@@ -329,7 +333,7 @@ function updateTempElementary() {
 	// Scalar Bosons
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
 	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
-	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1)
+	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
 	tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
@@ -352,6 +356,14 @@ function updateTempElementary() {
 		let e = player.inf.endorsements.sub(36).max(0)
 		if (e.gte(3)) e = e.sqrt().times(Math.sqrt(3))
 		return ExpantaNum.pow(7, e).max(1)
+	}
+	tmp.elm.bos["higgs_3;0;0"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("3;0;0")) return new ExpantaNum(1)
+		return ExpantaNum.pow(1.1, player.elementary.bosons.scalar.higgs.upgrades.length)
+	}
+	tmp.elm.bos["higgs_0;2;1"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("0;2;1")) return new ExpantaNum(1)
+		return player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(0.1).sub(1).times(100)
 	}
 	
 	// Perk Acceleration

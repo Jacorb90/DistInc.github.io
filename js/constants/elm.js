@@ -72,4 +72,20 @@ const HIGGS_UPGS = {
 		cost: new ExpantaNum(1.5e5),
 		desc: "Endorsements beyond 36 boost Higgs Boson gain.",
 	},
+	"3;0;0": {
+		cost: new ExpantaNum(2.5e7),
+		desc: "Keep Stadium Challenges on reset, and Elementary Particle gain & Higgs Boson gain are increased by 10% for each Higgs Upgrade bought.",
+	},
+	"0;0;3": {
+		cost: new ExpantaNum(5e7),
+		desc: "Unlock Auto-Derivative Shifts/Boosts, Auto-Endorsements buy max, and you gain Knowledge 200% faster.",
+	},
+	"1;2;0": {
+		cost: new ExpantaNum(1e8),
+		desc: "Unlock Auto-Spectral Gem Distribution, and you keep Purge Power on reset.",
+	},
+	"0;2;1": {
+		cost: new ExpantaNum(2e8),
+		desc: "Derivative Boosts are stronger based on your Higgs Bosons.",
+	},
 }
