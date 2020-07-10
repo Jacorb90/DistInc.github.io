@@ -26,6 +26,7 @@ const NEWS_DATA = {
 	m24: ["Egg is the next mechanic"],
 	m25: ["This game doesn't lag, your eyeballs are just too dilated."],
 	m26: ["Please don't disable the news, it's my only way to get my voice heard..."],
+	m27: ["Now that we use OmegaNum, we have become ordinals."],
 
 	// Distance-based Conditions
 	d1: [
