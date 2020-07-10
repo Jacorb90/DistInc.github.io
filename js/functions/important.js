@@ -83,6 +83,9 @@ function autoTick(diff) {
 			}
 		}
 	}
+	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) tmp.inf.manualReset(true) 
+	if (player.automators["perks"]) for (let i=1;i<=4;i++) if (player.inf.ascension.time[i-1].eq(0)) tmp.inf.asc.activatePerk(i)
+	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.buyEnl(i)
 }
 
 function showModeDescs(modes) {

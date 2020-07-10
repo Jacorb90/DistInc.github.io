@@ -48,4 +48,28 @@ const HIGGS_UPGS = {
 		cost: new ExpantaNum(1e5),
 		desc: "You start with 10 Endorsements on reset.",
 	},
+	"2;0;0": {
+		cost: new ExpantaNum(1e7),
+		desc: "Unlock Auto-Endorsements.",
+	},
+	"0;2;0": {
+		cost: new ExpantaNum(1e7),
+		desc: "Unlock Auto-Enlightenments.",
+	},
+	"1;1;0": {
+		cost: new ExpantaNum(1.5e5),
+		desc: "Quarks, Leptons, Photons, Gravitons, & Higgs Bosons boost Elementary Particle gain.",
+	},
+	"1;0;1": {
+		cost: new ExpantaNum(1.5e5),
+		desc: "Perks last 900% longer.",
+	},
+	"0;0;2": {
+		cost: new ExpantaNum(1e7),
+		desc: "Unlock Auto-Perks & the Perk Accelerator.",
+	},
+	"0;1;1": {
+		cost: new ExpantaNum(1.5e5),
+		desc: "Endorsements beyond 36 boost Higgs Boson gain.",
+	},
 }

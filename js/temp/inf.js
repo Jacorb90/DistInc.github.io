@@ -309,8 +309,8 @@ function updateTempInf() {
 		tmp.inf.updateTabs();
 	};
 	tmp.inf.updateTabs();
-	tmp.inf.manualReset = function () {
-		if (tmp.canCompleteStadium) {
+	tmp.inf.manualReset = function (noStadium=false) {
+		if (tmp.canCompleteStadium&&!noStadium) {
 			if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
 				player.inf.stadium.completions.push(player.inf.stadium.current);
 			player.inf.stadium.current = "";
@@ -324,6 +324,11 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]());
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]());
 	if (tmp.ach[124].has) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(2);
+	if (tmp.elm) if (tmp.elm.bos.hasHiggs("1;0;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(10);
+	tmp.inf.asc.perkTimeO = new ExpantaNum(tmp.inf.asc.perkTime)
+	if (tmp.elm) {
+		if (tmp.elm.pa.active) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.elm.pa.speedBoost.max(1))
+	} else tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.inf.asc.perkTimeO.div(10))
 	tmp.inf.asc.maxPerks = 1;
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2;
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++;
@@ -344,6 +349,7 @@ function updateTempInf() {
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1));
+	if (tmp.elm) if (tmp.elm.pa.active) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.pa.boost.max(1))
 	tmp.inf.asc.perkPower = [
 		null,
 		tmp.inf.asc.perkStrength,

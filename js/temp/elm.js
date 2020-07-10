@@ -4,6 +4,8 @@ function updateTempElementary() {
 		tmp.z1 = tmp.elm.bos.z1;
 		tmp.glu2 = tmp.elm.bos.gluon2total;
 		tmp.gravEff = tmp.elm.bos.gravEff;
+		tmp.higgs110 = tmp.elm.bos["higgs_1;1;0"]()
+		tmp.higgs011 = tmp.elm.bos["higgs_0;1;1"]()
 	}
 
 	// Elementary Layer
@@ -18,6 +20,7 @@ function updateTempElementary() {
 		let f2 = player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10());
 		let f3 = ExpantaNum.pow(2, player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).sub(1));
 		let gain = f1.times(f2).times(f3);
+		gain = gain.times(tmp.higgs110?tmp.higgs110:1)
 		return gain.floor();
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
@@ -62,6 +65,9 @@ function updateTempElementary() {
 			player.inf.endorsements = new ExpantaNum(10)
 			player.inf.unl = true
 		}
+		
+		// Bugfixes
+		infTab = "infinity"
 	};
 
 	// Elementary Tab System
@@ -323,11 +329,34 @@ function updateTempElementary() {
 	// Scalar Bosons
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
 	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
+	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1)
 	tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
 		player.elementary.bosons.scalar.higgs.amount = player.elementary.bosons.scalar.higgs.amount.sub(data.cost)
 		player.elementary.bosons.scalar.higgs.upgrades.push(id)
+		if (id=="0;0;2") for (let i=1;i<=4;i++) tmp.inf.asc.activatePerk(i)
 	}
 	tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
+	tmp.elm.bos["higgs_1;1;0"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("1;1;0")) return new ExpantaNum(1)
+		let f1 = player.elementary.fermions.quarks.amount.plus(1).log10().pow(0.2).plus(1)
+		let f2 = player.elementary.fermions.leptons.amount.plus(1).log10().pow(0.3).plus(1)
+		let f3 = player.elementary.bosons.gauge.photons.amount.plus(1).log10().pow(0.15).plus(1)
+		let f4 = player.elementary.bosons.gauge.gravitons.plus(1).log10().pow(0.25).plus(1)
+		let f5 = player.elementary.bosons.scalar.higgs.amount.plus(1).log10().pow(0.1).plus(1)
+		return f1.times(f2).times(f3).times(f4).times(f5).pow(0.2)
+	}
+	tmp.elm.bos["higgs_0;1;1"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("0;1;1")) return new ExpantaNum(1)
+		let e = player.inf.endorsements.sub(36).max(0)
+		if (e.gte(3)) e = e.sqrt().times(Math.sqrt(3))
+		return ExpantaNum.pow(7, e).max(1)
+	}
+	
+	// Perk Acceleration
+	tmp.elm.pa = {}
+	tmp.elm.pa.active = tmp.elm.bos.hasHiggs("0;0;2")
+	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
+	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
 }

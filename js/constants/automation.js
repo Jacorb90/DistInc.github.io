@@ -60,5 +60,14 @@ const AUTOMATORS = {
 	},
 	infinity_upgrades: function() {
 		return tmp.elm.bos.hasHiggs("0;1;0")
-	}
+	},
+	endorsements: function() {
+		return tmp.elm.bos.hasHiggs("2;0;0")
+	},
+	perks: function() {
+		return tmp.elm.bos.hasHiggs("0;0;2")
+	},
+	enlightenments: function() {
+		return tmp.elm.bos.hasHiggs("0;2;0")
+	},
 };

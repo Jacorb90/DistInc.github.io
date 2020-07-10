@@ -431,6 +431,7 @@ function updateHTML() {
 					showNum(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension")) +
 					"/sec)"
 			);
+			tmp.el.perkAccel.setHTML(tmp.elm.pa.active?("Your Perk Accelerator is making Perks be used up <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.speedBoost)+"</span>x as fast, but in return, your Perks are <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.boost)+"</span>x as strong."):"")
 		}
 
 		// The Stadium
@@ -731,6 +732,8 @@ function updateHTML() {
 					tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)})
 					tmp.el["higgs"+name].setHTML(data.desc+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
 				}
+				tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x")
+				tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")
 			}
 		}
 	}

@@ -23,6 +23,7 @@ const NEWS_DATA = {
 	m21: ["Why progress when you can revert back to square one?"],
 	m22: ["The high gods are looking down at you (or up, maybe you're further than I thought)"],
 	m23: ["If I'm not mistaken, the current date is "+new Date().toISOString().substring(0, 10)+"."],
+	m24: ["Egg is the next mechanic"],
 
 	// Distance-based Conditions
 	d1: [
@@ -206,7 +207,13 @@ const NEWS_DATA = {
 		function () {
 			return player.elementary.times.gt(0);
 		}
-	]
+	],
+	s6: [
+		"The news ticker committee notice that you are starting to move. They are not quite afraid just yet.",
+		function () {
+			return player.inf.endorsements.gt(0);
+		}
+	],
 };
 
 const NEWS_ADJ = 110;

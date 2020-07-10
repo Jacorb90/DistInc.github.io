@@ -1,4 +1,5 @@
 function updateNews() {
+	if (!player.options.newst) return
 	let r = parseFloat(document.getElementById("news").style.right.split("%")[0], 10);
 	let visible = r < NEWS_ADJ;
 	if (!visible) {

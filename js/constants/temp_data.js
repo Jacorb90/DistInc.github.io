@@ -81,6 +81,7 @@ const TMP_DATA = {
 		"endorsementManual",
 		"perkPower",
 		"ascPower",
+		"perkAccel",
 		"forceInf",
 		"exitStad",
 		"emInner",
