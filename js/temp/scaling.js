@@ -56,6 +56,7 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("5;7"))
 			tmp.scalings.superscaled.tier = tmp.scalings.superscaled.tier.plus(INF_UPGS.effects["5;7"]());
 		if (tmp.inf.upgs.has("9;3")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1);
+		if (tmp.inf.upgs.has("2;10")) tmp.scalings.superscaled.darkCore = tmp.scalings.superscaled.darkCore.plus(5)
 	}
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
@@ -112,11 +113,13 @@ function updateTempScaling() {
 			tmp.scalingPower.superscaled.tier = tmp.scalingPower.superscaled.tier.times(
 				ExpantaNum.sub(1, INF_UPGS.effects["9;6"]())
 			);
+		if (tmp.inf.upgs.has("1;10")) tmp.scalingPower.hyper.tier = tmp.scalingPower.hyper.tier.times(ExpantaNum.sub(1, INF_UPGS.effects["1;10"]()))
 		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75);
 		if (tmp.inf.stadium.active("infinity", 4))
 			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6);
 		if (tmp.inf.upgs.has("8;7"))
 			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(0.16);
+		if (tmp.inf.upgs.has("10;1")) tmp.scalingPower.superscaled.pathogenUpg = tmp.scalingPower.superscaled.pathogenUpg.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]().pth))
 		if (tmp.inf.upgs.has("8;6"))
 			tmp.scalingPower.scaled.darkCore = tmp.scalingPower.scaled.darkCore.times(
 				ExpantaNum.sub(1, INF_UPGS.effects["8;6"]())

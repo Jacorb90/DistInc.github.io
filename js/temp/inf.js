@@ -32,9 +32,9 @@ function updateTempInf() {
 		let r = parseInt(id.split(";")[0]);
 		let c = parseInt(id.split(";")[1]);
 		if (INF_UPGS.rowReqs[r])
-			if (!INF_UPGS.rowReqs[r]() || (r == 1 ? false : !tmp.inf.upgs.shown(r - 1 + ";" + c))) return false;
+			if (!INF_UPGS.rowReqs[r]()) return false;
 		if (INF_UPGS.colReqs[c])
-			if (!INF_UPGS.colReqs[c]() || (c == 1 ? false : !tmp.inf.upgs.shown(r + ";" + (c - 1)))) return false;
+			if (!INF_UPGS.colReqs[c]()) return false;
 		return true;
 	};
 	tmp.inf.upgs.reset = function (force = false) {
@@ -62,7 +62,8 @@ function updateTempInf() {
 				showNum(INF_UPGS.effects[id]()["knowledge"]) +
 				"x"
 			);
-		else if (id == "2;7" || id == "8;6" || id == "9;6")
+		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]().pth.times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]().snp)+"/sec"
+		else if (id == "2;7" || id == "8;6" || id == "9;6" || id=="1;10")
 			return showNum(INF_UPGS.effects[id]().times(100)) + "% weaker";
 		else if (id == "3;2")
 			return (
@@ -113,6 +114,7 @@ function updateTempInf() {
 	};
 	tmp.inf.upgs.hover = function (id) {
 		tmp.infSelected = id;
+		if (tmp.el) tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected));
 	};
 	tmp.inf.upgs.canBuy = function (id) {
 		let reqData = INF_UPGS.reqs[id];
@@ -165,8 +167,10 @@ function updateTempInf() {
 		player.inf.endorsements
 	);
 	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]());
+	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(3)
 	tmp.inf.knowledgeExp = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25);
+	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.15);
 	tmp.inf.knowledgeGain = new ExpantaNum(deepCopy(tmp.inf.knowledgeBase)).pow(tmp.inf.knowledgeExp);
 	if (tmp.inf.upgs.has("2;2")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["2;2"]());
 	if (tmp.inf.upgs.has("2;3"))
@@ -186,6 +190,7 @@ function updateTempInf() {
 			tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.leptonR("tau").max(1));
 	if (tmp.elm) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos.photonEff(2).max(1));
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3)
+	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
@@ -385,8 +390,10 @@ function updateTempInf() {
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.ferm.quarkR("bottom").max(1));
-	if (tmp.elm)
+	if (tmp.elm) {
 		if (player.elementary.times.gt(0)) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos.w2.max(1));
+		if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos["higgs_0;0;4"]())
+	}
 	tmp.inf.asc.activatePerk = function (n) {
 		if (player.inf.endorsements.lt(10)) return;
 		if (tmp.inf.asc.perkActive(n)) {
@@ -569,7 +576,7 @@ function updateTempInf() {
 	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
 		let power = tmp.scalingPower.scaled.spectralGems;
 		let exp = ExpantaNum.pow(2, power);
-		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(tmp.scalings.scaled.spectralGems)
 			.pow(exp)
 			.div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
 			.plus(1)
@@ -580,7 +587,6 @@ function updateTempInf() {
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
 			.sqrt()
-			.sub(1)
 			.times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.floor();
@@ -590,7 +596,7 @@ function updateTempInf() {
 		let exp2 = ExpantaNum.pow(3, power2);
 		let power = tmp.scalingPower.scaled.spectralGems;
 		let exp = ExpantaNum.pow(2, power);
-		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(tmp.scalings.superscaled.spectralGems)
 			.pow(exp2)
 			.div(tmp.scalings.superscaled.spectralGems.pow(exp2.sub(1)))
 			.pow(exp)
@@ -603,7 +609,6 @@ function updateTempInf() {
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
 			.sqrt()
-			.sub(1)
 			.times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.times(tmp.scalings.superscaled.spectralGems.pow(exp2.sub(1)))
@@ -714,6 +719,7 @@ function updateTempInf() {
 		if (name == "velocity")
 			return tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
 		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
+		if (name=="snap" && tmp.inf.upgs.has("10;1")) return tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp.times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
 		let gain = tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
@@ -727,7 +733,7 @@ function updateTempInf() {
 						).max(1)
 					)
 				);
-		return gain.times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
+		return gain.times((tmp.nerfs.active("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29);
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor();
@@ -808,6 +814,10 @@ function updateTempInf() {
 			let name = DERV_INCR[i];
 			let next = DERV_INCR[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
+			if (name=="snap" && tmp.inf.upgs.has("10;1")) {
+				player.inf.derivatives.amts[name] = player.inf.derivatives.amts[name].plus(tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
+				return
+			}
 			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))
 				player.inf.derivatives.amts[name] = new ExpantaNum(1);
 			else

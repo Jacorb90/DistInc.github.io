@@ -116,4 +116,5 @@ function updateAchievements() {
 
 	if (player.elementary.times.gt(0)) tmp.ach[131].grant();
 	if (player.distance.gte(1e15)&&player.inf.pantheon.purge.active&&!player.inf.upgrades.includes('8;8')&&tmp.inf.stadium.active("reality", 6)) tmp.ach[132].grant()
+	if (player.elementary.fermions.amount.gte(1e3) && player.elementary.bosons.amount.gte(1e3)) tmp.ach[133].grant()
 }

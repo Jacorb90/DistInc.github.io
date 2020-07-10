@@ -30,6 +30,7 @@ function updateTempRockets() {
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets).max(1);
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets).max(1);
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(tmp.rockets.eff).plus(1);
+	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(tmp.rockets.eff).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
 	tmp.rockets.onReset = function (prev) {
 		tmp.inf.derv.resetDervs();
 	};

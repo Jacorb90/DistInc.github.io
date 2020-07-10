@@ -34,7 +34,7 @@ const SCALING_STARTS = {
 		pathogenUpg: new ExpantaNum(65),
 		darkCore: new ExpantaNum(40)
 	},
-	atomic: { rank: new ExpantaNum(800), tier: new ExpantaNum(40), rf: new ExpantaNum(320) }
+	atomic: { rank: new ExpantaNum(800), tier: new ExpantaNum(40), rf: new ExpantaNum(300) }
 };
 const SCALING_RES = {
 	rank: function (n = 0) {

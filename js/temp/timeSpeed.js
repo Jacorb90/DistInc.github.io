@@ -45,4 +45,5 @@ function updateTempTimeSpeed() {
 	if (tmp.nerfs.active("nerfTS")) tmp.timeSpeed = tmp.timeSpeed.pow(0.1);
 	if (player.tr.upgrades.includes(30) && tmp.modes.extreme.active)
 		tmp.timeSpeed = tmp.timeSpeed.pow(player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.7));
+	if (tmp.rockets) tmp.timeSpeed = tmp.timeSpeed.times(tmp.rockets.tsPow)
 }

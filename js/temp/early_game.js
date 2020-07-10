@@ -68,5 +68,6 @@ function updateTempEarlyGame() {
 	if (tmp.inf) if (tmp.inf.upgs.has("7;7")) tmp.accEn = tmp.accEn.plus(1).times(INF_UPGS.effects["7;7"]()["ae"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("8;2")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["8;2"]()["energy"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("9;1")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["9;1"]());
+	if (tmp.inf) if (tmp.inf.upgs.has("10;2")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["10;2"]());
 	if (tmp.inf && tmp.rockets) if (tmp.inf.upgs.has("5;8")) tmp.accEn = tmp.accEn.times(tmp.rockets.accEnPow);
 }

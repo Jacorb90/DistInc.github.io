@@ -365,6 +365,12 @@ function updateTempElementary() {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;2;1")) return new ExpantaNum(1)
 		return player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(0.1).sub(1).times(100)
 	}
+	tmp.elm.bos["higgs_0;0;4"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("0;0;4")) return new ExpantaNum(1)
+		let ret = tmp.elm.pa.active?tmp.elm.pa.speedBoost.plus(1):new ExpantaNum(1)
+		if (ret.gte(1e3)) ret = ret.pow(0.95).times(Math.pow(1e3, 0.05))
+		return ret
+	}
 	
 	// Perk Acceleration
 	tmp.elm.pa = {}

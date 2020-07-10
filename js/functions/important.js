@@ -74,14 +74,13 @@ function autoTick(diff) {
 		autoRobotTarget = (autoRobotTarget+1)%Object.keys(ROBOT_REQS).length
 	}
 	if (player.automators["infinity_upgrades"]) {
-		for (let r=1;r<=INF_UPGS.rows;r++) {
-			if (r>3) if (!INF_UPGS.rowReqs[r]()) continue
-			for (let c=1;c<=INF_UPGS.cols;c++) {
-				if (c>3) if (!INF_UPGS.colReqs[c]()) continue
-				let id=r+";"+c
-				tmp.inf.upgs.buy(id)
-			}
-		}
+		let applRows = [...Array(INF_UPGS.rows).keys()].map(x => x+1).filter(r => (r>3?INF_UPGS.rowReqs[r]():true))
+		let applCols = [...Array(INF_UPGS.cols).keys()].map(x => x+1).filter(c => (c>3?INF_UPGS.colReqs[c]():true))
+		applRows.forEach(r => function() {
+			applCols.forEach(c => function() {
+				tmp.inf.upgs.buy(r+";"+c);
+			}())
+		}())
 	}
 	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) {
 		if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.maxEndorse()

@@ -24,6 +24,7 @@ const NEWS_DATA = {
 	m22: ["The high gods are looking down at you (or up, maybe you're further than I thought)"],
 	m23: ["If I'm not mistaken, the current date is "+new Date().toISOString().substring(0, 10)+"."],
 	m24: ["Egg is the next mechanic"],
+	m25: ["This game doesn't lag, your eyeballs are just too dilated."],
 
 	// Distance-based Conditions
 	d1: [

@@ -88,4 +88,12 @@ const HIGGS_UPGS = {
 		cost: new ExpantaNum(2e8),
 		desc: "Derivative Boosts are stronger based on your Higgs Bosons.",
 	},
+	"4;0;0": {
+		cost: new ExpantaNum(1e10),
+		desc: "Unlock 1 new row & column of Infinity Upgrades.",
+	},
+	"0;0;4": {
+		cost: new ExpantaNum(1e10),
+		desc: "Knowledge gain & Ascension Power gain are faster based on the Perk Accelerator's speed.",
+	},
 }

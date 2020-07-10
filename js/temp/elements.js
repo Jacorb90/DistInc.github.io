@@ -57,6 +57,10 @@ function updateHTML() {
 		tmp.el.tierDesc.setTxt(tmp.tiers.desc);
 		tmp.el.tierReq.setTxt(showNum(tmp.tiers.req));
 		tmp.el.tierName.setTxt(tmp.scaling.getName("tier") + "Tier");
+		
+		// Misc
+		tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
+		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
 	}
 
 	// Rockets
@@ -298,6 +302,16 @@ function updateHTML() {
 		tmp.el.pthUpgPow.setHTML(
 			!tmp.pathogens.upgPow.eq(1) ? "Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%<br>" : ""
 		);
+		
+		tmp.el.tdeEff.setHTML(
+			tmp.ach[63].has
+				? "Time Doesn't Exist multiplier: " +
+					showNum(tmp.ach63) +
+					"x " +
+					(tmp.ach63.gte(tmp.ach63sc) ? "<span class='sc'>(softcapped)</span>" : "") +
+					"<br><br>"
+				: ""
+		);
 	}
 
 	// Softcaps
@@ -375,18 +389,16 @@ function updateHTML() {
 			tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req));
 			tmp.el.knowledge.setTxt(showNum(player.inf.knowledge));
 			tmp.el.knowledgeGain.setTxt(showNum(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge")));
-			tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected));
 			for (let r = 1; r <= INF_UPGS.rows; r++) {
 				for (let c = 1; c <= INF_UPGS.cols; c++) {
-					let id = r + ";" + c;
 					let state = "";
-					if (tmp.inf.upgs.repealed(id)) state = "repealed";
-					else if (!tmp.inf.upgs.canBuy(id)) state = "locked";
-					else if (tmp.inf.upgs.has(id)) state = "bought";
-					else if (player.inf.knowledge.gte(INF_UPGS.costs[id])) state = "unbought";
+					if (tmp.inf.upgs.repealed(r+";"+c)) state = "repealed";
+					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
+					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
+					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";
 					else state = "locked";
-					tmp.el["inf" + id].setDisplay(tmp.inf.upgs.shown(id));
-					tmp.el["inf" + id].setClasses({
+					tmp.el["inf" + (r+";"+c)].setDisplay(tmp.inf.upgs.shown(r+";"+c));
+					tmp.el["inf" + (r+";"+c)].setClasses({
 						btn: true,
 						inf: state == "unbought",
 						locked: state == "locked",
@@ -396,6 +408,10 @@ function updateHTML() {
 				}
 			}
 			tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements") + " ");
+			
+			tmp.el.tudeEff.setHTML(
+				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
+			);
 		}
 
 		// Ascension
@@ -557,32 +573,34 @@ function updateHTML() {
 		tmp.el.rankCheapName.setTxt(tmp.scaling.getName("rankCheap") + "Rank Cheapener");
 
 		// The Furnace
-		tmp.el.coal.setTxt(
-			showNum(player.furnace.coal) +
-				" Coal" +
-				(" (+" +
-					showNum(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)) +
-					"/sec)")
-		);
-		tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
-		for (let i = 1; i <= 3; i++) {
-			tmp.el["fnu" + i].setClasses({
+		if (player.tab=="furnace") {
+			tmp.el.coal.setTxt(
+				showNum(player.furnace.coal) +
+					" Coal" +
+					(" (+" +
+						showNum(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)) +
+						"/sec)")
+			);
+			tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
+			for (let i = 1; i <= 3; i++) {
+				tmp.el["fnu" + i].setClasses({
+					btn: true,
+					locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost),
+					fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
+				});
+				tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
+				tmp.el["fnu" + i + "name"].setTxt(tmp.scaling.getName("fn", i));
+				tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
+			}
+			tmp.el.bf.setClasses({
 				btn: true,
-				locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost),
-				fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
+				locked: player.furnace.coal.lt(tmp.fn.bfReq),
+				fn: player.furnace.coal.gte(tmp.fn.bfReq)
 			});
-			tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
-			tmp.el["fnu" + i + "name"].setTxt(tmp.scaling.getName("fn", i));
-			tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
+			tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
+			tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
+			tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
 		}
-		tmp.el.bf.setClasses({
-			btn: true,
-			locked: player.furnace.coal.lt(tmp.fn.bfReq),
-			fn: player.furnace.coal.gte(tmp.fn.bfReq)
-		});
-		tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
-		tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
-		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
 	}
 
 	// Elementary
@@ -738,6 +756,7 @@ function updateHTML() {
 				tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")
 				tmp.el["higgs3;0;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_3;0;0"](true))+"x")
 				tmp.el["higgs0;2;1"].setTooltip("Currently: +"+showNum(tmp.elm.bos["higgs_0;2;1"](true))+"%")
+				tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
 			}
 		}
 	}
@@ -752,29 +771,10 @@ function updateHTML() {
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
-	root.style.setProperty(
-		"--threeArrows",
-		player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")'
-	);
+	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
 
-	tmp.el.tdeEff.setHTML(
-		tmp.ach[63].has
-			? "Time Doesn't Exist multiplier: " +
-					showNum(tmp.ach63) +
-					"x " +
-					(tmp.ach63.gte(tmp.ach63sc) ? "<span class='sc'>(softcapped)</span>" : "") +
-					"<br><br>"
-			: ""
-	);
-	tmp.el.tudeEff.setHTML(
-		tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
-	);
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)
-	tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
-	tmp.el.accEn.setHTML(
-		tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : ""
-	);
 	tmp.el.footer.setDisplay(player.tab == "options" && player.optionsTab !== "saving");
 	tmp.el.newsticker.setDisplay(player.options.newst);
 }
