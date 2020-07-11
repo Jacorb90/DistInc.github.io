@@ -18,6 +18,9 @@
 						<button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button>
 					</td>
 					<td>
+						<button id="statisticstabbtn" class="btn tb main" onclick="showTab('statistics')">Stats</button>
+					</td>
+					<td>
 						<button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">
 							Achievements
 						</button>
@@ -222,6 +225,19 @@
 					target="_blank"
 					>Distances</a
 				>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+			</div>
+		</div>
+		<div id="statistics" class="tab" style="display: none;">
+			Best-Ever Distance: <span id="best"></span><br>
+			Best-Ever Velocity: <span id="bestV"></span><br>
+			Best-Ever Acceleration: <span id="bestA"></span><br>
+			<span id="maxEnd"></span><br><br>
+			<b>Scaling Levels</b><br><br>
+			<div id="scaleStatDiv" align="center" style="min-width: 100%;">
+				<span id="scaledStat">Scaled</span>&nbsp;
+				<span id="superscaledStat">Superscaled</span>&nbsp;
+				<span id="hyperStat">Hyper</span>&nbsp;
+				<span id="atomicStat">Atomic</span>
 			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">

@@ -131,6 +131,12 @@ const NEWS_DATA = {
 			return Math.random() < 1e-9;
 		}
 	],
+	c5: [
+		"Your luck skills have broke the universe",
+		function () {
+			return Math.random() < 1e-15;
+		}
+	],
 
 	// Achievement-based Conditions
 	a1: [

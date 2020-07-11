@@ -1246,6 +1246,46 @@ table {
     transform: translate(-50%, -50%);
 }
 
+#scaledStat {
+	display: inline-block;
+	border-radius: 75px;
+	width: 75px;
+	height: 75px;
+	background-color: #72a5f7;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#superscaledStat {
+	display: inline-block;
+	border-radius: 140px;
+	width: 140px;
+	height: 75px;
+	background-color: #eb9e34;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#hyperStat {
+	display: inline-block;
+	border-radius: 75px;
+	width: 75px;
+	height: 75px;
+	background-color: #f03784;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#atomicStat {
+	display: inline-block;
+	border-radius: 75px;
+	width: 75px;
+	height: 75px;
+	background-color: #92b064;
+	display: table-cell;
+	vertical-align: middle;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;
@@ -1399,6 +1439,7 @@ table {
 [tooltip] {
 	position: relative;
 	z-index: 2;
+	white-space: pre-wrap;
 }
 
 [tooltip]:before,
@@ -1408,6 +1449,7 @@ table {
 	filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
 	opacity: 0;
 	pointer-events: none;
+	white-space: pre-wrap;
 }
 
 [tooltip]:before {
@@ -1429,6 +1471,7 @@ table {
 	font-size: 14px;
 	line-height: 1.2;
 	transition-duration: 0.5s;
+	white-space: pre-wrap;
 }
 
 [tooltip]:after {
@@ -1445,6 +1488,7 @@ table {
 	font-size: 0;
 	line-height: 0;
 	transition-duration: 0.5s;
+	white-space: pre-wrap;
 }
 
 [tooltip]:hover:before,
@@ -1453,11 +1497,13 @@ table {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
 	opacity: 1;
+	white-space: pre-wrap;
 }
 
 [widetooltip] {
 	position: relative;
 	z-index: 2;
+	white-space: pre-wrap;
 }
 
 [widetooltip]:before,
@@ -1467,6 +1513,7 @@ table {
 	filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
 	opacity: 0;
 	pointer-events: none;
+	white-space: pre-wrap;
 }
 
 [widetooltip]:before {
@@ -1488,6 +1535,7 @@ table {
 	font-size: 14px;
 	line-height: 1.2;
 	transition-duration: 0.5s;
+	white-space: pre-wrap;
 }
 
 [widetooltip]:after {
@@ -1504,6 +1552,7 @@ table {
 	font-size: 0;
 	line-height: 0;
 	transition-duration: 0.5s;
+	white-space: pre-wrap;
 }
 
 [widetooltip]:hover:before,
@@ -1512,4 +1561,5 @@ table {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
 	opacity: 1;
+	white-space: pre-wrap;
 }

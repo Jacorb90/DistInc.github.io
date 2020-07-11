@@ -45,6 +45,10 @@ function ENString(obj) {
 		for (const key in ret.inf.derivatives.amts)
 			ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]).toString();
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks).toString();
+	ret.bestDistance = new ExpantaNum(ret.bestDistance).toString()
+	ret.bestV = new ExpantaNum(ret.bestV).toString()
+	ret.bestA = new ExpantaNum(ret.bestA).toString()
+	ret.bestEnd = new ExpantaNum(ret.bestEnd).toString()
 	ret.elementary.times = new ExpantaNum(ret.elementary.times).toString();
 	ret.elementary.particles = new ExpantaNum(ret.elementary.particles).toString();
 	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount).toString();
@@ -160,6 +164,10 @@ function transformToEN(obj, sc = DEFAULT_START) {
 		for (const key in ret.inf.derivatives.amts)
 			ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]);
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks);
+	ret.bestDistance = new ExpantaNum(ret.bestDistance)
+	ret.bestV = new ExpantaNum(ret.bestV)
+	ret.bestA = new ExpantaNum(ret.bestA)
+	ret.bestEnd = new ExpantaNum(ret.bestEnd)
 	ret.elementary.times = new ExpantaNum(ret.elementary.times);
 	ret.elementary.particles = new ExpantaNum(ret.elementary.particles);
 	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount);

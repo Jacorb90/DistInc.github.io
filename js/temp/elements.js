@@ -55,7 +55,7 @@ function updateHTML() {
 		tmp.el.tier.setTxt(showNum(player.tier));
 		tmp.el.tierUp.setClasses({ btn: true, locked: !tmp.tiers.canTierUp });
 		tmp.el.tierDesc.setTxt(tmp.tiers.desc);
-		tmp.el.tierReq.setTxt(showNum(tmp.tiers.req));
+		tmp.el.tierReq.setTxt(showNum(tmp.tiers.req.ceil()));
 		tmp.el.tierName.setTxt(tmp.scaling.getName("tier") + "Tier");
 		
 		// Misc
@@ -602,6 +602,30 @@ function updateHTML() {
 			tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
 			tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
 		}
+	}
+	
+	// Statistics
+	if (player.tab == "statistics") {
+		tmp.el.best.setTxt(formatDistance(player.bestDistance))
+		tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
+		tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
+		tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
+		let v = false
+		for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
+			let name = Object.keys(SCALING_STARTS)[i]
+			let tt = ""
+			for (let r=0;r<Object.keys(SCALING_RES).length;r++) { // NESTED LOOP, REMOVE TO REDUCE LAG
+				let func = Object.values(SCALING_RES)[r]
+				let key = Object.keys(SCALING_RES)[r]
+				let amt = func(1)
+				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!player.modes.includes("extreme"))) continue
+				if (amt.gte(tmp.scalings[name][key])) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(tmp.scalingPower[name][key].times(100))+"%): Starts at "+showNum(tmp.scalings[name][key])+"\n"
+			}
+			tmp.el[name+"Stat"].changeStyle("visibility", tt==""?"hidden":"visible")
+			if (tt!="") v = true
+			tmp.el[name+"Stat"].setAttr("widetooltip", tt)
+		}
+		tmp.el.scaleStatDiv.changeStyle("visibility", v?"visible":"hidden")
 	}
 
 	// Elementary

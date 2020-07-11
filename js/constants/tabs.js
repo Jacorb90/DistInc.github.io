@@ -5,6 +5,9 @@ const TABBTN_SHOWN = {
 	options: function () {
 		return true;
 	},
+	statistics: function () {
+		return true;
+	},
 	achievements: function () {
 		return true;
 	},

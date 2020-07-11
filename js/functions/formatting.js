@@ -66,6 +66,7 @@ function formatDistance(x) {
 }
 
 function capitalFirst(str) {
+	if (str=="" || str==" ") return str
 	return str
 		.split(" ")
 		.map(x => x[0].toUpperCase() + x.slice(1))

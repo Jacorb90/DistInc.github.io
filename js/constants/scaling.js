@@ -79,3 +79,17 @@ const SCALING_RES = {
 		return player.inf.derivatives.unlocks;
 	},
 };
+const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments"]
+const REAL_SCALING_NAMES = {
+	rank: "ranks",
+	rankCheap: "rank cheapeners",
+	tier: "tiers",
+	rf: "rocket fuel",
+	fn: "furnace upgrades",
+	pathogenUpg: "pathogen upgrades",
+	darkCore: "dark cores",
+	endorsements: "endorsements",
+	enlightenments: "enlightenments",
+	spectralGems: "spectral gems",
+	dervBoost: "derivative boosts",
+}

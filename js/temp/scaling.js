@@ -64,19 +64,6 @@ function updateTempScaling() {
 	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
 	if (tmp.modes.extreme.active) tmp.scalings.hyper.rf = new ExpantaNum(1);
 
-	// Scaling Start Bugfix
-
-	for (let t = 0; t < Object.keys(SCALING_STARTS).length; t++) {
-		let name = Object.keys(SCALING_STARTS)[t];
-		let next = Object.keys(SCALING_STARTS)[t + 1];
-		for (let p = 0; p < Object.keys(SCALING_STARTS[name]).length; p++) {
-			let name2 = Object.keys(SCALING_STARTS[name])[p];
-			if (next !== undefined)
-				if (tmp.scalings[next][name2] !== undefined)
-					tmp.scalings[name][name2] = ExpantaNum.min(tmp.scalings[name][name2], tmp.scalings[next][name2]);
-		}
-	}
-
 	// Scaling Strengths
 	if (tmp.pathogens) {
 		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(ExpantaNum.sub(1, tmp.pathogens[14].eff));
@@ -128,5 +115,19 @@ function updateTempScaling() {
 	}
 	if (tmp.modes.extreme.active) {
 		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6);
+	}
+	
+	// Scaling Bugfixes
+
+	for (let t = 0; t < Object.keys(SCALING_STARTS).length; t++) {
+		let name = Object.keys(SCALING_STARTS)[t];
+		let next = Object.keys(SCALING_STARTS)[t + 1];
+		for (let p = 0; p < Object.keys(SCALING_STARTS[name]).length; p++) {
+			let name2 = Object.keys(SCALING_STARTS[name])[p];
+			if (next !== undefined)
+				if (tmp.scalings[next][name2] !== undefined)
+					tmp.scalings[name][name2] = ExpantaNum.min(tmp.scalings[name][name2], tmp.scalings[next][name2]);
+			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.4)
+		}
 	}
 }

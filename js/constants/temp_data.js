@@ -168,7 +168,12 @@ const TMP_DATA = {
 		"higgs",
 		"higgsGain",
 		"loading",
-		"stadiumProg"
+		"stadiumProg",
+		"best",
+		"bestV",
+		"bestA",
+		"maxEnd",
+		"scaleStatDiv"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -232,4 +237,8 @@ for (let i = 0; i < GLUON_COLOURS.length; i++) {
 for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
 	let name = Object.keys(HIGGS_UPGS)[i]
 	TMP_DATA.ELS.push("higgs"+name)
+}
+
+for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
+	TMP_DATA.ELS.push(Object.keys(SCALING_STARTS)[i]+"Stat")
 }

@@ -26,6 +26,7 @@ var betaID = "beta1.5";
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
+	player.bestEnd = player.bestEnd.max(player.inf.endorsements)
 	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff));
 	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets"))
@@ -114,6 +115,9 @@ function tickWithTR(diff) {
 		.min(tmp.nerfs.active("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
 	player.distance = player.distance.plus(tmp.nerfs.adjust(player.velocity, "dist").times(diff)).max(0);
+	player.bestDistance = player.bestDistance.max(player.distance)
+	player.bestV = player.bestV.max(player.velocity)
+	player.bestA = player.bestA.max(tmp.acc)
 	if (player.automation.unl) autoTick(diff);
 	if (tmp.modes.extreme.active) {
 		if (player.rf.gt(0)) {
