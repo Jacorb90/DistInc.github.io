@@ -16,7 +16,7 @@ function updateNews() {
 			let n = Math.floor(Math.random() * possible.length);
 			txt = possible[n][0];
 		}
-		document.getElementById("news").textContent = txt;
+		document.getElementById("news").innerHTML = txt;
 		document.getElementById("news").style.right = 0 - NEWS_ADJ + "%";
 	} else {
 		r += 100 / 33 / NEWS_TIME;

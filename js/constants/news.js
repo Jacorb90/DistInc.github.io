@@ -28,6 +28,9 @@ const NEWS_DATA = {
 	m26: ["Please don't disable the news, it's my only way to get my voice heard..."],
 	m27: ["Now that we use OmegaNum, we have become ordinals."],
 	m28: ["There is a timewall coming up, I can just sense it."],
+	m29: ["Bad testing"],
+	m30: ["Click <a href='https://www.youtube.com/watch?v=ub82Xb1C8os'>here</a> to unlock something special..."],
+	m31: ['"Can you make this a news ticker?" - The guy who made Tree Game'],
 
 	// Distance-based Conditions
 	d1: [
@@ -216,6 +219,12 @@ const NEWS_DATA = {
 		"The news ticker committee notice that you are starting to move. They are not quite afraid just yet.",
 		function () {
 			return player.inf.endorsements.gt(0);
+		}
+	],
+	s7: [
+		"We released the Higgs Update before Aarex! Yay!",
+		function () {
+			return player.elementary.times.gt(0);
 		}
 	],
 };

@@ -102,7 +102,7 @@ function updateTempInf() {
 				showNum(INF_UPGS.effects[id]()["energy"]) +
 				"x"
 			);
-		else if (id == "8;8") return "+" + showNum(INF_UPGS.effects[id]().sub(1).times(100)) + "%";
+		else if (id == "8;8" || id=="9;10") return "+" + showNum(INF_UPGS.effects[id]().sub(1).times(100)) + "%";
 		else if (id == "9;3")
 			return (
 				"Angels: " +

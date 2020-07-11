@@ -129,7 +129,7 @@ const INF_UPGS = {
 		"8;7": new ExpantaNum(7.5e27),
 		"8;8": new ExpantaNum(4e28),
 		"8;9": new ExpantaNum(1e44),
-		"8;10": new ExpantaNum(1/0), // INFINITY
+		"8;10": new ExpantaNum(1e147),
 		"9;1": new ExpantaNum(2.5e30),
 		"9;2": new ExpantaNum(3e31),
 		"9;3": new ExpantaNum(6.4e31),
@@ -139,7 +139,7 @@ const INF_UPGS = {
 		"9;7": new ExpantaNum(1e34),
 		"9;8": new ExpantaNum(1.5e34),
 		"9;9": new ExpantaNum(2e44),
-		"9;10": new ExpantaNum(1/0), // INFINITY
+		"9;10": new ExpantaNum(1e149),
 		"10;1": new ExpantaNum(4e76),
 		"10;2": new ExpantaNum(1.5e118),
 		"10;3": new ExpantaNum(4e119),
@@ -148,8 +148,8 @@ const INF_UPGS = {
 		"10;6": new ExpantaNum(1e141),
 		"10;7": new ExpantaNum(1e143),
 		"10;8": new ExpantaNum(1.2e143),
-		"10;9": new ExpantaNum(1/0), // INFINITY
-		"10;10": new ExpantaNum(1/0), // INFINITY
+		"10;9": new ExpantaNum(1e158),
+		"10;10": new ExpantaNum(1.5e161),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -232,7 +232,7 @@ const INF_UPGS = {
 		"8;7": "Scaled Pathogen Upgrade scaling is 84% weaker.",
 		"8;8": "inf8;1 & inf3;8 are stronger based on your Purge Power.",
 		"8;9": "Ascension Power gain is 10x faster.",
-		"8;10": "???", // UNKNOWN
+		"8;10": "Gauge Force uses a better formula to get its reward.",
 		"9;1": "Jerk boosts Accelerational Energy & Knowledge gain.",
 		"9;2": "Derivative Shifts & Boosts add to the Rocket effect.",
 		"9;3": "Angels & Demons are synergized, and Scaled Endorsement scaling starts 1 later.",
@@ -242,7 +242,7 @@ const INF_UPGS = {
 		"9;7": "Derivative Boosts give a better boost to Derivatives based on your Rank.",
 		"9;8": "Rocket gain is multiplied by (n+1)^0.1, where n is your Time Cubes (softcaps at higher values).",
 		"9;9": "Knowledge gain is multiplied by (n+1)^0.2, where n is your Ascension Power.",
-		"9;10": "???", // UNKNOWN
+		"9;10": "Pathogen Upgrades are stronger based on your Scalar Bosons.",
 		"10;1": "Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces Snap at a reduced rate (unaffected by Time Speed).",
 		"10;2": "Velocital Energy boosts your Accelerational Energy at a reduced rate, and inf7;7's boost to Velocital Energy uses a better formula.",
 		"10;3": "The Rocket effect also affects Time Speed.",
@@ -251,8 +251,8 @@ const INF_UPGS = {
 		"10;6": "Leptons make Perks last longer.",
 		"10;7": "Hyper Rocket Fuel scaling starts 20 later.",
 		"10;8": "The Perk Accelerator's boost to Perk Power uses a better formula.",
-		"10;9": "???", // UNKNOWN
-		"10;10": "???", // UNKNOWN
+		"10;9": "Gravitons are gained 100x as fast.",
+		"10;10": "Dark Flow & Pathogen gain are increased by 90% for every Rank you have & by 750% for every Tier you have.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -470,7 +470,8 @@ const INF_UPGS = {
 			return ret;
 		},
 		"4;10": function() {
-			let times = player.elementary.times
+			let times = new ExpantaNum(player.elementary.times)
+			if (times.gte(100)) times = times.sqrt().times(Math.sqrt(100))
 			let ret = times.plus(1).log10().plus(1).pow(5)
 			return ret
 		},
@@ -618,6 +619,12 @@ const INF_UPGS = {
 			let ret = ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.02, power)), rank.pow(2));
 			return ret;
 		},
+		"9;10": function() {
+			let amt = player.elementary.bosons.scalar.amount
+			let ret = amt.plus(1).log10().pow(2/9).plus(1)
+			if (ret.gte(4)) ret = ret.logBase(2).times(2)
+			return ret
+		},
 		"10;1": function() {
 			let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
 			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
@@ -642,6 +649,10 @@ const INF_UPGS = {
 		},
 		"10;6": function() {
 			let ret = player.elementary.fermions.leptons.amount.plus(1).pow(0.05)
+			return ret
+		},
+		"10;10": function() {
+			let ret = ExpantaNum.pow(1.9, player.rank.max(1).sub(1)).times(ExpantaNum.pow(8.5, player.tier.max(1).sub(1)))
 			return ret
 		},
 	}

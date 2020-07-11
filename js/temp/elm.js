@@ -11,6 +11,7 @@ function updateTempElementary() {
 		tmp.higgs031 = tmp.elm.bos["higgs_0;3;1"]()
 		tmp.inf510 = tmp.inf.upgs.has("5;10")
 		tmp.lu3 = tmp.elm.bos.photonEff(3)
+		tmp.lu4 = tmp.elm.bos.photonEff(4)
 	}
 
 	// Elementary Layer
@@ -27,6 +28,7 @@ function updateTempElementary() {
 		let gain = f1.times(f2).times(f3);
 		gain = gain.times(tmp.higgs110?tmp.higgs110:1)
 		gain = gain.times(tmp.higgs300?tmp.higgs300:1)
+		gain = gain.times(tmp.lu4?tmp.lu4:1)
 		return gain.floor();
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
@@ -253,6 +255,7 @@ function updateTempElementary() {
 	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
 	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
 	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
+	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(0.08))
 	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
 	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
@@ -264,15 +267,14 @@ function updateTempElementary() {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
 		3: ExpantaNum.pow(10, player.elementary.bosons.gauge.photons.upgrades[2]).times(1e4),
-		4: new ExpantaNum(1 / 0)
+		4: ExpantaNum.pow(2, player.elementary.bosons.gauge.photons.upgrades[3].pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]))).times(6e4),
 	};
 	tmp.elm.bos.photonEff = function (x) {
 		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1];
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(3, bought);
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
-		if (x == 3) return ExpantaNum.pow(2, bought);
-		if (x == 4) return new ExpantaNum(0);
+		if (x == 3||x == 4) return ExpantaNum.pow(2, bought);
 	};
 	tmp.elm.bos.buyLU = function (x) {
 		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return;
@@ -335,6 +337,7 @@ function updateTempElementary() {
 
 	// Gravitons
 	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75);
+	if (player.inf.upgrades.includes("10;9")) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(100)
 	tmp.elm.bos.gravEff = player.elementary.bosons.gauge.gravitons
 		.times(player.elementary.times.plus(1))
 		.plus(1)
