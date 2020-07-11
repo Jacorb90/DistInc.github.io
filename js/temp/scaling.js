@@ -49,6 +49,7 @@ function updateTempScaling() {
 		}
 		if (tmp.inf.upgs.has("2;6")) tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(5);
 		if (tmp.inf.upgs.has("6;1")) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(10);
+		if (tmp.inf.upgs.has("10;7")) tmp.scalings.hyper.rf = tmp.scalings.hyper.rf.plus(20);
 		if (tmp.inf.upgs.has("6;2")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(5);
 		if (tmp.inf.upgs.has("6;4")) tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(2);
 		if (tmp.inf.stadium.completed("solaris"))

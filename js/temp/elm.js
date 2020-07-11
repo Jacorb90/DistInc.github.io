@@ -10,6 +10,7 @@ function updateTempElementary() {
 		tmp.higgs130 = tmp.elm.bos["higgs_1;3;0"]()
 		tmp.higgs031 = tmp.elm.bos["higgs_0;3;1"]()
 		tmp.inf510 = tmp.inf.upgs.has("5;10")
+		tmp.lu3 = tmp.elm.bos.photonEff(3)
 	}
 
 	// Elementary Layer
@@ -258,10 +259,11 @@ function updateTempElementary() {
 
 	// Photons
 	tmp.elm.bos.photonGain = gaugeSpeed;
+	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
-		3: new ExpantaNum(1 / 0),
+		3: ExpantaNum.pow(10, player.elementary.bosons.gauge.photons.upgrades[2]).times(1e4),
 		4: new ExpantaNum(1 / 0)
 	};
 	tmp.elm.bos.photonEff = function (x) {
@@ -269,7 +271,8 @@ function updateTempElementary() {
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(3, bought);
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
-		if (x == 3 || x == 4) return new ExpantaNum(0);
+		if (x == 3) return ExpantaNum.pow(2, bought);
+		if (x == 4) return new ExpantaNum(0);
 	};
 	tmp.elm.bos.buyLU = function (x) {
 		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return;
@@ -284,9 +287,11 @@ function updateTempElementary() {
 	// W & Z Bosons
 	tmp.elm.bos.wg = gaugeSpeed.times(0.4).times(tmp.z1 || 1);
 	tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).log10().div(10).plus(1);
+	if (player.inf.upgrades.includes("7;10")) tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).pow(0.25).max(tmp.elm.bos.w1)
 	tmp.elm.bos.w2 = player.elementary.bosons.gauge.w.plus(1).log10().sqrt().plus(1);
 	tmp.elm.bos.zg = gaugeSpeed.times(0.1).times(tmp.elm.bos.w1);
 	tmp.elm.bos.z1 = player.elementary.bosons.gauge.z.plus(1).pow(0.04);
+	if (tmp.elm.bos.z1.gte(1.4)) tmp.elm.bos.z1 = tmp.elm.bos.z1.logBase(1.4).times(1.4).min(tmp.elm.bos.z1)
 	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2);
 
 	// Gluons
@@ -305,12 +310,12 @@ function updateTempElementary() {
 		if (x == 1) return ExpantaNum.pow(2, bought);
 		else return ExpantaNum.pow(1.1, bought);
 	};
-	tmp.elm.bos.rg = gaugeSpeed.div(2.5).times(tmp.elm.bos.gluonEff("ar", 1));
-	tmp.elm.bos.gg = gaugeSpeed.div(2.6).times(tmp.elm.bos.gluonEff("ag", 1));
-	tmp.elm.bos.bg = gaugeSpeed.div(2.4).times(tmp.elm.bos.gluonEff("ab", 1));
-	tmp.elm.bos.arg = gaugeSpeed.div(10).times(tmp.elm.bos.gluonEff("r", 1));
-	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1));
-	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1));
+	tmp.elm.bos.rg = gaugeSpeed.div(2.5).times(tmp.elm.bos.gluonEff("ar", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	tmp.elm.bos.gg = gaugeSpeed.div(2.6).times(tmp.elm.bos.gluonEff("ag", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	tmp.elm.bos.bg = gaugeSpeed.div(2.4).times(tmp.elm.bos.gluonEff("ab", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	tmp.elm.bos.arg = gaugeSpeed.div(10).times(tmp.elm.bos.gluonEff("r", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.gluonCost = function (col, x) {
 		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1];
 		if (x == 1) return ExpantaNum.pow(2, bought.pow(2.5).times(2)).times(100);
@@ -395,6 +400,16 @@ function updateTempElementary() {
 	// Perk Acceleration
 	tmp.elm.pa = {}
 	tmp.elm.pa.active = tmp.elm.bos.hasHiggs("0;0;2")
+	tmp.elm.pa.stateStarts = {
+		weakened: new ExpantaNum(3600*24),
+		broken: new ExpantaNum(3600*24*365.24),
+	}
+	tmp.elm.pa.state = ""
+	if (tmp.inf.asc.perkTimeO.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
+	if (tmp.inf.asc.perkTimeO.gte(tmp.elm.pa.stateStarts.broken)) tmp.elm.pa.state = "broken"
 	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
+	if (tmp.elm.pa.state=="weakened") tmp.elm.pa.speedBoost = tmp.elm.pa.speedBoost.sqrt().times(ExpantaNum.sqrt(tmp.elm.pa.stateStarts.weakened))
+	if (tmp.elm.pa.state=="broken") tmp.elm.pa.speedBoost = tmp.elm.pa.speedBoost.cbrt().times(ExpantaNum.pow(tmp.elm.pa.stateStarts.broken, 2/3))
 	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
+	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
 }

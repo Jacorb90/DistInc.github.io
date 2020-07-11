@@ -118,4 +118,5 @@ function updateAchievements() {
 	if (player.distance.gte(1e15)&&player.inf.pantheon.purge.active&&!player.inf.upgrades.includes('8;8')&&tmp.inf.stadium.active("reality", 6)) tmp.ach[132].grant()
 	if (player.elementary.fermions.amount.gte(1e3) && player.elementary.bosons.amount.gte(1e3)) tmp.ach[133].grant()
 	if (antiBool && player.dc.cores.eq(0) && player.distance.gte("4.4e1100026")) tmp.ach[134].grant()
+	if (player.inf.pantheon.heavenlyChips.gte(2.5e7)) tmp.ach[135].grant()
 }

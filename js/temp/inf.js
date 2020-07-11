@@ -337,6 +337,7 @@ function updateTempInf() {
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME);
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]());
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]());
+	if (tmp.inf.upgs.has("10;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["10;6"]());
 	if (tmp.ach[124].has) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(2);
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("1;0;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(10);
 	tmp.inf.asc.perkTimeO = new ExpantaNum(tmp.inf.asc.perkTime)
@@ -664,6 +665,7 @@ function updateTempInf() {
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
 	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
 	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
+	if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
 	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);

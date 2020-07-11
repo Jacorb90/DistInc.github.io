@@ -114,6 +114,7 @@ const ACH_DATA = {
 		132: "What's the point of even stopping you?",
 		133: "It's Elementary, my dear Watson.",
 		134: "Why use the features I give you?",
+		135: "Never Seen Again",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -228,6 +229,7 @@ const ACH_DATA = {
 		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8, & while in Reality's Stadium challenge at Tier 6.",
 		133: "Reach showNum(1e3) Fermions & Bosons.",
 		134: "Reach formatDistance(4.4e1100026) without Pathogens & Dark Cores.",
+		135: "Reach showNum(2.5e7) Heavenly Chips.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -296,5 +298,6 @@ const ACH_DATA = {
 
 		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
 		132: "The Gauge Force Effect is doubled.",
+		135: "The Purge Power effect is halved.",
 	}
 };

@@ -27,6 +27,7 @@ function updateTempRockets() {
 	if (tmp.fn && tmp.modes.extreme.active) if (player.rf.gt(0)) tmp.rockets.eff = tmp.rockets.eff.plus(tmp.fn.eff);
 	if (tmp.inf) if (tmp.inf.upgs.has("2;1")) tmp.rockets.eff = tmp.rockets.eff.times(INF_UPGS.effects["2;1"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("9;2")) tmp.rockets.eff = tmp.rockets.eff.plus(INF_UPGS.effects["9;2"]());
+	if (tmp.inf) if (tmp.inf.upgs.has("6;10")) tmp.rockets.eff = tmp.rockets.eff.times(16)
 	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets).max(1);
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(tmp.rockets.eff).plus(player.rockets).max(1);
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(tmp.rockets.eff).plus(1);

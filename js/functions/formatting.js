@@ -30,10 +30,12 @@ function showNum(val) {
 function decimalPlaces(value, places, base = 10) {
 	// Taken from ExpantaNum.js (but altered slightly)
 	var len = places + 1;
-	var numDigits = Math.ceil(Math.log10(Math.abs(value)));
+	var numDigits = Math.ceil(Math.log10(Math.max(Math.abs(value), 1)));
 	var rounded = Math.round(value * Math.pow(10, len - numDigits)) * Math.pow(10, numDigits - len);
-	if (base == 10) return parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), 100)));
-	else {
+	if (base == 10) {
+		if (value<Math.pow(10, places)) return parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), places)));
+		else return value.toExponential(places)
+	} else {
 		if (value.toString(base).split(".")[0].length < places + 2) {
 			return ((value * Math.pow(base, len - numDigits)) / Math.pow(base, len - numDigits))
 				.toString(base)

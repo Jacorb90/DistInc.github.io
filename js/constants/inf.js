@@ -109,7 +109,7 @@ const INF_UPGS = {
 		"6;7": new ExpantaNum(2e22),
 		"6;8": new ExpantaNum(6e24),
 		"6;9": new ExpantaNum(3e39),
-		"6;10": new ExpantaNum(1/0), // INFINITY
+		"6;10": new ExpantaNum(1e142),
 		"7;1": new ExpantaNum(1e13),
 		"7;2": new ExpantaNum(2e13),
 		"7;3": new ExpantaNum(4e13),
@@ -119,7 +119,7 @@ const INF_UPGS = {
 		"7;7": new ExpantaNum(5e22),
 		"7;8": new ExpantaNum(1e25),
 		"7;9": new ExpantaNum(5e43),
-		"7;10": new ExpantaNum(1/0), // INFINITY
+		"7;10": new ExpantaNum(1e143),
 		"8;1": new ExpantaNum(1.5e26),
 		"8;2": new ExpantaNum(2e26),
 		"8;3": new ExpantaNum(3.2e26),
@@ -145,9 +145,9 @@ const INF_UPGS = {
 		"10;3": new ExpantaNum(4e119),
 		"10;4": new ExpantaNum(1.22e122),
 		"10;5": new ExpantaNum(1e140),
-		"10;6": new ExpantaNum(1/0), // INFINITY
-		"10;7": new ExpantaNum(1/0), // INFINITY
-		"10;8": new ExpantaNum(1/0), // INFINITY
+		"10;6": new ExpantaNum(1e141),
+		"10;7": new ExpantaNum(1e143),
+		"10;8": new ExpantaNum(1.2e143),
 		"10;9": new ExpantaNum(1/0), // INFINITY
 		"10;10": new ExpantaNum(1/0), // INFINITY
 	},
@@ -211,7 +211,7 @@ const INF_UPGS = {
 		"6;7": "Maximum Velocity is replaced by Velocital Energy.",
 		"6;8": "Dark Matter & Dark Energy use better formulas.",
 		"6;9": "Multipliers to Derivatives beyond Velocity are raised to the power of 4.",
-		"6;10": "???", // UNKNOWN
+		"6;10": "The Rocket effect exponent is multiplied by 16.",
 		"7;1": "Stadium Challenge completions boost perks & make them last longer.",
 		"7;2": "Ascension Power & Dark Flow have synergy.",
 		"7;3": "Start Infinities with Dark Circles unlocked.",
@@ -222,7 +222,7 @@ const INF_UPGS = {
 			"Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
 		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
 		"7;9": "Hyper Rank scaling is 2% weaker.",
-		"8;10": "???", // UNKNOWN
+		"7;10": "The W Boson boost to Z Boson gain uses a better formula.",
 		"8;1": "The Dark Circle cycle reduction uses a much weaker formula.",
 		"8;2": "Accelerational Energy & Purge Power gain are synergized.",
 		"8;3": "Heavenly Chip & Demonic Soul gain are boosted by Endorsements.",
@@ -248,9 +248,9 @@ const INF_UPGS = {
 		"10;3": "The Rocket effect also affects Time Speed.",
 		"10;4": "Robot Magnitudes boost Demonic Soul gain, and the Purge Power effect exponent is halved.",
 		"10;5": "Quarks boost Dark Flow & Pathogen gain.",
-		"10;6": "???", // UNKNOWN
-		"10;7": "???", // UNKNOWN
-		"10;8": "???", // UNKNOWN
+		"10;6": "Leptons make Perks last longer.",
+		"10;7": "Hyper Rocket Fuel scaling starts 20 later.",
+		"10;8": "The Perk Accelerator's boost to Perk Power uses a better formula.",
 		"10;9": "???", // UNKNOWN
 		"10;10": "???", // UNKNOWN
 	},
@@ -638,6 +638,10 @@ const INF_UPGS = {
 		},
 		"10;5": function() {
 			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
+			return ret
+		},
+		"10;6": function() {
+			let ret = player.elementary.fermions.leptons.amount.plus(1).pow(0.05)
 			return ret
 		},
 	}
