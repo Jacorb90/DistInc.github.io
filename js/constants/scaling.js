@@ -10,7 +10,7 @@ const SCALING_STARTS = {
 		endorsements: new ExpantaNum(5),
 		enlightenments: new ExpantaNum(6),
 		spectralGems: new ExpantaNum(5),
-		dervBoost: new ExpantaNum(6)
+		dervBoost: new ExpantaNum(6),
 	},
 	superscaled: {
 		rank: new ExpantaNum(100),

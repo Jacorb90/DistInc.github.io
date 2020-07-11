@@ -78,6 +78,9 @@ function updateTempElementary() {
 		
 		// Bugfixes
 		infTab = "infinity"
+		
+		// Achievement Rewards
+		if (prev.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
 
 	// Elementary Tab System

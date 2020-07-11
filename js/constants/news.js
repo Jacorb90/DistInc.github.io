@@ -31,6 +31,10 @@ const NEWS_DATA = {
 	m29: ["Bad testing"],
 	m30: ["Click <a href='https://www.youtube.com/watch?v=ub82Xb1C8os'>here</a> to unlock something special..."],
 	m31: ['"Can you make this a news ticker?" - The guy who made Tree Game'],
+	m32: ['"Ya like jazz?" - BBB'],
+	m33: ["Remember to export often!"],
+	m34: ["Gotta wonder what you're using to travel this far"],
+	m35: ["BREAKING NEWS: Florida Man goes out for a jog: becomes High God of the Omniverse"],
 
 	// Distance-based Conditions
 	d1: [
@@ -225,6 +229,12 @@ const NEWS_DATA = {
 		"We released the Higgs Update before Aarex! Yay!",
 		function () {
 			return player.elementary.times.gt(0);
+		}
+	],
+	s8: [
+		"Weren't we already using those?",
+		function () {
+			return player.rockets.gt(0);
 		}
 	],
 };

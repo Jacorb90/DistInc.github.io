@@ -116,6 +116,8 @@ const ACH_DATA = {
 		134: "Why use the features I give you?",
 		135: "Never Seen Again",
 		136: "Fastest in the Metaverse",
+		137: "Back to the Past",
+		138: "The Fleet Flees",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -232,6 +234,8 @@ const ACH_DATA = {
 		134: "Reach formatDistance(4.4e1100026) without Pathogens & Dark Cores.",
 		135: "Reach showNum(2.5e7) Heavenly Chips.",
 		136: "Reach showNum(1e3750000) uni/s of Velocity.",
+		137: "Do an Elementary reset without any Derivative Boosts (but you can have Derivative Shifts).",
+		138: "Reach formatDistance(4.4e7826) while having ten Endorsements or less.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

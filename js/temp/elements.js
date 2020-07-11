@@ -482,6 +482,7 @@ function updateHTML() {
 				);
 			}
 			tmp.el.exitStad.setDisplay(player.inf.stadium.current != "");
+			tmp.el.stadiumProg.setTxt(player.inf.stadium.current==""?"":"Progress to Completion: "+showNum(tmp.inf.stadium.progress())+"%")
 		}
 
 		// The Pantheon

@@ -567,6 +567,12 @@ function updateTempInf() {
 	tmp.inf.stadium.completed = function (name) {
 		return player.inf.endorsements.gte(15) && player.inf.stadium.completions.includes(name);
 	};
+	tmp.inf.stadium.progress = function() {
+		let current = player.inf.stadium.current
+		if (current=="") return new ExpantaNum(0)
+		let goal = tmp.inf.stadium.goal(current)
+		return player.distance.max(1).log10().div(goal.log10()).times(100).min(100)
+	}
 
 	// The Pantheon
 	tmp.inf.pantheon = {};

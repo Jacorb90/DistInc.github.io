@@ -167,7 +167,8 @@ const TMP_DATA = {
 		"scalarGain",
 		"higgs",
 		"higgsGain",
-		"loading"
+		"loading",
+		"stadiumProg"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

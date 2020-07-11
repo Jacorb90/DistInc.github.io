@@ -35,7 +35,8 @@ function loadGame() {
 }
 
 function simulateTime() {
-	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time || getCurrentTime()));
+	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time!==undefined?player.time:getCurrentTime()));
+	if (time.isNaN()) time = new ExpantaNum(0) 
 	player.time = getCurrentTime();
 	gameLoop(time.div(1000));
 }

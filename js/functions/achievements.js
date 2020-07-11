@@ -120,4 +120,6 @@ function updateAchievements() {
 	if (antiBool && player.dc.cores.eq(0) && player.distance.gte("4.4e1100026")) tmp.ach[134].grant()
 	if (player.inf.pantheon.heavenlyChips.gte(2.5e7)) tmp.ach[135].grant()
 	if (player.velocity.gte("4.4e3750026")) tmp.ach[136].grant()
+	// ach137 is in the Elementary reset function
+	if (player.distance.gte("4.4e7826")&&player.inf.endorsements.lte(10)) tmp.ach[138].grant()
 }

@@ -489,6 +489,8 @@ const INF_UPGS = {
 			let base = player.inf.knowledge.div(1e9).plus(1).slog(10).plus(1);
 			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).plus(1);
 			let ret = base.pow(exp);
+			if (ret.lt(9)) ret = ret.sqrt()
+			else ret = ret.div(3)
 			return ret;
 		},
 		"5;7": function () {
@@ -676,7 +678,7 @@ const INF_TABS = {
 };
 
 // Ascension
-const BASE_PERK_TIME = new ExpantaNum(4);
+const BASE_PERK_TIME = new ExpantaNum(12);
 const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"];
 
 // The Stadium
