@@ -173,6 +173,8 @@ function updateTempOptions() {
 				};
 		} else if (type == 3) {
 			player.options[name] = window.prompt("Change the " + name + ".", player.options[name]);
+			let d2 = new Element("dropDown2")
+			d2.changeStyle("display", "none");
 			tmp.options.save();
 			return;
 		}
