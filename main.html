@@ -11,58 +11,60 @@
 	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
-			<table>
-				<tr>
-					<td><button id="maintabbtn" class="btn tb main" onclick="showTab('main')">Main</button></td>
-					<td>
-						<button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button>
-					</td>
-					<td>
-						<button id="statisticstabbtn" class="btn tb main" onclick="showTab('statistics')">Stats</button>
-					</td>
-					<td>
-						<button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">
-							Achievements
-						</button>
-					</td>
-					<td>
-						<button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">
-							Rockets
-						</button>
-					</td>
-					<td>
-						<button
-							id="furnacetabbtn"
-							class="btn tb fn main"
-							onclick="showTab('furnace')"
-							style="display: none;"
-						>
-							The Furnace
-						</button>
-					</td>
-					<td>
-						<button id="autotabbtn" class="btn tb rckt main" onclick="showTab('auto')">Automation</button>
-					</td>
-					<td><button id="trtabbtn" class="btn tb rt main" onclick="showTab('tr')">Time Reversal</button></td>
-					<td>
-						<button id="collapsetabbtn" class="btn tb btndd main" onclick="showTab('collapse')">
-							Universal Collapse
-						</button>
-					</td>
-					<td>
-						<button id="pathogenstabbtn" class="btn tb gross main" onclick="showTab('pathogens')">
-							Pathogens
-						</button>
-					</td>
-					<td><button id="dctabbtn" class="btn tb dark main" onclick="showTab('dc')">Dark Circle</button></td>
-					<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
-					<td>
-						<button id="elementarytabbtn" class="btn tb elm eltxt main" onclick="showTab('elementary')">
-							Elementary
-						</button>
-					</td>
-				</tr>
-			</table>
+			<div style="overflow-x: auto;">
+				<table>
+					<tr>
+						<td><button id="maintabbtn" class="btn tb main" onclick="showTab('main')">Main</button></td>
+						<td>
+							<button id="optionstabbtn" class="btn tb main" onclick="showTab('options')">Options</button>
+						</td>
+						<td>
+							<button id="statisticstabbtn" class="btn tb main" onclick="showTab('statistics')">Stats</button>
+						</td>
+						<td>
+							<button id="achievementstabbtn" class="btn tb main" onclick="showTab('achievements')">
+								Achievements
+							</button>
+						</td>
+						<td>
+							<button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">
+								Rockets
+							</button>
+						</td>
+						<td>
+							<button
+								id="furnacetabbtn"
+								class="btn tb fn main"
+								onclick="showTab('furnace')"
+								style="display: none;"
+							>
+								The Furnace
+							</button>
+						</td>
+						<td>
+							<button id="autotabbtn" class="btn tb rckt main" onclick="showTab('auto')">Automation</button>
+						</td>
+						<td><button id="trtabbtn" class="btn tb rt main" onclick="showTab('tr')">Time Reversal</button></td>
+						<td>
+							<button id="collapsetabbtn" class="btn tb btndd main" onclick="showTab('collapse')">
+								Universal Collapse
+							</button>
+						</td>
+						<td>
+							<button id="pathogenstabbtn" class="btn tb gross main" onclick="showTab('pathogens')">
+								Pathogens
+							</button>
+						</td>
+						<td><button id="dctabbtn" class="btn tb dark main" onclick="showTab('dc')">Dark Circle</button></td>
+						<td><button id="inftabbtn" class="btn tb inf main" onclick="showTab('inf')">Infinity</button></td>
+						<td>
+							<button id="elementarytabbtn" class="btn tb elm eltxt main" onclick="showTab('elementary')">
+								Elementary
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<span id="nextFeature"></span><br /><br />
 			<div id="newsticker"><div id="news"></div></div>
 		</div>
