@@ -56,19 +56,21 @@ function simulateTime() {
 
 function autoTick(diff) {
 	// Normal Automation
-	player.automation.scraps = player.automation.scraps
-		.plus(tmp.nerfs.adjust(tmp.auto.scrapGain, "scraps").times(diff))
-		.max(0);
-	player.automation.intelligence = player.automation.intelligence
-		.plus(tmp.nerfs.adjust(tmp.auto.intGain, "intel").times(diff))
-		.max(0);
-	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) {
-		let name = Object.keys(ROBOT_REQS)[i];
-		if (tmp.auto[name].unl) {
-			autoTimes[name] = autoTimes[name].plus(diff).max(0);
-			if (autoTimes[name].gte(tmp.auto[name].interval)) {
-				autoTimes[name] = new ExpantaNum(0);
-				tmp.auto[name].act();
+	if (player.automation.unl) {
+		player.automation.scraps = player.automation.scraps
+			.plus(tmp.nerfs.adjust(tmp.auto.scrapGain, "scraps").times(diff))
+			.max(0);
+		player.automation.intelligence = player.automation.intelligence
+			.plus(tmp.nerfs.adjust(tmp.auto.intGain, "intel").times(diff))
+			.max(0);
+		for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) {
+			let name = Object.keys(ROBOT_REQS)[i];
+			if (tmp.auto[name].unl) {
+				autoTimes[name] = autoTimes[name].plus(diff).max(0);
+				if (autoTimes[name].gte(tmp.auto[name].interval)) {
+					autoTimes[name] = new ExpantaNum(0);
+					tmp.auto[name].act();
+				}
 			}
 		}
 	}

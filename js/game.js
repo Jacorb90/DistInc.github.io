@@ -118,7 +118,7 @@ function tickWithTR(diff) {
 	player.bestDistance = player.bestDistance.max(player.distance)
 	player.bestV = player.bestV.max(player.velocity)
 	player.bestA = player.bestA.max(tmp.acc)
-	if (player.automation.unl) autoTick(diff);
+	autoTick(diff);
 	if (tmp.modes.extreme.active) {
 		if (player.rf.gt(0)) {
 			player.furnace.coal = player.furnace.coal.plus(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(diff)).max(0);
