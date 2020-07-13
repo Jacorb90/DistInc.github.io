@@ -150,12 +150,28 @@ function updateTempSpecial() {
 					.times(player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).min(1));
 			},
 			spec: [false, true, true]
-		})
+		}),
+		theory: new Feature({
+			name: "theory",
+			res_amt: 2,
+			req: [
+				new ExpantaNum(THEORY_REQ[0]),
+				new ExpantaNum(THEORY_REQ[1]),
+			],
+			specRes: [false, "EP in one run"],
+			res: ["distance", "bestEP"],
+			display: [formatDistance, showNum],
+			reached: deepCopy(player.elementary.theory.unl),
+			progress: function () {
+				return player.distance.plus(1).logBase(THEORY_REQ[0]).min(1).times(player.bestEP.div(THEORY_REQ[1]).min(1))
+			},
+			spec: [false, false],
+		}),
 	};
 	tmp.nf = "none";
 	for (let i = 0; i < Object.keys(tmp.features).length; i++) {
 		let feature = Object.values(tmp.features)[i];
-		if (!feature.reached) {
+		if (!(feature.name=="theory"&&player.elementary.theory.unl)) if (!feature.reached) {
 			tmp.nf = feature.name;
 			break;
 		}

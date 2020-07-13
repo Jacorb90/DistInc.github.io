@@ -110,6 +110,19 @@ function ENString(obj) {
 	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons).toString();
 	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount).toString();
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount).toString();
+	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points).toString();
+	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth).toString();
+	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks).toString();
+	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons).toString();
+	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos).toString();
+	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos).toString();
+	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]).toString();
+	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]).toString();
+	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled).toString();
+	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount).toString();
+	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
+	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount).toString();
+	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders).toString();
 	return ret;
 }
 
@@ -125,6 +138,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon);
 	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives);
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
+	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory)
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);
@@ -230,6 +244,19 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons);
 	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount);
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount);
+	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points);
+	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth);
+	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks);
+	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons);
+	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos);
+	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos);
+	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]);
+	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]);
+	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled);
+	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount);
+	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
+	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount);
+	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }

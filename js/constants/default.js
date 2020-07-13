@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.5,
+	version: 1.6,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -148,6 +148,38 @@ const DEFAULT_START = {
 					upgrades: []
 				}
 			}
-		}
+		},
+		theory: {
+			unl: false,
+			active: false,
+			points: new ExpantaNum(0),
+			depth: new ExpantaNum(0),
+			supersymmetry: {
+				unl: false,
+				squarks: new ExpantaNum(0),
+				sleptons: new ExpantaNum(0),
+				neutralinos: new ExpantaNum(0),
+				charginos: new ExpantaNum(0),
+			},
+			tree: {
+				unl: false,
+				upgrades: {},
+			},
+			strings: {
+				unl: false,
+				amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+				entangled: new ExpantaNum(0),
+			},
+			preons: {
+				unl: false,
+				amount: new ExpantaNum(0),
+				boosters: new ExpantaNum(0),
+			},
+			accelerons: {
+				unl: false,
+				amount: new ExpantaNum(0),
+				expanders: new ExpantaNum(0),
+			},
+		},
 	}
 };

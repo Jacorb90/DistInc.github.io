@@ -12,6 +12,7 @@ function updateTempElementary() {
 		tmp.inf510 = tmp.inf.upgs.has("5;10")
 		tmp.lu3 = tmp.elm.bos.photonEff(3)
 		tmp.lu4 = tmp.elm.bos.photonEff(4)
+		tmp.thGain = tmp.elm.theory.gain
 	}
 
 	// Elementary Layer
@@ -35,13 +36,22 @@ function updateTempElementary() {
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
 	tmp.elm.doGain = function () {
+		// Gains
 		if (player.options.elc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
-		player.bestEP = player.bestEP.max(tmp.elm.layer.gain)
-		player.elementary.particles = player.elementary.particles.plus(tmp.elm.layer.gain);
-	};
-	tmp.elm.onReset = function (prev) {
+		if (player.elementary.theory.points) {
+			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
+			player.elementary.theory.depth = player.elementary.theory.depth.plus(1)
+			player.elementary.theory.active = false
+		} else {
+			player.bestEP = player.bestEP.max(tmp.elm.layer.gain)
+			player.elementary.particles = player.elementary.particles.plus(tmp.elm.layer.gain);
+		}
 		player.elementary.times = player.elementary.times.plus(1);
 		
+		// Achievement Rewards
+		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
+	};
+	tmp.elm.onReset = function (prev) {
 		// Reset Quarks, Leptons, & Gauge Boson sub-resources
 		player.elementary.fermions.quarks.amount = new ExpantaNum(0);
 		player.elementary.fermions.leptons.amount = new ExpantaNum(0);
@@ -81,9 +91,6 @@ function updateTempElementary() {
 		
 		// Bugfixes
 		infTab = "infinity"
-		
-		// Achievement Rewards
-		if (prev.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
 
 	// Elementary Tab System
@@ -421,4 +428,29 @@ function updateTempElementary() {
 	if (tmp.elm.pa.state=="broken") tmp.elm.pa.speedBoost = tmp.elm.pa.speedBoost.cbrt().times(ExpantaNum.pow(tmp.elm.pa.stateStarts.broken, 2/3))
 	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
 	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
+		
+	// Theories
+	tmp.elm.theory = {}
+	tmp.elm.theory.updateTabs = function () {
+		let tabs = Element.allFromClass("theorytab");
+		for (let i = 0; i < tabs.length; i++) {
+			tabs[i].setDisplay(thTab == tabs[i].id);
+			new Element(tabs[i].id + "tabbtn").setDisplay(TH_TABS[tabs[i].id]());
+		}
+	};
+	tmp.elm.theory.showTab = function (name) {
+		if (thTab == name) return;
+		thTab = name;
+		tmp.elm.theory.updateTabs();
+	};
+	tmp.elm.theory.updateTabs();
+	
+	// The Theoriverse
+	tmp.elm.theory.nerf = ExpantaNum.pow(0.88, player.elementary.theory.depth.plus(1))
+	tmp.elm.theory.start = function() {
+		if (!player.elementary.theory.unl) return
+		tmp.elm.layer.reset(true)
+		player.elementary.theory.active = !player.elementary.theory.active
+	}
+	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth)
 }

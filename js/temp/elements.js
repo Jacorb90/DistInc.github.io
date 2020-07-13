@@ -637,11 +637,11 @@ function updateHTML() {
 	if (player.tab == "elementary") {
 		// Elementary
 		tmp.el.elmReset.setHTML(
-			"Reset all previous progress to gain <span class='eltxt'>" +
+			player.elementary.theory.active?(tmp.elm.can?("Exit The Theoriverse to gain "+showNum(tmp.elm.theory.gain)+" Theory Points."):"Reach the end of this Elementary run to gain Theory Points."):("Reset all previous progress to gain <span class='eltxt'>" +
 				showNum(tmp.elm.layer.gain) +
-				"</span> Elementary Particles."+(tmp.elm.layer.gain.gte(tmp.elm.softcap)?"<span class='sc'>(softcapped)</span>":"")
+				"</span> Elementary Particles."+(tmp.elm.layer.gain.gte(tmp.elm.softcap)?"<span class='sc'>(softcapped)</span>":""))
 		);
-		tmp.el.elmReset.setClasses({ btn: true, locked: !tmp.elm.can, elm: tmp.elm.can });
+		tmp.el.elmReset.setClasses({ btn: true, locked: !tmp.elm.can, elm: (tmp.elm.can&&!player.elementary.theory.active), th: (tmp.elm.can&&player.elementary.theory.active) });
 		tmp.el.elmt.setTxt(showNum(player.elementary.times));
 		tmp.el.elmp.setTxt(showNum(player.elementary.particles));
 		if (elmTab == "fermions") {
@@ -790,6 +790,13 @@ function updateHTML() {
 				tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
 				tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x")
 				tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x")
+			}
+		}
+		if (elmTab=="theory") {
+			tmp.el.thp.setTxt(showNum(player.elementary.theory.points))
+			if (thTab=="tv") {
+				tmp.el.theoriverse.setTxt(player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
+				tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
 			}
 		}
 	}

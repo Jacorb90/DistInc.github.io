@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 13,
+	rows: 14,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -118,6 +118,8 @@ const ACH_DATA = {
 		136: "Fastest in the Metaverse",
 		137: "Back to the Past",
 		138: "The Fleet Flees",
+		
+		141: "The Impossible Happened",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -236,6 +238,8 @@ const ACH_DATA = {
 		136: "Reach showNum(1e3750000) uni/s of Velocity.",
 		137: "Do an Elementary reset without any Derivative Boosts (but you can have Derivative Shifts).",
 		138: "Reach formatDistance(4.4e7826) while having ten Endorsements or less.",
+		
+		141: "Get a Theory Point.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

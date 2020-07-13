@@ -727,6 +727,11 @@
 								Bosons
 							</button>
 						</td>
+						<td>
+							<button id="theorytabbtn" class="btn tb th main" onclick="tmp.elm.showTab('theory')">
+								Theories
+							</button>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -1012,6 +1017,28 @@
 							<td><button id="higgs0;0;3" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;3')"></button></td>
 						</tr>
 					</table>
+				</div>
+			</div>
+			<div id="theory" class="elmtab" style="display: none;">
+				You have <span id="thp" class='thp'>1</span> Theory Points.
+				<br><br>
+				<div class="band or">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button id="tvtabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('tv')">
+									The Theoriverse
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="tv" class="theorytab">
+					<br>
+					<button id="theoriverse" onclick="tmp.elm.theory.start()"></button><br><br>
 				</div>
 			</div>
 		</div>

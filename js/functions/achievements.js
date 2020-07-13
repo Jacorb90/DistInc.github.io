@@ -122,4 +122,6 @@ function updateAchievements() {
 	if (player.velocity.gte("4.4e3750026")) tmp.ach[136].grant()
 	// ach137 is in the Elementary reset function
 	if (player.distance.gte("4.4e7826")&&player.inf.endorsements.lte(10)) tmp.ach[138].grant()
+		
+	if (player.elementary.theory.points.gte(1)) tmp.ach[141].grant()
 }

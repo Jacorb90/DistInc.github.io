@@ -19,6 +19,7 @@ var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
 var gluonTab = "r";
+var thTab = "tv";
 var autoRobotTarget = 0
 var betaID = "beta1.6";
 

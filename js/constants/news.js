@@ -45,6 +45,11 @@ const NEWS_DATA = {
 	m43: ['"Playing the game 2.5 times is fun" - Bugged out Ink'],
 	m44: ['"Gaming." - Danny DeVito'],
 	m45: ['"I need a raise" - Ink after wasting his life actually enjoying something'],
+	m46: ["And the winner is, Leonardo DiCarlo"],
+	m47: ['"But thats just a theory, a game theory!"- Matpat'],
+	m48: ['"But thats just a theory, a film theory!"- Matpat'],
+	m49: ['"But thats just a theory, a survival theory!"- Matpat'],
+	m50: ['"Nont" - Jacorb after 5 hours has passed'],
 
 	// Distance-based Conditions
 	d1: [
@@ -263,6 +268,30 @@ const NEWS_DATA = {
 		"It's time to grind some Elementaries!",
 		function () {
 			return player.elementary.times.gte(3);
+		}
+	],
+	s10: [
+		"NASA can't afford to fund you anymore.",
+		function () {
+			return player.tr.cubes.gt(0);
+		}
+	],
+	s11: [
+		'"1/5 no botbot" - Guy after unlocking the Auto-Robots Automator',
+		function () {
+			return player.automators["robots"]
+		}
+	],
+	s12: [
+		'"To elementary, and beyond!" - Buzz e600k uni',
+		function () {
+			return player.distance.gte("1e600027")
+		}
+	],
+	s13: [
+		'"I want more PP" - Guy who completes the game and sees no Pantheon Boosts',
+		function () {
+			return player.inf.pantheon.unl
 		}
 	],
 };

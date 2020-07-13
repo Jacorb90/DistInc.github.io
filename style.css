@@ -1294,6 +1294,60 @@ table {
 	max-height: 12px !important;
 }
 
+.btn.th {
+	box-shadow: 3px 4px 0px 0px #000000;
+	background: none;
+	background-color: black;
+	border-radius: 18px;
+	border: 1px solid #e66700;
+	display: inline-block;
+	cursor: pointer;
+	color: #e66700;
+	font-size: 12px;
+	font-weight: bold;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px black;
+	transition-duration: 0.5s;
+}
+
+.btn.th:hover {
+	background: none;
+	background-color: #994903;
+	box-shadow: 3px 4px 0px 0px #6e3300;
+	color: #e66700;
+}
+
+.btn.th:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+#theoriverse {
+	font-size: 15px;
+	width: 200px;
+	height: 200px;
+	border-radius: 50px;
+	background-color: black;
+	border: 2px solid #e66700;
+	color: #e66700;
+	transition-duration: 0.75s;
+	font-weight: bold;
+}
+
+#theoriverse:hover {
+	background-color: #994903;
+	cursor: pointer;
+}
+
+.thp {
+	font-size: 25px;
+	color: #e66700;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

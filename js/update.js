@@ -228,4 +228,5 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true;
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
+	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 }

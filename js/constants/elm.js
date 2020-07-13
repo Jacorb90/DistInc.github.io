@@ -4,7 +4,10 @@ const ELM_TABS = {
 	},
 	bosons: function () {
 		return true;
-	}
+	},
+	theory: function () {
+		return player.elementary.theory.unl;
+	},
 };
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
@@ -123,3 +126,11 @@ const HIGGS_UPGS = {
 		unl: function() { return player.elementary.bosons.scalar.higgs.upgrades.includes("0;2;1") },
 	},
 }
+
+const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]
+
+const TH_TABS = {
+	tv: function () {
+		return true;
+	},
+};

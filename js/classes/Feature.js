@@ -13,15 +13,17 @@ class Feature {
 					return 0;
 			  };
 		this.res_amt = data.res_amt || 1;
+		this.specRes = data.specRes || [];
 	}
 
 	amt(x = 1) {
-		if (this.res_amt > 1)
+		if (this.res_amt > 1) {
 			return this.spec[x - 1] ? player[this.res[x - 1][0]][this.res[x - 1][1]] : player[this.res[x - 1]];
-		else return this.spec ? player[this.res[0]][this.res[1]] : player[this.res];
+		} else return this.spec ? player[this.res[0]][this.res[1]] : player[this.res];
 	}
 
 	dispAmt(x = 1) {
+		if (this.specRes[x-1]) return this.specRes[x-1]
 		if (this.res_amt > 1)
 			return this.spec[x - 1] ? capitalFirst(this.res[x - 1][1]) : capitalFirst(this.res[x - 1]);
 		return this.spec ? capitalFirst(this.res[1]) : capitalFirst(this.res);

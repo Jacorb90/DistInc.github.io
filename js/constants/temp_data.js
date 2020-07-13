@@ -174,7 +174,9 @@ const TMP_DATA = {
 		"bestA",
 		"maxEnd",
 		"maxEP",
-		"scaleStatDiv"
+		"scaleStatDiv",
+		"theoriverse",
+		"thp"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
