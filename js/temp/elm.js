@@ -20,6 +20,7 @@ function updateTempElementary() {
 		player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
 		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&
 		player.inf.endorsements.gte(LAYER_REQS.elementary[2][1]);
+	tmp.elm.softcap = new ExpantaNum(4000)
 	tmp.elm.gain = (function () {
 		if (!tmp.elm.can) return new ExpantaNum(0);
 		let f1 = player.rockets.max(1).log10().div(LAYER_REQS.elementary[0][1].log10()).sqrt();
@@ -29,11 +30,13 @@ function updateTempElementary() {
 		gain = gain.times(tmp.higgs110?tmp.higgs110:1)
 		gain = gain.times(tmp.higgs300?tmp.higgs300:1)
 		gain = gain.times(tmp.lu4?tmp.lu4:1)
+		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(1/4).times(ExpantaNum.pow(tmp.elm.softcap, 3/4))
 		return gain.floor();
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
 	tmp.elm.doGain = function () {
 		if (player.options.elc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
+		player.bestEP = player.bestEP.max(tmp.elm.layer.gain)
 		player.elementary.particles = player.elementary.particles.plus(tmp.elm.layer.gain);
 	};
 	tmp.elm.onReset = function (prev) {

@@ -21,6 +21,7 @@ const DEFAULT_START = {
 	bestV: new ExpantaNum(0),
 	bestA: new ExpantaNum(0),
 	bestEnd: new ExpantaNum(0),
+	bestEP: new ExpantaNum(0),
 	velocity: new ExpantaNum(0),
 	rank: new ExpantaNum(1),
 	tier: new ExpantaNum(0),

@@ -187,7 +187,9 @@ function updateTempOptions() {
 		else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
 		else mds = "None";
 		let info = "Modes: " + mds + "<br>";
-		if (sav.inf.derivatives.unl)
+		if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
+			info += "Elementaries: "+showNum(new ExpantaNum(sav.elementary.times))+", Fermions: "+showNum(new ExpantaNum(sav.elementary.fermions.amount))+", Bosons: "+showNum(new ExpantaNum(sav.elementary.bosons.amount))+", "
+		else if (sav.inf.derivatives.unl)
 			info += "Derivative Shifts/Boosts: " + showNum(new ExpantaNum(sav.inf.derivatives.unlocks)) + ", ";
 		else if (new ExpantaNum(sav.inf.endorsements).gte(21))
 			info +=

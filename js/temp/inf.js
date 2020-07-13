@@ -557,7 +557,7 @@ function updateTempInf() {
 		let l = Math.min(player.inf.stadium.completions.length + 1, descs.length);
 		if (player.inf.stadium.completions.includes(name))
 			l = Math.min(player.inf.stadium.completions.indexOf(name) + 1, l);
-		let tooltip = "";
+		let tooltip = "Tier "+l+"\n";
 		for (let i = 0; i < l; i++) {
 			tooltip += descs[i];
 			if (i < l - 1) tooltip += ", ";

@@ -173,6 +173,7 @@ const TMP_DATA = {
 		"bestV",
 		"bestA",
 		"maxEnd",
+		"maxEP",
 		"scaleStatDiv"
 	]
 };

@@ -20,7 +20,7 @@ var elmTab = "fermions";
 var bosTab = "gauge";
 var gluonTab = "r";
 var autoRobotTarget = 0
-var betaID = "beta1.5";
+var betaID = ""; //beta1.5
 
 // Game Loops
 

@@ -7,11 +7,6 @@ function loadGame() {
 		player.tab = DEFAULT_START.tab;
 		player.optionsTab = DEFAULT_START.optionsTab;
 	}
-	if (player.modes.includes("absurd"))
-		if (!confirm("Are you sure you want to continue playing in Absurd Mode?")) {
-			player.modes = [];
-			player = transformToEN(DEFAULT_START, DEFAULT_START);
-		}
 	let all = JSON.parse(
 		atob(
 			localStorage.getItem("dist-inc-saves" + betaID)
@@ -19,6 +14,24 @@ function loadGame() {
 				: btoa(JSON.stringify([]))
 		)
 	);
+	if (player.modes.includes("absurd"))
+		if (!confirm("Are you sure you want to continue playing in Absurd Mode?")) {
+			let s = transformToEN(DEFAULT_START);
+			if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+			else s.savePos = all.length + 1;
+			if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+			player = transformToEN(s)
+			player.modes = []
+			localStorage.setItem("dist-inc" + betaID, btoa(JSON.stringify(ENString(player))));
+			if (
+				(all.includes(null) || all[player.savePos - 1] === undefined || all[player.savePos - 1].savePos == player.savePos) &&
+				all.length >= player.savePos
+			)
+				all[player.savePos - 1] = ENString(player);
+			else all.push(ENString(player));
+			localStorage.setItem("dist-inc-saves" + betaID, btoa(JSON.stringify(all)));
+			reload();
+		}
 	let c = 1;
 	for (let i = 0; i < all.length; i++)
 		if (all[i] !== null) {

@@ -29,12 +29,18 @@ const NEWS_DATA = {
 	m27: ["Now that we use OmegaNum, we have become ordinals."],
 	m28: ["There is a timewall coming up, I can just sense it."],
 	m29: ["Bad testing"],
-	m30: ["Click <a href='https://www.youtube.com/watch?v=ub82Xb1C8os'>here</a> to unlock something special..."],
+	m30: ["Click <a href='https://www.youtube.com/watch?v=lXMskKTw3Bc' style='color: grey;'>here</a> to unlock something special..."],
 	m31: ['"Can you make this a news ticker?" - The guy who made Tree Game'],
 	m32: ['"Ya like jazz?" - BBB'],
 	m33: ["Remember to export often!"],
 	m34: ["Gotta wonder what you're using to travel this far"],
 	m35: ["BREAKING NEWS: Florida Man goes out for a jog: becomes High God of the Omniverse"],
+	m36: ["This feature is definitely not a ripoff of anything else..."],
+	m37: ["This is not the 69th news ticker"],
+	m38: ["If you saw the loading screen, I know, it's really creative."],
+	m39: ["If you can see this, get back to playing the game"],
+	m40: ["There is a news ticker entry out there that has apparently tried to rick roll people. So far only they have 1 known victim."],
+	m41: ["What if you wanted to go to heaven, but god said <span class='sc'>(softcapped)</span>"],
 
 	// Distance-based Conditions
 	d1: [
@@ -65,6 +71,12 @@ const NEWS_DATA = {
 		"You are a very dedicated addict",
 		function () {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e100000"));
+		}
+	],
+	d6: [
+		"Stop grinding or you'll go insane within the next 5 hours!",
+		function () {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e4200000"));
 		}
 	],
 
@@ -241,6 +253,12 @@ const NEWS_DATA = {
 		"Weren't we already using those?",
 		function () {
 			return player.rockets.gt(0);
+		}
+	],
+	s9: [
+		"It's time to grind some Elementaries!",
+		function () {
+			return player.elementary.times.gte(3);
 		}
 	],
 };

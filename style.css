@@ -23,7 +23,7 @@
 	color: var(--plaintxt);
 }
 
-body {
+html, body {
 	overflow-x: hidden;
 }
 
@@ -288,7 +288,7 @@ table {
 	border: 1px solid #6c06d1;
 	display: inline-block;
 	cursor: pointer;
-	color: #e800dc;
+	color: #ff0015;
 	font-size: 12px;
 	max-width: 200px;
 	padding: 7px 25px;
@@ -736,12 +736,14 @@ table {
 }
 
 .stadiumChall {
-	width: 150px;
+	min-width: 150px;
+	max-width: 150px;
 	height: 150px;
 	color: white;
 	border-radius: 18px;
 	border: 2px solid #798a91;
 	background-color: #bdd4de;
+	white-space: normal;
 }
 
 .stadiumChall.comp {

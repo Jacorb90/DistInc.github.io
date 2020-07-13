@@ -49,6 +49,7 @@ function ENString(obj) {
 	ret.bestV = new ExpantaNum(ret.bestV).toString()
 	ret.bestA = new ExpantaNum(ret.bestA).toString()
 	ret.bestEnd = new ExpantaNum(ret.bestEnd).toString()
+	ret.bestEP = new ExpantaNum(ret.bestEP).toString()
 	ret.elementary.times = new ExpantaNum(ret.elementary.times).toString();
 	ret.elementary.particles = new ExpantaNum(ret.elementary.particles).toString();
 	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount).toString();
@@ -168,6 +169,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.bestV = new ExpantaNum(ret.bestV)
 	ret.bestA = new ExpantaNum(ret.bestA)
 	ret.bestEnd = new ExpantaNum(ret.bestEnd)
+	ret.bestEP = new ExpantaNum(ret.bestEP)
 	ret.elementary.times = new ExpantaNum(ret.elementary.times);
 	ret.elementary.particles = new ExpantaNum(ret.elementary.particles);
 	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount);

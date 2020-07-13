@@ -97,7 +97,7 @@
 			<button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">
 				Reset your ranks, but <span id="tierDesc" class="based"></span><br />Req: Rank
 				<span id="tierReq" class="based"></span>.
-			</button>
+			</button><br>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -231,9 +231,10 @@
 			Best-Ever Distance: <span id="best"></span><br>
 			Best-Ever Velocity: <span id="bestV"></span><br>
 			Best-Ever Acceleration: <span id="bestA"></span><br>
-			<span id="maxEnd"></span><br><br>
-			<b>Scaling Levels</b><br><br>
+			<span id="maxEnd"></span><br>
+			<span id="maxEP"></span><br><br>
 			<div id="scaleStatDiv" align="center" style="min-width: 100%;">
+				<b>Scaling Levels</b><br><br>
 				<span id="scaledStat">Scaled</span>&nbsp;
 				<span id="superscaledStat">Superscaled</span>&nbsp;
 				<span id="hyperStat">Hyper</span>&nbsp;
@@ -604,7 +605,7 @@
 				<table>
 					<tr>
 						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description">
-							<span class="spaceon">Spaceon</span><br /><button
+							<div class="spaceon">Spaceon</div><br /><button
 								id="spaceonChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('spaceon')"
@@ -613,7 +614,7 @@
 							><br /><br /><span id="spaceonBtm" class="stadiumDesc"></span>
 						</td>
 						<td id="solarisDiv" class="stadiumChall" tooltip="Solaris Challenge Description">
-							<span class="solaris">Solaris</span><br /><button
+							<div class="solaris">Solaris</div><br /><button
 								id="solarisChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('solaris')"
@@ -622,7 +623,7 @@
 							><br /><br /><span id="solarisBtm" class="stadiumDesc"></span>
 						</td>
 						<td id="infinityDiv" class="stadiumChall" tooltip="Infinity Challenge Description">
-							<span class="infinity">Infinity</span><br /><button
+							<div class="infinity">Infinity</div><br /><button
 								id="infinityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('infinity')"
@@ -631,7 +632,7 @@
 							><br /><br /><span id="infinityBtm" class="stadiumDesc"></span>
 						</td>
 						<td id="eternityDiv" class="stadiumChall" tooltip="Eternity Challenge Description">
-							<span class="eternity">Eternity</span><br /><button
+							<div class="eternity">Eternity</div><br /><button
 								id="eternityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('eternity')"
@@ -640,7 +641,7 @@
 							><br /><br /><span id="eternityBtm" class="stadiumDesc"></span>
 						</td>
 						<td id="realityDiv" class="stadiumChall" tooltip="Reality Challenge Description">
-							<span class="reality">Reality</span><br /><button
+							<div class="reality">Reality</div><br /><button
 								id="realityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('reality')"
@@ -649,7 +650,7 @@
 							><br /><br /><span id="realityBtm" class="stadiumDesc"></span>
 						</td>
 						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description">
-							<span class="drigganiz">Drigganiz</span><br /><button
+							<div class="drigganiz">Drigganiz</div><br /><button
 								id="drigganizChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('drigganiz')"

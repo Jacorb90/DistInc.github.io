@@ -610,10 +610,12 @@ function updateHTML() {
 		tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
 		tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
 		tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
+		tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
 		let v = false
 		for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 			let name = Object.keys(SCALING_STARTS)[i]
 			let tt = ""
+			if (name=="hyper") tt = "Note: Hyper scaling cannot go below 50% strength :)\n"
 			for (let r=0;r<Object.keys(SCALING_RES).length;r++) { // NESTED LOOP, REMOVE TO REDUCE LAG
 				let func = Object.values(SCALING_RES)[r]
 				let key = Object.keys(SCALING_RES)[r]
@@ -621,8 +623,10 @@ function updateHTML() {
 				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!player.modes.includes("extreme"))) continue
 				if (amt.gte(tmp.scalings[name][key])) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(tmp.scalingPower[name][key].times(100))+"%): Starts at "+showNum(tmp.scalings[name][key])+"\n"
 			}
-			tmp.el[name+"Stat"].changeStyle("visibility", tt==""?"hidden":"visible")
-			if (tt!="") v = true
+			let blank = ""
+			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
+			tmp.el[name+"Stat"].changeStyle("visibility", tt==blank?"hidden":"visible")
+			if (tt!=blank) v = true
 			tmp.el[name+"Stat"].setAttr("widetooltip", tt)
 		}
 		tmp.el.scaleStatDiv.changeStyle("visibility", v?"visible":"hidden")
@@ -634,7 +638,7 @@ function updateHTML() {
 		tmp.el.elmReset.setHTML(
 			"Reset all previous progress to gain <span class='eltxt'>" +
 				showNum(tmp.elm.layer.gain) +
-				"</span> Elementary Particles."
+				"</span> Elementary Particles."+(tmp.elm.layer.gain.gte(tmp.elm.softcap)?"<span class='sc'>(softcapped)</span>":"")
 		);
 		tmp.el.elmReset.setClasses({ btn: true, locked: !tmp.elm.can, elm: tmp.elm.can });
 		tmp.el.elmt.setTxt(showNum(player.elementary.times));

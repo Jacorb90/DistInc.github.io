@@ -203,8 +203,8 @@ function updateAfterTick() {
 		saveTimer = 0;
 	}
 	if (tmp.modes.absurd.active && !reloaded) {
-		gameWindow.resizeTo(Math.random() * 400, Math.random() * 400);
-		gameWindow.moveTo(Math.random() * 1000, Math.random() * 200);
+		window.resizeTo(Math.random() * 400, Math.random() * 400);
+		window.moveTo(Math.random() * 1000, Math.random() * 200);
 		const bufhiesibvfib = document.body.querySelectorAll("*");
 		for (const i in bufhiesibvfib)
 			if (bufhiesibvfib[i].style !== undefined) {
