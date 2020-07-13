@@ -798,6 +798,18 @@ function updateHTML() {
 				tmp.el.theoriverse.setTxt(player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
 				tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
 			}
+			if (thTab=="ss") {
+				tmp.el.ssUnl.setDisplay(!player.elementary.theory.supersymmetry.unl)
+				tmp.el.ssDiv.setDisplay(player.elementary.theory.supersymmetry.unl)
+				for (let i=0;i<4;i++) {
+					let type = ["squark","slepton","neutralino","chargino"][i]
+					tmp.el[type+"s"].setTxt(showNum(player.elementary.theory.supersymmetry[type+"s"]))
+					tmp.el[type+"Gain"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss")))
+					tmp.el[type+"Eff"].setTxt(showNum(tmp.elm.theory.ss[type+"Eff"]))
+				}
+				tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength))
+				tmp.el.waveEff.setTxt(showNum(tmp.elm.theory.ss.waveEff))
+			}
 		}
 	}
 

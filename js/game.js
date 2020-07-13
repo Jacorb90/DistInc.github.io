@@ -107,6 +107,12 @@ function tickWithoutTS(diff) {
 		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(player.elementary.bosons.scalar.higgs.amount).plus(
 			tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar").times(diff)
 		);
+		if (player.elementary.theory.supersymmetry.unl) {
+			for (let i=0;i<4;i++) {
+				let type = ["squark", "slepton", "neutralino", "chargino"][i]
+				player.elementary.theory.supersymmetry[type+"s"] = player.elementary.theory.supersymmetry[type+"s"].plus(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss").times(diff))
+			}
+		}
 	}
 }
 

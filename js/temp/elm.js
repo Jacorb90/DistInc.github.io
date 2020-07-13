@@ -13,6 +13,10 @@ function updateTempElementary() {
 		tmp.lu3 = tmp.elm.bos.photonEff(3)
 		tmp.lu4 = tmp.elm.bos.photonEff(4)
 		tmp.thGain = tmp.elm.theory.gain
+		tmp.sqEff = tmp.elm.theory.ss.squarkEff
+		tmp.slEff = tmp.elm.theory.ss.sleptonEff
+		tmp.neuEff = tmp.elm.theory.ss.neutralinoEff
+		tmp.chEff = tmp.elm.theory.ss.charginoEff
 	}
 
 	// Elementary Layer
@@ -38,7 +42,7 @@ function updateTempElementary() {
 	tmp.elm.doGain = function () {
 		// Gains
 		if (player.options.elc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
-		if (player.elementary.theory.points) {
+		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
 			player.elementary.theory.depth = player.elementary.theory.depth.plus(1)
 			player.elementary.theory.active = false
@@ -127,6 +131,7 @@ function updateTempElementary() {
 		.times((tmp.psiEff ? tmp.psiEff : new ExpantaNum(0)).max(1));
 	if (tmp.glu2) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.glu2.max(1));
 	if (tmp.higgs031) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.higgs031)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.sqEff)
 	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor();
 	if (tmp.elm.ferm.quarkRewards.gte(10)) tmp.elm.ferm.quarkRewards = tmp.elm.ferm.quarkRewards.sqrt().times(Math.sqrt(10))
 	tmp.elm.ferm.quarkName = function (noExp = false) {
@@ -183,6 +188,7 @@ function updateTempElementary() {
 		.times(tmp.elm.ferm.quarkR("top").max(1));
 	if (tmp.glu2) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.glu2.max(1));
 	if (tmp.higgs031) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.higgs031)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.slEff)
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor();
 	if (tmp.elm.ferm.leptonRewards.gte(7)) tmp.elm.ferm.leptonRewards = tmp.elm.ferm.leptonRewards.sqrt().times(Math.sqrt(7))
 	tmp.elm.ferm.leptonName = function (noExp = false) {
@@ -276,6 +282,7 @@ function updateTempElementary() {
 	// Photons
 	tmp.elm.bos.photonGain = gaugeSpeed;
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff)
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
@@ -351,6 +358,7 @@ function updateTempElementary() {
 	// Gravitons
 	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75);
 	if (player.inf.upgrades.includes("10;9")) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(100)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(tmp.neuEff)
 	tmp.elm.bos.gravEff = player.elementary.bosons.gauge.gravitons
 		.times(player.elementary.times.plus(1))
 		.plus(1)
@@ -446,11 +454,28 @@ function updateTempElementary() {
 	tmp.elm.theory.updateTabs();
 	
 	// The Theoriverse
-	tmp.elm.theory.nerf = ExpantaNum.pow(0.88, player.elementary.theory.depth.plus(1))
+	tmp.elm.theory.nerf = player.elementary.theory.depth.eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.sqrt())
 	tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active
 	}
 	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth)
+	
+	// Supersymmetry
+	tmp.elm.theory.ss = {}
+	tmp.elm.theory.ss.unl = function() {
+		if (!player.elementary.theory.unl) return
+		if (player.elementary.theory.supersymmetry.unl) return
+		if (player.elementary.theory.points.lt(1)) return
+		player.elementary.theory.points = player.elementary.theory.points.sub(1)
+		player.elementary.theory.supersymmetry.unl = true
+	}
+	for (let i=0;i<4;i++) {
+		let type = ["squark", "slepton", "neutralino", "chargino"][i]
+		tmp.elm.theory.ss[type+"Gain"] = new ExpantaNum((4-i)/4)
+		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
+	}
+	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
+	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
 }

@@ -133,4 +133,7 @@ const TH_TABS = {
 	tv: function () {
 		return true;
 	},
+	ss: function () {
+		return true
+	},
 };

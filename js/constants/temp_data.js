@@ -176,7 +176,23 @@ const TMP_DATA = {
 		"maxEP",
 		"scaleStatDiv",
 		"theoriverse",
-		"thp"
+		"thp",
+		"ssUnl",
+		"ssDiv",
+		"squarks",
+		"squarkGain",
+		"squarkEff",
+		"sleptons",
+		"sleptonGain",
+		"sleptonEff",
+		"neutralinos",
+		"neutralinoGain",
+		"neutralinoEff",
+		"charginos",
+		"charginoGain",
+		"charginoEff",
+		"wavelength",
+		"waveEff"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

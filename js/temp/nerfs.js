@@ -158,8 +158,9 @@ function updateTempNerfs() {
 			type == "demonicSouls" ||
 			type == "derv" ||
 			preinf;
-		let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar";
+		let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss";
 		let exp = new ExpantaNum(1);
+		if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10);
 		if (player.inf.pantheon.purge.active && type == "vel") exp = exp.div(3);
 		if (player.elementary.theory.active && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
