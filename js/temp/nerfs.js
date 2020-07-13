@@ -156,8 +156,7 @@ function updateTempNerfs() {
 			type == "ascension" ||
 			type == "heavenlyChips" ||
 			type == "demonicSouls" ||
-			type == "derv" ||
-			preinf;
+			type == "derv" || preinf;
 		let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss";
 		let exp = new ExpantaNum(1);
 		if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))

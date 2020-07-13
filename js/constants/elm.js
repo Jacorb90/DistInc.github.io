@@ -136,4 +136,18 @@ const TH_TABS = {
 	ss: function () {
 		return true
 	},
+	tree: function() {
+		return player.elementary.theory.supersymmetry.unl
+	},
 };
+
+const TREE_UPGS = {
+	1: {
+		cost: function(bought) { return bought.plus(1) },
+		cap: new ExpantaNum(100),
+		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
+		effect: function(bought) { return player.elementary.bosons.scalar.higgs.amount.times(bought).plus(1).pow(0.1) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+}
+const TREE_AMT = Object.keys(TREE_UPGS).length

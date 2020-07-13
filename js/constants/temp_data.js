@@ -192,7 +192,10 @@ const TMP_DATA = {
 		"charginoGain",
 		"charginoEff",
 		"wavelength",
-		"waveEff"
+		"waveEff",
+		"treeUnl",
+		"treeDiv",
+		"treeRespec"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -261,3 +264,4 @@ for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
 for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 	TMP_DATA.ELS.push(Object.keys(SCALING_STARTS)[i]+"Stat")
 }
+for (let i=1;i<=TREE_AMT;i++) TMP_DATA.ELS.push("tree"+i)

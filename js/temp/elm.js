@@ -131,7 +131,7 @@ function updateTempElementary() {
 		.times((tmp.psiEff ? tmp.psiEff : new ExpantaNum(0)).max(1));
 	if (tmp.glu2) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.glu2.max(1));
 	if (tmp.higgs031) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.higgs031)
-	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.sqEff)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.sqEff||1)
 	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor();
 	if (tmp.elm.ferm.quarkRewards.gte(10)) tmp.elm.ferm.quarkRewards = tmp.elm.ferm.quarkRewards.sqrt().times(Math.sqrt(10))
 	tmp.elm.ferm.quarkName = function (noExp = false) {
@@ -188,7 +188,7 @@ function updateTempElementary() {
 		.times(tmp.elm.ferm.quarkR("top").max(1));
 	if (tmp.glu2) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.glu2.max(1));
 	if (tmp.higgs031) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.higgs031)
-	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.slEff)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.slEff||1)
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor();
 	if (tmp.elm.ferm.leptonRewards.gte(7)) tmp.elm.ferm.leptonRewards = tmp.elm.ferm.leptonRewards.sqrt().times(Math.sqrt(7))
 	tmp.elm.ferm.leptonName = function (noExp = false) {
@@ -282,7 +282,7 @@ function updateTempElementary() {
 	// Photons
 	tmp.elm.bos.photonGain = gaugeSpeed;
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
-	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
@@ -358,7 +358,7 @@ function updateTempElementary() {
 	// Gravitons
 	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75);
 	if (player.inf.upgrades.includes("10;9")) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(100)
-	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(tmp.neuEff)
+	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(tmp.neuEff||1)
 	tmp.elm.bos.gravEff = player.elementary.bosons.gauge.gravitons
 		.times(player.elementary.times.plus(1))
 		.plus(1)
@@ -474,8 +474,44 @@ function updateTempElementary() {
 	for (let i=0;i<4;i++) {
 		let type = ["squark", "slepton", "neutralino", "chargino"][i]
 		tmp.elm.theory.ss[type+"Gain"] = new ExpantaNum((4-i)/4)
+		if (player.elementary.theory.tree.unl) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 	}
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
 	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
+	
+	// The Theory Tree
+	tmp.elm.theory.tree = {}
+	tmp.elm.theory.tree.unl = function() {
+		if (!player.elementary.theory.unl) return
+		if (!player.elementary.theory.supersymmetry.unl) return
+		if (player.elementary.theory.tree.unl) return
+		if (player.elementary.theory.points.lt(1)) return
+		player.elementary.theory.points = player.elementary.theory.points.sub(1)
+		player.elementary.theory.tree.unl = true
+	}
+	tmp.elm.theory.tree.bought = {}
+	for (let i=1;i<=TREE_AMT;i++) tmp.elm.theory.tree.bought[i] = new ExpantaNum(player.elementary.theory.tree.upgrades[i]||0)
+	tmp.elm.theory.tree.buy = function(x) {
+		if (!player.elementary.theory.unl) return
+		if (!player.elementary.theory.tree.unl) return
+		let bought = tmp.elm.theory.tree.bought[x]
+		if (bought.gte(TREE_UPGS[x].cap)) return
+		let cost = TREE_UPGS[x].cost(bought)
+		if (player.elementary.theory.points.lt(cost)) return
+		player.elementary.theory.points = player.elementary.theory.points.sub(cost)
+		player.elementary.theory.tree.spent =player.elementary.theory.tree.spent.plus(cost)
+		player.elementary.theory.tree.upgrades[x] = tmp.elm.theory.tree.bought[x].plus(1)
+	}
+}
+
+function resetTheoryTree() {
+	if (!player.elementary.theory.unl) return
+	if (!player.elementary.theory.tree.unl) return
+	if (player.elementary.theory.tree.spent.eq(0)) return
+	if (!confirm("Are you sure you want to reset your tree to get Theory Points back?")) return
+	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
+	player.elementary.theory.tree.spent = new ExpantaNum(0)
+	player.elementary.theory.tree.upgrades = {}
+	tmp.elm.layer.reset(true)
 }

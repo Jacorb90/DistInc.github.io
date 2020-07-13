@@ -1348,6 +1348,38 @@ table {
 	color: #e66700;
 }
 
+.tree.locked {
+	width: 40px;
+	height: 40px;
+	background-color: grey;
+	border-color: #e66700;
+	font-size: 10px;
+}
+
+.tree.locked:hover {
+	cursor: not-allowed;
+}
+
+.tree.unl {
+	width: 40px;
+	height: 40px;
+	background-color: #fcb377;
+	border-color: #e66700;
+	font-size: 10px;
+}
+
+.tree.unl:hover {
+	cursor: pointer;
+}
+
+.tree.capped {
+	width: 40px;
+	height: 40px;
+	background-color: green;
+	border-color: #e66700;
+	font-size: 10px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

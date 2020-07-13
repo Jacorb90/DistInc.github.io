@@ -1038,6 +1038,11 @@
 									Supersymmetry
 								</button>
 							</td>
+							<td>
+								<button id="treetabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('tree')">
+									The Theory Tree
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1054,6 +1059,16 @@
 						You have <span id="neutralinos" class="thp"></span> Neutralinos (+<span id="neutralinoGain"></span>/sec), translated to a <span id="neutralinoEff" class="thp"></span>x multiplier to Graviton gain.<br><br>
 						You have <span id="charginos" class="thp"></span> Charginos (+<span id="charginoGain"></span>/sec), translated to a <span id="charginoEff" class="thp"></span>x multiplier to Photon gain.<br><br><br><br>
 						Your Supersymmetric Particles have provided you with a Supersymmetric Wave with a length of <span id="wavelength" class="thp"></span>, translated to a <span id="waveEff" class="thp"></span>x multiplier to all pre-Elementary resources.<br><br>
+					</div>
+				</div>
+				<div id="tree" class="theorytab">
+					<br>
+					<button id="treeUnl" class="btn th" onclick="tmp.elm.theory.tree.unl()">Unlock The Theory Tree<br>Cost: 1 Theory Point</button>
+					<div id="treeDiv">
+						<button id="treeRespec" class="btn th" onclick="resetTheoryTree()"></button><br><br>
+						<table><tr>
+							<td><button id="tree1" class="tree locked" onclick="tmp.elm.theory.tree.buy(1)"></button></td>
+						</tr></table>
 					</div>
 				</div>
 			</div>

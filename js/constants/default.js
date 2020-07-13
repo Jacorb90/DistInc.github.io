@@ -163,6 +163,7 @@ const DEFAULT_START = {
 			},
 			tree: {
 				unl: false,
+				spent: new ExpantaNum(0),
 				upgrades: {},
 			},
 			strings: {

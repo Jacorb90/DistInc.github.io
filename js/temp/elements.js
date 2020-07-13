@@ -810,6 +810,16 @@ function updateHTML() {
 				tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength))
 				tmp.el.waveEff.setTxt(showNum(tmp.elm.theory.ss.waveEff))
 			}
+			if (thTab=="tree") {
+				tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
+				tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
+				for (let i=1;i<=TREE_AMT;i++) {
+					tmp.el["tree"+i].setTxt(showNum(tmp.elm.theory.tree.bought[i])+"/"+showNum(TREE_UPGS[i].cap))
+					tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(tmp.elm.theory.tree.bought[i])))
+					tmp.el["tree"+i].setClasses({tree: true, capped: tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap), unl: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))), locked: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i])))})
+				}
+				tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
+			}
 		}
 	}
 

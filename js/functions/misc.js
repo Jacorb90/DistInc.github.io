@@ -116,6 +116,7 @@ function ENString(obj) {
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons).toString();
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos).toString();
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos).toString();
+	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent).toString();
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]).toString();
 	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]).toString();
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled).toString();
@@ -139,6 +140,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives);
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
 	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory)
+	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);
@@ -250,6 +252,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons);
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos);
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos);
+	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent);
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]);
 	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]);
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled);
