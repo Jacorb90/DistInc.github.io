@@ -41,6 +41,10 @@ const NEWS_DATA = {
 	m39: ["If you can see this, get back to playing the game"],
 	m40: ["There is a news ticker entry out there that has apparently tried to rick roll people. So far only they have 1 known victim."],
 	m41: ["What if you wanted to go to heaven, but god said <span class='sc'>(softcapped)</span>"],
+	m42: ["Softcapped: the game"],
+	m43: ['"Playing the game 2.5 times is fun" - Bugged out Ink'],
+	m44: ['"Gaming." - Danny DeVito'],
+	m45: ['"I need a raise" - Ink after wasting his life actually enjoying something'],
 
 	// Distance-based Conditions
 	d1: [
