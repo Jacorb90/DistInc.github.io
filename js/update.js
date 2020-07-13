@@ -35,7 +35,7 @@ function setupHTML() {
 		table += "<tr>";
 		for (let c = 1; c <= ACH_DATA.cols; c++) {
 			let id = r * 10 + c;
-			table += "<td id='ach" + id + "' class='achCont' onmouseover='tmp.ach[" + id + "].select()'>";
+			table += "<td id='ach" + id + "' class='achCont'>";
 			table += "</td>";
 		}
 		table += "</tr>";

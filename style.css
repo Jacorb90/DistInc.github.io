@@ -1288,6 +1288,12 @@ table {
 	vertical-align: middle;
 }
 
+#achDesc {
+	position: sticky; 
+	top: 0px; 
+	max-height: 12px !important;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

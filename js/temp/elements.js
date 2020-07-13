@@ -93,7 +93,7 @@ function updateHTML() {
 
 	// Achievements
 	if (player.tab == "achievements") {
-		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>" + (tmp.selAch == 0 ? "" : tmp.ach[tmp.selAch].desc));
+		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
 		let all = tmp.ga == tmp.ta && !tmp.modes.aau.active;
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
@@ -106,6 +106,7 @@ function updateHTML() {
 					blocked: ACH_DATA.descs[id] === undefined
 				});
 				tmp.el["ach" + id].changeStyle("visibility", getAllAchievements().includes(id) ? "visible" : "hidden");
+				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
 			}
 		}
 	}
