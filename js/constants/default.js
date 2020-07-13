@@ -1,20 +1,27 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.4,
+	version: 1.5,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
-	saveID: Math.floor(Math.random()*9000000000000+1000000000000), // I know this might cause a problem since two save IDs might be the same, but there is a 1 in 10 trillion chance of it happening per save, so whatever
+	saveID: Math.floor(Math.random() * 9000000000000 + 1000000000000), // I know this might cause a problem since two save IDs might be the same, but there is a 1 in 10 trillion chance of it happening per save, so whatever
 	options: {
 		sf: 5,
 		not: "scientific",
 		theme: "normal",
 		name: "Save #",
 		autoSave: true,
+		newst: true,
+		elc: true,
 	},
 	modes: [],
 	time: new Date().getTime(),
 	distance: new ExpantaNum(0),
+	bestDistance: new ExpantaNum(0),
+	bestV: new ExpantaNum(0),
+	bestA: new ExpantaNum(0),
+	bestEnd: new ExpantaNum(0),
+	bestEP: new ExpantaNum(0),
 	velocity: new ExpantaNum(0),
 	rank: new ExpantaNum(1),
 	tier: new ExpantaNum(0),
@@ -25,18 +32,18 @@ const DEFAULT_START = {
 		scraps: new ExpantaNum(0),
 		intelligence: new ExpantaNum(0),
 		robots: {},
-		open: "none",
+		open: "none"
 	},
 	tr: {
 		unl: false,
 		active: false,
 		cubes: new ExpantaNum(0),
-		upgrades: [],
+		upgrades: []
 	},
 	collapse: {
 		unl: false,
 		cadavers: new ExpantaNum(0),
-		lifeEssence: new ExpantaNum(0),
+		lifeEssence: new ExpantaNum(0)
 	},
 	pathogens: {
 		unl: false,
@@ -56,15 +63,15 @@ const DEFAULT_START = {
 			12: new ExpantaNum(0),
 			13: new ExpantaNum(0),
 			14: new ExpantaNum(0),
-			15: new ExpantaNum(0),
-		},
+			15: new ExpantaNum(0)
+		}
 	},
 	dc: {
 		unl: false,
 		matter: new ExpantaNum(0),
 		energy: new ExpantaNum(0),
 		fluid: new ExpantaNum(0),
-		cores: new ExpantaNum(0),
+		cores: new ExpantaNum(0)
 	},
 	inf: {
 		unl: false,
@@ -74,11 +81,11 @@ const DEFAULT_START = {
 		ascension: {
 			time: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			enlightenments: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
-			power: new ExpantaNum(0),
+			power: new ExpantaNum(0)
 		},
 		stadium: {
 			current: "",
-			completions: [],
+			completions: []
 		},
 		pantheon: {
 			gems: new ExpantaNum(0),
@@ -89,14 +96,58 @@ const DEFAULT_START = {
 			purge: {
 				unl: false,
 				active: false,
-				power: new ExpantaNum(0),
-			},
+				power: new ExpantaNum(0)
+			}
 		},
 		derivatives: {
 			unl: false,
 			amts: {},
-			unlocks: new ExpantaNum(0),
-		},
+			unlocks: new ExpantaNum(0)
+		}
 	},
 	automators: {},
-}
+	elementary: {
+		times: new ExpantaNum(0),
+		particles: new ExpantaNum(0),
+		fermions: {
+			amount: new ExpantaNum(0),
+			quarks: {
+				amount: new ExpantaNum(0),
+				type: 1
+			},
+			leptons: {
+				amount: new ExpantaNum(0),
+				type: 1
+			}
+		},
+		bosons: {
+			amount: new ExpantaNum(0),
+			gauge: {
+				amount: new ExpantaNum(0),
+				force: new ExpantaNum(0),
+				photons: {
+					amount: new ExpantaNum(0),
+					upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+				},
+				w: new ExpantaNum(0),
+				z: new ExpantaNum(0),
+				gluons: {
+					r: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] },
+					g: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] },
+					b: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] },
+					ar: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] },
+					ag: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] },
+					ab: { amount: new ExpantaNum(0), upgrades: [new ExpantaNum(0), new ExpantaNum(0)] }
+				},
+				gravitons: new ExpantaNum(0)
+			},
+			scalar: {
+				amount: new ExpantaNum(0),
+				higgs: {
+					amount: new ExpantaNum(0),
+					upgrades: []
+				}
+			}
+		}
+	}
+};

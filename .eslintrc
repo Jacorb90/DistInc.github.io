@@ -1,0 +1,15 @@
+{
+	"extends": ["eslint:recommended"],
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"parserOptions": { "ecmaVersion": 2018 },
+	"rules": {
+		"no-undef": "off",
+		// We can disable unused vars because ESLint
+		// doesn't consider if they are used in HTML
+		// or any other files
+		"no-unused-vars": "off"
+	}
+}

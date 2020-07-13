@@ -1,23 +1,53 @@
 // Infinity
-const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni)
+const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni);
 const INF_UPGS = {
-	rows: 9,
-	cols: 9,
+	rows: 10,
+	cols: 10,
 	rowReqs: {
-		4: function() { return player.inf.endorsements.gte(3) },
-		5: function() { return player.inf.endorsements.gte(6) },
-		6: function() { return player.inf.endorsements.gte(10) },
-		7: function() { return player.inf.endorsements.gte(15) },
-		8: function() { return player.inf.endorsements.gte(21) },
-		9: function() { return player.inf.endorsements.gte(28) },
+		4: function () {
+			return player.inf.endorsements.gte(3);
+		},
+		5: function () {
+			return player.inf.endorsements.gte(6);
+		},
+		6: function () {
+			return player.inf.endorsements.gte(10);
+		},
+		7: function () {
+			return player.inf.endorsements.gte(15);
+		},
+		8: function () {
+			return player.inf.endorsements.gte(21);
+		},
+		9: function () {
+			return player.inf.endorsements.gte(28);
+		},
+		10: function() {
+			return tmp.elm.bos.hasHiggs("4;0;0");
+		},
 	},
 	colReqs: {
-		4: function() { return player.inf.endorsements.gte(3) },
-		5: function() { return player.inf.endorsements.gte(6) },
-		6: function() { return player.inf.endorsements.gte(10) },
-		7: function() { return player.inf.endorsements.gte(15) },
-		8: function() { return player.inf.endorsements.gte(21) },
-		9: function() { return player.inf.endorsements.gte(28) },
+		4: function () {
+			return player.inf.endorsements.gte(3);
+		},
+		5: function () {
+			return player.inf.endorsements.gte(6);
+		},
+		6: function () {
+			return player.inf.endorsements.gte(10);
+		},
+		7: function () {
+			return player.inf.endorsements.gte(15);
+		},
+		8: function () {
+			return player.inf.endorsements.gte(21);
+		},
+		9: function () {
+			return player.inf.endorsements.gte(28);
+		},
+		10: function() {
+			return tmp.elm.bos.hasHiggs("4;0;0");
+		},
 	},
 	costs: {
 		"1;1": new ExpantaNum(40),
@@ -29,6 +59,7 @@ const INF_UPGS = {
 		"1;7": new ExpantaNum(5e19),
 		"1;8": new ExpantaNum(2e23),
 		"1;9": new ExpantaNum(1e35),
+		"1;10": new ExpantaNum(1e75),
 		"2;1": new ExpantaNum(200),
 		"2;2": new ExpantaNum(400),
 		"2;3": new ExpantaNum(8e3),
@@ -38,6 +69,7 @@ const INF_UPGS = {
 		"2;7": new ExpantaNum(1e21),
 		"2;8": new ExpantaNum(2.5e23),
 		"2;9": new ExpantaNum(1.2e35),
+		"2;10": new ExpantaNum(1e115),
 		"3;1": new ExpantaNum(1e3),
 		"3;2": new ExpantaNum(8e3),
 		"3;3": new ExpantaNum(5e4),
@@ -47,6 +79,7 @@ const INF_UPGS = {
 		"3;7": new ExpantaNum(4e21),
 		"3;8": new ExpantaNum(4e23),
 		"3;9": new ExpantaNum(1e39),
+		"3;10": new ExpantaNum(1.2e120),
 		"4;1": new ExpantaNum(1e4),
 		"4;2": new ExpantaNum(5e4),
 		"4;3": new ExpantaNum(1e5),
@@ -56,6 +89,7 @@ const INF_UPGS = {
 		"4;7": new ExpantaNum(7.5e21),
 		"4;8": new ExpantaNum(1e24),
 		"4;9": new ExpantaNum(2e39),
+		"4;10": new ExpantaNum(1.23e123),
 		"5;1": new ExpantaNum(1e7),
 		"5;2": new ExpantaNum(1e8),
 		"5;3": new ExpantaNum(2.5e7),
@@ -65,6 +99,7 @@ const INF_UPGS = {
 		"5;7": new ExpantaNum(1.5e22),
 		"5;8": new ExpantaNum(2.5e24),
 		"5;9": new ExpantaNum(2.5e39),
+		"5;10": new ExpantaNum(1e138),
 		"6;1": new ExpantaNum(2e10),
 		"6;2": new ExpantaNum(6e10),
 		"6;3": new ExpantaNum(1.8e11),
@@ -74,6 +109,7 @@ const INF_UPGS = {
 		"6;7": new ExpantaNum(2e22),
 		"6;8": new ExpantaNum(6e24),
 		"6;9": new ExpantaNum(3e39),
+		"6;10": new ExpantaNum(1e142),
 		"7;1": new ExpantaNum(1e13),
 		"7;2": new ExpantaNum(2e13),
 		"7;3": new ExpantaNum(4e13),
@@ -83,6 +119,7 @@ const INF_UPGS = {
 		"7;7": new ExpantaNum(5e22),
 		"7;8": new ExpantaNum(1e25),
 		"7;9": new ExpantaNum(5e43),
+		"7;10": new ExpantaNum(1e143),
 		"8;1": new ExpantaNum(1.5e26),
 		"8;2": new ExpantaNum(2e26),
 		"8;3": new ExpantaNum(3.2e26),
@@ -92,6 +129,7 @@ const INF_UPGS = {
 		"8;7": new ExpantaNum(7.5e27),
 		"8;8": new ExpantaNum(4e28),
 		"8;9": new ExpantaNum(1e44),
+		"8;10": new ExpantaNum(1e147),
 		"9;1": new ExpantaNum(2.5e30),
 		"9;2": new ExpantaNum(3e31),
 		"9;3": new ExpantaNum(6.4e31),
@@ -101,6 +139,17 @@ const INF_UPGS = {
 		"9;7": new ExpantaNum(1e34),
 		"9;8": new ExpantaNum(1.5e34),
 		"9;9": new ExpantaNum(2e44),
+		"9;10": new ExpantaNum(1e149),
+		"10;1": new ExpantaNum(4e76),
+		"10;2": new ExpantaNum(1.5e118),
+		"10;3": new ExpantaNum(4e119),
+		"10;4": new ExpantaNum(1.22e122),
+		"10;5": new ExpantaNum(1e140),
+		"10;6": new ExpantaNum(1e141),
+		"10;7": new ExpantaNum(1e143),
+		"10;8": new ExpantaNum(1.2e143),
+		"10;9": new ExpantaNum(1e158),
+		"10;10": new ExpantaNum(1.5e161),
 	},
 	descs: {
 		"1;1": "Ranks & Tiers boost Time Speed.",
@@ -109,18 +158,20 @@ const INF_UPGS = {
 		"1;4": "Start with all Time Reversal upgrades on reset.",
 		"1;5": "Scaled Tier scaling is 20% weaker.",
 		"1;6": "Scaled Rank & Tier scaling starts 2 later.",
-		"1;7": "Before any other boosts, Knowledge gain is raised to the power of 1.25.", 
+		"1;7": "Before any other boosts, Knowledge gain is raised to the power of 1.25.",
 		"1;8": "Time Reversal Upgrade 11 is stronger based on your Accelerational Energy.",
 		"1;9": "inf9;7 is stronger based on your Tier.",
+		"1;10": "Hyper Tier scaling is weaker based on your Knowledge.",
 		"2;1": "Knowledge boosts the Rocket effect.",
 		"2;2": "Time Speed boosts Knowledge gain at a reduced rate.",
 		"2;3": "Knowledge & Time Cubes synergize with one another.",
 		"2;4": "Gain 1% of Cadaver gain every second.",
 		"2;5": "Superscaled Rank scaling is 5% weaker.",
 		"2;6": "Superscaled Rocket Fuel scaling starts 5 later.",
-		"2;7": "Scaled Tier scaling is weaker based on your Stadium Challenge completions.", 
+		"2;7": "Scaled Tier scaling is weaker based on your Stadium Challenge completions.",
 		"2;8": "Base Knowledge gain is boosted by Heavenly Chips & Demonic Souls.",
 		"2;9": "Unlock 5 new Pathogen Upgrades.",
+		"2;10": "Superscaled Dark Core scaling starts 5 later, triple Base Knowledge gain, & before any other boosts, Knowledge gain is raised to the power of 1.15.",
 		"3;1": "Start with all Collapse Milestones on reset.",
 		"3;2": "Knowledge & Cadavers synergize with one another.",
 		"3;3": "Pathogen Upgrades are 10% stronger.",
@@ -130,42 +181,48 @@ const INF_UPGS = {
 		"3;7": "Enlightenments boost Ascension Power gain.",
 		"3;8": "Pathogen Upgrades 6-10 use better formulas.",
 		"3;9": "Ascension Power gain is boosted by your Rocket Fuel.",
-		"4;1": "Dark Flow is twice as fast.", 
+		"3;10": "Robot Intervals boost Heavenly Chip gain.",
+		"4;1": "Dark Flow is twice as fast.",
 		"4;2": "Unlock Auto-Dark Cores.",
-		"4;3": "Scaled Rank scaling is 50% weaker.", 
+		"4;3": "Scaled Rank scaling is 50% weaker.",
 		"4;4": "Inf2;1, inf2;2, inf2;3, & inf3;2 are brought back if repealed.",
 		"4;5": "Scaled Pathogen Upgrade scaling starts 2 later.",
 		"4;6": "Dark Flow is twice as fast.",
-		"4;7": "Time Speed boosts Acceleration & Maximum Velocity.", 
+		"4;7": "Time Speed boosts Acceleration & Maximum Velocity.",
 		"4;8": "Life Essence multiplies Rocket gain.",
 		"4;9": "Ranks & Tiers do not reset Derivatives beyond Acceleration.",
-		"5;1": "Dark Flow is twice as fast.", 
-		"5;2": "Pathogen Upgrades are 5% stronger.", 
-		"5;3": "Gain 10% of Life Essence gain every second.", 
-		"5;4": "Cadavers boost Knowledge gain.", 
+		"4;10": "'The Universe Doesnt Exist' reward is stronger based on your Elementaries.",
+		"5;1": "Dark Flow is twice as fast.",
+		"5;2": "Pathogen Upgrades are 5% stronger.",
+		"5;3": "Gain 10% of Life Essence gain every second.",
+		"5;4": "Cadavers boost Knowledge gain.",
 		"5;5": "Knowledge & Endorsements boost Dark Flow.",
-		"5;6": "Perks last longer based on your Knowledge.", 
+		"5;6": "Perks last longer based on your Knowledge.",
 		"5;7": "Superscaled Tier scaling starts later based on your Maximum Velocity.",
 		"5;8": "Rockets also boost Accelerational Energy.",
 		"5;9": "The Spectral Gem requirement starts earlier.",
+		"5;10": "Higgs Bosons & Pathogen gain are synergized.",
 		"6;1": "Scaled Rocket Fuel scaling starts 10 later.",
-		"6;2": "Superscaled Rank scaling starts 5 later.", 
+		"6;2": "Superscaled Rank scaling starts 5 later.",
 		"6;3": "Pathogen Upgrades are 2.5% stronger.",
-		"6;4": "Dark Cores scale 2 later.", 
-		"6;5": "Knowledge boosts Ascension Power gain.", 
+		"6;4": "Dark Cores scale 2 later.",
+		"6;5": "Knowledge boosts Ascension Power gain.",
 		"6;6": "Maximum Velocity boosts Acceleration, and you can activate 2 perks at once.",
 		"6;7": "Maximum Velocity is replaced by Velocital Energy.",
 		"6;8": "Dark Matter & Dark Energy use better formulas.",
 		"6;9": "Multipliers to Derivatives beyond Velocity are raised to the power of 4.",
+		"6;10": "The Rocket effect exponent is multiplied by 16.",
 		"7;1": "Stadium Challenge completions boost perks & make them last longer.",
 		"7;2": "Ascension Power & Dark Flow have synergy.",
 		"7;3": "Start Infinities with Dark Circles unlocked.",
 		"7;4": "inf2;3 & inf3;2 are stronger based on your Pathogens.",
 		"7;5": "The fifth Pathogen Upgrade boosts itself.",
 		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
-		"7;7": "Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
+		"7;7":
+			"Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
 		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
 		"7;9": "Hyper Rank scaling is 2% weaker.",
+		"7;10": "The W Boson boost to Z Boson gain uses a better formula.",
 		"8;1": "The Dark Circle cycle reduction uses a much weaker formula.",
 		"8;2": "Accelerational Energy & Purge Power gain are synergized.",
 		"8;3": "Heavenly Chip & Demonic Soul gain are boosted by Endorsements.",
@@ -175,6 +232,7 @@ const INF_UPGS = {
 		"8;7": "Scaled Pathogen Upgrade scaling is 84% weaker.",
 		"8;8": "inf8;1 & inf3;8 are stronger based on your Purge Power.",
 		"8;9": "Ascension Power gain is 10x faster.",
+		"8;10": "Gauge Force uses a better formula to get its reward.",
 		"9;1": "Jerk boosts Accelerational Energy & Knowledge gain.",
 		"9;2": "Derivative Shifts & Boosts add to the Rocket effect.",
 		"9;3": "Angels & Demons are synergized, and Scaled Endorsement scaling starts 1 later.",
@@ -184,6 +242,17 @@ const INF_UPGS = {
 		"9;7": "Derivative Boosts give a better boost to Derivatives based on your Rank.",
 		"9;8": "Rocket gain is multiplied by (n+1)^0.1, where n is your Time Cubes (softcaps at higher values).",
 		"9;9": "Knowledge gain is multiplied by (n+1)^0.2, where n is your Ascension Power.",
+		"9;10": "Pathogen Upgrades are stronger based on your Scalar Bosons.",
+		"10;1": "Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces Snap at a reduced rate (unaffected by Time Speed).",
+		"10;2": "Velocital Energy boosts your Accelerational Energy at a reduced rate, and inf7;7's boost to Velocital Energy uses a better formula.",
+		"10;3": "The Rocket effect also affects Time Speed.",
+		"10;4": "Robot Magnitudes boost Demonic Soul gain, and the Purge Power effect exponent is halved.",
+		"10;5": "Quarks boost Dark Flow & Pathogen gain.",
+		"10;6": "Leptons make Perks last longer.",
+		"10;7": "Hyper Rocket Fuel scaling starts 20 later.",
+		"10;8": "The Perk Accelerator's boost to Perk Power uses a better formula.",
+		"10;9": "Gravitons are gained 100x as fast.",
+		"10;10": "Dark Flow & Pathogen gain are increased by 90% for every Rank you have & by 750% for every Tier you have.",
 	},
 	reqs: {
 		"1;2": ["1;1"],
@@ -194,6 +263,7 @@ const INF_UPGS = {
 		"1;7": ["6;6"],
 		"1;8": ["7;7"],
 		"1;9": ["9;7"],
+		"1;10": ["9;9"],
 		"2;1": ["1;1"],
 		"2;2": ["1;2", "2;1"],
 		"2;3": ["2;2", "1;3"],
@@ -203,6 +273,7 @@ const INF_UPGS = {
 		"2;7": ["1;7"],
 		"2;8": ["1;8"],
 		"2;9": ["1;9"],
+		"2;10": ["9;9"],
 		"3;1": ["2;1"],
 		"3;2": ["2;2", "3;1"],
 		"3;3": ["2;3", "3;2"],
@@ -212,6 +283,7 @@ const INF_UPGS = {
 		"3;7": ["2;7"],
 		"3;8": ["2;8"],
 		"3;9": ["2;9"],
+		"3;10": ["9;9"],
 		"4;1": ["3;2"],
 		"4;2": ["4;1"],
 		"4;3": ["4;2"],
@@ -221,15 +293,17 @@ const INF_UPGS = {
 		"4;7": ["3;7"],
 		"4;8": ["3;8"],
 		"4;9": ["3;9"],
+		"4;10": ["9;9"],
 		"5;1": ["4;4"],
 		"5;2": ["4;4"],
 		"5;3": ["4;4"],
 		"5;4": ["4;4"],
-		"5;5": ["4;5", "5;4",],
+		"5;5": ["4;5", "5;4"],
 		"5;6": ["4;6"],
 		"5;7": ["4;7"],
 		"5;8": ["4;8"],
 		"5;9": ["4;9"],
+		"5;10": ["9;9"],
 		"6;1": ["4;4"],
 		"6;2": ["4;4"],
 		"6;3": ["4;4"],
@@ -239,6 +313,7 @@ const INF_UPGS = {
 		"6;7": ["5;7"],
 		"6;8": ["5;8"],
 		"6;9": ["5;9"],
+		"6;10": ["9;9"],
 		"7;1": ["6;6"],
 		"7;2": ["7;1"],
 		"7;3": ["7;2"],
@@ -248,6 +323,7 @@ const INF_UPGS = {
 		"7;7": ["6;7", "7;6"],
 		"7;8": ["6;8"],
 		"7;9": ["6;9"],
+		"7;10": ["9;9"],
 		"8;1": ["7;7"],
 		"8;2": ["8;1"],
 		"8;3": ["8;2"],
@@ -257,6 +333,7 @@ const INF_UPGS = {
 		"8;7": ["8;6"],
 		"8;8": ["7;8", "8;7"],
 		"8;9": ["7;9"],
+		"8;10": ["9;9"],
 		"9;1": ["8;8"],
 		"9;2": ["9;1"],
 		"9;3": ["9;2"],
@@ -266,6 +343,17 @@ const INF_UPGS = {
 		"9;7": ["9;6"],
 		"9;8": ["9;7"],
 		"9;9": ["8;9", "9;8"],
+		"9;10": ["9;9"],
+		"10;1": ["9;9"],
+		"10;2": ["9;9"],
+		"10;3": ["9;9"],
+		"10;4": ["9;9"],
+		"10;5": ["9;9"],
+		"10;6": ["9;9"],
+		"10;7": ["9;9"],
+		"10;8": ["9;9"],
+		"10;9": ["9;9"],
+		"10;10": ["10;9", "9;10"],
 	},
 	repeals: {
 		"2;2": ["1;2", "2;1"],
@@ -274,7 +362,7 @@ const INF_UPGS = {
 		"3;2": ["2;1"],
 		"3;3": ["2;2"],
 		"4;2": ["2;3"],
-		"5;5": ["4;1", "5;1"],
+		"5;5": ["4;1", "5;1"]
 	},
 	repealed: {
 		"1;2": ["2;2"],
@@ -283,251 +371,367 @@ const INF_UPGS = {
 		"2;3": ["4;2"],
 		"3;2": ["2;3", "2;4"],
 		"4;1": ["5;5"],
-		"5;1": ["5;5"],
+		"5;1": ["5;5"]
 	},
 	effects: {
-		"1;1": function() {
-			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1)
-			let total = player.rank.plus(player.tier.pow(2))
-			let exp = new ExpantaNum(3)
-			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon())
-			let ret = total.plus(1).pow(exp)
+		"1;1": function () {
+			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1);
+			let total = player.rank.plus(player.tier.pow(2));
+			let exp = new ExpantaNum(3);
+			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon());
+			let ret = total.plus(1).pow(exp);
+			return ret;
+		},
+		"1;2": function () {
+			let exp = player.inf.knowledge.plus(1).slog(2);
+			let ret = player.inf.knowledge.plus(1).log10().plus(1).pow(exp);
+			return ret;
+		},
+		"1;8": function () {
+			let e = tmp.accEn ? tmp.accEn : new ExpantaNum(0);
+			let ret = e.plus(1).pow(0.08);
+			if (ret.gte(2)) ret = ret.logBase(2).times(2).min(ret);
+			if (ret.gte(14)) ret = ret.sub(4).slog(10).plus(13).min(ret);
+			return ret;
+		},
+		"1;9": function () {
+			let ret = player.tier.sqrt().div(2).plus(1);
+			return ret;
+		},
+		"1;10": function() {
+			let ret = player.inf.knowledge.plus(1).times(10).slog(10).div(10)
+			if (ret.gte(0.9)) ret = ret.div(10).plus(0.89)
+			if (ret.gte(0.975)) ret = new ExpantaNum(0.975)
 			return ret
 		},
-		"1;2": function() {
-			let exp = player.inf.knowledge.plus(1).slog(2)
-			let ret = player.inf.knowledge.plus(1).log10().plus(1).pow(exp)
-			return ret
+		"2;1": function () {
+			let ret = player.inf.knowledge.plus(1).slog(10).sqrt();
+			if (ret.gte(1.1)) ret = ret.pow(0.001).times(ExpantaNum.pow(1.1, 0.999));
+			return ret.max(1);
 		},
-		"1;8": function() {
-			let e = tmp.accEn?tmp.accEn:new ExpantaNum(0)
-			let ret = e.plus(1).pow(0.08)
-			if (ret.gte(2)) ret = ret.logBase(2).times(2).min(ret)
-			if (ret.gte(14)) ret = ret.sub(4).slog(10).plus(13).min(ret)
-			return ret
+		"2;2": function () {
+			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1) : new ExpantaNum(1);
+			return ret;
 		},
-		"1;9": function() {
-			let ret = player.tier.sqrt().div(2).plus(1)
-			return ret
-		},
-		"2;1": function() {
-			let ret = player.inf.knowledge.plus(1).slog(10).sqrt()
-			if (ret.gte(1.1)) ret = ret.pow(0.001).times(ExpantaNum.pow(1.1, 0.999))
-			return ret.max(1)
-		},
-		"2;2": function() {
-			let ret = tmp.timeSpeed?tmp.timeSpeed.log10().plus(1):new ExpantaNum(1)
-			return ret
-		},
-		"2;3": function() {
-			let exp = new ExpantaNum(1)
-			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]())
+		"2;3": function () {
+			let exp = new ExpantaNum(1);
+			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
 				knowledge: player.tr.cubes.plus(1).slog(10).plus(1).log10().times(exp),
-				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp),
-			}
+				cubes: player.inf.knowledge.plus(1).slog(2).plus(1).log10().times(exp)
+			};
 			return {
 				knowledge: player.tr.cubes.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
-				cubes: player.inf.knowledge.plus(1).pow(pow.cubes),
-			}
+				cubes: player.inf.knowledge.plus(1).pow(pow.cubes)
+			};
 		},
-		"2;7": function() {
-			let ret = ExpantaNum.pow(player.inf.stadium.completions.length, 0.8).div(4)
-			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
-			return ret
+		"2;7": function () {
+			let ret = ExpantaNum.pow(player.inf.stadium.completions.length, 0.8).div(4);
+			if (ret.gte(0.9)) ret = new ExpantaNum(0.9);
+			return ret;
 		},
-		"2;8": function() {
-			let v = [player.inf.pantheon.heavenlyChips, player.inf.pantheon.demonicSouls]
-			let ret = v[0].plus(1).times(v[1].plus(1)).log10().plus(1)
-			return ret
+		"2;8": function () {
+			let v = [player.inf.pantheon.heavenlyChips, player.inf.pantheon.demonicSouls];
+			let ret = v[0].plus(1).times(v[1].plus(1)).log10().plus(1);
+			return ret;
 		},
-		"3;2": function() {
-			let exp = new ExpantaNum(1)
-			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]())
+		"3;2": function () {
+			let exp = new ExpantaNum(1);
+			if (tmp.inf) if (tmp.inf.upgs.has("7;4")) exp = exp.times(INF_UPGS.effects["7;4"]());
 			let pow = {
 				knowledge: player.collapse.cadavers.plus(1).slog(2).plus(1).log10().times(exp),
-				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp),
-			}
+				cadavers: player.inf.knowledge.plus(1).slog(10).plus(1).log10().times(exp)
+			};
 			return {
 				knowledge: player.collapse.cadavers.plus(1).log10().plus(1).log10().plus(1).pow(pow.knowledge),
-				cadavers: player.inf.knowledge.plus(1).pow(pow.cadavers),
-			}
+				cadavers: player.inf.knowledge.plus(1).pow(pow.cadavers)
+			};
 		},
-		"3;7": function() {
-			let enl = player.inf.ascension.enlightenments.reduce((x,y) => ExpantaNum.add(x, y))
-			let ret = ExpantaNum.pow(1.5, enl.sqrt())
+		"3;7": function () {
+			let enl = player.inf.ascension.enlightenments.reduce((x, y) => ExpantaNum.add(x, y));
+			let ret = ExpantaNum.pow(1.5, enl.sqrt());
+			return ret;
+		},
+		"3;9": function () {
+			let ret = ExpantaNum.pow(1.01, player.rf);
+			return ret;
+		},
+		"3;10": function() {
+			if (!tmp.auto) return new ExpantaNum(1)
+			let f1 = tmp.auto.rankbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
+			let f2 = tmp.auto.tierbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
+			let f3 = tmp.auto.fuelbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).sqrt()
+			return f1.times(f2).times(f3).cbrt()
+		},
+		"4;7": function () {
+			let speed = tmp.timeSpeed;
+			let ret = speed.pow(0.3);
+			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
+			return ret;
+		},
+		"4;10": function() {
+			let times = new ExpantaNum(player.elementary.times)
+			if (times.gte(100)) times = times.sqrt().times(Math.sqrt(100))
+			let ret = times.plus(1).log10().plus(1).pow(5)
 			return ret
 		},
-		"3;9": function() {
-			let ret = ExpantaNum.pow(1.01, player.rf)
-			return ret
+		"5;4": function () {
+			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt();
+			return ret;
 		},
-		"4;7": function() {
-			let speed = tmp.timeSpeed
-			let ret = speed.pow(0.3)
-			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000/3))
-			return ret
+		"5;5": function () {
+			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1);
+			let exp = player.inf.endorsements.sqrt();
+			let ret = base.pow(exp);
+			return ret;
 		},
-		"5;4": function() {
-			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt()
-			return ret
+		"5;6": function () {
+			let base = player.inf.knowledge.div(1e9).plus(1).slog(10).plus(1);
+			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).plus(1);
+			let ret = base.pow(exp);
+			if (ret.lt(9)) ret = ret.sqrt()
+			else ret = ret.div(3)
+			return ret;
 		},
-		"5;5": function() {
-			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1)
-			let exp = player.inf.endorsements.sqrt()
-			let ret = base.pow(exp)
-			return ret
+		"5;7": function () {
+			let mv = tmp.maxVel ? tmp.maxVel : new ExpantaNum(0);
+			let ret = mv.plus(1).slog(10);
+			if (ret.gte(4)) ret = ret.sqrt().times(2);
+			return ret;
 		},
-		"5;6": function() {
-			let base = player.inf.knowledge.div(1e9).plus(1).slog(10).plus(1)
-			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).plus(1)
-			let ret = base.pow(exp)
-			return ret
+		"5;10": function() {
+			let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).pow(2)
+			let ret2 = player.pathogens.amount.plus(1).log10().plus(1)
+			return {pth: ret, hb: ret2}
 		},
-		"5;7": function() {
-			let mv = tmp.maxVel?tmp.maxVel:new ExpantaNum(0)
-			let ret = mv.plus(1).slog(10)
-			if (ret.gte(4)) ret = ret.sqrt().times(2)
-			return ret
+		"6;5": function () {
+			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1);
+			return ret;
 		},
-		"6;5": function() {
-			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1)
-			return ret
+		"6;6": function () {
+			let ret = tmp.maxVel.plus(1).pow(0.075);
+			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
+			return ret;
 		},
-		"6;6": function() {
-			let ret = tmp.maxVel.plus(1).pow(0.075)
-			if (ret.gte("1e1000")) ret = ret.log10().pow(1000/3)
-			return ret
+		"7;1": function () {
+			let ret = ExpantaNum.mul(0.2, player.inf.stadium.completions.length).add(1);
+			return ret;
 		},
-		"7;1": function() {
-			let ret = ExpantaNum.mul(0.2, player.inf.stadium.completions.length).add(1)
-			return ret
-		},
-		"7;2": function() {
-			let pow = player.inf.ascension.power
-			let flow = tmp.dc?tmp.dc.flow:new ExpantaNum(1)
+		"7;2": function () {
+			let pow = player.inf.ascension.power;
+			let flow = tmp.dc ? tmp.dc.flow : new ExpantaNum(1);
 			return {
 				power: flow.plus(1).log10().sqrt().plus(1),
-				flow: pow.plus(1).log10().sqrt().plus(1),
-			}
+				flow: pow.plus(1).log10().sqrt().plus(1)
+			};
 		},
-		"7;4": function() {
-			let exp = player.pathogens.amount.plus(1).slog(10)
-			let base = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1)
-			let ret = base.pow(exp)
-			if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret)
-			return ret
+		"7;4": function () {
+			let exp = player.pathogens.amount.plus(1).slog(10);
+			let base = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1);
+			let ret = base.pow(exp);
+			if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret);
+			return ret;
 		},
-		"7;5": function() {
-			let ret = player.pathogens.upgrades[5].plus(1).sqrt()
-			return ret
-		}, 
-		"7;6": function() { return ExpantaNum.pow(1.2, player.dc.cores) },
-		"7;7": function() {
+		"7;5": function () {
+			let ret = player.pathogens.upgrades[5].plus(1).sqrt();
+			return ret;
+		},
+		"7;6": function () {
+			return ExpantaNum.pow(1.2, player.dc.cores);
+		},
+		"7;7": function () {
 			let ret = {
 				ae: ExpantaNum.pow(1.025, player.rank.plus(player.tier.pow(2))),
-				ve: (tmp.accEn?tmp.accEn:new ExpantaNum(0)).plus(1).pow(240),
-				ts: (tmp.maxVel?tmp.maxVel:new ExpantaNum(0)).plus(1).pow(0.06)
-			}
-			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve)
-			return ret
+				ve: (tmp.accEn ? tmp.accEn : new ExpantaNum(0)).plus(1).pow(tmp.inf.upgs.has("10;2")?1200:240),
+				ts: (tmp.maxVel ? tmp.maxVel : new ExpantaNum(0)).plus(1).pow(0.06)
+			};
+			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve);
+			return ret;
 		},
-		"7;8": function() {
-			let amt = new ExpantaNum(0)
-			if (tmp.inf) amt = tmp.inf.pantheon.totalGems
-			let ret = ExpantaNum.pow(1e25, amt.sqrt())
-			return ret
+		"7;8": function () {
+			let amt = new ExpantaNum(0);
+			if (tmp.inf) amt = tmp.inf.pantheon.totalGems;
+			let ret = ExpantaNum.pow(1e25, amt.sqrt());
+			return ret;
 		},
-		"8;2": function() {
-			let e = tmp.accEn?tmp.accEn:new Expantanum(0)
+		"8;2": function () {
+			let e = tmp.accEn ? tmp.accEn : new Expantanum(0);
 			let ret = {
 				energy: player.inf.pantheon.purge.power.plus(1).pow(10),
-				power: e.plus(2).slog(2),
-			}
-			return ret
+				power: e.plus(2).slog(2)
+			};
+			return ret;
 		},
-		"8;3": function() {
-			let ret = player.inf.endorsements.plus(1).pow(0.45)
-			return ret
+		"8;3": function () {
+			let ret = player.inf.endorsements.plus(1).pow(0.45);
+			return ret;
 		},
-		"8;6": function() {
-			let ret = player.inf.endorsements.div(100)
-			if (ret.gte(0.5)) ret = ret.pow(2).times(2)
-			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
-			return ret
+		"8;6": function () {
+			let ret = player.inf.endorsements.div(100);
+			if (ret.gte(0.5)) ret = ret.pow(2).times(2);
+			if (ret.gte(0.9)) ret = new ExpantaNum(0.9);
+			return ret;
 		},
-		"8;8": function() {
-			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10)
-			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1))
-			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5))
-			return ret
+		"8;8": function () {
+			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10);
+			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1));
+			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5));
+			return ret;
 		},
-		"9;1": function() {
-			let jerk = player.inf.derivatives.amts.jerk?player.inf.derivatives.amts.jerk:new ExpantaNum(0)
-			let ret = jerk.plus(1).pow(0.0001)
-			if (ret.gte(1e100)) ret = ret.log10().pow(50)
-			return ret
+		"9;1": function () {
+			let jerk = player.inf.derivatives.amts.jerk ? player.inf.derivatives.amts.jerk : new ExpantaNum(0);
+			let ret = jerk.plus(1).pow(0.0001);
+			if (ret.gte(1e100)) ret = ret.log10().pow(50);
+			return ret;
 		},
-		"9;2": function() {
-			let u = player.inf.derivatives.unlocks
-			let ret = u.sqrt().div(2)
-			if (ret.gte(10)) ret = ret.log10().times(10).min(ret)
-			return ret.times(10)
+		"9;2": function () {
+			let u = player.inf.derivatives.unlocks;
+			let ret = u.sqrt().div(2);
+			if (ret.gte(10)) ret = ret.log10().times(10).min(ret);
+			return ret.times(10);
 		},
-		"9;3": function() {
-			let a = player.inf.pantheon.angels
-			let d = player.inf.pantheon.demons
+		"9;3": function () {
+			let a = player.inf.pantheon.angels;
+			let d = player.inf.pantheon.demons;
 			let ret = {
 				angels: d.plus(1).logBase(1.5).pow(3).plus(1),
-				demons: a.plus(1).logBase(1.5).pow(3).plus(1),
-			}
+				demons: a.plus(1).logBase(1.5).pow(3).plus(1)
+			};
+			return ret;
+		},
+		"9;4": function () {
+			let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0);
+			let ret = ExpantaNum.pow(tmp.inf.derv.boostMult, boosts);
+			return ret;
+		},
+		"9;6": function () {
+			let d = player.inf.pantheon.demonicSouls;
+			let ret = d.plus(1).times(10).slog(10).div(10);
+			if (ret.gte(0.5)) ret = ret.div(10).plus(0.45);
+			if (ret.gte(0.75)) ret = ret.pow(2).div(0.75);
+			if (ret.gte(0.9)) ret = ExpantaNum.sub(1, ExpantaNum.div(1, ret.times(10).plus(1)));
+			return ret;
+		},
+		"9;7": function () {
+			let power = new ExpantaNum(1);
+			if (tmp.inf) if (tmp.inf.upgs.has("1;9")) power = power.times(INF_UPGS.effects["1;9"]());
+			let rank = player.rank;
+			if (rank.gte(308)) rank = rank.sqrt().times(Math.sqrt(308));
+			if (rank.gte(400)) rank = ExpantaNum.pow(10, rank.log10().sqrt()).times(9.75);
+			let ret = ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.02, power)), rank.pow(2));
+			return ret;
+		},
+		"9;10": function() {
+			let amt = player.elementary.bosons.scalar.amount
+			let ret = amt.plus(1).log10().pow(2/9).plus(1)
+			if (ret.gte(4)) ret = ret.logBase(2).times(2)
 			return ret
 		},
-		"9;4": function() {
-			let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0)
-			let ret = ExpantaNum.pow(tmp.inf.derv.boostMult, boosts)
+		"10;1": function() {
+			let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
+			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+			let snp = player.distance.plus(1).log10().plus(1).pow(10)
+			return {pth: ret, snp: snp}
+		},
+		"10;2": function() {
+			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1)
+			let exp = tmp.maxVel.plus(1).times(10).slog(10)
+			return base.pow(exp).pow(12)
+		},
+		"10;4": function() {
+			if (!tmp.auto) return new ExpantaNum(1)
+			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt()
+			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt()
+			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75)
+			return f1.times(f2).times(f3).cbrt()
+		},
+		"10;5": function() {
+			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
 			return ret
 		},
-		"9;6": function() {
-			let d = player.inf.pantheon.demonicSouls
-			let ret = d.plus(1).times(10).slog(10).div(10)
-			if (ret.gte(0.5)) ret = ret.div(10).plus(0.45)
-			if (ret.gte(0.75)) ret = ret.pow(2).div(0.75)
-			if (ret.gte(0.9)) ret = ExpantaNum.sub(1, ExpantaNum.div(1, ret.times(10).plus(1)))
+		"10;6": function() {
+			let ret = player.elementary.fermions.leptons.amount.plus(1).pow(0.05)
 			return ret
 		},
-		"9;7": function() {
-			let power = new ExpantaNum(1)
-			if (tmp.inf) if (tmp.inf.upgs.has("1;9")) power = power.times(INF_UPGS.effects["1;9"]())
-			let rank = player.rank
-			if (rank.gte(308)) rank = rank.sqrt().times(Math.sqrt(308))
-			if (rank.gte(400)) rank = ExpantaNum.pow(10, rank.log10().sqrt()).times(9.75)
-			let ret = ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.02, power)), rank.pow(2))
+		"10;10": function() {
+			let ret = ExpantaNum.pow(1.9, player.rank.max(1).sub(1)).times(ExpantaNum.pow(8.5, player.tier.max(1).sub(1)))
 			return ret
 		},
-	},
-}
+	}
+};
 const INF_TABS = {
-	infinity: function() { return true },
-	ascension: function() { return player.inf.endorsements.gte(10) },
-	stadium: function() { return player.inf.endorsements.gte(15) },
-	pantheon: function() { return player.inf.endorsements.gte(21) },
-	derivatives: function() { return player.inf.derivatives.unl },
-}
+	infinity: function () {
+		return true;
+	},
+	ascension: function () {
+		return player.inf.endorsements.gte(10);
+	},
+	stadium: function () {
+		return player.inf.endorsements.gte(15);
+	},
+	pantheon: function () {
+		return player.inf.endorsements.gte(21);
+	},
+	derivatives: function () {
+		return player.inf.derivatives.unl;
+	}
+};
 
 // Ascension
-const BASE_PERK_TIME = new ExpantaNum(4)
-const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"]
+const BASE_PERK_TIME = new ExpantaNum(12);
+const PERK_NAMES = ["godhood", "holy", "sainthood", "glory"];
 
 // The Stadium
 const STADIUM_DESCS = {
-	spaceon: ["You cannot gain Rockets", "Time Speed is raised to the power of 0.1", "You cannot gain Life Essence", "inf1;1 does nothing", "The base cost of Ranks is much higher", "The base cost of Tiers is much higher"],
-	solaris: ["You cannot gain Cadavers", "Scaled Rocket Fuel scaling starts instantly", "Scaled Rank scaling starts instantly", "Scaled Rank scaling is 500% stronger", "The base cost of Tiers is much higher", "The base cost of Ranks is much higher"],
-	infinity: ["You cannot Rank or Tier up", "Maximum Velocity is raised to the power of 0.1", "Rocket Fuel does nothing", "Scaled Pathogen Upgrade scaling is 500% stronger", "Pathogen Upgrades are 90% weaker", "You do not gain Time Cubes"],
-	eternity: ["Time Speed does nothing", "Dark Flow is always 0x", "Pathogen Upgrades are 90% weaker", "Scaled Tier scaling is 500% stronger", "You do not gain Time Cubes", "Pathogen Upgrades do nothing"],
-	reality: ["All resource gain before Infinity is raised to the power of 0.1", "Time Speed does nothing", "Maximum Velocity is raised to the power of 0.1", "Acceleration is raised to the power of 0.1", "You cannot buy Dark Cores", "Pathogen Upgrades do nothing"],
-	drigganiz: ["Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1", "Scaled Rank scaling starts instantly", "Scaled Tier scaling starts instantly", "Scaled Rank & Scaled Tier scalings are 500% stronger", "You do not gain Rockets or Cadavers", "You cannot buy Dark Cores"],
-}
+	spaceon: [
+		"You cannot gain Rockets",
+		"Time Speed is raised to the power of 0.1",
+		"You cannot gain Life Essence",
+		"inf1;1 does nothing",
+		"The base cost of Ranks is much higher",
+		"The base cost of Tiers is much higher"
+	],
+	solaris: [
+		"You cannot gain Cadavers",
+		"Scaled Rocket Fuel scaling starts instantly",
+		"Scaled Rank scaling starts instantly",
+		"Scaled Rank scaling is 500% stronger",
+		"The base cost of Tiers is much higher",
+		"The base cost of Ranks is much higher"
+	],
+	infinity: [
+		"You cannot Rank or Tier up",
+		"Maximum Velocity is raised to the power of 0.1",
+		"Rocket Fuel does nothing",
+		"Scaled Pathogen Upgrade scaling is 500% stronger",
+		"Pathogen Upgrades are 90% weaker",
+		"You do not gain Time Cubes"
+	],
+	eternity: [
+		"Time Speed does nothing",
+		"Dark Flow is always 0x",
+		"Pathogen Upgrades are 90% weaker",
+		"Scaled Tier scaling is 500% stronger",
+		"You do not gain Time Cubes",
+		"Pathogen Upgrades do nothing"
+	],
+	reality: [
+		"All resource gain before Infinity is raised to the power of 0.1",
+		"Time Speed does nothing",
+		"Maximum Velocity is raised to the power of 0.1",
+		"Acceleration is raised to the power of 0.1",
+		"You cannot buy Dark Cores",
+		"Pathogen Upgrades do nothing"
+	],
+	drigganiz: [
+		"Pathogen Upgrades do nothing & Time Speed is raised to the power of 0.1",
+		"Scaled Rank scaling starts instantly",
+		"Scaled Tier scaling starts instantly",
+		"Scaled Rank & Scaled Tier scalings are 500% stronger",
+		"You do not gain Rockets or Cadavers",
+		"You cannot buy Dark Cores"
+	]
+};
 const STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets.",
 	solaris: "Superscaled Rank scaling starts later based on your Cadavers.",
@@ -536,52 +740,103 @@ const STADIUM_REWARDS = {
 	reality: "Time Cubes are thrice as powerful.",
 	drigganiz: "Pathogen Upgrades are 0.75% stronger for every achievement you have.",
 	effects: {
-		spaceon: function() {
-			let mult = tmp.inf.pantheon.chipBoost
-			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1)
-			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret)
-			ret = ret.times(mult)
-			return ret
+		spaceon: function () {
+			let mult = tmp.inf.pantheon.chipBoost;
+			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
+			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
+			ret = ret.times(mult);
+			return ret;
 		},
-		solaris: function() {
-			let mult = tmp.inf.pantheon.chipBoost
-			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25)
-			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret)
-			ret = ret.times(mult)
-			return ret
+		solaris: function () {
+			let mult = tmp.inf.pantheon.chipBoost;
+			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25);
+			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret);
+			ret = ret.times(mult);
+			return ret;
 		},
-		eternity: function() {
-			let mult = tmp.inf.pantheon.chipBoost
-			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1))
-			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7)
-			let totalExp = base.pow(exp)
-			if (totalExp.gte(Number.MAX_VALUE)) totalExp = totalExp.log10().times(Number.MAX_VALUE/Math.log10(Number.MAX_VALUE))
-			let ret = player.rank.pow(totalExp.log10().div(2))
-			ret = ret.pow(mult)
-			return ret.max(1)
+		eternity: function () {
+			let mult = tmp.inf.pantheon.chipBoost;
+			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1));
+			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7);
+			let totalExp = base.pow(exp);
+			if (totalExp.gte(Number.MAX_VALUE))
+				totalExp = totalExp.log10().times(Number.MAX_VALUE / Math.log10(Number.MAX_VALUE));
+			let ret = player.rank.pow(totalExp.log10().div(2));
+			ret = ret.pow(mult);
+			return ret.max(1);
 		},
-		drigganiz: function() {
-			let ret = ExpantaNum.mul(0.0075, player.achievements.length)
-			return ret
-		},
+		drigganiz: function () {
+			let ret = ExpantaNum.mul(0.0075, player.achievements.length);
+			return ret;
+		}
 	},
 	disp: {
-		spaceon: function() { return "^"+showNum(STADIUM_REWARDS.effects.spaceon()) },
-		solaris: function() { return "+"+showNum(STADIUM_REWARDS.effects.solaris()) },
-		eternity: function() { return "x"+showNum(STADIUM_REWARDS.effects.eternity()) },
-		drigganiz: function() { return "+"+showNum(STADIUM_REWARDS.effects.drigganiz().times(100))+"%" },
-	},
-}
+		spaceon: function () {
+			return "^" + showNum(STADIUM_REWARDS.effects.spaceon());
+		},
+		solaris: function () {
+			return "+" + showNum(STADIUM_REWARDS.effects.solaris());
+		},
+		eternity: function () {
+			return "x" + showNum(STADIUM_REWARDS.effects.eternity());
+		},
+		drigganiz: function () {
+			return "+" + showNum(STADIUM_REWARDS.effects.drigganiz().times(100)) + "%";
+		}
+	}
+};
 const STADIUM_GOALS = {
-	spaceon: [new ExpantaNum("1e800").times(DISTANCES.uni), new ExpantaNum(1e100).times(DISTANCES.uni), new ExpantaNum(1e96).times(DISTANCES.uni), new ExpantaNum(1e128).times(DISTANCES.uni), new ExpantaNum(1e240).times(DISTANCES.uni), new ExpantaNum("1e300").times(DISTANCES.uni)],
-	solaris: [new ExpantaNum(1e20).times(DISTANCES.uni), new ExpantaNum("1e365").times(DISTANCES.uni), new ExpantaNum("1e450").times(DISTANCES.uni), new ExpantaNum("1e500").times(DISTANCES.uni), new ExpantaNum(1.11e111).times(DISTANCES.uni), new ExpantaNum(1e180).times(DISTANCES.uni)],
-	infinity: [new ExpantaNum("1e1500").times(DISTANCES.uni), new ExpantaNum("1e125").times(DISTANCES.uni), new ExpantaNum("1e480").times(DISTANCES.uni), new ExpantaNum("1e640").times(DISTANCES.uni), new ExpantaNum("1e1000").times(DISTANCES.uni), new ExpantaNum("1e1200").times(DISTANCES.uni)],
-	eternity: [new ExpantaNum("1e260").times(DISTANCES.uni), new ExpantaNum("1e250").times(DISTANCES.uni), new ExpantaNum("1e295").times(DISTANCES.uni), new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni), new ExpantaNum("1e350").times(DISTANCES.uni), new ExpantaNum("1e375").times(DISTANCES.uni)],
-	reality: [new ExpantaNum(10).times(DISTANCES.uni), new ExpantaNum(100).times(DISTANCES.pc), new ExpantaNum(3).times(DISTANCES.ly), new ExpantaNum(800).times(DISTANCES.Gm), new ExpantaNum(250), new ExpantaNum(150)],
-	drigganiz: [new ExpantaNum(1e16).times(DISTANCES.uni), new ExpantaNum(1e10).times(DISTANCES.uni), new ExpantaNum(1e25).times(DISTANCES.uni), new ExpantaNum(1e40).times(DISTANCES.uni), new ExpantaNum(1e150).times(DISTANCES.uni), new ExpantaNum(1e200).times(DISTANCES.uni)],
-}
+	spaceon: [
+		new ExpantaNum("1e800").times(DISTANCES.uni),
+		new ExpantaNum(1e100).times(DISTANCES.uni),
+		new ExpantaNum(1e96).times(DISTANCES.uni),
+		new ExpantaNum(1e128).times(DISTANCES.uni),
+		new ExpantaNum(1e240).times(DISTANCES.uni),
+		new ExpantaNum("1e300").times(DISTANCES.uni)
+	],
+	solaris: [
+		new ExpantaNum(1e20).times(DISTANCES.uni),
+		new ExpantaNum("1e365").times(DISTANCES.uni),
+		new ExpantaNum("1e450").times(DISTANCES.uni),
+		new ExpantaNum("1e500").times(DISTANCES.uni),
+		new ExpantaNum(1.11e111).times(DISTANCES.uni),
+		new ExpantaNum(1e180).times(DISTANCES.uni)
+	],
+	infinity: [
+		new ExpantaNum("1e1500").times(DISTANCES.uni),
+		new ExpantaNum("1e125").times(DISTANCES.uni),
+		new ExpantaNum("1e480").times(DISTANCES.uni),
+		new ExpantaNum("1e640").times(DISTANCES.uni),
+		new ExpantaNum("1e1000").times(DISTANCES.uni),
+		new ExpantaNum("1e1200").times(DISTANCES.uni)
+	],
+	eternity: [
+		new ExpantaNum("1e260").times(DISTANCES.uni),
+		new ExpantaNum("1e250").times(DISTANCES.uni),
+		new ExpantaNum("1e295").times(DISTANCES.uni),
+		new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni),
+		new ExpantaNum("1e350").times(DISTANCES.uni),
+		new ExpantaNum("1e375").times(DISTANCES.uni)
+	],
+	reality: [
+		new ExpantaNum(10).times(DISTANCES.uni),
+		new ExpantaNum(100).times(DISTANCES.pc),
+		new ExpantaNum(3).times(DISTANCES.ly),
+		new ExpantaNum(800).times(DISTANCES.Gm),
+		new ExpantaNum(250),
+		new ExpantaNum(150)
+	],
+	drigganiz: [
+		new ExpantaNum(1e16).times(DISTANCES.uni),
+		new ExpantaNum(1e10).times(DISTANCES.uni),
+		new ExpantaNum(1e25).times(DISTANCES.uni),
+		new ExpantaNum(1e40).times(DISTANCES.uni),
+		new ExpantaNum(1e150).times(DISTANCES.uni),
+		new ExpantaNum(1e200).times(DISTANCES.uni)
+	]
+};
 
 // Derivatives
 
-const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"]
-const DERV_INCR = ["acceleration", "jerk", "snap"]
+const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];
+const DERV_INCR = ["acceleration", "jerk", "snap"];

@@ -1,37 +1,38 @@
 const COMBOS = {
 	hard_aau: {
 		balancing: "same as hard mode, but faster",
-		balanceCheck: false,
+		balanceCheck: false
 	},
 	hard_na: {
 		balancing: "almost balanced (late game is quite slow)",
-		balanceCheck: false,
+		balanceCheck: false
 	},
 	aau_na: {
 		balancing: "slightly faster than normal",
-		balanceCheck: false,
+		balanceCheck: false
 	},
 	absurd: {
 		balancing: "completely impossible",
-		balanceCheck: true,
+		balanceCheck: true
 	},
 	easy: {
 		balancing: "balanced up to Infinity",
-		balanceCheck: false,
+		balanceCheck: false
 	},
 	easy_hard: {
 		balancing: "balanced up to Infinity",
-		balanceCheck: false,
+		balanceCheck: false
 	},
 	extreme: {
 		balancing: "balanced up to Infinity",
-		balanceCheck: false,
-	},
-}
+		balanceCheck: false
+	}
+};
 
 const MODES = {
 	hard: {
-		desc: "The game is harder & slower, with slight compensation to help you slowly grind to the end (this mode does have an ending).",
+		desc:
+			"The game is harder & slower, with slight compensation to help you slowly grind to the end (this mode does have an ending).",
 		balancing: "balanced up to Infinity",
 		balanceCheck: false,
 		combos: {
@@ -39,9 +40,9 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
 		},
-		dis: ["extreme"],
+		dis: ["extreme"]
 	},
 	aau: {
 		desc: "Start with all achievements unlocked.",
@@ -52,8 +53,8 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-		},
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+		}
 	},
 	na: {
 		desc: "All unnecessary achievements are gone.",
@@ -64,8 +65,8 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-		},
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+		}
 	},
 	absurd: {
 		desc: "Ehehe... You'll see...",
@@ -76,8 +77,8 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		},
+			extreme: JSON.parse(JSON.stringify(COMBOS.absurd))
+		}
 	},
 	easy: {
 		desc: "This mode is easier & faster to help you reach the end faster (this mode does have an ending).",
@@ -88,11 +89,12 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
 			na: JSON.parse(JSON.stringify(COMBOS.easy)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-		},
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+		}
 	},
 	extreme: {
-		desc: "This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
+		desc:
+			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
 		balancing: "balanced up to Infinity",
 		balanceCheck: false,
 		combos: {
@@ -100,11 +102,11 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
 			na: JSON.parse(JSON.stringify(COMBOS.easy)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			easy: JSON.parse(JSON.stringify(COMBOS.extreme))
 		},
-		ext: ["hard"],
-	},
-}
+		ext: ["hard"]
+	}
+};
 
 const MODE_VARS = {
 	extreme: {
@@ -112,17 +114,21 @@ const MODE_VARS = {
 		furnace: {
 			coal: new ExpantaNum(0),
 			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
-			blueFlame: new ExpantaNum(0),
-		},
-	},
-}
+			blueFlame: new ExpantaNum(0)
+		}
+	}
+};
 
 const MODE_EX = {
-	extreme: function(source) {
-		source.rankCheap = new ExpantaNum(source.rankCheap)
-		source.furnace.coal = new ExpantaNum(source.furnace.coal)
-		source.furnace.upgrades = [new ExpantaNum(source.furnace.upgrades[0]), new ExpantaNum(source.furnace.upgrades[1]), new ExpantaNum(source.furnace.upgrades[2])]
-		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame)
-		return source
-	},
-}
+	extreme: function (source) {
+		source.rankCheap = new ExpantaNum(source.rankCheap);
+		source.furnace.coal = new ExpantaNum(source.furnace.coal);
+		source.furnace.upgrades = [
+			new ExpantaNum(source.furnace.upgrades[0]),
+			new ExpantaNum(source.furnace.upgrades[1]),
+			new ExpantaNum(source.furnace.upgrades[2])
+		];
+		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
+		return source;
+	}
+};
