@@ -127,7 +127,7 @@ function updateTempScaling() {
 			if (next !== undefined)
 				if (tmp.scalings[next][name2] !== undefined)
 					tmp.scalings[name][name2] = ExpantaNum.min(tmp.scalings[name][name2], tmp.scalings[next][name2]);
-			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.4)
+			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.5)
 		}
 	}
 }

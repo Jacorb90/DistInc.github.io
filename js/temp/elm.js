@@ -372,6 +372,7 @@ function updateTempElementary() {
 	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
 	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
 	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
+	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
@@ -454,7 +455,7 @@ function updateTempElementary() {
 	tmp.elm.theory.updateTabs();
 	
 	// The Theoriverse
-	tmp.elm.theory.nerf = player.elementary.theory.depth.eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.sqrt())
+	tmp.elm.theory.nerf = player.elementary.theory.depth.eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.cbrt())
 	tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		tmp.elm.layer.reset(true)
@@ -505,6 +506,14 @@ function updateTempElementary() {
 	}
 }
 
+function elmReset(force=false) {
+	let c = player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
+		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&
+		player.inf.endorsements.gte(LAYER_REQS.elementary[2][1]);
+	let L = new Layer("elementary", c, "multi-res", true, "elm");
+	L.reset(force)
+}
+
 function resetTheoryTree() {
 	if (!player.elementary.theory.unl) return
 	if (!player.elementary.theory.tree.unl) return
@@ -513,5 +522,5 @@ function resetTheoryTree() {
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
 	player.elementary.theory.tree.spent = new ExpantaNum(0)
 	player.elementary.theory.tree.upgrades = {}
-	tmp.elm.layer.reset(true)
+	elmReset(true)
 }

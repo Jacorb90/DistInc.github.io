@@ -146,8 +146,22 @@ const TREE_UPGS = {
 		cost: function(bought) { return bought.plus(1) },
 		cap: new ExpantaNum(100),
 		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
-		effect: function(bought) { return player.elementary.bosons.scalar.higgs.amount.times(bought).plus(1).pow(0.1) },
+		effect: function(bought) { return player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(0.1) },
 		effD: function(e) { return showNum(e)+"x" },
+	},
+	2: {
+		cost: function(bought) { return bought.pow(2).plus(1) },
+		cap: new ExpantaNum(50),
+		desc: "Boost Knowledge gain & Higgs Boson gain.",
+		effect: function(bought) { return ExpantaNum.pow(100, new ExpantaNum(bought).sqrt()) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	3: {
+		cost: function(bought) { return bought.pow(3).plus(1) },
+		cap: new ExpantaNum(20),
+		desc: "inf4;10 is stronger based on your # of achievements gotten.",
+		effect: function(bought) { return ExpantaNum.mul(player.achievements.length, ExpantaNum.mul(0.0001, bought)) },
+		effD: function(e) { return "Exponent of effect: "+showNum(5)+" -> "+showNum(e.plus(5)) },
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length

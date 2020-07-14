@@ -472,7 +472,9 @@ const INF_UPGS = {
 		"4;10": function() {
 			let times = new ExpantaNum(player.elementary.times)
 			if (times.gte(100)) times = times.sqrt().times(Math.sqrt(100))
-			let ret = times.plus(1).log10().plus(1).pow(5)
+			let exp = new ExpantaNum(5)
+			if (player.elementary.theory.tree.unl) exp = exp.plus(TREE_UPGS[3].effect(player.elementary.theory.tree.upgrades[3]||0))
+			let ret = times.plus(1).log10().plus(1).pow(exp)
 			return ret
 		},
 		"5;4": function () {

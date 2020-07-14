@@ -48,8 +48,10 @@ const NEWS_DATA = {
 	m46: ["And the winner is, Leonardo DiCarlo"],
 	m47: ['"But thats just a theory, a game theory!"- Matpat'],
 	m48: ['"But thats just a theory, a film theory!"- Matpat'],
-	m49: ['"But thats just a theory, a survival theory!"- Matpat'],
+	m49: ['"But thats just a theory, a survival theory!"- Patmat'],
 	m50: ['"Nont" - Jacorb after 5 hours has passed'],
+	m51: ["The most recent feature of Distance Incremental is not a ripoff, or at least you can't prove that in court"],
+	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
 
 	// Distance-based Conditions
 	d1: [

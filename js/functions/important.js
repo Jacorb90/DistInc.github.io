@@ -99,8 +99,12 @@ function autoTick(diff) {
 		}())
 	}
 	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) {
-		if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.maxEndorse()
-		else tmp.inf.manualReset(true) 
+		if (tmp.elm.bos.hasHiggs("0;0;3") || tmp.ach[142].has) tmp.inf.maxEndorse(tmp.ach[142].has)
+		else {
+			if (tmp.ach[142].has) {
+				if (player.distance.gte(tmp.inf.req)) player.inf.endorsements = player.inf.endorsements.plus(1)
+			} else tmp.inf.manualReset(true) 
+		}
 	}
 	if (player.automators["perks"]) for (let i=1;i<=4;i++) if (player.inf.ascension.time[i-1].eq(0)) tmp.inf.asc.activatePerk(i)
 	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.maxEnl(i)

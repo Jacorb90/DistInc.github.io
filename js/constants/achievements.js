@@ -120,6 +120,7 @@ const ACH_DATA = {
 		138: "The Fleet Flees",
 		
 		141: "The Impossible Happened",
+		142: "Endless Endeavours",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -240,6 +241,7 @@ const ACH_DATA = {
 		138: "Reach formatDistance(4.4e7826) while having ten Endorsements or less.",
 		
 		141: "Get a Theory Point.",
+		142: "Reach formatDistance(4.4e136) while in a Purge run, while in Reality's Stadium challenge at Tier 6, without Pathogen Upgrades, & without Dark Cores.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -309,5 +311,7 @@ const ACH_DATA = {
 		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
 		132: "The Gauge Force Effect is doubled.",
 		135: "The Purge Power effect is halved.",
+		
+		142: "Endorsements that are bought automatically do not reset anything.",
 	}
 };

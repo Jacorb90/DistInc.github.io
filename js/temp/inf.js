@@ -193,6 +193,7 @@ function updateTempInf() {
 	if (tmp.elm) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos.photonEff(2).max(1));
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3)
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
+	if (player.elementary.theory.tree.unl) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.ach112)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
@@ -326,10 +327,10 @@ function updateTempInf() {
 			tmp.inf.layer.reset(true);
 		} else tmp.inf.layer.reset();
 	};
-	tmp.inf.maxEndorse = function () {
+	tmp.inf.maxEndorse = function (keep) {
 		if (player.distance.lt(tmp.inf.req) && tmp.inf.bulk.floor().gt(player.inf.endorsements)) return
 		player.inf.endorsements = player.inf.endorsements.max(tmp.inf.bulk.floor().max(player.inf.endorsements.plus(1)))
-		tmp.inf.layer.reset(true)
+		if (!keep) tmp.inf.layer.reset(true)
 	};
 
 	// Ascension
