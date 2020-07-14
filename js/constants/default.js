@@ -13,6 +13,7 @@ const DEFAULT_START = {
 		autoSave: true,
 		newst: true,
 		elc: true,
+		saveImp: "new save",
 	},
 	modes: [],
 	time: new Date().getTime(),

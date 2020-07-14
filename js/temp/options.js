@@ -69,9 +69,12 @@ function updateTempOptions() {
 							: btoa(JSON.stringify([]))
 					)
 				);
-				if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
-				else s.savePos = all.length + 1;
-				if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+				if (player.options.saveImp=="overwrite") s.savePos = deepCopy(player.savePos)
+				else {
+					if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+					else s.savePos = all.length + 1;
+					if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+				}
 				tmp.options.setSave(s);
 			} catch (e) {
 				notifier.error("Invalid Save");
@@ -187,7 +190,9 @@ function updateTempOptions() {
 		else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
 		else mds = "None";
 		let info = "Modes: " + mds + "<br>";
-		if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
+		if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
+			info += "Theory Points: "+showNum(new ExpantaNum(sav.elementary.theory.points))+", Theoriverse Depth: "+showNum(new ExpantaNum(sav.elementary.theory.depth))+", "
+		} else if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
 			info += "Elementaries: "+showNum(new ExpantaNum(sav.elementary.times))+", Fermions: "+showNum(new ExpantaNum(sav.elementary.fermions.amount))+", Bosons: "+showNum(new ExpantaNum(sav.elementary.bosons.amount))+", "
 		else if (sav.inf.derivatives.unl)
 			info += "Derivative Shifts/Boosts: " + showNum(new ExpantaNum(sav.inf.derivatives.unlocks)) + ", ";

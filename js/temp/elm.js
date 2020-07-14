@@ -455,7 +455,9 @@ function updateTempElementary() {
 	tmp.elm.theory.updateTabs();
 	
 	// The Theoriverse
-	tmp.elm.theory.nerf = player.elementary.theory.depth.eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.cbrt())
+	tmp.elm.theory.subbed = new ExpantaNum(0)
+	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
+	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 	tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		tmp.elm.layer.reset(true)
@@ -475,7 +477,10 @@ function updateTempElementary() {
 	for (let i=0;i<4;i++) {
 		let type = ["squark", "slepton", "neutralino", "chargino"][i]
 		tmp.elm.theory.ss[type+"Gain"] = new ExpantaNum((4-i)/4)
-		if (player.elementary.theory.tree.unl) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
+		if (player.elementary.theory.tree.unl) {
+			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
+			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[5].effect(player.elementary.theory.tree.upgrades[5]||0))
+		}
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 	}
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
@@ -514,11 +519,13 @@ function elmReset(force=false) {
 	L.reset(force)
 }
 
-function resetTheoryTree() {
-	if (!player.elementary.theory.unl) return
-	if (!player.elementary.theory.tree.unl) return
-	if (player.elementary.theory.tree.spent.eq(0)) return
-	if (!confirm("Are you sure you want to reset your tree to get Theory Points back?")) return
+function resetTheoryTree(force=false) {
+	if (!force) {
+		if (!player.elementary.theory.unl) return
+		if (!player.elementary.theory.tree.unl) return
+		if (player.elementary.theory.tree.spent.eq(0)) return
+		if (!confirm("Are you sure you want to reset your tree to get Theory Points back?")) return
+	}
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
 	player.elementary.theory.tree.spent = new ExpantaNum(0)
 	player.elementary.theory.tree.upgrades = {}

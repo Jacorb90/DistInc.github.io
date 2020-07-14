@@ -296,6 +296,12 @@ const NEWS_DATA = {
 			return player.inf.pantheon.unl
 		}
 	],
+	s14: [
+		"What if crackle is an affiliate of Slabdrill?",
+		function () {
+			return player.inf.derivatives.unl
+		},
+	],
 };
 
 const NEWS_ADJ = 110;

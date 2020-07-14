@@ -146,7 +146,12 @@ const TREE_UPGS = {
 		cost: function(bought) { return bought.plus(1) },
 		cap: new ExpantaNum(100),
 		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
-		effect: function(bought) { return player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(0.1) },
+		effect: function(bought) { 
+			let ret = player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(0.1) 
+			if (ret.gte(50)) ret = ret.sqrt().times(Math.sqrt(50))
+			if (ret.gte(100)) ret = ret.log10().pow(new ExpantaNum(100).logBase(2)).min(ret.cbrt().times(Math.pow(100, 2/3)))
+			return ret
+		},
 		effD: function(e) { return showNum(e)+"x" },
 	},
 	2: {
@@ -162,6 +167,20 @@ const TREE_UPGS = {
 		desc: "inf4;10 is stronger based on your # of achievements gotten.",
 		effect: function(bought) { return ExpantaNum.mul(player.achievements.length, ExpantaNum.mul(0.0001, bought)) },
 		effD: function(e) { return "Exponent of effect: "+showNum(5)+" -> "+showNum(e.plus(5)) },
+	},
+	4: {
+		cost: function(bought) { return ExpantaNum.pow(5, bought.pow(2)).times(4) },
+		cap: new ExpantaNum(10),
+		desc: "The Theoriverse's nerf is weakened.",
+		effect: function(bought) { return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(7.6).max(0) },
+		effD: function(e) { return "-"+showNum(e)+" Depths" },
+	},
+	5: {
+		cost: function(bought) { return ExpantaNum.pow(2, bought).times(4) },
+		cap: new ExpantaNum(80),
+		desc: "Triple Supersymmetric Particle gain.",
+		effect: function(bought) { return ExpantaNum.pow(3, bought) },
+		effD: function(e) { return showNum(e)+"x" },
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length

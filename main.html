@@ -192,7 +192,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td></td>
+						<td>
+							<button id="saveImp" class="btn tb opt" onclick="tmp.options.change('saveImp', 2)">
+								Imports: X
+							</button>
+						</td>
 						<td>
 							<button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">
 								Auto-Save: ON
@@ -1072,6 +1076,11 @@
 						<table><tr>
 							<td><button id="tree2" class="tree locked" onclick="tmp.elm.theory.tree.buy(2)"></button></td>
 							<td><button id="tree3" class="tree locked" onclick="tmp.elm.theory.tree.buy(3)"></button></td>
+						</tr></table>
+						<table><tr>
+							<td><button id="tree4" class="tree locked" onclick="tmp.elm.theory.tree.buy(4)"></button></td>
+							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
 						</tr></table>
 						<br><br><br><br><br>
 					</div>

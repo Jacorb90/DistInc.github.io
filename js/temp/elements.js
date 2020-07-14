@@ -22,6 +22,7 @@ function updateHTML() {
 		tmp.el.newst.setTxt("News Ticker: " + (player.options.newst ? "ON" : "OFF"));
 		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"))
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
+		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
 	}
 
 	// Main
@@ -376,7 +377,7 @@ function updateHTML() {
 	if (player.tab == "inf") {
 		// Infinity
 		tmp.el.endorsementManual.setDisplay(
-			player.inf.endorsements.gte(10) && (tmp.inf.can || tmp.inf.stadium.canComplete)
+			player.inf.endorsements.gte(10) && ((tmp.inf.can && !player.automators["endorsements"]) || tmp.inf.stadium.canComplete)
 		);
 		tmp.el.emInner.setHTML(
 			tmp.inf.stadium.canComplete
