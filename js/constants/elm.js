@@ -181,7 +181,7 @@ const TREE_UPGS = {
 		effD: function(e) { return "Exponent of effect: "+showNum(5)+" -> "+showNum(e.plus(5)) },
 	},
 	4: {
-		cost: function(bought) { return ExpantaNum.pow(5, bought.pow(2)).times(4) },
+		cost: function(bought) { return ExpantaNum.pow(5, bought).times(4) },
 		cap: new ExpantaNum(10),
 		desc: "The Theoriverse's nerf is weakened.",
 		effect: function(bought) { return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(7.6).max(0) },
@@ -209,6 +209,38 @@ const TREE_UPGS = {
 		desc: "Scaled Endorsement scaling starts later based on your Primary Strings, and Knowledge gain is boosted in Theoriverse runs.",
 		effect: function(bought) { return player.elementary.theory.strings.amounts[0].plus(1).times(10).slog(10).log10().div(5).times(new ExpantaNum(bought).times(75)) },
 		effD: function(e) { return "Scaling: "+showNum(e)+" later, Knowledge gain: "+showNum(e.plus(1).pow(10))+"x" },
+	},
+	8: {
+		unl: function() { return player.elementary.theory.preons.unl },
+		cost: function(bought) { return ExpantaNum.add(10, bought.pow(2).times(2)) },
+		cap: new ExpantaNum(16),
+		desc: "Superscaled Rocket Fuel scaling is 5% weaker (non-compounding).",
+		effect: function(bought) { return ExpantaNum.mul(0.05, bought) },
+		effD: function(e) { return showNum(e.times(100))+"% weaker" },
+	},
+	9: {
+		unl: function() { return player.elementary.theory.preons.unl },
+		cost: function(bought) { return ExpantaNum.add(9, bought.times(3)) },
+		cap: new ExpantaNum(90),
+		desc: "Preons are gained faster based on your Fermions.",
+		effect: function(bought) { return player.elementary.fermions.amount.pow(0.2).times(new ExpantaNum(bought).pow(2)).plus(1) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	10: {
+		unl: function() { return player.elementary.theory.preons.unl },
+		cost: function(bought) { return ExpantaNum.add(14, bought.pow(3).times(7)) },
+		cap: new ExpantaNum(35),
+		desc: "Theoretical Boosters cost less.",
+		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.add(bought, 1), 3) },
+		effD: function(e) { return showNum(e)+"x cheaper" },
+	},
+	11: {
+		unl: function() { return player.elementary.theory.preons.unl },
+		cost: function(bought) { return ExpantaNum.mul(20, bought.div(2).plus(1)) },
+		cap: new ExpantaNum(5),
+		desc: "The above upgrade gets extra levels added to its effect based on your Preons.",
+		effect: function(bought) { return player.elementary.theory.preons.amount.plus(1).times(10).slog(10).times(bought) },
+		effD: function(e) { return showNum(e)+" extra levels" },
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length

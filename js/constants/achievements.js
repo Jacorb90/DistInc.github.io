@@ -122,6 +122,7 @@ const ACH_DATA = {
 		141: "The Impossible Happened",
 		142: "Endless Endeavours",
 		143: "Under the C",
+		144: "To The Next Rank",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -244,6 +245,7 @@ const ACH_DATA = {
 		141: "Get a Theory Point.",
 		142: "Reach formatDistance(4.4e136) while in a Purge run, while in Reality's Stadium challenge at Tier 6, without Pathogen Upgrades, & without Dark Cores.",
 		143: "Complete The Theoriverse at Depth 4.",
+		144: "Reach showNum(1e33) Ascension Power.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -315,5 +317,6 @@ const ACH_DATA = {
 		135: "The Purge Power effect is halved.",
 		
 		142: "Endorsements that are bought automatically do not reset anything.",
+		144: "All Strings are gained showNum(25)% faster.",
 	}
 };

@@ -574,6 +574,7 @@ function getStringGain(n) {
 	let gain = new ExpantaNum(0.02).times(1/Math.sqrt(n))
 	if (n<TOTAL_STR) gain = gain.times(getStringEff(n+1))
 	gain = gain.times(getEntangleEff())
+	if (tmp.ach[144].has) gain = gain.times(1.25)
 	return gain
 }
 
@@ -618,6 +619,7 @@ function unlockPreons() {
 function getPreonGain() {
 	if (!player.elementary.theory.preons.unl) return new ExpantaNum(0)
 	let gain = player.elementary.theory.strings.amounts[0].plus(1).log10().div(10)
+	gain = gain.times(TREE_UPGS[9].effect(player.elementary.theory.tree.upgrades[9]||0))
 	return gain
 }
 
@@ -625,6 +627,7 @@ function getTBCost() {
 	let b = new ExpantaNum(player.elementary.theory.preons.boosters)
 	if (b.gte(4)) b = b.pow(2).div(4)
 	let cost = new ExpantaNum(20).times(ExpantaNum.pow(2, b))
+	cost = cost.div(TREE_UPGS[10].effect(player.elementary.theory.tree.upgrades[10]||0))
 	return cost
 }
 

@@ -59,7 +59,7 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("9;3")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1);
 		if (tmp.inf.upgs.has("2;10")) tmp.scalings.superscaled.darkCore = tmp.scalings.superscaled.darkCore.plus(5)
 	}
-	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(player.elementary.theory.tree.upgrades[7]||0))
+	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
@@ -104,6 +104,7 @@ function updateTempScaling() {
 			);
 		if (tmp.inf.upgs.has("1;10")) tmp.scalingPower.hyper.tier = tmp.scalingPower.hyper.tier.times(ExpantaNum.sub(1, INF_UPGS.effects["1;10"]()))
 		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75);
+		if (player.elementary.theory.tree.unl) tmp.scalingPower.superscaled.rf = tmp.scalingPower.superscaled.rf.sub(TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0)).max(0)
 		if (tmp.inf.stadium.active("infinity", 4))
 			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6);
 		if (tmp.inf.upgs.has("8;7"))

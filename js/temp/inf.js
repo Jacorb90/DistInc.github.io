@@ -195,7 +195,7 @@ function updateTempInf() {
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	if (player.elementary.theory.tree.unl) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.ach112)
-	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(player.elementary.theory.tree.upgrades[7]||0).plus(1).pow(10))
+	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
