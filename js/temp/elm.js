@@ -470,6 +470,7 @@ function updateTempElementary() {
 	tmp.elm.theory.subbed = new ExpantaNum(0)
 	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
 	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
+	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).sub(3))
 	tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		tmp.elm.layer.reset(true)
@@ -579,7 +580,14 @@ function getStringGain(n) {
 function getEntangleGain() {
 	let base = new ExpantaNum(1)
 	player.elementary.theory.strings.amounts.forEach(x => function() { base = base.times(ExpantaNum.add(x, 1)) }())
-	let gain = base.max(1).logBase(2).sqrt()
+	let gain = base.pow(1/7).sqrt()
+	if (gain.gte(1e7)) gain = gain.cbrt().times(Math.pow(1e7, 2/3))
+	if (gain.gte(1e9)) {
+		let exp = gain.plus(1).log10().sqrt().div(Math.sqrt(8)/4)
+		if (exp.gte(1e300)) exp = new ExpantaNum(1e300)
+		gain = gain.pow(exp.pow(-1)).times(ExpantaNum.pow(1e9, ExpantaNum.sub(1, exp.pow(-1))))
+	}
+	gain = gain.times(TREE_UPGS[6].effect(player.elementary.theory.tree.upgrades[6]||0))
 	return gain
 }
 

@@ -194,12 +194,13 @@ function setupHTML() {
 function updateBeforeTick() {
 	updateTemp();
 	updateHTML();
+	checkNaN();
 }
 
 function updateAfterTick() {
 	updateUnlocks();
 	if (player.options.autoSave && saveTimer >= AUTOSAVE_TIME) {
-		tmp.options.save();
+		if (!anyNaN) tmp.options.save();
 		saveTimer = 0;
 	}
 	if (tmp.modes.absurd.active && !reloaded) {

@@ -4,6 +4,7 @@ function updateHTML() {
 	for (i = 0; i < TMP_DATA.ELS.length; i++) {
 		let id = TMP_DATA.ELS[i];
 		tmp.el[id] = new Element(id);
+		if (tmp.el[id].el.textContent=="NaN"||tmp.el[id].el.textContent==NaN) anyNaN = true
 	}
 
 	// Options
@@ -815,6 +816,7 @@ function updateHTML() {
 				tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
 				tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
 				for (let i=1;i<=TREE_AMT;i++) {
+					tmp.el["tree"+i].setDisplay(TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)
 					tmp.el["tree"+i].setTxt(showNum(tmp.elm.theory.tree.bought[i])+"/"+showNum(TREE_UPGS[i].cap))
 					tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(tmp.elm.theory.tree.bought[i])))
 					tmp.el["tree"+i].setClasses({tree: true, capped: tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap), unl: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))), locked: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i])))})

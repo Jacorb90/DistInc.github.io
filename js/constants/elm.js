@@ -191,6 +191,22 @@ const TREE_UPGS = {
 		effect: function(bought) { return ExpantaNum.pow(3, bought) },
 		effD: function(e) { return showNum(e)+"x" },
 	},
+	6: {
+		unl: function() { return player.elementary.theory.strings.unl },
+		cost: function(bought) { return ExpantaNum.add(bought.times(2), 6) },
+		cap: new ExpantaNum(40),
+		desc: "Entangled String gain is boosted by your Elementaries.",
+		effect: function(bought) { return player.elementary.times.plus(1).pow(new ExpantaNum(bought).pow(0.15).div(5)) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	7: {
+		unl: function() { return player.elementary.theory.strings.unl },
+		cost: function(bought) { return ExpantaNum.add(bought.times(3), 2) },
+		cap: new ExpantaNum(5),
+		desc: "Scaled Endorsement scaling starts later based on your Primary Strings, and Knowledge gain is boosted in Theoriverse runs.",
+		effect: function(bought) { return player.elementary.theory.strings.amounts[0].plus(1).times(10).slog(10).log10().div(5).times(new ExpantaNum(bought).times(75)) },
+		effD: function(e) { return "Scaling: "+showNum(e)+" later, Knowledge gain: "+showNum(e.plus(1).pow(10))+"x" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
@@ -200,8 +216,8 @@ const STR_REQS = {
 	1: new ExpantaNum(0),
 	2: new ExpantaNum(0.5),
 	3: new ExpantaNum(100),
-	4: new ExpantaNum(1/0), // 1e6 or 1e9
-	5: new ExpantaNum(1/0), // DISTANCES.uni
+	4: new ExpantaNum(1e4),
+	5: new ExpantaNum(1e7),
 }
 const STR_NAMES = {
 	1: "Primary",

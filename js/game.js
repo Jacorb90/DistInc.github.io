@@ -21,6 +21,7 @@ var bosTab = "gauge";
 var gluonTab = "r";
 var thTab = "tv";
 var autoRobotTarget = 0
+var anyNaN = false
 var betaID = "beta1.6";
 
 // Game Loops

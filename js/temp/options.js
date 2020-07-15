@@ -69,7 +69,7 @@ function updateTempOptions() {
 							: btoa(JSON.stringify([]))
 					)
 				);
-				if (player.options.saveImp=="overwrite") s.savePos = deepCopy(player.savePos)
+				if (player.options.saveImp=="overwrite" || s.saveID==player.saveID) s.savePos = deepCopy(player.savePos)
 				else {
 					if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
 					else s.savePos = all.length + 1;
@@ -271,7 +271,7 @@ function updateTempOptions() {
 		let els = {};
 		for (let x = 0; x < all.length; x++) {
 			if (all[x] === undefined || all[x] === null) continue;
-			let active = player.saveID == all[x].saveID;
+			let active = player.saveID == all[x].saveID && player.savePos == all[x].savePos;
 			let name =
 				all[x].options.name == "Save #"
 					? "Save #" + (all[x].savePos ? all[x].savePos : "???")

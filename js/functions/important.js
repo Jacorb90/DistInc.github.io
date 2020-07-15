@@ -152,3 +152,10 @@ function modeLoad(resetted) {
 			);
 	}
 }
+
+function checkNaN() {
+	if (anyNaN||player.distance.isNaN()||player.inf.knowledge.isNaN()) {
+		alert("We have detected a NaN Error and are about to reload your game. We apologize for this, but it is for your own good...")
+		reload()
+	}
+}
