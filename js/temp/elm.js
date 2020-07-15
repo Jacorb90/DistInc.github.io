@@ -602,3 +602,42 @@ function entangleStrings() {
 	player.elementary.theory.strings.entangled = player.elementary.theory.strings.entangled.plus(getEntangleGain())
 	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }
+
+// Preons
+
+function unlockPreons() {
+	if (!player.elementary.theory.unl) return
+	if (!player.elementary.theory.strings.unl) return
+	if (player.elementary.theory.preons.unl) return
+	if (player.elementary.theory.points.lt(10)) return
+	if (!confirm("Are you sure you want to unlock Preons? You will not be able to get your Theory Points back!")) return
+	player.elementary.theory.points = player.elementary.theory.points.sub(10)
+	player.elementary.theory.preons.unl = true
+}
+
+function getPreonGain() {
+	if (!player.elementary.theory.preons.unl) return new ExpantaNum(0)
+	let gain = player.elementary.theory.strings.amounts[0].plus(1).log10().div(10)
+	return gain
+}
+
+function getTBCost() {
+	let b = new ExpantaNum(player.elementary.theory.preons.boosters)
+	if (b.gte(4)) b = b.pow(2).div(4)
+	let cost = new ExpantaNum(20).times(ExpantaNum.pow(2, b))
+	return cost
+}
+
+function getTBGain() {
+	let ret = player.elementary.theory.preons.boosters.plus(1)
+	return ret
+}
+
+function theoryBoost() {
+	if (!player.elementary.theory.unl) return
+	if (!player.elementary.theory.preons.unl) return
+	if (player.elementary.theory.preons.amount.lt(getTBCost())) return
+	player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.sub(getTBCost())
+	player.elementary.theory.points = player.elementary.theory.points.plus(getTBGain())
+	player.elementary.theory.preons.boosters = player.elementary.theory.preons.boosters.plus(1)
+}

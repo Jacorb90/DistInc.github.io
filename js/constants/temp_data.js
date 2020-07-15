@@ -203,7 +203,13 @@ const TMP_DATA = {
 		"entangleDiv",
 		"entangle",
 		"entangleAmt",
-		"entangleEff"
+		"entangleEff",
+		"preonsUnl",
+		"preonsDiv",
+		"preonAmt",
+		"preonGain",
+		"theoryBoost",
+		"theoryBoosters"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

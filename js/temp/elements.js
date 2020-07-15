@@ -840,6 +840,15 @@ function updateHTML() {
 				tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled))
 				tmp.el.entangleEff.setTxt(showNum(getEntangleEff()))
 			}
+			if (thTab=="preons") {
+				tmp.el.preonsUnl.setDisplay(!player.elementary.theory.preons.unl)
+				tmp.el.preonsDiv.setDisplay(player.elementary.theory.preons.unl)
+				tmp.el.preonAmt.setTxt(showNum(player.elementary.theory.preons.amount))
+				tmp.el.preonGain.setTxt(showNum(tmp.nerfs.adjust(getPreonGain(), "preons")))
+				tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())})
+				tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
+				tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
+			}
 		}
 	}
 

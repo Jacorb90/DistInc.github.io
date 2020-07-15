@@ -119,6 +119,7 @@ function tickWithoutTS(diff) {
 				player.elementary.theory.strings.amounts[i-1] = player.elementary.theory.strings.amounts[i-1].plus(tmp.nerfs.adjust(getStringGain(i), "str").times(diff))
 			}
 		}
+		if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(tmp.nerfs.adjust(getPreonGain(), "preons").times(diff))
 	}
 }
 

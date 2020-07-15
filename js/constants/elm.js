@@ -148,6 +148,9 @@ const TH_TABS = {
 	strings: function() {
 		return player.elementary.theory.tree.unl
 	},
+	preons: function() {
+		return player.elementary.theory.strings.unl
+	},
 };
 
 const TREE_UPGS = {

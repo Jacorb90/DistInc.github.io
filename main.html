@@ -1052,6 +1052,11 @@
 									Strings
 								</button>
 							</td>
+							<td>
+								<button id="preonstabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('preons')">
+									Preons
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1107,6 +1112,15 @@
 						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> (+<span id="str4gain"></span>/sec), translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
 						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> (+<span id="str5gain"></span>/sec), translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
 						<br><br><span id="entangleDiv"><button id="entangle" class="btn th" onclick="entangleStrings()"></button><br><br>You have <span id="entangleAmt" class="thp"></span> of Entangled Strings, translated to a <span id="entangleEff" class="thp"></span>x multiplier to the generation speed of all Strings.<br><br></span>
+					</div>
+				</div>
+				<div id="preons" class="theorytab">
+					<br>
+					<button id="preonsUnl" class="btn th" onclick="unlockPreons()">Unlock Preons<br>Cost: 10 Theory Points</button>
+					<div id="preonsDiv">
+						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons (+<span id="preonGain"></span>/sec).<br><br><br>
+						<button id="theoryBoost" class="btn locked" onclick="theoryBoost()"></button><br><br>
+						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters.
 					</div>
 				</div>
 			</div>
