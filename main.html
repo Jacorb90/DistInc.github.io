@@ -1057,6 +1057,11 @@
 									Preons
 								</button>
 							</td>
+							<td>
+								<button id="acceleronstabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('accelerons')">
+									Accelerons
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1128,6 +1133,15 @@
 						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons (+<span id="preonGain"></span>/sec).<br><br><br>
 						<button id="theoryBoost" class="btn locked" onclick="theoryBoost()"></button><br><br>
 						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters.
+					</div>
+				</div>
+				<div id="accelerons" class="theorytab">
+					<br>
+					<button id="acceleronsUnl" class="btn th" onclick="unlockAccelerons()">Unlock Accelerons<br>Cost: 84 Theory Points</button>
+					<div id="acceleronsDiv">
+						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second.<br><br>
+						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff" class="thp"></span>x later.<br><br><br>
+						<span style="font-size: 4px;">Dark Expanders coming soon...</span><br><br><br>
 					</div>
 				</div>
 			</div>

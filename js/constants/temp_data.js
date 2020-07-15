@@ -209,7 +209,12 @@ const TMP_DATA = {
 		"preonAmt",
 		"preonGain",
 		"theoryBoost",
-		"theoryBoosters"
+		"theoryBoosters",
+		"acceleronsUnl",
+		"acceleronsDiv",
+		"accel",
+		"accelGain",
+		"accelEff"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

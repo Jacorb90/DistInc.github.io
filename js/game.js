@@ -120,6 +120,7 @@ function tickWithoutTS(diff) {
 			}
 		}
 		if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(tmp.nerfs.adjust(getPreonGain(), "preons").times(diff))
+		if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(tmp.nerfs.adjust(getAccelGain(), "accelerons").times(diff))
 	}
 }
 

@@ -437,9 +437,10 @@ function updateTempElementary() {
 	tmp.elm.pa = {}
 	tmp.elm.pa.active = tmp.elm.bos.hasHiggs("0;0;2")
 	tmp.elm.pa.stateStarts = {
-		weakened: new ExpantaNum(3600*24),
-		broken: new ExpantaNum(3600*24*365.24),
+		weakened: new ExpantaNum(12.5e3),
+		broken: new ExpantaNum(1e6),
 	}
+	if (player.elementary.theory.accelerons.unl) tmp.elm.pa.stateStarts.weakened = tmp.elm.pa.stateStarts.weakened.times(getAccelEff())
 	tmp.elm.pa.state = ""
 	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
 	if (tmp.elm.pa.speedBoost.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
@@ -643,4 +644,28 @@ function theoryBoost() {
 	player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.sub(getTBCost())
 	player.elementary.theory.points = player.elementary.theory.points.plus(getTBGain())
 	player.elementary.theory.preons.boosters = player.elementary.theory.preons.boosters.plus(1)
+}
+
+// Accelerons
+
+function unlockAccelerons() {
+	if (!player.elementary.theory.unl) return
+	if (!player.elementary.theory.preons.unl) return
+	if (player.elementary.theory.accelerons.unl) return
+	if (player.elementary.theory.points.lt(84)) return
+	if (!confirm("Are you sure you want to unlock Accelerons? At this point in development, it is not worth it to unlock them (since their more powerful buffs aren't added yet)...")) return
+	player.elementary.theory.points = player.elementary.theory.points.sub(84)
+	player.elementary.theory.accelerons.unl = true
+}
+
+function getAccelGain() {
+	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(0)
+	let gain = tmp.acc.plus(1).log10().div(1e6).sqrt()
+	return gain
+}
+
+function getAccelEff() {
+	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(1)
+	let eff = player.elementary.theory.accelerons.amount.plus(1).pow(0.04)
+	return eff
 }

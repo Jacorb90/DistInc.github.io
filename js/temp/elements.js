@@ -849,6 +849,13 @@ function updateHTML() {
 				tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
 				tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
 			}
+			if (thTab=="accelerons") {
+				tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl)
+				tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl)
+				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
+				tmp.el.accelGain.setTxt(showNum(tmp.nerfs.adjust(getAccelGain(), "accelerons")))
+				tmp.el.accelEff.setTxt(showNum(getAccelEff()))
+			}
 		}
 	}
 
