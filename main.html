@@ -823,7 +823,7 @@
 							<tr>
 								<td>
 									<button id="photon1" class="btn locked" onclick="tmp.elm.bos.buyLU(1)">
-										Triple Pathogen gain<br />Level:
+										Triple Pathogen gain<br />
 										<span id="photonLvl1" style="color: white;"></span><br />Currently:
 										<span id="photonDesc1" style="color: white;"></span><br />Cost:
 										<span id="photonCost1" style="color: white;"></span> Photons
@@ -831,7 +831,7 @@
 								</td>
 								<td>
 									<button id="photon2" class="btn locked" onclick="tmp.elm.bos.buyLU(2)">
-										Boost Knowledge gain by 50%<br />Level:
+										Boost Knowledge gain by 50%<br />
 										<span id="photonLvl2" style="color: white;"></span><br />Currently:
 										<span id="photonDesc2" style="color: white;"></span><br />Cost:
 										<span id="photonCost2" style="color: white;"></span> Photons
@@ -841,14 +841,14 @@
 							<tr>
 								<td>
 									<button id="photon3" class="btn locked" onclick="tmp.elm.bos.buyLU(3)">
-										Double Photon & Gluon gain<br />Level: <span id="photonLvl3" style="color: white;"></span
+										Double Photon & Gluon gain<br /><span id="photonLvl3" style="color: white;"></span
 										><br />Currently: <span id="photonDesc3" style="color: white;"></span
 										><br />Cost: <span id="photonCost3" style="color: white;"></span> Photons
 									</button>
 								</td>
 								<td>
 									<button id="photon4" class="btn locked" onclick="tmp.elm.bos.buyLU(4)">
-										Double Elementary Particle gain<br />Level: <span id="photonLvl4" style="color: white;"></span
+										Double Elementary Particle gain<br /><span id="photonLvl4" style="color: white;"></span
 										><br />Currently: <span id="photonDesc4" style="color: white;"></span
 										><br />Cost: <span id="photonCost4" style="color: white;"></span> Photons
 									</button>
@@ -1047,6 +1047,11 @@
 									The Theory Tree
 								</button>
 							</td>
+							<td>
+								<button id="stringstabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('strings')">
+									Strings
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1083,6 +1088,19 @@
 							<td><button id="tree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
 						</tr></table>
 						<br><br><br><br><br>
+					</div>
+				</div>
+				<div id="strings" class="theorytab">
+					<br>
+					<button id="stringsUnl" class="btn th" onclick="unlockStrings()">Unlock Strings<br>Cost: 7 Theory Points</button>
+					<div id="stringsDiv">
+						<span id="nextStr"></span><br><br>
+						You have a Primary String with a length of <span id="str1amt" class="thp"></span> (+<span id="str1gain"></span>/sec), translated to a <span id="str1eff" class="thp"></span>x multiplier to Supersymmetric Particle gain.<br><br>
+						<span id="str2" style="display: none">You have a Secondary String with a length of <span id="str2amt" class="thp"></span> (+<span id="str2gain"></span>/sec), translated to a <span id="str2eff" class="thp"></span>x multiplier to Primary String gain.<br><br></span>
+						<span id="str3" style="display: none">You have a Tertiary String with a length of <span id="str3amt" class="thp"></span> (+<span id="str3gain"></span>/sec), translated to a <span id="str3eff" class="thp"></span>x multiplier to Secondary String gain.<br><br></span>
+						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> (+<span id="str4gain"></span>/sec), translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
+						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> (+<span id="str5gain"></span>/sec), translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
+						<br><br><span id="entangleDiv"><button id="entangle" class="btn th" onclick="entangleStrings()"></button><br><br>You have <span id="entangleAmt" class="thp"></span> of Entangled Strings, translated to a <span id="entangleEff" class="thp"></span>x multiplier to the generation speed of all Strings.<br><br></span>
 					</div>
 				</div>
 			</div>

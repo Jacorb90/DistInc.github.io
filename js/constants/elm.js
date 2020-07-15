@@ -31,6 +31,12 @@ const LEPTON_DESCS = {
 };
 
 const PHOTON_UPGS = 4;
+const PH_CST_SCLD = {
+	1: function(exp, s) { return ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(exp).div(s.pow(exp.sub(1))).pow(2)).times(25) },
+	2: function(exp, s) { return ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(exp).div(s.pow(exp.sub(1))).pow(2)).times(40) },
+	3: function(exp, s) { return ExpantaNum.pow(10, player.elementary.bosons.gauge.photons.upgrades[2].pow(exp).div(s.pow(exp.sub(1)))).times(1e4) },
+	4: function(exp, s) { return ExpantaNum.pow(2, player.elementary.bosons.gauge.photons.upgrades[3].pow(exp).div(s.pow(exp.sub(1))).pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]))).times(6e4) },
+}
 
 const GLUON_COLOURS = ["r", "g", "b", "ar", "ag", "ab"];
 
@@ -139,6 +145,9 @@ const TH_TABS = {
 	tree: function() {
 		return player.elementary.theory.supersymmetry.unl
 	},
+	strings: function() {
+		return player.elementary.theory.tree.unl
+	},
 };
 
 const TREE_UPGS = {
@@ -184,3 +193,22 @@ const TREE_UPGS = {
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
+
+const UNL_STR = function() { return 5 }
+const TOTAL_STR = 5
+const STR_REQS = {
+	1: new ExpantaNum(0),
+	2: new ExpantaNum(0.5),
+	3: new ExpantaNum(100),
+	4: new ExpantaNum(1/0), // 1e6 or 1e9
+	5: new ExpantaNum(1/0), // DISTANCES.uni
+}
+const STR_NAMES = {
+	1: "Primary",
+	2: "Secondary",
+	3: "Tertiary",
+	4: "Quaternary",
+	5: "Quinary",
+	6: "Senary",
+	7: "Septenary"
+}

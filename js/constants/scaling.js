@@ -11,6 +11,7 @@ const SCALING_STARTS = {
 		enlightenments: new ExpantaNum(6),
 		spectralGems: new ExpantaNum(5),
 		dervBoost: new ExpantaNum(6),
+		photons: new ExpantaNum(15),
 	},
 	superscaled: {
 		rank: new ExpantaNum(100),
@@ -78,8 +79,11 @@ const SCALING_RES = {
 	dervBoost: function (n = 0) {
 		return player.inf.derivatives.unlocks;
 	},
+	photons: function(n = 0) {
+		return player.elementary.bosons.gauge.photons.upgrades[n - 1];
+	},
 };
-const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments"]
+const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments", "photons"]
 const REAL_SCALING_NAMES = {
 	rank: "ranks",
 	rankCheap: "rank cheapeners",
@@ -92,4 +96,5 @@ const REAL_SCALING_NAMES = {
 	enlightenments: "enlightenments",
 	spectralGems: "spectral gems",
 	dervBoost: "derivative boosts",
+	photons: "photon upgrades",
 }

@@ -675,8 +675,10 @@ function updateTempInf() {
 	if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
+	if (tmp.inf.pantheon.chipBoost.gte(2.5)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.logBase(2.5).plus(1.5);
 	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2);
+	if (tmp.inf.pantheon.soulBoost.gte(2.5)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.logBase(2.5).plus(1.5);
 	if (player.inf.pantheon.purge.active) {
 		tmp.inf.pantheon.chipBoost = new ExpantaNum(1);
 		tmp.inf.pantheon.soulBoost = new ExpantaNum(1);

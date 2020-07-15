@@ -92,6 +92,10 @@ function updateTempElementary() {
 		}
 		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
 		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
+		if (player.elementary.times.gte(3)) {
+			player.pathogens.unl = true
+			player.dc.unl = true
+		}
 		
 		// Bugfixes
 		infTab = "infinity"
@@ -289,6 +293,13 @@ function updateTempElementary() {
 		3: ExpantaNum.pow(10, player.elementary.bosons.gauge.photons.upgrades[2]).times(1e4),
 		4: ExpantaNum.pow(2, player.elementary.bosons.gauge.photons.upgrades[3].pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]))).times(6e4),
 	};
+	for (let i=1;i<=4;i++) {
+		if (tmp.scaling.active("photons", player.elementary.bosons.gauge.photons.upgrades[i-1], "scaled")) {
+			let power = tmp.scalingPower.scaled.photons
+			let exp = ExpantaNum.pow(2, power)
+			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, tmp.scalings.scaled.photons)
+		}
+	}
 	tmp.elm.bos.photonEff = function (x) {
 		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1];
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
@@ -430,13 +441,14 @@ function updateTempElementary() {
 		broken: new ExpantaNum(3600*24*365.24),
 	}
 	tmp.elm.pa.state = ""
-	if (tmp.inf.asc.perkTimeO.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
-	if (tmp.inf.asc.perkTimeO.gte(tmp.elm.pa.stateStarts.broken)) tmp.elm.pa.state = "broken"
 	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
+	if (tmp.elm.pa.speedBoost.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
+	if (tmp.elm.pa.speedBoost.gte(tmp.elm.pa.stateStarts.broken)) tmp.elm.pa.state = "broken"
 	if (tmp.elm.pa.state=="weakened") tmp.elm.pa.speedBoost = tmp.elm.pa.speedBoost.sqrt().times(ExpantaNum.sqrt(tmp.elm.pa.stateStarts.weakened))
 	if (tmp.elm.pa.state=="broken") tmp.elm.pa.speedBoost = tmp.elm.pa.speedBoost.cbrt().times(ExpantaNum.pow(tmp.elm.pa.stateStarts.broken, 2/3))
 	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
 	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
+	if (tmp.elm.pa.boost.gte(6.75)) tmp.elm.pa.boost = tmp.elm.pa.boost.logBase(6.75).plus(5.75)
 		
 	// Theories
 	tmp.elm.theory = {}
@@ -480,11 +492,14 @@ function updateTempElementary() {
 		if (player.elementary.theory.tree.unl) {
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[5].effect(player.elementary.theory.tree.upgrades[5]||0))
+			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(getStringEff(1))
 		}
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
+		if (tmp.elm.theory.ss[type+"Eff"].gte(1e9)) tmp.elm.theory.ss[type+"Eff"] = tmp.elm.theory.ss[type+"Eff"].cbrt().times(1e6)
 	}
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
 	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
+	if (tmp.elm.theory.ss.waveEff.gte(1e13)) tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.waveEff.pow(1/4).times(Math.pow(1e13, 3/4))
 	
 	// The Theory Tree
 	tmp.elm.theory.tree = {}
@@ -530,4 +545,52 @@ function resetTheoryTree(force=false) {
 	player.elementary.theory.tree.spent = new ExpantaNum(0)
 	player.elementary.theory.tree.upgrades = {}
 	elmReset(true)
+}
+
+// Strings
+
+function unlockStrings() {
+	if (!player.elementary.theory.unl) return
+	if (!player.elementary.theory.tree.unl) return
+	if (player.elementary.theory.strings.unl) return
+	if (player.elementary.theory.points.lt(7)) return
+	if (!confirm("Are you sure you want to unlock Strings? You will not be able to get your Theory Points back!")) return
+	player.elementary.theory.points = player.elementary.theory.points.sub(7)
+	player.elementary.theory.strings.unl = true
+}
+
+function getStringEff(n) {
+	if (!player.elementary.theory.unl || !player.elementary.theory.strings.unl) return new ExpantaNum(1)
+	let ret = player.elementary.theory.strings.amounts[n-1].plus(1).pow(3/n)
+	if (ret.gte(1e6)) ret = ret.cbrt().times(1e4)
+	if (n==1 && ret.gte(1e9)) ret = ret.pow(0.1).times(Math.pow(1e9, 0.9))
+	return ret
+}
+
+function getStringGain(n) {
+	if (!player.elementary.theory.strings.unl) return new ExpantaNum(0)
+	if (n>1) if (!(player.elementary.theory.strings.amounts[n-2].gte(STR_REQS[n])&&(UNL_STR()>=n))) return new ExpantaNum(0)
+	let gain = new ExpantaNum(0.02).times(1/Math.sqrt(n))
+	if (n<TOTAL_STR) gain = gain.times(getStringEff(n+1))
+	gain = gain.times(getEntangleEff())
+	return gain
+}
+
+function getEntangleGain() {
+	let base = new ExpantaNum(1)
+	player.elementary.theory.strings.amounts.forEach(x => function() { base = base.times(ExpantaNum.add(x, 1)) }())
+	let gain = base.max(1).logBase(2).sqrt()
+	return gain
+}
+
+function getEntangleEff() {
+	let eff = player.elementary.theory.strings.entangled.plus(1).pow(1.5)
+	return eff
+}
+
+function entangleStrings() {
+	let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
+	if (lastStr<3) return
+	player.elementary.theory.strings.entangled = player.elementary.theory.strings.entangled.plus(getEntangleGain())
+	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }

@@ -113,6 +113,11 @@ function tickWithoutTS(diff) {
 				player.elementary.theory.supersymmetry[type+"s"] = player.elementary.theory.supersymmetry[type+"s"].plus(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss").times(diff))
 			}
 		}
+		if (player.elementary.theory.strings.unl) {
+			for (let i=1;i<=TOTAL_STR;i++) {
+				player.elementary.theory.strings.amounts[i-1] = player.elementary.theory.strings.amounts[i-1].plus(tmp.nerfs.adjust(getStringGain(i), "str").times(diff))
+			}
+		}
 	}
 }
 

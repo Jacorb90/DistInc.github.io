@@ -196,7 +196,14 @@ const TMP_DATA = {
 		"treeUnl",
 		"treeDiv",
 		"treeRespec",
-		"saveImp"
+		"saveImp",
+		"stringsUnl",
+		"stringsDiv",
+		"nextStr",
+		"entangleDiv",
+		"entangle",
+		"entangleAmt",
+		"entangleEff"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -266,3 +273,9 @@ for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 	TMP_DATA.ELS.push(Object.keys(SCALING_STARTS)[i]+"Stat")
 }
 for (let i=1;i<=TREE_AMT;i++) TMP_DATA.ELS.push("tree"+i)
+for (let i=1;i<=TOTAL_STR;i++) {
+	if (i>1) TMP_DATA.ELS.push("str"+i)
+	TMP_DATA.ELS.push("str"+i+"amt")
+	TMP_DATA.ELS.push("str"+i+"eff")
+	TMP_DATA.ELS.push("str"+i+"gain")
+}

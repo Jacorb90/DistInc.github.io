@@ -731,7 +731,7 @@ function updateHTML() {
 						locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]),
 						light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])
 					});
-					tmp.el["photonLvl" + i].setTxt(showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
+					tmp.el["photonLvl" + i].setTxt(tmp.scaling.getName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
 					tmp.el["photonDesc" + i].setTxt(showNum(tmp.elm.bos.photonEff(i)) + "x");
 					tmp.el["photonCost" + i].setTxt(showNum(tmp.elm.bos.photonCost[i]));
 				}
@@ -820,6 +820,23 @@ function updateHTML() {
 					tmp.el["tree"+i].setClasses({tree: true, capped: tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap), unl: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))), locked: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i])))})
 				}
 				tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
+			}
+			if (thTab=="strings") {
+				tmp.el.stringsUnl.setDisplay(!player.elementary.theory.strings.unl)
+				tmp.el.stringsDiv.setDisplay(player.elementary.theory.strings.unl)
+				for (let i=1;i<=TOTAL_STR;i++) {
+					if (i>1) tmp.el["str"+i].setDisplay(player.elementary.theory.strings.amounts[i-2].gte(STR_REQS[i])&&(UNL_STR()>=i))
+					tmp.el["str"+i+"amt"].setTxt(formatDistance(player.elementary.theory.strings.amounts[i-1]))
+					tmp.el["str"+i+"eff"].setTxt(showNum(getStringEff(i)))
+					tmp.el["str"+i+"gain"].setTxt(formatDistance(tmp.nerfs.adjust(getStringGain(i), "str")))
+				}
+				let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
+				tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])))
+				tmp.el.entangleDiv.setDisplay(lastStr>=3||player.elementary.theory.strings.entangled.gt(0))
+				tmp.el.entangle.setClasses({btn: true, locked: lastStr<3, th: lastStr>=3})
+				tmp.el.entangle.setTxt("Entangle your Strings (which resets them) to gain "+formatDistance(getEntangleGain())+" of Entangled Strings.")
+				tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled))
+				tmp.el.entangleEff.setTxt(showNum(getEntangleEff()))
 			}
 		}
 	}
