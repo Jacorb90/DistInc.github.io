@@ -264,14 +264,19 @@ const TREE_UPGS = {
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
-const UNL_STR = function() { return 5 }
-const TOTAL_STR = 5
+const UNL_STR = function() { 
+	if (hasDE(2)) return 7
+	else return 5 
+}
+const TOTAL_STR = 7
 const STR_REQS = {
 	1: new ExpantaNum(0),
 	2: new ExpantaNum(0.5),
 	3: new ExpantaNum(100),
 	4: new ExpantaNum(1e4),
 	5: new ExpantaNum(1e7),
+	6: new ExpantaNum(1e14),
+	7: new ExpantaNum(DISTANCES.pc),
 }
 const STR_NAMES = {
 	1: "Primary",
@@ -283,10 +288,12 @@ const STR_NAMES = {
 	7: "Septenary"
 }
 
-const MAX_DARK_EXPANDERS = 1
+const MAX_DARK_EXPANDERS = 2
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
+	2: new ExpantaNum(250),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
+	2: "Unlock two more Strings.",
 }
