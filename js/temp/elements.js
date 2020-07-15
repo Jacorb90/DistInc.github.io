@@ -491,7 +491,7 @@ function updateHTML() {
 		// The Pantheon
 		if (infTab == "pantheon") {
 			tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems));
-			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next));
+			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next.ceil()));
 			let name = tmp.scaling.getName("spectralGems");
 			tmp.el.spectralGemName.setTxt(name == "" ? "" : name + " ");
 			tmp.el.respecSpectralGems.setClasses({
@@ -753,14 +753,15 @@ function updateHTML() {
 					let amt = player.elementary.bosons.gauge.gluons[col].amount;
 					tmp.el[col + "g"].setTxt(showNum(amt));
 					tmp.el[col + "gg"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos[col + "g"], "gauge")));
-					for (let x = 1; x <= 2; x++) {
+					tmp.el["glu"+col+"3"].setDisplay(hasDE(1))
+					for (let x = 1; x <= 3; x++) {
 						tmp.el[col + "Upg" + x].setClasses({
 							btn: true,
 							locked: amt.lt(tmp.elm.bos.gluonCost(col, x)),
 							elm: amt.gte(tmp.elm.bos.gluonCost(col, x))
 						});
 						tmp.el[col + "Lvl" + x].setTxt(
-							showNum(player.elementary.bosons.gauge.gluons[col].upgrades[x - 1])
+							showNum(player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0))
 						);
 						tmp.el[col + "Eff" + x].setTxt(showNum(tmp.elm.bos.gluonEff(col, x)));
 						tmp.el[col + "Cost" + x].setTxt(showNum(tmp.elm.bos.gluonCost(col, x)));
@@ -855,6 +856,10 @@ function updateHTML() {
 				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
 				tmp.el.accelGain.setTxt(showNum(tmp.nerfs.adjust(getAccelGain(), "accelerons")))
 				tmp.el.accelEff.setTxt(showNum(getAccelEff()))
+				let amt = player.elementary.theory.accelerons.expanders.toNumber()+1
+				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS))})
+				tmp.el.darkExp.setHTML((amt-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[amt]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[amt])+" Accelerons"))
+				tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
 			}
 		}
 	}

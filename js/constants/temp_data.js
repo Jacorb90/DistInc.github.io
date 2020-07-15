@@ -214,7 +214,9 @@ const TMP_DATA = {
 		"acceleronsDiv",
 		"accel",
 		"accelGain",
-		"accelEff"
+		"accelEff",
+		"darkExp",
+		"darkExpAmt"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -268,7 +270,8 @@ for (let i = 0; i < GLUON_COLOURS.length; i++) {
 	let col = GLUON_COLOURS[i];
 	TMP_DATA.ELS.push(col + "g");
 	TMP_DATA.ELS.push(col + "gg");
-	for (let x = 1; x <= 2; x++) {
+	TMP_DATA.ELS.push("glu"+col+"3");
+	for (let x = 1; x <= 3; x++) {
 		TMP_DATA.ELS.push(col + "Upg" + x);
 		TMP_DATA.ELS.push(col + "Lvl" + x);
 		TMP_DATA.ELS.push(col + "Eff" + x);

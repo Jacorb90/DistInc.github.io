@@ -339,9 +339,10 @@ function updateTempElementary() {
 	};
 	tmp.elm.bos.updateTabs();
 	tmp.elm.bos.gluonEff = function (col, x) {
-		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1];
+		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(2, bought);
-		else return ExpantaNum.pow(1.1, bought);
+		else if (x==2) return ExpantaNum.pow(1.1, bought);
+		else return bought.times(10)
 	};
 	tmp.elm.bos.rg = gaugeSpeed.div(2.5).times(tmp.elm.bos.gluonEff("ar", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.gg = gaugeSpeed.div(2.6).times(tmp.elm.bos.gluonEff("ag", 1)).times(tmp.elm.bos.photonEff(3).max(1));
@@ -350,9 +351,10 @@ function updateTempElementary() {
 	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.gluonCost = function (col, x) {
-		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1];
+		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(2, bought.pow(2.5).times(2)).times(100);
-		else return ExpantaNum.pow(3, ExpantaNum.pow(3, bought)).times(1e3 / 3);
+		else if (x==2) return ExpantaNum.pow(3, ExpantaNum.pow(3, bought)).times(1e3 / 3);
+		else return ExpantaNum.pow(10, bought.pow(2)).times(1e7)
 	};
 	tmp.elm.bos.buy = function (col, x) {
 		let amt = player.elementary.bosons.gauge.gluons[col].amount;
@@ -653,7 +655,7 @@ function unlockAccelerons() {
 	if (!player.elementary.theory.preons.unl) return
 	if (player.elementary.theory.accelerons.unl) return
 	if (player.elementary.theory.points.lt(84)) return
-	if (!confirm("Are you sure you want to unlock Accelerons? At this point in development, it is not worth it to unlock them (since their more powerful buffs aren't added yet)...")) return
+	if (!confirm("Are you sure you want to unlock Accelerons? You won't be able to get your Theory Points back!")) return
 	player.elementary.theory.points = player.elementary.theory.points.sub(84)
 	player.elementary.theory.accelerons.unl = true
 }
@@ -661,6 +663,7 @@ function unlockAccelerons() {
 function getAccelGain() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(0)
 	let gain = tmp.acc.plus(1).log10().div(1e6).sqrt()
+	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
 	return gain
 }
 
@@ -668,4 +671,22 @@ function getAccelEff() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(1)
 	let eff = player.elementary.theory.accelerons.amount.plus(1).pow(0.04)
 	return eff
+}
+
+function darkExpand() {
+	if (!player.elementary.theory.accelerons.unl) return
+	if (player.elementary.theory.accelerons.expanders.gte(MAX_DARK_EXPANDERS)) return
+	if (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])) return
+	player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.sub(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])
+	player.elementary.theory.accelerons.expanders = player.elementary.theory.accelerons.expanders.plus(1)
+}
+
+function hasDE(n) { return player.elementary.theory.accelerons.expanders.gte(n)&&player.elementary.theory.accelerons.unl }
+
+function buyGluon3(col) {
+	if (!hasDE(1)) return
+	if (player.elementary.bosons.gauge.gluons[col].amount.lt(tmp.elm.bos.gluonCost(col, 3))) return
+	player.elementary.bosons.gauge.gluons[col].amount = player.elementary.bosons.gauge.gluons[col].amount.sub(tmp.elm.bos.gluonCost(col, 3))
+	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(1)
+	player.elementary.theory.points = player.elementary.theory.points.plus(10)
 }

@@ -601,6 +601,7 @@ function updateTempInf() {
 			.sqrt()
 			.times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
+			.plus(1)
 			.floor();
 	}
 	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "superscaled")) {
@@ -625,6 +626,7 @@ function updateTempInf() {
 			.pow(exp.pow(-1))
 			.times(tmp.scalings.superscaled.spectralGems.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
+			.plus(1)
 			.floor();
 	}
 	tmp.inf.pantheon.collect = function () {

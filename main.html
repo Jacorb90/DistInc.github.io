@@ -1110,6 +1110,14 @@
 							<td><button id="tree10" class="tree locked" onclick="tmp.elm.theory.tree.buy(10)"></button></td>
 							<td><button id="tree11" class="tree locked" onclick="tmp.elm.theory.tree.buy(11)"></button></td>
 						</tr></table>
+						<table><tr>
+							<td><button id="tree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
+							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
+						</tr></table>
 						<br><br><br><br><br>
 					</div>
 				</div>
@@ -1141,7 +1149,8 @@
 					<div id="acceleronsDiv">
 						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second.<br><br>
 						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff" class="thp"></span>x later.<br><br><br>
-						<span style="font-size: 4px;">Dark Expanders coming soon...</span><br><br><br>
+						<button id="darkExp" class="btn locked" onclick="darkExpand()"></button><br><br>
+						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br><br><br>
 					</div>
 				</div>
 			</div>

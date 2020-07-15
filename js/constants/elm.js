@@ -245,6 +245,22 @@ const TREE_UPGS = {
 		effect: function(bought) { return player.elementary.theory.preons.amount.plus(1).times(10).slog(10).times(bought) },
 		effD: function(e) { return showNum(e)+" extra levels" },
 	},
+	12: {
+		unl: function() { return player.elementary.theory.accelerons.unl },
+		cost: function(bought) { return ExpantaNum.mul(100, bought.sqrt().plus(1)) },
+		cap: new ExpantaNum(12),
+		desc: "Accelerons are generated faster based on your Supersymmetric Wave length.",
+		effect: function(bought) { return tmp.elm.theory.ss.wavelength.plus(1).pow(0.04).pow(bought) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	13: {
+		unl: function() { return player.elementary.theory.accelerons.unl },
+		cost: function(bought) { return ExpantaNum.mul(5, bought.pow(2).plus(1)).plus(75) },
+		cap: new ExpantaNum(25),
+		desc: "Pathogen Upgrades are stronger based on your Bosons.",
+		effect: function(bought) { return player.elementary.bosons.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)) },
+		effD: function(e) { return "+"+showNum(e.times(100))+"%" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
@@ -265,4 +281,12 @@ const STR_NAMES = {
 	5: "Quinary",
 	6: "Senary",
 	7: "Septenary"
+}
+
+const MAX_DARK_EXPANDERS = 1
+const DARK_EXPANDER_COSTS = {
+	1: new ExpantaNum(40),
+}
+const DARK_EXPANDER_DESCS = {
+	1: "Unlock a third Gluon Upgrade.",
 }

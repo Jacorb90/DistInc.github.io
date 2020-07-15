@@ -52,6 +52,7 @@ const NEWS_DATA = {
 	m50: ['"Nont" - Jacorb after 5 hours has passed'],
 	m51: ["The most recent feature of Distance Incremental is not a ripoff, or at least you can't prove that in court"],
 	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
+	m53: ["Maybe you're actually Slabdrill and just don't realize it"],
 
 	// Distance-based Conditions
 	d1: [
@@ -300,6 +301,12 @@ const NEWS_DATA = {
 		"What if crackle is an affiliate of Slabdrill?",
 		function () {
 			return player.inf.derivatives.unl
+		},
+	],
+	s15: [
+		"Accelerons were your biggest mistake",
+		function () {
+			return player.elementary.theory.accelerons.unl
 		},
 	],
 };

@@ -186,7 +186,19 @@ function setupHTML() {
 			col +
 			"Eff2'></span>x<br>Cost: <span id='" +
 			col +
-			"Cost2'></span> of these Gluons.</button></td></tr>";
+			"Cost2'></span> of these Gluons.</button></td>";
+		data +=
+			"<td id='glu"+col+"3'><button id='" +
+			col +
+			"Upg3' class='btn locked' onclick='buyGluon3(&quot;" +
+			col +
+			"&quot;)'>Get ten free Theory Points.<br>Level: <span id='" +
+			col +
+			"Lvl3'></span><br>Total: +<span id='" +
+			col +
+			"Eff3'></span><br>Cost: <span id='" +
+			col +
+			"Cost3'></span> of these Gluons.</button></td></tr>";
 		tbl.setHTML(data);
 	}
 }
