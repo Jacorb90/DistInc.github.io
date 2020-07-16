@@ -793,6 +793,7 @@ function updateHTML() {
 				tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
 				tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x")
 				tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x")
+				tmp.el["higgs0;0;5"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;5"](true))+" later")
 			}
 		}
 		if (elmTab=="theory") {
@@ -835,8 +836,8 @@ function updateHTML() {
 				}
 				let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
 				tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])))
-				tmp.el.entangleDiv.setDisplay(lastStr>=3||player.elementary.theory.strings.entangled.gt(0))
-				tmp.el.entangle.setClasses({btn: true, locked: lastStr<3, th: lastStr>=3})
+				tmp.el.entangleDiv.setDisplay(lastStr>=3||lastStr==0||player.elementary.theory.strings.entangled.gt(0))
+				tmp.el.entangle.setClasses({btn: true, locked: lastStr<3&&lastStr!=0, th: lastStr>=3||lastStr==0})
 				tmp.el.entangle.setTxt("Entangle your Strings (which resets them) to gain "+formatDistance(getEntangleGain())+" of Entangled Strings.")
 				tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled))
 				tmp.el.entangleEff.setTxt(showNum(getEntangleEff()))

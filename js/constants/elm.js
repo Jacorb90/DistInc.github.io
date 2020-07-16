@@ -131,6 +131,31 @@ const HIGGS_UPGS = {
 		desc: "Purge Power boosts Quark & Lepton gain.",
 		unl: function() { return player.elementary.bosons.scalar.higgs.upgrades.includes("0;2;1") },
 	},
+	"5;0;0": {
+		cost: new ExpantaNum(5e20),
+		desc: "inf10;4 uses a better formula.",
+		unl: function() { return hasDE(3) },
+	},
+	"0;0;5": {
+		cost: new ExpantaNum(5e20),
+		desc: "Atomic Rank scaling starts later based on your Higgs Bosons.",
+		unl: function() { return hasDE(3) },
+	},
+	"5;0;5": {
+		cost: new ExpantaNum(1e21),
+		desc: "inf10;10 uses a better formula.",
+		unl: function() { return hasDE(3) },
+	},
+	"4;1;0": {
+		cost: new ExpantaNum(2e20),
+		desc: "Gain 666x more Gluons.",
+		unl: function() { return hasDE(3) },
+	},
+	"0;1;4": {
+		cost: new ExpantaNum(2e20),
+		desc: "The first softcap to Pathogen Upgrade 1's effect is disabled, and Pathogen Upgrade 1's formula is better.",
+		unl: function() { return hasDE(3) },
+	},
 }
 
 const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]
@@ -288,12 +313,14 @@ const STR_NAMES = {
 	7: "Septenary"
 }
 
-const MAX_DARK_EXPANDERS = 2
+const MAX_DARK_EXPANDERS = 3
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
 	2: new ExpantaNum(250),
+	3: new ExpantaNum(600),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
 	2: "Unlock two more Strings.",
+	3: "Unlock new Higgs Upgrades.",
 }

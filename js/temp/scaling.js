@@ -59,6 +59,7 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("9;3")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1);
 		if (tmp.inf.upgs.has("2;10")) tmp.scalings.superscaled.darkCore = tmp.scalings.superscaled.darkCore.plus(5)
 	}
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) tmp.scalings.atomic.rank = tmp.scalings.atomic.rank.plus(tmp.elm.bos["higgs_0;0;5"]())
 	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);

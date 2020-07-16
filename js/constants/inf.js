@@ -645,7 +645,9 @@ const INF_UPGS = {
 			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt()
 			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt()
 			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75)
-			return f1.times(f2).times(f3).cbrt()
+			let ret = f1.times(f2).times(f3).cbrt()
+			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;0")) ret = ret.pow(1.8)
+			return ret
 		},
 		"10;5": function() {
 			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
@@ -656,7 +658,15 @@ const INF_UPGS = {
 			return ret
 		},
 		"10;10": function() {
-			let ret = ExpantaNum.pow(1.9, player.rank.max(1).sub(1)).times(ExpantaNum.pow(8.5, player.tier.max(1).sub(1)))
+			let base1 = new ExpantaNum(1.9)
+			let ranks = player.rank.max(1).sub(1)
+			let base2 = new ExpantaNum(8.5)
+			let tiers = player.tier.max(1).sub(1)
+			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;5")) {
+				base1 = base1.plus(ranks.plus(1).log10().div(10))
+				base2 = base2.plus(tiers.plus(1).log10().div(4))
+			}
+			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers))
 			return ret
 		},
 	}

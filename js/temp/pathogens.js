@@ -186,8 +186,9 @@ function updateTempPathogens() {
 							.logBase(2)
 							.plus(bought.gt(0) ? 1 : 0)
 					);
-				if (ret.gte(2e3)) ret = ret.sqrt().times(Math.sqrt(2e3));
+				if (ret.gte(2e3) && !(tmp.elm?tmp.elm.bos.hasHiggs("0;1;4"):false)) ret = ret.sqrt().times(Math.sqrt(2e3));
 				if (ret.gte(1e4)) ret = ret.log10().times(1e4 / 4);
+				if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;4")) ret = ret.times(4)
 				return ret;
 			} else if (i == 2) {
 				let ret = player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3));

@@ -17,6 +17,7 @@ function updateTempElementary() {
 		tmp.slEff = tmp.elm.theory.ss.sleptonEff
 		tmp.neuEff = tmp.elm.theory.ss.neutralinoEff
 		tmp.chEff = tmp.elm.theory.ss.charginoEff
+		tmp.hh410 = tmp.elm.bos.hasHiggs("4;1;0")
 	}
 
 	// Elementary Layer
@@ -70,11 +71,11 @@ function updateTempElementary() {
 			z: new ExpantaNum(0),
 			gluons: {
 				r: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				g: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				b: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				ar: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				ag: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				ab: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades }
+				g: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.g.upgrades },
+				b: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.b.upgrades },
+				ar: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ar.upgrades },
+				ag: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ag.upgrades },
+				ab: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ab.upgrades }
 			},
 			gravitons: new ExpantaNum(0)
 		};
@@ -365,8 +366,10 @@ function updateTempElementary() {
 		].upgrades[x - 1].plus(1);
 	};
 	tmp.elm.bos.gluon2total = new ExpantaNum(1);
-	for (let i = 0; i < GLUON_COLOURS.length; i++)
+	for (let i = 0; i < GLUON_COLOURS.length; i++) {
 		tmp.elm.bos.gluon2total = tmp.elm.bos.gluon2total.times(tmp.elm.bos.gluonEff(GLUON_COLOURS[i], 2));
+		if (tmp.hh410) tmp.elm.bos[GLUON_COLOURS[i]+"g"] = tmp.elm.bos[GLUON_COLOURS[i]+"g"].times(666)
+	}
 
 	// Gravitons
 	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75);
@@ -432,6 +435,11 @@ function updateTempElementary() {
 	tmp.elm.bos["higgs_0;3;1"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;3;1")) return new ExpantaNum(1)
 		let ret = player.inf.pantheon.purge.power.plus(1).pow(0.9)
+		return ret
+	}
+	tmp.elm.bos["higgs_0;0;5"] = function(disp=false) {
+		if (!disp) if (!tmp.elm.bos.hasHiggs("0;0;5")) return new ExpantaNum(0)
+		let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(2.5).sub(1).times(18)
 		return ret
 	}
 	
@@ -602,7 +610,7 @@ function getEntangleEff() {
 
 function entangleStrings() {
 	let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
-	if (lastStr<3) return
+	if (lastStr<3&&lastStr!=0) return
 	player.elementary.theory.strings.entangled = player.elementary.theory.strings.entangled.plus(getEntangleGain())
 	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }

@@ -309,6 +309,18 @@ const NEWS_DATA = {
 			return player.elementary.theory.accelerons.unl
 		},
 	],
+	s16: [
+		"We were originally planning on giving a pg-3 rating for this game, but after Cadavers were added, we have decided to up it to 18+",
+		function () {
+			return player.collapse.cadavers.gt(0)
+		},
+	],
+	s17: [
+		"You have achieved true lightspeed!"
+		function () {
+			return player.bestV.gte(299792458)
+		},
+	],
 };
 
 const NEWS_ADJ = 110;
