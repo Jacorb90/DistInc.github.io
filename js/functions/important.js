@@ -155,7 +155,8 @@ function modeLoad(resetted) {
 
 function checkNaN() {
 	if (anyNaN||player.distance.isNaN()||player.inf.knowledge.isNaN()) {
-		alert("We have detected a NaN Error and are about to reload your game. We apologize for this, but it is for your own good...")
-		reload()
+		tmp.options.export()
+		alert("We have detected a NaN Error in your save! We have exported it to your clipboard (although it may be broken), and will hard reset the game to remove this bug as soon as possible. Please go to the discord (in the options menu) and tell someone about what happened, and hopefully your save can be salvaged. We apologize for this error.")
+		tmp.options.hardReset(true)
 	}
 }

@@ -216,7 +216,10 @@ const TMP_DATA = {
 		"accelGain",
 		"accelEff",
 		"darkExp",
-		"darkExpAmt"
+		"darkExpAmt",
+		"gravBoostDiv",
+		"gravBoosts",
+		"gravBoostMult"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

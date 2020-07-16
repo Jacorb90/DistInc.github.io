@@ -51,7 +51,7 @@ function updateTempElementary() {
 			player.bestEP = player.bestEP.max(tmp.elm.layer.gain)
 			player.elementary.particles = player.elementary.particles.plus(tmp.elm.layer.gain);
 		}
-		player.elementary.times = player.elementary.times.plus(1);
+		player.elementary.times = player.elementary.times.plus(getElementariesGained());
 		
 		// Achievement Rewards
 		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
@@ -697,4 +697,22 @@ function buyGluon3(col) {
 	player.elementary.bosons.gauge.gluons[col].amount = player.elementary.bosons.gauge.gluons[col].amount.sub(tmp.elm.bos.gluonCost(col, 3))
 	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(1)
 	player.elementary.theory.points = player.elementary.theory.points.plus(10)
+}
+
+function getGravBoosts() {
+	if (!hasDE(4)) return new ExpantaNum(0)
+	let g = player.elementary.bosons.gauge.gravitons
+	return g.plus(1).log10().sqrt().floor()
+}
+
+function getGravBoostMult() {
+	if (!hasDE(4)) return new ExpantaNum(1)
+	let b = getGravBoosts()
+	return ExpantaNum.pow(2, b)
+}
+
+function getElementariesGained() {
+	let e = new ExpantaNum(1)
+	if (hasDE(4)) e = e.times(getGravBoostMult())
+	return e.max(1).floor()
 }

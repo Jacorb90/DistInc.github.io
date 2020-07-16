@@ -313,14 +313,16 @@ const STR_NAMES = {
 	7: "Septenary"
 }
 
-const MAX_DARK_EXPANDERS = 3
+const MAX_DARK_EXPANDERS = 4
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
 	2: new ExpantaNum(250),
 	3: new ExpantaNum(600),
+	4: new ExpantaNum(2e3),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
 	2: "Unlock two more Strings.",
 	3: "Unlock new Higgs Upgrades.",
+	4: "Unlock Graviton Boosts.",
 }

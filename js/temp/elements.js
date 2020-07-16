@@ -772,6 +772,9 @@ function updateHTML() {
 				tmp.el.grav.setTxt(showNum(player.elementary.bosons.gauge.gravitons));
 				tmp.el.gravGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge")));
 				tmp.el.gravMult.setTxt(showNum(tmp.elm.bos.gravEff));
+				tmp.el.gravBoostDiv.setDisplay(hasDE(4))
+				tmp.el.gravBoosts.setTxt(showNum(getGravBoosts()));
+				tmp.el.gravBoostMult.setTxt(showNum(getGravBoostMult()));
 			}
 			if (bosTab == "scalar") {
 				// Scalar Bosons
