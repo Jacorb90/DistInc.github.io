@@ -36,7 +36,9 @@ function updateTempElementary() {
 		gain = gain.times(tmp.higgs110?tmp.higgs110:1)
 		gain = gain.times(tmp.higgs300?tmp.higgs300:1)
 		gain = gain.times(tmp.lu4?tmp.lu4:1)
-		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(1/4).times(ExpantaNum.pow(tmp.elm.softcap, 3/4))
+		let exp = new ExpantaNum(1/4)
+		if (hasDE(5) && (player.elementary.theory.tree.upgrades[20]||new ExpantaNum(0)).gte(1)) exp = exp.times(2)
+		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(exp).times(ExpantaNum.pow(tmp.elm.softcap, ExpantaNum.sub(1, exp)))
 		return gain.floor();
 	})();
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
@@ -509,6 +511,11 @@ function updateTempElementary() {
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 		if (tmp.elm.theory.ss[type+"Eff"].gte(1e9)) tmp.elm.theory.ss[type+"Eff"] = tmp.elm.theory.ss[type+"Eff"].cbrt().times(1e6)
 	}
+	if (hasDE(5)) for (let i=2;i>=0;i--) {
+		let type = ["squark", "slepton", "neutralino", "chargino"][i]
+		let next = ["squark", "slepton", "neutralino", "chargino"][i+1]
+		if ((player.elementary.theory.tree.upgrades[i+22]||new ExpantaNum(0)).gte(1)) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(tmp.elm.theory.ss[next+"Eff"])
+	}
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
 	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
 	if (tmp.elm.theory.ss.waveEff.gte(1e13)) tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.waveEff.pow(1/4).times(Math.pow(1e13, 3/4))
@@ -574,9 +581,16 @@ function unlockStrings() {
 function getStringEff(n) {
 	if (!player.elementary.theory.unl || !player.elementary.theory.strings.unl) return new ExpantaNum(1)
 	let ret = player.elementary.theory.strings.amounts[n-1].plus(1).pow(3/n)
-	if (ret.gte(1e6)) ret = ret.cbrt().times(1e4)
+	if (ret.gte(1e6)) ret = ret.pow(1/3).times(ExpantaNum.pow(1e6, 2/3))
 	if (n==1 && ret.gte(1e9)) ret = ret.pow(0.1).times(Math.pow(1e9, 0.9))
-	return ret
+	let finalExp = new ExpantaNum(1)
+	if (hasDE(5) && n==2) finalExp = finalExp.plus(TREE_UPGS[14].effect(player.elementary.theory.tree.upgrades[14]||0))
+	if (hasDE(5) && n==3) finalExp = finalExp.plus(TREE_UPGS[15].effect(player.elementary.theory.tree.upgrades[15]||0))
+	if (hasDE(5) && n==4) finalExp = finalExp.plus(TREE_UPGS[16].effect(player.elementary.theory.tree.upgrades[16]||0))
+	if (hasDE(5) && n==5) finalExp = finalExp.plus(TREE_UPGS[17].effect(player.elementary.theory.tree.upgrades[17]||0))
+	if (hasDE(5) && n==6) finalExp = finalExp.plus(TREE_UPGS[18].effect(player.elementary.theory.tree.upgrades[18]||0))
+	if (hasDE(5) && n==7) finalExp = finalExp.plus(TREE_UPGS[19].effect(player.elementary.theory.tree.upgrades[19]||0))
+	return ret.pow(finalExp)
 }
 
 function getStringGain(n) {
@@ -637,7 +651,9 @@ function getPreonGain() {
 function getTBCost() {
 	let b = new ExpantaNum(player.elementary.theory.preons.boosters)
 	if (b.gte(4)) b = b.pow(2).div(4)
-	let cost = new ExpantaNum(20).times(ExpantaNum.pow(2, b))
+	let base = new ExpantaNum(2)
+	if (hasDE(5)) base = base.pow(0.1)
+	let cost = new ExpantaNum(20).times(ExpantaNum.pow(base, b))
 	cost = cost.div(TREE_UPGS[10].effect(player.elementary.theory.tree.upgrades[10]||0))
 	return cost
 }
@@ -705,10 +721,16 @@ function getGravBoosts() {
 	return g.plus(1).log10().sqrt().floor()
 }
 
+function getGravBoostBase() {
+	let base = new ExpantaNum(2)
+	if (hasDE(5)&&(player.elementary.theory.tree.upgrades[21]||new ExpantaNum(0)).gte(1)) base = base.pow(2)
+	return base
+}
+
 function getGravBoostMult() {
 	if (!hasDE(4)) return new ExpantaNum(1)
 	let b = getGravBoosts()
-	return ExpantaNum.pow(2, b)
+	return ExpantaNum.pow(getGravBoostBase(), b)
 }
 
 function getElementariesGained() {

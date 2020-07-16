@@ -316,9 +316,15 @@ const NEWS_DATA = {
 		},
 	],
 	s17: [
-		"You have achieved true lightspeed!"
+		"You have achieved true lightspeed!",
 		function () {
 			return player.bestV.gte(299792458)
+		},
+	],
+	s18: [
+		"Physics can no longer hold me down!",
+		function () {
+			return player.bestV.gte(299792458*1.1)
 		},
 	],
 };

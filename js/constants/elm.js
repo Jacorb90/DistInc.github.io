@@ -187,7 +187,9 @@ const TREE_UPGS = {
 		cap: new ExpantaNum(100),
 		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
 		effect: function(bought) { 
-			let ret = player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(0.1) 
+			let exp = new ExpantaNum(0.1)
+			if ((player.elementary.theory.tree.upgrades[26]||new ExpantaNum(0)).gte(1)) exp = new ExpantaNum(0.4)
+			let ret = player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(exp) 
 			if (ret.gte(50)) ret = ret.sqrt().times(Math.sqrt(50))
 			if (ret.gte(100)) ret = ret.log10().pow(new ExpantaNum(100).logBase(2)).min(ret.cbrt().times(Math.pow(100, 2/3)))
 			return ret
@@ -286,6 +288,118 @@ const TREE_UPGS = {
 		effect: function(bought) { return player.elementary.bosons.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)) },
 		effD: function(e) { return "+"+showNum(e.times(100))+"%" },
 	},
+	14: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Secondary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	15: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Tertiary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	16: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Quaternary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	17: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Quinary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	18: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Senary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	19: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		cap: new ExpantaNum(10),
+		desc: "The Septenary String effect is stronger.",
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
+		effD: function(e) { return "^"+showNum(e.plus(1)) },
+	},
+	20: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(240) },
+		cap: new ExpantaNum(1),
+		desc: "The EP gain softcap is 50% weaker.",
+		effect: function(bought) { return new ExpantaNum(0.5).times(bought) },
+		effD: function(e) { return showNum(e.times(100))+"% weaker" },
+	},
+	21: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(240) },
+		cap: new ExpantaNum(1),
+		desc: "Graviton Boosts are twice as strong.",
+		effect: function(bought) { return new ExpantaNum(2).times(bought) },
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	22: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(50) },
+		cap: new ExpantaNum(1),
+		desc: "Sleptons also boost Squark gain.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	23: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(50) },
+		cap: new ExpantaNum(1),
+		desc: "Neutralinos also boost Slepton gain.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	24: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(50) },
+		cap: new ExpantaNum(1),
+		desc: "Charginos also boost Neutralino gain.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	25: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(250) },
+		cap: new ExpantaNum(1),
+		desc: "Pathogen Upgrades are 150% stronger (additive).",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	26: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(250) },
+		cap: new ExpantaNum(1),
+		desc: "The topmost Theory Tree Upgrade's effect uses a better formula.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	27: {
+		unl: function() { return hasDE(5) },
+		cost: function(bought) { return new ExpantaNum(50) },
+		cap: new ExpantaNum(1),
+		desc: "Collapse Milestone 10 uses a better formula.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
@@ -313,16 +427,18 @@ const STR_NAMES = {
 	7: "Septenary"
 }
 
-const MAX_DARK_EXPANDERS = 4
+const MAX_DARK_EXPANDERS = 5
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
 	2: new ExpantaNum(250),
 	3: new ExpantaNum(600),
 	4: new ExpantaNum(2e3),
+	5: new ExpantaNum(4e3),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
 	2: "Unlock two more Strings.",
 	3: "Unlock new Higgs Upgrades.",
 	4: "Unlock Graviton Boosts.",
+	5: "Unlock new Theory Tree Upgrades, and the Theoretical Boost formula is much slower.",
 }

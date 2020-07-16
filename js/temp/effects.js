@@ -92,6 +92,10 @@ function updateTempEffects() {
 	if (tmp.ucme8.gte(50)) tmp.ucme8 = tmp.ucme8.times(2).log10().times(25);
 	tmp.ucme10 = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(8);
 	if (tmp.ucme10.gte(40)) tmp.ucme10 = tmp.ucme10.times(2.5).log10().times(20);
+	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[27]||new ExpantaNum(0)).gte(1)) {
+		tmp.ucme10 = player.collapse.lifeEssence.plus(1).pow(0.1)
+		if (tmp.ucme10.gte(40)) tmp.ucme10 = tmp.ucme10.pow(0.2).times(Math.pow(40, 0.8))
+	}
 
 	// Pathogen Upgrade Effects
 

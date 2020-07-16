@@ -124,6 +124,7 @@ const ACH_DATA = {
 		143: "Under the C",
 		144: "To The Next Rank",
 		145: "The Great Epoch",
+		146: "True Infinity+",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -248,6 +249,7 @@ const ACH_DATA = {
 		143: "Complete The Theoriverse at Depth 4.",
 		144: "Reach showNum(1e33) Ascension Power.",
 		145: "Reach formatDistance(4.4e8000026).",
+		146: "Reach showNum(1.8e308) Knowledge.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
