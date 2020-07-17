@@ -243,3 +243,53 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 }
+
+document.onkeydown = function(e) {
+	if (!player.options.hot) return
+	let shiftDown = e.shiftKey
+	let key = e.which
+	switch(key) {
+		case 49: 
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(1)
+			break;
+		case 50: 
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(2)
+			break;
+		case 51: 
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(3)
+			break;
+		case 52: 
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(4)
+			break;
+		case 67: 
+			if (TABBTN_SHOWN.collapse()) tmp.collapse.layer.reset()
+			break;
+		case 68:
+			if (shiftDown && INF_TABS.derivatives()) tmp.inf.derv.doUnl()
+			else if (TABBTN_SHOWN.dc()) tmp.dc.buyCore()
+			break;
+		case 69: // Nice.
+			if (shiftDown && TABBTN_SHOWN.elementary()) tmp.elm.layer.reset()
+			else if (TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10)) tmp.inf.layer.reset()
+			break;
+		case 70: 
+			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset()
+			else if (TABBTN_SHOWN.rockets()) tmp.rf.layer.reset()
+			break;
+		case 80:
+			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()
+			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll()
+			break;
+		case 82:
+			if (shiftDown && TABBTN_SHOWN.rockets()) tmp.rockets.layer.reset()
+			else tmp.ranks.layer.reset()
+			break;
+		case 84: 
+			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start()
+			else tmp.tiers.layer.reset()
+			break;
+		case 85: 
+			if (TABBTN_SHOWN.tr()) reverseTime()
+			break;
+	}
+}

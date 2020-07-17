@@ -190,6 +190,11 @@
 								Rename Save
 							</button>
 						</td>
+						<td>
+							<button id="hot" class="btn tb opt" onclick="tmp.options.change('hot', 0)">
+								Hotkeys: ON
+							</button>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -230,7 +235,8 @@
 					href="key.html"
 					target="_blank"
 					>Distances</a
-				>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+				>&nbsp;&nbsp;&nbsp;&nbsp;<a id="hotkeys">Hotkeys</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
@@ -714,7 +720,7 @@
 		<div id="elementary" class="tab" style="display: none;">
 			<button id="elmReset" class="btn locked" onclick="elmReset()" style="min-height: 150px;"></button><br /><br />
 			You have <span id="elmp" class="elmp"></span> Elementary Particles.<br />
-			You have performed an Elementary reset <span id="elmt" style="font-weight: bold;"></span> times.<br /><br />
+			You have performed <span id="elmt" style="font-weight: bold;"></span> Elementaries.<br /><br />
 			<div class="band r">
 				<table>
 					<tr>

@@ -219,7 +219,9 @@ const TMP_DATA = {
 		"darkExpAmt",
 		"gravBoostDiv",
 		"gravBoosts",
-		"gravBoostMult"
+		"gravBoostMult",
+		"hotkeys",
+		"hot"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

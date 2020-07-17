@@ -14,6 +14,7 @@ const DEFAULT_START = {
 		newst: true,
 		elc: true,
 		saveImp: "new save",
+		hot: true,
 	},
 	modes: [],
 	time: new Date().getTime(),
