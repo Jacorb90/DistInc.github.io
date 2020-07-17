@@ -19,6 +19,7 @@ class Layer {
 		if (tmp[this.tName].sc !== undefined) sc = tmp[this.tName].sc;
 		if (gain.gte(sc)) gain = gain.sqrt().times(ExpantaNum.sqrt(sc));
 		if (tmp.lm) if (tmp.lm[this.name]) gain = gain.times(tmp.lm[this.name]);
+		if (this.name=="collapse"&&player.inf.pantheon.purge.active) gain = gain.plus(1).pow(gain.plus(1).times(10).slog(10).pow(-1)).min(gain)
 		return gain.floor();
 	}
 

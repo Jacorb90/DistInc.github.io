@@ -125,6 +125,8 @@ const ACH_DATA = {
 		144: "To The Next Rank",
 		145: "The Great Epoch",
 		146: "True Infinity+",
+		147: "The Biggest Setback",
+		148: "The Impossible Task",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -250,6 +252,8 @@ const ACH_DATA = {
 		144: "Reach showNum(1e33) Ascension Power.",
 		145: "Reach formatDistance(4.4e8000026).",
 		146: "Reach showNum(1.8e308) Knowledge.",
+		147: "Reach Rank showNum(200) with ten Endorsements or less.",
+		148: "Reach Rank showNum(995).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -322,5 +326,6 @@ const ACH_DATA = {
 		
 		142: "Endorsements that are bought automatically do not reset anything.",
 		144: "All Strings are gained showNum(25)% faster.",
+		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 	}
 };

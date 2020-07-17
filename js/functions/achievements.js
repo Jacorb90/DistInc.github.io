@@ -129,4 +129,6 @@ function updateAchievements() {
 	if (player.inf.ascension.power.gte(1e33)) tmp.ach[144].grant()
 	if (player.distance.gte("4.4e8000026")) tmp.ach[145].grant()
 	if (player.inf.knowledge.gte("1.8e308")) tmp.ach[146].grant()
+	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
+	if (player.rank.gte(995)) tmp.ach[148].grant()
 }

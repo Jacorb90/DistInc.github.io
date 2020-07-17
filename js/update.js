@@ -212,7 +212,7 @@ function updateBeforeTick() {
 function updateAfterTick() {
 	updateUnlocks();
 	if (player.options.autoSave && saveTimer >= AUTOSAVE_TIME) {
-		if (!anyNaN) tmp.options.save();
+		tmp.options.save();
 		saveTimer = 0;
 	}
 	if (tmp.modes.absurd.active && !reloaded) {

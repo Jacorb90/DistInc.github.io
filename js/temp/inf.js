@@ -836,8 +836,8 @@ function updateTempInf() {
 			let name = DERV_INCR[i];
 			let next = DERV_INCR[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
-			if (name=="snap" && tmp.inf.upgs.has("10;1")) {
-				player.inf.derivatives.amts[name] = player.inf.derivatives.amts[name].plus(tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
+			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
+				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
 				return
 			}
 			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))

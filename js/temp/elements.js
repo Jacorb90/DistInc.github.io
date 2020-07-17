@@ -4,7 +4,6 @@ function updateHTML() {
 	for (i = 0; i < TMP_DATA.ELS.length; i++) {
 		let id = TMP_DATA.ELS[i];
 		tmp.el[id] = new Element(id);
-		if (tmp.el[id].el.textContent=="NaN"||tmp.el[id].el.textContent==NaN) anyNaN = true
 	}
 
 	// Options

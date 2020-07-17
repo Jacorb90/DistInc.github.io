@@ -348,7 +348,7 @@ const TREE_UPGS = {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return new ExpantaNum(240) },
 		cap: new ExpantaNum(1),
-		desc: "Graviton Boosts are twice as strong.",
+		desc: "Each Graviton Boost is twice as strong.",
 		effect: function(bought) { return new ExpantaNum(2).times(bought) },
 		effD: function(e) { return showNum(e)+"x" },
 	},

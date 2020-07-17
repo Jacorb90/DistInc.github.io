@@ -147,16 +147,18 @@ function updateTempElementary() {
 			.sub(player.elementary.fermions.quarks.type)
 			.div(QUARK_NAMES.length)
 			.plus(1)
-			.ceil();
-		return capitalFirst(name) + (noExp ? "" : stacks.gt(1) ? "<sup>" + stacks + "</sup>" : "");
+			.ceil()
+			.max(0);
+		return capitalFirst(name) + (noExp ? "" : stacks.gt(1) ? "<sup>" + showNum(stacks) + "</sup>" : "");
 	};
 	tmp.elm.ferm.quarkEff = function (name) {
-		let qks = player.elementary.fermions.quarks.amount;
+		let qks = player.elementary.fermions.quarks.amount.max(0);
 		let stacks = tmp.elm.ferm.quarkRewards
 			.sub(QUARK_NAMES.indexOf(name) + 1)
 			.div(QUARK_NAMES.length)
 			.plus(1)
-			.ceil();
+			.ceil()
+			.max(0);
 		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8));
 		if (name == "up") return qks.plus(1).pow(ExpantaNum.mul(5, stacks));
 		else if (name == "down") return qks.plus(1).pow(ExpantaNum.mul(Math.sqrt(2), stacks.sqrt()));
@@ -192,9 +194,10 @@ function updateTempElementary() {
 	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount
 		.times(tmp.inf.pantheon.totalGems.plus(1))
 		.div(2.5)
-		.times(tmp.elm.ferm.quarkR("top").max(1));
+		.times(tmp.elm.ferm.quarkR("top").max(1))
+		.max(0);
 	if (tmp.glu2) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.glu2.max(1));
-	if (tmp.higgs031) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.higgs031)
+	if (tmp.higgs031) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.higgs031.max(1));
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.slEff||1)
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor();
 	if (tmp.elm.ferm.leptonRewards.gte(7)) tmp.elm.ferm.leptonRewards = tmp.elm.ferm.leptonRewards.sqrt().times(Math.sqrt(7))
@@ -204,8 +207,9 @@ function updateTempElementary() {
 			.sub(player.elementary.fermions.leptons.type)
 			.div(LEPTON_NAMES.length)
 			.plus(1)
-			.ceil();
-		return capitalFirst(name) + (noExp ? "" : stacks.gt(1) ? "<sup>" + stacks + "</sup>" : "");
+			.ceil()
+			.max(0);
+		return capitalFirst(name) + (noExp ? "" : stacks.gt(1) ? "<sup>" + showNum(stacks) + "</sup>" : "");
 	};
 	tmp.elm.ferm.leptonEff = function (name) {
 		let lpts = player.elementary.fermions.leptons.amount;
@@ -213,28 +217,30 @@ function updateTempElementary() {
 			.sub(LEPTON_NAMES.indexOf(name) + 1)
 			.div(LEPTON_NAMES.length)
 			.plus(1)
-			.ceil();
+			.ceil()
+			.max(0);
 		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8));
 		if (name == "electron")
-			return lpts
+			return lpts.max(0)
 				.plus(1)
 				.times(10)
 				.slog(10)
+				.max(1)
 				.pow(ExpantaNum.mul(0.1, stacks.plus(1).log10().plus(1)))
 				.sub(1)
 				.div(10)
 				.max(0);
-		else if (name == "muon") return lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).sqrt();
+		else if (name == "muon") return lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).sqrt().max(1);
 		else if (name == "tau")
 			return ExpantaNum.pow(
-				player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1),
-				lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).div(5)
+				player.inf.knowledge.max(0).plus(1).log10().plus(1).log10().plus(1),
+				lpts.max(0).times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).div(5).max(0.2)
 			);
 		else if (name == "netrion")
-			return lpts.times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).sub(1).div(100).max(0);
+			return lpts.max(0).times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).max(1).sub(1).div(100).max(0);
 		else if (name == "vibrino")
-			return lpts.times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).sub(1).div(250).max(0);
-		else if (name == "psi") return lpts.plus(1).log10().plus(1).pow(stacks.plus(0.5));
+			return lpts.max(0).times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).max(1).sub(1).div(250).max(0);
+		else if (name == "psi") return lpts.max(0).plus(1).log10().plus(1).pow(stacks.plus(0.5)).max(1);
 	};
 	tmp.elm.ferm.leptonR = function (name) {
 		if (name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1]) return tmp.elm.ferm.leptonEff(name);
@@ -737,4 +743,43 @@ function getElementariesGained() {
 	let e = new ExpantaNum(1)
 	if (hasDE(4)) e = e.times(getGravBoostMult())
 	return e.max(1).floor()
+}
+
+// Tree Export/Import functions
+
+function exportTree() {
+	let upgs = player.elementary.theory.tree.upgrades
+	let parsedUpgs = {}
+	for (let i=0;i<Object.keys(upgs).length;i++) {
+		let key = Object.keys(upgs)[i]
+		parsedUpgs[key] = upgs[key].toString();
+	}
+	let tree = JSON.stringify(parsedUpgs)
+	notifier.info("Tree exported!")
+	copyToClipboard(tree)
+}
+
+function importTree() {
+	let input = prompt("Paste your exported Theory Tree here.")
+	try {
+		let upgs = JSON.parse(input)
+		let plyr = player.elementary.theory.tree.upgrades
+		for (let i=0;i<Object.keys(upgs).length;i++) {
+			let key = Object.keys(upgs)[i]
+			upgs[key] = new ExpantaNum(upgs[key])
+			if (upgs[key].lte(plyr[key])) continue
+			else {
+				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)))
+				console.log(key+", "+costs) // REMOVE THIS
+				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
+				if (player.elementary.theory.points.gte(totalCost)) {
+					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
+					player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
+					player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], TREE_UPGS[key].cap)
+				} else notifier.warn("You could not afford some of your requested Tree upgrades!")
+			}
+		}
+	} catch(e) {
+		notifier.error("Invalid tree")
+	}
 }

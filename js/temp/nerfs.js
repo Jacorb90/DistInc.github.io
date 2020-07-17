@@ -82,8 +82,8 @@ function updateTempNerfs() {
 			active =
 				active ||
 				(tmp.inf
-					? (tmp.inf.stadium.active("solaris") && !tmp.modes.extreme.active) ||
-					  tmp.inf.stadium.active("drigganiz", 5)
+					? (((tmp.inf.stadium.active("solaris") && !tmp.modes.extreme.active) ||
+					  tmp.inf.stadium.active("drigganiz", 5)) && !(player.inf.pantheon.purge.active&&tmp.ach[147].has))
 					: true);
 			return active;
 		}
@@ -104,8 +104,8 @@ function updateTempNerfs() {
 			active =
 				active ||
 				(tmp.inf
-					? tmp.inf.stadium.active("drigganiz") ||
-					  tmp.inf.stadium.active("eternity", 6) ||
+					? ((tmp.inf.stadium.active("drigganiz") ||
+					  tmp.inf.stadium.active("eternity", 6)) && !(tmp.ach[147].has&&player.inf.pantheon.purge.active)) ||
 					  tmp.inf.stadium.active("reality", 6)
 					: true);
 			return active;

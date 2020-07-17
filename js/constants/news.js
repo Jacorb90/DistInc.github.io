@@ -53,6 +53,7 @@ const NEWS_DATA = {
 	m51: ["The most recent feature of Distance Incremental is not a ripoff, or at least you can't prove that in court"],
 	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
 	m53: ["Maybe you're actually Slabdrill and just don't realize it"],
+	m54: ["Kirb is still faster than you"],
 
 	// Distance-based Conditions
 	d1: [
