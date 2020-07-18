@@ -314,9 +314,9 @@ const ACH_DATA = {
 
 		111: "You can activate all four perks at once.",
 		112: "Time Speed boosts Knowledge gain at a reduced rate.",
-		116: "You gain twice as many Heavenly Chips & Demonic Souls.",
+		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs).",
 
-		123: "The Universe Doesn't Exist uses a slightly better formula.",
+		123: "The Universe Doesn't Exist uses a slightly better formulaboolean(extreme, and Furnace Challenge 4's reward is slightly better [^0.9 -> ^0.95]).",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 

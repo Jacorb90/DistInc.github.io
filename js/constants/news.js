@@ -57,6 +57,7 @@ const NEWS_DATA = {
 	m55: ["Hotkeys are the latest fashion trend"],
 	m56: ["Mom, look! I'm on the news!"],
 	m57: ["Are we getting paid for this?"],
+	m58: ["If you stare too long at the ticker, the ticker stares back at you"],
 
 	// Distance-based Conditions
 	d1: [

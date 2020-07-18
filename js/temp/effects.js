@@ -49,7 +49,7 @@ function updateTempEffects() {
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10());
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length);
 	let tr89mod = 1;
-	if (tmp.modes.hard.active) tr89mod /= ((tmp.ach?tmp.ach[105].has:false)&&tmp.modes.extreme.active)?1.2:2;
+	if (tmp.modes.hard.active) tr89mod /= ((tmp.ach?tmp.ach[105].has:false)&&tmp.modes.extreme.active)?0.9:2;
 	if (tmp.modes.easy.active) tr89mod *= 3;
 	tmp.tr8 = ExpantaNum.div(4, tmp.auto ? tmp.auto.rankbot.interval.max(1e-10) : 1)
 		.pow((1 / 3) * tr89mod)

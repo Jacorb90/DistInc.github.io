@@ -44,8 +44,7 @@ class Feature {
 				for (let i = 1; i <= this.res_amt; i++) {
 					desc +=
 						this.display[i - 1](this.req[i - 1]) +
-						" " +
-						(this.res[i - 1] == "distance" ? "" : this.dispAmt(i));
+						(this.res[i - 1] == "distance" ? "" : (" "+this.dispAmt(i)));
 					if (i == this.res_amt - 1) desc += ", and ";
 					else if (i < this.res_amt - 1) desc += ", ";
 				}
