@@ -467,7 +467,7 @@ function updateHTML() {
 					comp: player.inf.stadium.completions.includes(name)
 				});
 				let active = player.inf.stadium.current == name;
-				let trapped = !active && tmp.inf.stadium.active(name);
+				let trapped = !active && tmp.inf.stadium.active(name) && !tmp.modes.extreme.active;
 				let comp = player.inf.stadium.completions.includes(name);
 				tmp.el[name + "Chall"].setTxt(trapped ? "Trapped" : active ? "Active" : comp ? "Completed" : "Start");
 				tmp.el[name + "Chall"].setClasses({
@@ -606,6 +606,11 @@ function updateHTML() {
 			tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
 			tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
 			tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
+			tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
+			for (let i=1;i<=5;i++) {
+				if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
+				tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
+			}
 		}
 	}
 	

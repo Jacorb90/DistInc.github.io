@@ -422,7 +422,7 @@ function updateTempInf() {
 		else if (n == 4) return ExpantaNum.pow(1e10, pow);
 		return undefined;
 	};
-	tmp.inf.asc.costData = { base: new ExpantaNum(2.5), start: new ExpantaNum(500), exp: new ExpantaNum(1.5) };
+	tmp.inf.asc.costData = { base: new ExpantaNum(tmp.modes.extreme.active?1.5:2.5), start: new ExpantaNum(tmp.modes.extreme.active?100:500), exp: new ExpantaNum(tmp.modes.extreme.active?2:1.5) };
 	tmp.inf.asc.enlCost = function (n) {
 		let enl = player.inf.ascension.enlightenments[n - 1];
 		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start);
@@ -552,7 +552,7 @@ function updateTempInf() {
 		player.inf.stadium.current != "" &&
 		player.distance.gte(tmp.inf.stadium.goal(player.inf.stadium.current));
 	tmp.inf.stadium.start = function (name) {
-		if (tmp.inf.stadium.active(name)) return;
+		if (tmp.inf.stadium.active(name)&&!(name=="solaris"&&tmp.modes.extreme.active&&player.inf.stadium.current!=name)) return;
 		if (player.inf.stadium.current != "") return;
 		tmp.inf.layer.reset(true);
 		player.inf.stadium.current = name;

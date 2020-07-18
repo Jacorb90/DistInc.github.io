@@ -41,6 +41,7 @@ function updateTempScaling() {
 		tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(tmp.pathogens[11].eff);
 		tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(tmp.pathogens[12].eff);
 	}
+	if (tmp.ach) if (tmp.ach[108].has && tmp.modes.extreme.active) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1)
 	if (tmp.inf) {
 		if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2);
 		if (tmp.inf.upgs.has("1;6")) {
@@ -118,6 +119,12 @@ function updateTempScaling() {
 	}
 	if (tmp.modes.extreme.active) {
 		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6);
+		if (FCComp(1)) {
+			tmp.scalingPower.superscaled.fn = tmp.scalingPower.superscaled.fn.times(0.1)
+			tmp.scalingPower.hyper.fn = tmp.scalingPower.hyper.fn.times(0.1)
+		}
+		if (inFC(3)) tmp.scalingPower.hyper.fn = new ExpantaNum(9.99)
+		if (FCComp(3)) tmp.scalingPower.scaled.rankCheap = tmp.scalingPower.scaled.rankCheap.times(0.1)
 	}
 	
 	// Scaling Bugfixes

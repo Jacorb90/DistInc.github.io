@@ -8,7 +8,7 @@ const DEFAULT_START = {
 	options: {
 		sf: 5,
 		not: "scientific",
-		theme: "normal",
+		theme: "dark",
 		name: "Save #",
 		autoSave: true,
 		newst: true,

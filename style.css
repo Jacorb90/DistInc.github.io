@@ -1384,6 +1384,18 @@ table {
 	min-height: 100px;
 }
 
+.furnChall {
+	background-color: #c4711d;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	font-size: 12px;
+	min-width: 150px;
+	max-width: 150px;
+	min-height: 225px;
+	padding: 7px 25px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

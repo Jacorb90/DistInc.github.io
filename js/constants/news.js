@@ -95,6 +95,12 @@ const NEWS_DATA = {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e4200000"));
 		}
 	],
+	d7: [
+		"Uni sounds like a prestige currency",
+		function () {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, 5));
+		}
+	],
 
 	// Mode-based Conditions
 	mod1: [

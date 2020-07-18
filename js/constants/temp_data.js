@@ -221,7 +221,17 @@ const TMP_DATA = {
 		"gravBoosts",
 		"gravBoostMult",
 		"hotkeys",
-		"hot"
+		"hot",
+		"furnChalls",
+		"fns1",
+		"fnc2",
+		"fns2",
+		"fnc3",
+		"fns3",
+		"fnc4",
+		"fns4",
+		"fnc5",
+		"fns5"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

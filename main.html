@@ -310,7 +310,17 @@
 				Reset all Furnace progress to gain a Blue Flame<br />Req: <span id="bfReq"></span> Coal</button
 			><br /><br />
 			You have <span id="bfAmt" class="blfl"></span> Blue Flame, which makes the cost of all Furnace Upgrades
-			scale <span id="bfEff" class="blfl"></span>% slower.
+			scale <span id="bfEff" class="blfl"></span>% slower.<br><br><br>
+			<div id="furnChalls">
+				Notice: Furnace Challenges will perform a Collapse reset, and in order to complete them, you need to reach 10 Blue Flame.<br>
+				<table><tr>
+					<td class="furnChall"><br><b>Blue Flame does nothing</b><br><button id="fns1" class="btn fn" onclick="startFurnChall(1)"></button><br><br>Reward: Superscaled & Hyper Furnace Upgrade scalings are 90% weaker.<br><br></td>
+					<td id="fnc2" class="furnChall"><br><b>Coal gain is raised to the power of 0.1 (before reduction)</b><br><button id="fns2" class="btn fn" onclick="startFurnChall(2)"></button><br><br>Reward: Furnace Upgrade 1 multiplies Coal gain by 25 instead.<br><br></td>
+					<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 999% strength</b><br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker.<br><br></td>
+					<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.9)<br><br></td>
+					<td id="fnc5" class="furnChall"><br><b>You are trapped in Furnace Challenges 2 & 3</b><br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 1 boosts itself<br><br></td>
+				</tr></table>
+			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
 			<table>

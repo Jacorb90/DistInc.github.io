@@ -29,8 +29,8 @@ const LAYER_RESETS_EXTRA = {
 	rockets: ["rankCheap"],
 	rf: [],
 	collapse: ["rankCheap", "furnace"],
-	inf: ["rankCheap", "furnace"],
-	elementary: ["rankCheap", "furnace"]
+	inf: ["rankCheap", "furnace", "activeFC"],
+	elementary: ["rankCheap", "furnace", "activeFC", "furnChalls"]
 };
 
 const LAYER_REQS = {

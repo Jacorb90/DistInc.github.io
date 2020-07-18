@@ -466,7 +466,9 @@ const INF_UPGS = {
 		},
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
-			let ret = speed.pow(0.3);
+			let exp = 0.3
+			if (player.modes.includes("extreme")) exp = 0.5
+			let ret = speed.pow(exp);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
 		},
@@ -758,6 +760,7 @@ const STADIUM_REWARDS = {
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
 			ret = ret.times(mult);
+			if (player.modes.includes("extreme")) ret = ret.plus(1).log10().plus(1).log10().div(10).plus(1)
 			return ret;
 		},
 		solaris: function () {

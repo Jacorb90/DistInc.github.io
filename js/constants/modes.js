@@ -94,8 +94,8 @@ const MODES = {
 	},
 	extreme: {
 		desc:
-			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this (ends at Infinity).",
-		balancing: "balanced up to Infinity",
+			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this (ends at Elementary).",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
@@ -115,7 +115,9 @@ const MODE_VARS = {
 			coal: new ExpantaNum(0),
 			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			blueFlame: new ExpantaNum(0)
-		}
+		},
+		activeFC: 0,
+		furnChalls: [],
 	}
 };
 

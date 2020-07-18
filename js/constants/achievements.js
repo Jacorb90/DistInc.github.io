@@ -309,8 +309,8 @@ const ACH_DATA = {
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
 
 		103: "You can activate one extra perk at any given time.",
-		105: "Acceleration is showNum(300)% faster.",
-		108: "Knowledge gain is showNum(50)% faster.",
+		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
+		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
 
 		111: "You can activate all four perks at once.",
 		112: "Time Speed boosts Knowledge gain at a reduced rate.",

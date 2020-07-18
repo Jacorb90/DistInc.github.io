@@ -163,7 +163,7 @@ function updateTempNerfs() {
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10);
 		if (player.inf.pantheon.purge.active && type == "vel") exp = exp.div(3);
 		if (player.elementary.theory.active && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
-		if (tmp.modes.extreme.active && preinf) exp = exp.times(0.75);
+		if (tmp.modes.extreme.active && preinf) exp = exp.times(FCComp(4)?0.9:0.75);
 		return val.pow(exp);
 	};
 }
