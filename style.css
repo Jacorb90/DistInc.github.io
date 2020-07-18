@@ -1380,6 +1380,10 @@ table {
 	font-size: 10px;
 }
 
+#rocketReset, #collapseReset {
+	min-height: 100px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

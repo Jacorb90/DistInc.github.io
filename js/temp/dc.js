@@ -86,8 +86,8 @@ function updateTempDC() {
 			);
 	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power);
 	tmp.dc.coreEff =
-		player.dc.cores.gte(12) && !tmp.modes.extreme.active
-			? player.dc.cores.pow(7).div(ExpantaNum.pow(12, 6).times(8)).plus(1).log10().plus(1).log10()
+		player.dc.cores.gte(tmp.modes.extreme.active?21:12)
+			? player.dc.cores.pow(7).div(ExpantaNum.pow(tmp.modes.extreme.active?21:12, 6).times(8)).plus(1).log10().plus(1).logBase(tmp.modes.extreme.active?1e3:10)
 			: new ExpantaNum(0);
 	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(
 		tmp.modes.extreme.active ? 0.25 : 10
@@ -208,7 +208,7 @@ function updateTempDC() {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || tmp.nerfs.active("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
-		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0));
+		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0)).max(player.dc.cores.plus(1));
 	};
 	tmp.dc.tick = function (diff) {
 		player.dc.matter = player.dc.matter.plus(tmp.nerfs.adjust(tmp.dc.dmGain, "dc").times(diff).times(tmp.dc.flow));

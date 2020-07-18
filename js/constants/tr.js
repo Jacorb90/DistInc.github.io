@@ -248,7 +248,7 @@ const TR_UPGS = {
 	},
 	30: {
 		cost: new ExpantaNum(1e152),
-		desc: "Time Speed is raised to the power of (x+1), where x is based on your Pathogens.",
+		desc: "Time Speed is raised to a power based on your Pathogens.",
 		current: function () {
 			return player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.7);
 		},

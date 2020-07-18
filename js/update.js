@@ -201,6 +201,8 @@ function setupHTML() {
 			"Cost3'></span> of these Gluons.</button></td></tr>";
 		tbl.setHTML(data);
 	}
+	let v = new Element("version")
+	v.setTxt(player.version)
 }
 
 function updateBeforeTick() {

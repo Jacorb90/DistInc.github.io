@@ -262,7 +262,7 @@ function updateTempInf() {
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
 			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
-			(tmp.modes.hard.active
+			((tmp.modes.hard.active&&!tmp.modes.extreme.active)
 				? ", however you need to exit your current mode to do so"
 				: "") +
 			".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
@@ -290,7 +290,7 @@ function updateTempInf() {
 			player.automation.unl = prev.automation.unl;
 			player.automation.robots = prev.automation.robots;
 		}
-		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = tmp.modes.extreme.active?[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 		else if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		if (tmp.inf.upgs.has("3;1")) {
 			player.collapse.unl = true;
@@ -298,12 +298,8 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true;
 		tmp.doDervReset();
-		if (player.modes.includes("hard") || player.modes.includes("extreme")) {
-			if (tmp.modes.extreme.active) {
-				player.furnace = undefined;
-				player.rankCheap = undefined;
-			}
-			player.modes = player.modes.filter(x => x != "hard" && x != "extreme");
+		if (player.modes.includes("hard") && !player.modes.includes("extreme")) {
+			player.modes = player.modes.filter(x => x != "hard");
 			tmp.options.save(player, true);
 			reload();
 		}

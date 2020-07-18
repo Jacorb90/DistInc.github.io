@@ -203,27 +203,28 @@ function updateLayerMults() {
 	if (tmp.modes.extreme.active && player.rf.gt(0))
 		tmp.lm.rockets = tmp.lm.rockets.times(ExpantaNum.pow(2, player.furnace.upgrades[2]));
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2);
-	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10);
+	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10.max(1));
 	if (player.tr.upgrades.includes(28) && tmp.modes.extreme.active)
 		tmp.lm.rockets = tmp.lm.rockets.times(player.furnace.coal.plus(1).pow(0.15));
 	if (player.tr.upgrades.includes(29) && tmp.modes.extreme.active)
 		tmp.lm.rockets = tmp.lm.rockets.times(
-			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2))
+			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1))
 		);
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(6)) tmp.lm.rockets = tmp.lm.rockets.times(10);
-	if (tmp.collapse) if (tmp.collapse.hasMilestone(8)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.ucme8);
-	if (tmp.pathogens && player.pathogens.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.pathogens[2].eff);
-	if (tmp.dc) if (player.dc.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.dc.dmEff);
-	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) tmp.lm.rockets = tmp.lm.rockets.times(INF_UPGS.effects["1;2"]());
+	if (tmp.collapse) if (tmp.collapse.hasMilestone(8)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.ucme8.max(1));
+	if (tmp.pathogens && player.pathogens.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.pathogens[2].eff.max(1));
+	if (tmp.dc) if (player.dc.unl) tmp.lm.rockets = tmp.lm.rockets.times(tmp.dc.dmEff.max(1));
+	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) tmp.lm.rockets = tmp.lm.rockets.times(INF_UPGS.effects["1;2"]().max(1));
 	if (tmp.inf) if (tmp.inf.upgs.has("4;8")) tmp.lm.rockets = tmp.lm.rockets.times(player.collapse.lifeEssence.max(1));
 	if (tmp.inf)
 		if (tmp.inf.upgs.has("9;8")) {
 			let c = player.tr.cubes.max(1).pow(0.1);
 			if (c.gte("1e100000")) c = c.log10().pow(20000);
-			tmp.lm.rockets = tmp.lm.rockets.times(c);
+			tmp.lm.rockets = tmp.lm.rockets.times(c.max(1));
 		}
 	if (tmp.elm)
 		if (player.elementary.times.gt(0)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.elm.ferm.quarkR("up").max(1));
+	if (tmp.lm.rockets.eq(0)) tmp.lm.rockets = new ExpantaNum(1)
 	tmp.lm.collapse = new ExpantaNum(1);
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(5)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme5);
 	if (tmp.collapse) if (tmp.collapse.hasMilestone(10)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.ucme10);

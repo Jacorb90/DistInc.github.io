@@ -378,6 +378,7 @@ const INF_UPGS = {
 			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
+			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
 			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon());
 			let ret = total.plus(1).pow(exp);
 			return ret;

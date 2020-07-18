@@ -294,6 +294,7 @@ function copyToClipboard(str) {
 	el.value = str;
 	document.body.appendChild(el);
 	el.select();
+    el.setSelectionRange(0, 99999);
 	document.execCommand("copy");
 	document.body.removeChild(el);
 }
@@ -313,8 +314,8 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (tmp.modes.hard.active) a = a.filter(x => x / 10 <= 8);
-	if (tmp.modes.easy.active) a = a.filter(x => x / 10 <= 13);
+	if (tmp.modes.hard.active&&!tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 8);
+	if (tmp.modes.easy.active||tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 13);
 	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
