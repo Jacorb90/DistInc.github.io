@@ -8,13 +8,15 @@ function updateHTML() {
 
 	// Options
 	if (player.tab == "options") {
-		for (let i = 0; i < Object.keys(MODES).length; i++)
+		for (let i = 0; i < Object.keys(MODES).length; i++) {
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setClasses({
 				btn: true,
 				tb: true,
 				opt: !modesSelected.includes(Object.keys(MODES)[i]),
 				optSelected: modesSelected.includes(Object.keys(MODES)[i])
 			});
+			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+		}
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
@@ -395,7 +397,7 @@ function updateHTML() {
 			for (let r = 1; r <= INF_UPGS.rows; r++) {
 				for (let c = 1; c <= INF_UPGS.cols; c++) {
 					let state = "";
-					if (tmp.inf.upgs.repealed(r+";"+c)) state = "repealed";
+					if (tmp.inf.upgs.repealed(r+";"+c) && !tmp.modes.easy.active) state = "repealed";
 					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
 					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
 					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";

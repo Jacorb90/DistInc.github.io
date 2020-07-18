@@ -54,6 +54,9 @@ const NEWS_DATA = {
 	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
 	m53: ["Maybe you're actually Slabdrill and just don't realize it"],
 	m54: ["Kirb is still faster than you"],
+	m55: ["Hotkeys are the latest fashion trend"],
+	m56: ["Mom, look! I'm on the news!"],
+	m57: ["Are we getting paid for this?"],
 
 	// Distance-based Conditions
 	d1: [

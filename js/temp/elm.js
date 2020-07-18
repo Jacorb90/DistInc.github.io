@@ -102,6 +102,9 @@ function updateTempElementary() {
 		
 		// Bugfixes
 		infTab = "infinity"
+		
+		// Modes
+		if (tmp.modes.easy.active) player.modes = player.modes.filter(x => x != "easy")
 	};
 
 	// Elementary Tab System

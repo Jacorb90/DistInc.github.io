@@ -132,40 +132,29 @@
 				<table>
 					<tr>
 						<td>
-							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">
-								Hard
-							</button>
+							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">AAU</button>
 						</td>
 						<td>
-							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">
-								AAU
-							</button>
+							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')">Easy</button>
+						</td>
+						<td>
+							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button>
 						</td>
 						<td>
 							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button>
 						</td>
-						<td>
-							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">
-								Absurd
-							</button>
-						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')">
-								Extreme
-							</button>
+							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')">Extreme</button>
 						</td>
 						<td>
-							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')">
-								Easy
-							</button>
+							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">Hard</button>
 						</td>
 					</tr>
 				</table>
 				<br /><br />
 				<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
-				<button class="btn tb opt" onclick="showModeDescs(modesSelected)">Show Description</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
 				<table>
@@ -220,7 +209,7 @@
 					</tr>
 				</table>
 				<br />
-				<div class="dropdown"><div id="dropDown" class="dropdown-content"></div></div>
+				<div class="dropdown" style="z-index: 10"><div id="dropDown" class="dropdown-content"></div></div>
 			</div>
 			<br /><br />
 			<div id="footer">
@@ -235,7 +224,7 @@
 					href="key.html"
 					target="_blank"
 					>Distances</a
-				>&nbsp;&nbsp;&nbsp;&nbsp;<a id="hotkeys">Hotkeys</a>
+				>&nbsp;&nbsp;&nbsp;&nbsp;<a id="hotkeys" style="z-index: -1">Hotkeys</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
 			</div>
 		</div>

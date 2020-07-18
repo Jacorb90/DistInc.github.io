@@ -123,19 +123,6 @@ function autoTick(diff) {
 	}
 }
 
-function showModeDescs(modes) {
-	let d = "";
-	if (modes.length > 1) {
-		for (let i = 0; i < modes.length; i++) {
-			let mode = MODES[modes[i]];
-			d += mode.desc;
-			if (i < modes.length - 1) d += "\n\n\n";
-		}
-	} else if (modes.length == 1) d = MODES[modes[0]].desc;
-	else if (modes.length == 0) d = "Just the main game.";
-	alert(d);
-}
-
 function modeLoad(resetted) {
 	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
 		player.modes

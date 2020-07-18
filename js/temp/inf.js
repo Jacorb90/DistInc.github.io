@@ -23,6 +23,7 @@ function updateTempInf() {
 	// Infinity Upgrades
 	tmp.inf.upgs = {};
 	tmp.inf.upgs.repealed = function (id) {
+		if (tmp.modes.easy.active) return false
 		if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
 		let rep = INF_UPGS.repealed[id] ? INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)) : false;
 		if (tmp.infUr.includes(id)) rep = false;
@@ -196,6 +197,7 @@ function updateTempInf() {
 	if (player.elementary.theory.tree.unl) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.ach112)
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
+	if (tmp.modes.easy.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
@@ -260,7 +262,7 @@ function updateTempInf() {
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
 			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
-			(tmp.modes.hard.active || tmp.modes.easy.active
+			(tmp.modes.hard.active
 				? ", however you need to exit your current mode to do so"
 				: "") +
 			".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
@@ -296,12 +298,12 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true;
 		tmp.doDervReset();
-		if (player.modes.includes("hard") || player.modes.includes("easy") || player.modes.includes("extreme")) {
+		if (player.modes.includes("hard") || player.modes.includes("extreme")) {
 			if (tmp.modes.extreme.active) {
 				player.furnace = undefined;
 				player.rankCheap = undefined;
 			}
-			player.modes = player.modes.filter(x => x != "hard" && x != "easy" && x != "extreme");
+			player.modes = player.modes.filter(x => x != "hard" && x != "extreme");
 			tmp.options.save(player, true);
 			reload();
 		}
@@ -346,6 +348,7 @@ function updateTempInf() {
 	if (tmp.elm) {
 		if (tmp.elm.pa.active) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.elm.pa.speedBoost.max(1))
 	} else tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.inf.asc.perkTimeO.div(10))
+	if (tmp.modes.easy.active) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(3)
 	tmp.inf.asc.maxPerks = 1;
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2;
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++;
@@ -367,6 +370,7 @@ function updateTempInf() {
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1));
 	if (tmp.elm) if (tmp.elm.pa.active) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.pa.boost.max(1))
+	if (tmp.modes.easy.active) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(1.2)
 	tmp.inf.asc.perkPower = [
 		null,
 		tmp.inf.asc.perkStrength,
@@ -400,6 +404,7 @@ function updateTempInf() {
 		if (player.elementary.times.gt(0)) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos.w2.max(1));
 		if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	}
+	if (tmp.modes.easy.active) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
 	tmp.inf.asc.activatePerk = function (n) {
 		if (player.inf.endorsements.lt(10)) return;
 		if (tmp.inf.asc.perkActive(n)) {
@@ -658,6 +663,10 @@ function updateTempInf() {
 	};
 	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1);
 	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1);
+	if (tmp.modes.easy.active) {
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(4)
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(4)
+	}
 	if (tmp.ach[116].has) {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(2);
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(2);
@@ -691,9 +700,12 @@ function updateTempInf() {
 	tmp.inf.pantheon.purgeMult = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("8;2"))
 		tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"]);
+	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(4)
 	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni);
 	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5);
+	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
 	tmp.inf.pantheon.purgeExp = new ExpantaNum(1 / 2);
+	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeExp = new ExpantaNum(2 / 3)
 	tmp.inf.pantheon.purgeGain = player.distance
 		.div(tmp.inf.pantheon.purgeStart)
 		.plus(1)
@@ -821,6 +833,7 @@ function updateTempInf() {
 		tmp.inf.derv.boostPow = tmp.inf.derv.boostPow.times(tmp.elm.bos["higgs_0;2;1"]().div(100).plus(1))
 	}
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE);
+	if (tmp.modes.easy.active) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]());
 	tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.inf.derv.boostPow);
 	tmp.inf.derv.mult = function (name) {
