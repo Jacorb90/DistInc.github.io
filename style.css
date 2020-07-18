@@ -18,8 +18,8 @@
 	outline: none;
 }
 
-*:not(span, .keep),
-*:not(div, .keep) {
+*:not(span):not(.keep),
+*:not(div):not(.keep) {
 	color: var(--plaintxt);
 }
 
