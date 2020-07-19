@@ -69,7 +69,7 @@ function updateTempEffects() {
 		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow)
 	};
 	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1);
-	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0);
+	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1).max(0) : new ExpantaNum(0);
 	tmp.tr14 = {
 		cd: player.tier.plus(1).pow(1.25),
 		ss: player.dc.cores.plus(1).log10().plus(1).log10().times(7.5)

@@ -57,7 +57,8 @@ const NEWS_DATA = {
 	m55: ["Hotkeys are the latest fashion trend"],
 	m56: ["Mom, look! I'm on the news!"],
 	m57: ["Are we getting paid for this?"],
-	m58: ["If you stare too long at the ticker, the ticker stares back at you"],
+	m58: ['"If you stare too long at the ticker, the ticker stares back at you" - Some guy that played Antimatter Dimensions'],
+	m59: ["Are you the real Slim Shady? If so, get out of your chair as soon as you feasibly can."],
 
 	// Distance-based Conditions
 	d1: [

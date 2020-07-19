@@ -373,5 +373,5 @@ function sleep(s) {
 function nerfOfflineProg(time) {
 	time = new ExpantaNum(time).div(1000);
 	if (time.gt(60)) time = time.pow(3/4).times(Math.pow(60, 1/4));
-	return time.times(1000);
+	return time.times(1000).max(0);
 }
