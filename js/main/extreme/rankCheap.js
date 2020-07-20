@@ -120,7 +120,7 @@ function updateTempRankCheap() {
 	tmp.rankCheap.layer = new Layer("rankCheap", tmp.rankCheap.can, "semi-forced");
 	tmp.rankCheap.pow = new ExpantaNum(1);
 	if (tmp.ach[12].has) tmp.rankCheap.pow = tmp.rankCheap.pow.plus(ExpantaNum.mul(0.5, player.achievements.length));
-	if (player.tr.upgrades.includes(22) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(22) && modeActive("extreme"))
 		tmp.rankCheap.pow = tmp.rankCheap.pow.times(player.collapse.cadavers.plus(1).times(10).slog(10).sqrt());
 	tmp.rankCheap.manPow = new ExpantaNum(1);
 	tmp.rankCheap.eff = player.rankCheap

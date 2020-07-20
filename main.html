@@ -113,17 +113,17 @@
 			<div id="saving" class="optionstab">
 				<table>
 					<tr>
-						<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.loads()">Load</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
+						<td><button class="btn tb opt" onclick="save()">Save</button></td>
+						<td><button class="btn tb opt" onclick="loads()">Load</button></td>
+						<td><button class="btn tb opt" onclick="importSave()">Import</button></td>
+						<td><button class="btn tb opt" onclick="exportSave()">Export</button></td>
+						<td><button class="btn tb opt" onclick="hardReset()">HARD RESET</button></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td></td>
-						<td><button class="btn tb opt" onclick="tmp.options.importAll()">Import All</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.exportAll()">Export All</button></td>
+						<td><button class="btn tb opt" onclick="importAll()">Import All</button></td>
+						<td><button class="btn tb opt" onclick="exportAll()">Export All</button></td>
 						</td>
 					</tr>
 				</table>
@@ -139,77 +139,77 @@
 				<table>
 					<tr>
 						<td>
-							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')" style="z-index: 0">AAU</button>
+							<button id="aauMode" class="btn tb opt" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
 						</td>
 						<td>
-							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')" style="z-index: 0">Easy</button>
+							<button id="easyMode" class="btn tb opt" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
 						</td>
 						<td>
-							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')" style="z-index: 0">Absurd</button>
+							<button id="absurdMode" class="btn tb opt" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
 						</td>
 						<td>
-							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')" style="z-index: 0">NA</button>
+							<button id="naMode" class="btn tb opt" onclick="selectMode('na')" style="z-index: 0">NA</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')" style="z-index: 0">Extreme</button>
+							<button id="extremeMode" class="btn tb opt" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
 						</td>
 						<td>
-							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')" style="z-index: 0">Hard</button>
+							<button id="hardMode" class="btn tb opt" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
 						</td>
 					</tr>
 				</table>
 				<br /><br />
-				<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
+				<button class="btn tb opt" onclick="confirmModes()">Activate Modes</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
 				<table>
 					<tr>
 						<td>
-							<button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">
+							<button id="sf" class="btn tb opt" onclick="changeOpt('sf', 1)">
 								Significant Figures: X
 							</button>
 						</td>
 						<td>
-							<button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">
+							<button id="not" class="btn tb opt" onclick="changeOpt('not', 2)">
 								Notation: X
 							</button>
 						</td>
 						<td>
-							<button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">
+							<button id="theme" class="btn tb opt" onclick="changeOpt('theme', 2)">
 								Theme: X
 							</button>
 						</td>
 						<td>
-							<button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">
+							<button id="name" class="btn tb opt" onclick="changeOpt('name', 3)">
 								Rename Save
 							</button>
 						</td>
 						<td>
-							<button id="hot" class="btn tb opt" onclick="tmp.options.change('hot', 0)">
+							<button id="hot" class="btn tb opt" onclick="changeOpt('hot', 0)">
 								Hotkeys: ON
 							</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="saveImp" class="btn tb opt" onclick="tmp.options.change('saveImp', 2)">
+							<button id="saveImp" class="btn tb opt" onclick="changeOpt('saveImp', 2)">
 								Imports: X
 							</button>
 						</td>
 						<td>
-							<button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">
+							<button id="autoSave" class="btn tb opt" onclick="changeOpt('autoSave', 0)">
 								Auto-Save: ON
 							</button>
 						</td>
 						<td>
-							<button id="newst" class="btn tb opt" onclick="tmp.options.change('newst', 0)">
+							<button id="newst" class="btn tb opt" onclick="changeOpt('newst', 0)">
 								News Ticker: ON
 							</button>
 						</td>
 						<td>
-							<button id="elc" class="btn tb opt" onclick="tmp.options.change('elc', 0)">
+							<button id="elc" class="btn tb opt" onclick="changeOpt('elc', 0)">
 								Elementary Confirmation: ON
 							</button>
 						</td>
@@ -1251,7 +1251,6 @@
 
 	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
-	<script type="text/javascript" src="js/classes/Mode.js"></script>
 
 	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>

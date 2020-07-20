@@ -8,8 +8,8 @@ function updateAchievements() {
 	if (player.tr.unl) tmp.ach[17].grant();
 	if (player.collapse.cadavers.gt(0)) tmp.ach[18].grant();
 
-	if (player.distance.gte(tmp.modes.extreme.active ? 3e4 : 5e5)) tmp.ach[21].grant();
-	if (player.rank.gte(tmp.modes.extreme.active ? 6 : 8)) tmp.ach[22].grant();
+	if (player.distance.gte(modeActive("extreme") ? 3e4 : 5e5)) tmp.ach[21].grant();
+	if (player.rank.gte(modeActive("extreme") ? 6 : 8)) tmp.ach[22].grant();
 	if (player.tier.gte(3)) tmp.ach[23].grant();
 	if (player.rockets.gte(2)) tmp.ach[24].grant();
 	if (player.rf.gte(2)) tmp.ach[25].grant();

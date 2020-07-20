@@ -1,7 +1,7 @@
 function updateTempDC() {
 	tmp.dc = {};
 	tmp.dc.lrm = new ExpantaNum(1);
-	if (tmp.modes.extreme.active) tmp.dc.lrm = tmp.dc.lrm.times(1e-28);
+	if (modeActive("extreme")) tmp.dc.lrm = tmp.dc.lrm.times(1e-28);
 	tmp.dc.dmGain = ExpantaNum.pow(2, player.dc.cores).sub(1).times(player.dc.fluid.plus(1).log10().plus(1)).max(0);
 	tmp.dc.deGain = player.dc.matter.plus(1).log10();
 	tmp.dc.dfGain = player.dc.energy.plus(1).log10();
@@ -86,14 +86,14 @@ function updateTempDC() {
 			);
 	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power);
 	tmp.dc.coreEff =
-		player.dc.cores.gte(tmp.modes.extreme.active?21:12)
-			? player.dc.cores.pow(7).div(ExpantaNum.pow(tmp.modes.extreme.active?21:12, 6).times(8)).plus(1).log10().plus(1).logBase(tmp.modes.extreme.active?1e3:10)
+		player.dc.cores.gte(modeActive("extreme")?21:12)
+			? player.dc.cores.pow(7).div(ExpantaNum.pow(modeActive("extreme")?21:12, 6).times(8)).plus(1).log10().plus(1).logBase(modeActive("extreme")?1e3:10)
 			: new ExpantaNum(0);
 	tmp.dc.coreCost = ExpantaNum.pow(10, ExpantaNum.pow(10, player.dc.cores.div(50).plus(1))).times(
-		tmp.modes.extreme.active ? 0.25 : 10
+		modeActive("extreme") ? 0.25 : 10
 	);
 	tmp.dc.bulk = player.collapse.cadavers
-		.div(tmp.modes.extreme.active ? 0.25 : 10)
+		.div(modeActive("extreme") ? 0.25 : 10)
 		.max(1)
 		.log10()
 		.max(1)
@@ -114,9 +114,9 @@ function updateTempDC() {
 					.div(50)
 					.plus(1)
 			)
-		).times(tmp.modes.extreme.active ? 0.25 : 10);
+		).times(modeActive("extreme") ? 0.25 : 10);
 		tmp.dc.bulk = player.collapse.cadavers
-			.div(tmp.modes.extreme.active ? 0.25 : 10)
+			.div(modeActive("extreme") ? 0.25 : 10)
 			.max(1)
 			.log10()
 			.max(1)
@@ -144,9 +144,9 @@ function updateTempDC() {
 					.div(50)
 					.plus(1)
 			)
-		).times(tmp.modes.extreme.active ? 0.25 : 10);
+		).times(modeActive("extreme") ? 0.25 : 10);
 		tmp.dc.bulk = player.collapse.cadavers
-			.div(tmp.modes.extreme.active ? 0.25 : 10)
+			.div(modeActive("extreme") ? 0.25 : 10)
 			.max(1)
 			.log10()
 			.max(1)
@@ -179,9 +179,9 @@ function updateTempDC() {
 					.div(50)
 					.plus(1)
 			)
-		).times(tmp.modes.extreme.active ? 0.25 : 10);
+		).times(modeActive("extreme") ? 0.25 : 10);
 		tmp.dc.bulk = player.collapse.cadavers
-			.div(tmp.modes.extreme.active ? 0.25 : 10)
+			.div(modeActive("extreme") ? 0.25 : 10)
 			.max(1)
 			.log10()
 			.max(1)

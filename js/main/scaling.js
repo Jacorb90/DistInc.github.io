@@ -41,7 +41,7 @@ function updateTempScaling() {
 		tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(tmp.pathogens[11].eff);
 		tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(tmp.pathogens[12].eff);
 	}
-	if (tmp.ach) if (tmp.ach[108].has && tmp.modes.extreme.active) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1)
+	if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1)
 	if (tmp.inf) {
 		if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2);
 		if (tmp.inf.upgs.has("1;6")) {
@@ -65,7 +65,7 @@ function updateTempScaling() {
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
-	if (tmp.modes.extreme.active) tmp.scalings.hyper.rf = new ExpantaNum(1);
+	if (modeActive("extreme")) tmp.scalings.hyper.rf = new ExpantaNum(1);
 
 	// Scaling Strengths
 	if (tmp.pathogens) {
@@ -117,7 +117,7 @@ function updateTempScaling() {
 				ExpantaNum.sub(1, INF_UPGS.effects["8;6"]())
 			);
 	}
-	if (tmp.modes.extreme.active) {
+	if (modeActive("extreme")) {
 		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6);
 		if (FCComp(1)) {
 			tmp.scalingPower.superscaled.fn = tmp.scalingPower.superscaled.fn.times(0.1)

@@ -76,7 +76,7 @@ function autoTick(diff) {
 	}
 
 	// Automators
-	if (player.automators["furnace"] && tmp.modes.extreme.active) {
+	if (player.automators["furnace"] && modeActive("extreme")) {
 		for (let i = 1; i <= 3; i++) tmp.fn.upgs[i].max();
 		player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor());
 	}
@@ -142,8 +142,8 @@ function modeLoad(resetted) {
 
 function checkNaN() {
 	if (player.distance.isNaN()) {
-		tmp.options.export()
+		exportSave()
 		alert("We have detected a NaN Error in your save! We have exported it to your clipboard (although it may be broken), and will hard reset the game to remove this bug as soon as possible. Please go to the discord (in the options menu) and tell someone about what happened, and hopefully your save can be salvaged. We apologize for this error.")
-		tmp.options.hardReset(true)
+		hardReset(true)
 	}
 }

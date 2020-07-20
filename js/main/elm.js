@@ -44,7 +44,7 @@ function updateTempElementary() {
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
 	tmp.elm.doGain = function () {
 		// Gains
-		if (player.options.elc) if (!confirm("Are you sure you want to do this? "+((tmp.modes.easy.active||tmp.modes.extreme.active)?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
+		if (player.options.elc) if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("extreme"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
 		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
 			player.elementary.theory.depth = player.elementary.theory.depth.plus(1)
@@ -104,7 +104,7 @@ function updateTempElementary() {
 		infTab = "infinity"
 		
 		// Modes
-		if (tmp.modes.easy.active||tmp.modes.extreme.active) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme")
+		if (modeActive("easy")||modeActive("extreme")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme")
 	};
 
 	// Elementary Tab System

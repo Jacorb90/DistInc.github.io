@@ -98,7 +98,7 @@ function updateHTML() {
 	// Achievements
 	if (player.tab == "achievements") {
 		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
-		let all = tmp.ga == tmp.ta && !tmp.modes.aau.active;
+		let all = tmp.ga == tmp.ta && !modeActive("aau");
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
 				let id = r * 10 + c;
@@ -151,7 +151,7 @@ function updateHTML() {
 				)
 			});
 		}
-		tmp.el.rankCheapbot.setDisplay(tmp.modes.extreme.active);
+		tmp.el.rankCheapbot.setDisplay(modeActive("extreme"));
 		tmp.el.fuelbot.setDisplay(
 			tmp.collapse.hasMilestone(5) ||
 				(player.automation.robots.fuelbot ? player.automation.robots.fuelbot[1].gt(0) : false)
@@ -216,7 +216,7 @@ function updateHTML() {
 			if (!tmp.tr11pow.eq(1) && i == 11)
 				desc += "<span class='grossminitxt'>(^" + showNum(tmp.tr11pow) + ")</span>";
 			tmp.el["tr" + i].setHTML(desc + "<br>Cost: " + showNum(upg.cost) + " Time Cubes.");
-			if (upg.current !== undefined && (i > 15 ? tmp.modes.extreme.active : true))
+			if (upg.current !== undefined && (i > 15 ? modeActive("extreme") : true))
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
 			tmp.el["tr" + i].setClasses({
 				btn: true,
@@ -226,9 +226,9 @@ function updateHTML() {
 			});
 		}
 		tmp.el.trRow3.setDisplay(player.dc.unl || tmp.inf.upgs.has("1;4"));
-		tmp.el.trRow4.setDisplay(tmp.modes.extreme.active);
-		tmp.el.trRow5.setDisplay(tmp.modes.extreme.active && player.collapse.unl);
-		tmp.el.trRow6.setDisplay(tmp.modes.extreme.active && player.dc.unl);
+		tmp.el.trRow4.setDisplay(modeActive("extreme"));
+		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
+		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
 	}
 
 	// Universal Collapse
@@ -397,7 +397,7 @@ function updateHTML() {
 			for (let r = 1; r <= INF_UPGS.rows; r++) {
 				for (let c = 1; c <= INF_UPGS.cols; c++) {
 					let state = "";
-					if (tmp.inf.upgs.repealed(r+";"+c) && !tmp.modes.easy.active) state = "repealed";
+					if (tmp.inf.upgs.repealed(r+";"+c) && !modeActive("easy")) state = "repealed";
 					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
 					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
 					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";
@@ -467,7 +467,7 @@ function updateHTML() {
 					comp: player.inf.stadium.completions.includes(name)
 				});
 				let active = player.inf.stadium.current == name;
-				let trapped = !active && tmp.inf.stadium.active(name) && !tmp.modes.extreme.active;
+				let trapped = !active && tmp.inf.stadium.active(name) && !modeActive("extreme");
 				let comp = player.inf.stadium.completions.includes(name);
 				tmp.el[name + "Chall"].setTxt(trapped ? "Trapped" : active ? "Active" : comp ? "Completed" : "Start");
 				tmp.el[name + "Chall"].setClasses({
@@ -570,8 +570,8 @@ function updateHTML() {
 	}
 
 	// Extreme Mode
-	tmp.el.rankCheapDiv.setDisplay(tmp.modes.extreme.active);
-	if (tmp.modes.extreme.active) {
+	tmp.el.rankCheapDiv.setDisplay(modeActive('extreme'));
+	if (modeActive("extreme")) {
 		// Rank Cheapeners
 		tmp.el.rankCheap.setTxt(
 			showNum(player.rankCheap) + (tmp.rankCheap.free.eq(0) ? "" : " + " + showNum(tmp.rankCheap.free))
@@ -632,7 +632,7 @@ function updateHTML() {
 				let func = Object.values(SCALING_RES)[r]
 				let key = Object.keys(SCALING_RES)[r]
 				let amt = func(1)
-				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!player.modes.includes("extreme"))) continue
+				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
 				if (amt.gte(tmp.scalings[name][key])) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(tmp.scalingPower[name][key].times(100))+"%): Starts at "+showNum(tmp.scalings[name][key])+"\n"
 			}
 			let blank = ""

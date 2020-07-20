@@ -1,13 +1,13 @@
 function updateTempTimeSpeed() {
 	tmp.timeSpeed = new ExpantaNum(1);
-	if (tmp.modes.hard.active) tmp.timeSpeed = tmp.timeSpeed.times(0.75);
-	if (tmp.modes.easy.active) tmp.timeSpeed = tmp.timeSpeed.times(2.5);
-	if (tmp.modes.extreme.active) tmp.timeSpeed = tmp.timeSpeed.times(0.7);
+	if (modeActive("hard")) tmp.timeSpeed = tmp.timeSpeed.times(0.75);
+	if (modeActive("easy")) tmp.timeSpeed = tmp.timeSpeed.times(2.5);
+	if (modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.times(0.7);
 	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2);
 	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7);
-	if (player.tr.upgrades.includes(18) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(18) && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(2, player.rankCheap.sqrt()));
-	if (player.tr.upgrades.includes(23) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(23) && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(2.5, player.furnace.blueFlame));
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01);
 	if (tmp.ach[27].has) tmp.timeSpeed = tmp.timeSpeed.times(1.1);
@@ -43,8 +43,8 @@ function updateTempTimeSpeed() {
 	if (tmp.inf.upgs.has("9;4")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["9;4"]());
 	if (tmp.inf.stadium.completed("eternity")) tmp.timeSpeed = tmp.timeSpeed.times(STADIUM_REWARDS.effects.eternity());
 	if (tmp.nerfs.active("nerfTS")) tmp.timeSpeed = tmp.timeSpeed.pow(0.1);
-	if (player.tr.upgrades.includes(30) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(30) && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.pow(player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.7));
 	if (tmp.rockets) tmp.timeSpeed = tmp.timeSpeed.times(tmp.rockets.tsPow)
-	if (tmp.modes.extreme.active && tmp.timeSpeed.gte(Number.MAX_VALUE)) tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
+	if (modeActive("extreme") && tmp.timeSpeed.gte(Number.MAX_VALUE)) tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
 }

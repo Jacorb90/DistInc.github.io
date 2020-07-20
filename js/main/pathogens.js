@@ -1,8 +1,8 @@
 function updateTempPathogens() {
 	tmp.pathogens = {};
 	tmp.pathogens.lrm = new ExpantaNum(1);
-	if (tmp.modes.hard.active) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5);
-	if (tmp.modes.extreme.active) tmp.pathogens.lrm = tmp.pathogens.lrm.times(20);
+	if (modeActive("hard")) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5);
+	if (modeActive("extreme")) tmp.pathogens.lrm = tmp.pathogens.lrm.times(20);
 	tmp.pathogens.st = new ExpantaNum(1.25);
 	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1);
 	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1);
@@ -16,8 +16,8 @@ function updateTempPathogens() {
 	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)));
 	if (tmp.ach[84].has) tmp.pathogens.gain = tmp.pathogens.gain.times(a84);
 	if (tmp.ach[131].has) tmp.pathogens.gain = tmp.pathogens.gain.times(2);
-	if (tmp.modes.hard.active) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
-	if (tmp.modes.easy.active) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
+	if (modeActive("hard")) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
+	if (modeActive("easy")) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
 	tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.pth5);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
@@ -28,14 +28,14 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;10"]())
 	tmp.pathogens.upgPow = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.tr13.max(0));
-	if (tmp.modes.extreme.active && player.tr.upgrades.includes(27))
+	if (modeActive("extreme") && player.tr.upgrades.includes(27))
 		tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(
 			player.furnace.coal.plus(1).times(10).slog(10).sub(1).div(5).max(0)
 		);
-	if (tmp.modes.hard.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.98);
-	if (tmp.modes.easy.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(1.089);
+	if (modeActive("hard")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.98);
+	if (modeActive("easy")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(1.089);
 	if (tmp.dc) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tmp.dc.coreEff.max(0));
-	if (tmp.modes.extreme.active) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8);
+	if (modeActive('extreme')) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8);
 	if (tmp.inf) if (tmp.inf.upgs.has("3;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.1);
 	if (tmp.inf) if (tmp.inf.upgs.has("5;2")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.05);
 	if (tmp.inf) if (tmp.inf.upgs.has("6;3")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(0.025);
@@ -73,11 +73,11 @@ function updateTempPathogens() {
 	};
 	for (let i = 1; i <= PTH_AMT; i++) {
 		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1);
-		if (tmp.modes.hard.active) {
-			tmp.pathogens.sc[i] = tmp.modes.easy.active ? tmp.pathogens.sc[i] : new ExpantaNum(1);
+		if (modeActive("hard")) {
+			tmp.pathogens.sc[i] = modeActive("easy") ? tmp.pathogens.sc[i] : new ExpantaNum(1);
 			if (tmp.ach[65].has) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(5);
 		}
-		if (tmp.modes.easy.active) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].times(1.1).round();
+		if (modeActive("easy")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].times(1.1).round();
 		let upg = PTH_UPGS[i];
 		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) };
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1);

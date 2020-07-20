@@ -7,8 +7,8 @@ function updateTempRanks() {
 	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1);
 	if (tmp.rankCheap) tmp.ranks.fp = tmp.ranks.fp.times(tmp.rankCheap.eff);
 	tmp.ranks.bc = new ExpantaNum(10);
-	if (tmp.modes.hard.active && player.rank < 3) tmp.ranks.bc = tmp.ranks.bc.times(2);
-	if (tmp.modes.easy.active && player.rank < 3) tmp.ranks.bc = tmp.ranks.bc.div(3);
+	if (modeActive("hard") && player.rank < 3) tmp.ranks.bc = tmp.ranks.bc.times(2);
+	if (modeActive("easy") && player.rank < 3) tmp.ranks.bc = tmp.ranks.bc.div(3);
 	if (tmp.inf)
 		if (tmp.inf.stadium.active("spaceon", 5) || tmp.inf.stadium.active("solaris", 6))
 			tmp.ranks.bc = tmp.ranks.bc.times(1e10);

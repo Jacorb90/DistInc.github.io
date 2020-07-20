@@ -1,5 +1,4 @@
 function updateTemp() {
-	updateTempOptions();
 	updateTempNerfs();
 	updateTempScaling();
 	updateTempEffects();
@@ -21,7 +20,7 @@ function updateTemp() {
 	updateTempMisc();
 	updateTempTimeSpeed();
 
-	if (tmp.modes.extreme.active) {
+	if (modeActive("extreme")) {
 		updateTempRankCheap();
 		updateTempFurnace();
 	}
@@ -214,10 +213,10 @@ function updateBeforeTick() {
 function updateAfterTick() {
 	updateUnlocks();
 	if (player.options.autoSave && saveTimer >= AUTOSAVE_TIME) {
-		tmp.options.save();
+		save();
 		saveTimer = 0;
 	}
-	if (tmp.modes.absurd.active && !reloaded) {
+	if (modeActive("absurd") && !reloaded) {
 		window.resizeTo(Math.random() * 400, Math.random() * 400);
 		window.moveTo(Math.random() * 1000, Math.random() * 200);
 		const bufhiesibvfib = document.body.querySelectorAll("*");

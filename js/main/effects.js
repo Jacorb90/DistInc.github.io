@@ -26,8 +26,8 @@ function updateTempEffects() {
 		if (tmp.inf.upgs.has("8;4")) tmp.ach63sc = tmp.ach63sc.times(player.inf.pantheon.purge.power.plus(1).pow(17));
 	tmp.ach63pow = new ExpantaNum(1);
 	if (tmp.ach) if (tmp.ach[74].has) tmp.ach63pow = tmp.ach63pow.times(1.75);
-	if (tmp.modes.easy.active) tmp.ach63pow = tmp.ach63pow.times(2);
-	if (player.tr.upgrades.includes(24) && tmp.modes.extreme.active) tmp.ach63pow = tmp.ach63pow.times(1.4);
+	if (modeActive("easy")) tmp.ach63pow = tmp.ach63pow.times(2);
+	if (player.tr.upgrades.includes(24) && modeActive("extreme")) tmp.ach63pow = tmp.ach63pow.times(1.4);
 	tmp.ach63 = tmp.timeSpeed ? tmp.timeSpeed.pow(0.025).pow(tmp.ach63pow) : new ExpantaNum(1);
 	if (tmp.ach63.gte(tmp.ach63sc)) tmp.ach63 = tmp.ach63.log10().times(tmp.ach63sc.div(tmp.ach63sc.log10()));
 	tmp.ach112pow = new ExpantaNum(1);
@@ -49,8 +49,8 @@ function updateTempEffects() {
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10());
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length);
 	let tr89mod = 1;
-	if (tmp.modes.hard.active) tr89mod /= ((tmp.ach?tmp.ach[105].has:false)&&tmp.modes.extreme.active)?0.9:2;
-	if (tmp.modes.easy.active) tr89mod *= 3;
+	if (modeActive("hard")) tr89mod /= ((tmp.ach?tmp.ach[105].has:false)&&modeActive("extreme"))?0.9:2;
+	if (modeActive("easy")) tr89mod *= 3;
 	tmp.tr8 = ExpantaNum.div(4, tmp.auto ? tmp.auto.rankbot.interval.max(1e-10) : 1)
 		.pow((1 / 3) * tr89mod)
 		.max(1);
@@ -76,7 +76,7 @@ function updateTempEffects() {
 	};
 	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores);
 	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10);
-	if (tmp.modes.extreme.active) {
+	if (modeActive("extreme")) {
 		tmp.tr19 = ExpantaNum.div(4.5, tmp.auto ? tmp.auto.rankCheapbot.interval.max(1e-10) : 1)
 			.pow(0.3 * tr89mod)
 			.max(1);

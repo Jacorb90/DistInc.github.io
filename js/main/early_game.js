@@ -1,8 +1,8 @@
 function updateTempEarlyGame() {
 	// Acceleration
 	tmp.acc = new ExpantaNum(0.1);
-	if (tmp.modes.hard.active) tmp.acc = tmp.acc.div(3);
-	if (tmp.modes.easy.active) tmp.acc = tmp.acc.times(2);
+	if (modeActive("hard")) tmp.acc = tmp.acc.div(3);
+	if (modeActive("easy")) tmp.acc = tmp.acc.times(2);
 	if (player.rank.gt(2)) tmp.acc = tmp.acc.times(tmp.r2);
 	if (player.rank.gt(3)) tmp.acc = tmp.acc.times(2);
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.acc = tmp.acc.times(2);
@@ -25,7 +25,7 @@ function updateTempEarlyGame() {
 	if (tmp.ach) if (tmp.ach[32].has) tmp.acc = tmp.acc.times(1.8);
 	if (tmp.ach) if (tmp.ach[35].has) tmp.acc = tmp.acc.times(1.8);
 	if (tmp.ach) if (tmp.ach[105].has) tmp.acc = tmp.acc.times(4);
-	if (tmp.ach) if (tmp.ach[24].has && tmp.modes.extreme.active) tmp.acc = tmp.acc.times(10);
+	if (tmp.ach) if (tmp.ach[24].has && modeActive("extreme")) tmp.acc = tmp.acc.times(10);
 	if (tmp.maxVel && tmp.inf) if (tmp.inf.upgs.has("6;6")) tmp.acc = tmp.acc.times(INF_UPGS.effects["6;6"]());
 	if (tmp.inf && tmp.timeSpeed) if (tmp.inf.upgs.has("4;7")) tmp.acc = tmp.acc.times(INF_UPGS.effects["4;7"]());
 	if (tmp.rockets) tmp.acc = tmp.acc.times(tmp.rockets.accPow);
@@ -37,14 +37,14 @@ function updateTempEarlyGame() {
 				: new ExpantaNum(0)
 			).max(1)
 		);
-	if (player.modes.includes("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
-	if (player.modes.includes("extreme") && tmp.acc.gte("1e40000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e40000"))
+	if (modeActive("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
+	if (modeActive("extreme") && tmp.acc.gte("1e40000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e40000"))
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1);
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1);
-	if (tmp.modes.hard.active) tmp.maxVel = tmp.maxVel.div(2);
-	if (tmp.modes.easy.active) tmp.maxVel = tmp.maxVel.times(3);
+	if (modeActive("hard")) tmp.maxVel = tmp.maxVel.div(2);
+	if (modeActive("easy")) tmp.maxVel = tmp.maxVel.times(3);
 	if (player.rank.gt(2)) tmp.maxVel = tmp.maxVel.times(tmp.r2);
 	if (player.tier.gt(1) && player.rank.gte(3)) tmp.maxVel = tmp.maxVel.times(5);
 	if (player.rank.gt(4)) tmp.maxVel = tmp.maxVel.times(tmp.r4);

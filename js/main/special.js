@@ -200,13 +200,13 @@ function updateLayerMults() {
 	if (tmp.ach[44].has) tmp.lm.rockets = tmp.lm.rockets.times(1.15);
 	if (tmp.ach[76].has) tmp.lm.rockets = tmp.lm.rockets.times(1.02);
 	if (tmp.ach[131].has) tmp.lm.rockets = tmp.lm.rockets.times(2);
-	if (tmp.modes.extreme.active && player.rf.gt(0))
+	if (modeActive("extreme") && player.rf.gt(0))
 		tmp.lm.rockets = tmp.lm.rockets.times(ExpantaNum.pow(2, player.furnace.upgrades[2]));
 	if (player.rank.gt(100)) tmp.lm.rockets = tmp.lm.rockets.times(2);
 	if (player.tr.upgrades.includes(10)) tmp.lm.rockets = tmp.lm.rockets.times(tmp.tr10.max(1));
-	if (player.tr.upgrades.includes(28) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(28) && modeActive("extreme"))
 		tmp.lm.rockets = tmp.lm.rockets.times(player.furnace.coal.plus(1).pow(0.15));
-	if (player.tr.upgrades.includes(29) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(29) && modeActive("extreme"))
 		tmp.lm.rockets = tmp.lm.rockets.times(
 			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1))
 		);
@@ -236,14 +236,14 @@ function updateLayerMults() {
 		if (tmp.inf.upgs.has("3;2")) tmp.lm.collapse = tmp.lm.collapse.times(INF_UPGS.effects["3;2"]()["cadavers"]);
 	if (tmp.collapse)
 		if (
-			tmp.modes.hard.active &&
+			modeActive("hard") &&
 			(tmp.collapse.layer.gain.gte(10) || (tmp.clghm && tmp.collapse.layer.gain.gte(5)))
 		) {
 			tmp.lm.collapse = tmp.lm.collapse.div(2);
 			tmp.clghm = true;
 		}
-	if (tmp.ach[68].has && tmp.modes.extreme.active) tmp.lm.collapse = tmp.lm.collapse.times(5);
-	if (tmp.collapse) if (tmp.modes.easy.active) tmp.lm.collapse = tmp.lm.collapse.times(3);
+	if (tmp.ach[68].has && modeActive("extreme")) tmp.lm.collapse = tmp.lm.collapse.times(5);
+	if (tmp.collapse) if (modeActive("easy")) tmp.lm.collapse = tmp.lm.collapse.times(3);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0)) tmp.lm.collapse = tmp.lm.collapse.times(tmp.elm.ferm.quarkR("down").max(1));
 }

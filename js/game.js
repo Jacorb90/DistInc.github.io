@@ -13,7 +13,6 @@ var ddState = "none";
 var notifier = new Notifier();
 var saveTimer = 0;
 var showContainer = true;
-var reloadFail = false;
 var infActive = false;
 var infTab = "infinity";
 var elmTab = "fermions";
@@ -67,7 +66,7 @@ function tickWithTR(diff) {
 	player.bestV = player.bestV.max(player.velocity)
 	player.bestA = player.bestA.max(tmp.acc)
 	autoTick(diff);
-	if (tmp.modes.extreme.active) {
+	if (modeActive("extreme")) {
 		if (player.rf.gt(0)) {
 			player.furnace.coal = player.furnace.coal.plus(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(diff)).max(0);
 		}
