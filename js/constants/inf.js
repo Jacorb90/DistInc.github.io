@@ -378,6 +378,7 @@ const INF_UPGS = {
 			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
+			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
 			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon());
 			let ret = total.plus(1).pow(exp);
 			return ret;
@@ -465,14 +466,18 @@ const INF_UPGS = {
 		},
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
-			let ret = speed.pow(0.3);
+			let exp = 0.3
+			if (player.modes.includes("extreme")) exp = 0.5
+			let ret = speed.pow(exp);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
 		},
 		"4;10": function() {
 			let times = new ExpantaNum(player.elementary.times)
 			if (times.gte(100)) times = times.sqrt().times(Math.sqrt(100))
-			let ret = times.plus(1).log10().plus(1).pow(5)
+			let exp = new ExpantaNum(5)
+			if (player.elementary.theory.tree.unl) exp = exp.plus(TREE_UPGS[3].effect(player.elementary.theory.tree.upgrades[3]||0))
+			let ret = times.plus(1).log10().plus(1).pow(exp)
 			return ret
 		},
 		"5;4": function () {
@@ -643,7 +648,9 @@ const INF_UPGS = {
 			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt()
 			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt()
 			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75)
-			return f1.times(f2).times(f3).cbrt()
+			let ret = f1.times(f2).times(f3).cbrt()
+			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;0")) ret = ret.pow(1.8)
+			return ret
 		},
 		"10;5": function() {
 			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
@@ -654,7 +661,15 @@ const INF_UPGS = {
 			return ret
 		},
 		"10;10": function() {
-			let ret = ExpantaNum.pow(1.9, player.rank.max(1).sub(1)).times(ExpantaNum.pow(8.5, player.tier.max(1).sub(1)))
+			let base1 = new ExpantaNum(1.9)
+			let ranks = player.rank.max(1).sub(1)
+			let base2 = new ExpantaNum(8.5)
+			let tiers = player.tier.max(1).sub(1)
+			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;5")) {
+				base1 = base1.plus(ranks.plus(1).log10().div(10))
+				base2 = base2.plus(tiers.plus(1).log10().div(4))
+			}
+			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers))
 			return ret
 		},
 	}
@@ -745,6 +760,7 @@ const STADIUM_REWARDS = {
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
 			ret = ret.times(mult);
+			if (player.modes.includes("extreme")) ret = ret.plus(1).log10().plus(1).log10().div(10).plus(1)
 			return ret;
 		},
 		solaris: function () {

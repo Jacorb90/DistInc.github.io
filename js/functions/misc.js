@@ -69,47 +69,67 @@ function ENString(obj) {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.g = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.b = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ar = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ag = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ab = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.amount).toString(),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[0]).toString(),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1]).toString()
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1]).toString(),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[2]||0).toString()
 		]
 	};
 	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons).toString();
 	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount).toString();
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount).toString();
+	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points).toString();
+	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth).toString();
+	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks).toString();
+	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons).toString();
+	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos).toString();
+	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos).toString();
+	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent).toString();
+	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]).toString();
+	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]).toString();
+	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled).toString();
+	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount).toString();
+	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
+	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount).toString();
+	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders).toString();
 	return ret;
 }
 
@@ -125,6 +145,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon);
 	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives);
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
+	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory)
+	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);
@@ -189,47 +211,67 @@ function transformToEN(obj, sc = DEFAULT_START) {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.r.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.g = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.g.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.b = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.b.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ar = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ar.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ag = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ag.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gluons.ab = {
 		amount: new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.amount),
 		upgrades: [
 			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[0]),
-			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1])
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[1]),
+			new ExpantaNum(ret.elementary.bosons.gauge.gluons.ab.upgrades[2]||0)
 		]
 	};
 	ret.elementary.bosons.gauge.gravitons = new ExpantaNum(ret.elementary.bosons.gauge.gravitons);
 	ret.elementary.bosons.scalar.amount = new ExpantaNum(ret.elementary.bosons.scalar.amount);
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount);
+	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points);
+	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth);
+	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks);
+	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons);
+	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos);
+	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos);
+	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent);
+	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]);
+	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]);
+	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled);
+	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount);
+	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
+	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount);
+	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }
@@ -252,6 +294,7 @@ function copyToClipboard(str) {
 	el.value = str;
 	document.body.appendChild(el);
 	el.select();
+    el.setSelectionRange(0, 99999);
 	document.execCommand("copy");
 	document.body.removeChild(el);
 }
@@ -271,7 +314,8 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (tmp.modes.hard.active || tmp.modes.easy.active) a = a.filter(x => x / 10 <= 8);
+	if (tmp.modes.hard.active&&!tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 8);
+	if (tmp.modes.easy.active||tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 13);
 	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
@@ -329,5 +373,5 @@ function sleep(s) {
 function nerfOfflineProg(time) {
 	time = new ExpantaNum(time).div(1000);
 	if (time.gt(60)) time = time.pow(3/4).times(Math.pow(60, 1/4));
-	return time.times(1000);
+	return time.times(1000).max(0);
 }

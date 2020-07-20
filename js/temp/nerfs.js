@@ -74,7 +74,7 @@ function updateTempNerfs() {
 		if (name == "noTS") {
 			let active = false;
 			active =
-				active || (tmp.inf ? tmp.inf.stadium.active("eternity") || tmp.inf.stadium.active("reality", 2) : true);
+				active || (tmp.inf ? (tmp.inf.stadium.active("eternity")&&!(tmp.ach[116].has && tmp.modes.extreme.active&&player.inf.pantheon.purge.active)) || tmp.inf.stadium.active("reality", 2) : true);
 			return active;
 		}
 		if (name == "noCadavers") {
@@ -82,8 +82,8 @@ function updateTempNerfs() {
 			active =
 				active ||
 				(tmp.inf
-					? (tmp.inf.stadium.active("solaris") && !tmp.modes.extreme.active) ||
-					  tmp.inf.stadium.active("drigganiz", 5)
+					? (((tmp.inf.stadium.active("solaris") && !tmp.modes.extreme.active) ||
+					  tmp.inf.stadium.active("drigganiz", 5)) && !(player.inf.pantheon.purge.active&&(tmp.ach[147].has||tmp.modes.extreme.active)))
 					: true);
 			return active;
 		}
@@ -104,8 +104,8 @@ function updateTempNerfs() {
 			active =
 				active ||
 				(tmp.inf
-					? tmp.inf.stadium.active("drigganiz") ||
-					  tmp.inf.stadium.active("eternity", 6) ||
+					? ((tmp.inf.stadium.active("drigganiz") ||
+					  tmp.inf.stadium.active("eternity", 6)) && !((tmp.ach[147].has||tmp.modes.extreme.active)&&player.inf.pantheon.purge.active)) ||
 					  tmp.inf.stadium.active("reality", 6)
 					: true);
 			return active;
@@ -156,12 +156,14 @@ function updateTempNerfs() {
 			type == "ascension" ||
 			type == "heavenlyChips" ||
 			type == "demonicSouls" ||
-			type == "derv";
-		let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar";
+			type == "derv" || preinf;
+		let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss" || type=="str" || type=="preons" || type=="accelerons";
 		let exp = new ExpantaNum(1);
+		if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 		if (tmp.nerfs.active("preInf.1") && preinf) exp = exp.div(10);
-		if (player.inf.pantheon.purge.active && type == "vel") exp = exp.div(3);
-		if (tmp.modes.extreme.active && preinf) exp = exp.times(0.75);
+		if (player.inf.pantheon.purge.active && type == "vel") exp = exp.div(tmp.modes.extreme.active?1:3);
+		if (player.elementary.theory.active && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
+		if (tmp.modes.extreme.active && preinf) exp = exp.times(FCComp(4)?(tmp.ach[123].has?0.95:0.9):0.75);
 		return val.pow(exp);
 	};
 }

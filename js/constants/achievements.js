@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 13,
+	rows: 14,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -118,6 +118,15 @@ const ACH_DATA = {
 		136: "Fastest in the Metaverse",
 		137: "Back to the Past",
 		138: "The Fleet Flees",
+		
+		141: "The Impossible Happened",
+		142: "Endless Endeavours",
+		143: "Under the C",
+		144: "To The Next Rank",
+		145: "The Great Epoch",
+		146: "True Infinity+",
+		147: "The Biggest Setback",
+		148: "The Impossible Task",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -219,23 +228,32 @@ const ACH_DATA = {
 		117: "Reach showNum(1e3000) Cadavers.",
 		118: "Reach formatDistance(1e33600) while in Eternity's Stadium challenge.",
 
-		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Tier 6.",
+		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Difficulty Level 6.",
 		122: "Purchase two Derivative Shifts.",
 		123: "Reach showNum(2.5e5) Ascension Power.",
 		124: "Reach showNum(30) Purge Power.",
-		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Tier 6.",
+		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Difficulty Level 6.",
 		126: "Have a magnitude of showNum(1e200) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 
 		131: "Perform an Elementary reset.",
-		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8, & while in Reality's Stadium challenge at Tier 6.",
+		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8 in the current Infinity, & while in Reality's Stadium challenge at Difficulty Level 6.",
 		133: "Reach showNum(1e3) Fermions & Bosons.",
-		134: "Reach formatDistance(4.4e1100026) without Pathogens & Dark Cores.",
+		134: "Reach formatDistance(4.4e1100026) without Pathogen Upgrades & Dark Cores in the current Infinity.",
 		135: "Reach showNum(2.5e7) Heavenly Chips.",
 		136: "Reach showNum(1e3750000) uni/s of Velocity.",
 		137: "Do an Elementary reset without any Derivative Boosts (but you can have Derivative Shifts).",
 		138: "Reach formatDistance(4.4e7826) while having ten Endorsements or less.",
+		
+		141: "Get a Theory Point.",
+		142: "Reach formatDistance(4.4e136) while in a Purge run, while in Reality's Stadium challenge at Difficulty Level 6, and without Pathogen Upgrades & Dark Cores in the current Infinity.",
+		143: "Complete The Theoriverse at Depth 4.",
+		144: "Reach showNum(1e33) Ascension Power.",
+		145: "Reach formatDistance(4.4e8000026).",
+		146: "Reach showNum(1.8e308) Knowledge.",
+		147: "Reach Rank showNum(200) with ten Endorsements or less.",
+		148: "Reach Rank showNum(995).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -291,19 +309,23 @@ const ACH_DATA = {
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
 
 		103: "You can activate one extra perk at any given time.",
-		105: "Acceleration is showNum(300)% faster.",
-		108: "Knowledge gain is showNum(50)% faster.",
+		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
+		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
 
 		111: "You can activate all four perks at once.",
 		112: "Time Speed boosts Knowledge gain at a reduced rate.",
-		116: "You gain twice as many Heavenly Chips & Demonic Souls.",
+		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs).",
 
-		123: "The Universe Doesn't Exist uses a slightly better formula.",
+		123: "The Universe Doesn't Exist uses a slightly better formulaboolean(extreme, and Furnace Challenge 4's reward is slightly better [^0.9 -> ^0.95]).",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
 		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
 		132: "The Gauge Force Effect is doubled.",
 		135: "The Purge Power effect is halved.",
+		
+		142: "Endorsements that are bought automatically do not reset anything.",
+		144: "All Strings are gained showNum(25)% faster.",
+		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 	}
 };

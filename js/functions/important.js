@@ -99,8 +99,12 @@ function autoTick(diff) {
 		}())
 	}
 	if (player.automators["endorsements"] && player.distance.gte(tmp.inf.req)) {
-		if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.maxEndorse()
-		else tmp.inf.manualReset(true) 
+		if (tmp.elm.bos.hasHiggs("0;0;3") || tmp.ach[142].has) tmp.inf.maxEndorse(tmp.ach[142].has)
+		else {
+			if (tmp.ach[142].has) {
+				if (player.distance.gte(tmp.inf.req)) player.inf.endorsements = player.inf.endorsements.plus(1)
+			} else tmp.inf.manualReset(true) 
+		}
 	}
 	if (player.automators["perks"]) for (let i=1;i<=4;i++) if (player.inf.ascension.time[i-1].eq(0)) tmp.inf.asc.activatePerk(i)
 	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.maxEnl(i)
@@ -119,19 +123,6 @@ function autoTick(diff) {
 	}
 }
 
-function showModeDescs(modes) {
-	let d = "";
-	if (modes.length > 1) {
-		for (let i = 0; i < modes.length; i++) {
-			let mode = MODES[modes[i]];
-			d += mode.desc;
-			if (i < modes.length - 1) d += "\n\n\n";
-		}
-	} else if (modes.length == 1) d = MODES[modes[0]].desc;
-	else if (modes.length == 0) d = "Just the main game.";
-	alert(d);
-}
-
 function modeLoad(resetted) {
 	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
 		player.modes
@@ -146,5 +137,13 @@ function modeLoad(resetted) {
 					player = MODE_EX[x](player);
 				})()
 			);
+	}
+}
+
+function checkNaN() {
+	if (player.distance.isNaN()) {
+		tmp.options.export()
+		alert("We have detected a NaN Error in your save! We have exported it to your clipboard (although it may be broken), and will hard reset the game to remove this bug as soon as possible. Please go to the discord (in the options menu) and tell someone about what happened, and hopefully your save can be salvaged. We apologize for this error.")
+		tmp.options.hardReset(true)
 	}
 }

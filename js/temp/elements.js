@@ -8,13 +8,15 @@ function updateHTML() {
 
 	// Options
 	if (player.tab == "options") {
-		for (let i = 0; i < Object.keys(MODES).length; i++)
+		for (let i = 0; i < Object.keys(MODES).length; i++) {
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setClasses({
 				btn: true,
 				tb: true,
 				opt: !modesSelected.includes(Object.keys(MODES)[i]),
 				optSelected: modesSelected.includes(Object.keys(MODES)[i])
 			});
+			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+		}
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
@@ -22,6 +24,8 @@ function updateHTML() {
 		tmp.el.newst.setTxt("News Ticker: " + (player.options.newst ? "ON" : "OFF"));
 		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"))
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
+		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
+		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
 	}
 
 	// Main
@@ -89,7 +93,7 @@ function updateHTML() {
 	}
 
 	// Features
-	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "" : tmp.features[tmp.nf].desc);
+	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "All Features Unlocked!" : tmp.features[tmp.nf].desc);
 
 	// Achievements
 	if (player.tab == "achievements") {
@@ -376,7 +380,7 @@ function updateHTML() {
 	if (player.tab == "inf") {
 		// Infinity
 		tmp.el.endorsementManual.setDisplay(
-			player.inf.endorsements.gte(10) && (tmp.inf.can || tmp.inf.stadium.canComplete)
+			player.inf.endorsements.gte(10) && ((tmp.inf.can && !player.automators["endorsements"]) || tmp.inf.stadium.canComplete)
 		);
 		tmp.el.emInner.setHTML(
 			tmp.inf.stadium.canComplete
@@ -393,7 +397,7 @@ function updateHTML() {
 			for (let r = 1; r <= INF_UPGS.rows; r++) {
 				for (let c = 1; c <= INF_UPGS.cols; c++) {
 					let state = "";
-					if (tmp.inf.upgs.repealed(r+";"+c)) state = "repealed";
+					if (tmp.inf.upgs.repealed(r+";"+c) && !tmp.modes.easy.active) state = "repealed";
 					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
 					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
 					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";
@@ -463,7 +467,7 @@ function updateHTML() {
 					comp: player.inf.stadium.completions.includes(name)
 				});
 				let active = player.inf.stadium.current == name;
-				let trapped = !active && tmp.inf.stadium.active(name);
+				let trapped = !active && tmp.inf.stadium.active(name) && !tmp.modes.extreme.active;
 				let comp = player.inf.stadium.completions.includes(name);
 				tmp.el[name + "Chall"].setTxt(trapped ? "Trapped" : active ? "Active" : comp ? "Completed" : "Start");
 				tmp.el[name + "Chall"].setClasses({
@@ -489,7 +493,7 @@ function updateHTML() {
 		// The Pantheon
 		if (infTab == "pantheon") {
 			tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems));
-			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next));
+			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next.ceil()));
 			let name = tmp.scaling.getName("spectralGems");
 			tmp.el.spectralGemName.setTxt(name == "" ? "" : name + " ");
 			tmp.el.respecSpectralGems.setClasses({
@@ -514,11 +518,13 @@ function updateHTML() {
 				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips")) + "/sec)"
 			);
 			tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
+			tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls));
 			tmp.el.soulGain.setTxt(
 				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")) + "/sec)"
 			);
 			tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)));
+			tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl);
 			tmp.el.purgeBtn.setTxt(
 				player.inf.pantheon.purge.active
@@ -602,6 +608,11 @@ function updateHTML() {
 			tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
 			tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
 			tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
+			tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
+			for (let i=1;i<=5;i++) {
+				if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
+				tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
+			}
 		}
 	}
 	
@@ -637,11 +648,11 @@ function updateHTML() {
 	if (player.tab == "elementary") {
 		// Elementary
 		tmp.el.elmReset.setHTML(
-			"Reset all previous progress to gain <span class='eltxt'>" +
+			player.elementary.theory.active?(tmp.elm.can?("Exit The Theoriverse to gain "+showNum(tmp.elm.theory.gain)+" Theory Points."):"Reach the end of this Elementary run to gain Theory Points."):("Reset all previous progress to gain <span class='eltxt'>" +
 				showNum(tmp.elm.layer.gain) +
-				"</span> Elementary Particles."+(tmp.elm.layer.gain.gte(tmp.elm.softcap)?"<span class='sc'>(softcapped)</span>":"")
+				"</span> Elementary Particles."+(tmp.elm.layer.gain.gte(tmp.elm.softcap)?"<span class='sc'>(softcapped)</span>":""))
 		);
-		tmp.el.elmReset.setClasses({ btn: true, locked: !tmp.elm.can, elm: tmp.elm.can });
+		tmp.el.elmReset.setClasses({ btn: true, locked: !tmp.elm.can, elm: (tmp.elm.can&&!player.elementary.theory.active), th: (tmp.elm.can&&player.elementary.theory.active) });
 		tmp.el.elmt.setTxt(showNum(player.elementary.times));
 		tmp.el.elmp.setTxt(showNum(player.elementary.particles));
 		if (elmTab == "fermions") {
@@ -730,7 +741,7 @@ function updateHTML() {
 						locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]),
 						light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])
 					});
-					tmp.el["photonLvl" + i].setTxt(showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
+					tmp.el["photonLvl" + i].setTxt(tmp.scaling.getName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
 					tmp.el["photonDesc" + i].setTxt(showNum(tmp.elm.bos.photonEff(i)) + "x");
 					tmp.el["photonCost" + i].setTxt(showNum(tmp.elm.bos.photonCost[i]));
 				}
@@ -751,14 +762,15 @@ function updateHTML() {
 					let amt = player.elementary.bosons.gauge.gluons[col].amount;
 					tmp.el[col + "g"].setTxt(showNum(amt));
 					tmp.el[col + "gg"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos[col + "g"], "gauge")));
-					for (let x = 1; x <= 2; x++) {
+					tmp.el["glu"+col+"3"].setDisplay(hasDE(1))
+					for (let x = 1; x <= 3; x++) {
 						tmp.el[col + "Upg" + x].setClasses({
 							btn: true,
 							locked: amt.lt(tmp.elm.bos.gluonCost(col, x)),
 							elm: amt.gte(tmp.elm.bos.gluonCost(col, x))
 						});
 						tmp.el[col + "Lvl" + x].setTxt(
-							showNum(player.elementary.bosons.gauge.gluons[col].upgrades[x - 1])
+							showNum(player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0))
 						);
 						tmp.el[col + "Eff" + x].setTxt(showNum(tmp.elm.bos.gluonEff(col, x)));
 						tmp.el[col + "Cost" + x].setTxt(showNum(tmp.elm.bos.gluonCost(col, x)));
@@ -769,6 +781,9 @@ function updateHTML() {
 				tmp.el.grav.setTxt(showNum(player.elementary.bosons.gauge.gravitons));
 				tmp.el.gravGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge")));
 				tmp.el.gravMult.setTxt(showNum(tmp.elm.bos.gravEff));
+				tmp.el.gravBoostDiv.setDisplay(hasDE(4))
+				tmp.el.gravBoosts.setTxt(showNum(getGravBoosts()));
+				tmp.el.gravBoostMult.setTxt(showNum(getGravBoostMult()));
 			}
 			if (bosTab == "scalar") {
 				// Scalar Bosons
@@ -790,6 +805,75 @@ function updateHTML() {
 				tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
 				tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x")
 				tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x")
+				tmp.el["higgs0;0;5"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;5"](true))+" later")
+			}
+		}
+		if (elmTab=="theory") {
+			tmp.el.thp.setTxt(showNum(player.elementary.theory.points))
+			if (thTab=="tv") {
+				tmp.el.theoriverse.setTxt(player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
+				tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
+			}
+			if (thTab=="ss") {
+				tmp.el.ssUnl.setDisplay(!player.elementary.theory.supersymmetry.unl)
+				tmp.el.ssDiv.setDisplay(player.elementary.theory.supersymmetry.unl)
+				for (let i=0;i<4;i++) {
+					let type = ["squark","slepton","neutralino","chargino"][i]
+					tmp.el[type+"s"].setTxt(showNum(player.elementary.theory.supersymmetry[type+"s"]))
+					tmp.el[type+"Gain"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss")))
+					tmp.el[type+"Eff"].setTxt(showNum(tmp.elm.theory.ss[type+"Eff"]))
+				}
+				tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength))
+				tmp.el.waveEff.setTxt(showNum(tmp.elm.theory.ss.waveEff))
+			}
+			if (thTab=="tree") {
+				tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
+				tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
+				for (let i=1;i<=TREE_AMT;i++) {
+					let bought = tmp.elm.theory.tree.bought(i)
+					tmp.el["tree"+i].setDisplay(TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)
+					tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(TREE_UPGS[i].cap))
+					tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought))+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+					tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(TREE_UPGS[i].cap), unl: (!(bought.gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought))), locked: (!(bought.gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought)))})
+				}
+				tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
+			}
+			if (thTab=="strings") {
+				tmp.el.stringsUnl.setDisplay(!player.elementary.theory.strings.unl)
+				tmp.el.stringsDiv.setDisplay(player.elementary.theory.strings.unl)
+				for (let i=1;i<=TOTAL_STR;i++) {
+					if (i>1) tmp.el["str"+i].setDisplay(player.elementary.theory.strings.amounts[i-2].gte(STR_REQS[i])&&(UNL_STR()>=i))
+					tmp.el["str"+i+"amt"].setTxt(formatDistance(player.elementary.theory.strings.amounts[i-1]))
+					tmp.el["str"+i+"eff"].setTxt(showNum(getStringEff(i)))
+					tmp.el["str"+i+"gain"].setTxt(formatDistance(tmp.nerfs.adjust(getStringGain(i), "str")))
+				}
+				let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
+				tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])))
+				tmp.el.entangleDiv.setDisplay(lastStr>=3||lastStr==0||player.elementary.theory.strings.entangled.gt(0))
+				tmp.el.entangle.setClasses({btn: true, locked: lastStr<3&&lastStr!=0, th: lastStr>=3||lastStr==0})
+				tmp.el.entangle.setTxt("Entangle your Strings (which resets them) to gain "+formatDistance(getEntangleGain())+" of Entangled Strings.")
+				tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled))
+				tmp.el.entangleEff.setTxt(showNum(getEntangleEff()))
+			}
+			if (thTab=="preons") {
+				tmp.el.preonsUnl.setDisplay(!player.elementary.theory.preons.unl)
+				tmp.el.preonsDiv.setDisplay(player.elementary.theory.preons.unl)
+				tmp.el.preonAmt.setTxt(showNum(player.elementary.theory.preons.amount))
+				tmp.el.preonGain.setTxt(showNum(tmp.nerfs.adjust(getPreonGain(), "preons")))
+				tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())})
+				tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
+				tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
+			}
+			if (thTab=="accelerons") {
+				tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl)
+				tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl)
+				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
+				tmp.el.accelGain.setTxt(showNum(tmp.nerfs.adjust(getAccelGain(), "accelerons")))
+				tmp.el.accelEff.setTxt(showNum(getAccelEff()))
+				let amt = player.elementary.theory.accelerons.expanders.toNumber()+1
+				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS))})
+				tmp.el.darkExp.setHTML((amt-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[amt]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[amt])+" Accelerons"))
+				tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
 			}
 		}
 	}
@@ -810,4 +894,21 @@ function updateHTML() {
 	tmp.el.loading.setDisplay(false)
 	tmp.el.footer.setDisplay(player.tab == "options" && player.optionsTab !== "saving");
 	tmp.el.newsticker.setDisplay(player.options.newst);
+	tmp.el.hotkeys.setAttr("widetooltip", 
+		"R -> Rank Reset\n"+
+		"T -> Tier Reset\n"+
+		(TABBTN_SHOWN.rockets()?"Shift + R -> Rocket Reset\n":"")+
+		(TABBTN_SHOWN.rockets()?"F -> Rocket Fuel Reset\n":"")+
+		((TABBTN_SHOWN.furnace()&&tmp.fn)?"Shift + F -> Blue Flame Reset\n":"")+
+		(TABBTN_SHOWN.tr()?"U -> Time Reversal\n":"")+
+		(TABBTN_SHOWN.collapse()?"C -> Collapse Reset\n":"")+
+		(TABBTN_SHOWN.pathogens()?"P -> Max All Pathogen Upgrades\n":"")+
+		(TABBTN_SHOWN.dc()?"D -> Buy Dark Core\n":"")+
+		((TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10))?"E -> Get Endorsement\n":"")+
+		(INF_TABS.ascension()?"1, 2, 3, 4 -> Toggle Perks\n":"")+
+		(INF_TABS.derivatives()?"Shift + P -> Toggle Purge\n":"")+
+		(INF_TABS.derivatives()?"Shift + D -> Derivative Shift/Boost\n":"")+
+		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
+		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")
+	);
 }

@@ -122,4 +122,13 @@ function updateAchievements() {
 	if (player.velocity.gte("4.4e3750026")) tmp.ach[136].grant()
 	// ach137 is in the Elementary reset function
 	if (player.distance.gte("4.4e7826")&&player.inf.endorsements.lte(10)) tmp.ach[138].grant()
+		
+	if (player.elementary.theory.points.gte(1)) tmp.ach[141].grant()
+	if (player.inf.pantheon.purge.active && tmp.inf.stadium.active("reality", 6) && antiBool && player.dc.cores.eq(0) && player.distance.gte(4.4e136)) tmp.ach[142].grant()
+	if (player.elementary.theory.depth.gte(5)) tmp.ach[143].grant()
+	if (player.inf.ascension.power.gte(1e33)) tmp.ach[144].grant()
+	if (player.distance.gte("4.4e8000026")) tmp.ach[145].grant()
+	if (player.inf.knowledge.gte("1.8e308")) tmp.ach[146].grant()
+	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
+	if (player.rank.gte(995)) tmp.ach[148].grant()
 }

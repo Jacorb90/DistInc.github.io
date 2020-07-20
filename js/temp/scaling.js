@@ -41,6 +41,7 @@ function updateTempScaling() {
 		tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(tmp.pathogens[11].eff);
 		tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(tmp.pathogens[12].eff);
 	}
+	if (tmp.ach) if (tmp.ach[108].has && tmp.modes.extreme.active) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1)
 	if (tmp.inf) {
 		if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2);
 		if (tmp.inf.upgs.has("1;6")) {
@@ -59,6 +60,8 @@ function updateTempScaling() {
 		if (tmp.inf.upgs.has("9;3")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1);
 		if (tmp.inf.upgs.has("2;10")) tmp.scalings.superscaled.darkCore = tmp.scalings.superscaled.darkCore.plus(5)
 	}
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) tmp.scalings.atomic.rank = tmp.scalings.atomic.rank.plus(tmp.elm.bos["higgs_0;0;5"]())
+	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
 	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
 	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
@@ -103,6 +106,7 @@ function updateTempScaling() {
 			);
 		if (tmp.inf.upgs.has("1;10")) tmp.scalingPower.hyper.tier = tmp.scalingPower.hyper.tier.times(ExpantaNum.sub(1, INF_UPGS.effects["1;10"]()))
 		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75);
+		if (player.elementary.theory.tree.unl) tmp.scalingPower.superscaled.rf = tmp.scalingPower.superscaled.rf.sub(TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0)).max(0)
 		if (tmp.inf.stadium.active("infinity", 4))
 			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6);
 		if (tmp.inf.upgs.has("8;7"))
@@ -115,6 +119,12 @@ function updateTempScaling() {
 	}
 	if (tmp.modes.extreme.active) {
 		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6);
+		if (FCComp(1)) {
+			tmp.scalingPower.superscaled.fn = tmp.scalingPower.superscaled.fn.times(0.1)
+			tmp.scalingPower.hyper.fn = tmp.scalingPower.hyper.fn.times(0.1)
+		}
+		if (inFC(3)) tmp.scalingPower.hyper.fn = new ExpantaNum(9.99)
+		if (FCComp(3)) tmp.scalingPower.scaled.rankCheap = tmp.scalingPower.scaled.rankCheap.times(0.1)
 	}
 	
 	// Scaling Bugfixes
@@ -127,7 +137,7 @@ function updateTempScaling() {
 			if (next !== undefined)
 				if (tmp.scalings[next][name2] !== undefined)
 					tmp.scalings[name][name2] = ExpantaNum.min(tmp.scalings[name][name2], tmp.scalings[next][name2]);
-			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.4)
+			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.5)
 		}
 	}
 }

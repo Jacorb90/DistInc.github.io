@@ -69,9 +69,12 @@ function updateTempOptions() {
 							: btoa(JSON.stringify([]))
 					)
 				);
-				if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
-				else s.savePos = all.length + 1;
-				if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+				if (player.options.saveImp=="overwrite" || s.saveID==player.saveID) s.savePos = deepCopy(player.savePos)
+				else {
+					if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+					else s.savePos = all.length + 1;
+					if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+				}
 				tmp.options.setSave(s);
 			} catch (e) {
 				notifier.error("Invalid Save");
@@ -187,7 +190,9 @@ function updateTempOptions() {
 		else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
 		else mds = "None";
 		let info = "Modes: " + mds + "<br>";
-		if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
+		if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
+			info += "Theory Points: "+showNum(new ExpantaNum(sav.elementary.theory.points))+", Theoriverse Depth: "+showNum(new ExpantaNum(sav.elementary.theory.depth))+", "
+		} else if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
 			info += "Elementaries: "+showNum(new ExpantaNum(sav.elementary.times))+", Fermions: "+showNum(new ExpantaNum(sav.elementary.fermions.amount))+", Bosons: "+showNum(new ExpantaNum(sav.elementary.bosons.amount))+", "
 		else if (sav.inf.derivatives.unl)
 			info += "Derivative Shifts/Boosts: " + showNum(new ExpantaNum(sav.inf.derivatives.unlocks)) + ", ";
@@ -266,7 +271,7 @@ function updateTempOptions() {
 		let els = {};
 		for (let x = 0; x < all.length; x++) {
 			if (all[x] === undefined || all[x] === null) continue;
-			let active = player.saveID == all[x].saveID;
+			let active = player.saveID == all[x].saveID && player.savePos == all[x].savePos;
 			let name =
 				all[x].options.name == "Save #"
 					? "Save #" + (all[x].savePos ? all[x].savePos : "???")
@@ -283,6 +288,27 @@ function updateTempOptions() {
 		}
 		tmp.options.setDropdown(dropdown, els, true);
 	};
+	tmp.options.exportAll = function() {
+		tmp.options.save()
+		let all = localStorage.getItem("dist-inc-saves" + betaID) ? localStorage.getItem("dist-inc-saves" + betaID) : btoa(JSON.stringify([]))
+		copyToClipboard(all);
+		notifier.info("All saves exported");
+	}
+	tmp.options.importAll = function() {
+		let input = prompt("Paste your saves here.");
+		if (input) {
+			if (!confirm("Are you sure you want to import all saves? This will overwrite any saves currently in your game!")) return
+			try {
+				saves = JSON.parse(atob(input));
+				notifier.info("Saves imported");
+				localStorage.setItem("dist-inc-saves"+betaID, input)
+				let s = transformToEN(saves[saves.findIndex(x => x!=null)]);
+				tmp.options.setSave(s);
+			} catch (e) {
+				notifier.error("Invalid Saves");
+			}
+		}
+	}
 
 	tmp.options.modes = {};
 	tmp.options.modes.select = function (name) {

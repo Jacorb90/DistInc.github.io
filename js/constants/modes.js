@@ -32,7 +32,7 @@ const COMBOS = {
 const MODES = {
 	hard: {
 		desc:
-			"The game is harder & slower, with slight compensation to help you slowly grind to the end (this mode does have an ending).",
+			"The game is harder & slower, with slight compensation to help you slowly grind to the end (ends at Infinity).",
 		balancing: "balanced up to Infinity",
 		balanceCheck: false,
 		combos: {
@@ -81,8 +81,8 @@ const MODES = {
 		}
 	},
 	easy: {
-		desc: "This mode is easier & faster to help you reach the end faster (this mode does have an ending).",
-		balancing: "balanced up to Infinity",
+		desc: "This mode is easier & faster to help you reach the end faster (ends at Elementary).",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
@@ -94,8 +94,8 @@ const MODES = {
 	},
 	extreme: {
 		desc:
-			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
-		balancing: "balanced up to Infinity",
+			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this (ends at Elementary).",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
@@ -115,7 +115,9 @@ const MODE_VARS = {
 			coal: new ExpantaNum(0),
 			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			blueFlame: new ExpantaNum(0)
-		}
+		},
+		activeFC: 0,
+		furnChalls: [],
 	}
 };
 

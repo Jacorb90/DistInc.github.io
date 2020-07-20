@@ -49,7 +49,7 @@ function updateTempEffects() {
 	tmp.tr6 = ExpantaNum.pow(1.1, player.tr.cubes.plus(1).log10());
 	tmp.tr7 = ExpantaNum.pow(1.05, player.achievements.length);
 	let tr89mod = 1;
-	if (tmp.modes.hard.active) tr89mod /= 2;
+	if (tmp.modes.hard.active) tr89mod /= ((tmp.ach?tmp.ach[105].has:false)&&tmp.modes.extreme.active)?0.9:2;
 	if (tmp.modes.easy.active) tr89mod *= 3;
 	tmp.tr8 = ExpantaNum.div(4, tmp.auto ? tmp.auto.rankbot.interval.max(1e-10) : 1)
 		.pow((1 / 3) * tr89mod)
@@ -69,7 +69,7 @@ function updateTempEffects() {
 		dcf: player.tr.cubes.plus(1).log10().div(75).plus(1).pow(tmp.tr11pow)
 	};
 	tmp.tr12 = tmp.dc ? tmp.dc.allComp.plus(1).sqrt() : new ExpantaNum(1);
-	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1) : new ExpantaNum(0);
+	tmp.tr13 = tmp.dc ? tmp.dc.allComp.plus(1).slog(2).pow(0.1).sub(1).max(0) : new ExpantaNum(0);
 	tmp.tr14 = {
 		cd: player.tier.plus(1).pow(1.25),
 		ss: player.dc.cores.plus(1).log10().plus(1).log10().times(7.5)
@@ -77,7 +77,7 @@ function updateTempEffects() {
 	tmp.tr15 = ExpantaNum.pow(1.2, player.dc.cores);
 	if (tmp.tr15.gte(10)) tmp.tr15 = tmp.tr15.log10().times(10);
 	if (tmp.modes.extreme.active) {
-		tmp.tr19 = ExpantaNum.pow(4.5, tmp.auto ? tmp.auto.rankCheapbot.interval.max(1e-10) : 1)
+		tmp.tr19 = ExpantaNum.div(4.5, tmp.auto ? tmp.auto.rankCheapbot.interval.max(1e-10) : 1)
 			.pow(0.3 * tr89mod)
 			.max(1);
 		if (showNum(tmp.tr19) === undefined || !tmp.tr19.isFinite()) tmp.tr19 = new ExpantaNum(1);
@@ -92,6 +92,10 @@ function updateTempEffects() {
 	if (tmp.ucme8.gte(50)) tmp.ucme8 = tmp.ucme8.times(2).log10().times(25);
 	tmp.ucme10 = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(8);
 	if (tmp.ucme10.gte(40)) tmp.ucme10 = tmp.ucme10.times(2.5).log10().times(20);
+	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[27]||new ExpantaNum(0)).gte(1)) {
+		tmp.ucme10 = player.collapse.lifeEssence.plus(1).pow(0.1)
+		if (tmp.ucme10.gte(40)) tmp.ucme10 = tmp.ucme10.pow(0.2).times(Math.pow(40, 0.8))
+	}
 
 	// Pathogen Upgrade Effects
 

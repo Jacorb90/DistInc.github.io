@@ -8,7 +8,8 @@ const OPT_CHNG_MIN = {
 };
 const OPT_NAMES = {
 	not: ["scientific", "standard", "mixed", "hexadecimal", "binary", "symbols", "tetrational"],
-	theme: ["normal", "dark"]
+	theme: ["normal", "dark"],
+	saveImp: ["new save", "overwrite"],
 };
 const AUTOSAVE_TIME = 10;
 const MAX_SAVES = 5;

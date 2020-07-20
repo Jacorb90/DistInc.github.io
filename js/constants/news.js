@@ -45,6 +45,23 @@ const NEWS_DATA = {
 	m43: ['"Playing the game 2.5 times is fun" - Bugged out Ink'],
 	m44: ['"Gaming." - Danny DeVito'],
 	m45: ['"I need a raise" - Ink after wasting his life actually enjoying something'],
+	m46: ["And the winner is, Leonardo DiCarlo"],
+	m47: ['"But thats just a theory, a game theory!"- Matpat'],
+	m48: ['"But thats just a theory, a film theory!"- Matpat'],
+	m49: ['"But thats just a theory, a survival theory!"- Patmat'],
+	m50: ['"Nont" - Jacorb after 5 hours has passed'],
+	m51: ["The most recent feature of Distance Incremental is not a ripoff, or at least you can't prove that in court"],
+	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
+	m53: ["Maybe you're actually Slabdrill and just don't realize it"],
+	m54: ["Kirb is still faster than you"],
+	m55: ["Hotkeys are the latest fashion trend"],
+	m56: ["Mom, look! I'm on the news!"],
+	m57: ["Are we getting paid for this?"],
+	m58: ['"If you stare too long at the ticker, the ticker stares back at you" - Some guy that played Antimatter Dimensions'],
+	m59: ["Are you the real Slim Shady? If so, get out of your chair as soon as you feasibly can."],
+	m60: ["Click <a href='https://www.youtube.com/watch?v=xfr64zoBTAQ' style='color: grey;'>this</a> to walk 1 extra micrometer, whatever that means..."],
+	m61: ['"Wait... Its all softcapped?"   "Always has been."   *Gets shot by (softcapped)*'],
+	m62: ["Click <a href='#' onclick='return false;'>here</a> to make nothing happen"],
 
 	// Distance-based Conditions
 	d1: [
@@ -81,6 +98,12 @@ const NEWS_DATA = {
 		"Stop grinding or you'll go insane within the next 5 hours!",
 		function () {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e4200000"));
+		}
+	],
+	d7: [
+		"Uni sounds like a prestige currency",
+		function () {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, 5));
 		}
 	],
 
@@ -264,6 +287,60 @@ const NEWS_DATA = {
 		function () {
 			return player.elementary.times.gte(3);
 		}
+	],
+	s10: [
+		"NASA can't afford to fund you anymore.",
+		function () {
+			return player.tr.cubes.gt(0);
+		}
+	],
+	s11: [
+		'"1/5 no botbot" - Guy after unlocking the Auto-Robots Automator',
+		function () {
+			return player.automators["robots"]
+		}
+	],
+	s12: [
+		'"To elementary, and beyond!" - Buzz e600k uni',
+		function () {
+			return player.distance.gte("1e600027")
+		}
+	],
+	s13: [
+		'"I want more PP" - Guy who completes the game and sees no Pantheon Boosts',
+		function () {
+			return player.inf.pantheon.unl
+		}
+	],
+	s14: [
+		"What if crackle is an affiliate of Slabdrill?",
+		function () {
+			return player.inf.derivatives.unl
+		},
+	],
+	s15: [
+		"Accelerons were your biggest mistake",
+		function () {
+			return player.elementary.theory.accelerons.unl
+		},
+	],
+	s16: [
+		"We were originally planning on giving a pg-3 rating for this game, but after Cadavers were added, we have decided to up it to 18+",
+		function () {
+			return player.collapse.cadavers.gt(0)
+		},
+	],
+	s17: [
+		"You have achieved true lightspeed!",
+		function () {
+			return player.bestV.gte(299792458)
+		},
+	],
+	s18: [
+		"Physics can no longer hold me down!",
+		function () {
+			return player.bestV.gte(299792458*1.1)
+		},
 	],
 };
 

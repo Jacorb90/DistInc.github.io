@@ -174,7 +174,66 @@ const TMP_DATA = {
 		"bestA",
 		"maxEnd",
 		"maxEP",
-		"scaleStatDiv"
+		"scaleStatDiv",
+		"theoriverse",
+		"thp",
+		"ssUnl",
+		"ssDiv",
+		"squarks",
+		"squarkGain",
+		"squarkEff",
+		"sleptons",
+		"sleptonGain",
+		"sleptonEff",
+		"neutralinos",
+		"neutralinoGain",
+		"neutralinoEff",
+		"charginos",
+		"charginoGain",
+		"charginoEff",
+		"wavelength",
+		"waveEff",
+		"treeUnl",
+		"treeDiv",
+		"treeRespec",
+		"saveImp",
+		"stringsUnl",
+		"stringsDiv",
+		"nextStr",
+		"entangleDiv",
+		"entangle",
+		"entangleAmt",
+		"entangleEff",
+		"preonsUnl",
+		"preonsDiv",
+		"preonAmt",
+		"preonGain",
+		"theoryBoost",
+		"theoryBoosters",
+		"acceleronsUnl",
+		"acceleronsDiv",
+		"accel",
+		"accelGain",
+		"accelEff",
+		"darkExp",
+		"darkExpAmt",
+		"gravBoostDiv",
+		"gravBoosts",
+		"gravBoostMult",
+		"hotkeys",
+		"hot",
+		"furnChalls",
+		"fns1",
+		"fnc2",
+		"fns2",
+		"fnc3",
+		"fns3",
+		"fnc4",
+		"fns4",
+		"fnc5",
+		"fns5",
+		"chipNerf",
+		"soulNerf"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
@@ -228,7 +287,8 @@ for (let i = 0; i < GLUON_COLOURS.length; i++) {
 	let col = GLUON_COLOURS[i];
 	TMP_DATA.ELS.push(col + "g");
 	TMP_DATA.ELS.push(col + "gg");
-	for (let x = 1; x <= 2; x++) {
+	TMP_DATA.ELS.push("glu"+col+"3");
+	for (let x = 1; x <= 3; x++) {
 		TMP_DATA.ELS.push(col + "Upg" + x);
 		TMP_DATA.ELS.push(col + "Lvl" + x);
 		TMP_DATA.ELS.push(col + "Eff" + x);
@@ -242,4 +302,11 @@ for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
 
 for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 	TMP_DATA.ELS.push(Object.keys(SCALING_STARTS)[i]+"Stat")
+}
+for (let i=1;i<=TREE_AMT;i++) TMP_DATA.ELS.push("tree"+i)
+for (let i=1;i<=TOTAL_STR;i++) {
+	if (i>1) TMP_DATA.ELS.push("str"+i)
+	TMP_DATA.ELS.push("str"+i+"amt")
+	TMP_DATA.ELS.push("str"+i+"eff")
+	TMP_DATA.ELS.push("str"+i+"gain")
 }
