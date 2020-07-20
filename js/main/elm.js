@@ -554,6 +554,56 @@ function updateTempElementary() {
 	}
 }
 
+function elTick(diff) {
+	player.elementary.fermions.quarks.amount = new ExpantaNum(player.elementary.fermions.quarks.amount).plus(
+		tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks").times(diff)
+	);
+	player.elementary.fermions.leptons.amount = new ExpantaNum(player.elementary.fermions.leptons.amount).plus(
+		tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons").times(diff)
+	);
+	player.elementary.bosons.gauge.amount = new ExpantaNum(player.elementary.bosons.gauge.amount).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge").times(diff)
+	);
+	player.elementary.bosons.gauge.force = new ExpantaNum(player.elementary.bosons.gauge.force).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.forceGain, "gauge").times(diff)
+	);
+	player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
+		player.elementary.bosons.gauge.photons.amount
+	).plus(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge").times(diff));
+	player.elementary.bosons.gauge.w = new ExpantaNum(player.elementary.bosons.gauge.w).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge").times(diff)
+	);
+	player.elementary.bosons.gauge.z = new ExpantaNum(player.elementary.bosons.gauge.z).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge").times(diff)
+	);
+	for (let i = 0; i < GLUON_COLOURS.length; i++)
+		player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount = new ExpantaNum(
+			player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount
+		).plus(tmp.nerfs.adjust(tmp.elm.bos[GLUON_COLOURS[i] + "g"], "gauge").times(diff));
+	player.elementary.bosons.gauge.gravitons = new ExpantaNum(player.elementary.bosons.gauge.gravitons).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge").times(diff)
+	);
+	player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff)
+	);
+	player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(player.elementary.bosons.scalar.higgs.amount).plus(
+		tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar").times(diff)
+	);
+	if (player.elementary.theory.supersymmetry.unl) {
+		for (let i=0;i<4;i++) {
+			let type = ["squark", "slepton", "neutralino", "chargino"][i]
+			player.elementary.theory.supersymmetry[type+"s"] = player.elementary.theory.supersymmetry[type+"s"].plus(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss").times(diff))
+		}
+	}
+	if (player.elementary.theory.strings.unl) {
+		for (let i=1;i<=TOTAL_STR;i++) {
+			player.elementary.theory.strings.amounts[i-1] = player.elementary.theory.strings.amounts[i-1].plus(tmp.nerfs.adjust(getStringGain(i), "str").times(diff))
+		}
+	}
+	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(tmp.nerfs.adjust(getPreonGain(), "preons").times(diff))
+	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(tmp.nerfs.adjust(getAccelGain(), "accelerons").times(diff))
+}
+
 function elmReset(force=false) {
 	let c = player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
 		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&

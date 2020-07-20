@@ -28,15 +28,16 @@ var betaID = "";
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
 	player.bestEnd = player.bestEnd.max(player.inf.endorsements)
+
 	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff));
 	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)));
-	if (player.pathogens.unl)
-		player.pathogens.amount = player.pathogens.amount.plus(
-			tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff)
-		);
-	if (player.dc.unl) tmp.dc.tick(diff);
+
+	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))
+		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff));
+	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))
+		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)));
 	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(
 			player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff)
@@ -45,82 +46,15 @@ function tickWithoutTS(diff) {
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(
 			player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff.div(10))
 		);
-	if (player.inf.unl)
-		player.inf.knowledge = player.inf.knowledge.plus(
-			tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff)
+
+	if (player.pathogens.unl)
+		player.pathogens.amount = player.pathogens.amount.plus(
+			tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff)
 		);
-	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))
-		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff));
-	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))
-		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)));
-	if (player.inf.endorsements.gte(10)) {
-		for (let i = 1; i <= 4; i++)
-			if (tmp.inf.asc.perkActive(i))
-				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
-		if (tmp.inf.asc.anyPerkActive())
-			player.inf.ascension.power = player.inf.ascension.power.plus(
-				tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension").times(diff)
-			);
-	}
-	if (player.inf.endorsements.gte(21)) {
-		tmp.inf.pantheon.collect();
-		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(
-			diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips"))
-		);
-		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
-			diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls"))
-		);
-		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
-	}
-	if (player.elementary.times.gt(0)) {
-		player.elementary.fermions.quarks.amount = new ExpantaNum(player.elementary.fermions.quarks.amount).plus(
-			tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks").times(diff)
-		);
-		player.elementary.fermions.leptons.amount = new ExpantaNum(player.elementary.fermions.leptons.amount).plus(
-			tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons").times(diff)
-		);
-		player.elementary.bosons.gauge.amount = new ExpantaNum(player.elementary.bosons.gauge.amount).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge").times(diff)
-		);
-		player.elementary.bosons.gauge.force = new ExpantaNum(player.elementary.bosons.gauge.force).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.forceGain, "gauge").times(diff)
-		);
-		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
-			player.elementary.bosons.gauge.photons.amount
-		).plus(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge").times(diff));
-		player.elementary.bosons.gauge.w = new ExpantaNum(player.elementary.bosons.gauge.w).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge").times(diff)
-		);
-		player.elementary.bosons.gauge.z = new ExpantaNum(player.elementary.bosons.gauge.z).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge").times(diff)
-		);
-		for (let i = 0; i < GLUON_COLOURS.length; i++)
-			player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount = new ExpantaNum(
-				player.elementary.bosons.gauge.gluons[GLUON_COLOURS[i]].amount
-			).plus(tmp.nerfs.adjust(tmp.elm.bos[GLUON_COLOURS[i] + "g"], "gauge").times(diff));
-		player.elementary.bosons.gauge.gravitons = new ExpantaNum(player.elementary.bosons.gauge.gravitons).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge").times(diff)
-		);
-		player.elementary.bosons.scalar.amount = new ExpantaNum(player.elementary.bosons.scalar.amount).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar").times(diff)
-		);
-		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(player.elementary.bosons.scalar.higgs.amount).plus(
-			tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar").times(diff)
-		);
-		if (player.elementary.theory.supersymmetry.unl) {
-			for (let i=0;i<4;i++) {
-				let type = ["squark", "slepton", "neutralino", "chargino"][i]
-				player.elementary.theory.supersymmetry[type+"s"] = player.elementary.theory.supersymmetry[type+"s"].plus(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss").times(diff))
-			}
-		}
-		if (player.elementary.theory.strings.unl) {
-			for (let i=1;i<=TOTAL_STR;i++) {
-				player.elementary.theory.strings.amounts[i-1] = player.elementary.theory.strings.amounts[i-1].plus(tmp.nerfs.adjust(getStringGain(i), "str").times(diff))
-			}
-		}
-		if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(tmp.nerfs.adjust(getPreonGain(), "preons").times(diff))
-		if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(tmp.nerfs.adjust(getAccelGain(), "accelerons").times(diff))
-	}
+	
+	if (player.dc.unl) tmp.dc.tick(diff);
+	if (player.inf.unl) infTick(diff);
+	if (player.elementary.times.gt(0)) elTick(diff);
 }
 
 function tickWithTR(diff) {
