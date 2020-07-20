@@ -62,9 +62,9 @@ function updateTempScaling() {
 	}
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) tmp.scalings.atomic.rank = tmp.scalings.atomic.rank.plus(tmp.elm.bos["higgs_0;0;5"]())
 	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
-	if (tmp.nerfs.active("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
-	if (tmp.nerfs.active("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
-	if (tmp.nerfs.active("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
+	if (nerfActive("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
+	if (nerfActive("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
+	if (nerfActive("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
 	if (modeActive("extreme")) tmp.scalings.hyper.rf = new ExpantaNum(1);
 
 	// Scaling Strengths

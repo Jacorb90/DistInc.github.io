@@ -51,7 +51,7 @@ function updateTempDC() {
 	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;5"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;10"]());
 	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.dc.flow = tmp.dc.flow.times(tmp.elm.bos.z2.max(1));
-	if (tmp.nerfs.active("noDarkFlow")) tmp.dc.flow = new ExpantaNum(0);
+	if (nerfActive("noDarkFlow")) tmp.dc.flow = new ExpantaNum(0);
 	tmp.dc.power = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(15)) tmp.dc.power = tmp.dc.power.times(tmp.tr15);
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power));
@@ -199,20 +199,20 @@ function updateTempDC() {
 			.add(1);
 	}
 	tmp.dc.buyCore = function () {
-		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || tmp.nerfs.active("noDarkCores")) return;
+		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || nerfActive("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
 		player.dc.cores = player.dc.cores.plus(1);
 	};
 	tmp.dc.maxCores = function () {
-		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || tmp.nerfs.active("noDarkCores")) return;
+		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || nerfActive("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
 		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0)).max(player.dc.cores.plus(1));
 	};
 	tmp.dc.tick = function (diff) {
-		player.dc.matter = player.dc.matter.plus(tmp.nerfs.adjust(tmp.dc.dmGain, "dc").times(diff).times(tmp.dc.flow));
-		player.dc.energy = player.dc.energy.plus(tmp.nerfs.adjust(tmp.dc.deGain, "dc").times(diff).times(tmp.dc.flow));
-		player.dc.fluid = player.dc.fluid.plus(tmp.nerfs.adjust(tmp.dc.dfGain, "dc").times(diff).times(tmp.dc.flow));
+		player.dc.matter = player.dc.matter.plus(adjustGen(tmp.dc.dmGain, "dc").times(diff).times(tmp.dc.flow));
+		player.dc.energy = player.dc.energy.plus(adjustGen(tmp.dc.deGain, "dc").times(diff).times(tmp.dc.flow));
+		player.dc.fluid = player.dc.fluid.plus(adjustGen(tmp.dc.dfGain, "dc").times(diff).times(tmp.dc.flow));
 	};
 }

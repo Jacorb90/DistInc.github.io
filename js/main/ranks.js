@@ -171,7 +171,7 @@ function updateTempRanks() {
 			: DEFAULT_RANK_DESC
 		: DEFAULT_RANK_DESC;
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req);
-	if (tmp.nerfs.active("noRank")) tmp.ranks.canRankUp = false;
+	if (nerfActive("noRank")) tmp.ranks.canRankUp = false;
 	tmp.ranks.layer = new Layer("rank", tmp.ranks.canRankUp, "semi-forced");
 	tmp.rank = {};
 	tmp.rank.onReset = function (prev) {

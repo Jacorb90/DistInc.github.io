@@ -8,7 +8,7 @@ function updateTempRockets() {
 	if (modeActive("easy")) tmp.rockets.sc = ExpantaNum.mul(LAYER_SC["rockets"], 1.1).round();
 	if (tmp.pathogens && player.pathogens.unl) tmp.rockets.sc = tmp.rockets.sc.times(tmp.pathogens[7].eff);
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm));
-	if (tmp.nerfs.active("noRockets")) tmp.rockets.canRocket = false;
+	if (nerfActive("noRockets")) tmp.rockets.canRocket = false;
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal");
 	tmp.rockets.esc = new ExpantaNum(5);
 	if (modeActive("hard")) tmp.rockets.esc = tmp.rockets.esc.sub(0.5);

@@ -93,7 +93,7 @@ function updateAchievements() {
 	if (tmp.timeSpeed.gte(new ExpantaNum("2.22e2222"))) tmp.ach[105].grant();
 	if (player.inf.endorsements.gte(20)) tmp.ach[106].grant();
 	if (player.inf.stadium.completions.length >= 6) tmp.ach[107].grant();
-	if (!tmp.nerfs.active("maxVelActive")) tmp.ach[108].grant();
+	if (!nerfActive("maxVelActive")) tmp.ach[108].grant();
 
 	if (tmp.auto.fuelbot.interval.lt(1)) tmp.ach[111].grant();
 	if (tmp.acc.gte("2.2e10022")) tmp.ach[112].grant();

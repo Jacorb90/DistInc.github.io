@@ -412,7 +412,7 @@ function updateTempInf() {
 	};
 	tmp.inf.asc.perkEff = function (n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n]);
-		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || tmp.nerfs.active("noPerks")) return base;
+		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks")) return base;
 		let pow = new ExpantaNum(tmp.inf.asc.perkPower[n]);
 		if (pow.gte(90)) pow = pow.div(10).plus(81)
 		if (pow.gte(150)) pow = pow.sqrt().times(Math.sqrt(150))
@@ -745,16 +745,16 @@ function updateTempInf() {
 		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance")
-			return tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
+			return adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		if (name == "velocity")
-			return tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
+			return adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
-		if (name=="snap" && tmp.inf.upgs.has("10;1")) return tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp.times(tmp.inf.derv.mult(name)), "derv")
+		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]().snp.times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
-		let gain = tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
+		let gain = adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
 			return gain
-				.times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)
+				.times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 				.times(
 					tmp.acc.div(
 						(player.inf.derivatives.amts.acceleration
@@ -763,7 +763,7 @@ function updateTempInf() {
 						).max(1)
 					)
 				);
-		return gain.times((tmp.nerfs.active("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
+		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29);
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor();
@@ -846,7 +846,7 @@ function updateTempInf() {
 			let next = DERV_INCR[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
 			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
-				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
+				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
 				return
 			}
 			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))
@@ -855,7 +855,7 @@ function updateTempInf() {
 				player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]
 					? player.inf.derivatives.amts[name]
 					: new ExpantaNum(0)
-				).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff));
+				).plus(adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff));
 		}
 	};
 	tmp.inf.derv.resetDervs = function () {
@@ -867,7 +867,7 @@ function updateTempInf() {
 
 function infTick(diff) {
 	player.inf.knowledge = player.inf.knowledge.plus(
-		tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge").times(diff)
+		adjustGen(tmp.inf.knowledgeGain, "knowledge").times(diff)
 	);
 	
 	if (player.inf.endorsements.gte(10)) {
@@ -876,17 +876,17 @@ function infTick(diff) {
 				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
 		if (tmp.inf.asc.anyPerkActive())
 			player.inf.ascension.power = player.inf.ascension.power.plus(
-				tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension").times(diff)
+				adjustGen(tmp.inf.asc.powerGain, "ascension").times(diff)
 			);
 	}
 	
 	if (player.inf.endorsements.gte(21)) {
 		tmp.inf.pantheon.collect();
 		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(
-			diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips"))
+			diff.times(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips"))
 		);
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
-			diff.times(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls"))
+			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
 		);
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
 	}

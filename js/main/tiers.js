@@ -140,7 +140,7 @@ function updateTempTiers() {
 			: DEFAULT_TIER_DESC
 		: DEFAULT_TIER_DESC;
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req);
-	if (tmp.nerfs.active("noTier")) tmp.tiers.canTierUp = false;
+	if (nerfActive("noTier")) tmp.tiers.canTierUp = false;
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced");
 	tmp.tier = {};
 	tmp.tier.onReset = function (prev) {

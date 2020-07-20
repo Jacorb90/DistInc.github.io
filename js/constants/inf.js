@@ -375,7 +375,7 @@ const INF_UPGS = {
 	},
 	effects: {
 		"1;1": function () {
-			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1);
+			if (nerfActive("noInf1;1")) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
 			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))

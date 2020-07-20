@@ -28,27 +28,27 @@ function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
 	player.bestEnd = player.bestEnd.max(player.inf.endorsements)
 
-	if (tmp.ach[95].has && !tmp.nerfs.active("noRockets"))
+	if (tmp.ach[95].has && !nerfActive("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff));
-	else if (tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets"))
+	else if (tmp.collapse.hasMilestone(9) && !nerfActive("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)));
 
-	if (tmp.ach[96].has && !tmp.nerfs.active("noCadavers"))
+	if (tmp.ach[96].has && !nerfActive("noCadavers"))
 		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff));
-	else if (tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers"))
+	else if (tmp.inf.upgs.has("2;4") && !nerfActive("noCadavers"))
 		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain.times(diff.div(100)));
-	if (tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence"))
+	if (tmp.ach[97].has && !nerfActive("noLifeEssence"))
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(
 			player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff)
 		);
-	else if (tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence"))
+	else if (tmp.inf.upgs.has("5;3") && !nerfActive("noLifeEssence"))
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(
 			player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).times(diff.div(10))
 		);
 
 	if (player.pathogens.unl)
 		player.pathogens.amount = player.pathogens.amount.plus(
-			tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens").times(diff)
+			adjustGen(tmp.pathogens.gain, "pathogens").times(diff)
 		);
 	
 	if (player.dc.unl) tmp.dc.tick(diff);
@@ -58,26 +58,26 @@ function tickWithoutTS(diff) {
 
 function tickWithTR(diff) {
 	player.velocity = player.velocity
-		.plus(tmp.nerfs.adjust(tmp.acc, "vel").times(diff))
-		.min(tmp.nerfs.active("maxVelActive") ? tmp.maxVel : 1 / 0)
+		.plus(adjustGen(tmp.acc, "vel").times(diff))
+		.min(nerfActive("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
-	player.distance = player.distance.plus(tmp.nerfs.adjust(player.velocity, "dist").times(diff)).max(0);
+	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(diff)).max(0);
 	player.bestDistance = player.bestDistance.max(player.distance)
 	player.bestV = player.bestV.max(player.velocity)
 	player.bestA = player.bestA.max(tmp.acc)
 	autoTick(diff);
 	if (modeActive("extreme")) {
 		if (player.rf.gt(0)) {
-			player.furnace.coal = player.furnace.coal.plus(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(diff)).max(0);
+			player.furnace.coal = player.furnace.coal.plus(adjustGen(tmp.fn.gain, "fn").times(diff)).max(0);
 		}
 	}
 }
 
 function tickWithTS(diff) {
-	if (player.tr.active && !tmp.nerfs.active("noTimeCubes"))
-		player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff));
-	else if (tmp.ach[72].has && player.tr.unl && !tmp.nerfs.active("noTimeCubes"))
-		player.tr.cubes = player.tr.cubes.plus(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(diff.div(2)));
+	if (player.tr.active && !nerfActive("noTimeCubes"))
+		player.tr.cubes = player.tr.cubes.plus(adjustGen(tmp.tr.cg, "tc").times(diff));
+	else if (tmp.ach[72].has && player.tr.unl && !nerfActive("noTimeCubes"))
+		player.tr.cubes = player.tr.cubes.plus(adjustGen(tmp.tr.cg, "tc").times(diff.div(2)));
 	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff);
 	tickWithTR(diff.times(player.tr.active ? -1 : 1));
 }
@@ -86,7 +86,7 @@ function gameLoop(diff) {
 	updateBeforeTick();
 	if (showContainer) {
 		tickWithoutTS(diff);
-		tickWithTS(diff.times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed));
+		tickWithTS(diff.times(nerfActive("noTS") ? 1 : tmp.timeSpeed));
 	}
 	updateAfterTick();
 }

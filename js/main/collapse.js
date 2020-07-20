@@ -7,7 +7,7 @@ function updateTempCollapse() {
 	if (modeActive("hard")) tmp.collapse.lrm = tmp.collapse.lrm.div(50);
 	if (modeActive("easy")) tmp.collapse.lrm = tmp.collapse.lrm.times(5e16 / 3.5068);
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm));
-	if (tmp.nerfs.active("noCadavers")) tmp.collapse.can = false;
+	if (nerfActive("noCadavers")) tmp.collapse.can = false;
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true);
 	tmp.collapse.eff = ExpantaNum.log10(player.rank.plus(player.tier.times(5)).plus(player.collapse.cadavers).plus(1))
 		.pow(player.collapse.cadavers.plus(1).logBase(2))
@@ -35,7 +35,7 @@ function updateTempCollapse() {
 	if (modeActive("easy")) tmp.collapse.sacEff = tmp.collapse.sacEff.times(1.6);
 	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff);
 	tmp.collapse.sacrifice = function () {
-		if (player.collapse.cadavers.eq(0) || tmp.nerfs.active("noLifeEssence")) return;
+		if (player.collapse.cadavers.eq(0) || nerfActive("noLifeEssence")) return;
 		player.collapse.lifeEssence = player.collapse.lifeEssence.plus(
 			player.collapse.cadavers.times(tmp.collapse.sacEff).max(1)
 		);
