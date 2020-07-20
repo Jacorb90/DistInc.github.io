@@ -540,17 +540,17 @@ function updateTempElementary() {
 		player.elementary.theory.tree.unl = true
 	}
 	tmp.elm.theory.tree.bought = {}
-	for (let i=1;i<=TREE_AMT;i++) tmp.elm.theory.tree.bought[i] = new ExpantaNum(player.elementary.theory.tree.upgrades[i]||0)
+	tmp.elm.theory.tree.bought = function(i) { return new ExpantaNum(player.elementary.theory.tree.upgrades[i]||0) }
 	tmp.elm.theory.tree.buy = function(x) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
-		let bought = tmp.elm.theory.tree.bought[x]
+		let bought = tmp.elm.theory.tree.bought(x)
 		if (bought.gte(TREE_UPGS[x].cap)) return
 		let cost = TREE_UPGS[x].cost(bought)
 		if (player.elementary.theory.points.lt(cost)) return
 		player.elementary.theory.points = player.elementary.theory.points.sub(cost)
 		player.elementary.theory.tree.spent =player.elementary.theory.tree.spent.plus(cost)
-		player.elementary.theory.tree.upgrades[x] = tmp.elm.theory.tree.bought[x].plus(1)
+		player.elementary.theory.tree.upgrades[x] = bought.plus(1)
 	}
 }
 

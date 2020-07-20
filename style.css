@@ -1396,6 +1396,10 @@ table {
 	padding: 7px 25px;
 }
 
+.halfline {
+  line-height: .5em;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

@@ -231,7 +231,9 @@ const TMP_DATA = {
 		"fnc4",
 		"fns4",
 		"fnc5",
-		"fns5"
+		"fns5",
+		"chipNerf",
+		"soulNerf"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {

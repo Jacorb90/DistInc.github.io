@@ -288,6 +288,27 @@ function updateTempOptions() {
 		}
 		tmp.options.setDropdown(dropdown, els, true);
 	};
+	tmp.options.exportAll = function() {
+		tmp.options.save()
+		let all = localStorage.getItem("dist-inc-saves" + betaID) ? localStorage.getItem("dist-inc-saves" + betaID) : btoa(JSON.stringify([]))
+		copyToClipboard(all);
+		notifier.info("All saves exported");
+	}
+	tmp.options.importAll = function() {
+		let input = prompt("Paste your saves here.");
+		if (input) {
+			if (!confirm("Are you sure you want to import all saves? This will overwrite any saves currently in your game!")) return
+			try {
+				saves = JSON.parse(atob(input));
+				notifier.info("Saves imported");
+				localStorage.setItem("dist-inc-saves"+betaID, input)
+				let s = transformToEN(saves[saves.findIndex(x => x!=null)]);
+				tmp.options.setSave(s);
+			} catch (e) {
+				notifier.error("Invalid Saves");
+			}
+		}
+	}
 
 	tmp.options.modes = {};
 	tmp.options.modes.select = function (name) {

@@ -11,6 +11,8 @@
 	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
+			<p class="halfline">&nbsp;</p><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
+			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
 				<table>
 					<tr>
@@ -63,10 +65,8 @@
 							</button>
 						</td>
 					</tr>
-				</table>
+				</table><br>
 			</div>
-			<span id="nextFeature"></span><br /><br />
-			<div id="newsticker"><div id="news"></div></div>
 		</div>
 		<br />
 		<div id="main" class="tab">
@@ -119,6 +119,13 @@
 						<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
 						<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><button class="btn tb opt" onclick="tmp.options.importAll()">Import All</button></td>
+						<td><button class="btn tb opt" onclick="tmp.options.exportAll()">Export All</button></td>
+						</td>
+					</tr>
 				</table>
 				<br />
 				<div
@@ -132,24 +139,24 @@
 				<table>
 					<tr>
 						<td>
-							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')">AAU</button>
+							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')" style="z-index: 0">AAU</button>
 						</td>
 						<td>
-							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')">Easy</button>
+							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')" style="z-index: 0">Easy</button>
 						</td>
 						<td>
-							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')">Absurd</button>
+							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')" style="z-index: 0">Absurd</button>
 						</td>
 						<td>
-							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')">NA</button>
+							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')" style="z-index: 0">NA</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')">Extreme</button>
+							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')" style="z-index: 0">Extreme</button>
 						</td>
 						<td>
-							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')">Hard</button>
+							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')" style="z-index: 0">Hard</button>
 						</td>
 					</tr>
 				</table>
@@ -224,7 +231,7 @@
 					href="key.html"
 					target="_blank"
 					>Distances</a
-				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 0" widetooltip="">Hotkeys</span>
+				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
 				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
 			</div>
 		</div>
@@ -685,7 +692,8 @@
 					You have <span id="angels" class="spectral"></span> Angels.<br /><br />
 					You have <span id="chips" class="spectral"></span> Heavenly Chips
 					<span id="chipGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity.
+					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity, but they also make Demonic Souls in their effect divide by
+					<span id="chipNerf" class="spectral"></span>.
 					<br /><br /><br />
 				</div>
 				<div style="background-color: #a31414;">
@@ -695,7 +703,9 @@
 					You have <span id="demons" class="spectral"></span> Demons.<br /><br />
 					You have <span id="souls" class="spectral"></span> Demonic Souls
 					<span id="soulGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength. <br /><br /><br />
+					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength, but they also make Heavenly Chips in their effect divide by 
+					<span id="soulNerf" class="spectral"></span>.
+					<br /><br /><br />
 				</div>
 				<div id="purgeDiv" style="background-color: #259199;">
 					<br /><button

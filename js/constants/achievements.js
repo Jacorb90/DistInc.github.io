@@ -238,7 +238,7 @@ const ACH_DATA = {
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 
 		131: "Perform an Elementary reset.",
-		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8, & while in Reality's Stadium challenge at Difficulty Level 6.",
+		132: "Reach formatDistance(1e15) while in a Purge run, without inf8;8 in the current Infinity, & while in Reality's Stadium challenge at Difficulty Level 6.",
 		133: "Reach showNum(1e3) Fermions & Bosons.",
 		134: "Reach formatDistance(4.4e1100026) without Pathogen Upgrades & Dark Cores in the current Infinity.",
 		135: "Reach showNum(2.5e7) Heavenly Chips.",

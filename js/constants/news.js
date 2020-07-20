@@ -59,6 +59,9 @@ const NEWS_DATA = {
 	m57: ["Are we getting paid for this?"],
 	m58: ['"If you stare too long at the ticker, the ticker stares back at you" - Some guy that played Antimatter Dimensions'],
 	m59: ["Are you the real Slim Shady? If so, get out of your chair as soon as you feasibly can."],
+	m60: ["Click <a href='https://www.youtube.com/watch?v=xfr64zoBTAQ' style='color: grey;'>this</a> to walk 1 extra micrometer, whatever that means..."],
+	m61: ['"Wait... Its all softcapped?"   "Always has been."   *Gets shot by (softcapped)*'],
+	m62: ["Click <a href='#' onclick='return false;'>here</a> to make nothing happen"],
 
 	// Distance-based Conditions
 	d1: [

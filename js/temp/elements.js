@@ -93,7 +93,7 @@ function updateHTML() {
 	}
 
 	// Features
-	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "" : tmp.features[tmp.nf].desc);
+	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "All Features Unlocked!" : tmp.features[tmp.nf].desc);
 
 	// Achievements
 	if (player.tab == "achievements") {
@@ -518,11 +518,13 @@ function updateHTML() {
 				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips")) + "/sec)"
 			);
 			tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
+			tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls));
 			tmp.el.soulGain.setTxt(
 				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")) + "/sec)"
 			);
 			tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)));
+			tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl);
 			tmp.el.purgeBtn.setTxt(
 				player.inf.pantheon.purge.active
@@ -828,10 +830,11 @@ function updateHTML() {
 				tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
 				tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
 				for (let i=1;i<=TREE_AMT;i++) {
+					let bought = tmp.elm.theory.tree.bought(i)
 					tmp.el["tree"+i].setDisplay(TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)
-					tmp.el["tree"+i].setTxt(showNum(tmp.elm.theory.tree.bought[i])+"/"+showNum(TREE_UPGS[i].cap))
-					tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(tmp.elm.theory.tree.bought[i], i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
-					tmp.el["tree"+i].setClasses({tree: true, capped: tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap), unl: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i]))), locked: (!(tmp.elm.theory.tree.bought[i].gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(tmp.elm.theory.tree.bought[i])))})
+					tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(TREE_UPGS[i].cap))
+					tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought))+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+					tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(TREE_UPGS[i].cap), unl: (!(bought.gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought))), locked: (!(bought.gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought)))})
 				}
 				tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 			}
