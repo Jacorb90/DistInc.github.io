@@ -306,10 +306,10 @@ function updateTempElementary() {
 		4: ExpantaNum.pow(2, player.elementary.bosons.gauge.photons.upgrades[3].pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]))).times(6e4),
 	};
 	for (let i=1;i<=4;i++) {
-		if (tmp.scaling.active("photons", player.elementary.bosons.gauge.photons.upgrades[i-1], "scaled")) {
-			let power = tmp.scalingPower.scaled.photons
+		if (scalingActive("photons", player.elementary.bosons.gauge.photons.upgrades[i-1], "scaled")) {
+			let power = getScalingPower("scaled", "photons")
 			let exp = ExpantaNum.pow(2, power)
-			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, tmp.scalings.scaled.photons)
+			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, getScalingStart("scaled", "photons"))
 		}
 	}
 	tmp.elm.bos.photonEff = function (x) {

@@ -1,5 +1,4 @@
 function updateTemp() {
-	updateTempScaling();
 	updateTempEffects();
 	updateTempEarlyGame();
 	updateTempRanks();

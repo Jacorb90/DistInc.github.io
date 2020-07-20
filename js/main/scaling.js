@@ -1,143 +1,137 @@
-function updateTempScaling() {
-	tmp.scaling = {};
-	tmp.scaling.active = function (type, v, scaling) {
-		v = new ExpantaNum(v);
-		let sd = tmp.scalings ? tmp.scalings : SCALING_STARTS;
-		return v.gte(sd[scaling][type]);
-	};
-	tmp.scaling.getName = function (name, x = 0) {
-		let mx = Object.keys(SCALING_STARTS).length;
-		let current = "";
-		let amt = SCALING_RES[name](x);
-		for (let n = mx - 1; n >= 0; n--) {
-			let scaling = SCALING_STARTS[Object.keys(SCALING_STARTS)[n]];
-			if (tmp.scaling.active(name, amt, Object.keys(SCALING_STARTS)[n]))
-				return capitalFirst(Object.keys(SCALING_STARTS)[n]) + " ";
-		}
-		return current;
-	};
+function scalingActive(name, amt, type) {
+	amt = new ExpantaNum(amt);
+	return amt.gte(getScalingStart(type, name));
+}
 
-	tmp.scalings = {};
-	tmp.scalingPower = {};
-	for (let t = 0; t < Object.keys(SCALING_STARTS).length; t++) {
-		let name = Object.keys(SCALING_STARTS)[t];
-		tmp.scalings[name] = {};
-		tmp.scalingPower[name] = {};
-		for (let p = 0; p < Object.keys(SCALING_STARTS[name]).length; p++) {
-			let name2 = Object.keys(SCALING_STARTS[name])[p];
-			tmp.scalings[name][name2] = new ExpantaNum(deepCopy(SCALING_STARTS[name][name2]));
-			tmp.scalingPower[name][name2] = new ExpantaNum(1);
-		}
+function getScalingName(name, x=0) {
+	let cap = Object.keys(SCALING_STARTS).length;
+	let current = "";
+	let amt = SCALING_RES[name](x);
+	for (let n = cap - 1; n >= 0; n--) {
+		if (scalingActive(name, amt, Object.keys(SCALING_STARTS)[n]))
+			return capitalFirst(Object.keys(SCALING_STARTS)[n]) + " ";
 	}
+	return current;
+}
 
-	// Scaling Starts
-	if (player.tr.upgrades.includes(11)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(10);
-	if (player.tr.upgrades.includes(15)) tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(32);
-	if (player.tr.upgrades.includes(12)) tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2);
-	if (player.tr.upgrades.includes(14) && tmp.tr14)
-		tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(tmp.tr14["ss"]);
-	if (player.dc.unl && tmp.dc) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(tmp.dc.dfEff);
-	if (tmp.pathogens) {
-		tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(tmp.pathogens[11].eff);
-		tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(tmp.pathogens[12].eff);
-	}
-	if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1)
-	if (tmp.inf) {
-		if (tmp.inf.upgs.has("4;5")) tmp.scalings.scaled.pathogenUpg = tmp.scalings.scaled.pathogenUpg.plus(2);
-		if (tmp.inf.upgs.has("1;6")) {
-			tmp.scalings.scaled.rank = tmp.scalings.scaled.rank.plus(2);
-			tmp.scalings.scaled.tier = tmp.scalings.scaled.tier.plus(2);
+function getScalingStart(type, name) {
+	let start = new ExpantaNum(SCALING_STARTS[type][name])
+	if (name=="rank") {
+		if (type=="scaled") {
+			if (player.tr.upgrades.includes(11)) start = start.plus(10)
+			if (player.tr.upgrades.includes(15)) start = start.plus(32)
+			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
+			if (nerfActive("scaledRank")) start = new ExpantaNum(1)
+		} else if (type=="superscaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("6;2")) start = start.plus(5)
+			if (tmp.inf) if (tmp.inf.stadium.completed("solaris")) start = start.plus(STADIUM_REWARDS.effects.solaris())
+		} else if (type=="atomic") {
+			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
-		if (tmp.inf.upgs.has("2;6")) tmp.scalings.superscaled.rf = tmp.scalings.superscaled.rf.plus(5);
-		if (tmp.inf.upgs.has("6;1")) tmp.scalings.scaled.rf = tmp.scalings.scaled.rf.plus(10);
-		if (tmp.inf.upgs.has("10;7")) tmp.scalings.hyper.rf = tmp.scalings.hyper.rf.plus(20);
-		if (tmp.inf.upgs.has("6;2")) tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(5);
-		if (tmp.inf.upgs.has("6;4")) tmp.scalings.scaled.darkCore = tmp.scalings.scaled.darkCore.plus(2);
-		if (tmp.inf.stadium.completed("solaris"))
-			tmp.scalings.superscaled.rank = tmp.scalings.superscaled.rank.plus(STADIUM_REWARDS.effects.solaris());
-		if (tmp.inf.upgs.has("5;7"))
-			tmp.scalings.superscaled.tier = tmp.scalings.superscaled.tier.plus(INF_UPGS.effects["5;7"]());
-		if (tmp.inf.upgs.has("9;3")) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(1);
-		if (tmp.inf.upgs.has("2;10")) tmp.scalings.superscaled.darkCore = tmp.scalings.superscaled.darkCore.plus(5)
+	} else if (name=="tier") {
+		if (type=="scaled") {
+			if (player.tr.upgrades.includes(12)) start = start.plus(2)
+			if (player.tr.upgrades.includes(14) && tmp.tr14) start = start.plus(tmp.tr14["ss"])
+			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
+			if (nerfActive("scaledTier")) start = new ExpantaNum(1)
+		} else if (type=="superscaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("5;7")) start = start.plus(INF_UPGS.effects["5;7"]());
+		}
+	} else if (name=="rf") {
+		if (type=="scaled") {
+			if (player.dc.unl && tmp.dc) start = start.plus(tmp.dc.dfEff)
+			if (tmp.inf) if (tmp.inf.upgs.has("6;1")) start = start.plus(10)
+			if (nerfActive("scaledRF")) start = new ExpantaNum(1)
+		} else if (type=="superscaled") {
+			if (tmp.pathogens) start = start.plus(tmp.pathogens[11].eff)
+			if (tmp.inf) if (tmp.inf.upgs.has("2;6")) start = start.plus(5)
+		} else if (type=="hyper") {
+			if (tmp.inf) if (tmp.inf.upgs.has("10;7")) start = start.plus(20)
+			if (modeActive("extreme")) start = new ExpantaNum(1)
+		}
+	} else if (name=="pathogenUpg") {
+		if (type=="scaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("4;5")) start = start.plus(2)
+		}
+	} else if (name=="darkCore") {
+		if (type=="scaled") {
+			if (tmp.pathogens) start = start.plus(tmp.pathogens[12].eff)
+			if (tmp.inf) if (tmp.inf.upgs.has("6;4")) start = start.plus(2)
+		} else if (type=="superscaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("2;10")) start = start.plus(5)
+		}
+	} else if (name=="endorsements") {
+		if (type=="scaled") {
+			if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) start = start.plus(1)
+			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
+			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
+		}
 	}
-	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) tmp.scalings.atomic.rank = tmp.scalings.atomic.rank.plus(tmp.elm.bos["higgs_0;0;5"]())
-	if (player.elementary.theory.tree.unl) tmp.scalings.scaled.endorsements = tmp.scalings.scaled.endorsements.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
-	if (nerfActive("scaledRank")) tmp.scalings.scaled.rank = new ExpantaNum(1);
-	if (nerfActive("scaledTier")) tmp.scalings.scaled.tier = new ExpantaNum(1);
-	if (nerfActive("scaledRF")) tmp.scalings.scaled.rf = new ExpantaNum(1);
-	if (modeActive("extreme")) tmp.scalings.hyper.rf = new ExpantaNum(1);
+	if (type!=="atomic") if (Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1][name]!==undefined) start = start.min(getScalingStart(Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1], name))
+	return start
+}
 
-	// Scaling Strengths
-	if (tmp.pathogens) {
-		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(ExpantaNum.sub(1, tmp.pathogens[14].eff));
-		tmp.scalingPower.superscaled.rank = tmp.scalingPower.superscaled.rank.times(
-			ExpantaNum.sub(1, tmp.pathogens[14].eff)
-		);
-		tmp.scalingPower.scaled.endorsements = tmp.scalingPower.scaled.endorsements.times(
-			ExpantaNum.sub(1, tmp.pathogens[15].eff)
-		);
-	}
-	if (tmp.inf) {
-		if (tmp.inf.upgs.has("4;3")) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(0.5);
-		if (tmp.inf.stadium.active("solaris", 4)) tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(6);
-		if (tmp.inf.stadium.active("drigganiz", 4))
-			tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.times(6);
-		if (tmp.inf.upgs.has("2;5")) tmp.scalingPower.superscaled.rank = tmp.scalingPower.superscaled.rank.times(0.95);
-		if (tmp.inf.upgs.has("9;6"))
-			tmp.scalingPower.superscaled.rank = tmp.scalingPower.superscaled.rank.times(
-				ExpantaNum.sub(1, INF_UPGS.effects["9;6"]())
-			);
-		if (tmp.inf.upgs.has("8;6"))
-			tmp.scalingPower.hyper.rank = tmp.scalingPower.hyper.rank.times(
-				ExpantaNum.sub(1, INF_UPGS.effects["8;6"]())
-			);
-		if (tmp.inf.upgs.has("7;9")) tmp.scalingPower.hyper.rank = tmp.scalingPower.hyper.rank.times(0.98);
-		if (tmp.inf.upgs.has("1;5")) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(0.8);
-		if (tmp.inf.upgs.has("2;7"))
-			tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(
-				ExpantaNum.sub(1, INF_UPGS.effects["2;7"]())
-			);
-		if (tmp.inf.stadium.active("eternity", 4)) tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(6);
-		if (tmp.inf.stadium.active("drigganiz", 4))
-			tmp.scalingPower.scaled.tier = tmp.scalingPower.scaled.tier.times(6);
-		if (tmp.inf.upgs.has("9;6"))
-			tmp.scalingPower.superscaled.tier = tmp.scalingPower.superscaled.tier.times(
-				ExpantaNum.sub(1, INF_UPGS.effects["9;6"]())
-			);
-		if (tmp.inf.upgs.has("1;10")) tmp.scalingPower.hyper.tier = tmp.scalingPower.hyper.tier.times(ExpantaNum.sub(1, INF_UPGS.effects["1;10"]()))
-		if (tmp.inf.upgs.has("3;5")) tmp.scalingPower.scaled.rf = tmp.scalingPower.scaled.rf.times(0.75);
-		if (player.elementary.theory.tree.unl) tmp.scalingPower.superscaled.rf = tmp.scalingPower.superscaled.rf.sub(TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0)).max(0)
-		if (tmp.inf.stadium.active("infinity", 4))
-			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(6);
-		if (tmp.inf.upgs.has("8;7"))
-			tmp.scalingPower.scaled.pathogenUpg = tmp.scalingPower.scaled.pathogenUpg.times(0.16);
-		if (tmp.inf.upgs.has("10;1")) tmp.scalingPower.superscaled.pathogenUpg = tmp.scalingPower.superscaled.pathogenUpg.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]().pth))
-		if (tmp.inf.upgs.has("8;6"))
-			tmp.scalingPower.scaled.darkCore = tmp.scalingPower.scaled.darkCore.times(
-				ExpantaNum.sub(1, INF_UPGS.effects["8;6"]())
-			);
-	}
-	if (modeActive("extreme")) {
-		tmp.scalingPower.scaled.rank = tmp.scalingPower.scaled.rank.div(6);
-		if (FCComp(1)) {
-			tmp.scalingPower.superscaled.fn = tmp.scalingPower.superscaled.fn.times(0.1)
-			tmp.scalingPower.hyper.fn = tmp.scalingPower.hyper.fn.times(0.1)
+function getScalingPower(type, name) {
+	let power = new ExpantaNum(1)
+	if (name=="rank") {
+		if (type=="scaled") {
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff))
+			if (tmp.inf) if (tmp.inf.upgs.has("4;3")) power = power.times(0.5)
+			if (tmp.inf) if (tmp.inf.stadium.active("solaris", 4)) power = power.times(6)
+			if (tmp.inf) if (tmp.inf.stadium.active("drigganiz", 4)) power = power.times(6)
+			if (modeActive("extreme")) power = power.div(6)
+		} else if (type=="superscaled") {
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff))
+			if (tmp.inf) if (tmp.inf.upgs.has("2;5")) power = power.times(0.95)
+			if (tmp.inf) if (tmp.inf.upgs.has("9;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["9;6"]()))
+		} else if (type=="hyper") {
+			if (tmp.inf) if (tmp.inf.upgs.has("8;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
+			if (tmp.inf) if (tmp.inf.upgs.has("7;9")) power = power.times(0.98)
 		}
-		if (inFC(3)) tmp.scalingPower.hyper.fn = new ExpantaNum(9.99)
-		if (FCComp(3)) tmp.scalingPower.scaled.rankCheap = tmp.scalingPower.scaled.rankCheap.times(0.1)
-	}
-	
-	// Scaling Bugfixes
-
-	for (let t = 0; t < Object.keys(SCALING_STARTS).length; t++) {
-		let name = Object.keys(SCALING_STARTS)[t];
-		let next = Object.keys(SCALING_STARTS)[t + 1];
-		for (let p = 0; p < Object.keys(SCALING_STARTS[name]).length; p++) {
-			let name2 = Object.keys(SCALING_STARTS[name])[p];
-			if (next !== undefined)
-				if (tmp.scalings[next][name2] !== undefined)
-					tmp.scalings[name][name2] = ExpantaNum.min(tmp.scalings[name][name2], tmp.scalings[next][name2]);
-			if (name=="hyper" && tmp.scalingPower.hyper[name2].lte(0.5)) tmp.scalingPower.hyper[name2] = new ExpantaNum(0.5)
+	} else if (name=="rankCheap" && modeActive("extreme")) {
+		if (type=="scaled") {
+			if (FCComp(3)) power = power.times(0.1)
+		}
+	} else if (name=="tier") {
+		if (type=="scaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("1;5")) power = power.times(0.8)
+			if (tmp.inf) if (tmp.inf.upgs.has("2;7")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["2;7"]()))
+			if (tmp.inf) if (tmp.inf.stadium.active("eternity", 4)) power = power.times(6)
+			if (tmp.inf) if (tmp.inf.stadium.active("drigganiz", 4)) power = power.times(6)
+		} else if (type=="superscaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("9;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["9;6"]()))
+		} else if (type=="hyper") {
+			if (tmp.inf) if (tmp.inf.upgs.has("1;10")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["1;10"]()))
+		}
+	} else if (name=="rf") {
+		if (type=="scaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("3;5")) power = power.times(0.75)
+		} else if (type=="superscaled") {
+			if (player.elementary.theory.tree.unl) power = power.times(ExpantaNum.sub(1, TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0))).max(0)
+		}
+	} else if (name=="fn" && modeActive("extreme")) {
+		if (type=="superscaled") {
+			if (FCComp(1)) power = power.times(0.1)
+		} else if (type=="hyper") {
+			if (FCComp(1)) power = power.times(0.1)
+			if (inFC(3)) power = power.times(9.99)
+		}
+	} else if (name=="pathogenUpg") {
+		if (type=="scaled") {
+			if (tmp.inf) if (tmp.inf.stadium.active("infinity", 4)) power = power.times(6)
+			if (tmp.inf) if (tmp.inf.upgs.has("8;7")) power = power.times(0.16)
+		} else if (type=="superscaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("10;1")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]().pth))
+		}
+	} else if (name=="darkCore") {
+		if (type=="scaled") {
+			if (tmp.inf) if (tmp.inf.upgs.has("8;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
+		}
+	} else if (name=="endorsements") {
+		if (type=="scaled") {
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[15].eff))
 		}
 	}
+	if (type=="hyper") power = power.max(0.5)
+	return power
 }

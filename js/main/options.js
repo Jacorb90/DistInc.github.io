@@ -16,7 +16,7 @@ function save(sav=player, force=false) {
 }
 
 function setSave(ns, cod=false) {
-	save(cod ? JSON.parse(atob(ns)) : ns);
+	save(cod ? transformToEN(JSON.parse(atob(ns))) : transformToEN(ns));
 	reload();
 	notifier.error("Could not open new window.");
 	let el = document.createElement("a");

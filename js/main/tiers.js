@@ -11,13 +11,14 @@ function updateTempTiers() {
 			tmp.tiers.bc = tmp.tiers.bc.plus(25);
 	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2));
 	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).add(1).round();
-	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.tier;
+	if (scalingActive("tier", player.tier.max(tmp.tiers.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "tier");
+		let power = getScalingPower("scaled", "tier");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(
 			player.tier
 				.pow(exp)
-				.div(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.div(tmp.tiers.fp)
 				.pow(2)
 		);
@@ -26,22 +27,24 @@ function updateTempTiers() {
 			.max(0)
 			.sqrt()
 			.times(tmp.tiers.fp)
-			.times(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.tier;
+	if (scalingActive("tier", player.tier.max(tmp.tiers.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "tier");
+		let power2 = getScalingPower("superscaled", "tier");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.tier;
+		let start = getScalingStart("scaled", "tier");
+		let power = getScalingPower("scaled", "tier");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(
 			player.tier
 				.pow(exp2)
-				.div(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+				.div(start2.pow(exp2.sub(1)))
 				.pow(exp)
-				.div(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.div(tmp.tiers.fp)
 				.pow(2)
 		);
@@ -50,27 +53,30 @@ function updateTempTiers() {
 			.max(0)
 			.sqrt()
 			.times(tmp.tiers.fp)
-			.times(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "hyper")) {
-		let power3 = tmp.scalingPower.hyper.tier;
+	if (scalingActive("tier", player.tier.max(tmp.tiers.bulk), "hyper")) {
+		let start3 = getScalingStart("hyper", "tier");
+		let power3 = getScalingPower("hyper", "tier");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.tier;
+		let start2 = getScalingStart("superscaled", "tier");
+		let power2 = getScalingPower("superscaled", "tier");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.tier;
+		let start = getScalingStart("scaled", "tier");
+		let power = getScalingPower("scaled", "tier");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(
-			ExpantaNum.pow(base3, player.tier.sub(tmp.scalings.hyper.tier))
-				.times(tmp.scalings.hyper.tier)
+			ExpantaNum.pow(base3, player.tier.sub(start3))
+				.times(start3)
 				.pow(exp2)
-				.div(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+				.div(start2.pow(exp2.sub(1)))
 				.pow(exp)
-				.div(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.div(tmp.tiers.fp)
 				.pow(2)
 		);
@@ -79,39 +85,43 @@ function updateTempTiers() {
 			.max(0)
 			.sqrt()
 			.times(tmp.tiers.fp)
-			.times(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.tier)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.tier)
+			.add(start3)
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("tier", player.tier.max(tmp.tiers.bulk), "atomic")) {
-		let power4 = tmp.scalingPower.atomic.tier;
+	if (scalingActive("tier", player.tier.max(tmp.tiers.bulk), "atomic")) {
+		let start4 = getScalingStart("atomic", "tier");
+		let power4 = getScalingPower("atomic", "tier");
 		let exp4 = ExpantaNum.pow(4, power4);
-		let power3 = tmp.scalingPower.hyper.tier;
+		let start3 = getScalingStart("hyper", "tier");
+		let power3 = getScalingPower("hyper", "tier");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.tier;
+		let start2 = getScalingStart("superscaled", "tier");
+		let power2 = getScalingPower("superscaled", "tier");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.tier;
+		let start = getScalingStart("scaled", "tier");
+		let power = getScalingPower("scaled", "tier");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(
 			ExpantaNum.pow(
 				base3,
 				player.tier
 					.pow(exp4)
-					.div(tmp.scalings.atomic.tier.pow(exp4.sub(1)))
-					.sub(tmp.scalings.hyper.tier)
+					.div(start4.pow(exp4.sub(1)))
+					.sub(start3)
 			)
-				.times(tmp.scalings.hyper.tier)
+				.times(start3)
 				.pow(exp2)
-				.div(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+				.div(start2.pow(exp2.sub(1)))
 				.pow(exp)
-				.div(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.div(tmp.tiers.fp)
 				.pow(2)
 		);
@@ -120,15 +130,15 @@ function updateTempTiers() {
 			.max(0)
 			.sqrt()
 			.times(tmp.tiers.fp)
-			.times(tmp.scalings.scaled.tier.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.tier.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.tier)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.tier)
-			.times(tmp.scalings.atomic.tier.pow(exp4.sub(1)))
+			.add(start3)
+			.times(start4.pow(exp4.sub(1)))
 			.pow(exp4.pow(-1))
 			.add(1)
 			.floor();

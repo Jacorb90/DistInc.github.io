@@ -17,15 +17,16 @@ function updateTempRanks() {
 		ExpantaNum.pow(2, player.rank.div(tmp.ranks.fp).max(1).sub(1).pow(2))
 	);
 	tmp.ranks.bulk = player.distance.div(tmp.ranks.bc).logBase(2).sqrt().plus(1).times(tmp.ranks.fp).plus(1).round();
-	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.rank;
+	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "rank");
+		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rank
 					.pow(exp)
-					.div(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.ranks.fp)
 					.sub(1)
 					.pow(2)
@@ -38,24 +39,26 @@ function updateTempRanks() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.ranks.fp)
-			.times(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.rank;
+	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "rank");
+		let power2 = getScalingPower("superscaled", "rank");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rank;
+		let start = getScalingStart("scaled", "rank");
+		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rank
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.ranks.fp)
 					.sub(1)
 					.pow(2)
@@ -68,29 +71,32 @@ function updateTempRanks() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.ranks.fp)
-			.times(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "hyper")) {
-		let power3 = tmp.scalingPower.hyper.rank;
+	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "hyper")) {
+		let start3 = getScalingStart("hyper", "rank");
+		let power3 = getScalingPower("hyper", "rank");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.rank;
+		let start2 = getScalingStart("superscaled", "rank");
+		let power2 = getScalingPower("superscaled", "rank");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rank;
+		let start = getScalingStart("scaled", "rank");
+		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(
 			ExpantaNum.pow(
 				2,
-				ExpantaNum.pow(base3, player.rank.sub(tmp.scalings.hyper.rank))
-					.times(tmp.scalings.hyper.rank)
+				ExpantaNum.pow(base3, player.rank.sub(start3))
+					.times(start3)
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.ranks.fp)
 					.sub(1)
 					.pow(2)
@@ -103,25 +109,29 @@ function updateTempRanks() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.ranks.fp)
-			.times(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.rank)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.rank)
+			.add(start3)
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rank", player.rank.max(tmp.ranks.bulk), "atomic")) {
-		let power4 = tmp.scalingPower.atomic.rank;
+	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "atomic")) {
+		let start4 = getScalingStart("atomic", "rank");
+		let power4 = getScalingPower("atomic", "rank");
 		let exp4 = ExpantaNum.pow(4, power4);
-		let power3 = tmp.scalingPower.hyper.rank;
+		let start3 = getScalingStart("hyper", "rank");
+		let power3 = getScalingPower("hyper", "rank");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.rank;
+		let start2 = getScalingStart("superscaled", "rank");
+		let power2 = getScalingPower("superscaled", "rank");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rank;
+		let start = getScalingStart("scaled", "rank");
+		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.ranks.req = new ExpantaNum(tmp.ranks.bc).times(
 			ExpantaNum.pow(
@@ -130,14 +140,14 @@ function updateTempRanks() {
 					base3,
 					player.rank
 						.pow(exp4)
-						.div(tmp.scalings.atomic.rank.pow(exp4.sub(1)))
-						.sub(tmp.scalings.hyper.rank)
+						.div(start4.pow(exp4.sub(1)))
+						.sub(start3)
 				)
-					.times(tmp.scalings.hyper.rank)
+					.times(start3)
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.ranks.fp)
 					.sub(1)
 					.pow(2)
@@ -150,15 +160,15 @@ function updateTempRanks() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.ranks.fp)
-			.times(tmp.scalings.scaled.rank.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rank.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.rank)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.rank)
-			.times(tmp.scalings.atomic.rank.pow(exp4.sub(1)))
+			.add(start3)
+			.times(start4.pow(exp4.sub(1)))
 			.pow(exp4.pow(-1))
 			.add(1)
 			.floor();

@@ -53,14 +53,14 @@ function updateHTML() {
 		tmp.el.rankUp.setClasses({ btn: true, locked: !tmp.ranks.canRankUp });
 		tmp.el.rankDesc.setTxt(tmp.ranks.desc);
 		tmp.el.rankReq.setTxt(formatDistance(tmp.ranks.req));
-		tmp.el.rankName.setTxt(tmp.scaling.getName("rank") + "Rank");
+		tmp.el.rankName.setTxt(getScalingName("rank") + "Rank");
 
 		// Tiers
 		tmp.el.tier.setTxt(showNum(player.tier));
 		tmp.el.tierUp.setClasses({ btn: true, locked: !tmp.tiers.canTierUp });
 		tmp.el.tierDesc.setTxt(tmp.tiers.desc);
 		tmp.el.tierReq.setTxt(showNum(tmp.tiers.req.ceil()));
-		tmp.el.tierName.setTxt(tmp.scaling.getName("tier") + "Tier");
+		tmp.el.tierName.setTxt(getScalingName("tier") + "Tier");
 		
 		// Misc
 		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
@@ -88,7 +88,7 @@ function updateHTML() {
 		tmp.el.rfReset.setClasses({ btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can });
 		tmp.el.rfReq.setTxt(showNum(tmp.rf.req));
 		tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)));
-		tmp.el.rfName.setTxt(tmp.scaling.getName("rf") + "Rocket Fuel");
+		tmp.el.rfName.setTxt(getScalingName("rf") + "Rocket Fuel");
 		tmp.el.rf2.setTxt(showNum(tmp.rf.eff2));
 	}
 
@@ -288,7 +288,7 @@ function updateHTML() {
 			tmp.el["pth" + i].setHTML(
 				PTH_UPGS[i].desc +
 					"<br>" +
-					tmp.scaling.getName("pathogenUpg", i) +
+					getScalingName("pathogenUpg", i) +
 					"Level: " +
 					showNum(player.pathogens.upgrades[i]) +
 					(tmp.pathogens[i].extra.gt(0) ? " + " + showNum(tmp.pathogens[i].extra) : "") +
@@ -355,7 +355,7 @@ function updateHTML() {
 				" Rocket Fuel later."
 		);
 		tmp.el.darkCore.setHTML(
-			tmp.scaling.getName("darkCore") +
+			getScalingName("darkCore") +
 				"Dark Cores<br>Amount: " +
 				showNum(player.dc.cores) +
 				"<br>Cost: " +
@@ -410,7 +410,7 @@ function updateHTML() {
 					});
 				}
 			}
-			tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements") + " ");
+			tmp.el.endorsementName.setTxt(getScalingName("endorsements") + " ");
 			
 			tmp.el.tudeEff.setHTML(
 				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
@@ -440,7 +440,7 @@ function updateHTML() {
 					inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)),
 					locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))
 				});
-				let name = tmp.scaling.getName("enlightenments", i);
+				let name = getScalingName("enlightenments", i);
 				tmp.el["enlScale" + i].setTxt(name == "" ? "" : name + " ");
 			}
 			tmp.el.perkPower.setTxt("Perk Strength: " + showNum(tmp.inf.asc.perkStrength.times(100)) + "%");
@@ -492,7 +492,7 @@ function updateHTML() {
 		if (infTab == "pantheon") {
 			tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems));
 			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next.ceil()));
-			let name = tmp.scaling.getName("spectralGems");
+			let name = getScalingName("spectralGems");
 			tmp.el.spectralGemName.setTxt(name == "" ? "" : name + " ");
 			tmp.el.respecSpectralGems.setClasses({
 				btn: true,
@@ -550,7 +550,7 @@ function updateHTML() {
 			}
 			let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts) ? "Boosts" : "Shifts";
 			tmp.el.dervUnlock.setHTML(
-				tmp.scaling.getName("dervBoost") +
+				getScalingName("dervBoost") +
 					" Derivative " +
 					dervName +
 					" (" +
@@ -576,7 +576,7 @@ function updateHTML() {
 		);
 		tmp.el.rankCheapUp.setClasses({ btn: true, locked: !tmp.rankCheap.can });
 		tmp.el.rankCheapReq.setTxt(formatDistance(tmp.rankCheap.req));
-		tmp.el.rankCheapName.setTxt(tmp.scaling.getName("rankCheap") + "Rank Cheapener");
+		tmp.el.rankCheapName.setTxt(getScalingName("rankCheap") + "Rank Cheapener");
 
 		// The Furnace
 		if (player.tab=="furnace") {
@@ -595,7 +595,7 @@ function updateHTML() {
 					fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
 				});
 				tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
-				tmp.el["fnu" + i + "name"].setTxt(tmp.scaling.getName("fn", i));
+				tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
 				tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
 			}
 			tmp.el.bf.setClasses({
@@ -631,7 +631,7 @@ function updateHTML() {
 				let key = Object.keys(SCALING_RES)[r]
 				let amt = func(1)
 				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
-				if (amt.gte(tmp.scalings[name][key])) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(tmp.scalingPower[name][key].times(100))+"%): Starts at "+showNum(tmp.scalings[name][key])+"\n"
+				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
 			}
 			let blank = ""
 			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
@@ -739,7 +739,7 @@ function updateHTML() {
 						locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]),
 						light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])
 					});
-					tmp.el["photonLvl" + i].setTxt(tmp.scaling.getName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
+					tmp.el["photonLvl" + i].setTxt(getScalingName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
 					tmp.el["photonDesc" + i].setTxt(showNum(tmp.elm.bos.photonEff(i)) + "x");
 					tmp.el["photonCost" + i].setTxt(showNum(tmp.elm.bos.photonCost[i]));
 				}

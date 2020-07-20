@@ -101,8 +101,9 @@ function updateTempDC() {
 		.sub(1)
 		.times(50)
 		.plus(1);
-	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.darkCore;
+	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "darkCore");
+		let power = getScalingPower("scaled", "darkCore");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
@@ -110,7 +111,7 @@ function updateTempDC() {
 				10,
 				player.dc.cores
 					.pow(exp)
-					.div(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(50)
 					.plus(1)
 			)
@@ -123,14 +124,16 @@ function updateTempDC() {
 			.log10()
 			.sub(1)
 			.times(50)
-			.times(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.add(1);
 	}
-	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.darkCore;
+	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "darkCore");
+		let power2 = getScalingPower("superscaled", "darkCore");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.darkCore;
+		let start = getScalingStart("scaled", "darkCore");
+		let power = getScalingPower("scaled", "darkCore");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
@@ -138,9 +141,9 @@ function updateTempDC() {
 				10,
 				player.dc.cores
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(50)
 					.plus(1)
 			)
@@ -153,29 +156,32 @@ function updateTempDC() {
 			.log10()
 			.sub(1)
 			.times(50)
-			.times(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.add(1);
 	}
-	if (tmp.scaling.active("darkCore", player.dc.cores.max(tmp.dc.bulk), "hyper")) {
-		let power3 = tmp.scalingPower.hyper.darkCore;
+	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "hyper")) {
+		let start3 = getScalingStart("hyper", "darkCore");
+		let power3 = getScalingPower("hyper", "darkCore");
 		let base3 = ExpantaNum.pow(1.03, power3);
-		let power2 = tmp.scalingPower.superscaled.darkCore;
+		let start2 = getScalingStart("superscaled", "darkCore");
+		let power2 = getScalingPower("superscaled", "darkCore");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.darkCore;
+		let start = getScalingStart("scaled", "darkCore");
+		let power = getScalingPower("scaled", "darkCore");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
 			ExpantaNum.pow(
 				10,
-				ExpantaNum.pow(base3, player.dc.cores.sub(tmp.scalings.hyper.darkCore))
-					.times(tmp.scalings.hyper.darkCore)
+				ExpantaNum.pow(base3, player.dc.cores.sub(start3))
+					.times(start3)
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(50)
 					.plus(1)
 			)
@@ -188,14 +194,14 @@ function updateTempDC() {
 			.log10()
 			.sub(1)
 			.times(50)
-			.times(tmp.scalings.scaled.darkCore.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.darkCore.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.darkCore)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.darkCore)
+			.add(start3)
 			.add(1);
 	}
 	tmp.dc.buyCore = function () {

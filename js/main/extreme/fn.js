@@ -31,79 +31,85 @@ function updateTempFurnace() {
 			.pow(tmp.fn.bfEff.times(2).pow(-1))
 			.plus(1)
 			.floor();
-		if (tmp.scaling.active("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "scaled")) {
-			let power = tmp.scalingPower.scaled.fn;
+		if (scalingActive("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "scaled")) {
+			let start = getScalingStart("scaled", "fn")
+			let power = getScalingPower("scaled", "fn")
 			let exp = ExpantaNum.pow(2, power);
 			tmp.fn.upgs[n].cost = ExpantaNum.pow(
 				tmp.fn.upgs[n].base.div(10),
 				player.furnace.upgrades[n - 1]
 					.pow(exp)
-					.div(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.pow(tmp.fn.bfEff.times(2))
 			).times(tmp.fn.upgs[n].base);
 			tmp.fn.upgs[n].bulk = player.furnace.coal
 				.div(tmp.fn.upgs[n].base)
 				.logBase(tmp.fn.upgs[n].base.div(10))
 				.pow(tmp.fn.bfEff.times(2).pow(-1))
-				.times(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
 				.plus(1)
 				.floor();
 		}
-		if (tmp.scaling.active("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "superscaled")) {
-			let power2 = tmp.scalingPower.superscaled.fn;
+		if (scalingActive("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "superscaled")) {
+			let start2 = getScalingStart("superscaled", "fn");
+			let power2 = getScalingPower("superscaled", "fn");
 			let exp2 = ExpantaNum.pow(3, power2);
-			let power = tmp.scalingPower.scaled.fn;
+			let start = getScalingStart("scaled", "fn");
+			let power = getScalingPower("scaled", "fn");
 			let exp = ExpantaNum.pow(2, power);
 			tmp.fn.upgs[n].cost = ExpantaNum.pow(
 				tmp.fn.upgs[n].base.div(10),
 				player.furnace.upgrades[n - 1]
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.fn.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.pow(tmp.fn.bfEff.times(2))
 			).times(tmp.fn.upgs[n].base);
 			tmp.fn.upgs[n].bulk = player.furnace.coal
 				.div(tmp.fn.upgs[n].base)
 				.logBase(tmp.fn.upgs[n].base.div(10))
 				.pow(tmp.fn.bfEff.times(2).pow(-1))
-				.times(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
-				.times(tmp.scalings.superscaled.fn)
+				.times(start2.pow(exp.sub(1)))
 				.pow(exp2.pow(-1))
 				.plus(1)
 				.floor();
 		}
-		if (tmp.scaling.active("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "hyper")) {
-			let power3 = tmp.scalingPower.hyper.fn;
+		if (scalingActive("fn", player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk), "hyper")) {
+			let start3 = getScalingStart("hyper", "fn");
+			let power3 = getScalingPower("hyper", "fn");
 			let base3 = ExpantaNum.pow(1.1, power3);
-			let power2 = tmp.scalingPower.superscaled.fn;
+			let start2 = getScalingStart("superscaled", "fn");
+			let power2 = getScalingPower("superscaled", "fn");
 			let exp2 = ExpantaNum.pow(3, power2);
-			let power = tmp.scalingPower.scaled.fn;
+			let start = getScalingStart("scaled", "fn");
+			let power = getScalingPower("scaled", "fn");
 			let exp = ExpantaNum.pow(2, power);
 			tmp.fn.upgs[n].cost = ExpantaNum.pow(
 				tmp.fn.upgs[n].base.div(10),
-				ExpantaNum.pow(base3, player.furnace.upgrades[n - 1].sub(tmp.scalings.hyper.fn))
-					.times(tmp.scalings.hyper.fn)
+				ExpantaNum.pow(base3, player.furnace.upgrades[n - 1].sub(start3))
+					.times(start3)
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.fn.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.pow(tmp.fn.bfEff.times(2))
 			).times(tmp.fn.upgs[n].base);
 			tmp.fn.upgs[n].bulk = player.furnace.coal
 				.div(tmp.fn.upgs[n].base)
 				.logBase(tmp.fn.upgs[n].base.div(10))
 				.pow(tmp.fn.bfEff.times(2).pow(-1))
-				.times(tmp.scalings.scaled.fn.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
-				.times(tmp.scalings.superscaled.fn)
+				.times(start2)
 				.pow(exp2.pow(-1))
-				.div(tmp.scalings.hyper.fn)
+				.div(start3)
 				.max(1)
 				.logBase(base3)
-				.add(tmp.scalings.hyper.fn)
+				.add(start3)
 				.plus(1)
 				.floor();
 		}

@@ -12,8 +12,9 @@ function updateTempRF() {
 		.times(tmp.rf.fp)
 		.add(1)
 		.floor();
-	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.rf;
+	if (scalingActive("rf", player.rf.max(tmp.rf.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "rf");
+		let power = getScalingPower("scaled", "rf");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.rf.req = tmp.rf.bc
 			.times(
@@ -21,7 +22,7 @@ function updateTempRF() {
 					5,
 					player.rf
 						.pow(exp)
-						.div(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.div(tmp.rf.fp)
 						.pow(1.1)
 				)
@@ -33,15 +34,17 @@ function updateTempRF() {
 			.logBase(5)
 			.pow(1 / 1.1)
 			.times(tmp.rf.fp)
-			.times(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.rf;
+	if (scalingActive("rf", player.rf.max(tmp.rf.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "rf");
+		let power2 = getScalingPower("superscaled", "rf");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rf;
+		let start = getScalingStart("scaled", "rf");
+		let power = getScalingPower("scaled", "rf");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.rf.req = tmp.rf.bc
 			.times(
@@ -49,9 +52,9 @@ function updateTempRF() {
 					5,
 					player.rf
 						.pow(exp2)
-						.div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+						.div(start2.pow(exp2.sub(1)))
 						.pow(exp)
-						.div(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.div(tmp.rf.fp)
 						.pow(1.1)
 				)
@@ -63,30 +66,33 @@ function updateTempRF() {
 			.logBase(5)
 			.pow(1 / 1.1)
 			.times(tmp.rf.fp)
-			.times(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "hyper")) {
-		let power3 = tmp.scalingPower.hyper.rf;
+	if (scalingActive("rf", player.rf.max(tmp.rf.bulk), "hyper")) {
+		let start3 = getScalingStart("hyper", "rf");
+		let power3 = getScalingPower("hyper", "rf");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.rf;
+		let start2 = getScalingStart("superscaled", "rf");
+		let power2 = getScalingPower("superscaled", "rf");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rf;
+		let start = getScalingStart("scaled", "rf");
+		let power = getScalingPower("scaled", "rf");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.rf.req = tmp.rf.bc
 			.times(
 				ExpantaNum.pow(
 					5,
-					ExpantaNum.pow(base3, player.rf.sub(tmp.scalings.hyper.rf))
-						.times(tmp.scalings.hyper.rf)
+					ExpantaNum.pow(base3, player.rf.sub(start3))
+						.times(start3)
 						.pow(exp2)
-						.div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+						.div(start2.pow(exp2.sub(1)))
 						.pow(exp)
-						.div(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.div(tmp.rf.fp)
 						.pow(1.1)
 				)
@@ -98,25 +104,29 @@ function updateTempRF() {
 			.logBase(5)
 			.pow(1 / 1.1)
 			.times(tmp.rf.fp)
-			.times(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.rf)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.rf)
+			.add(start3)
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rf", player.rf.max(tmp.rf.bulk), "atomic")) {
-		let power4 = tmp.scalingPower.atomic.rf;
+	if (scalingActive("rf", player.rf.max(tmp.rf.bulk), "atomic")) {
+		let start4 = getScalingStart("atomic", "rf");
+		let power4 = getScalingPower("atomic", "rf");
 		let exp4 = ExpantaNum.pow(4, power4);
-		let power3 = tmp.scalingPower.hyper.rf;
+		let start3 = getScalingStart("hyper", "rf");
+		let power3 = getScalingPower("hyper", "rf");
 		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.rf;
+		let start2 = getScalingStart("superscaled", "rf");
+		let power2 = getScalingPower("superscaled", "rf");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rf;
+		let start = getScalingStart("scaled", "rf");
+		let power = getScalingPower("scaled", "rf");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.rf.req = tmp.rf.bc
 			.times(
@@ -126,14 +136,14 @@ function updateTempRF() {
 						base3,
 						player.rf
 							.pow(exp4)
-							.div(tmp.scalings.atomic.rf.pow(exp4.sub(1)))
-							.sub(tmp.scalings.hyper.rf)
+							.div(start4.pow(exp4.sub(1)))
+							.sub(start3)
 					)
-						.times(tmp.scalings.hyper.rf)
+						.times(start3)
 						.pow(exp2)
-						.div(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+						.div(start2.pow(exp2.sub(1)))
 						.pow(exp)
-						.div(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.div(tmp.rf.fp)
 						.pow(1.1)
 				)
@@ -145,15 +155,15 @@ function updateTempRF() {
 			.logBase(5)
 			.pow(1 / 1.1)
 			.times(tmp.rf.fp)
-			.times(tmp.scalings.scaled.rf.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rf.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.rf)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.rf)
-			.times(tmp.scalings.atomic.rf.pow(exp4.sub(1)))
+			.add(start3)
+			.times(start4.pow(exp4.sub(1)))
 			.pow(exp4.pow(-1))
 			.plus(1)
 			.floor();
