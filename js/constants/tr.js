@@ -3,7 +3,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(50),
 		desc: "Increase Time Cube gain by 10% for each Rank or Tier.",
 		current: function () {
-			return tmp.tr1;
+			return tr1Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -13,7 +13,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(300),
 		desc: "Time goes by (log(n+1)) times faster, where n is your Time Cubes.",
 		current: function () {
-			return tmp.tr2;
+			return tr2Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -24,7 +24,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(2500),
 		desc: "Time Cube gain is increased by 33% for every OoM of Rockets (softcaps after a while).",
 		current: function () {
-			return tmp.tr4;
+			return tr4Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -35,7 +35,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(25000),
 		desc: "Scrap & Intelligence gain are increased by 10% for every OoM of Time Cubes.",
 		current: function () {
-			return tmp.tr6;
+			return tr6Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -45,7 +45,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(40000),
 		desc: "Time goes by 5% faster for every achievement gotten.",
 		current: function () {
-			return tmp.tr7;
+			return tr7Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -55,7 +55,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(75000),
 		desc: "Rankbot's interval boosts its magnitude.",
 		current: function () {
-			return tmp.tr8;
+			return tr8Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -65,7 +65,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1.2e5),
 		desc: "Tierbot's interval boosts its magnitude, but not as strongly as the previous upgrade.",
 		current: function () {
-			return tmp.tr9;
+			return tr9Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -75,7 +75,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(2e5),
 		desc: "Rocket gain is increased by 10% for every OoM of Time Cubes (softcaps after a while).",
 		current: function () {
-			return tmp.tr10;
+			return tr10Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -85,7 +85,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1e60),
 		desc: "Time Cubes and Dark Flow boost each other, and Scaled Rank scaling starts 10 Ranks later.",
 		current: function () {
-			return tmp.tr11;
+			return tr11Eff();
 		},
 		disp: function (g) {
 			return "Cubes: " + showNum(g.cg) + "x, Flow: " + showNum(g.dcf) + "x";
@@ -95,7 +95,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1e70),
 		desc: "Each component of The Dark Circle boosts Dark Flow, and Scaled Tier scaling starts 2 Tiers later.",
 		current: function () {
-			return tmp.tr12;
+			return tr12Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -105,7 +105,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1e105),
 		desc: "Each component of The Dark Circle boosts Pathogen Upgrade efficiency.",
 		current: function () {
-			return tmp.tr13;
+			return tr13Eff();
 		},
 		disp: function (x) {
 			return "+" + showNum(x.times(100)) + "%";
@@ -116,7 +116,7 @@ const TR_UPGS = {
 		desc:
 			"Tiers do not reset anything, Scaled Tier scaling starts later based on your Dark Cores, and Tiers boost Cadaver gain.",
 		current: function () {
-			return tmp.tr14;
+			return tr14Eff();
 		},
 		disp: function (g) {
 			return "Tier scaling: " + showNum(g.ss) + " later, Cadavers: " + showNum(g.cd) + "x";
@@ -127,7 +127,7 @@ const TR_UPGS = {
 		desc:
 			"Scaled Rank scaling starts 32 Ranks later, and all effects of The Dark Circle are stronger based on your Dark Cores.",
 		current: function () {
-			return tmp.tr15;
+			return tr15Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
@@ -167,7 +167,7 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1e5),
 		desc: "Rank Cheapener-bot's interval boosts its magnitude.",
 		current: function () {
-			return tmp.tr19;
+			return tr19Eff();
 		},
 		disp: function (x) {
 			return showNum(x) + "x";

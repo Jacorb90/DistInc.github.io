@@ -162,3 +162,17 @@ function updateTempTiers() {
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
 }
+
+function tier3Eff() {
+	let tier = player.tier;
+	if (tier.gte(10)) tier = tier.log10().times(10);
+	return ExpantaNum.pow(1.1, tier);
+}
+
+function tier7Eff() {
+	return ExpantaNum.pow(1.1, player.rf)
+}
+
+function tier9Eff() {
+	return player.automation.intelligence.plus(1).log10().plus(1).sqrt();
+}

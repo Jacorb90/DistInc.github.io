@@ -3,8 +3,8 @@ function updateTempTimeSpeed() {
 	if (modeActive("hard")) tmp.timeSpeed = tmp.timeSpeed.times(0.75);
 	if (modeActive("easy")) tmp.timeSpeed = tmp.timeSpeed.times(2.5);
 	if (modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.times(0.7);
-	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr2);
-	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.tr7);
+	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tr2Eff());
+	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tr7Eff());
 	if (player.tr.upgrades.includes(18) && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(2, player.rankCheap.sqrt()));
 	if (player.tr.upgrades.includes(23) && modeActive("extreme"))
@@ -31,12 +31,12 @@ function updateTempTimeSpeed() {
 	if (player.rank.gt(1000)) tmp.timeSpeed = tmp.timeSpeed.times(1.98);
 	if (player.rank.gt(10000)) tmp.timeSpeed = tmp.timeSpeed.times(2);
 	if (player.tier.gt(6)) tmp.timeSpeed = tmp.timeSpeed.times(1.5);
-	if (player.tier.gt(7)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.t7);
+	if (player.tier.gt(7)) tmp.timeSpeed = tmp.timeSpeed.times(tier7Eff());
 	if (player.tier.gt(16)) tmp.timeSpeed = tmp.timeSpeed.times(1.6);
 	if (player.tier.gt(18)) tmp.timeSpeed = tmp.timeSpeed.times(1.8);
 	if (player.tier.gt(20)) tmp.timeSpeed = tmp.timeSpeed.times(2);
 	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff);
-	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(tmp.ucme1);
+	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(collapseMile1Eff());
 	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5);
 	if (tmp.inf.upgs.has("1;1")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["1;1"]());
 	if (tmp.inf.upgs.has("7;7")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["7;7"]()["ts"]);

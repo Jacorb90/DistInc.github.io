@@ -2,7 +2,7 @@ function updateTempRanks() {
 	tmp.ranks = {};
 	tmp.ranks.fp = new ExpantaNum(1);
 	if (player.tier.gt(0)) tmp.ranks.fp = tmp.ranks.fp.times(1.25);
-	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tmp.t3);
+	if (player.tier.gt(2)) tmp.ranks.fp = tmp.ranks.fp.times(tier3Eff());
 	if (tmp.ach) if (tmp.ach[43].has) tmp.ranks.fp = tmp.ranks.fp.times(1.025);
 	if (player.tr.upgrades.includes(3)) tmp.ranks.fp = tmp.ranks.fp.times(1.1);
 	if (tmp.rankCheap) tmp.ranks.fp = tmp.ranks.fp.times(tmp.rankCheap.eff);
@@ -192,4 +192,38 @@ function updateTempRanks() {
 			}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
+}
+
+function rank2Eff() {
+	return ExpantaNum.pow(1.1, player.rank);
+}
+
+function rank4Eff() {
+	return ExpantaNum.pow(3, player.tier);
+}
+
+function rank5Eff() {
+	return ExpantaNum.pow(1.975, player.rank);
+}
+
+function rank8Eff() {
+	return ExpantaNum.pow(1.1, player.rank);
+}
+
+function rank14Eff() {
+	return ExpantaNum.pow(player.rf.plus(1), 1.6);
+}
+
+function rank40Eff() {
+	let eff = primesLTE(player.automation.scraps).max(1);
+	if (eff.gte(1e9)) eff = eff.log10().times(1e9/9)
+	return eff;
+}
+
+function rank55Eff() {
+	return ExpantaNum.pow(2, player.rank)
+}
+
+function rank111Eff() {
+	return ExpantaNum.pow(2, player.rank)
 }

@@ -31,7 +31,7 @@ function getScalingStart(type, name) {
 	} else if (name=="tier") {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(12)) start = start.plus(2)
-			if (player.tr.upgrades.includes(14) && tmp.tr14) start = start.plus(tmp.tr14["ss"])
+			if (player.tr.upgrades.includes(14)) start = start.plus(tr14Eff()["ss"])
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledTier")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {

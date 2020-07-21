@@ -210,9 +210,9 @@ function updateHTML() {
 		for (let i = 1; i <= TR_UPG_AMT; i++) {
 			let upg = TR_UPGS[i];
 			let desc = upg.desc;
-			if (!tmp.tr2e.eq(1) && i == 2) desc += "<span class='grossminitxt'>(^" + showNum(tmp.tr2e) + ")</span>";
-			if (!tmp.tr11pow.eq(1) && i == 11)
-				desc += "<span class='grossminitxt'>(^" + showNum(tmp.tr11pow) + ")</span>";
+			if (!tr2Pow().eq(1) && i == 2) desc += "<span class='grossminitxt'>(^" + showNum(tr2Pow()) + ")</span>";
+			if (!tr11Pow().eq(1) && i == 11)
+				desc += "<span class='grossminitxt'>(^" + showNum(tr11Pow()) + ")</span>";
 			tmp.el["tr" + i].setHTML(desc + "<br>Cost: " + showNum(upg.cost) + " Time Cubes.");
 			if (upg.current !== undefined && (i > 15 ? modeActive("extreme") : true))
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
@@ -309,9 +309,9 @@ function updateHTML() {
 		tmp.el.tdeEff.setHTML(
 			tmp.ach[63].has
 				? "Time Doesn't Exist multiplier: " +
-					showNum(tmp.ach63) +
+					showNum(ach63Eff()) +
 					"x " +
-					(tmp.ach63.gte(tmp.ach63sc) ? "<span class='sc'>(softcapped)</span>" : "") +
+					(ach63Eff().gte(ach63SC()) ? "<span class='sc'>(softcapped)</span>" : "") +
 					"<br><br>"
 				: ""
 		);
@@ -413,7 +413,7 @@ function updateHTML() {
 			tmp.el.endorsementName.setTxt(getScalingName("endorsements") + " ");
 			
 			tmp.el.tudeEff.setHTML(
-				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
+				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(ach112Eff()) + "x<br><br>" : ""
 			);
 		}
 
@@ -630,6 +630,7 @@ function updateHTML() {
 				let func = Object.values(SCALING_RES)[r]
 				let key = Object.keys(SCALING_RES)[r]
 				let amt = func(1)
+				if (MULTI_SCALINGS.includes(key)) for (let i=1;i<=SCALING_AMTS[key];i++) amt = ExpantaNum.max(amt, func(i))
 				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
 				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
 			}
@@ -868,10 +869,13 @@ function updateHTML() {
 				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
 				tmp.el.accelGain.setTxt(showNum(adjustGen(getAccelGain(), "accelerons")))
 				tmp.el.accelEff.setTxt(showNum(getAccelEff()))
-				let amt = player.elementary.theory.accelerons.expanders.toNumber()+1
-				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS))})
-				tmp.el.darkExp.setHTML((amt-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[amt]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[amt])+" Accelerons"))
+				let next = player.elementary.theory.accelerons.expanders.toNumber()+1
+				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS))})
+				tmp.el.darkExp.setHTML((next-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"))
 				tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
+				let past = ""
+				if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
+				tmp.el.darkExpPast.setHTML(past)
 			}
 		}
 	}

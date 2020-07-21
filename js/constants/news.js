@@ -342,6 +342,12 @@ const NEWS_DATA = {
 			return player.bestV.gte(299792458*1.1)
 		},
 	],
+	s19: [
+		'"But where are the replicants?" - NG+++ fan after unlocking preons',
+		function () {
+			return player.elementary.theory.preons.unl
+		}
+	],
 };
 
 const NEWS_ADJ = 110;

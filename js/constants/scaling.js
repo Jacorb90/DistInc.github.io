@@ -76,6 +76,12 @@ const SCALING_RES = {
 	},
 };
 const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments", "photons"]
+const SCALING_AMTS = {
+	fn: 3,
+	pathogenUpg: 15,
+	enlightenments: 4,
+	photons: 4,
+}
 const REAL_SCALING_NAMES = {
 	rank: "ranks",
 	rankCheap: "rank cheapeners",

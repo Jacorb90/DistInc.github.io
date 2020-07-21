@@ -51,3 +51,29 @@ function updateTempCollapse() {
 		tmp.inf.derv.resetDervs();
 	};
 }
+
+function collapseMile1Eff() {
+	return new ExpantaNum(100).div(player.distance.plus(1).pow(0.06989).plus(1).min(50))
+}
+
+function collapseMile5Eff() {
+	let eff = player.tr.cubes.plus(1).log10().plus(1).log10().plus(1);
+	if (eff.gte(2.5)) eff = eff.logBase(2.5).plus(1.5)
+	return eff
+}
+
+function collapseMile8Eff() {
+	let eff = (tmp.timeSpeed ? tmp.timeSpeed : new ExpantaNum(1)).plus(1).logBase(2).max(1);
+	if (eff.gte(50)) eff = eff.times(2).log10().times(25);
+	return eff
+}
+
+function collapseMile10Eff() {
+	let eff = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(8);
+	if (eff.gte(40)) eff = eff.times(2.5).log10().times(20);
+	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[27]||new ExpantaNum(0)).gte(1)) {
+		eff = player.collapse.lifeEssence.plus(1).pow(0.1)
+		if (eff.gte(40)) eff = eff.pow(0.2).times(Math.pow(40, 0.8))
+	}
+	return eff
+}

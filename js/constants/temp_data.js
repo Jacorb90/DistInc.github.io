@@ -233,7 +233,8 @@ const TMP_DATA = {
 		"fnc5",
 		"fns5",
 		"chipNerf",
-		"soulNerf"
+		"soulNerf",
+		"darkExpPast"
 	]
 };
 for (let r = 1; r <= ACH_DATA.rows; r++) {
