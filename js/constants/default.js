@@ -108,7 +108,10 @@ const DEFAULT_START = {
 		}
 	},
 	automators: {},
+	autoModes: {},
+	autoTxt: {},
 	elementary: {
+		time: new ExpantaNum(0),
 		times: new ExpantaNum(0),
 		particles: new ExpantaNum(0),
 		fermions: {

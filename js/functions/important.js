@@ -109,7 +109,16 @@ function autoTick(diff) {
 	if (player.automators["perks"]) for (let i=1;i<=4;i++) if (player.inf.ascension.time[i-1].eq(0)) tmp.inf.asc.activatePerk(i)
 	if (player.automators["enlightenments"]) for (let i=1;i<=4;i++) tmp.inf.asc.maxEnl(i)
 	if (player.automators["derivative_boosts"]) tmp.inf.derv.maxBoosts()
-	if (player.automators["spectral_gems"]) {
+	if (player.automators["elementaries"]) {
+		let mode = player.autoModes["elementaries"]
+		let val = new ExpantaNum(player.autoTxt["elementaries"]||0)
+		if (mode=="AMOUNT") {
+			if (tmp.elm.layer.gain.gte(val)) elmReset()
+		} else if (mode=="TIME") {
+			if (player.elementary.time.gte(val)) elmReset()
+		}
+	}
+	if (player.automators["spectral_gems"]) { // NEEDS to be last due to RETURNS
 		if (player.inf.pantheon.gems.eq(0)) return
 		let types = ["angels", "demons"]
 		let taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]

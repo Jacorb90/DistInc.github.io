@@ -1,6 +1,6 @@
 function updateTemp() {
 	updateTempEarlyGame();
-	updateTempRanks(); // KEPT ^
+	updateTempRanks(); // DONE ^
 	updateTempTiers();
 	updateTempRockets();
 	updateTempSpecial();
@@ -123,12 +123,35 @@ function setupHTML() {
 			(dp.includes("auto") || dp.includes("Auto") ? dp : "Auto-" + dp) +
 			": <input id='automator-" +
 			Object.keys(AUTOMATORS)[i] +
-			"' type='checkbox'></input></div><br>";
+			"' type='checkbox'></input><br>";
+		let name = Object.keys(AUTOMATORS)[i]
+		if (AUTOMATOR_X[name]!==undefined) {
+			if (AUTOMATOR_X[name]>=1) {
+				autos += "<button class='btn tb rckt' onclick='toggleAutoMode(&quot;"+name+"&quot;)'>Mode: <span id='autoMode"+name+"' style='color: black;'>"+AUTOMATOR_MODES[name][0]+"</span></button><br>"
+			}
+			if (AUTOMATOR_X[name]>=2) {
+				autos += "<input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
+			}
+		}
+		autos += "</div><br>";
 	}
 	au.setHTML(autos);
 	for (let i = 0; i < Object.keys(player.automators).length; i++) {
 		let el = new Element("automator-" + Object.keys(player.automators)[i]);
 		el.el.checked = Object.values(player.automators)[i];
+		let name = Object.keys(player.automators)[i]
+		if (AUTOMATOR_X[name]) {
+			if (AUTOMATOR_X[name]>=1) {
+				let btn = new Element("autoMode"+name)
+				if (!player.autoModes[name]) player.autoModes[name] = AUTOMATOR_MODES[name][0]
+				btn.setTxt(player.autoModes[name])
+			}
+			if (AUTOMATOR_X[name]>=2) {
+				let field = new Element("autoTxt"+name)
+				if (!player.autoTxt[name]) player.autoTxt[name] = new ExpantaNum(0)
+				field.setAttr("value", player.autoTxt[name].toString())
+			}
+		}
 	}
 
 	// Derivatives

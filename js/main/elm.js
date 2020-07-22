@@ -59,6 +59,8 @@ function updateTempElementary() {
 		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
 	tmp.elm.onReset = function (prev) {
+		player.elementary.time = new ExpantaNum(0);
+		
 		// Reset Quarks, Leptons, & Gauge Boson sub-resources
 		player.elementary.fermions.quarks.amount = new ExpantaNum(0);
 		player.elementary.fermions.leptons.amount = new ExpantaNum(0);
@@ -555,6 +557,7 @@ function updateTempElementary() {
 }
 
 function elTick(diff) {
+	player.elementary.time = player.elementary.time.plus(diff)
 	player.elementary.fermions.quarks.amount = new ExpantaNum(player.elementary.fermions.quarks.amount).plus(
 		adjustGen(tmp.elm.ferm.quarkGain, "quarks").times(diff)
 	);

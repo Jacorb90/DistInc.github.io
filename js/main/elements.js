@@ -193,6 +193,7 @@ function updateHTML() {
 			tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
 			player.automators[Object.keys(AUTOMATORS)[i]] =
 				tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
+			let name = Object.keys(AUTOMATORS)[i]
 		}
 	}
 

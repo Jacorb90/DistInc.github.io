@@ -62,6 +62,7 @@ const NEWS_DATA = {
 	m60: ["Click <a href='https://www.youtube.com/watch?v=xfr64zoBTAQ' style='color: grey;'>this</a> to walk 1 extra micrometer, whatever that means..."],
 	m61: ['"Wait... Its all softcapped?"   "Always has been."   *Gets shot by (softcapped)*'],
 	m62: ["Click <a href='#' onclick='return false;'>here</a> to make nothing happen"],
+	m63: ["due to a recent influx of news stories we have decided to make the news ticker <span class='sc'>(softcapped)</span>"],
 
 	// Distance-based Conditions
 	d1: [

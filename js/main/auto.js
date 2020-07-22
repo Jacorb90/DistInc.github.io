@@ -53,3 +53,18 @@ function updateTempAuto() {
 	if (player.tr.upgrades.includes(19) && modeActive("extreme"))
 		tmp.rd.mp.rankCheapbot = tmp.rd.mp.rankCheapbot.times(tr19Eff());
 }
+
+function toggleAutoMode(name) {
+	player.autoModes[name] = AUTOMATOR_MODES[name][(AUTOMATOR_MODES[name].indexOf(player.autoModes[name])+1)%AUTOMATOR_MODES[name].length]
+	let btn = new Element("autoMode"+name)
+	btn.setTxt(player.autoModes[name])
+}
+
+function updateAutoTxt(name) {
+	let inp = document.getElementById("autoTxt"+name).value
+	try {
+		player.autoTxt[name] = new ExpantaNum(inp)
+	} catch(e) {
+		return
+	}
+}

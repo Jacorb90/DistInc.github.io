@@ -322,6 +322,7 @@ const ACH_DATA = {
 
 		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
 		132: "The Gauge Force Effect is doubled.",
+		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",
 		
 		142: "Endorsements that are bought automatically do not reset anything.",

@@ -1,14 +1,7 @@
 function updateTempTiers() {
 	tmp.tiers = {};
-	tmp.tiers.fp = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(20) && modeActive("extreme"))
-		tmp.tiers.fp = tmp.tiers.fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
-	tmp.tiers.bc = new ExpantaNum(3);
-	if (modeActive("hard") && player.tier < 2) tmp.tiers.bc = tmp.tiers.bc.plus(1);
-	if (modeActive("easy") && player.tier < 2) tmp.tiers.bc = tmp.tiers.bc.sub(1);
-	if (tmp.inf)
-		if (tmp.inf.stadium.active("solaris", 5) || tmp.inf.stadium.active("spaceon", 6))
-			tmp.tiers.bc = tmp.tiers.bc.plus(25);
+	tmp.tiers.fp = getTierFP();
+	tmp.tiers.bc = getTierBaseCost();
 	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2));
 	tmp.tiers.bulk = player.rank.sub(tmp.tiers.bc).max(0).sqrt().times(tmp.tiers.fp).add(1).round();
 	if (scalingActive("tier", player.tier.max(tmp.tiers.bulk), "scaled")) {
@@ -161,6 +154,20 @@ function updateTempTiers() {
 		}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
+}
+
+function getTierFP() {
+	let fp = new ExpantaNum(1)
+	if (player.tr.upgrades.includes(20) && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
+	return fp
+}
+
+function getTierBaseCost() {
+	let bc = new ExpantaNum(3)
+	if (modeActive("hard") && player.tier < 2) bc = bc.plus(1);
+	if (modeActive("easy") && player.tier < 2) bc = bc.sub(1);
+	if (tmp.inf) if (tmp.inf.stadium.active("solaris", 5) || tmp.inf.stadium.active("spaceon", 6)) bc = bc.plus(25);
+	return bc
 }
 
 function tier3Eff() {

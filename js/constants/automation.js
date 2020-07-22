@@ -76,4 +76,15 @@ const AUTOMATORS = {
 	spectral_gems: function() {
 		return tmp.elm.bos.hasHiggs("1;2;0")
 	},
+	elementaries: function() {
+		return tmp.ach[133].has
+	},
 };
+
+const AUTOMATOR_X = {
+	elementaries: 2,
+}
+
+const AUTOMATOR_MODES = {
+	elementaries: ["AMOUNT", "TIME"],
+}
