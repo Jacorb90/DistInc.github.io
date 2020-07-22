@@ -1,6 +1,6 @@
 function updateTemp() {
 	updateTempEarlyGame();
-	updateTempRanks();
+	updateTempRanks(); // KEPT ^
 	updateTempTiers();
 	updateTempRockets();
 	updateTempSpecial();

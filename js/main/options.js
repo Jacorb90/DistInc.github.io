@@ -271,7 +271,7 @@ function loads() {
 function exportAll() {
 	save()
 	let all = getAllSaves();
-	copyToClipboard(all);
+	copyToClipboard(btoa(JSON.stringify(all)));
 	notifier.info("All saves exported");
 }
 
