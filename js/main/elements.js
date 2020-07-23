@@ -206,7 +206,7 @@ function updateHTML() {
 			showNum(player.tr.cubes) +
 				" Time Cubes" +
 				(" (+" +
-					showNum(adjustGen(tmp.tr.cg, "tc").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
+					showNum(adjustGen(getTimeCubeGain(), "tc").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 					"/sec)")
 		);
 		tmp.el.frf.setTxt(showNum(tmp.tr.eff));

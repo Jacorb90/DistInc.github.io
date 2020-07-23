@@ -1,32 +1,31 @@
 function updateTempTR() {
 	tmp.tr = {};
-	tmp.tr.cg = new ExpantaNum(1);
-	if (modeActive("hard")) tmp.tr.cg = tmp.tr.cg.div(3);
-	if (modeActive("easy")) tmp.tr.cg = tmp.tr.cg.times(5).times(player.pathogens.amount.plus(1));
-	if (player.tr.upgrades.includes(1)) tmp.tr.cg = tmp.tr.cg.times(tr1Eff());
-	if (player.tr.upgrades.includes(4)) tmp.tr.cg = tmp.tr.cg.times(tr4Eff());
-	if (tmp.ach[55].has) tmp.tr.cg = tmp.tr.cg.times(1.1);
-	if (tmp.ach[72].has && modeActive("extreme")) {
-		let exp = ExpantaNum.add(5, player.dc.cores.sqrt().times(5));
-		tmp.tr.cg = tmp.tr.cg.times(player.furnace.coal.plus(1).log10().plus(1).pow(exp));
-	}
-	if (player.tr.upgrades.includes(16) && modeActive("extreme"))
-		tmp.tr.cg = tmp.tr.cg.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
-	if (tmp.pathogens && player.pathogens.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.pathogens[3].eff);
-	if (tmp.dc) if (player.dc.unl) tmp.tr.cg = tmp.tr.cg.times(tmp.dc.deEff);
-	if (tmp.dc) if (player.tr.upgrades.includes(11)) tmp.tr.cg = tmp.tr.cg.times(tr11Eff()["cg"]);
-	if (tmp.inf) if (tmp.inf.upgs.has("2;3")) tmp.tr.cg = tmp.tr.cg.times(INF_UPGS.effects["2;3"]()["cubes"]);
 	tmp.tr.txt = player.tr.active ? "Bring Time back to normal." : "Reverse Time.";
 	tmp.tr.esc = new ExpantaNum(1e20);
 	cubes = player.tr.cubes;
 	if (cubes.gte(tmp.tr.esc)) cubes = cubes.cbrt().times(Math.pow(tmp.tr.esc, 2 / 3));
 	tmp.tr.eff = cubes.plus(1).log10().plus(1).logBase(2);
 	if (tmp.inf) if (tmp.inf.stadium.completed("reality")) tmp.tr.eff = tmp.tr.eff.times(3);
-	tmp.tr.upg = {};
-	for (let i = 1; i <= TR_UPG_AMT; i++)
-		tmp.tr.upg[i] = function () {
-			buyTRUpg(i);
-		};
+}
+
+function getTimeCubeGain() {
+	let gain = new ExpantaNum(1);
+	if (modeActive("hard")) gain = gain.div(3);
+	if (modeActive("easy")) gain = gain.times(5).times(player.pathogens.amount.plus(1));
+	if (player.tr.upgrades.includes(1)) gain = gain.times(tr1Eff());
+	if (player.tr.upgrades.includes(4)) gain = gain.times(tr4Eff());
+	if (tmp.ach[55].has) gain = gain.times(1.1);
+	if (tmp.ach[72].has && modeActive("extreme")) {
+		let exp = ExpantaNum.add(5, player.dc.cores.sqrt().times(5));
+		gain = gain.times(player.furnace.coal.plus(1).log10().plus(1).pow(exp));
+	}
+	if (player.tr.upgrades.includes(16) && modeActive("extreme"))
+		gain = gain.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
+	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff);
+	if (tmp.dc) if (player.dc.unl) gain = gain.times(tmp.dc.deEff);
+	if (tmp.dc) if (player.tr.upgrades.includes(11)) gain = gain.times(tr11Eff()["cg"]);
+	if (tmp.inf) if (tmp.inf.upgs.has("2;3")) gain = gain.times(INF_UPGS.effects["2;3"]()["cubes"]);
+	return gain
 }
 
 function reverseTime(force = false) {

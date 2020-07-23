@@ -63,6 +63,7 @@ const NEWS_DATA = {
 	m61: ['"Wait... Its all softcapped?"   "Always has been."   *Gets shot by (softcapped)*'],
 	m62: ["Click <a href='#' onclick='return false;'>here</a> to make nothing happen"],
 	m63: ["due to a recent influx of news stories we have decided to make the news ticker <span class='sc'>(softcapped)</span>"],
+	m64: ['"I wonder if my lore will ever catch up to the most recent update" -CRG'],
 
 	// Distance-based Conditions
 	d1: [

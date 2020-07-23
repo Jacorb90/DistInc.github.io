@@ -4,9 +4,9 @@ function updateTemp() {
 	updateTempTiers(); 
 	updateTempRockets();
 	updateTempSpecial(); 
-	updateTempRF(); // ^ DONE
+	updateTempRF();
 	updateTempAuto();
-	updateLayerMults(); // <- DONE
+	updateLayerMults(); // ^ DONE
 	updateTempTR();
 	updateTempCollapse();
 	updateTempPathogens();
@@ -48,9 +48,9 @@ function setupHTML() {
 			table +=
 				"<td><button id='tr" +
 				id +
-				"' class='btn locked' onclick='tmp.tr.upg[" +
+				"' class='btn locked' onclick='buyTRUpg(" +
 				id +
-				"]()' style='height: 140px;'></button></td>";
+				")' style='height: 140px;'></button></td>";
 			table += "</td>";
 		}
 		table += "</tr>";

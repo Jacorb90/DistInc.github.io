@@ -75,9 +75,9 @@ function tickWithTR(diff) {
 
 function tickWithTS(diff) {
 	if (player.tr.active && !nerfActive("noTimeCubes"))
-		player.tr.cubes = player.tr.cubes.plus(adjustGen(tmp.tr.cg, "tc").times(diff));
+		player.tr.cubes = player.tr.cubes.plus(adjustGen(getTimeCubeGain(), "tc").times(diff));
 	else if (tmp.ach[72].has && player.tr.unl && !nerfActive("noTimeCubes"))
-		player.tr.cubes = player.tr.cubes.plus(adjustGen(tmp.tr.cg, "tc").times(diff.div(2)));
+		player.tr.cubes = player.tr.cubes.plus(adjustGen(getTimeCubeGain(), "tc").times(diff.div(2)));
 	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff);
 	tickWithTR(diff.times(player.tr.active ? -1 : 1));
 }
