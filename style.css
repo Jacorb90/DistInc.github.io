@@ -1019,8 +1019,8 @@ table {
 #dc {
 	background-image: var(--threeArrows);
 	background-repeat: no-repeat;
-	background-size: 45% 90%;
-	background-position: 47.5% 85%;
+	background-size: 550px 480px;
+	background-position: calc(50% - 25px) 50px;
 }
 
 #newsticker {

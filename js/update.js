@@ -2,18 +2,18 @@ function updateTemp() {
 	updateTempEarlyGame();
 	updateTempRanks();
 	updateTempTiers(); 
-	updateTempRockets(); // DONE ^
-	updateTempSpecial();
+	updateTempRockets();
+	updateTempSpecial(); // ^ DONE
 	updateTempRF();
 	updateTempAuto();
-	updateLayerMults();
+	updateLayerMults(); // <- DONE
 	updateTempTR();
 	updateTempCollapse();
 	updateTempPathogens();
 	updateTempDC();
 	updateTempInf();
 	updateTempElementary();
-	updateTempSC();
+	updateTempSC(); // <- DONE
 	updateTempMisc();
 	updateTempTimeSpeed();
 
