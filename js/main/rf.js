@@ -1,3 +1,37 @@
+function getFuelPow() {
+	let pow = new ExpantaNum(1);
+	if (player.tr.upgrades.includes(5)) pow = pow.times(1.1);
+	return pow
+}
+
+function getFreeFuel() {
+	return tmp.tr ? tmp.tr.eff : new ExpantaNum(0)
+}
+
+function getFuelEff() {
+	let rf = player.rf;
+	if (modeActive("extreme") && rf.gte(10)) rf = rf.log10().times(10);
+	let eff = rf
+		.plus(getFreeFuel())
+		.times(getFuelPow())
+		.plus(1)
+		.logBase(2)
+		.plus(1)
+		.pow(0.05);
+	if (modeActive("hard")) eff = eff.sub(0.02);
+	if (modeActive('easy')) eff = eff.plus(0.012);
+	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(2).add(1);
+	if (nerfActive("noRF")) eff = new ExpantaNum(1);
+	return eff
+}
+
+function getFuelEff2() {
+	let eff = player.rf.sqrt().div(2);
+	if (eff.gt(player.rockets.plus(1).times(10))) eff = player.rockets.plus(1).times(10);
+	if (nerfActive("noRF")) eff = new ExpantaNum(0);
+	return eff
+}
+
 function updateTempRF() {
 	tmp.rf = {};
 	tmp.rf.bc = new ExpantaNum(25);
@@ -171,27 +205,9 @@ function updateTempRF() {
 
 	tmp.rf.can = player.rockets.gte(tmp.rf.req);
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced");
-	tmp.rf.pow = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(5)) tmp.rf.pow = tmp.rf.pow.times(1.1);
-	let rf = player.rf;
-	if (modeActive("extreme") && rf.gte(10)) rf = rf.log10().times(10);
-	tmp.rf.eff = rf
-		.plus(tmp.freeRF ? tmp.freeRF : 0)
-		.times(tmp.rf.pow)
-		.plus(1)
-		.logBase(2)
-		.plus(1)
-		.pow(0.05);
-	if (modeActive("hard")) tmp.rf.eff = tmp.rf.eff.sub(0.02);
-	if (modeActive('easy')) tmp.rf.eff = tmp.rf.eff.plus(0.012);
-	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) tmp.rf.eff = tmp.rf.eff.sub(1).times(2).add(1);
-	if (nerfActive("noRF")) tmp.rf.eff = new ExpantaNum(1);
 	tmp.rf.onReset = function (prev) {
 		if (player.tr.upgrades.includes(17) && modeActive("extreme")) player.rockets = new ExpantaNum(prev.rockets);
 		else if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10);
 		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10);
 	};
-	tmp.rf.eff2 = player.rf.sqrt().div(2);
-	if (tmp.rf.eff2.gt(player.rockets.plus(1).times(10))) tmp.rf.eff2 = player.rockets.plus(1).times(10);
-	if (nerfActive("noRF")) tmp.rf.eff2 = new ExpantaNum(0);
 }

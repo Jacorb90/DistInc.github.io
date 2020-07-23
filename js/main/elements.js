@@ -26,6 +26,8 @@ function updateHTML() {
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
 		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
+		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
+		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
 	}
 
 	// Main
@@ -84,12 +86,12 @@ function updateHTML() {
 		tmp.el.rocketsEff.setTxt(showNum(getRocketEffect()));
 
 		// Rocket Fuel
-		tmp.el.rf.setTxt(showNum(player.rf) + (tmp.freeRF.gt(0) ? " + " + showNum(tmp.freeRF) : ""));
+		tmp.el.rf.setTxt(showNum(player.rf) + (getFreeFuel().gt(0) ? " + " + showNum(getFreeFuel()) : ""));
 		tmp.el.rfReset.setClasses({ btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can });
 		tmp.el.rfReq.setTxt(showNum(tmp.rf.req));
-		tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)));
+		tmp.el.rfEff.setTxt(showNum(getFuelEff().sub(1).times(100)));
 		tmp.el.rfName.setTxt(getScalingName("rf") + "Rocket Fuel");
-		tmp.el.rf2.setTxt(showNum(tmp.rf.eff2));
+		tmp.el.rf2.setTxt(showNum(getFuelEff2()));
 	}
 
 	// Features
@@ -366,10 +368,14 @@ function updateHTML() {
 					? "<br>Effect: +" + showNum(tmp.dc.coreEff.times(100)) + "% Pathogen Upgrade Power"
 					: "")
 		);
+		tmp.el.darkMatter.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
+		tmp.el.darkEnergy.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
+		tmp.el.darkFluid.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
 		tmp.el.darkCore.setClasses({
 			darkcore: true,
 			locked: player.collapse.cadavers.lt(tmp.dc.coreCost),
-			inactive: tmp.dc.dmGain.eq(0)
+			inactive: tmp.dc.dmGain.eq(0),
+			dcAnim: player.options.dcPulse
 		});
 		tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0) ? "&#8593;" : "");
 		tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow));

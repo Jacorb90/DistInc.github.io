@@ -17,8 +17,8 @@ function getRocketEffectSoftcapStart() {
 function getRocketEffect() {
 	let r = player.rockets;
 	if (r.gte(10)) r = r.log10().times(10);
-	if (tmp.rf && player.rf.gt(0)) r = r.plus(tmp.rf.eff2);
-	let eff = r.plus(1).logBase(3).times(tmp.rf ? tmp.rf.eff : 1);
+	if (player.rf.gt(0)) r = r.plus(getFuelEff2());
+	let eff = r.plus(1).logBase(3).times(getFuelEff());
 	if (modeActive("easy")) eff = eff.times(2).plus(1);
 	if (eff.gte(getRocketEffectSoftcapStart())) eff = eff.sqrt().times(ExpantaNum.sqrt(getRocketEffectSoftcapStart()));
 	if (tmp.fn && modeActive("extreme")) if (player.rf.gt(0)) eff = eff.plus(tmp.fn.eff);

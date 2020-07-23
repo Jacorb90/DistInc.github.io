@@ -3,8 +3,8 @@ function updateTemp() {
 	updateTempRanks();
 	updateTempTiers(); 
 	updateTempRockets();
-	updateTempSpecial(); // ^ DONE
-	updateTempRF();
+	updateTempSpecial(); 
+	updateTempRF(); // ^ DONE
 	updateTempAuto();
 	updateLayerMults(); // <- DONE
 	updateTempTR();

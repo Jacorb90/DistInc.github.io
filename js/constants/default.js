@@ -15,6 +15,7 @@ const DEFAULT_START = {
 		elc: true,
 		saveImp: "new save",
 		hot: true,
+		dcPulse: true,
 	},
 	modes: [],
 	time: new Date().getTime(),

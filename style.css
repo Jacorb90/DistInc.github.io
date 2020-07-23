@@ -532,7 +532,15 @@ table {
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
+	animation: none;
+}
+
+.dcAnim {
 	animation: darkcircle 1.5s ease infinite;
+}
+
+.dcSlowAnim {
+	animation: darkcircle 0.7s ease infinite;
 }
 
 .darkcore {
@@ -554,7 +562,7 @@ table {
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
-	animation: darkcore 0.7s ease infinite;
+	animation: none;
 }
 
 .darkcore.locked {

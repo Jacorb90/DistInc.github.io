@@ -1,5 +1,4 @@
 function updateTempMisc() {
-	tmp.freeRF = tmp.tr.eff;
 	tmp.bc = (function () {
 		let color = "white";
 		if (player.options.theme == "dark") {
