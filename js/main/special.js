@@ -251,7 +251,7 @@ function updateLayerMults() {
 function updateTempSC() {
 	tmp.sc = {};
 	tmp.sc.rocketGain = tmp.rockets.layer.gain.gte(tmp.rockets.sc);
-	tmp.sc.rocketEff = tmp.rockets.eff.gte(tmp.rockets.esc);
+	tmp.sc.rocketEff = getRocketEffect().gte(getRocketEffectSoftcapStart());
 	tmp.sc.timeCubeEff = player.tr.cubes.gte(tmp.tr.esc);
 	tmp.sc.cadaverGain = tmp.collapse.layer.gain.gte(tmp.collapse.sc);
 	tmp.sc.cadaverEff = tmp.collapse.eff.gte(tmp.collapse.esc);

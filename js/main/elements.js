@@ -81,7 +81,7 @@ function updateHTML() {
 					? " (+" + showNum(tmp.rockets.layer.gain.div(100)) + "/sec)"
 					: "")
 		);
-		tmp.el.rocketsEff.setTxt(showNum(tmp.rockets.eff));
+		tmp.el.rocketsEff.setTxt(showNum(getRocketEffect()));
 
 		// Rocket Fuel
 		tmp.el.rf.setTxt(showNum(player.rf) + (tmp.freeRF.gt(0) ? " + " + showNum(tmp.freeRF) : ""));

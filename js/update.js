@@ -1,8 +1,8 @@
 function updateTemp() {
 	updateTempEarlyGame();
-	updateTempRanks(); // DONE ^
-	updateTempTiers();
-	updateTempRockets();
+	updateTempRanks();
+	updateTempTiers(); 
+	updateTempRockets(); // DONE ^
 	updateTempSpecial();
 	updateTempRF();
 	updateTempAuto();
@@ -130,7 +130,7 @@ function setupHTML() {
 				autos += "<button class='btn tb rckt' onclick='toggleAutoMode(&quot;"+name+"&quot;)'>Mode: <span id='autoMode"+name+"' style='color: black;'>"+AUTOMATOR_MODES[name][0]+"</span></button><br>"
 			}
 			if (AUTOMATOR_X[name]>=2) {
-				autos += "<input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
+				autos += "<br><input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
 			}
 		}
 		autos += "</div><br>";
