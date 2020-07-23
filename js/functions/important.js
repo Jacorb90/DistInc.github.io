@@ -58,10 +58,10 @@ function autoTick(diff) {
 	// Normal Automation
 	if (player.automation.unl) {
 		player.automation.scraps = player.automation.scraps
-			.plus(adjustGen(tmp.auto.scrapGain, "scraps").times(diff))
+			.plus(adjustGen(getScrapGain(), "scraps").times(diff))
 			.max(0);
 		player.automation.intelligence = player.automation.intelligence
-			.plus(adjustGen(tmp.auto.intGain, "intel").times(diff))
+			.plus(adjustGen(getIntelligenceGain(), "intel").times(diff))
 			.max(0);
 		for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) {
 			let name = Object.keys(ROBOT_REQS)[i];

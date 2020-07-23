@@ -125,7 +125,7 @@ function updateHTML() {
 				" scraps" +
 				(" (+" +
 					showNum(
-						adjustGen(tmp.auto.scrapGain, "scraps").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+						adjustGen(getScrapGain(), "scraps").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 					) +
 					"/sec)")
 		);
@@ -134,7 +134,7 @@ function updateHTML() {
 				" intelligence" +
 				(" (+" +
 					showNum(
-						adjustGen(tmp.auto.intGain, "intel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+						adjustGen(getIntelligenceGain(), "intel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 					) +
 					"/sec)")
 		);

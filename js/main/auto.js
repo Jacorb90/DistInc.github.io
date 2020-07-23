@@ -3,30 +3,8 @@ function updateTempAuto() {
 
 	tmp.auto = {};
 	tmp.auto.lrm = new ExpantaNum(1);
-	tmp.auto.scrapGain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100);
-	if (player.rank.gt(60)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(2);
-	if (tmp.ach[36].has) tmp.auto.scrapGain = tmp.auto.scrapGain.times(1.5);
-	if (player.tr.upgrades.includes(6)) tmp.auto.scrapGain = tmp.auto.scrapGain.times(tr6Eff());
-	tmp.auto.intGain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000);
-	if (player.rank.gt(20)) tmp.auto.intGain = tmp.auto.intGain.times(2);
-	if (player.rank.gt(30)) tmp.auto.intGain = tmp.auto.intGain.times(3);
-	if (player.tier.gt(4)) tmp.auto.intGain = tmp.auto.intGain.times(2);
-	if (player.tier.gt(12)) tmp.auto.intGain = tmp.auto.intGain.times(3);
-	if (player.tier.gt(13)) tmp.auto.intGain = tmp.auto.intGain.times(4);
-	if (tmp.ach[36].has) tmp.auto.intGain = tmp.auto.intGain.times(1.5);
-	if (tmp.ach[46].has) tmp.auto.intGain = tmp.auto.intGain.times(2);
-	if (player.rank.gt(111)) tmp.auto.intGain = tmp.auto.intGain.times(rank111Eff());
-	if (player.rank.gt(40)) tmp.auto.intGain = tmp.auto.intGain.times(rank40Eff());
-	if (player.tr.upgrades.includes(6)) tmp.auto.intGain = tmp.auto.intGain.times(tr6Eff());
-	if (modeActive("hard")) {
-		tmp.auto.lrm = tmp.auto.lrm.times(10);
-		tmp.auto.scrapGain = tmp.auto.scrapGain.div(2);
-		tmp.auto.intGain = tmp.auto.intGain.div(2);
-	}
-	if (modeActive("easy")) {
-		tmp.auto.scrapGain = tmp.auto.scrapGain.times(3);
-		tmp.auto.intGain = tmp.auto.intGain.times(1.6);
-	}
+	if (modeActive("hard")) tmp.auto.lrm = tmp.auto.lrm.times(10);
+	
 	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++)
 		tmp.auto[Object.keys(ROBOT_REQS)[i]] = new Robot(
 			Object.keys(ROBOT_REQS)[i],
@@ -52,6 +30,33 @@ function updateTempAuto() {
 	if (player.tr.upgrades.includes(9)) tmp.rd.mp.tierbot = tmp.rd.mp.tierbot.times(tr9Eff());
 	if (player.tr.upgrades.includes(19) && modeActive("extreme"))
 		tmp.rd.mp.rankCheapbot = tmp.rd.mp.rankCheapbot.times(tr19Eff());
+}
+
+function getScrapGain() {
+	let gain = player.distance.plus(1).pow(2).times(player.velocity.plus(1)).log10().div(100);
+	if (player.rank.gt(60)) gain = gain.times(2);
+	if (tmp.ach[36].has) gain = gain.times(1.5);
+	if (player.tr.upgrades.includes(6)) gain = gain.times(tr6Eff());
+	if (modeActive("hard")) gain = gain.div(2)
+	if (modeActive("easy")) gain = gain.times(3)
+	return gain
+}
+
+function getIntelligenceGain() {
+	let gain = player.rank.plus(1).pow(2).times(player.tier.plus(1)).cbrt().div(1000);
+	if (player.rank.gt(20)) gain = gain.times(2);
+	if (player.rank.gt(30)) gain = gain.times(3);
+	if (player.tier.gt(4)) gain = gain.times(2);
+	if (player.tier.gt(12)) gain = gain.times(3);
+	if (player.tier.gt(13)) gain = gain.times(4);
+	if (tmp.ach[36].has) gain = gain.times(1.5);
+	if (tmp.ach[46].has) gain = gain.times(2);
+	if (player.rank.gt(111)) gain = gain.times(rank111Eff());
+	if (player.rank.gt(40)) gain = gain.times(rank40Eff());
+	if (player.tr.upgrades.includes(6)) gain = gain.times(tr6Eff());
+	if (modeActive("hard")) gain = gain.div(2)
+	if (modeActive("easy")) gain = gain.times(1.6)
+	return gain
 }
 
 function toggleAutoMode(name) {
