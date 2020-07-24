@@ -40,16 +40,18 @@ function updateTempDC() {
 	if (tmp.ach[131].has) tmp.dc.flow = tmp.dc.flow.times(1.5);
 	if (player.tr.upgrades.includes(11)) tmp.dc.flow = tmp.dc.flow.times(tr11Eff()["dcf"]);
 	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tr12Eff());
-	if (tmp.inf) if (tmp.inf.upgs.has("4;1")) tmp.dc.flow = tmp.dc.flow.times(2);
-	if (tmp.inf) if (tmp.inf.upgs.has("5;1")) tmp.dc.flow = tmp.dc.flow.times(2);
-	if (tmp.inf) if (tmp.inf.upgs.has("4;6")) tmp.dc.flow = tmp.dc.flow.times(2);
-	if (tmp.inf) if (tmp.inf.upgs.has("5;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["5;5"]());
-	if (tmp.inf) tmp.dc.flow = tmp.dc.flow.times(tmp.inf.asc.perkEff(1));
-	if (tmp.inf) if (tmp.inf.upgs.has("7;2")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;2"]()["flow"]);
-	if (tmp.inf) if (tmp.inf.upgs.has("7;6")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;6"]());
-	if (tmp.inf) if (tmp.inf.upgs.has("7;8")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;8"]());
-	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;5"]());
-	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;10"]());
+	if (tmp.inf) {
+		if (tmp.inf.upgs.has("4;1")) tmp.dc.flow = tmp.dc.flow.times(2);
+		if (tmp.inf.upgs.has("5;1")) tmp.dc.flow = tmp.dc.flow.times(2);
+		if (tmp.inf.upgs.has("4;6")) tmp.dc.flow = tmp.dc.flow.times(2);
+		if (tmp.inf.upgs.has("5;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["5;5"]());
+		tmp.dc.flow = tmp.dc.flow.times(tmp.inf.asc.perkEff(1));
+		if (tmp.inf.upgs.has("7;2")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;2"]()["flow"]);
+		if (tmp.inf.upgs.has("7;6")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;6"]());
+		if (tmp.inf.upgs.has("7;8")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["7;8"]());
+		if (tmp.inf.upgs.has("10;5")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;5"]());
+		if (tmp.inf.upgs.has("10;10")) tmp.dc.flow = tmp.dc.flow.times(INF_UPGS.effects["10;10"]());
+	}
 	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.dc.flow = tmp.dc.flow.times(tmp.elm.bos.z2.max(1));
 	if (nerfActive("noDarkFlow")) tmp.dc.flow = new ExpantaNum(0);
 	tmp.dc.power = new ExpantaNum(1);
@@ -101,10 +103,10 @@ function updateTempDC() {
 		.sub(1)
 		.times(50)
 		.plus(1);
+	let start = getScalingStart("scaled", "darkCore");
+	let power = getScalingPower("scaled", "darkCore");
+	let exp = ExpantaNum.pow(2, power);
 	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "scaled")) {
-		let start = getScalingStart("scaled", "darkCore");
-		let power = getScalingPower("scaled", "darkCore");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
 			ExpantaNum.pow(
@@ -128,13 +130,10 @@ function updateTempDC() {
 			.pow(exp.pow(-1))
 			.add(1);
 	}
+	let start2 = getScalingStart("superscaled", "darkCore");
+	let power2 = getScalingPower("superscaled", "darkCore");
+	let exp2 = ExpantaNum.pow(3, power2);
 	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "superscaled")) {
-		let start2 = getScalingStart("superscaled", "darkCore");
-		let power2 = getScalingPower("superscaled", "darkCore");
-		let exp2 = ExpantaNum.pow(3, power2);
-		let start = getScalingStart("scaled", "darkCore");
-		let power = getScalingPower("scaled", "darkCore");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
 			ExpantaNum.pow(
@@ -162,16 +161,10 @@ function updateTempDC() {
 			.pow(exp2.pow(-1))
 			.add(1);
 	}
+	let start3 = getScalingStart("hyper", "darkCore");
+	let power3 = getScalingPower("hyper", "darkCore");
+	let base3 = ExpantaNum.pow(1.03, power3);
 	if (scalingActive("darkCore", player.dc.cores.max(tmp.dc.bulk), "hyper")) {
-		let start3 = getScalingStart("hyper", "darkCore");
-		let power3 = getScalingPower("hyper", "darkCore");
-		let base3 = ExpantaNum.pow(1.03, power3);
-		let start2 = getScalingStart("superscaled", "darkCore");
-		let power2 = getScalingPower("superscaled", "darkCore");
-		let exp2 = ExpantaNum.pow(3, power2);
-		let start = getScalingStart("scaled", "darkCore");
-		let power = getScalingPower("scaled", "darkCore");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.dc.coreCost = ExpantaNum.pow(
 			10,
 			ExpantaNum.pow(
@@ -204,19 +197,19 @@ function updateTempDC() {
 			.add(start3)
 			.add(1);
 	}
-	tmp.dc.buyCore = function () {
+	if (!tmp.dc.buyCore) tmp.dc.buyCore = function () {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || nerfActive("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
 		player.dc.cores = player.dc.cores.plus(1);
 	};
-	tmp.dc.maxCores = function () {
+	if (!tmp.dc.maxCores) tmp.dc.maxCores = function () {
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || nerfActive("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
 		player.dc.cores = player.dc.cores.max(tmp.dc.bulk.floor().max(0)).max(player.dc.cores.plus(1));
 	};
-	tmp.dc.tick = function (diff) {
+	if (!tmp.dc.tick) tmp.dc.tick = function (diff) {
 		player.dc.matter = player.dc.matter.plus(adjustGen(tmp.dc.dmGain, "dc").times(diff).times(tmp.dc.flow));
 		player.dc.energy = player.dc.energy.plus(adjustGen(tmp.dc.deGain, "dc").times(diff).times(tmp.dc.flow));
 		player.dc.fluid = player.dc.fluid.plus(adjustGen(tmp.dc.dfGain, "dc").times(diff).times(tmp.dc.flow));
