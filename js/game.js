@@ -21,6 +21,7 @@ var gluonTab = "r";
 var thTab = "tv";
 var autoRobotTarget = 0
 var betaID = "";
+var needUpdate = true
 
 // Game Loops
 
@@ -84,9 +85,10 @@ function tickWithTS(diff) {
 
 function gameLoop(diff) {
 	updateBeforeTick();
-	if (showContainer) {
+	if (showContainer && !needUpdate) {
 		tickWithoutTS(diff);
 		tickWithTS(diff.times(nerfActive("noTS") ? 1 : tmp.timeSpeed));
 	}
 	updateAfterTick();
+	needUpdate = false
 }

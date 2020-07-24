@@ -64,7 +64,7 @@ function updateTempInf() {
 				showNum(INF_UPGS.effects[id]()["knowledge"]) +
 				"x"
 			);
-		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]().pth.times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]().snp)+"/sec"
+		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
 		else if (id == "2;7" || id == "8;6" || id == "9;6" || id=="1;10")
 			return showNum(INF_UPGS.effects[id]().times(100)) + "% weaker";
 		else if (id == "3;2")
@@ -761,7 +761,7 @@ function updateTempInf() {
 		if (name == "velocity")
 			return adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
-		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]().snp.times(tmp.inf.derv.mult(name)), "derv")
+		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
 		let gain = adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
@@ -861,7 +861,7 @@ function updateTempInf() {
 			let next = DERV_INCR[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
 			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
-				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
+				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]("snp"), "derv").times(tmp.inf.derv.mult(name))).max(1)
 				return
 			}
 			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))

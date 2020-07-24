@@ -21,7 +21,7 @@ function getTimeCubeGain() {
 	}
 	if (player.tr.upgrades.includes(16) && modeActive("extreme"))
 		gain = gain.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
-	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff);
+	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff());
 	if (tmp.dc) if (player.dc.unl) gain = gain.times(tmp.dc.deEff);
 	if (tmp.dc) if (player.tr.upgrades.includes(11)) gain = gain.times(tr11Eff()["cg"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("2;3")) gain = gain.times(INF_UPGS.effects["2;3"]()["cubes"]);
@@ -47,7 +47,7 @@ function tr1Eff() {
 
 function tr2Pow() {
 	let pow = new ExpantaNum(1)
-	if (tmp.pathogens && player.pathogens.unl) pow = pow.times(tmp.pathogens[1].eff);
+	if (tmp.pathogens && player.pathogens.unl) pow = pow.times(tmp.pathogens[1].eff());
 	return pow
 }
 

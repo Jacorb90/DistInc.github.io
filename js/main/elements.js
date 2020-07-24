@@ -294,10 +294,10 @@ function updateHTML() {
 					getScalingName("pathogenUpg", i) +
 					"Level: " +
 					showNum(player.pathogens.upgrades[i]) +
-					(tmp.pathogens[i].extra.gt(0) ? " + " + showNum(tmp.pathogens[i].extra) : "") +
+					(tmp.pathogens.extra(i).gt(0) ? " + " + showNum(tmp.pathogens.extra(i)) : "") +
 					"<br>Currently: " +
-					tmp.pathogens[i].disp +
-					(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])
+					tmp.pathogens.disp(i) +
+					(player.pathogens.upgrades[i].gte(getPathogenUpgSoftcapStart(i))
 						? "<span class='sc'>(softcapped)</span>"
 						: "") +
 					"<br>Cost: " +

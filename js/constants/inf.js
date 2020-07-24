@@ -632,11 +632,14 @@ const INF_UPGS = {
 			if (ret.gte(4)) ret = ret.logBase(2).times(2)
 			return ret
 		},
-		"10;1": function() {
-			let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
-			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
-			let snp = player.distance.plus(1).log10().plus(1).pow(10)
-			return {pth: ret, snp: snp}
+		"10;1": function(type) {
+			if (type=="pth") {
+				let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
+				if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+				return ret;
+			} else if (type=="snp") {
+				return player.distance.plus(1).log10().plus(1).pow(10)
+			}
 		},
 		"10;2": function() {
 			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1)

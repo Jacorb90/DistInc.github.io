@@ -1,31 +1,33 @@
 function updateTempRanks() {
 	if (!tmp.ranks) tmp.ranks = {};
-	tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
-		ExpantaNum.pow(2, player.rank.div(getRankFP()).max(1).sub(1).pow(2))
+	let fp = getRankFP()
+	let bc = getRankBaseCost()
+	tmp.ranks.req = new ExpantaNum(bc).times(
+		ExpantaNum.pow(2, player.rank.div(fp).max(1).sub(1).pow(2))
 	);
-	tmp.ranks.bulk = player.distance.div(getRankBaseCost()).logBase(2).sqrt().plus(1).times(getRankFP()).plus(1).round();
+	tmp.ranks.bulk = player.distance.div(bc).logBase(2).sqrt().plus(1).times(fp).plus(1).round();
 	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
 		let start = getScalingStart("scaled", "rank");
 		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
+		tmp.ranks.req = new ExpantaNum(bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rank
 					.pow(exp)
 					.div(start.pow(exp.sub(1)))
-					.div(getRankFP())
+					.div(fp)
 					.sub(1)
 					.pow(2)
 			)
 		);
 		tmp.ranks.bulk = player.distance
-			.div(getRankBaseCost())
+			.div(bc)
 			.max(1)
 			.logBase(2)
 			.sqrt()
 			.plus(1)
-			.times(getRankFP())
+			.times(fp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
@@ -38,7 +40,7 @@ function updateTempRanks() {
 		let start = getScalingStart("scaled", "rank");
 		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
+		tmp.ranks.req = new ExpantaNum(bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rank
@@ -46,18 +48,18 @@ function updateTempRanks() {
 					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
 					.div(start.pow(exp.sub(1)))
-					.div(getRankFP())
+					.div(fp)
 					.sub(1)
 					.pow(2)
 			)
 		);
 		tmp.ranks.bulk = player.distance
-			.div(getRankBaseCost())
+			.div(bc)
 			.max(1)
 			.logBase(2)
 			.sqrt()
 			.plus(1)
-			.times(getRankFP())
+			.times(fp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.times(start2.pow(exp2.sub(1)))
@@ -75,7 +77,7 @@ function updateTempRanks() {
 		let start = getScalingStart("scaled", "rank");
 		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
+		tmp.ranks.req = new ExpantaNum(bc).times(
 			ExpantaNum.pow(
 				2,
 				ExpantaNum.pow(base3, player.rank.sub(start3))
@@ -84,18 +86,18 @@ function updateTempRanks() {
 					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
 					.div(start.pow(exp.sub(1)))
-					.div(getRankFP())
+					.div(fp)
 					.sub(1)
 					.pow(2)
 			)
 		);
 		tmp.ranks.bulk = player.distance
-			.div(getRankBaseCost())
+			.div(bc)
 			.max(1)
 			.logBase(2)
 			.sqrt()
 			.plus(1)
-			.times(getRankFP())
+			.times(fp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.times(start2.pow(exp2.sub(1)))
@@ -120,7 +122,7 @@ function updateTempRanks() {
 		let start = getScalingStart("scaled", "rank");
 		let power = getScalingPower("scaled", "rank");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
+		tmp.ranks.req = new ExpantaNum(bc).times(
 			ExpantaNum.pow(
 				2,
 				ExpantaNum.pow(
@@ -135,18 +137,18 @@ function updateTempRanks() {
 					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
 					.div(start.pow(exp.sub(1)))
-					.div(getRankFP())
+					.div(fp)
 					.sub(1)
 					.pow(2)
 			)
 		);
 		tmp.ranks.bulk = player.distance
-			.div(getRankBaseCost())
+			.div(bc)
 			.max(1)
 			.logBase(2)
 			.sqrt()
 			.plus(1)
-			.times(getRankFP())
+			.times(fp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.times(start2.pow(exp2.sub(1)))
@@ -161,7 +163,7 @@ function updateTempRanks() {
 			.floor();
 	}
 
-	if (tmp.ranks.bulk.lt(getRankFP().plus(1))) tmp.ranks.bulk = tmp.ranks.bulk.max(getRankFP().plus(1));
+	if (tmp.ranks.bulk.lt(fp.plus(1))) tmp.ranks.bulk = tmp.ranks.bulk.max(fp.plus(1));
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)
 		? RANK_DESCS[player.rank.toNumber()]
 			? RANK_DESCS[player.rank.toNumber()]

@@ -2,7 +2,7 @@ function getRocketSoftcapStart() {
 	let sc = new ExpantaNum(LAYER_SC["rockets"]);
 	if (modeActive("hard")) sc = new ExpantaNum(1)
 	if (modeActive("easy")) sc = sc.times(1.1).round();
-	if (tmp.pathogens && player.pathogens.unl) sc = sc.times(tmp.pathogens[7].eff)
+	if (tmp.pathogens && player.pathogens.unl) sc = sc.times(tmp.pathogens[7].eff())
 	return sc
 }
 
@@ -10,7 +10,7 @@ function getRocketEffectSoftcapStart() {
 	let sc = new ExpantaNum(5);
 	if (modeActive("hard")) sc = sc.sub(0.5);
 	if (modeActive("easy")) sc = sc.plus(0.5);
-	if (tmp.pathogens && player.pathogens.unl) sc = sc.plus(tmp.pathogens[8].eff);
+	if (tmp.pathogens && player.pathogens.unl) sc = sc.plus(tmp.pathogens[8].eff());
 	return sc
 }
 
@@ -46,7 +46,7 @@ function getRocketGainMult() {
 		);
 	if (hasCollapseMilestone(6)) mult = mult.times(10);
 	if (hasCollapseMilestone(8)) mult = mult.times(collapseMile8Eff().max(1));
-	if (tmp.pathogens && player.pathogens.unl) mult = mult.times(tmp.pathogens[2].eff.max(1));
+	if (tmp.pathogens && player.pathogens.unl) mult = mult.times(tmp.pathogens[2].eff().max(1));
 	if (tmp.dc) if (player.dc.unl) mult = mult.times(tmp.dc.dmEff.max(1));
 	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) mult = mult.times(INF_UPGS.effects["1;2"]().max(1));
 	if (tmp.inf) if (tmp.inf.upgs.has("4;8")) mult = mult.times(player.collapse.lifeEssence.max(1));

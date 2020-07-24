@@ -53,7 +53,7 @@ function updateTempEarlyGame() {
 	if (player.rank.gt(14)) tmp.maxVel = tmp.maxVel.times(rank14Eff());
 	if (player.rank.gt(55)) tmp.maxVel = tmp.maxVel.times(rank55Eff());
 	if (player.tier.gt(9)) tmp.maxVel = tmp.maxVel.times(tier9Eff());
-	if (tmp.pathogens && player.pathogens.unl) tmp.maxVel = tmp.maxVel.times(tmp.pathogens[4].eff);
+	if (tmp.pathogens && player.pathogens.unl) tmp.maxVel = tmp.maxVel.times(tmp.pathogens[4].eff());
 	if (tmp.ach) if (tmp.ach[21].has) tmp.maxVel = tmp.maxVel.times(1.1);
 	if (tmp.ach) if (tmp.ach[14].has) tmp.maxVel = tmp.maxVel.times(1.5);
 	if (tmp.ach) if (tmp.ach[24].has) tmp.maxVel = tmp.maxVel.times(1.25);

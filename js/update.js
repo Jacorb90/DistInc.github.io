@@ -8,8 +8,8 @@ function updateTemp() {
 	updateTempAuto();
 	updateLayerMults(); 
 	updateTempTR();
-	updateTempCollapse(); // ^ DONE
-	updateTempPathogens();
+	updateTempCollapse();
+	updateTempPathogens(); // ^ DONE
 	updateTempDC();
 	updateTempInf();
 	updateTempElementary();

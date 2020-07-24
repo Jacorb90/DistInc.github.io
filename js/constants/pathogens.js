@@ -60,3 +60,21 @@ const PTH_UPGS = {
 	}
 };
 const PTH_AMT = Object.keys(PTH_UPGS).length;
+
+const PTH_UPG_SCS = {
+	1: new ExpantaNum(8),
+	2: new ExpantaNum(10),
+	3: new ExpantaNum(7),
+	4: new ExpantaNum(16),
+	5: new ExpantaNum(6),
+	6: new ExpantaNum(6),
+	7: new ExpantaNum(4),
+	8: new ExpantaNum(4),
+	9: new ExpantaNum(3),
+	10: new ExpantaNum(3),
+	11: new ExpantaNum(5),
+	12: new ExpantaNum(4),
+	13: new ExpantaNum(10),
+	14: new ExpantaNum(4),
+	15: new ExpantaNum(5)
+}

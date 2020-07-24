@@ -42,7 +42,15 @@ function hardReset(force=false) {
 	if (!force)
 		if (!confirm("Are you sure you want to reset? You will lose all of your progress if you do this!!!"))
 			return;
-	setSave(DEFAULT_START);
+	let s = transformToEN(DEFAULT_START, DEFAULT_START)
+	let all = getAllSaves();
+	if (player.options.saveImp=="overwrite" || s.saveID==player.saveID) s.savePos = deepCopy(player.savePos)
+	else {
+		if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+		else s.savePos = all.length + 1;
+		if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+	}
+	setSave(s);
 }
 
 function importSave() {

@@ -166,7 +166,12 @@ function loadTempFeatures() {
 			spec: [false, false],
 		}),
 	};
+}
+
+function updateTempSpecial() {
+	if (!tmp.features) loadTempFeatures();
 	
+	// Next Feature
 	tmp.nf = "none";
 	for (let i = 0; i < Object.keys(tmp.features).length; i++) {
 		let feature = Object.values(tmp.features)[i];
@@ -175,10 +180,6 @@ function loadTempFeatures() {
 			break;
 		}
 	}
-}
-
-function updateTempSpecial() {
-	if (!tmp.features) loadTempFeatures();
 	
 	// Achievements
 	if (!tmp.ach) {

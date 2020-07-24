@@ -32,7 +32,7 @@ class Feature {
 	get reached() {
 		if (this.res_amt > 1) {
 			let bool = true;
-			for (let i = 1; i <= this.res_amt; i++) bool = (bool && this.amt(i).gte(this.req[i - 1])) || this.r()[i - 1];
+			for (let i = 1; i <= this.res_amt; i++) bool = (bool && this.amt(i).gte(this.req[i - 1])) || this.r();
 			return bool;
 		} else return this.amt().gte(this.req) || this.r();
 	}

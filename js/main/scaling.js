@@ -43,7 +43,7 @@ function getScalingStart(type, name) {
 			if (tmp.inf) if (tmp.inf.upgs.has("6;1")) start = start.plus(10)
 			if (nerfActive("scaledRF")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {
-			if (tmp.pathogens) start = start.plus(tmp.pathogens[11].eff)
+			if (tmp.pathogens) start = start.plus(tmp.pathogens[11].eff())
 			if (tmp.inf) if (tmp.inf.upgs.has("2;6")) start = start.plus(5)
 		} else if (type=="hyper") {
 			if (tmp.inf) if (tmp.inf.upgs.has("10;7")) start = start.plus(20)
@@ -55,7 +55,7 @@ function getScalingStart(type, name) {
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {
-			if (tmp.pathogens) start = start.plus(tmp.pathogens[12].eff)
+			if (tmp.pathogens) start = start.plus(tmp.pathogens[12].eff())
 			if (tmp.inf) if (tmp.inf.upgs.has("6;4")) start = start.plus(2)
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("2;10")) start = start.plus(5)
@@ -75,13 +75,13 @@ function getScalingPower(type, name) {
 	let power = new ExpantaNum(1)
 	if (name=="rank") {
 		if (type=="scaled") {
-			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff))
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff()))
 			if (tmp.inf) if (tmp.inf.upgs.has("4;3")) power = power.times(0.5)
 			if (tmp.inf) if (tmp.inf.stadium.active("solaris", 4)) power = power.times(6)
 			if (tmp.inf) if (tmp.inf.stadium.active("drigganiz", 4)) power = power.times(6)
 			if (modeActive("extreme")) power = power.div(6)
 		} else if (type=="superscaled") {
-			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff))
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[14].eff()))
 			if (tmp.inf) if (tmp.inf.upgs.has("2;5")) power = power.times(0.95)
 			if (tmp.inf) if (tmp.inf.upgs.has("9;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["9;6"]()))
 		} else if (type=="hyper") {
@@ -121,7 +121,7 @@ function getScalingPower(type, name) {
 			if (tmp.inf) if (tmp.inf.stadium.active("infinity", 4)) power = power.times(6)
 			if (tmp.inf) if (tmp.inf.upgs.has("8;7")) power = power.times(0.16)
 		} else if (type=="superscaled") {
-			if (tmp.inf) if (tmp.inf.upgs.has("10;1")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]().pth))
+			if (tmp.inf) if (tmp.inf.upgs.has("10;1")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]("pth")))
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {
@@ -129,7 +129,7 @@ function getScalingPower(type, name) {
 		}
 	} else if (name=="endorsements") {
 		if (type=="scaled") {
-			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[15].eff))
+			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[15].eff()))
 		}
 	}
 	if (type=="hyper") power = power.max(0.5)

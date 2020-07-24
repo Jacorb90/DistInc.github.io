@@ -2,7 +2,7 @@ function getCadaverEffSoftcapStart() {
 	let sc = new ExpantaNum(1e12);
 	if (modeActive("hard")) sc = sc.div(100);
 	if (modeActive("easy")) sc = sc.times(80);
-	if (tmp.pathogens && player.pathogens.unl) sc = sc.times(tmp.pathogens[10].eff);
+	if (tmp.pathogens && player.pathogens.unl) sc = sc.times(tmp.pathogens[10].eff());
 	if (tmp.inf) sc = sc.times(tmp.inf.asc.perkEff(3));
 	return sc;
 }
@@ -53,7 +53,7 @@ function updateTempCollapse() {
 		};
 	}
 	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"]);
-	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sc = tmp.collapse.sc.times(tmp.pathogens[9].eff);
+	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sc = tmp.collapse.sc.times(tmp.pathogens[9].eff());
 	if (tmp.inf) tmp.collapse.sc = tmp.collapse.sc.times(tmp.inf.asc.perkEff(4));
 	tmp.collapse.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.collapse.lrm = tmp.collapse.lrm.div(50);
@@ -67,7 +67,7 @@ function updateTempCollapse() {
 	tmp.collapse.sacEff = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4);
 	if (modeActive("easy")) tmp.collapse.sacEff = tmp.collapse.sacEff.times(1.6);
-	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff);
+	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff());
 }
 
 function collapseMile1Eff() {

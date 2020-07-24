@@ -1,7 +1,5 @@
 function updateTempPathogens() {
-	tmp.pth13 = tmp.pathogens ? tmp.pathogens[13] : undefined
-	
-	tmp.pathogens = {};
+	if (!tmp.pathogens) tmp.pathogens = {};
 	tmp.pathogens.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5);
 	if (modeActive("extreme")) tmp.pathogens.lrm = tmp.pathogens.lrm.times(20);
@@ -33,37 +31,161 @@ function updateTempPathogens() {
 	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[25]||new ExpantaNum(0)).gte(1)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(1.5)
 	if (nerfActive("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10);
 	if (nerfActive("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0);
-	tmp.pathogens.sc = {
-		1: new ExpantaNum(8),
-		2: new ExpantaNum(10),
-		3: new ExpantaNum(7),
-		4: new ExpantaNum(16),
-		5: new ExpantaNum(6),
-		6: new ExpantaNum(6),
-		7: new ExpantaNum(4),
-		8: new ExpantaNum(4),
-		9: new ExpantaNum(3),
-		10: new ExpantaNum(3),
-		11: new ExpantaNum(5),
-		12: new ExpantaNum(4),
-		13: new ExpantaNum(10),
-		14: new ExpantaNum(4),
-		15: new ExpantaNum(5)
+	if (!tmp.pathogens.extra) tmp.pathogens.extra = function (n) {
+		let extra = new ExpantaNum(0);
+		if (tmp.inf) if (tmp.inf.asc) extra = extra.plus(tmp.inf.asc.perkEff(2));
+		if (n == 5 && tmp.pathogens[13]) extra = extra.plus(pathogenUpg13Eff());
+		return extra;
+	};
+	if (!tmp.pathogens.buy) tmp.pathogens.buy = function (n) {
+		if (PTH_UPGS[n].unl ? !PTH_UPGS[n].unl() : false) return;
+		if (player.pathogens.amount.lt(tmp.pathogens[n].cost)) return;
+		if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[n].cost);
+		player.pathogens.upgrades[n] = player.pathogens.upgrades[n].plus(1);
+	};
+	if (!tmp.pathogens.eff) tmp.pathogens.eff = function (n) {
+		let fp = new ExpantaNum(1);
+		if (tmp.inf) if (tmp.inf.upgs.has("8;8")) fp = fp.times(INF_UPGS.effects["8;8"]());
+		let bought = player.pathogens.upgrades[n].plus(tmp.pathogens.extra(n));
+		if (bought.gte(getPathogenUpgSoftcapStart(n))) bought = bought.sqrt().times(getPathogenUpgSoftcapStart(n).sqrt());
+		bought = bought.times(tmp.pathogens.upgPow);
+		if (PTH_UPGS[n].unl ? !PTH_UPGS[n].unl() : false) bought = new ExpantaNum(0);
+		let sPos = tmp.inf ? (tmp.inf.upgs.has("3;8") && n >= 6 && n <= 10) : false
+		switch(n) {
+			case 1: {
+				let ret = player.pathogens.amount
+					.plus(1)
+					.log10()
+					.plus(1)
+					.log10()
+					.plus(1)
+					.pow(
+						bought
+							.plus(1)
+							.logBase(2)
+							.plus(bought.gt(0) ? 1 : 0)
+					);
+				if (ret.gte(2e3) && !(tmp.elm?tmp.elm.bos.hasHiggs("0;1;4"):false)) ret = ret.sqrt().times(Math.sqrt(2e3));
+				if (ret.gte(1e4)) ret = ret.log10().times(1e4 / 4);
+				if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;4")) ret = ret.times(4)
+				return ret;
+				break;
+			} case 2: {
+				let ret = player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3));
+				if (ret.gte("1e100000"))
+					ret = ret
+						.log10()
+						.pow(1e5 / 5)
+						.min(ret);
+				return ret;
+				break;
+			} case 3: {
+				let ret = player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4));
+				if (ret.gte("1e100000"))
+					ret = ret
+						.log10()
+						.pow(1e5 / 5)
+						.min(ret);
+				return ret;
+				break;
+			} case 4:
+				return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9));
+				break;
+			case 5:
+				let exp = new ExpantaNum(1);
+				if (tmp.inf) if (tmp.inf.upgs.has("7;5")) exp = exp.times(INF_UPGS.effects["7;5"]());
+				return ExpantaNum.pow(3, bought.sqrt()).pow(exp);
+				break;
+			case 6:
+				if (sPos) {
+					return ExpantaNum.pow(1.4, bought.sqrt()).times(
+						ExpantaNum.pow(2, bought.pow(ExpantaNum.mul(2.5, fp))).pow(0.2)
+					);
+				} else return ExpantaNum.pow(1.4, bought.sqrt())
+				break;
+			case 7: 
+				if (sPos) {
+					return bought
+						.plus(1)
+						.logBase(2)
+						.plus(1)
+						.pow(5)
+						.times(bought.plus(1).pow(bought.plus(1).logBase(2).plus(1)).pow(ExpantaNum.mul(30, fp)));
+				} else return bought.plus(1).logBase(2).plus(1).pow(5);
+				break;
+			case 8: 
+				if (sPos) {
+					return bought
+						.plus(1)
+						.logBase(2)
+						.plus(1)
+						.log10()
+						.times(bought.plus(1).logBase(2).plus(1).pow(ExpantaNum.mul(2.75, fp)));
+				} else return bought.plus(1).logBase(2).plus(1).log10();
+				break;
+			case 9: 
+				if (sPos) {
+					return bought
+						.plus(1)
+						.logBase(4)
+						.plus(1)
+						.pow(1.25)
+						.times(bought.plus(1).pow(bought.plus(1).log10().plus(1)).pow(ExpantaNum.mul(100, fp)));
+				} else return bought.plus(1).logBase(4).plus(1).pow(1.25);
+				break;
+			case 10: 
+				if (sPos) {
+					return bought
+						.plus(1)
+						.logBase(4)
+						.plus(1)
+						.sqrt()
+						.times(bought.plus(1).pow(ExpantaNum.mul(10, fp)));
+				} else return bought.plus(1).logBase(4).plus(1).sqrt();
+				break;
+			case 11: 
+				return player.pathogens.amount.plus(1).times(10).slog(10).times(bought.sqrt().times(2.5));
+				break;
+			case 12: 
+				return player.rf.plus(1).log10().plus(1).log10().times(bought.cbrt().times(1.5));
+				break;
+			case 13: 
+				return ExpantaNum.mul(2, bought);
+				break;
+			case 14: 
+				return ExpantaNum.sub(1, ExpantaNum.div(1, player.dc.cores.plus(1).log10().times(bought).plus(1)));
+				break;
+			case 15: 
+				return ExpantaNum.sub(1, ExpantaNum.div(1, bought.plus(1).log10().plus(1).pow(0.1)));
+				break;
+		}
+		return undefined
+	};
+	if (!tmp.pathogens.disp) tmp.pathogens.disp = function (n) {
+		let eff = tmp.pathogens.eff(n);
+		if (n == 1) return "+" + showNum(eff.sub(1).times(100)) + "%";
+		else if (n == 2) return showNum(eff) + "x";
+		else if (n == 3) return showNum(eff) + "x";
+		else if (n == 4) return showNum(eff) + "x";
+		else if (n == 5) return showNum(eff) + "x";
+		else if (n == 6) return "+" + showNum(eff.sub(1).times(100)) + "%";
+		else if (n == 7) return showNum(eff) + "x later";
+		else if (n == 8) return showNum(eff) + " later";
+		else if (n == 9) return showNum(eff) + "x later";
+		else if (n == 10) return showNum(eff) + "x later";
+		else if (n == 11 || n == 12) return showNum(eff) + " later";
+		else if (n == 13) return "+" + showNum(eff) + " Levels";
+		else if (n == 14 || n == 15) return showNum(eff.times(100)) + "% weaker";
+		else return "???";
 	};
 	for (let i = 1; i <= PTH_AMT; i++) {
-		if (tmp.inf) if (tmp.inf.upgs.has("3;6")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(1);
-		if (modeActive("hard")) {
-			tmp.pathogens.sc[i] = modeActive("easy") ? tmp.pathogens.sc[i] : new ExpantaNum(1);
-			if (tmp.ach[65].has) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].plus(5);
-		}
-		if (modeActive("easy")) tmp.pathogens.sc[i] = tmp.pathogens.sc[i].times(1.1).round();
 		let upg = PTH_UPGS[i];
-		tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) };
+		if (!tmp.pathogens[i]) tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) };
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1);
+		let start = getScalingStart("scaled", "pathogenUpg");
+		let power = getScalingPower("scaled", "pathogenUpg");
+		let exp = ExpantaNum.pow(3, power);
 		if (scalingActive("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "scaled")) {
-			let start = getScalingStart("scaled", "pathogenUpg");
-			let power = getScalingPower("scaled", "pathogenUpg");
-			let exp = ExpantaNum.pow(3, power);
 			tmp.pathogens[i].cost = upg.start.times(
 				ExpantaNum.pow(
 					upg.inc,
@@ -78,13 +200,10 @@ function updateTempPathogens() {
 				.pow(exp.pow(-1))
 				.add(1);
 		}
+		let start2 = getScalingStart("superscaled", "pathogenUpg");
+		let power2 = getScalingPower("superscaled", "pathogenUpg");
+		let exp2 = ExpantaNum.pow(5, power2);
 		if (scalingActive("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "superscaled")) {
-			let start2 = getScalingStart("superscaled", "pathogenUpg");
-			let power2 = getScalingPower("superscaled", "pathogenUpg");
-			let exp2 = ExpantaNum.pow(5, power2);
-			let start = getScalingStart("scaled", "pathogenUpg");
-			let power = getScalingPower("scaled", "pathogenUpg");
-			let exp = ExpantaNum.pow(3, power);
 			tmp.pathogens[i].cost = upg.start.times(
 				ExpantaNum.pow(
 					upg.inc,
@@ -105,16 +224,10 @@ function updateTempPathogens() {
 				.pow(exp2.pow(-1))
 				.add(1);
 		}
+		let start3 = getScalingStart("hyper", "pathogenUpg");
+		let power3 = getScalingPower("hyper", "pathogenUpg");
+		let base3 = ExpantaNum.pow(1.025, power3);
 		if (scalingActive("pathogenUpg", player.pathogens.upgrades[i].max(tmp.pathogens[i].bulk), "hyper")) {
-			let start3 = getScalingStart("hyper", "pathogenUpg");
-			let power3 = getScalingPower("hyper", "pathogenUpg");
-			let base3 = ExpantaNum.pow(1.025, power3);
-			let start2 = getScalingStart("superscaled", "pathogenUpg");
-			let power2 = getScalingPower("superscaled", "pathogenUpg");
-			let exp2 = ExpantaNum.pow(5, power2);
-			let start = getScalingStart("scaled", "pathogenUpg");
-			let power = getScalingPower("scaled", "pathogenUpg");
-			let exp = ExpantaNum.pow(3, power);
 			tmp.pathogens[i].cost = upg.start.times(
 				ExpantaNum.pow(
 					upg.inc,
@@ -140,128 +253,12 @@ function updateTempPathogens() {
 				.plus(start3)
 				.add(1);
 		}
-		tmp.pathogens[i].extra = (function () {
-			let extra = new ExpantaNum(0);
-			if (tmp.inf) extra = extra.plus(tmp.inf.asc.perkEff(2));
-			if (i == 5 && tmp.pth13) extra = extra.plus(pathogenUpg13Eff());
-			return extra;
-		})();
-		tmp.pathogens[i].buy = function () {
-			if (PTH_UPGS[i].unl ? !PTH_UPGS[i].unl() : false) return;
-			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) return;
-			if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost);
-			player.pathogens.upgrades[i] = player.pathogens.upgrades[i].plus(1);
-		};
-		tmp.pathogens[i].eff = (function () {
-			let fp = new ExpantaNum(1);
-			if (tmp.inf) if (tmp.inf.upgs.has("8;8")) fp = fp.times(INF_UPGS.effects["8;8"]());
-			let bought = player.pathogens.upgrades[i].plus(tmp.pathogens[i].extra);
-			if (bought.gte(tmp.pathogens.sc[i])) bought = bought.sqrt().times(tmp.pathogens.sc[i].sqrt());
-			bought = bought.times(tmp.pathogens.upgPow);
-			if (PTH_UPGS[i].unl ? !PTH_UPGS[i].unl() : false) bought = new ExpantaNum(0);
-			if (i == 1) {
-				let ret = player.pathogens.amount
-					.plus(1)
-					.log10()
-					.plus(1)
-					.log10()
-					.plus(1)
-					.pow(
-						bought
-							.plus(1)
-							.logBase(2)
-							.plus(bought.gt(0) ? 1 : 0)
-					);
-				if (ret.gte(2e3) && !(tmp.elm?tmp.elm.bos.hasHiggs("0;1;4"):false)) ret = ret.sqrt().times(Math.sqrt(2e3));
-				if (ret.gte(1e4)) ret = ret.log10().times(1e4 / 4);
-				if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;4")) ret = ret.times(4)
-				return ret;
-			} else if (i == 2) {
-				let ret = player.collapse.cadavers.plus(1).pow(0.3).pow(bought.plus(1).logBase(1.3));
-				if (ret.gte("1e100000"))
-					ret = ret
-						.log10()
-						.pow(1e5 / 5)
-						.min(ret);
-				return ret;
-			} else if (i == 3) {
-				let ret = player.collapse.cadavers.plus(1).pow(0.4).pow(bought.plus(1).logBase(1.4));
-				if (ret.gte("1e100000"))
-					ret = ret
-						.log10()
-						.pow(1e5 / 5)
-						.min(ret);
-				return ret;
-			} else if (i == 4) return player.pathogens.amount.plus(1).pow(1.5).pow(bought.pow(0.9));
-			else if (i == 5) {
-				let exp = new ExpantaNum(1);
-				if (tmp.inf) if (tmp.inf.upgs.has("7;5")) exp = exp.times(INF_UPGS.effects["7;5"]());
-				return ExpantaNum.pow(3, bought.sqrt()).pow(exp);
-			} else if (tmp.inf ? tmp.inf.upgs.has("3;8") && i >= 6 && i <= 10 : false) {
-				if (i == 6)
-					return ExpantaNum.pow(1.4, bought.sqrt()).times(
-						ExpantaNum.pow(2, bought.pow(ExpantaNum.mul(2.5, fp))).pow(0.2)
-					);
-				else if (i == 7)
-					return bought
-						.plus(1)
-						.logBase(2)
-						.plus(1)
-						.pow(5)
-						.times(bought.plus(1).pow(bought.plus(1).logBase(2).plus(1)).pow(ExpantaNum.mul(30, fp)));
-				else if (i == 8)
-					return bought
-						.plus(1)
-						.logBase(2)
-						.plus(1)
-						.log10()
-						.times(bought.plus(1).logBase(2).plus(1).pow(ExpantaNum.mul(2.75, fp)));
-				else if (i == 9)
-					return bought
-						.plus(1)
-						.logBase(4)
-						.plus(1)
-						.pow(1.25)
-						.times(bought.plus(1).pow(bought.plus(1).log10().plus(1)).pow(ExpantaNum.mul(100, fp)));
-				else if (i == 10)
-					return bought
-						.plus(1)
-						.logBase(4)
-						.plus(1)
-						.sqrt()
-						.times(bought.plus(1).pow(ExpantaNum.mul(10, fp)));
-			} else if (i == 6) return ExpantaNum.pow(1.4, bought.sqrt());
-			else if (i == 7) return bought.plus(1).logBase(2).plus(1).pow(5);
-			else if (i == 8) return bought.plus(1).logBase(2).plus(1).log10();
-			else if (i == 9) return bought.plus(1).logBase(4).plus(1).pow(1.25);
-			else if (i == 10) return bought.plus(1).logBase(4).plus(1).sqrt();
-			else if (i == 11) return player.pathogens.amount.plus(1).times(10).slog(10).times(bought.sqrt().times(2.5));
-			else if (i == 12) return player.rf.plus(1).log10().plus(1).log10().times(bought.cbrt().times(1.5));
-			else if (i == 13) return ExpantaNum.mul(2, bought);
-			else if (i == 14)
-				return ExpantaNum.sub(1, ExpantaNum.div(1, player.dc.cores.plus(1).log10().times(bought).plus(1)));
-			else if (i == 15) return ExpantaNum.sub(1, ExpantaNum.div(1, bought.plus(1).log10().plus(1).pow(0.1)));
-			return undefined;
-		})();
-		tmp.pathogens[i].disp = (function () {
-			let eff = tmp.pathogens[i].eff;
-			if (i == 1) return "+" + showNum(eff.sub(1).times(100)) + "%";
-			else if (i == 2) return showNum(eff) + "x";
-			else if (i == 3) return showNum(eff) + "x";
-			else if (i == 4) return showNum(eff) + "x";
-			else if (i == 5) return showNum(eff) + "x";
-			else if (i == 6) return "+" + showNum(eff.sub(1).times(100)) + "%";
-			else if (i == 7) return showNum(eff) + "x later";
-			else if (i == 8) return showNum(eff) + " later";
-			else if (i == 9) return showNum(eff) + "x later";
-			else if (i == 10) return showNum(eff) + "x later";
-			else if (i == 11 || i == 12) return showNum(eff) + " later";
-			else if (i == 13) return "+" + showNum(eff) + " Levels";
-			else if (i == 14 || i == 15) return showNum(eff.times(100)) + "% weaker";
-			else return "???";
-		})();
+		if (!tmp.pathogens[i].extra) tmp.pathogens[i].extra = function() { return tmp.pathogens.extra(i) }
+		if (!tmp.pathogens[i].buy) tmp.pathogens[i].buy = function() { tmp.pathogens.buy(i) }
+		if (!tmp.pathogens[i].eff) tmp.pathogens[i].eff = function() { return tmp.pathogens.eff(i) }
+		if (!tmp.pathogens[i].disp) tmp.pathogens[i].disp = function() { return tmp.pathogens.disp(i) }
 	}
-	tmp.pathogens.maxAll = function () {
+	if (!tmp.pathogens.maxAll) tmp.pathogens.maxAll = function () {
 		for (let i = 1; i <= PTH_AMT; i++) {
 			if (PTH_UPGS[i].unl ? !PTH_UPGS[i].unl() : false) continue;
 			if (player.pathogens.amount.lt(tmp.pathogens[i].cost)) continue;
@@ -296,10 +293,21 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;10"]())
 }
 
+function getPathogenUpgSoftcapStart(x) {
+	let sc = new ExpantaNum(PTH_UPG_SCS[x])
+	if (tmp.inf) if (tmp.inf.upgs.has("3;6")) sc = sc.plus(1);
+	if (modeActive("hard")) {
+		sc = modeActive("easy") ? sc : new ExpantaNum(1);
+		if (tmp.ach[65].has) sc = sc.plus(5);
+	}
+	if (modeActive("easy")) sc = sc.times(1.1).round();
+	return sc;
+}
+
 function pathogenUpg5Eff() {
-	return (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens[5].eff : new ExpantaNum(1);
+	return (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens.eff(5) : new ExpantaNum(1);
 }
 
 function pathogenUpg13Eff() {
-	return (tmp.pathogens && player.pathogens.unl && tmp.pth13) ? tmp.pth13.eff : new ExpantaNum(1);
+	return (tmp.pathogens && player.pathogens.unl) ? tmp.pathogens.eff(13) : new ExpantaNum(1);
 }

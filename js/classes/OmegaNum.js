@@ -553,8 +553,10 @@
     if (other.eq(OmegaNum.ONE)) return this.clone();
     if (other.lt(OmegaNum.ZERO)) return this.root(other.neg()).rec();
     if (other.lt(OmegaNum.ONE)) return this.pow(other.rec());
-    if (this.lt(OmegaNum.ZERO)&&other.isint()&&other.mod(2).eq(OmegaNum.ONE)) return this.neg().root(other).neg();
-    if (this.lt(OmegaNum.ZERO)) return OmegaNum.NaN.clone();
+	if (this.lt(OmegaNum.ZERO)) {
+		if (other.isint()&&other.mod(2).eq(OmegaNum.ONE)) return this.neg().root(other).neg();
+		return OmegaNum.NaN.clone();
+	}
     if (this.eq(OmegaNum.ONE)) return OmegaNum.ONE.clone();
     if (this.eq(OmegaNum.ZERO)) return OmegaNum.ZERO.clone();
     if (this.max(other).gt(OmegaNum.TETRATED_MAX_SAFE_INTEGER)) return this.gt(other)?this.clone():OmegaNum.ZERO.clone();
