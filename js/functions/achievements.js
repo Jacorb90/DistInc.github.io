@@ -24,7 +24,7 @@ function updateAchievements() {
 	if (player.rf.gte(3)) tmp.ach[35].grant();
 	if (Object.keys(player.automation.robots).includes("tierbot")) tmp.ach[36].grant();
 	if (player.tr.upgrades.length >= 5) tmp.ach[37].grant();
-	if (tmp.collapse.hasMilestone(12)) tmp.ach[38].grant();
+	if (hasCollapseMilestone(12)) tmp.ach[38].grant();
 
 	if (player.distance.gte(10 * DISTANCES.pc)) tmp.ach[41].grant();
 	if (player.rank.gte(20)) tmp.ach[42].grant();

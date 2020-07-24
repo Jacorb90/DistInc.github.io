@@ -79,7 +79,7 @@ function updateHTML() {
 				" rockets" +
 				(tmp.ach[95].has && !nerfActive("noRockets")
 					? " (+" + showNum(tmp.rockets.layer.gain) + "/sec)"
-					: tmp.collapse.hasMilestone(9) && !nerfActive("noRockets")
+					: hasCollapseMilestone(9) && !nerfActive("noRockets")
 					? " (+" + showNum(tmp.rockets.layer.gain.div(100)) + "/sec)"
 					: "")
 		);
@@ -153,7 +153,7 @@ function updateHTML() {
 		}
 		tmp.el.rankCheapbot.setDisplay(modeActive("extreme"));
 		tmp.el.fuelbot.setDisplay(
-			tmp.collapse.hasMilestone(5) ||
+			hasCollapseMilestone(5) ||
 				(player.automation.robots.fuelbot ? player.automation.robots.fuelbot[1].gt(0) : false)
 		);
 		tmp.el.robotTab.setDisplay(player.automation.open != "none");
@@ -247,7 +247,7 @@ function updateHTML() {
 					: "") +
 				"</span>"
 		);
-		tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff));
+		tmp.el.cadaverEff.setTxt(showNum(getCadaverEff()));
 		tmp.el.sacrificeCadavers.setClasses({
 			btn: true,
 			locked: player.collapse.cadavers.eq(0),
@@ -267,7 +267,7 @@ function updateHTML() {
 			let ms = ESSENCE_MILESTONES[i];
 			tmp.el["lem" + i].setHTML(ms.desc + "<br>Req: " + showNum(ms.req) + " Life Essence.");
 			if (ms.disp !== undefined) tmp.el["lem" + i].setTooltip("Currently: " + ms.disp());
-			tmp.el["lem" + i].setClasses({ msCont: true, r: !tmp.collapse.hasMilestone(i) });
+			tmp.el["lem" + i].setClasses({ msCont: true, r: !hasCollapseMilestone(i) });
 		}
 	}
 

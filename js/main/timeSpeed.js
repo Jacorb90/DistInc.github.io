@@ -35,9 +35,9 @@ function updateTempTimeSpeed() {
 	if (player.tier.gt(16)) tmp.timeSpeed = tmp.timeSpeed.times(1.6);
 	if (player.tier.gt(18)) tmp.timeSpeed = tmp.timeSpeed.times(1.8);
 	if (player.tier.gt(20)) tmp.timeSpeed = tmp.timeSpeed.times(2);
-	tmp.timeSpeed = tmp.timeSpeed.times(tmp.collapse.eff.max(1));
-	if (tmp.collapse.hasMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(collapseMile1Eff());
-	if (tmp.collapse.hasMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5);
+	tmp.timeSpeed = tmp.timeSpeed.times(getCadaverEff().max(1));
+	if (hasCollapseMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(collapseMile1Eff());
+	if (hasCollapseMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5);
 	if (tmp.inf.upgs.has("1;1")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["1;1"]());
 	if (tmp.inf.upgs.has("7;7")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["7;7"]()["ts"]);
 	if (tmp.inf.upgs.has("9;4")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["9;4"]());

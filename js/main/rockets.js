@@ -44,8 +44,8 @@ function getRocketGainMult() {
 		mult = mult.times(
 			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1))
 		);
-	if (tmp.collapse) if (tmp.collapse.hasMilestone(6)) mult = mult.times(10);
-	if (tmp.collapse) if (tmp.collapse.hasMilestone(8)) mult = mult.times(collapseMile8Eff().max(1));
+	if (hasCollapseMilestone(6)) mult = mult.times(10);
+	if (hasCollapseMilestone(8)) mult = mult.times(collapseMile8Eff().max(1));
 	if (tmp.pathogens && player.pathogens.unl) mult = mult.times(tmp.pathogens[2].eff.max(1));
 	if (tmp.dc) if (player.dc.unl) mult = mult.times(tmp.dc.dmEff.max(1));
 	if (tmp.inf) if (tmp.inf.upgs.has("1;2")) mult = mult.times(INF_UPGS.effects["1;2"]().max(1));
@@ -63,7 +63,7 @@ function getRocketGainMult() {
 }
 
 function updateTempRockets() {
-	tmp.rockets = {};
+	if (!tmp.rockets) tmp.rockets = {};
 	tmp.rockets.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.rockets.lrm = tmp.rockets.lrm.times(2);
 	if (modeActive("extreme")) tmp.rockets.lrm = tmp.rockets.lrm.div(100);
@@ -75,7 +75,7 @@ function updateTempRockets() {
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(getRocketEffect()).plus(player.rockets).max(1);
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(getRocketEffect()).plus(1);
 	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(getRocketEffect()).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
-	tmp.rockets.onReset = function (prev) {
+	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {
 		tmp.inf.derv.resetDervs();
 	};
 }

@@ -6,9 +6,9 @@ function updateTemp() {
 	updateTempSpecial(); 
 	updateTempRF();
 	updateTempAuto();
-	updateLayerMults(); // ^ DONE
+	updateLayerMults(); 
 	updateTempTR();
-	updateTempCollapse();
+	updateTempCollapse(); // ^ DONE
 	updateTempPathogens();
 	updateTempDC();
 	updateTempInf();

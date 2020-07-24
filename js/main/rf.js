@@ -33,7 +33,7 @@ function getFuelEff2() {
 }
 
 function updateTempRF() {
-	tmp.rf = {};
+	if (!tmp.rf) tmp.rf = {};
 	tmp.rf.bc = new ExpantaNum(25);
 	if (modeActive("extreme")) tmp.rf.bc = new ExpantaNum(8);
 	tmp.rf.fp = new ExpantaNum(1);
@@ -205,9 +205,9 @@ function updateTempRF() {
 
 	tmp.rf.can = player.rockets.gte(tmp.rf.req);
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced");
-	tmp.rf.onReset = function (prev) {
+	if (!tmp.rf.onReset) tmp.rf.onReset = function (prev) {
 		if (player.tr.upgrades.includes(17) && modeActive("extreme")) player.rockets = new ExpantaNum(prev.rockets);
 		else if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10);
-		else if (tmp.collapse.hasMilestone(3)) player.rockets = new ExpantaNum(10);
+		else if (hasCollapseMilestone(3)) player.rockets = new ExpantaNum(10);
 	};
 }

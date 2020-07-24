@@ -1,5 +1,5 @@
 function updateTempTiers() {
-	tmp.tiers = {};
+	if (!tmp.tiers) tmp.tiers = {};
 	tmp.tiers.fp = getTierFP();
 	tmp.tiers.bc = getTierBaseCost();
 	tmp.tiers.req = new ExpantaNum(tmp.tiers.bc).plus(player.tier.div(tmp.tiers.fp).pow(2));
@@ -145,9 +145,9 @@ function updateTempTiers() {
 	tmp.tiers.canTierUp = player.rank.gte(tmp.tiers.req);
 	if (nerfActive("noTier")) tmp.tiers.canTierUp = false;
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced");
-	tmp.tier = {};
-	tmp.tier.onReset = function (prev) {
-		if (tmp.collapse) if (tmp.collapse.hasMilestone(11)) player.rank = prev.rank;
+	if (!tmp.tier) tmp.tier = {};
+	if (!tmp.tier.onReset) tmp.tier.onReset = function (prev) {
+		if (hasCollapseMilestone(11)) player.rank = prev.rank;
 		if (player.tr.upgrades.includes(14)) {
 			player.distance = prev.distance;
 			player.velocity = prev.velocity;

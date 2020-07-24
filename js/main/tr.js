@@ -1,5 +1,5 @@
 function updateTempTR() {
-	tmp.tr = {};
+	if (tmp.tr===undefined) tmp.tr = {};
 	tmp.tr.txt = player.tr.active ? "Bring Time back to normal." : "Reverse Time.";
 	tmp.tr.esc = new ExpantaNum(1e20);
 	cubes = player.tr.cubes;

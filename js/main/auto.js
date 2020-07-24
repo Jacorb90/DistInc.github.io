@@ -1,7 +1,7 @@
 function updateTempAuto() {
 	// Automation
 
-	tmp.auto = {};
+	if (!tmp.auto) tmp.auto = {};
 	tmp.auto.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.auto.lrm = tmp.auto.lrm.times(10);
 	
@@ -23,8 +23,8 @@ function updateTempAuto() {
 
 	// Robots
 
-	tmp.rd = {};
-	tmp.rd.mp = {};
+	if (!tmp.rd) tmp.rd = {};
+	if (!tmp.rd.mp) tmp.rd.mp = {};
 	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) tmp.rd.mp[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(8)) tmp.rd.mp.rankbot = tmp.rd.mp.rankbot.times(tr8Eff());
 	if (player.tr.upgrades.includes(9)) tmp.rd.mp.tierbot = tmp.rd.mp.tierbot.times(tr9Eff());

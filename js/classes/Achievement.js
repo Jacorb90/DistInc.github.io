@@ -1,8 +1,9 @@
 class Achievement {
-	constructor(data) {
-		this.name = data.name;
-		this.has = data.has;
+	constructor(id) {
+		this.name = id;
 	}
+	
+	get has() { return player.achievements.includes(this.name) }
 
 	parse(txt) {
 		if (txt.indexOf("boolean") != -1) {

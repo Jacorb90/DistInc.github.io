@@ -1,5 +1,5 @@
 function updateTempRanks() {
-	tmp.ranks = {};
+	if (!tmp.ranks) tmp.ranks = {};
 	tmp.ranks.req = new ExpantaNum(getRankBaseCost()).times(
 		ExpantaNum.pow(2, player.rank.div(getRankFP()).max(1).sub(1).pow(2))
 	);
@@ -170,10 +170,10 @@ function updateTempRanks() {
 	tmp.ranks.canRankUp = player.distance.gte(tmp.ranks.req);
 	if (nerfActive("noRank")) tmp.ranks.canRankUp = false;
 	tmp.ranks.layer = new Layer("rank", tmp.ranks.canRankUp, "semi-forced");
-	tmp.rank = {};
-	tmp.rank.onReset = function (prev) {
+	if (!tmp.rank) tmp.rank = {};
+	if (!tmp.rank.onReset) tmp.rank.onReset = function (prev) {
 		if (tmp.collapse)
-			if (tmp.collapse.hasMilestone(12)) {
+			if (hasCollapseMilestone(12)) {
 				player.distance = prev.distance;
 				player.velocity = prev.velocity;
 			}

@@ -30,7 +30,7 @@ function tickWithoutTS(diff) {
 
 	if (tmp.ach[95].has && !nerfActive("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff));
-	else if (tmp.collapse.hasMilestone(9) && !nerfActive("noRockets"))
+	else if (hasCollapseMilestone(9) && !nerfActive("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff.div(100)));
 
 	if (tmp.ach[96].has && !nerfActive("noCadavers"))
