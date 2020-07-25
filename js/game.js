@@ -22,6 +22,7 @@ var thTab = "tv";
 var autoRobotTarget = 0
 var betaID = "";
 var needUpdate = true
+var updating = false
 
 // Game Loops
 
@@ -84,11 +85,15 @@ function tickWithTS(diff) {
 }
 
 function gameLoop(diff) {
+	if (needUpdate) updating = true
 	updateBeforeTick();
 	if (showContainer && !needUpdate) {
 		tickWithoutTS(diff);
 		tickWithTS(diff.times(nerfActive("noTS") ? 1 : tmp.timeSpeed));
 	}
 	updateAfterTick();
-	needUpdate = false
+	if (updating) {
+		updating = false
+		needUpdate = false
+	}
 }

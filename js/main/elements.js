@@ -13,6 +13,7 @@ function updateHTML() {
 				btn: true,
 				tb: true,
 				opt: !modesSelected.includes(Object.keys(MODES)[i]),
+				ob: true,
 				optSelected: modesSelected.includes(Object.keys(MODES)[i])
 			});
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
@@ -28,6 +29,7 @@ function updateHTML() {
 		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
 		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
 		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
+		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
 	}
 
 	// Main
@@ -306,7 +308,7 @@ function updateHTML() {
 			);
 		}
 		tmp.el.pthUpgPow.setHTML(
-			!tmp.pathogens.upgPow.eq(1) ? "Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%<br>" : ""
+			!tmp.pathogens.upgPow.eq(1) ? ("Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%"+(tmp.pathogens.upgPow.gte(10)?" <span class='sc'>(softcapped)</span>":"")+"<br>") : ""
 		);
 		
 		tmp.el.tdeEff.setHTML(
@@ -419,8 +421,9 @@ function updateHTML() {
 			}
 			tmp.el.endorsementName.setTxt(getScalingName("endorsements") + " ");
 			
+			let ach112 = ach112Eff()
 			tmp.el.tudeEff.setHTML(
-				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(ach112Eff()) + "x<br><br>" : ""
+				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(ach112) + "x"+(ach112.gte(1e160)?" <span class='sc'>(softcapped)</span>":"")+"<br><br>" : ""
 			);
 		}
 

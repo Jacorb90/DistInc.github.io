@@ -7,9 +7,10 @@ const OPT_CHNG_MIN = {
 	sf: 3
 };
 const OPT_NAMES = {
-	not: ["scientific", "standard", "mixed", "hexadecimal", "binary", "symbols", "tetrational"],
+	not: ["scientific", "engineering", "standard", "mixed", "hexadecimal", "binary", "symbols", "tetrational"],
 	theme: ["normal", "dark"],
 	saveImp: ["new save", "overwrite"],
+	featPerc: ["logarithm", "linear"],
 };
 const AUTOSAVE_TIME = 10;
 const MAX_SAVES = 5;

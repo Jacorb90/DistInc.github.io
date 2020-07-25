@@ -15,6 +15,7 @@ const DEFAULT_START = {
 		elc: true,
 		saveImp: "new save",
 		hot: true,
+		featPerc: "logarithm",
 		dcPulse: true,
 	},
 	modes: [],

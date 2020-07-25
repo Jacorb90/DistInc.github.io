@@ -31,6 +31,7 @@ function updateTempPathogens() {
 	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[25]||new ExpantaNum(0)).gte(1)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(1.5)
 	if (nerfActive("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10);
 	if (nerfActive("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0);
+	if (tmp.pathogens.upgPow.gte(10)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.sqrt().times(Math.sqrt(10))
 	if (!tmp.pathogens.extra) tmp.pathogens.extra = function (n) {
 		let extra = new ExpantaNum(0);
 		if (tmp.inf) if (tmp.inf.asc) extra = extra.plus(tmp.inf.asc.perkEff(2));
@@ -180,7 +181,8 @@ function updateTempPathogens() {
 	};
 	for (let i = 1; i <= PTH_AMT; i++) {
 		let upg = PTH_UPGS[i];
-		if (!tmp.pathogens[i]) tmp.pathogens[i] = { cost: upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i])) };
+		if (!tmp.pathogens[i]) tmp.pathogens[i] = {};
+		tmp.pathogens[i].cost = upg.start.times(ExpantaNum.pow(upg.inc, player.pathogens.upgrades[i]))
 		tmp.pathogens[i].bulk = player.pathogens.amount.div(upg.start).max(1).logBase(upg.inc).add(1);
 		let start = getScalingStart("scaled", "pathogenUpg");
 		let power = getScalingPower("scaled", "pathogenUpg");

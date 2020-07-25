@@ -4,6 +4,24 @@ notations.scientific = function (val, places, locs) {
 	return disp(val, places, locs, 10);
 };
 
+notations.engineering = function(val, places=(player.options.sf - 1), locs) {
+	if (val.lt(0.1)) return "1/" + notations.engineering(val.pow(-1), places, locs)
+	else if (val.lt(1e3)) return decimalPlaces(val, places)
+	else if (val.lt("1e10000")) {
+		let back = val.logBase(1e3).floor().times(3)
+		let front = val.div(ExpantaNum.pow(10, back))
+		return decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+	} else if (val.lt("ee1000")) {
+		let back = val.log10().logBase(1e3).floor().times(3)
+		let front = val.log10().div(ExpantaNum.pow(10, back))
+		return "e"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+	} else if (val.lt("eee1000")) {
+		let back = val.log10().log10().logBase(1e3).floor().times(3)
+		let front = val.log10().log10().div(ExpantaNum.pow(10, back))
+		return "ee"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+	} else return disp(val, places, locs, 10)
+}
+
 notations.standard = function (val, places, locs) {
 	if (val.lt(0.1)) return "1/" + notations.standard(val.pow(-1), places, locs);
 	else if (val.lt(1e3)) return decimalPlaces(val, places);

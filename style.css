@@ -1099,7 +1099,7 @@ table {
 
 .lepton {
 	font-weight: bold;
-	color: #519bf5;
+	color: #47a18f;
 	font-size: 24px;
 }
 
@@ -1406,6 +1406,16 @@ table {
 
 .halfline {
   line-height: .5em;
+}
+
+.ob {
+	min-height: 35px;
+	min-width: 100px;
+}
+
+.ob_t {
+	min-height: 50px;
+	min-width: 100px;
 }
 
 @keyframes grosstxt {

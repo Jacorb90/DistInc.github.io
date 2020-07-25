@@ -7,10 +7,12 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.rockets.gt(0) || player.rf.gt(0) },
 			progress: function () {
-				return player.distance
-					.max(1)
-					.log10()
-					.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm).log10());
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm).log10());
+				} else return player.distance.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
 			}
 		}),
 		automation: new Feature({
@@ -20,10 +22,12 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.automation.unl },
 			progress: function () {
-				return player.distance
-					.max(1)
-					.log10()
-					.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10).log10());
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10).log10());
+				} else return player.distance.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10))
 			}
 		}),
 		"time reversal": new Feature({
@@ -33,7 +37,8 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.tr.unl },
 			progress: function () {
-				return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10());
+				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10());
+				else return player.distance.div(DISTANCES.ly)
 			}
 		}),
 		collapse: new Feature({
@@ -43,10 +48,12 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.collapse.unl },
 			progress: function () {
-				return player.distance
-					.max(1)
-					.log10()
-					.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1).log10());
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1).log10());
+				} else return player.distance.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1))
 			}
 		}),
 		pathogens: new Feature({
@@ -56,9 +63,12 @@ function loadTempFeatures() {
 			display: showNum,
 			reached: function() { return player.pathogens.unl },
 			progress: function () {
-				return player.collapse.cadavers.div(
-					new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1)
-				);
+				if (player.options.featPerc=="logarithm") {
+					return player.collapse.cadavers
+						.max(1)
+						.log10()
+						.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1).log10().max(1));
+				} else return player.collapse.cadavers.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1))
 			}
 		}),
 		dc: new Feature({
@@ -69,10 +79,12 @@ function loadTempFeatures() {
 			reached: function() { return player.dc.unl },
 			displayName: "dark circles",
 			progress: function () {
-				return player.distance
-					.max(1)
-					.log10()
-					.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1).log10());
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1).log10());
+				} else return player.distance.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1))
 			}
 		}),
 		infinity: new Feature({
@@ -82,7 +94,8 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.inf.unl },
 			progress: function () {
-				return player.distance.max(1).log10().div(new ExpantaNum(INF_UNL).log10());
+				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(new ExpantaNum(INF_UNL).log10());
+				else return player.distance.div(INF_UNL)
 			}
 		}),
 		ascension: new Feature({
@@ -124,7 +137,8 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.inf.derivatives.unl },
 			progress: function () {
-				return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, "1e90000").log10());
+				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, "1e90000").log10());
+				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, "1e90000"))
 			}
 		}),
 		elementary: new Feature({
@@ -139,13 +153,21 @@ function loadTempFeatures() {
 			display: [showNum, showNum, showNum],
 			reached: function() { return player.elementary.times.gt(0) },
 			progress: function () {
-				return player.rockets
-					.max(1)
-					.log10()
-					.div(LAYER_REQS.elementary[0][1].log10())
-					.min(1)
-					.times(player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10()).min(1))
-					.times(player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).min(1));
+				if (player.options.featPerc=="logarithm") {
+					return player.rockets
+						.max(1)
+						.log10()
+						.div(LAYER_REQS.elementary[0][1].log10())
+						.min(1)
+						.times(player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10()).min(1))
+						.times(player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).min(1));
+				} else {
+					return player.rockets
+						.div(LAYER_REQS.elementary[0][1])
+						.min(1)
+						.times(player.collapse.cadavers.div(LAYER_REQS.elementary[1][1]).min(1))
+						.times(player.inf.endorsements.div(LAYER_REQS.elementary[2][1]).min(1));
+				}
 			},
 			spec: [false, true, true]
 		}),

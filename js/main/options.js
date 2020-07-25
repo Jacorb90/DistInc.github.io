@@ -166,7 +166,9 @@ function changeOpt(name, type) {
 					"&quot;; this.parentElement.style.display=&quot;none&quot;"
 			};
 	} else if (type == 3) {
+		let old = deepCopy(player.options[name])
 		player.options[name] = window.prompt("Change the " + name + ".", player.options[name]);
+		if (player.options[name]===null || player.options[name]===undefined) player.options[name] = old
 		let d2 = new Element("dropDown2")
 		d2.changeStyle("display", "none");
 		save();
