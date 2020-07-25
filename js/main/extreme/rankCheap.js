@@ -1,5 +1,5 @@
 function updateTempRankCheap() {
-	tmp.rankCheap = {};
+	if (!tmp.rankCheap) tmp.rankCheap = {};
 	tmp.rankCheap.free = new ExpantaNum(0);
 	if (tmp.ach[21].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
 	if (tmp.ach[34].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(1);
@@ -17,10 +17,10 @@ function updateTempRankCheap() {
 		.times(tmp.rankCheap.fp)
 		.plus(1)
 		.round();
+	let start = getScalingStart("scaled", "rankCheap");
+	let power = getScalingPower("scaled", "rankCheap");
+	let exp = ExpantaNum.pow(2, power);
 	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "scaled")) {
-		let start = getScalingStart("scaled", "rankCheap");
-		let power = getScalingPower("scaled", "rankCheap");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,
@@ -44,13 +44,10 @@ function updateTempRankCheap() {
 			.plus(1)
 			.floor();
 	}
+	let start2 = getScalingStart("superscaled", "rankCheap");
+	let power2 = getScalingPower("superscaled", "rankCheap");
+	let exp2 = ExpantaNum.pow(3, power2);
 	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "superscaled")) {
-		let start2 = getScalingStart("superscaled", "rankCheap");
-		let power2 = getScalingPower("superscaled", "rankCheap");
-		let exp2 = ExpantaNum.pow(3, power2);
-		let start = getScalingStart("scaled", "rankCheap");
-		let power = getScalingPower("scaled", "rankCheap");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,
@@ -78,16 +75,10 @@ function updateTempRankCheap() {
 			.add(1)
 			.floor();
 	}
+	let start3 = getScalingStart("hyper", "rankCheap");
+	let power3 = getScalingPower("hyper", "rankCheap");
+	let base3 = ExpantaNum.pow(1.01, power3);
 	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "hyper")) {
-		let start3 = getScalingStart("hyper", "rankCheap");
-		let power3 = getScalingPower("hyper", "rankCheap");
-		let base3 = ExpantaNum.pow(1.01, power3);
-		let start2 = getScalingStart("superscaled", "rankCheap");
-		let power2 = getScalingPower("superscaled", "rankCheap");
-		let exp2 = ExpantaNum.pow(3, power2);
-		let start = getScalingStart("scaled", "rankCheap");
-		let power = getScalingPower("scaled", "rankCheap");
-		let exp = ExpantaNum.pow(2, power);
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,

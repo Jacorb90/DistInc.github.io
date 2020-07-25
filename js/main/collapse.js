@@ -107,7 +107,7 @@ function getCadaverGainMult() {
 	if (tmp.collapse) if (modeActive("hard") && (tmp.collapse.layer.gain.gte(10) || (tmp.clghm && tmp.collapse.layer.gain.gte(5)))) {
 		mult = mult.div(2);
 		tmp.clghm = true;
-	};
+	}
 	if (tmp.ach[68].has && modeActive("extreme")) mult = mult.times(5);
 	if (tmp.collapse) if (modeActive("easy")) mult = mult.times(3);
 	if (tmp.elm) if (player.elementary.times.gt(0)) mult = mult.times(tmp.elm.ferm.quarkR("down").max(1));

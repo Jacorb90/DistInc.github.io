@@ -13,9 +13,9 @@ function updateTemp() {
 	updateTempDC(); 
 	updateTempInf();
 	updateTempElementary();
-	updateTempSC(); // ^ DONE
+	updateTempSC(); 
 	updateTempMisc();
-	updateTempTimeSpeed();
+	updateTempTimeSpeed(); // ^ DONE
 
 	if (modeActive("extreme")) {
 		updateTempRankCheap();

@@ -1,5 +1,5 @@
 function updateTempFurnace() {
-	tmp.fn = {};
+	if (!tmp.fn) tmp.fn = {};
 	let adj = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(17) && modeActive("extreme"))
 		adj = adj.times(player.tr.cubes.plus(1).times(10).slog(10));
@@ -113,12 +113,12 @@ function updateTempFurnace() {
 				.plus(1)
 				.floor();
 		}
-		tmp.fn.upgs[n].buy = function () {
+		if (!tmp.fn.upgs[n].buy) tmp.fn.upgs[n].buy = function () {
 			if (player.furnace.coal.lt(tmp.fn.upgs[n].cost)) return;
 			player.furnace.coal = player.furnace.coal.sub(tmp.fn.upgs[n].cost);
 			player.furnace.upgrades[n - 1] = player.furnace.upgrades[n - 1].plus(1);
 		};
-		tmp.fn.upgs[n].max = function () {
+		if (!tmp.fn.upgs[n].max) tmp.fn.upgs[n].max = function () {
 			if (player.furnace.coal.lt(tmp.fn.upgs[n].cost)) return;
 			player.furnace.upgrades[n - 1] = player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk.floor());
 			if (tmp.fn.upgs[n].bulk.floor().lte(player.furnace.upgrades[n - 1]))
@@ -131,7 +131,7 @@ function updateTempFurnace() {
 		tmp.fn.bfReq = ExpantaNum.pow(160, ExpantaNum.pow(2, player.furnace.blueFlame).sub(1)).times(1e6);
 		tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(160).add(1).logBase(2).add(1);
 	}
-	tmp.fn.bfReset = function () {
+	if (!tmp.fn.bfReset) tmp.fn.bfReset = function () {
 		if (player.furnace.coal.lt(tmp.fn.bfReq)) return;
 		player.furnace.coal = new ExpantaNum(0);
 		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
