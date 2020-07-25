@@ -394,6 +394,15 @@ function updateHTML() {
 				? "Complete this Stadium challenge."
 				: 'Allow <span class="infinity">Infinity</span> to endorse you.'
 		);
+		let nextUnl;
+		for (let i=0;i<Object.keys(INF_UPGS.dispReqs).length;i++) {
+			let key = Object.keys(INF_UPGS.dispReqs)[i]
+			if (player.inf.endorsements.lt(INF_UPGS.dispReqs[key])) {
+				nextUnl = key
+				break;
+			}
+		}
+		tmp.el.nextIUs.setTxt(nextUnl ? ("Next set of Infinity Upgrades at Endorsement "+showNum(INF_UPGS.dispReqs[nextUnl])+".") : "")
 		tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10));
 		if (infTab == "infinity") {
 			tmp.el.endorsements.setTxt(showNum(player.inf.endorsements));

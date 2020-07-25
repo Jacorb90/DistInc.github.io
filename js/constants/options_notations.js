@@ -4,7 +4,7 @@ const OPT_CHNG_MAX = {
 	sf: 8
 };
 const OPT_CHNG_MIN = {
-	sf: 3
+	sf: 1
 };
 const OPT_NAMES = {
 	not: ["scientific", "engineering", "standard", "mixed", "hexadecimal", "binary", "symbols", "tetrational"],

@@ -9,7 +9,7 @@ class Layer {
 	}
 
 	get gain() {
-		if (this.type == "multi-res") return tmp[this.tName].gain;
+		if (this.type == "multi-res") return tmp[this.tName].gain();
 		if (this.type == "forced" || this.type == "semi-forced") return new ExpantaNum(1);
 		let req = LAYER_REQS[this.name];
 		let nr = req[1];

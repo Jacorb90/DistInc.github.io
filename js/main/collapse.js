@@ -57,7 +57,6 @@ function updateTempCollapse() {
 	if (tmp.inf) tmp.collapse.sc = tmp.collapse.sc.times(tmp.inf.asc.perkEff(4));
 	tmp.collapse.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.collapse.lrm = tmp.collapse.lrm.div(50);
-	if (modeActive("easy")) tmp.collapse.lrm = tmp.collapse.lrm.times(5e16 / 3.5068);
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm));
 	if (nerfActive("noCadavers")) tmp.collapse.can = false;
 	tmp.collapse.layer = new Layer("collapse", tmp.collapse.can, "normal", true);

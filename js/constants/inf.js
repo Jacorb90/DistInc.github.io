@@ -3,6 +3,14 @@ const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni);
 const INF_UPGS = {
 	rows: 10,
 	cols: 10,
+	dispReqs: {
+		4: new ExpantaNum(3),
+		5: new ExpantaNum(6),
+		6: new ExpantaNum(10),
+		7: new ExpantaNum(15),
+		8: new ExpantaNum(21),
+		9: new ExpantaNum(28),
+	},
 	rowReqs: {
 		4: function () {
 			return player.inf.endorsements.gte(3);

@@ -10,10 +10,10 @@ function updateTemp() {
 	updateTempTR();
 	updateTempCollapse();
 	updateTempPathogens();
-	updateTempDC(); // ^ DONE
+	updateTempDC(); 
 	updateTempInf();
 	updateTempElementary();
-	updateTempSC(); // <- DONE
+	updateTempSC(); // ^ DONE
 	updateTempMisc();
 	updateTempTimeSpeed();
 

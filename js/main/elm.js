@@ -21,13 +21,13 @@ function updateTempElementary() {
 	}
 
 	// Elementary Layer
-	tmp.elm = {};
+	if (!tmp.elm) tmp.elm = {};
 	tmp.elm.can =
 		player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
 		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&
 		player.inf.endorsements.gte(LAYER_REQS.elementary[2][1]);
 	tmp.elm.softcap = new ExpantaNum(4000)
-	tmp.elm.gain = (function () {
+	if (!tmp.elm.gain) tmp.elm.gain = (function () {
 		if (!tmp.elm.can) return new ExpantaNum(0);
 		let f1 = player.rockets.max(1).log10().div(LAYER_REQS.elementary[0][1].log10()).sqrt();
 		let f2 = player.collapse.cadavers.max(1).log10().div(LAYER_REQS.elementary[1][1].log10());
@@ -40,9 +40,9 @@ function updateTempElementary() {
 		if (hasDE(5) && (player.elementary.theory.tree.upgrades[20]||new ExpantaNum(0)).gte(1)) exp = exp.times(2)
 		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(exp).times(ExpantaNum.pow(tmp.elm.softcap, ExpantaNum.sub(1, exp)))
 		return gain.floor();
-	})();
+	});
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
-	tmp.elm.doGain = function () {
+	if (!tmp.elm.doGain) tmp.elm.doGain = function () {
 		// Gains
 		if (player.options.elc) if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("extreme"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
 		if (player.elementary.theory.active) {
@@ -58,7 +58,7 @@ function updateTempElementary() {
 		// Achievement Rewards
 		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
-	tmp.elm.onReset = function (prev) {
+	if (!tmp.elm.onReset) tmp.elm.onReset = function (prev) {
 		player.elementary.time = new ExpantaNum(0);
 		
 		// Reset Quarks, Leptons, & Gauge Boson sub-resources
@@ -110,14 +110,14 @@ function updateTempElementary() {
 	};
 
 	// Elementary Tab System
-	tmp.elm.updateTabs = function () {
+	if (!tmp.elm.updateTabs) tmp.elm.updateTabs = function () {
 		let tabs = Element.allFromClass("elmtab");
 		for (let i = 0; i < tabs.length; i++) {
 			tabs[i].setDisplay(elmTab == tabs[i].id);
 			new Element(tabs[i].id + "tabbtn").setDisplay(ELM_TABS[tabs[i].id]());
 		}
 	};
-	tmp.elm.showTab = function (name) {
+	if (!tmp.elm.showTab) tmp.elm.showTab = function (name) {
 		if (elmTab == name) return;
 		elmTab = name;
 		tmp.elm.updateTabs();
@@ -125,13 +125,13 @@ function updateTempElementary() {
 	tmp.elm.updateTabs();
 
 	// Fermions
-	tmp.elm.ferm = {};
-	tmp.elm.ferm.transfer1 = function () {
+	if (!tmp.elm.ferm) tmp.elm.ferm = {};
+	if (!tmp.elm.ferm.transfer1) tmp.elm.ferm.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
 		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1);
 	};
-	tmp.elm.ferm.transfer = function (ratio) {
+	if (!tmp.elm.ferm.transfer) tmp.elm.ferm.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
@@ -146,7 +146,7 @@ function updateTempElementary() {
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.quarkGain = tmp.elm.ferm.quarkGain.times(tmp.sqEff||1)
 	tmp.elm.ferm.quarkRewards = new ExpantaNum(player.elementary.fermions.quarks.amount).max(1).logBase(50).floor();
 	if (tmp.elm.ferm.quarkRewards.gte(10)) tmp.elm.ferm.quarkRewards = tmp.elm.ferm.quarkRewards.sqrt().times(Math.sqrt(10))
-	tmp.elm.ferm.quarkName = function (noExp = false) {
+	if (!tmp.elm.ferm.quarkName) tmp.elm.ferm.quarkName = function (noExp = false) {
 		let name = QUARK_NAMES[player.elementary.fermions.quarks.type - 1];
 		let stacks = tmp.elm.ferm.quarkRewards
 			.sub(player.elementary.fermions.quarks.type)
@@ -182,16 +182,16 @@ function updateTempElementary() {
 		else if (name == "bottom")
 			return ExpantaNum.pow(ExpantaNum.mul(0.4, qks.plus(1).log10()).plus(1), stacks.plus(1));
 	};
-	tmp.elm.ferm.quarkR = function (name) {
+	if (!tmp.elm.ferm.quarkR) tmp.elm.ferm.quarkR = function (name) {
 		if (name == QUARK_NAMES[player.elementary.fermions.quarks.type - 1]) return tmp.elm.ferm.quarkEff(name);
 		else return new ExpantaNum(1);
 	};
-	tmp.elm.ferm.quarkDesc = function (name) {
+	if (!tmp.elm.ferm.quarkDesc) tmp.elm.ferm.quarkDesc = function (name) {
 		let desc = QUARK_DESCS[name] + "     ";
 		desc += "Currently: " + showNum(tmp.elm.ferm.quarkEff(name)) + "x";
 		return desc;
 	};
-	tmp.elm.ferm.changeQuark = function () {
+	if (!tmp.elm.ferm.changeQuark) tmp.elm.ferm.changeQuark = function () {
 		player.elementary.fermions.quarks.type = (player.elementary.fermions.quarks.type % 6) + 1;
 	};
 
@@ -206,7 +206,7 @@ function updateTempElementary() {
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.ferm.leptonGain = tmp.elm.ferm.leptonGain.times(tmp.slEff||1)
 	tmp.elm.ferm.leptonRewards = new ExpantaNum(player.elementary.fermions.leptons.amount).max(1).logBase(100).floor();
 	if (tmp.elm.ferm.leptonRewards.gte(7)) tmp.elm.ferm.leptonRewards = tmp.elm.ferm.leptonRewards.sqrt().times(Math.sqrt(7))
-	tmp.elm.ferm.leptonName = function (noExp = false) {
+	if (!tmp.elm.ferm.leptonName) tmp.elm.ferm.leptonName = function (noExp = false) {
 		let name = LEPTON_NAMES[player.elementary.fermions.leptons.type - 1];
 		let stacks = tmp.elm.ferm.leptonRewards
 			.sub(player.elementary.fermions.leptons.type)
@@ -247,11 +247,11 @@ function updateTempElementary() {
 			return lpts.max(0).times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).max(1).sub(1).div(250).max(0);
 		else if (name == "psi") return lpts.max(0).plus(1).log10().plus(1).pow(stacks.plus(0.5)).max(1);
 	};
-	tmp.elm.ferm.leptonR = function (name) {
+	if (!tmp.elm.ferm.leptonR) tmp.elm.ferm.leptonR = function (name) {
 		if (name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1]) return tmp.elm.ferm.leptonEff(name);
 		else return new ExpantaNum(1);
 	};
-	tmp.elm.ferm.leptonDesc = function (name) {
+	if (!tmp.elm.ferm.leptonDesc) tmp.elm.ferm.leptonDesc = function (name) {
 		let desc = LEPTON_DESCS[name] + "      Currently: ";
 		let eff = tmp.elm.ferm.leptonEff(name);
 		if (name == "electron" || name == "netrion" || name == "vibrino") desc += "+" + showNum(eff.times(100)) + "%";
@@ -259,28 +259,28 @@ function updateTempElementary() {
 		else desc += showNum(eff) + "x";
 		return desc;
 	};
-	tmp.elm.ferm.changeLepton = function () {
+	if (!tmp.elm.ferm.changeLepton) tmp.elm.ferm.changeLepton = function () {
 		player.elementary.fermions.leptons.type = (player.elementary.fermions.leptons.type % 6) + 1;
 	};
 
 	// Bosons
-	tmp.elm.bos = {};
-	tmp.elm.bos.transfer1 = function () {
+	if (!tmp.elm.bos) tmp.elm.bos = {};
+	if (!tmp.elm.bos.transfer1) tmp.elm.bos.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(1);
 	};
-	tmp.elm.bos.transfer = function (ratio) {
+	if (!tmp.elm.bos.transfer) tmp.elm.bos.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub);
 	};
-	tmp.elm.bos.updateGluonTabs = function () {
+	if (!tmp.elm.bos.updateGluonTabs) tmp.elm.bos.updateGluonTabs = function () {
 		let tabs = Element.allFromClass("gluontab");
 		for (let i = 0; i < tabs.length; i++) tabs[i].setDisplay(gluonTab == tabs[i].id);
 	};
-	tmp.elm.bos.showGluonTab = function (name) {
+	if (!tmp.elm.bos.showGluonTab) tmp.elm.bos.showGluonTab = function (name) {
 		if (gluonTab == name) return;
 		gluonTab = name;
 		tmp.elm.bos.updateGluonTabs();
@@ -314,14 +314,14 @@ function updateTempElementary() {
 			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, getScalingStart("scaled", "photons"))
 		}
 	}
-	tmp.elm.bos.photonEff = function (x) {
+	if (!tmp.elm.bos.photonEff) tmp.elm.bos.photonEff = function (x) {
 		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1];
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(3, bought);
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
 		if (x == 3||x == 4) return ExpantaNum.pow(2, bought);
 	};
-	tmp.elm.bos.buyLU = function (x) {
+	if (!tmp.elm.bos.buyLU) tmp.elm.bos.buyLU = function (x) {
 		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return;
 		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
@@ -342,17 +342,17 @@ function updateTempElementary() {
 	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2);
 
 	// Gluons
-	tmp.elm.bos.updateTabs = function () {
+	if (!tmp.elm.bos.updateTabs) tmp.elm.bos.updateTabs = function () {
 		let tabs = Element.allFromClass("bostab");
 		for (let i = 0; i < tabs.length; i++) tabs[i].setDisplay(bosTab == tabs[i].id);
 	};
-	tmp.elm.bos.showTab = function (name) {
+	if (!tmp.elm.bos.showTab) tmp.elm.bos.showTab = function (name) {
 		if (bosTab == name) return;
 		bosTab = name;
 		tmp.elm.bos.updateTabs();
 	};
 	tmp.elm.bos.updateTabs();
-	tmp.elm.bos.gluonEff = function (col, x) {
+	if (!tmp.elm.bos.gluonEff) tmp.elm.bos.gluonEff = function (col, x) {
 		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(2, bought);
 		else if (x==2) return ExpantaNum.pow(1.1, bought);
@@ -364,7 +364,7 @@ function updateTempElementary() {
 	tmp.elm.bos.arg = gaugeSpeed.div(10).times(tmp.elm.bos.gluonEff("r", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1)).times(tmp.elm.bos.photonEff(3).max(1));
-	tmp.elm.bos.gluonCost = function (col, x) {
+	if (!tmp.elm.bos.gluonCost) tmp.elm.bos.gluonCost = function (col, x) {
 		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(2, bought.pow(2.5).times(2)).times(100);
 		else if (x==2) return ExpantaNum.pow(3, ExpantaNum.pow(3, bought)).times(1e3 / 3);
@@ -402,15 +402,15 @@ function updateTempElementary() {
 	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
 	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
 	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
-	tmp.elm.bos.buyHiggs = function(id) {
+	if (!tmp.elm.bos.buyHiggs) tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
 		player.elementary.bosons.scalar.higgs.amount = player.elementary.bosons.scalar.higgs.amount.sub(data.cost)
 		player.elementary.bosons.scalar.higgs.upgrades.push(id)
 		if (id=="0;0;2") for (let i=1;i<=4;i++) tmp.inf.asc.activatePerk(i)
 	}
-	tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
-	tmp.elm.bos["higgs_1;1;0"] = function(disp=false) {
+	if (!tmp.elm.bos.hasHiggs) tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
+	if (!tmp.elm.bos["higgs_1;1;0"]) tmp.elm.bos["higgs_1;1;0"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("1;1;0")) return new ExpantaNum(1)
 		let f1 = player.elementary.fermions.quarks.amount.plus(1).log10().pow(0.2).plus(1)
 		let f2 = player.elementary.fermions.leptons.amount.plus(1).log10().pow(0.3).plus(1)
@@ -419,38 +419,38 @@ function updateTempElementary() {
 		let f5 = player.elementary.bosons.scalar.higgs.amount.plus(1).log10().pow(0.1).plus(1)
 		return f1.times(f2).times(f3).times(f4).times(f5).pow(0.2)
 	}
-	tmp.elm.bos["higgs_0;1;1"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_0;1;1"]) tmp.elm.bos["higgs_0;1;1"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;1;1")) return new ExpantaNum(1)
 		let e = player.inf.endorsements.sub(36).max(0)
 		if (e.gte(3)) e = e.sqrt().times(Math.sqrt(3))
 		return ExpantaNum.pow(7, e).max(1)
 	}
-	tmp.elm.bos["higgs_3;0;0"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_3;0;0"]) tmp.elm.bos["higgs_3;0;0"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("3;0;0")) return new ExpantaNum(1)
 		return ExpantaNum.pow(1.1, player.elementary.bosons.scalar.higgs.upgrades.length)
 	}
-	tmp.elm.bos["higgs_0;2;1"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_0;2;1"]) tmp.elm.bos["higgs_0;2;1"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;2;1")) return new ExpantaNum(1)
 		return player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(0.1).sub(1).times(100)
 	}
-	tmp.elm.bos["higgs_0;0;4"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_0;0;4"]) tmp.elm.bos["higgs_0;0;4"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;0;4")) return new ExpantaNum(1)
 		let ret = tmp.elm.pa.active?tmp.elm.pa.speedBoost.plus(1):new ExpantaNum(1)
 		if (ret.gte(1e3)) ret = ret.pow(0.95).times(Math.pow(1e3, 0.05))
 		return ret
 	}
-	tmp.elm.bos["higgs_1;3;0"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_1;3;0"]) tmp.elm.bos["higgs_1;3;0"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("1;3;0")) return new ExpantaNum(1)
 		let amt = player.inf.pantheon.angels.plus(player.inf.pantheon.demons)
 		let ret = ExpantaNum.pow(10, amt.sqrt()).pow(0.2)
 		return ret
 	}
-	tmp.elm.bos["higgs_0;3;1"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_0;3;1"]) tmp.elm.bos["higgs_0;3;1"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;3;1")) return new ExpantaNum(1)
 		let ret = player.inf.pantheon.purge.power.plus(1).pow(0.9)
 		return ret
 	}
-	tmp.elm.bos["higgs_0;0;5"] = function(disp=false) {
+	if (!tmp.elm.bos["higgs_0;0;5"]) tmp.elm.bos["higgs_0;0;5"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("0;0;5")) return new ExpantaNum(0)
 		let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(2.5).sub(1).times(18)
 		return ret
@@ -476,14 +476,14 @@ function updateTempElementary() {
 		
 	// Theories
 	tmp.elm.theory = {}
-	tmp.elm.theory.updateTabs = function () {
+	if (!tmp.elm.theory.updateTabs) tmp.elm.theory.updateTabs = function () {
 		let tabs = Element.allFromClass("theorytab");
 		for (let i = 0; i < tabs.length; i++) {
 			tabs[i].setDisplay(thTab == tabs[i].id);
 			new Element(tabs[i].id + "tabbtn").setDisplay(TH_TABS[tabs[i].id]());
 		}
 	};
-	tmp.elm.theory.showTab = function (name) {
+	if (!tmp.elm.theory.showTab) tmp.elm.theory.showTab = function (name) {
 		if (thTab == name) return;
 		thTab = name;
 		tmp.elm.theory.updateTabs();
@@ -495,7 +495,7 @@ function updateTempElementary() {
 	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
 	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).sub(3))
-	tmp.elm.theory.start = function() {
+	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active
@@ -503,8 +503,8 @@ function updateTempElementary() {
 	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth)
 	
 	// Supersymmetry
-	tmp.elm.theory.ss = {}
-	tmp.elm.theory.ss.unl = function() {
+	if (!tmp.elm.theory.ss) tmp.elm.theory.ss = {}
+	if (!tmp.elm.theory.ss.unl) tmp.elm.theory.ss.unl = function() {
 		if (!player.elementary.theory.unl) return
 		if (player.elementary.theory.supersymmetry.unl) return
 		if (player.elementary.theory.points.lt(1)) return
@@ -532,8 +532,8 @@ function updateTempElementary() {
 	if (tmp.elm.theory.ss.waveEff.gte(1e13)) tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.waveEff.pow(1/4).times(Math.pow(1e13, 3/4))
 	
 	// The Theory Tree
-	tmp.elm.theory.tree = {}
-	tmp.elm.theory.tree.unl = function() {
+	if (!tmp.elm.theory.tree) tmp.elm.theory.tree = {}
+	if (!tmp.elm.theory.tree.unl) tmp.elm.theory.tree.unl = function() {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.supersymmetry.unl) return
 		if (player.elementary.theory.tree.unl) return
@@ -541,9 +541,8 @@ function updateTempElementary() {
 		player.elementary.theory.points = player.elementary.theory.points.sub(1)
 		player.elementary.theory.tree.unl = true
 	}
-	tmp.elm.theory.tree.bought = {}
 	tmp.elm.theory.tree.bought = function(i) { return new ExpantaNum(player.elementary.theory.tree.upgrades[i]||0) }
-	tmp.elm.theory.tree.buy = function(x) {
+	if (!tmp.elm.theory.tree.buy) tmp.elm.theory.tree.buy = function(x) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
 		let bought = tmp.elm.theory.tree.bought(x)
@@ -826,7 +825,6 @@ function importTree() {
 			if (upgs[key].lte(plyr[key])) continue
 			else {
 				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)))
-				console.log(key+", "+costs) // REMOVE THIS
 				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
 				if (player.elementary.theory.points.gte(totalCost)) {
 					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
