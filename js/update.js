@@ -15,7 +15,7 @@ function updateTemp() {
 	updateTempElementary();
 	updateTempSC(); 
 	updateTempMisc();
-	updateTempTimeSpeed(); // ^ DONE
+	updateTempTimeSpeed();
 
 	if (modeActive("extreme")) {
 		updateTempRankCheap();
@@ -266,7 +266,7 @@ function updateUnlocks() {
 }
 
 document.onkeydown = function(e) {
-	if (!player.options.hot) return
+	if (!player.options.hot || player.modes.includes("absurd")) return
 	let shiftDown = e.shiftKey
 	let key = e.which
 	switch(key) {

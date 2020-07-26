@@ -67,6 +67,7 @@ const NEWS_DATA = {
 	m65: ["This message has been (softcapped) so you can't re-"],
 	m66: ["Maybe try getting some distance in real life? It's just a suggestion..."],
 	m67: ['"The engineers have invaded Distance Incremental and have invented their own notation! Get out while you still can!" - A Scientist'],
+	m68: ['"I heard that Absurd Mode is fun, might try it out later" - Some new player who just finished normal mode'],
 
 	// Distance-based Conditions
 	d1: [
