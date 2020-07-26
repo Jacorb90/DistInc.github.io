@@ -5,13 +5,14 @@
 	--ach: #4ceb34;
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
+	--font: Courier;
 }
 
 * {
 	user-select: none;
 	margin: 0;
 	padding: 0;
-	font-family: Courier;
+	font-family: var(--font);
 }
 
 *:focus {
@@ -1027,8 +1028,8 @@ table {
 #dc {
 	background-image: var(--threeArrows);
 	background-repeat: no-repeat;
-	background-size: 550px 480px;
-	background-position: calc(50% - 25px) 50px;
+	background-size: 550px 550px;
+	background-position: calc(50% - 25px) 20px;
 }
 
 #newsticker {
@@ -1313,7 +1314,7 @@ table {
 	color: #e66700;
 	font-size: 12px;
 	font-weight: bold;
-	max-width: 200px;
+	max-width: 225px !important;
 	padding: 7px 25px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px black;

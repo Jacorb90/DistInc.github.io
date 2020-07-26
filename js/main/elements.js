@@ -1,11 +1,4 @@
 function updateHTML() {
-	// Element Setup
-	tmp.el = {};
-	for (i = 0; i < TMP_DATA.ELS.length; i++) {
-		let id = TMP_DATA.ELS[i];
-		tmp.el[id] = new Element(id);
-	}
-
 	// Options
 	if (player.tab == "options") {
 		for (let i = 0; i < Object.keys(MODES).length; i++) {
@@ -30,6 +23,7 @@ function updateHTML() {
 		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
 		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
 		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
+		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
 	}
 
 	// Main
@@ -905,11 +899,12 @@ function updateHTML() {
 	);
 	tmp.el.body.changeStyle("background", tmp.bc);
 	let root = document.documentElement;
-	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? "white" : "black");
+	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? (player.options.fonts=="verdana"?"#d9d9d9":"white") : "black");
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
+	root.style.setProperty("--font", capitalFirst(player.options.fonts))
 
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)

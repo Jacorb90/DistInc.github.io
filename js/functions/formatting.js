@@ -27,14 +27,23 @@ function showNum(val) {
 	return notations[player.options.not](new ExpantaNum(val), player.options.sf - 1, 2);
 }
 
+function addZeroes(orig, num, digits) {
+	if (typeof(num)=="string") num = parseFloat(num)
+	return orig==Math.round(orig)?Math.round(num):num.toLocaleString("en", {useGrouping: false, minimumFractionDigits: digits})
+}
+
 function decimalPlaces(value, places, base = 10) {
 	// Taken from ExpantaNum.js (but altered slightly)
 	var len = places + 1;
 	var numDigits = Math.ceil(Math.log10(Math.max(Math.abs(value), 1)));
 	var rounded = Math.round(value * Math.pow(10, len - numDigits)) * Math.pow(10, numDigits - len);
 	if (base == 10) {
-		if (value<Math.pow(10, places)||value<1000) return parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), places)));
-		else return value.toExponential(places)
+		if (value<Math.pow(10, places)||value<1000) return addZeroes(value, parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), places))), len - numDigits);
+		else {
+			let e = Math.floor(Math.log10(value))
+			let m = value/Math.pow(10, e)
+			return decimalPlaces(m, places, base)+"e+"+e
+		}
 	} else {
 		if (value.toString(base).split(".")[0].length < places + 2) {
 			return ((value * Math.pow(base, len - numDigits)) / Math.pow(base, len - numDigits))

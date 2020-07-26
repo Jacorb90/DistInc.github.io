@@ -11,6 +11,7 @@ const OPT_NAMES = {
 	theme: ["normal", "dark"],
 	saveImp: ["new save", "overwrite"],
 	featPerc: ["logarithm", "linear"],
+	fonts: ["verdana", "courier"],
 };
 const AUTOSAVE_TIME = 10;
 const MAX_SAVES = 5;

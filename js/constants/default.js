@@ -17,6 +17,7 @@ const DEFAULT_START = {
 		hot: true,
 		featPerc: "logarithm",
 		dcPulse: true,
+		fonts: "courier",
 	},
 	modes: [],
 	time: new Date().getTime(),
