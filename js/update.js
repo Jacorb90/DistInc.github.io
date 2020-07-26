@@ -28,7 +28,7 @@ function setupHTML() {
 	let achTable = new Element("achTable");
 	let table = "";
 	for (let r = 1; r <= ACH_DATA.rows; r++) {
-		table += "<tr>";
+		table += "<tr id='achR"+r+"'>";
 		for (let c = 1; c <= ACH_DATA.cols; c++) {
 			let id = r * 10 + c;
 			table += "<td id='ach" + id + "' class='achCont'>";

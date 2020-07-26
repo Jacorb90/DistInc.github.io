@@ -132,3 +132,7 @@ function updateAchievements() {
 	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
 	if (player.rank.gte(995)) tmp.ach[148].grant()
 }
+
+function rowComplete(r) {
+	return [r*10+1,r*10+2,r*10+3,r*10+4,r*10+5,r*10+6,r*10+7,r*10+8].every(i => player.achievements.includes(i))
+}

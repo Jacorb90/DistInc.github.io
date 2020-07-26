@@ -221,6 +221,11 @@
 					</tr>
 					<tr>
 						<td>
+							<button id="hideAch" class="btn tb opt ob_t" onclick="changeOpt('hideAch', 0)">
+								Hide Completed Ach Rows: OFF
+							</button>
+						</td>
+						<td>
 							<button id="dcPulse" class="btn tb opt ob_t" onclick="changeOpt('dcPulse', 0)">
 								Dark Circle Pulsing: ON
 							</button>
@@ -272,6 +277,7 @@
 		<div id="achievements" class="tab" style="display: none;">
 			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
+			<div id="achFin"></div>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">

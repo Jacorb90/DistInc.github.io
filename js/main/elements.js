@@ -24,6 +24,7 @@ function updateHTML() {
 		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
 		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
 		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
+		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"))
 	}
 
 	// Main
@@ -97,7 +98,11 @@ function updateHTML() {
 	if (player.tab == "achievements") {
 		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
 		let all = tmp.ga == tmp.ta && !modeActive("aau");
+		let rowsActive = Math.floor(tmp.ta/8)
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
+			let rc = rowComplete(r)
+			tmp.el["achR"+r].setDisplay(!(player.options.hideAch&&rc))
+			if (rc && player.options.hideAch) rowsActive--
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
 				let id = r * 10 + c;
 				tmp.el["ach" + id].setTxt(id);
@@ -107,10 +112,11 @@ function updateHTML() {
 					dgn: player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined && !all,
 					blocked: ACH_DATA.descs[id] === undefined
 				});
-				tmp.el["ach" + id].changeStyle("visibility", getAllAchievements().includes(id) ? "visible" : "hidden");
+				tmp.el["ach" + id].changeStyle("visibility", (getAllAchievements().includes(id)) ? "visible" : "hidden");
 				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
 			}
 		}
+		tmp.el.achFin.setTxt(rowsActive==0?"All Achievements are completed!":"")
 	}
 
 	// Automation
