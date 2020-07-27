@@ -19,6 +19,7 @@ function updateTabs() {
 		var elT = new Element(tabs[i].id + "tabbtn");
 		elT.changeStyle("visibility", getTabBtnsShown().includes(tabs[i].id)?"visible":"hidden");
 	}
+	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
 }
 
 function showTab(name) {
