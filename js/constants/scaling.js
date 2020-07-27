@@ -42,11 +42,7 @@ const SCALING_RES = {
 		return player.rank;
 	},
 	rankCheap: function (n = 0) {
-		return tmp.modes
-			? tmp.modes.extreme.active
-				? player.rankCheap
-				: new ExpantaNum(1 / 0)
-			: new ExpantaNum(1 / 0);
+		return modeActive("extreme") ? player.rankCheap : new ExpantaNum(1 / 0);
 	},
 	tier: function (n = 0) {
 		return player.tier;
@@ -55,11 +51,7 @@ const SCALING_RES = {
 		return player.rf;
 	},
 	fn: function (n = 0) {
-		return tmp.modes
-			? tmp.modes.extreme.active
-				? player.furnace.upgrades[n - 1]
-				: new ExpantaNum(1 / 0)
-			: new ExpantaNum(1 / 0);
+		return modeActive("extreme") ? player.furnace.upgrades[n - 1] : new ExpantaNum(1 / 0);
 	},
 	pathogenUpg: function (n = 0) {
 		return player.pathogens.upgrades[n];
@@ -84,6 +76,12 @@ const SCALING_RES = {
 	},
 };
 const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments", "photons"]
+const SCALING_AMTS = {
+	fn: 3,
+	pathogenUpg: 15,
+	enlightenments: 4,
+	photons: 4,
+}
 const REAL_SCALING_NAMES = {
 	rank: "ranks",
 	rankCheap: "rank cheapeners",

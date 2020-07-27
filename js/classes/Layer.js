@@ -9,7 +9,7 @@ class Layer {
 	}
 
 	get gain() {
-		if (this.type == "multi-res") return tmp[this.tName].gain;
+		if (this.type == "multi-res") return tmp[this.tName].gain();
 		if (this.type == "forced" || this.type == "semi-forced") return new ExpantaNum(1);
 		let req = LAYER_REQS[this.name];
 		let nr = req[1];
@@ -49,7 +49,7 @@ class Layer {
 		player = transformToEN(player, DEFAULT_START);
 		modeLoad(LAYER_RESETS_EXTRA[this.name]);
 		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev);
-		updateTemp();
+		needUpdate = true
 	}
 
 	bulk(mag = new ExpantaNum(1)) {

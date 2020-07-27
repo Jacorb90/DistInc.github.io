@@ -7,7 +7,7 @@ const NEWS_DATA = {
 	m5: ["Cancer notation has been kept away for now..."],
 	m6: ["Try to win without achievements"],
 	m7: ["You have probably ran over at least 1 snail so far on your journey"],
-	m8: ["If you want to be cursed, try Engineering Notation, which doesn't exist"],
+	m8: ["If you want to be cursed, try Engineering Notation"],
 	m9: ["There is no True Infinity here"],
 	m10: ["Try a byte of binary notation!"],
 	m11: ["Pentation is for the weak"],
@@ -48,7 +48,7 @@ const NEWS_DATA = {
 	m46: ["And the winner is, Leonardo DiCarlo"],
 	m47: ['"But thats just a theory, a game theory!"- Matpat'],
 	m48: ['"But thats just a theory, a film theory!"- Matpat'],
-	m49: ['"But thats just a theory, a survival theory!"- Patmat'],
+	m49: ['"But thats just a theory, a food theory!"- Patmat'],
 	m50: ['"Nont" - Jacorb after 5 hours has passed'],
 	m51: ["The most recent feature of Distance Incremental is not a ripoff, or at least you can't prove that in court"],
 	m52: ["I should make a mod of Antimatter Dimensions that releases Reality before Hevipelle does..."],
@@ -62,6 +62,13 @@ const NEWS_DATA = {
 	m60: ["Click <a href='https://www.youtube.com/watch?v=xfr64zoBTAQ' style='color: grey;'>this</a> to walk 1 extra micrometer, whatever that means..."],
 	m61: ['"Wait... Its all softcapped?"   "Always has been."   *Gets shot by (softcapped)*'],
 	m62: ["Click <a href='#' onclick='return false;'>here</a> to make nothing happen"],
+	m63: ["Due to a recent influx of news stories we have decided to make the news ticker <span class='sc'>(softcapped)</span>"],
+	m64: ['"I wonder if my lore will ever catch up to the most recent update" -CRG'],
+	m65: ["This message has been (softcapped) so you can't re-"],
+	m66: ["Maybe try getting some distance in real life? It's just a suggestion..."],
+	m67: ['"The engineers have invaded Distance Incremental and have invented their own notation! Get out while you still can!" - A Scientist'],
+	m68: ['"I heard that Absurd Mode is fun, might try it out later" - Some new player who just finished normal mode'],
+	m69: ['"Nice." - The guy who made the 69th news ticker message'],
 
 	// Distance-based Conditions
 	d1: [
@@ -341,6 +348,24 @@ const NEWS_DATA = {
 		function () {
 			return player.bestV.gte(299792458*1.1)
 		},
+	],
+	s19: [
+		'"But where are the replicants?" - NG+++ fan after unlocking preons',
+		function () {
+			return player.elementary.theory.preons.unl
+		}
+	],
+	s20: [
+		"This is a crime against Reality.",
+		function () {
+			return player.inf.pantheon.purge.active && !player.inf.stadium.current=="reality"
+		}
+	],
+	s21: [
+		'"Help" - People who realized that Cadavers are just bodies',
+		function () {
+			return player.collapse.cadavers.gt(0)
+		}
 	],
 };
 

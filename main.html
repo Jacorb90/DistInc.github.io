@@ -99,7 +99,7 @@
 			<button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">
 				Reset your ranks, but <span id="tierDesc" class="based"></span><br />Req: Rank
 				<span id="tierReq" class="based"></span>.
-			</button><br>
+			</button><br><br><br>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -113,17 +113,17 @@
 			<div id="saving" class="optionstab">
 				<table>
 					<tr>
-						<td><button class="btn tb opt" onclick="tmp.options.save()">Save</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.loads()">Load</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.import()">Import</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.export()">Export</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.hardReset()">HARD RESET</button></td>
+						<td><button class="btn tb opt ob" onclick="save()">Save</button></td>
+						<td><button class="btn tb opt ob" onclick="loads()">Load</button></td>
+						<td><button class="btn tb opt ob" onclick="importSave()">Import</button></td>
+						<td><button class="btn tb opt ob" onclick="exportSave()">Export</button></td>
+						<td><button class="btn tb opt ob" onclick="hardReset()">HARD RESET</button></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td></td>
-						<td><button class="btn tb opt" onclick="tmp.options.importAll()">Import All</button></td>
-						<td><button class="btn tb opt" onclick="tmp.options.exportAll()">Export All</button></td>
+						<td><button class="btn tb opt ob" onclick="importAll()">Import All</button></td>
+						<td><button class="btn tb opt ob" onclick="exportAll()">Export All</button></td>
 						</td>
 					</tr>
 				</table>
@@ -139,80 +139,108 @@
 				<table>
 					<tr>
 						<td>
-							<button id="aauMode" class="btn tb opt" onclick="tmp.options.modes.select('aau')" style="z-index: 0">AAU</button>
+							<button id="aauMode" class="btn tb opt ob" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
 						</td>
 						<td>
-							<button id="easyMode" class="btn tb opt" onclick="tmp.options.modes.select('easy')" style="z-index: 0">Easy</button>
+							<button id="easyMode" class="btn tb opt ob" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
 						</td>
 						<td>
-							<button id="absurdMode" class="btn tb opt" onclick="tmp.options.modes.select('absurd')" style="z-index: 0">Absurd</button>
+							<button id="absurdMode" class="btn tb opt ob" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
 						</td>
 						<td>
-							<button id="naMode" class="btn tb opt" onclick="tmp.options.modes.select('na')" style="z-index: 0">NA</button>
+							<button id="naMode" class="btn tb opt ob" onclick="selectMode('na')" style="z-index: 0">NA</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="extremeMode" class="btn tb opt" onclick="tmp.options.modes.select('extreme')" style="z-index: 0">Extreme</button>
+							<button id="extremeMode" class="btn tb opt ob" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
 						</td>
 						<td>
-							<button id="hardMode" class="btn tb opt" onclick="tmp.options.modes.select('hard')" style="z-index: 0">Hard</button>
+							<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
 						</td>
 					</tr>
 				</table>
 				<br /><br />
-				<button class="btn tb opt" onclick="tmp.options.modes.confirm()">Activate Modes</button>
+				<button class="btn tb opt" onclick="confirmModes()">Activate Modes</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
 				<table>
 					<tr>
 						<td>
-							<button id="sf" class="btn tb opt" onclick="tmp.options.change('sf', 1)">
+							<button id="sf" class="btn tb opt ob" onclick="changeOpt('sf', 1)">
 								Significant Figures: X
 							</button>
 						</td>
 						<td>
-							<button id="not" class="btn tb opt" onclick="tmp.options.change('not', 2)">
+							<button id="not" class="btn tb opt ob" onclick="changeOpt('not', 2)">
 								Notation: X
 							</button>
 						</td>
 						<td>
-							<button id="theme" class="btn tb opt" onclick="tmp.options.change('theme', 2)">
+							<button id="theme" class="btn tb opt ob" onclick="changeOpt('theme', 2)">
 								Theme: X
 							</button>
 						</td>
 						<td>
-							<button id="name" class="btn tb opt" onclick="tmp.options.change('name', 3)">
+							<button id="name" class="btn tb opt ob" onclick="changeOpt('name', 3)">
 								Rename Save
 							</button>
 						</td>
 						<td>
-							<button id="hot" class="btn tb opt" onclick="tmp.options.change('hot', 0)">
+							<button id="hot" class="btn tb opt ob" onclick="changeOpt('hot', 0)">
 								Hotkeys: ON
 							</button>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<button id="saveImp" class="btn tb opt" onclick="tmp.options.change('saveImp', 2)">
+							<button id="saveImp" class="btn tb opt ob_t" onclick="changeOpt('saveImp', 2)">
 								Imports: X
 							</button>
 						</td>
 						<td>
-							<button id="autoSave" class="btn tb opt" onclick="tmp.options.change('autoSave', 0)">
+							<button id="autoSave" class="btn tb opt ob_t" onclick="changeOpt('autoSave', 0)">
 								Auto-Save: ON
 							</button>
 						</td>
 						<td>
-							<button id="newst" class="btn tb opt" onclick="tmp.options.change('newst', 0)">
+							<button id="newst" class="btn tb opt ob_t" onclick="changeOpt('newst', 0)">
 								News Ticker: ON
 							</button>
 						</td>
 						<td>
-							<button id="elc" class="btn tb opt" onclick="tmp.options.change('elc', 0)">
+							<button id="featPerc" class="btn tb opt ob_t" onclick="changeOpt('featPerc', 2)">
+								Feature Percentage: X
+							</button>
+						</td>
+						<td>
+							<button id="fonts" class="btn tb opt ob_t" onclick="changeOpt('fonts', 2)">
+								Font: X
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="hideAch" class="btn tb opt ob_t" onclick="changeOpt('hideAch', 0)">
+								Hide Completed Ach Rows: OFF
+							</button>
+						</td>
+						<td>
+							<button id="visUpd" class="btn tb opt ob_t" onclick="changeOpt('visUpd', 2)">
+								Visual Updates: X
+							</button>
+						</td>
+						<td>
+							<button id="dcPulse" class="btn tb opt ob_t" onclick="changeOpt('dcPulse', 0)">
+								Dark Circle Pulsing: ON
+							</button>
+						</td>
+						<td>
+							<button id="elc" class="btn tb opt ob_t" onclick="changeOpt('elc', 0)">
 								Elementary Confirmation: ON
 							</button>
 						</td>
+						<td></td>
 					</tr>
 				</table>
 				<br />
@@ -232,7 +260,7 @@
 					target="_blank"
 					>Distances</a
 				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://plaza.dsolver.ca/m/Jacorb90">Plaza dSolver</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
@@ -252,6 +280,7 @@
 		<div id="achievements" class="tab" style="display: none;">
 			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
+			<div id="achFin"></div>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">
@@ -400,7 +429,7 @@
 			><br /><br />
 			You have <span id="cadavers"></span>, which make time go <span id="cadaverEff" class="dead"></span>x faster
 			<span id="cadaverEffSC"></span><br /><br />
-			<button id="sacrificeCadavers" class="btn locked" onclick="tmp.collapse.sacrifice()">
+			<button id="sacrificeCadavers" class="btn locked" onclick="sacrificeToLifeEssence()">
 				Sacrifice all your cadavers into life essence.</button
 			><br /><br />
 			You have <span id="lifeEssence"></span>.<br /><br />
@@ -504,6 +533,7 @@
 						</td>
 					</tr>
 				</table>
+				<span id="nextIUs" style="font-weight: bold;"></span><br><br>
 			</div>
 			<div id="infinity" class="inftab">
 				<span id="endorsementName"></span>Endorsements:
@@ -516,7 +546,7 @@
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br /><br />
 				<div id="infUpgData" class="bandBig or"></div>
 				<br /><br />
-				<table id="infUpgs"></table>
+				<div style="overflow-x: auto;"><table id="infUpgs"></table><br><br></div>
 				<br /><br />
 			</div>
 			<div id="ascension" class="inftab">
@@ -685,7 +715,7 @@
 				<button id="respecSpectralGems" class="btn locked" onclick="tmp.inf.pantheon.respec()">
 					Respec Angels & Demons back into Spectral Gems</button
 				><br /><br />
-				<div style="background-color: pink;">
+				<div style="background-color: #e0ffb5; color: black;">
 					<br /><button id="transferAngels" class="btn locked" onclick="tmp.inf.pantheon.transfer('angels')">
 						Transform one Spectral Gem into an Angel</button
 					><br /><br />
@@ -712,7 +742,7 @@
 						id="purgeBtn"
 						class="btn purge"
 						onclick="tmp.inf.pantheon.startPurge()"
-						tooltip="Starting a Purge run performs an Infinity reset, disables Pantheon features, and traps you in all Stadium Challenges except Reality (at tier 1). In addition, velocity gain is cube rooted."
+						tooltip="Starting a Purge run performs an Infinity reset, disables Pantheon features, and traps you in all Stadium Challenges except Reality (at difficulty level 1). In addition, velocity gain is cube rooted."
 					></button
 					><br /><br />
 					You have <span id="purgePower" class="spectral"></span> Purge Power, which makes the cancelling out
@@ -723,7 +753,7 @@
 			<div id="derivatives" class="inftab">
 				<div id="derivs"></div>
 				<br /><br />
-				<button id="dervUnlock" class="btn locked" onclick="tmp.inf.derv.doUnl()"></button>
+				<button id="dervUnlock" class="btn locked" onclick="tmp.inf.derv.doUnl()"></button><br><br>
 			</div>
 		</div>
 		<div id="elementary" class="tab" style="display: none;">
@@ -769,7 +799,7 @@
 					Transform 100% of your Elementary Particles into Fermions
 				</button>
 				<br /><br />You have <span id="fermionsamt" class="elmp"></span> Fermions.<br /><br />
-				<div style="width: 50%; min-height: 300px; background-color: #f5429b; float: left;">
+				<div style="width: 50%; min-height: 300px; background-color: #964035; float: left;">
 					Your Fermions & Endorsements are generating you
 					<span id="quarkGain" class="quark"></span> Quarks/sec.<br />
 					You have <span id="quarks" class="quark"></span>.<br /><br />
@@ -777,7 +807,7 @@
 						Hover to see current Quark effect<br />Click to change Quark Type
 					</button>
 				</div>
-				<div style="width: 50%; min-height: 300px; background-color: #9ef542; float: right; color: black;">
+				<div style="width: 50%; min-height: 300px; background-color: #e34430; float: right; color: black;">
 					Your Fermions & Total Spectral Gems are generating you
 					<span id="leptonGain" class="lepton"></span> Leptons/sec.<br />
 					You have <span id="leptons" class="lepton"></span>.<br /><br />
@@ -871,7 +901,7 @@
 							</tr>
 						</table>
 					</div>
-					<div style="width: 50%; min-height: 300px; background-color: #42ffa7; float: right; color: black;">
+					<div style="width: 50%; min-height: 300px; background-color: #9d3bff; float: right; color: black;">
 						<br />
 						You have <span id="w" class="gauge"></span> W Bosons (+<span
 							id="wg"
@@ -887,7 +917,7 @@
 						<span id="z2" class="gauge"></span>x multiplier to Dark Flow.
 					</div>
 					<br />
-					<div style="width: 50%; min-height: 300px; background-color: #e3b988; float: left; color: black;">
+					<div style="width: 50%; min-height: 300px; background-color: #38003b; float: left; color: white;">
 						<table>
 							<tr>
 								<td>
@@ -942,9 +972,9 @@
 						</div>
 						<div id="b" class="gluontab" style="display: none;">
 							<br />
-							You have <b><span id="bg" style="color: blue;"></span></b> Blue Gluons (+<span
+							You have <b><span id="bg" style="color: #6e72ff;"></span></b> Blue Gluons (+<span
 								id="bgg"
-								style="color: blue;"
+								style="color: #6e72ff;"
 							></span
 							>/sec).<br /><br />
 							<table id="b_table"></table>
@@ -968,7 +998,7 @@
 							<table id="ab_table"></table>
 						</div>
 					</div>
-					<div style="width: 50%; min-height: 300px; background-color: #838584; float: right; color: white;">
+					<div style="width: 50%; min-height: 300px; background-color: #595959; float: right; color: white;">
 						<br />
 						You have <span id="grav" class="gauge"></span> Gravitons (+<span id="gravGain"></span>/sec),
 						translated to a <span id="gravMult" class="gauge"></span>x multiplier to Gauge Force gain
@@ -982,7 +1012,7 @@
 					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br />
 					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.<br><br>
 					You have <span id="higgs" class="scalar"></span> Higgs Bosons (+<span id="higgsGain"></span>/sec).<br><br>
-					<table>
+					<div style="overflow-x: auto;"><table>
 						<tr>
 							<td><button id="higgs0;2;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;2;0')"></button></td>
 						</tr>
@@ -1050,7 +1080,7 @@
 							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs0;1;4" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;1;4')"></button></td>
 						</tr>
-					</table><br><br><br><br>
+					</table><br></div><br><br><br>
 				</div>
 			</div>
 			<div id="theory" class="elmtab" style="display: none;">
@@ -1213,7 +1243,8 @@
 						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second.<br><br>
 						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff" class="thp"></span>x later.<br><br><br>
 						<button id="darkExp" class="btn locked" onclick="darkExpand()"></button><br><br>
-						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br><br><br>
+						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br>
+						<span id="darkExpPast"></span><br><br><br>
 					</div>
 				</div>
 			</div>
@@ -1246,12 +1277,10 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/elm.js"></script>
-	<script type="text/javascript" src="js/constants/temp_data.js"></script>
 	<script type="text/javascript" src="js/constants/news.js"></script>
 
 	<!-- Primary Classes -->
 	<script type="text/javascript" src="js/classes/Element.js"></script>
-	<script type="text/javascript" src="js/classes/Mode.js"></script>
 
 	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>
@@ -1261,7 +1290,6 @@
 	<script type="text/javascript" src="js/functions/tabs.js"></script>
 	<script type="text/javascript" src="js/functions/achievements.js"></script>
 	<script type="text/javascript" src="js/functions/important.js"></script>
-	<script type="text/javascript" src="js/functions/tr.js"></script>
 	<script type="text/javascript" src="js/functions/misc.js"></script>
 	<script type="text/javascript" src="js/functions/news.js"></script>
 
@@ -1274,32 +1302,32 @@
 	<!-- Main Game -->
 	<script type="text/javascript" src="js/game.js"></script>
 
-	<!-- Temp Data -->
-	<script type="text/javascript" src="js/temp/elements.js"></script>
-	<script type="text/javascript" src="js/temp/options.js"></script>
-	<script type="text/javascript" src="js/temp/nerfs.js"></script>
-	<script type="text/javascript" src="js/temp/scaling.js"></script>
-	<script type="text/javascript" src="js/temp/effects.js"></script>
-	<script type="text/javascript" src="js/temp/early_game.js"></script>
-	<script type="text/javascript" src="js/temp/ranks.js"></script>
-	<script type="text/javascript" src="js/temp/tiers.js"></script>
-	<script type="text/javascript" src="js/temp/rockets.js"></script>
-	<script type="text/javascript" src="js/temp/special.js"></script>
-	<script type="text/javascript" src="js/temp/rf.js"></script>
-	<script type="text/javascript" src="js/temp/auto.js"></script>
-	<script type="text/javascript" src="js/temp/tr.js"></script>
-	<script type="text/javascript" src="js/temp/collapse.js"></script>
-	<script type="text/javascript" src="js/temp/pathogens.js"></script>
-	<script type="text/javascript" src="js/temp/dc.js"></script>
-	<script type="text/javascript" src="js/temp/inf.js"></script>
-	<script type="text/javascript" src="js/temp/elm.js"></script>
-	<script type="text/javascript" src="js/temp/misc.js"></script>
-	<script type="text/javascript" src="js/temp/timeSpeed.js"></script>
+	<!-- File Data -->
+	<script type="text/javascript" src="js/main/elements.js"></script>
+	<script type="text/javascript" src="js/main/options.js"></script>
+	<script type="text/javascript" src="js/main/nerfs.js"></script>
+	<script type="text/javascript" src="js/main/scaling.js"></script>
+	<script type="text/javascript" src="js/main/effects.js"></script>
+	<script type="text/javascript" src="js/main/early_game.js"></script>
+	<script type="text/javascript" src="js/main/ranks.js"></script>
+	<script type="text/javascript" src="js/main/tiers.js"></script>
+	<script type="text/javascript" src="js/main/rockets.js"></script>
+	<script type="text/javascript" src="js/main/special.js"></script>
+	<script type="text/javascript" src="js/main/rf.js"></script>
+	<script type="text/javascript" src="js/main/auto.js"></script>
+	<script type="text/javascript" src="js/main/tr.js"></script>
+	<script type="text/javascript" src="js/main/collapse.js"></script>
+	<script type="text/javascript" src="js/main/pathogens.js"></script>
+	<script type="text/javascript" src="js/main/dc.js"></script>
+	<script type="text/javascript" src="js/main/inf.js"></script>
+	<script type="text/javascript" src="js/main/elm.js"></script>
+	<script type="text/javascript" src="js/main/misc.js"></script>
+	<script type="text/javascript" src="js/main/timeSpeed.js"></script>
 
-	<!-- Extreme Mode Temp Data -->
+	<!-- Extreme Mode File Data -->
 
-	<script type="text/javascript" src="js/temp/extreme/rankCheap.js"></script>
-	<script type="text/javascript" src="js/temp/extreme/fn.js"></script>
+	<script type="text/javascript" src="js/main/extreme/rankCheap.js"></script>
+	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>

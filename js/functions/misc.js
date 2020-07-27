@@ -5,6 +5,8 @@ function deepCopy(obj) {
 function ENString(obj) {
 	let ret = deepCopy(obj);
 	if (ret.elementary === undefined) ret.elementary = deepCopy(DEFAULT_START.elementary);
+	if (ret.autoModes === undefined) ret.autoModes = {};
+	if (ret.autoTxt === undefined) ret.autoTxt = {};
 	ret.distance = new ExpantaNum(ret.distance).toString();
 	ret.velocity = new ExpantaNum(ret.velocity).toString();
 	ret.rank = new ExpantaNum(ret.rank).toString();
@@ -130,6 +132,8 @@ function ENString(obj) {
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount).toString();
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders).toString();
+	ret.elementary.time = new ExpantaNum(ret.elementary.time||0).toString();
+	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]]).toString();
 	return ret;
 }
 
@@ -147,6 +151,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
 	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory)
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
+	if (ret.autoModes === undefined) ret.autoModes = {};
+	if (ret.autoTxt === undefined) ret.autoTxt = {};
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);
@@ -272,6 +278,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount);
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders);
+	ret.elementary.time = new ExpantaNum(ret.elementary.time||0);
+	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]])
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }
@@ -314,9 +322,9 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (tmp.modes.hard.active&&!tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 8);
-	if (tmp.modes.easy.active||tmp.modes.extreme.active) a = a.filter(x => x / 10 <= 13);
-	if (tmp.modes.na.active) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
+	if (modeActive("hard")&&!modeActive("extreme")) a = a.filter(x => x / 10 <= 8);
+	if (modeActive("easy")||modeActive("extreme")) a = a.filter(x => x / 10 <= 13);
+	if (modeActive("na")) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
 

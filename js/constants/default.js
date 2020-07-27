@@ -15,6 +15,11 @@ const DEFAULT_START = {
 		elc: true,
 		saveImp: "new save",
 		hot: true,
+		featPerc: "logarithm",
+		dcPulse: true,
+		fonts: "courier",
+		hideAch: false,
+		visUpd: "every tick",
 	},
 	modes: [],
 	time: new Date().getTime(),
@@ -108,7 +113,10 @@ const DEFAULT_START = {
 		}
 	},
 	automators: {},
+	autoModes: {},
+	autoTxt: {},
 	elementary: {
+		time: new ExpantaNum(0),
 		times: new ExpantaNum(0),
 		particles: new ExpantaNum(0),
 		fermions: {

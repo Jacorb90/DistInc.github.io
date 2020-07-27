@@ -1,27 +1,23 @@
 function updateTemp() {
-	updateTempOptions();
-	updateTempNerfs();
-	updateTempScaling();
-	updateTempEffects();
 	updateTempEarlyGame();
 	updateTempRanks();
-	updateTempTiers();
+	updateTempTiers(); 
 	updateTempRockets();
-	updateTempSpecial();
+	updateTempSpecial(); 
 	updateTempRF();
 	updateTempAuto();
-	updateLayerMults();
+	updateLayerMults(); 
 	updateTempTR();
 	updateTempCollapse();
 	updateTempPathogens();
-	updateTempDC();
+	updateTempDC(); 
 	updateTempInf();
 	updateTempElementary();
-	updateTempSC();
+	updateTempSC(); 
 	updateTempMisc();
 	updateTempTimeSpeed();
 
-	if (tmp.modes.extreme.active) {
+	if (modeActive("extreme")) {
 		updateTempRankCheap();
 		updateTempFurnace();
 	}
@@ -32,7 +28,7 @@ function setupHTML() {
 	let achTable = new Element("achTable");
 	let table = "";
 	for (let r = 1; r <= ACH_DATA.rows; r++) {
-		table += "<tr>";
+		table += "<tr id='achR"+r+"'>";
 		for (let c = 1; c <= ACH_DATA.cols; c++) {
 			let id = r * 10 + c;
 			table += "<td id='ach" + id + "' class='achCont'>";
@@ -52,9 +48,9 @@ function setupHTML() {
 			table +=
 				"<td><button id='tr" +
 				id +
-				"' class='btn locked' onclick='tmp.tr.upg[" +
+				"' class='btn locked' onclick='buyTRUpg(" +
 				id +
-				"]()' style='height: 140px;'></button></td>";
+				")' style='height: 140px;'></button></td>";
 			table += "</td>";
 		}
 		table += "</tr>";
@@ -127,12 +123,35 @@ function setupHTML() {
 			(dp.includes("auto") || dp.includes("Auto") ? dp : "Auto-" + dp) +
 			": <input id='automator-" +
 			Object.keys(AUTOMATORS)[i] +
-			"' type='checkbox'></input></div><br>";
+			"' type='checkbox'></input><br>";
+		let name = Object.keys(AUTOMATORS)[i]
+		if (AUTOMATOR_X[name]!==undefined) {
+			if (AUTOMATOR_X[name]>=1) {
+				autos += "<button class='btn tb rckt' onclick='toggleAutoMode(&quot;"+name+"&quot;)'>Mode: <span id='autoMode"+name+"' style='color: black;'>"+AUTOMATOR_MODES[name][0]+"</span></button><br>"
+			}
+			if (AUTOMATOR_X[name]>=2) {
+				autos += "<br><input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
+			}
+		}
+		autos += "</div><br>";
 	}
 	au.setHTML(autos);
 	for (let i = 0; i < Object.keys(player.automators).length; i++) {
 		let el = new Element("automator-" + Object.keys(player.automators)[i]);
 		el.el.checked = Object.values(player.automators)[i];
+		let name = Object.keys(player.automators)[i]
+		if (AUTOMATOR_X[name]) {
+			if (AUTOMATOR_X[name]>=1) {
+				let btn = new Element("autoMode"+name)
+				if (!player.autoModes[name]) player.autoModes[name] = AUTOMATOR_MODES[name][0]
+				btn.setTxt(player.autoModes[name])
+			}
+			if (AUTOMATOR_X[name]>=2) {
+				let field = new Element("autoTxt"+name)
+				if (!player.autoTxt[name]) player.autoTxt[name] = new ExpantaNum(0)
+				field.setAttr("value", player.autoTxt[name].toString())
+			}
+		}
 	}
 
 	// Derivatives
@@ -203,21 +222,33 @@ function setupHTML() {
 	}
 	let v = new Element("version")
 	v.setTxt(player.version)
+	
+	// Element Setup
+	tmp.el = {}
+	let all = document.getElementsByTagName("*")
+	for (let i=0;i<all.length;i++) {
+		let x = all[i]
+		tmp.el[x.id] = new Element(x)
+	}
 }
 
 function updateBeforeTick() {
 	updateTemp();
-	updateHTML();
-	checkNaN();
+	let ticks = VIS_UPDS[player.options.visUpd]
+	if (visUpdTicks>=ticks) {
+		updateHTML();
+		checkNaN();
+		visUpdTicks = 0
+	}
 }
 
 function updateAfterTick() {
 	updateUnlocks();
 	if (player.options.autoSave && saveTimer >= AUTOSAVE_TIME) {
-		tmp.options.save();
+		save();
 		saveTimer = 0;
 	}
-	if (tmp.modes.absurd.active && !reloaded) {
+	if (modeActive("absurd") && !reloaded) {
 		window.resizeTo(Math.random() * 400, Math.random() * 400);
 		window.moveTo(Math.random() * 1000, Math.random() * 200);
 		const bufhiesibvfib = document.body.querySelectorAll("*");
@@ -247,7 +278,7 @@ function updateUnlocks() {
 }
 
 document.onkeydown = function(e) {
-	if (!player.options.hot) return
+	if (!player.options.hot || player.modes.includes("absurd")) return
 	let shiftDown = e.shiftKey
 	let key = e.which
 	switch(key) {

@@ -3,6 +3,14 @@ const INF_UNL = new ExpantaNum(Number.MAX_VALUE).times(DISTANCES.uni);
 const INF_UPGS = {
 	rows: 10,
 	cols: 10,
+	dispReqs: {
+		4: new ExpantaNum(3),
+		5: new ExpantaNum(6),
+		6: new ExpantaNum(10),
+		7: new ExpantaNum(15),
+		8: new ExpantaNum(21),
+		9: new ExpantaNum(28),
+	},
 	rowReqs: {
 		4: function () {
 			return player.inf.endorsements.gte(3);
@@ -375,7 +383,7 @@ const INF_UPGS = {
 	},
 	effects: {
 		"1;1": function () {
-			if (tmp.nerfs.active("noInf1;1")) return new ExpantaNum(1);
+			if (nerfActive("noInf1;1")) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
 			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
@@ -632,11 +640,14 @@ const INF_UPGS = {
 			if (ret.gte(4)) ret = ret.logBase(2).times(2)
 			return ret
 		},
-		"10;1": function() {
-			let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
-			if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
-			let snp = player.distance.plus(1).log10().plus(1).pow(10)
-			return {pth: ret, snp: snp}
+		"10;1": function(type) {
+			if (type=="pth") {
+				let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
+				if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+				return ret;
+			} else if (type=="snp") {
+				return player.distance.plus(1).log10().plus(1).pow(10)
+			}
 		},
 		"10;2": function() {
 			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1)

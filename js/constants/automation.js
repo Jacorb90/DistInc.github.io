@@ -47,7 +47,7 @@ const ROBOT_FL = {
 };
 const AUTOMATORS = {
 	furnace: function () {
-		return player.tr.upgrades.includes(21) && tmp.modes.extreme.active;
+		return player.tr.upgrades.includes(21) && modeActive("extreme");
 	},
 	pathogens: function () {
 		return tmp.inf.upgs.has("3;4")||tmp.elm.bos.hasHiggs("0;0;0");
@@ -76,4 +76,15 @@ const AUTOMATORS = {
 	spectral_gems: function() {
 		return tmp.elm.bos.hasHiggs("1;2;0")
 	},
+	elementaries: function() {
+		return tmp.ach[133].has
+	},
 };
+
+const AUTOMATOR_X = {
+	elementaries: 2,
+}
+
+const AUTOMATOR_MODES = {
+	elementaries: ["AMOUNT", "TIME"],
+}

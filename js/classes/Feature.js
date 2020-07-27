@@ -4,7 +4,7 @@ class Feature {
 		this.req = data.req;
 		this.res = data.res;
 		this.display = data.display;
-		this.r = data.reached || false;
+		this.r = data.reached || (function() { return false });
 		this.spec = data.spec ? data.spec : Array.isArray(data.res);
 		this.disp = data.displayName ? data.displayName : data.name;
 		this.progress = data.progress
@@ -32,9 +32,9 @@ class Feature {
 	get reached() {
 		if (this.res_amt > 1) {
 			let bool = true;
-			for (let i = 1; i <= this.res_amt; i++) bool = (bool && this.amt(i).gte(this.req[i - 1])) || this.r[i - 1];
+			for (let i = 1; i <= this.res_amt; i++) bool = (bool && this.amt(i).gte(this.req[i - 1])) || this.r();
 			return bool;
-		} else return this.amt().gte(this.req) || this.r;
+		} else return this.amt().gte(this.req) || this.r();
 	}
 
 	get desc() {

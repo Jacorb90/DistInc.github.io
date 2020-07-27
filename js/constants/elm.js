@@ -153,7 +153,7 @@ const HIGGS_UPGS = {
 	},
 	"0;1;4": {
 		cost: new ExpantaNum(2e20),
-		desc: "The first softcap to Pathogen Upgrade 1's effect is disabled, and Pathogen Upgrade 1's formula is better.",
+		desc: "The softcap to Pathogen Upgrade 1's effect is nerfed, and Pathogen Upgrade 1's formula is better.",
 		unl: function() { return hasDE(3) },
 	},
 }
@@ -274,7 +274,7 @@ const TREE_UPGS = {
 	},
 	12: {
 		unl: function() { return player.elementary.theory.accelerons.unl },
-		cost: function(bought) { return ExpantaNum.mul(100, bought.sqrt().plus(1)) },
+		cost: function(bought) { return ExpantaNum.mul(100, bought.sqrt().plus(1)).floor() },
 		cap: new ExpantaNum(12),
 		desc: "Accelerons are generated faster based on your Supersymmetric Wave length.",
 		effect: function(bought) { return tmp.elm.theory.ss.wavelength.plus(1).pow(0.04).pow(bought) },
@@ -349,7 +349,7 @@ const TREE_UPGS = {
 		cost: function(bought) { return new ExpantaNum(240) },
 		cap: new ExpantaNum(1),
 		desc: "Each Graviton Boost is twice as strong.",
-		effect: function(bought) { return new ExpantaNum(2).times(bought) },
+		effect: function(bought) { return new ExpantaNum(2).times(bought).max(1) },
 		effD: function(e) { return showNum(e)+"x" },
 	},
 	22: {

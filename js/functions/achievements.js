@@ -8,8 +8,8 @@ function updateAchievements() {
 	if (player.tr.unl) tmp.ach[17].grant();
 	if (player.collapse.cadavers.gt(0)) tmp.ach[18].grant();
 
-	if (player.distance.gte(tmp.modes.extreme.active ? 3e4 : 5e5)) tmp.ach[21].grant();
-	if (player.rank.gte(tmp.modes.extreme.active ? 6 : 8)) tmp.ach[22].grant();
+	if (player.distance.gte(modeActive("extreme") ? 3e4 : 5e5)) tmp.ach[21].grant();
+	if (player.rank.gte(modeActive("extreme") ? 6 : 8)) tmp.ach[22].grant();
 	if (player.tier.gte(3)) tmp.ach[23].grant();
 	if (player.rockets.gte(2)) tmp.ach[24].grant();
 	if (player.rf.gte(2)) tmp.ach[25].grant();
@@ -24,7 +24,7 @@ function updateAchievements() {
 	if (player.rf.gte(3)) tmp.ach[35].grant();
 	if (Object.keys(player.automation.robots).includes("tierbot")) tmp.ach[36].grant();
 	if (player.tr.upgrades.length >= 5) tmp.ach[37].grant();
-	if (tmp.collapse.hasMilestone(12)) tmp.ach[38].grant();
+	if (hasCollapseMilestone(12)) tmp.ach[38].grant();
 
 	if (player.distance.gte(10 * DISTANCES.pc)) tmp.ach[41].grant();
 	if (player.rank.gte(20)) tmp.ach[42].grant();
@@ -93,7 +93,7 @@ function updateAchievements() {
 	if (tmp.timeSpeed.gte(new ExpantaNum("2.22e2222"))) tmp.ach[105].grant();
 	if (player.inf.endorsements.gte(20)) tmp.ach[106].grant();
 	if (player.inf.stadium.completions.length >= 6) tmp.ach[107].grant();
-	if (!tmp.nerfs.active("maxVelActive")) tmp.ach[108].grant();
+	if (!nerfActive("maxVelActive")) tmp.ach[108].grant();
 
 	if (tmp.auto.fuelbot.interval.lt(1)) tmp.ach[111].grant();
 	if (tmp.acc.gte("2.2e10022")) tmp.ach[112].grant();
@@ -131,4 +131,8 @@ function updateAchievements() {
 	if (player.inf.knowledge.gte("1.8e308")) tmp.ach[146].grant()
 	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
 	if (player.rank.gte(995)) tmp.ach[148].grant()
+}
+
+function rowComplete(r) {
+	return [r*10+1,r*10+2,r*10+3,r*10+4,r*10+5,r*10+6,r*10+7,r*10+8].every(i => player.achievements.includes(i))
 }

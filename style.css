@@ -5,13 +5,14 @@
 	--ach: #4ceb34;
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
+	--font: Courier;
 }
 
 * {
 	user-select: none;
 	margin: 0;
 	padding: 0;
-	font-family: Courier;
+	font-family: var(--font);
 }
 
 *:focus {
@@ -532,7 +533,15 @@ table {
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
+	animation: none;
+}
+
+.dcAnim {
 	animation: darkcircle 1.5s ease infinite;
+}
+
+.dcSlowAnim {
+	animation: darkcircle 0.7s ease infinite;
 }
 
 .darkcore {
@@ -554,7 +563,7 @@ table {
 	font-weight: bold;
 	text-align: center;
 	vertical-align: center;
-	animation: darkcore 0.7s ease infinite;
+	animation: none;
 }
 
 .darkcore.locked {
@@ -1019,8 +1028,8 @@ table {
 #dc {
 	background-image: var(--threeArrows);
 	background-repeat: no-repeat;
-	background-size: 45% 90%;
-	background-position: 47.5% 85%;
+	background-size: 550px 550px;
+	background-position: calc(50% - 25px) 20px;
 }
 
 #newsticker {
@@ -1091,7 +1100,7 @@ table {
 
 .lepton {
 	font-weight: bold;
-	color: #d136a5;
+	color: #47a18f;
 	font-size: 24px;
 }
 
@@ -1305,7 +1314,7 @@ table {
 	color: #e66700;
 	font-size: 12px;
 	font-weight: bold;
-	max-width: 200px;
+	max-width: 225px !important;
 	padding: 7px 25px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px black;
@@ -1398,6 +1407,16 @@ table {
 
 .halfline {
   line-height: .5em;
+}
+
+.ob {
+	min-height: 35px;
+	min-width: 100px;
+}
+
+.ob_t {
+	min-height: 50px;
+	min-width: 100px;
 }
 
 @keyframes grosstxt {

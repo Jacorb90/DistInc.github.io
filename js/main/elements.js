@@ -1,11 +1,4 @@
 function updateHTML() {
-	// Element Setup
-	tmp.el = {};
-	for (i = 0; i < TMP_DATA.ELS.length; i++) {
-		let id = TMP_DATA.ELS[i];
-		tmp.el[id] = new Element(id);
-	}
-
 	// Options
 	if (player.tab == "options") {
 		for (let i = 0; i < Object.keys(MODES).length; i++) {
@@ -13,6 +6,7 @@ function updateHTML() {
 				btn: true,
 				tb: true,
 				opt: !modesSelected.includes(Object.keys(MODES)[i]),
+				ob: true,
 				optSelected: modesSelected.includes(Object.keys(MODES)[i])
 			});
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
@@ -26,6 +20,12 @@ function updateHTML() {
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
 		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
+		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
+		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
+		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
+		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
+		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"))
+		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd))
 	}
 
 	// Main
@@ -35,14 +35,14 @@ function updateHTML() {
 			formatDistance(player.distance) +
 				" (+" +
 				formatDistance(
-					tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)
+					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 				) +
 				"/sec)"
 		);
 		tmp.el.velocity.setTxt(
 			formatDistance(player.velocity) +
 				"/s (+" +
-				formatDistance(tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)) +
+				formatDistance(adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 				"/sec)"
 		);
 		tmp.el.maxVel.setTxt(formatDistance(tmp.maxVel));
@@ -53,17 +53,17 @@ function updateHTML() {
 		tmp.el.rankUp.setClasses({ btn: true, locked: !tmp.ranks.canRankUp });
 		tmp.el.rankDesc.setTxt(tmp.ranks.desc);
 		tmp.el.rankReq.setTxt(formatDistance(tmp.ranks.req));
-		tmp.el.rankName.setTxt(tmp.scaling.getName("rank") + "Rank");
+		tmp.el.rankName.setTxt(getScalingName("rank") + "Rank");
 
 		// Tiers
 		tmp.el.tier.setTxt(showNum(player.tier));
 		tmp.el.tierUp.setClasses({ btn: true, locked: !tmp.tiers.canTierUp });
 		tmp.el.tierDesc.setTxt(tmp.tiers.desc);
 		tmp.el.tierReq.setTxt(showNum(tmp.tiers.req.ceil()));
-		tmp.el.tierName.setTxt(tmp.scaling.getName("tier") + "Tier");
+		tmp.el.tierName.setTxt(getScalingName("tier") + "Tier");
 		
 		// Misc
-		tmp.el.mvName.setTxt(tmp.nerfs.active("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
+		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
 	}
 
@@ -75,21 +75,21 @@ function updateHTML() {
 		tmp.el.rocketsAmt.setTxt(
 			showNum(player.rockets) +
 				" rockets" +
-				(tmp.ach[95].has && !tmp.nerfs.active("noRockets")
+				(tmp.ach[95].has && !nerfActive("noRockets")
 					? " (+" + showNum(tmp.rockets.layer.gain) + "/sec)"
-					: tmp.collapse.hasMilestone(9) && !tmp.nerfs.active("noRockets")
+					: hasCollapseMilestone(9) && !nerfActive("noRockets")
 					? " (+" + showNum(tmp.rockets.layer.gain.div(100)) + "/sec)"
 					: "")
 		);
-		tmp.el.rocketsEff.setTxt(showNum(tmp.rockets.eff));
+		tmp.el.rocketsEff.setTxt(showNum(getRocketEffect()));
 
 		// Rocket Fuel
-		tmp.el.rf.setTxt(showNum(player.rf) + (tmp.freeRF.gt(0) ? " + " + showNum(tmp.freeRF) : ""));
+		tmp.el.rf.setTxt(showNum(player.rf) + (getFreeFuel().gt(0) ? " + " + showNum(getFreeFuel()) : ""));
 		tmp.el.rfReset.setClasses({ btn: true, locked: !tmp.rf.can, rckt: tmp.rf.can });
 		tmp.el.rfReq.setTxt(showNum(tmp.rf.req));
-		tmp.el.rfEff.setTxt(showNum(tmp.rf.eff.sub(1).times(100)));
-		tmp.el.rfName.setTxt(tmp.scaling.getName("rf") + "Rocket Fuel");
-		tmp.el.rf2.setTxt(showNum(tmp.rf.eff2));
+		tmp.el.rfEff.setTxt(showNum(getFuelEff().sub(1).times(100)));
+		tmp.el.rfName.setTxt(getScalingName("rf") + "Rocket Fuel");
+		tmp.el.rf2.setTxt(showNum(getFuelEff2()));
 	}
 
 	// Features
@@ -98,8 +98,12 @@ function updateHTML() {
 	// Achievements
 	if (player.tab == "achievements") {
 		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
-		let all = tmp.ga == tmp.ta && !tmp.modes.aau.active;
+		let all = tmp.ga == tmp.ta && !modeActive("aau");
+		let rowsActive = Math.floor(tmp.ta/8)
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
+			let rc = rowComplete(r)
+			tmp.el["achR"+r].setDisplay(!(player.options.hideAch&&rc))
+			if (rc && player.options.hideAch) rowsActive--
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
 				let id = r * 10 + c;
 				tmp.el["ach" + id].setTxt(id);
@@ -109,10 +113,11 @@ function updateHTML() {
 					dgn: player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined && !all,
 					blocked: ACH_DATA.descs[id] === undefined
 				});
-				tmp.el["ach" + id].changeStyle("visibility", getAllAchievements().includes(id) ? "visible" : "hidden");
+				tmp.el["ach" + id].changeStyle("visibility", (getAllAchievements().includes(id)) ? "visible" : "hidden");
 				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
 			}
 		}
+		tmp.el.achFin.setTxt(rowsActive==0?"All Achievements are completed!":"")
 	}
 
 	// Automation
@@ -123,9 +128,7 @@ function updateHTML() {
 				" scraps" +
 				(" (+" +
 					showNum(
-						tmp.nerfs
-							.adjust(tmp.auto.scrapGain, "scraps")
-							.times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)
+						adjustGen(getScrapGain(), "scraps").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 					) +
 					"/sec)")
 		);
@@ -134,7 +137,7 @@ function updateHTML() {
 				" intelligence" +
 				(" (+" +
 					showNum(
-						tmp.nerfs.adjust(tmp.auto.intGain, "intel").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)
+						adjustGen(getIntelligenceGain(), "intel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 					) +
 					"/sec)")
 		);
@@ -151,9 +154,9 @@ function updateHTML() {
 				)
 			});
 		}
-		tmp.el.rankCheapbot.setDisplay(tmp.modes.extreme.active);
+		tmp.el.rankCheapbot.setDisplay(modeActive("extreme"));
 		tmp.el.fuelbot.setDisplay(
-			tmp.collapse.hasMilestone(5) ||
+			hasCollapseMilestone(5) ||
 				(player.automation.robots.fuelbot ? player.automation.robots.fuelbot[1].gt(0) : false)
 		);
 		tmp.el.robotTab.setDisplay(player.automation.open != "none");
@@ -195,6 +198,7 @@ function updateHTML() {
 			tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
 			player.automators[Object.keys(AUTOMATORS)[i]] =
 				tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
+			let name = Object.keys(AUTOMATORS)[i]
 		}
 	}
 
@@ -205,18 +209,18 @@ function updateHTML() {
 			showNum(player.tr.cubes) +
 				" Time Cubes" +
 				(" (+" +
-					showNum(tmp.nerfs.adjust(tmp.tr.cg, "tc").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)) +
+					showNum(adjustGen(getTimeCubeGain(), "tc").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 					"/sec)")
 		);
 		tmp.el.frf.setTxt(showNum(tmp.tr.eff));
 		for (let i = 1; i <= TR_UPG_AMT; i++) {
 			let upg = TR_UPGS[i];
 			let desc = upg.desc;
-			if (!tmp.tr2e.eq(1) && i == 2) desc += "<span class='grossminitxt'>(^" + showNum(tmp.tr2e) + ")</span>";
-			if (!tmp.tr11pow.eq(1) && i == 11)
-				desc += "<span class='grossminitxt'>(^" + showNum(tmp.tr11pow) + ")</span>";
+			if (!tr2Pow().eq(1) && i == 2) desc += "<span class='grossminitxt'>(^" + showNum(tr2Pow()) + ")</span>";
+			if (!tr11Pow().eq(1) && i == 11)
+				desc += "<span class='grossminitxt'>(^" + showNum(tr11Pow()) + ")</span>";
 			tmp.el["tr" + i].setHTML(desc + "<br>Cost: " + showNum(upg.cost) + " Time Cubes.");
-			if (upg.current !== undefined && (i > 15 ? tmp.modes.extreme.active : true))
+			if (upg.current !== undefined && (i > 15 ? modeActive("extreme") : true))
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
 			tmp.el["tr" + i].setClasses({
 				btn: true,
@@ -226,9 +230,9 @@ function updateHTML() {
 			});
 		}
 		tmp.el.trRow3.setDisplay(player.dc.unl || tmp.inf.upgs.has("1;4"));
-		tmp.el.trRow4.setDisplay(tmp.modes.extreme.active);
-		tmp.el.trRow5.setDisplay(tmp.modes.extreme.active && player.collapse.unl);
-		tmp.el.trRow6.setDisplay(tmp.modes.extreme.active && player.dc.unl);
+		tmp.el.trRow4.setDisplay(modeActive("extreme"));
+		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
+		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
 	}
 
 	// Universal Collapse
@@ -239,14 +243,14 @@ function updateHTML() {
 			"<span class='dead'>" +
 				showNum(player.collapse.cadavers) +
 				"</span> cadavers<span class='dead'>" +
-				(tmp.ach[96].has && !tmp.nerfs.active("noCadavers")
+				(tmp.ach[96].has && !nerfActive("noCadavers")
 					? " (+" + showNum(tmp.collapse.layer.gain) + "/sec)"
-					: tmp.inf.upgs.has("2;4") && !tmp.nerfs.active("noCadavers")
+					: tmp.inf.upgs.has("2;4") && !nerfActive("noCadavers")
 					? " (+" + showNum(tmp.collapse.layer.gain.div(100)) + "/sec)"
 					: "") +
 				"</span>"
 		);
-		tmp.el.cadaverEff.setTxt(showNum(tmp.collapse.eff));
+		tmp.el.cadaverEff.setTxt(showNum(getCadaverEff()));
 		tmp.el.sacrificeCadavers.setClasses({
 			btn: true,
 			locked: player.collapse.cadavers.eq(0),
@@ -256,9 +260,9 @@ function updateHTML() {
 			"<span class='alive'>" +
 				showNum(player.collapse.lifeEssence) +
 				"</span> life essence<span class='alive'>" +
-				(tmp.ach[97].has && !tmp.nerfs.active("noLifeEssence")
+				(tmp.ach[97].has && !nerfActive("noLifeEssence")
 					? " (+" + showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1)) + "/sec)"
-					: tmp.inf.upgs.has("5;3") && !tmp.nerfs.active("noLifeEssence")
+					: tmp.inf.upgs.has("5;3") && !nerfActive("noLifeEssence")
 					? " (+" + showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).div(10)) + "/sec)"
 					: "")
 		);
@@ -266,7 +270,7 @@ function updateHTML() {
 			let ms = ESSENCE_MILESTONES[i];
 			tmp.el["lem" + i].setHTML(ms.desc + "<br>Req: " + showNum(ms.req) + " Life Essence.");
 			if (ms.disp !== undefined) tmp.el["lem" + i].setTooltip("Currently: " + ms.disp());
-			tmp.el["lem" + i].setClasses({ msCont: true, r: !tmp.collapse.hasMilestone(i) });
+			tmp.el["lem" + i].setClasses({ msCont: true, r: !hasCollapseMilestone(i) });
 		}
 	}
 
@@ -276,7 +280,7 @@ function updateHTML() {
 			"<span class='grosstxt'>" +
 				showNum(player.pathogens.amount) +
 				"</span> Pathogens<span class='grosstxt'>" +
-				(" (+" + showNum(tmp.nerfs.adjust(tmp.pathogens.gain, "pathogens")) + "/sec)") +
+				(" (+" + showNum(adjustGen(tmp.pathogens.gain, "pathogens")) + "/sec)") +
 				"</span>"
 		);
 		for (let i = 1; i <= PTH_AMT; i++) {
@@ -290,13 +294,13 @@ function updateHTML() {
 			tmp.el["pth" + i].setHTML(
 				PTH_UPGS[i].desc +
 					"<br>" +
-					tmp.scaling.getName("pathogenUpg", i) +
+					getScalingName("pathogenUpg", i) +
 					"Level: " +
 					showNum(player.pathogens.upgrades[i]) +
-					(tmp.pathogens[i].extra.gt(0) ? " + " + showNum(tmp.pathogens[i].extra) : "") +
+					(tmp.pathogens.extra(i).gt(0) ? " + " + showNum(tmp.pathogens.extra(i)) : "") +
 					"<br>Currently: " +
-					tmp.pathogens[i].disp +
-					(player.pathogens.upgrades[i].gte(tmp.pathogens.sc[i])
+					tmp.pathogens.disp(i) +
+					(player.pathogens.upgrades[i].gte(getPathogenUpgSoftcapStart(i))
 						? "<span class='sc'>(softcapped)</span>"
 						: "") +
 					"<br>Cost: " +
@@ -305,15 +309,15 @@ function updateHTML() {
 			);
 		}
 		tmp.el.pthUpgPow.setHTML(
-			!tmp.pathogens.upgPow.eq(1) ? "Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%<br>" : ""
+			!tmp.pathogens.upgPow.eq(1) ? ("Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%"+(tmp.pathogens.upgPow.gte(10)?" <span class='sc'>(softcapped)</span>":"")+"<br>") : ""
 		);
 		
 		tmp.el.tdeEff.setHTML(
 			tmp.ach[63].has
 				? "Time Doesn't Exist multiplier: " +
-					showNum(tmp.ach63) +
+					showNum(ach63Eff()) +
 					"x " +
-					(tmp.ach63.gte(tmp.ach63sc) ? "<span class='sc'>(softcapped)</span>" : "") +
+					(ach63Eff().gte(ach63SC()) ? "<span class='sc'>(softcapped)</span>" : "") +
 					"<br><br>"
 				: ""
 		);
@@ -333,7 +337,7 @@ function updateHTML() {
 			"Dark Matter<br>Amount: " +
 				showNum(player.dc.matter) +
 				"<br>Gain: +" +
-				showNum(tmp.nerfs.adjust(tmp.dc.dmGain, "dc").times(tmp.dc.flow)) +
+				showNum(adjustGen(tmp.dc.dmGain, "dc").times(tmp.dc.flow)) +
 				"/s<br>Effect: You gain " +
 				showNum(tmp.dc.dmEff) +
 				"x as many Rockets."
@@ -342,7 +346,7 @@ function updateHTML() {
 			"Dark Energy<br>Amount: " +
 				showNum(player.dc.energy) +
 				"<br>Gain: +" +
-				showNum(tmp.nerfs.adjust(tmp.dc.deGain, "dc").times(tmp.dc.flow)) +
+				showNum(adjustGen(tmp.dc.deGain, "dc").times(tmp.dc.flow)) +
 				"/s<br>Effect: You gain " +
 				showNum(tmp.dc.deEff) +
 				"x as many Time Cubes."
@@ -351,13 +355,13 @@ function updateHTML() {
 			"Dark Fluid<br>Amount: " +
 				showNum(player.dc.fluid) +
 				"<br>Gain: +" +
-				showNum(tmp.nerfs.adjust(tmp.dc.dfGain, "dc").times(tmp.dc.flow)) +
+				showNum(adjustGen(tmp.dc.dfGain, "dc").times(tmp.dc.flow)) +
 				"/s<br>Effect: Scaled Rocket Fuel scaling starts " +
 				showNum(tmp.dc.dfEff) +
 				" Rocket Fuel later."
 		);
 		tmp.el.darkCore.setHTML(
-			tmp.scaling.getName("darkCore") +
+			getScalingName("darkCore") +
 				"Dark Cores<br>Amount: " +
 				showNum(player.dc.cores) +
 				"<br>Cost: " +
@@ -367,10 +371,14 @@ function updateHTML() {
 					? "<br>Effect: +" + showNum(tmp.dc.coreEff.times(100)) + "% Pathogen Upgrade Power"
 					: "")
 		);
+		tmp.el.darkMatter.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
+		tmp.el.darkEnergy.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
+		tmp.el.darkFluid.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
 		tmp.el.darkCore.setClasses({
 			darkcore: true,
 			locked: player.collapse.cadavers.lt(tmp.dc.coreCost),
-			inactive: tmp.dc.dmGain.eq(0)
+			inactive: tmp.dc.dmGain.eq(0),
+			dcAnim: player.options.dcPulse
 		});
 		tmp.el.arrowToDarkMatter.setHTML(tmp.dc.dmGain.gt(0) ? "&#8593;" : "");
 		tmp.el.darkFlow.setTxt(showNum(tmp.dc.flow));
@@ -387,17 +395,26 @@ function updateHTML() {
 				? "Complete this Stadium challenge."
 				: 'Allow <span class="infinity">Infinity</span> to endorse you.'
 		);
+		let nextUnl;
+		for (let i=0;i<Object.keys(INF_UPGS.dispReqs).length;i++) {
+			let key = Object.keys(INF_UPGS.dispReqs)[i]
+			if (player.inf.endorsements.lt(INF_UPGS.dispReqs[key])) {
+				nextUnl = key
+				break;
+			}
+		}
+		tmp.el.nextIUs.setTxt(nextUnl ? ("Next set of Infinity Upgrades at Endorsement "+showNum(INF_UPGS.dispReqs[nextUnl])+".") : "")
 		tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10));
 		if (infTab == "infinity") {
 			tmp.el.endorsements.setTxt(showNum(player.inf.endorsements));
 			tmp.el.knowledgeBase.setTxt(showNum(tmp.inf.knowledgeBase));
 			tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req));
 			tmp.el.knowledge.setTxt(showNum(player.inf.knowledge));
-			tmp.el.knowledgeGain.setTxt(showNum(tmp.nerfs.adjust(tmp.inf.knowledgeGain, "knowledge")));
+			tmp.el.knowledgeGain.setTxt(showNum(adjustGen(tmp.inf.knowledgeGain, "knowledge")));
 			for (let r = 1; r <= INF_UPGS.rows; r++) {
 				for (let c = 1; c <= INF_UPGS.cols; c++) {
 					let state = "";
-					if (tmp.inf.upgs.repealed(r+";"+c) && !tmp.modes.easy.active) state = "repealed";
+					if (tmp.inf.upgs.repealed(r+";"+c) && !modeActive("easy")) state = "repealed";
 					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
 					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
 					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";
@@ -412,10 +429,11 @@ function updateHTML() {
 					});
 				}
 			}
-			tmp.el.endorsementName.setTxt(tmp.scaling.getName("endorsements") + " ");
+			tmp.el.endorsementName.setTxt(getScalingName("endorsements") + " ");
 			
+			let ach112 = ach112Eff()
 			tmp.el.tudeEff.setHTML(
-				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(tmp.ach112) + "x<br><br>" : ""
+				tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(ach112) + "x"+(ach112.gte(1e160)?" <span class='sc'>(softcapped)</span>":"")+"<br><br>" : ""
 			);
 		}
 
@@ -442,7 +460,7 @@ function updateHTML() {
 					inf: player.inf.ascension.power.gte(tmp.inf.asc.enlCost(i)),
 					locked: player.inf.ascension.power.lt(tmp.inf.asc.enlCost(i))
 				});
-				let name = tmp.scaling.getName("enlightenments", i);
+				let name = getScalingName("enlightenments", i);
 				tmp.el["enlScale" + i].setTxt(name == "" ? "" : name + " ");
 			}
 			tmp.el.perkPower.setTxt("Perk Strength: " + showNum(tmp.inf.asc.perkStrength.times(100)) + "%");
@@ -451,7 +469,7 @@ function updateHTML() {
 				"Ascension Power: <span style='font-size: 25px; color: red;'>" +
 					showNum(player.inf.ascension.power) +
 					"</span> (+" +
-					showNum(tmp.nerfs.adjust(tmp.inf.asc.powerGain, "ascension")) +
+					showNum(adjustGen(tmp.inf.asc.powerGain, "ascension")) +
 					"/sec)"
 			);
 			tmp.el.perkAccel.setHTML(tmp.elm.pa.active?("Your "+(tmp.elm.pa.state==""?"":(capitalFirst(tmp.elm.pa.state)+" "))+"Perk Accelerator is making Perks be used up <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.speedBoost)+"</span>x as fast, but in return, your Perks are <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.boost)+"</span>x as strong."):"")
@@ -467,7 +485,7 @@ function updateHTML() {
 					comp: player.inf.stadium.completions.includes(name)
 				});
 				let active = player.inf.stadium.current == name;
-				let trapped = !active && tmp.inf.stadium.active(name) && !tmp.modes.extreme.active;
+				let trapped = !active && tmp.inf.stadium.active(name) && !modeActive("extreme");
 				let comp = player.inf.stadium.completions.includes(name);
 				tmp.el[name + "Chall"].setTxt(trapped ? "Trapped" : active ? "Active" : comp ? "Completed" : "Start");
 				tmp.el[name + "Chall"].setClasses({
@@ -494,7 +512,7 @@ function updateHTML() {
 		if (infTab == "pantheon") {
 			tmp.el.spectralGems.setTxt(showNum(player.inf.pantheon.gems));
 			tmp.el.nextSpectralGem.setTxt(showNum(tmp.inf.pantheon.next.ceil()));
-			let name = tmp.scaling.getName("spectralGems");
+			let name = getScalingName("spectralGems");
 			tmp.el.spectralGemName.setTxt(name == "" ? "" : name + " ");
 			tmp.el.respecSpectralGems.setClasses({
 				btn: true,
@@ -515,13 +533,13 @@ function updateHTML() {
 			});
 			tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips));
 			tmp.el.chipGain.setTxt(
-				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.chipGain, "heavenlyChips")) + "/sec)"
+				"(+" + showNum(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips")) + "/sec)"
 			);
 			tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
 			tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls));
 			tmp.el.soulGain.setTxt(
-				"(+" + showNum(tmp.nerfs.adjust(tmp.inf.pantheon.soulGain, "demonicSouls")) + "/sec)"
+				"(+" + showNum(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls")) + "/sec)"
 			);
 			tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)));
 			tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
@@ -547,12 +565,12 @@ function updateHTML() {
 				tmp.el["dervDiv" + name].setDisplay(tmp.inf.derv.unlocked(name));
 				tmp.el["derv" + name].setTxt(formatDistance(tmp.inf.derv.amt(name)));
 				tmp.el["dervgain" + name].setTxt(
-					"(+" + formatDistance(tmp.nerfs.adjust(tmp.inf.derv.gain(name), "derv")) + "/sec)"
+					"(+" + formatDistance(adjustGen(tmp.inf.derv.gain(name), "derv")) + "/sec)"
 				);
 			}
 			let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts) ? "Boosts" : "Shifts";
 			tmp.el.dervUnlock.setHTML(
-				tmp.scaling.getName("dervBoost") +
+				getScalingName("dervBoost") +
 					" Derivative " +
 					dervName +
 					" (" +
@@ -570,15 +588,15 @@ function updateHTML() {
 	}
 
 	// Extreme Mode
-	tmp.el.rankCheapDiv.setDisplay(tmp.modes.extreme.active);
-	if (tmp.modes.extreme.active) {
+	tmp.el.rankCheapDiv.setDisplay(modeActive('extreme'));
+	if (modeActive("extreme")) {
 		// Rank Cheapeners
 		tmp.el.rankCheap.setTxt(
 			showNum(player.rankCheap) + (tmp.rankCheap.free.eq(0) ? "" : " + " + showNum(tmp.rankCheap.free))
 		);
 		tmp.el.rankCheapUp.setClasses({ btn: true, locked: !tmp.rankCheap.can });
 		tmp.el.rankCheapReq.setTxt(formatDistance(tmp.rankCheap.req));
-		tmp.el.rankCheapName.setTxt(tmp.scaling.getName("rankCheap") + "Rank Cheapener");
+		tmp.el.rankCheapName.setTxt(getScalingName("rankCheap") + "Rank Cheapener");
 
 		// The Furnace
 		if (player.tab=="furnace") {
@@ -586,7 +604,7 @@ function updateHTML() {
 				showNum(player.furnace.coal) +
 					" Coal" +
 					(" (+" +
-						showNum(tmp.nerfs.adjust(tmp.fn.gain, "fn").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)) +
+						showNum(adjustGen(tmp.fn.gain, "fn").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 						"/sec)")
 			);
 			tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
@@ -597,7 +615,7 @@ function updateHTML() {
 					fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
 				});
 				tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
-				tmp.el["fnu" + i + "name"].setTxt(tmp.scaling.getName("fn", i));
+				tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
 				tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
 			}
 			tmp.el.bf.setClasses({
@@ -632,8 +650,9 @@ function updateHTML() {
 				let func = Object.values(SCALING_RES)[r]
 				let key = Object.keys(SCALING_RES)[r]
 				let amt = func(1)
-				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!player.modes.includes("extreme"))) continue
-				if (amt.gte(tmp.scalings[name][key])) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(tmp.scalingPower[name][key].times(100))+"%): Starts at "+showNum(tmp.scalings[name][key])+"\n"
+				if (MULTI_SCALINGS.includes(key)) for (let i=1;i<=SCALING_AMTS[key];i++) amt = ExpantaNum.max(amt, func(i))
+				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
+				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
 			}
 			let blank = ""
 			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
@@ -683,7 +702,7 @@ function updateHTML() {
 			tmp.el.quarks.setHTML(
 				showNum(player.elementary.fermions.quarks.amount) + " " + tmp.elm.ferm.quarkName() + " Quarks"
 			);
-			tmp.el.quarkGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.ferm.quarkGain, "quarks")));
+			tmp.el.quarkGain.setTxt(showNum(adjustGen(tmp.elm.ferm.quarkGain, "quarks")));
 			tmp.el.quarkRewards.setTooltip(
 				tmp.elm.ferm.quarkName(true) +
 					" Quarks: " +
@@ -694,7 +713,7 @@ function updateHTML() {
 			tmp.el.leptons.setHTML(
 				showNum(player.elementary.fermions.leptons.amount) + " " + tmp.elm.ferm.leptonName() + " Leptons"
 			);
-			tmp.el.leptonGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.ferm.leptonGain, "leptons")));
+			tmp.el.leptonGain.setTxt(showNum(adjustGen(tmp.elm.ferm.leptonGain, "leptons")));
 			tmp.el.leptonRewards.setTooltip(
 				tmp.elm.ferm.leptonName(true) +
 					" Leptons: " +
@@ -727,32 +746,32 @@ function updateHTML() {
 			if (bosTab == "gauge") {
 				// Gauge Bosons
 				tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount));
-				tmp.el.gaugeGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gaugeGain, "gauge")));
+				tmp.el.gaugeGain.setTxt(showNum(adjustGen(tmp.elm.bos.gaugeGain, "gauge")));
 				tmp.el.gaugeForce.setTxt(showNum(player.elementary.bosons.gauge.force));
 				tmp.el.gaugeForceGain.setTxt(showNum(tmp.elm.bos.forceGain));
 				tmp.el.gaugeForceEff.setTxt(showNum(tmp.elm.bos.forceEff));
 
 				// Photons
 				tmp.el.photons.setTxt(showNum(player.elementary.bosons.gauge.photons.amount));
-				tmp.el.photonGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.photonGain, "gauge")));
+				tmp.el.photonGain.setTxt(showNum(adjustGen(tmp.elm.bos.photonGain, "gauge")));
 				for (let i = 1; i <= PHOTON_UPGS; i++) {
 					tmp.el["photon" + i].setClasses({
 						btn: true,
 						locked: player.elementary.bosons.gauge.photons.amount.lt(tmp.elm.bos.photonCost[i]),
 						light: player.elementary.bosons.gauge.photons.amount.gte(tmp.elm.bos.photonCost[i])
 					});
-					tmp.el["photonLvl" + i].setTxt(tmp.scaling.getName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
+					tmp.el["photonLvl" + i].setTxt(getScalingName("photons", i)+"Level: "+showNum(player.elementary.bosons.gauge.photons.upgrades[i - 1]));
 					tmp.el["photonDesc" + i].setTxt(showNum(tmp.elm.bos.photonEff(i)) + "x");
 					tmp.el["photonCost" + i].setTxt(showNum(tmp.elm.bos.photonCost[i]));
 				}
 
 				// W & Z Bosons
 				tmp.el.w.setTxt(showNum(player.elementary.bosons.gauge.w));
-				tmp.el.wg.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.wg, "gauge")));
+				tmp.el.wg.setTxt(showNum(adjustGen(tmp.elm.bos.wg, "gauge")));
 				tmp.el.w1.setTxt(showNum(tmp.elm.bos.w1));
 				tmp.el.w2.setTxt(showNum(tmp.elm.bos.w2));
 				tmp.el.z.setTxt(showNum(player.elementary.bosons.gauge.z));
-				tmp.el.zg.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.zg, "gauge")));
+				tmp.el.zg.setTxt(showNum(adjustGen(tmp.elm.bos.zg, "gauge")));
 				tmp.el.z1.setTxt(showNum(tmp.elm.bos.z1));
 				tmp.el.z2.setTxt(showNum(tmp.elm.bos.z2));
 
@@ -761,7 +780,7 @@ function updateHTML() {
 					let col = GLUON_COLOURS[i];
 					let amt = player.elementary.bosons.gauge.gluons[col].amount;
 					tmp.el[col + "g"].setTxt(showNum(amt));
-					tmp.el[col + "gg"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos[col + "g"], "gauge")));
+					tmp.el[col + "gg"].setTxt(showNum(adjustGen(tmp.elm.bos[col + "g"], "gauge")));
 					tmp.el["glu"+col+"3"].setDisplay(hasDE(1))
 					for (let x = 1; x <= 3; x++) {
 						tmp.el[col + "Upg" + x].setClasses({
@@ -779,7 +798,7 @@ function updateHTML() {
 
 				// Gravitons
 				tmp.el.grav.setTxt(showNum(player.elementary.bosons.gauge.gravitons));
-				tmp.el.gravGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.gravGain, "gauge")));
+				tmp.el.gravGain.setTxt(showNum(adjustGen(tmp.elm.bos.gravGain, "gauge")));
 				tmp.el.gravMult.setTxt(showNum(tmp.elm.bos.gravEff));
 				tmp.el.gravBoostDiv.setDisplay(hasDE(4))
 				tmp.el.gravBoosts.setTxt(showNum(getGravBoosts()));
@@ -788,9 +807,9 @@ function updateHTML() {
 			if (bosTab == "scalar") {
 				// Scalar Bosons
 				tmp.el.scalarAmt.setTxt(showNum(player.elementary.bosons.scalar.amount));
-				tmp.el.scalarGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.scalarGain, "scalar")));
+				tmp.el.scalarGain.setTxt(showNum(adjustGen(tmp.elm.bos.scalarGain, "scalar")));
 				tmp.el.higgs.setTxt(showNum(player.elementary.bosons.scalar.higgs.amount))
-				tmp.el.higgsGain.setTxt(showNum(tmp.nerfs.adjust(tmp.elm.bos.higgsGain, "scalar")))
+				tmp.el.higgsGain.setTxt(showNum(adjustGen(tmp.elm.bos.higgsGain, "scalar")))
 				for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
 					let name = Object.keys(HIGGS_UPGS)[i]
 					let data = Object.values(HIGGS_UPGS)[i]
@@ -820,7 +839,7 @@ function updateHTML() {
 				for (let i=0;i<4;i++) {
 					let type = ["squark","slepton","neutralino","chargino"][i]
 					tmp.el[type+"s"].setTxt(showNum(player.elementary.theory.supersymmetry[type+"s"]))
-					tmp.el[type+"Gain"].setTxt(showNum(tmp.nerfs.adjust(tmp.elm.theory.ss[type+"Gain"], "ss")))
+					tmp.el[type+"Gain"].setTxt(showNum(adjustGen(tmp.elm.theory.ss[type+"Gain"], "ss")))
 					tmp.el[type+"Eff"].setTxt(showNum(tmp.elm.theory.ss[type+"Eff"]))
 				}
 				tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength))
@@ -845,7 +864,7 @@ function updateHTML() {
 					if (i>1) tmp.el["str"+i].setDisplay(player.elementary.theory.strings.amounts[i-2].gte(STR_REQS[i])&&(UNL_STR()>=i))
 					tmp.el["str"+i+"amt"].setTxt(formatDistance(player.elementary.theory.strings.amounts[i-1]))
 					tmp.el["str"+i+"eff"].setTxt(showNum(getStringEff(i)))
-					tmp.el["str"+i+"gain"].setTxt(formatDistance(tmp.nerfs.adjust(getStringGain(i), "str")))
+					tmp.el["str"+i+"gain"].setTxt(formatDistance(adjustGen(getStringGain(i), "str")))
 				}
 				let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
 				tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])))
@@ -859,7 +878,7 @@ function updateHTML() {
 				tmp.el.preonsUnl.setDisplay(!player.elementary.theory.preons.unl)
 				tmp.el.preonsDiv.setDisplay(player.elementary.theory.preons.unl)
 				tmp.el.preonAmt.setTxt(showNum(player.elementary.theory.preons.amount))
-				tmp.el.preonGain.setTxt(showNum(tmp.nerfs.adjust(getPreonGain(), "preons")))
+				tmp.el.preonGain.setTxt(showNum(adjustGen(getPreonGain(), "preons")))
 				tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())})
 				tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
 				tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
@@ -868,27 +887,31 @@ function updateHTML() {
 				tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl)
 				tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl)
 				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
-				tmp.el.accelGain.setTxt(showNum(tmp.nerfs.adjust(getAccelGain(), "accelerons")))
+				tmp.el.accelGain.setTxt(showNum(adjustGen(getAccelGain(), "accelerons")))
 				tmp.el.accelEff.setTxt(showNum(getAccelEff()))
-				let amt = player.elementary.theory.accelerons.expanders.toNumber()+1
-				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[amt])||amt-1>=MAX_DARK_EXPANDERS))})
-				tmp.el.darkExp.setHTML((amt-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[amt]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[amt])+" Accelerons"))
+				let next = player.elementary.theory.accelerons.expanders.toNumber()+1
+				tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS))})
+				tmp.el.darkExp.setHTML((next-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"))
 				tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
+				let past = ""
+				if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
+				tmp.el.darkExpPast.setHTML(past)
 			}
 		}
 	}
 
 	// Miscellaneous
 	tmp.el.ts.setHTML(
-		tmp.timeSpeed.eq(1) || tmp.nerfs.active("noTS") ? "" : "Time Speed: " + showNum(tmp.timeSpeed) + "x<br>"
+		tmp.timeSpeed.eq(1) || nerfActive("noTS") ? "" : "Time Speed: " + showNum(tmp.timeSpeed) + "x<br>"
 	);
 	tmp.el.body.changeStyle("background", tmp.bc);
 	let root = document.documentElement;
-	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? "white" : "black");
+	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? (player.options.fonts=="verdana"?"#d9d9d9":"white") : "black");
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
+	root.style.setProperty("--font", capitalFirst(player.options.fonts))
 
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)

@@ -1,11 +1,11 @@
 function updateTempInf() {
 	if (tmp.inf) {
-		tmp.forceInfReset = function () {
+		if (!tmp.forceInfReset) tmp.forceInfReset = function () {
 			tmp.inf.layer.reset(true);
 		};
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete;
-		tmp.soulBoost = tmp.inf.pantheon.soulBoost;
-		tmp.doDervReset = tmp.inf.derv.resetDervs;
+		if (!tmp.soulBoost) tmp.soulBoost = tmp.inf.pantheon.soulBoost;
+		if (!tmp.doDervReset) tmp.doDervReset = tmp.inf.derv.resetDervs;
 	}
 
 	// Unrepealed Infinity Upgrades
@@ -18,18 +18,18 @@ function updateTempInf() {
 			tmp.infUr.push("3;2");
 		}
 
-	tmp.inf = {};
+	if (!tmp.inf) tmp.inf = {};
 
 	// Infinity Upgrades
-	tmp.inf.upgs = {};
-	tmp.inf.upgs.repealed = function (id) {
-		if (tmp.modes.easy.active) return false
+	if (!tmp.inf.upgs) tmp.inf.upgs = {};
+	if (!tmp.inf.upgs.repealed) tmp.inf.upgs.repealed = function (id) {
+		if (modeActive("easy")) return false
 		if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
 		let rep = INF_UPGS.repealed[id] ? INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)) : false;
 		if (tmp.infUr.includes(id)) rep = false;
 		return rep;
 	};
-	tmp.inf.upgs.shown = function (id) {
+	if (!tmp.inf.upgs.shown) tmp.inf.upgs.shown = function (id) {
 		let r = parseInt(id.split(";")[0]);
 		let c = parseInt(id.split(";")[1]);
 		if (INF_UPGS.rowReqs[r])
@@ -38,7 +38,7 @@ function updateTempInf() {
 			if (!INF_UPGS.colReqs[c]()) return false;
 		return true;
 	};
-	tmp.inf.upgs.reset = function (force = false) {
+	if (!tmp.inf.upgs.reset) tmp.inf.upgs.reset = function (force = false) {
 		if (player.inf.upgrades.length == 0) return;
 		if (!force)
 			if (
@@ -50,11 +50,11 @@ function updateTempInf() {
 		player.inf.upgrades = [];
 		tmp.forceInfReset();
 	};
-	tmp.inf.upgs.has = function (id) {
+	if (!tmp.inf.upgs.has) tmp.inf.upgs.has = function (id) {
 		if (tmp.inf.upgs.repealed(id)) return false;
 		return player.inf.upgrades.includes(id);
 	};
-	tmp.inf.upgs.current = function (id) {
+	if (!tmp.inf.upgs.current) tmp.inf.upgs.current = function (id) {
 		if (id=="4;10") return "^"+showNum(INF_UPGS.effects[id]())
 		else if (id == "2;3")
 			return (
@@ -64,7 +64,7 @@ function updateTempInf() {
 				showNum(INF_UPGS.effects[id]()["knowledge"]) +
 				"x"
 			);
-		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]().pth.times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]().snp)+"/sec"
+		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
 		else if (id == "2;7" || id == "8;6" || id == "9;6" || id=="1;10")
 			return showNum(INF_UPGS.effects[id]().times(100)) + "% weaker";
 		else if (id == "3;2")
@@ -115,18 +115,18 @@ function updateTempInf() {
 		else if (id=="5;10") return "Pathogens: "+showNum(INF_UPGS.effects[id]().pth)+"x, Higgs Bosons: "+showNum(INF_UPGS.effects[id]().hb)+"x"
 		return showNum(INF_UPGS.effects[id]()) + "x";
 	};
-	tmp.inf.upgs.hover = function (id) {
+	if (!tmp.inf.upgs.hover) tmp.inf.upgs.hover = function (id) {
 		tmp.infSelected = id;
 		if (tmp.el) tmp.el.infUpgData.setHTML(tmp.inf.upgs.desc(tmp.infSelected));
 	};
-	tmp.inf.upgs.canBuy = function (id) {
+	if (!tmp.inf.upgs.canBuy) tmp.inf.upgs.canBuy = function (id) {
 		let reqData = INF_UPGS.reqs[id];
 		if (reqData === undefined) return true;
 		let can = true;
 		reqData.map(x => (can = can == true ? player.inf.upgrades.includes(x) : false));
 		return can;
 	};
-	tmp.inf.upgs.desc = function (sel) {
+	if (!tmp.inf.upgs.desc) tmp.inf.upgs.desc = function (sel) {
 		if (sel === undefined) return "";
 		return (
 			INF_UPGS.descs[sel] +
@@ -153,7 +153,7 @@ function updateTempInf() {
 			(INF_UPGS.effects[sel] ? "Currently: " + tmp.inf.upgs.current(sel) : "")
 		);
 	};
-	tmp.inf.upgs.buy = function (id) {
+	if (!tmp.inf.upgs.buy) tmp.inf.upgs.buy = function (id) {
 		if (!tmp.inf.upgs.canBuy(id)) return;
 		if (!tmp.inf.upgs.shown(id)) return;
 		if (player.inf.upgrades.includes(id)) return;
@@ -183,7 +183,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("5;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["5;4"]());
 	if (tmp.inf.upgs.has("9;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(INF_UPGS.effects["9;1"]());
 	if (tmp.inf.upgs.has("9;9"))
-		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2).times(tmp.modes.extreme.active?50:1));
+		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2).times(modeActive('extreme')?50:1));
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
@@ -195,9 +195,9 @@ function updateTempInf() {
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3)
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	if (player.elementary.theory.tree.unl) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
-	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.ach112)
+	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(ach112Eff())
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
-	if (tmp.modes.easy.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
+	if (modeActive('easy')) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
@@ -207,14 +207,15 @@ function updateTempInf() {
 			.logBase(ExpantaNum.pow(1.1, tmp.inf.fp))
 			.plus(1)
 			.floor();
-	if (tmp.scaling.active("endorsements", player.inf.endorsements.max(tmp.inf.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.endorsements;
+	if (scalingActive("endorsements", player.inf.endorsements.max(tmp.inf.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "endorsements");
+		let power = getScalingPower("scaled", "endorsements");
 		let exp = ExpantaNum.pow(1.5, power);
 		tmp.inf.req = ExpantaNum.pow(
 			tmp.inf.bc,
 			ExpantaNum.pow(
 				ExpantaNum.pow(1.1, tmp.inf.fp),
-				player.inf.endorsements.pow(exp).div(tmp.scalings.scaled.endorsements.pow(exp.sub(1)))
+				player.inf.endorsements.pow(exp).div(start.pow(exp.sub(1)))
 			)
 		);
 		if (tmp.inf.bulk.gt(0))
@@ -222,15 +223,17 @@ function updateTempInf() {
 				.plus(1)
 				.logBase(tmp.inf.bc)
 				.logBase(ExpantaNum.pow(1.1, tmp.inf.fp))
-				.times(tmp.scalings.scaled.endorsements.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
 				.plus(1)
 				.floor();
 	}
-	if (tmp.scaling.active("endorsements", player.inf.endorsements.max(tmp.inf.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.endorsements;
+	if (scalingActive("endorsements", player.inf.endorsements.max(tmp.inf.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "endorsements");
+		let power2 = getScalingPower("superscaled", "endorsements");
 		let exp2 = ExpantaNum.pow(2.5, power2);
-		let power = tmp.scalingPower.scaled.endorsements;
+		let start = getScalingStart("scaled", "endorsements");
+		let power = getScalingPower("scaled", "endorsements");
 		let exp = ExpantaNum.pow(1.5, power);
 		tmp.inf.req = ExpantaNum.pow(
 			tmp.inf.bc,
@@ -238,9 +241,9 @@ function updateTempInf() {
 				ExpantaNum.pow(1.1, tmp.inf.fp),
 				player.inf.endorsements
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.endorsements.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.endorsements.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 			)
 		);
 		if (tmp.inf.bulk.gt(0))
@@ -248,21 +251,21 @@ function updateTempInf() {
 				.plus(1)
 				.logBase(tmp.inf.bc)
 				.logBase(ExpantaNum.pow(1.1, tmp.inf.fp))
-				.times(tmp.scalings.scaled.endorsements.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
-				.times(tmp.scalings.superscaled.endorsements.pow(exp2.sub(1)))
+				.times(start2.pow(exp2.sub(1)))
 				.pow(exp2.pow(-1))
 				.plus(1)
 				.floor();
 	}
 	tmp.inf.can = player.distance.gte(tmp.inf.req);
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true);
-	tmp.inf.forceReset = function () {
+	if (!tmp.inf.forceReset) tmp.inf.forceReset = function () {
 		infActive = true;
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
 			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
-			((tmp.modes.hard.active&&!tmp.modes.extreme.active)
+			((modeActive("hard")&&!modeActive("extreme"))
 				? ", however you need to exit your current mode to do so"
 				: "") +
 			".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
@@ -277,12 +280,12 @@ function updateTempInf() {
 		});
 		player.inf.unl = true;
 	};
-	tmp.inf.doGain = function () {
+	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
 		let mag = new ExpantaNum(1);
 		let m = player.inf.endorsements.plus(mag).min(tmp.inf.layer.fcBulk).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);
 	};
-	tmp.inf.onReset = function (prev) {
+	if (!tmp.inf.onReset) tmp.inf.onReset = function (prev) {
 		infActive = true;
 		if (!showContainer) closeHiddenDiv();
 		player.inf.stadium.current = "";
@@ -290,7 +293,7 @@ function updateTempInf() {
 			player.automation.unl = prev.automation.unl;
 			player.automation.robots = prev.automation.robots;
 		}
-		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = tmp.modes.extreme.active?[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = modeActive("extreme")?[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 		else if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		if (tmp.inf.upgs.has("3;1")) {
 			player.collapse.unl = true;
@@ -298,42 +301,43 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true;
 		tmp.doDervReset();
-		if (player.modes.includes("hard") && !player.modes.includes("extreme")) {
+		if (modeActive("hard") && !modeActive("extreme")) {
 			player.modes = player.modes.filter(x => x != "hard");
-			tmp.options.save(player, true);
+			save(player, true);
 			reload();
 		}
 		infActive = false;
 	};
-	tmp.inf.updateTabs = function () {
+	if (!tmp.inf.updateTabs) tmp.inf.updateTabs = function () {
 		let tabs = Element.allFromClass("inftab");
 		for (let i = 0; i < tabs.length; i++) {
 			tabs[i].setDisplay(infTab == tabs[i].id);
 			new Element(tabs[i].id + "tabbtn").setDisplay(INF_TABS[tabs[i].id]());
 		}
 	};
-	tmp.inf.showTab = function (name) {
+	if (!tmp.inf.showTab) tmp.inf.showTab = function (name) {
 		if (infTab == name) return;
 		infTab = name;
-		tmp.inf.updateTabs();
 	};
 	tmp.inf.updateTabs();
-	tmp.inf.manualReset = function (noStadium=false) {
-		if (tmp.canCompleteStadium&&!noStadium) {
-			if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
-				player.inf.stadium.completions.push(player.inf.stadium.current);
-			player.inf.stadium.current = "";
-			tmp.inf.layer.reset(true);
-		} else tmp.inf.layer.reset();
-	};
-	tmp.inf.maxEndorse = function (keep) {
+	if (!tmp.inf.manualReset) {
+		tmp.inf.manualReset = function (noStadium=false) {
+			if (tmp.canCompleteStadium&&!noStadium) {
+				if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
+					player.inf.stadium.completions.push(player.inf.stadium.current);
+				player.inf.stadium.current = "";
+				tmp.inf.layer.reset(true);
+			} else tmp.inf.layer.reset();
+		};
+	}
+	if (!tmp.inf.maxEndorse) tmp.inf.maxEndorse = function (keep) {
 		if (player.distance.lt(tmp.inf.req) && tmp.inf.bulk.floor().gt(player.inf.endorsements)) return
 		player.inf.endorsements = player.inf.endorsements.max(tmp.inf.bulk.floor().max(player.inf.endorsements.plus(1)))
 		if (!keep) tmp.inf.layer.reset(true)
 	};
 
 	// Ascension
-	tmp.inf.asc = {};
+	if (!tmp.inf.asc) tmp.inf.asc = {};
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME);
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]());
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["7;1"]());
@@ -344,17 +348,13 @@ function updateTempInf() {
 	if (tmp.elm) {
 		if (tmp.elm.pa.active) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.elm.pa.speedBoost.max(1))
 	} else tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.div(tmp.inf.asc.perkTimeO.div(10))
-	if (tmp.modes.easy.active) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(3)
+	if (modeActive("easy")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(3)
 	tmp.inf.asc.maxPerks = 1;
 	if (tmp.inf.upgs.has("6;6")) tmp.inf.asc.maxPerks = 2;
 	if (tmp.ach[103].has) tmp.inf.asc.maxPerks++;
 	if (tmp.ach[111].has) tmp.inf.asc.maxPerks = 4;
-	tmp.inf.asc.powerEff = (function () {
-		let power = player.inf.ascension.power;
-		let eff = power.plus(1).log10().plus(1).log10().div(10);
-		return eff;
-	})();
-	tmp.inf.asc.enlEff = function (n) {
+	tmp.inf.asc.powerEff = player.inf.ascension.power.plus(1).log10().plus(1).log10().div(10)
+	if (!tmp.inf.asc.enlEff) tmp.inf.asc.enlEff = function (n) {
 		let enl = player.inf.ascension.enlightenments[n - 1];
 		let eff = enl.pow(0.8).times(0.8);
 		return eff;
@@ -366,7 +366,7 @@ function updateTempInf() {
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1));
 	if (tmp.elm) if (tmp.elm.pa.active) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.pa.boost.max(1))
-	if (tmp.modes.easy.active) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(1.2)
+	if (modeActive('easy')) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(1.2)
 	tmp.inf.asc.perkPower = [
 		null,
 		tmp.inf.asc.perkStrength,
@@ -375,13 +375,13 @@ function updateTempInf() {
 		tmp.inf.asc.perkStrength
 	];
 	for (let i = 1; i <= 4; i++) tmp.inf.asc.perkPower[i] = tmp.inf.asc.perkPower[i].plus(tmp.inf.asc.enlEff(i));
-	tmp.inf.asc.perkActive = function (n) {
+	if (!tmp.inf.asc.perkActive) tmp.inf.asc.perkActive = function (n) {
 		return player.inf.ascension.time[n - 1].gt(0);
 	};
-	tmp.inf.asc.anyPerkActive = function () {
+	if (!tmp.inf.asc.anyPerkActive) tmp.inf.asc.anyPerkActive = function () {
 		return player.inf.ascension.time.some(x => new ExpantaNum(x).gt(0));
 	};
-	tmp.inf.asc.perksActive = function () {
+	if (!tmp.inf.asc.perksActive) tmp.inf.asc.perksActive = function () {
 		let perks = 0;
 		for (let i = 1; i <= 4; i++) if (tmp.inf.asc.perkActive(i)) perks++;
 		return perks;
@@ -400,8 +400,8 @@ function updateTempInf() {
 		if (player.elementary.times.gt(0)) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos.w2.max(1));
 		if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	}
-	if (tmp.modes.easy.active) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
-	tmp.inf.asc.activatePerk = function (n) {
+	if (modeActive('easy')) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
+	if (!tmp.inf.asc.activatePerk) tmp.inf.asc.activatePerk = function (n) {
 		if (player.inf.endorsements.lt(10)) return;
 		if (tmp.inf.asc.perkActive(n)) {
 			player.inf.ascension.time[n - 1] = new ExpantaNum(0);
@@ -410,9 +410,9 @@ function updateTempInf() {
 		if (tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks) return;
 		player.inf.ascension.time[n - 1] = new ExpantaNum(tmp.inf.asc.perkTime);
 	};
-	tmp.inf.asc.perkEff = function (n) {
+	if (!tmp.inf.asc.perkEff) tmp.inf.asc.perkEff = function (n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n]);
-		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || tmp.nerfs.active("noPerks")) return base;
+		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks")) return base;
 		let pow = new ExpantaNum(tmp.inf.asc.perkPower[n]);
 		if (pow.gte(90)) pow = pow.div(10).plus(81)
 		if (pow.gte(150)) pow = pow.sqrt().times(Math.sqrt(150))
@@ -422,41 +422,44 @@ function updateTempInf() {
 		else if (n == 4) return ExpantaNum.pow(1e10, pow);
 		return undefined;
 	};
-	tmp.inf.asc.costData = { base: new ExpantaNum(tmp.modes.extreme.active?1.5:2.5), start: new ExpantaNum(tmp.modes.extreme.active?100:500), exp: new ExpantaNum(tmp.modes.extreme.active?2:1.5) };
-	tmp.inf.asc.enlCost = function (n) {
+	if (!tmp.inf.asc.costData) tmp.inf.asc.costData = { base: new ExpantaNum(modeActive('extreme')?1.5:2.5), start: new ExpantaNum(modeActive("extreme")?100:500), exp: new ExpantaNum(modeActive('extreme')?2:1.5) };
+	if (!tmp.inf.asc.enlCost) tmp.inf.asc.enlCost = function (n) {
 		let enl = player.inf.ascension.enlightenments[n - 1];
 		let cost = tmp.inf.asc.costData.base.pow(enl.pow(tmp.inf.asc.costData.exp)).times(tmp.inf.asc.costData.start);
-		if (tmp.scaling.active("enlightenments", enl, "scaled")) {
-			let power = tmp.scalingPower.scaled.enlightenments;
+		if (scalingActive("enlightenments", enl, "scaled")) {
+			let start = getScalingStart("scaled", "enlightenments");
+			let power = getScalingPower("scaled", "enlightenments");
 			let exp = ExpantaNum.pow(2, power);
 			cost = tmp.inf.asc.costData.base
 				.pow(
 					enl
 						.pow(exp)
-						.div(tmp.scalings.scaled.enlightenments.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.pow(tmp.inf.asc.costData.exp)
 				)
 				.times(tmp.inf.asc.costData.start);
 		}
-		if (tmp.scaling.active("enlightenments", enl, "superscaled")) {
-			let power2 = tmp.scalingPower.superscaled.enlightenments;
+		if (scalingActive("enlightenments", enl, "superscaled")) {
+			let start2 = getScalingStart("superscaled", "enlightenments");
+			let power2 = getScalingPower("superscaled", "enlightenments");
 			let exp2 = ExpantaNum.pow(3, power2);
-			let power = tmp.scalingPower.scaled.enlightenments;
+			let start = getScalingStart("scaled", "enlightenments");
+			let power = getScalingPower("scaled", "enlightenments");
 			let exp = ExpantaNum.pow(2, power);
 			cost = tmp.inf.asc.costData.base
 				.pow(
 					enl
 						.pow(exp2)
-						.div(tmp.scalings.superscaled.enlightenments.pow(exp2.sub(1)))
+						.div(start2.pow(exp2.sub(1)))
 						.pow(exp)
-						.div(tmp.scalings.scaled.enlightenments.pow(exp.sub(1)))
+						.div(start.pow(exp.sub(1)))
 						.pow(tmp.inf.asc.costData.exp)
 				)
 				.times(tmp.inf.asc.costData.start);
 		}
 		return cost;
 	};
-	tmp.inf.asc.enlBulk = function (n) {
+	if (!tmp.inf.asc.enlBulk) tmp.inf.asc.enlBulk = function (n) {
 		let ap = player.inf.ascension.power;
 		let bulk = ap
 			.div(tmp.inf.asc.costData.start)
@@ -465,46 +468,49 @@ function updateTempInf() {
 			.pow(tmp.inf.asc.costData.exp.pow(-1))
 			.plus(1)
 			.floor();
-		if (tmp.scaling.active("enlightenments", player.inf.ascension.enlightenments[n - 1].max(bulk), "scaled")) {
-			let power = tmp.scalingPower.scaled.enlightenments;
+		if (scalingActive("enlightenments", player.inf.ascension.enlightenments[n - 1].max(bulk), "scaled")) {
+			let start = getScalingStart("scaled", "enlightenments");
+			let power = getScalingPower("scaled", "enlightenments");
 			let exp = ExpantaNum.pow(2, power);
 			bulk = ap
 				.div(tmp.inf.asc.costData.start)
 				.max(1)
 				.logBase(tmp.inf.asc.costData.base)
 				.pow(tmp.inf.asc.costData.exp.pow(-1))
-				.times(tmp.scalings.scaled.enlightenments.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
 				.plus(1)
 				.floor();
 		}
-		if (tmp.scaling.active("enlightenments", player.inf.ascension.enlightenments[n - 1].max(bulk), "superscaled")) {
-			let power2 = tmp.scalingPower.superscaled.enlightenments;
+		if (scalingActive("enlightenments", player.inf.ascension.enlightenments[n - 1].max(bulk), "superscaled")) {
+			let start2 = getScalingStart("superscaled", "enlightenments");
+			let power2 = getScalingPower("superscaled", "enlightenments");
 			let exp2 = ExpantaNum.pow(3, power2);
-			let power = tmp.scalingPower.scaled.enlightenments;
+			let start = getScalingStart("scaled", "enlightenments");
+			let power = getScalingPower("scaled", "enlightenments");
 			let exp = ExpantaNum.pow(2, power);
 			bulk = ap
 				.div(tmp.inf.asc.costData.start)
 				.max(1)
 				.logBase(tmp.inf.asc.costData.base)
 				.pow(tmp.inf.asc.costData.exp.pow(-1))
-				.times(tmp.scalings.scaled.enlightenments.pow(exp.sub(1)))
+				.times(start.pow(exp.sub(1)))
 				.pow(exp.pow(-1))
-				.times(tmp.scalings.superscaled.enlightenments.pow(exp2.sub(1)))
+				.times(start2.pow(exp2.sub(1)))
 				.pow(exp2.pow(-1))
 				.plus(1)
 				.floor();
 		}
 		return bulk;
 	};
-	tmp.inf.asc.buyEnl = function (n) {
+	if (!tmp.inf.asc.buyEnl) tmp.inf.asc.buyEnl = function (n) {
 		let ap = player.inf.ascension.power;
 		let cost = tmp.inf.asc.enlCost(n);
 		if (ap.lt(cost)) return;
 		player.inf.ascension.power = ap.sub(cost);
 		player.inf.ascension.enlightenments[n - 1] = player.inf.ascension.enlightenments[n - 1].plus(1);
 	};
-	tmp.inf.asc.maxEnl = function (n) {
+	if (!tmp.inf.asc.maxEnl) tmp.inf.asc.maxEnl = function (n) {
 		let ap = player.inf.ascension.power;
 		let cost = tmp.inf.asc.enlCost(n);
 		if (ap.lt(cost)) return;
@@ -513,20 +519,20 @@ function updateTempInf() {
 	};
 
 	// Stadium
-	tmp.inf.stadium = {};
-	tmp.inf.stadium.reset = function () {
+	if (!tmp.inf.stadium) tmp.inf.stadium = {};
+	if (!tmp.inf.stadium.reset) tmp.inf.stadium.reset = function () {
 		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return;
 		player.inf.stadium.completions = [];
 		tmp.inf.layer.reset(true);
 	};
-	tmp.inf.stadium.exit = function () {
+	if (!tmp.inf.stadium.exit) tmp.inf.stadium.exit = function () {
 		if (player.inf.stadium.current == "") return;
 		player.inf.stadium.current = "";
 		tmp.inf.layer.reset(true);
 	};
-	tmp.inf.stadium.active = function (name, rank = 1) {
+	if (!tmp.inf.stadium.active) tmp.inf.stadium.active = function (name, rank = 1) {
 		if (player.inf.pantheon.purge.active && name != "reality" && rank == 1) return true;
-		if (tmp.modes.extreme.active && name == "solaris" && rank <= 4) return true;
+		if (modeActive('extreme') && name == "solaris" && rank <= 4) return true;
 		let active = player.inf.stadium.current == name;
 		let l = player.inf.stadium.completions.length + 1;
 		if (player.inf.stadium.completions.includes(name))
@@ -534,12 +540,12 @@ function updateTempInf() {
 		if (rank > 1) active = active && l >= rank;
 		return active;
 	};
-	tmp.inf.stadium.anyActive = function () {
+	if (!tmp.inf.stadium.anyActive) tmp.inf.stadium.anyActive = function () {
 		if (player.inf.pantheon.purge.active) return true;
 		let active = player.inf.stadium.current != "";
 		return active;
 	};
-	tmp.inf.stadium.goal = function (name) {
+	if (!tmp.inf.stadium.goal) tmp.inf.stadium.goal = function (name) {
 		let goal_data = STADIUM_GOALS[name];
 		let l = player.inf.stadium.completions.length + 1;
 		if (player.inf.stadium.completions.includes(name))
@@ -551,13 +557,13 @@ function updateTempInf() {
 		player.inf.endorsements.gte(15) &&
 		player.inf.stadium.current != "" &&
 		player.distance.gte(tmp.inf.stadium.goal(player.inf.stadium.current));
-	tmp.inf.stadium.start = function (name) {
-		if (tmp.inf.stadium.active(name)&&!(name=="solaris"&&tmp.modes.extreme.active&&player.inf.stadium.current!=name)) return;
+	if (!tmp.inf.stadium.start) tmp.inf.stadium.start = function (name) {
+		if (tmp.inf.stadium.active(name)&&!(name=="solaris"&&modeActive("extreme")&&player.inf.stadium.current!=name)) return;
 		if (player.inf.stadium.current != "") return;
 		tmp.inf.layer.reset(true);
 		player.inf.stadium.current = name;
 	};
-	tmp.inf.stadium.tooltip = function (name) {
+	if (!tmp.inf.stadium.tooltip) tmp.inf.stadium.tooltip = function (name) {
 		let descs = STADIUM_DESCS[name];
 		let l = Math.min(player.inf.stadium.completions.length + 1, descs.length);
 		if (player.inf.stadium.completions.includes(name))
@@ -569,10 +575,10 @@ function updateTempInf() {
 		}
 		return tooltip;
 	};
-	tmp.inf.stadium.completed = function (name) {
+	if (!tmp.inf.stadium.completed) tmp.inf.stadium.completed = function (name) {
 		return player.inf.endorsements.gte(15) && player.inf.stadium.completions.includes(name);
 	};
-	tmp.inf.stadium.progress = function() {
+	if (!tmp.inf.stadium.progress) tmp.inf.stadium.progress = function() {
 		let current = player.inf.stadium.current
 		if (current=="") return new ExpantaNum(0)
 		let goal = tmp.inf.stadium.goal(current)
@@ -580,20 +586,19 @@ function updateTempInf() {
 	}
 
 	// The Pantheon
-	tmp.inf.pantheon = {};
-	tmp.inf.pantheon.totalGems = (function () {
-		return player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons);
-	})();
+	if (!tmp.inf.pantheon) tmp.inf.pantheon = {};
+	tmp.inf.pantheon.totalGems = player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons);
 	tmp.inf.pantheon.bc = new ExpantaNum(21);
 	if (tmp.inf.upgs.has("5;9")) tmp.inf.pantheon.bc = new ExpantaNum(16);
 	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1);
 	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor();
-	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.spectralGems;
+	if (scalingActive("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
+		let start = getScalingStart("scaled", "spectralGems");
+		let power = getScalingPower("scaled", "spectralGems");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(tmp.scalings.scaled.spectralGems)
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(start)
 			.pow(exp)
-			.div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
+			.div(start.pow(exp.sub(1)))
 			.plus(1)
 			.pow(2)
 			.plus(tmp.inf.pantheon.bc)
@@ -602,21 +607,23 @@ function updateTempInf() {
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
 			.sqrt()
-			.times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.spectralGems;
+	if (scalingActive("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "spectralGems");
+		let power2 = getScalingPower("superscaled", "spectralGems");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.spectralGems;
+		let start = getScalingStart("scaled", "spectralGems");
+		let power = getScalingPower("scaled", "spectralGems");
 		let exp = ExpantaNum.pow(2, power);
-		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(tmp.scalings.superscaled.spectralGems)
+		tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.max(start2)
 			.pow(exp2)
-			.div(tmp.scalings.superscaled.spectralGems.pow(exp2.sub(1)))
+			.div(start2.pow(exp2.sub(1)))
 			.pow(exp)
-			.div(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
+			.div(start.pow(exp.sub(1)))
 			.plus(1)
 			.pow(2)
 			.plus(tmp.inf.pantheon.bc)
@@ -625,24 +632,24 @@ function updateTempInf() {
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
 			.sqrt()
-			.times(tmp.scalings.scaled.spectralGems.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.spectralGems.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	tmp.inf.pantheon.collect = function () {
+	if (!tmp.inf.pantheon.collect) tmp.inf.pantheon.collect = function () {
 		let diff = tmp.inf.pantheon.bulk.sub(tmp.inf.pantheon.totalGems);
 		if (diff.lt(1)) return;
 		player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff);
 	};
-	tmp.inf.pantheon.transfer = function (type, bulk=new ExpantaNum(1)) {
+	if (!tmp.inf.pantheon.transfer) tmp.inf.pantheon.transfer = function (type, bulk=new ExpantaNum(1)) {
 		if (player.inf.pantheon.gems.lt(bulk)) return;
 		player.inf.pantheon[type] = player.inf.pantheon[type].plus(bulk);
 		player.inf.pantheon.gems = player.inf.pantheon.gems.sub(bulk);
 	};
-	tmp.inf.pantheon.respec = function () {
+	if (!tmp.inf.pantheon.respec) tmp.inf.pantheon.respec = function () {
 		if (!player.inf.pantheon.angels.plus(player.inf.pantheon.demons).gt(0)) return;
 		if (
 			!confirm(
@@ -659,7 +666,7 @@ function updateTempInf() {
 	};
 	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1);
 	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1);
-	if (tmp.modes.easy.active) {
+	if (modeActive("easy")) {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(4)
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(4)
 	}
@@ -696,12 +703,12 @@ function updateTempInf() {
 	tmp.inf.pantheon.purgeMult = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("8;2"))
 		tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"]);
-	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(4)
+	if (modeActive("easy")) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(4)
 	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni);
 	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5);
-	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
+	if (modeActive("easy")) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
 	tmp.inf.pantheon.purgeExp = new ExpantaNum(1 / 2);
-	if (tmp.modes.easy.active) tmp.inf.pantheon.purgeExp = new ExpantaNum(2 / 3)
+	if (modeActive("easy")) tmp.inf.pantheon.purgeExp = new ExpantaNum(2 / 3)
 	tmp.inf.pantheon.purgeGain = player.distance
 		.div(tmp.inf.pantheon.purgeStart)
 		.plus(1)
@@ -717,7 +724,7 @@ function updateTempInf() {
 	)
 		.sub(1)
 		.times(tmp.inf.pantheon.purgeStart);
-	tmp.inf.pantheon.startPurge = function () {
+	if (!tmp.inf.pantheon.startPurge) tmp.inf.pantheon.startPurge = function () {
 		if (!player.inf.pantheon.purge.unl) return;
 		if (player.inf.pantheon.purge.active)
 			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain);
@@ -726,35 +733,35 @@ function updateTempInf() {
 	};
 
 	// Derivatives
-	tmp.inf.derv = {};
+	if (!tmp.inf.derv) tmp.inf.derv = {};
 	tmp.inf.derv.maxShifts = new ExpantaNum(2);
-	tmp.inf.derv.unlocked = function (name) {
+	if (!tmp.inf.derv.unlocked) tmp.inf.derv.unlocked = function (name) {
 		if (name == "distance" || name == "velocity" || name == "acceleration") return true;
 		if (name == "jerk" && player.inf.derivatives.unlocks.gte(1)) return true;
 		if (name == "snap" && player.inf.derivatives.unlocks.gte(2)) return true;
 		return false;
 	};
-	tmp.inf.derv.amt = function (name) {
+	if (!tmp.inf.derv.amt) tmp.inf.derv.amt = function (name) {
 		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance" || name == "velocity") return player[name];
 		if (name == "acceleration") return tmp.acc;
 		return player.inf.derivatives.amts[name] ? player.inf.derivatives.amts[name] : new ExpantaNum(0);
 	};
-	tmp.inf.derv.gain = function (name) {
+	if (!tmp.inf.derv.gain) tmp.inf.derv.gain = function (name) {
 		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance")
-			return tmp.nerfs.adjust(player.velocity, "dist").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
+			return adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		if (name == "velocity")
-			return tmp.nerfs.adjust(tmp.acc, "vel").times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed);
+			return adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
-		if (name=="snap" && tmp.inf.upgs.has("10;1")) return tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp.times(tmp.inf.derv.mult(name)), "derv")
+		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
-		let gain = tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
+		let gain = adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
 			return gain
-				.times(tmp.nerfs.active("noTS") ? 1 : tmp.timeSpeed)
+				.times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 				.times(
 					tmp.acc.div(
 						(player.inf.derivatives.amts.acceleration
@@ -763,18 +770,19 @@ function updateTempInf() {
 						).max(1)
 					)
 				);
-		return gain.times((tmp.nerfs.active("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
+		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29);
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor();
-	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.dervBoost;
+	if (scalingActive("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
+		let start = getScalingStart("scaled", "dervBoost");
+		let power = getScalingPower("scaled", "dervBoost");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.inf.derv.unlCost = ExpantaNum.pow(
 			2,
 			player.inf.derivatives.unlocks
 				.pow(exp)
-				.div(tmp.scalings.scaled.dervBoost.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.pow(3)
 		).times(2.5e29);
 		tmp.inf.derv.unlBulk = player.inf.knowledge
@@ -782,23 +790,25 @@ function updateTempInf() {
 			.max(1)
 			.logBase(2)
 			.cbrt()
-			.times(tmp.scalings.scaled.dervBoost.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.dervBoost;
+	if (scalingActive("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "superscaled")) {
+		let start2 = getScalingStart("superscaled", "dervBoost");
+		let power2 = getScalingPower("superscaled", "dervBoost");
 		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.dervBoost;
+		let start = getScalingStart("scaled", "dervBoost");
+		let power = getScalingPower("scaled", "dervBoost");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.inf.derv.unlCost = ExpantaNum.pow(
 			2,
 			player.inf.derivatives.unlocks
 				.pow(exp2)
-				.div(tmp.scalings.superscaled.dervBoost.pow(exp2.sub(1)))
+				.div(start2.pow(exp2.sub(1)))
 				.pow(exp)
-				.div(tmp.scalings.scaled.dervBoost.pow(exp.sub(1)))
+				.div(start.pow(exp.sub(1)))
 				.pow(3)
 		).times(2.5e29);
 		tmp.inf.derv.unlBulk = player.inf.knowledge
@@ -806,19 +816,19 @@ function updateTempInf() {
 			.max(1)
 			.logBase(2)
 			.cbrt()
-			.times(tmp.scalings.scaled.dervBoost.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.dervBoost.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	tmp.inf.derv.doUnl = function () {
+	if (!tmp.inf.derv.doUnl) tmp.inf.derv.doUnl = function () {
 		if (player.inf.knowledge.lt(tmp.inf.derv.unlCost)) return;
 		player.inf.knowledge = player.inf.knowledge.sub(tmp.inf.derv.unlCost);
 		player.inf.derivatives.unlocks = player.inf.derivatives.unlocks.plus(1);
 	};
-	tmp.inf.derv.maxBoosts = function () {
+	if (!tmp.inf.derv.maxBoosts) tmp.inf.derv.maxBoosts = function () {
 		if (player.inf.knowledge.lt(tmp.inf.derv.unlCost)) return;
 		player.inf.derivatives.unlocks = player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk.floor().max(player.inf.derivatives.unlocks.plus(1)));
 		player.inf.knowledge = player.inf.knowledge.sub(tmp.inf.derv.unlCost);
@@ -829,24 +839,24 @@ function updateTempInf() {
 		tmp.inf.derv.boostPow = tmp.inf.derv.boostPow.times(tmp.elm.bos["higgs_0;2;1"]().div(100).plus(1))
 	}
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE);
-	if (tmp.modes.easy.active) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
+	if (modeActive('easy')) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]());
 	tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.inf.derv.boostPow);
-	tmp.inf.derv.mult = function (name) {
+	if (!tmp.inf.derv.mult) tmp.inf.derv.mult = function (name) {
 		let mult = new ExpantaNum(1);
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0);
 		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts));
 		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4); // NICE
 		return mult;
 	};
-	tmp.inf.derv.tick = function (diff) {
+	if (!tmp.inf.derv.tick) tmp.inf.derv.tick = function (diff) {
 		if (!player.inf.derivatives.unl) return;
 		for (let i = 0; i < DERV_INCR.length; i++) {
 			let name = DERV_INCR[i];
 			let next = DERV_INCR[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
 			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
-				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(tmp.nerfs.adjust(INF_UPGS.effects["10;1"]().snp, "derv").times(tmp.inf.derv.mult(name))).max(1)
+				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]("snp"), "derv").times(tmp.inf.derv.mult(name))).max(1)
 				return
 			}
 			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))
@@ -855,12 +865,39 @@ function updateTempInf() {
 				player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]
 					? player.inf.derivatives.amts[name]
 					: new ExpantaNum(0)
-				).plus(tmp.nerfs.adjust(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff));
+				).plus(adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv").times(diff));
 		}
 	};
-	tmp.inf.derv.resetDervs = function () {
+	if (!tmp.inf.derv.resetDervs) tmp.inf.derv.resetDervs = function () {
 		for (key in player.inf.derivatives.amts) {
 			player.inf.derivatives.amts[key] = tmp.inf.derv.unlocked(key) ? new ExpantaNum(1) : new ExpantaNum(0);
 		}
 	};
+}
+
+function infTick(diff) {
+	player.inf.knowledge = player.inf.knowledge.plus(
+		adjustGen(tmp.inf.knowledgeGain, "knowledge").times(diff)
+	);
+	
+	if (player.inf.endorsements.gte(10)) {
+		for (let i = 1; i <= 4; i++)
+			if (tmp.inf.asc.perkActive(i))
+				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
+		if (tmp.inf.asc.anyPerkActive())
+			player.inf.ascension.power = player.inf.ascension.power.plus(
+				adjustGen(tmp.inf.asc.powerGain, "ascension").times(diff)
+			);
+	}
+	
+	if (player.inf.endorsements.gte(21)) {
+		tmp.inf.pantheon.collect();
+		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(
+			diff.times(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips"))
+		);
+		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
+			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
+		);
+		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
+	}
 }

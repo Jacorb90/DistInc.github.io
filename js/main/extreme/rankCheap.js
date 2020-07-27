@@ -1,5 +1,5 @@
 function updateTempRankCheap() {
-	tmp.rankCheap = {};
+	if (!tmp.rankCheap) tmp.rankCheap = {};
 	tmp.rankCheap.free = new ExpantaNum(0);
 	if (tmp.ach[21].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
 	if (tmp.ach[34].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(1);
@@ -17,15 +17,16 @@ function updateTempRankCheap() {
 		.times(tmp.rankCheap.fp)
 		.plus(1)
 		.round();
-	if (tmp.scaling.active("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "scaled")) {
-		let power = tmp.scalingPower.scaled.rankCheap;
-		let exp = ExpantaNum.pow(2, power);
+	let start = getScalingStart("scaled", "rankCheap");
+	let power = getScalingPower("scaled", "rankCheap");
+	let exp = ExpantaNum.pow(2, power);
+	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "scaled")) {
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rankCheap
 					.pow(exp)
-					.div(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.rankCheap.fp)
 					.sub(1)
 					.pow(2)
@@ -38,24 +39,23 @@ function updateTempRankCheap() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.rankCheap.fp)
-			.times(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "superscaled")) {
-		let power2 = tmp.scalingPower.superscaled.rankCheap;
-		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rankCheap;
-		let exp = ExpantaNum.pow(2, power);
+	let start2 = getScalingStart("superscaled", "rankCheap");
+	let power2 = getScalingPower("superscaled", "rankCheap");
+	let exp2 = ExpantaNum.pow(3, power2);
+	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "superscaled")) {
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,
 				player.rankCheap
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.rankCheap.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.rankCheap.fp)
 					.sub(1)
 					.pow(2)
@@ -68,29 +68,26 @@ function updateTempRankCheap() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.rankCheap.fp)
-			.times(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rankCheap.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
 			.add(1)
 			.floor();
 	}
-	if (tmp.scaling.active("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "hyper")) {
-		let power3 = tmp.scalingPower.hyper.rankCheap;
-		let base3 = ExpantaNum.pow(1.01, power3);
-		let power2 = tmp.scalingPower.superscaled.rankCheap;
-		let exp2 = ExpantaNum.pow(3, power2);
-		let power = tmp.scalingPower.scaled.rankCheap;
-		let exp = ExpantaNum.pow(2, power);
+	let start3 = getScalingStart("hyper", "rankCheap");
+	let power3 = getScalingPower("hyper", "rankCheap");
+	let base3 = ExpantaNum.pow(1.01, power3);
+	if (scalingActive("rankCheap", player.rankCheap.max(tmp.rankCheap.bulk), "hyper")) {
 		tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 			ExpantaNum.pow(
 				2,
-				ExpantaNum.pow(base3, player.rankCheap.sub(tmp.scalings.hyper.rankCheap))
-					.times(tmp.scalings.hyper.rankCheap)
+				ExpantaNum.pow(base3, player.rankCheap.sub(start3))
+					.times(start3)
 					.pow(exp2)
-					.div(tmp.scalings.superscaled.rankCheap.pow(exp2.sub(1)))
+					.div(start2.pow(exp2.sub(1)))
 					.pow(exp)
-					.div(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+					.div(start.pow(exp.sub(1)))
 					.div(tmp.rankCheap.fp)
 					.sub(1)
 					.pow(2)
@@ -103,14 +100,14 @@ function updateTempRankCheap() {
 			.sqrt()
 			.plus(1)
 			.times(tmp.rankCheap.fp)
-			.times(tmp.scalings.scaled.rankCheap.pow(exp.sub(1)))
+			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
-			.times(tmp.scalings.superscaled.rankCheap.pow(exp2.sub(1)))
+			.times(start2.pow(exp2.sub(1)))
 			.pow(exp2.pow(-1))
-			.div(tmp.scalings.hyper.rankCheap)
+			.div(start3)
 			.max(1)
 			.logBase(base3)
-			.add(tmp.scalings.hyper.rankCheap)
+			.add(start3)
 			.add(1)
 			.floor();
 	}
@@ -120,7 +117,7 @@ function updateTempRankCheap() {
 	tmp.rankCheap.layer = new Layer("rankCheap", tmp.rankCheap.can, "semi-forced");
 	tmp.rankCheap.pow = new ExpantaNum(1);
 	if (tmp.ach[12].has) tmp.rankCheap.pow = tmp.rankCheap.pow.plus(ExpantaNum.mul(0.5, player.achievements.length));
-	if (player.tr.upgrades.includes(22) && tmp.modes.extreme.active)
+	if (player.tr.upgrades.includes(22) && modeActive("extreme"))
 		tmp.rankCheap.pow = tmp.rankCheap.pow.times(player.collapse.cadavers.plus(1).times(10).slog(10).sqrt());
 	tmp.rankCheap.manPow = new ExpantaNum(1);
 	tmp.rankCheap.eff = player.rankCheap

@@ -15,7 +15,7 @@ const TABBTN_SHOWN = {
 		return tmp.rockets ? tmp.rockets.canRocket || player.rockets.gt(0) || player.rf.gt(0) : false;
 	},
 	furnace: function () {
-		return tmp.modes.extreme.active ? player.rf.gt(0) : false;
+		return modeActive("extreme") ? player.rf.gt(0) : false;
 	},
 	auto: function () {
 		return player.automation.unl;
