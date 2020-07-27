@@ -234,8 +234,12 @@ function setupHTML() {
 
 function updateBeforeTick() {
 	updateTemp();
-	updateHTML();
-	checkNaN();
+	let ticks = VIS_UPDS[player.options.visUpd]
+	if (visUpdTicks>=ticks) {
+		updateHTML();
+		checkNaN();
+		visUpdTicks = 0
+	}
 }
 
 function updateAfterTick() {

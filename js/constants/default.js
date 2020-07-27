@@ -19,6 +19,7 @@ const DEFAULT_START = {
 		dcPulse: true,
 		fonts: "courier",
 		hideAch: false,
+		visUpd: "every tick",
 	},
 	modes: [],
 	time: new Date().getTime(),

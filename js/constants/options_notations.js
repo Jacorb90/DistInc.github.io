@@ -12,9 +12,16 @@ const OPT_NAMES = {
 	saveImp: ["new save", "overwrite"],
 	featPerc: ["logarithm", "linear"],
 	fonts: ["verdana", "courier"],
+	visUpd: ["every tick", "every 2 ticks", "every 5 ticks", "every 20 ticks"],
 };
 const AUTOSAVE_TIME = 10;
 const MAX_SAVES = 5;
+const VIS_UPDS = {
+	"every tick": 1,
+	"every 2 ticks": 2,
+	"every 5 ticks": 5,
+	"every 20 ticks": 20,
+}
 
 // Notations
 

@@ -25,6 +25,7 @@ function updateHTML() {
 		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
 		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
 		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"))
+		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd))
 	}
 
 	// Main

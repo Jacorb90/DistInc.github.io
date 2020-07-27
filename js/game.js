@@ -23,6 +23,7 @@ var autoRobotTarget = 0
 var betaID = "";
 var needUpdate = true
 var updating = false
+var visUpdTicks = 1/0
 
 // Game Loops
 
@@ -85,6 +86,7 @@ function tickWithTS(diff) {
 }
 
 function gameLoop(diff) {
+	visUpdTicks++
 	if (needUpdate) updating = true
 	updateBeforeTick();
 	if (showContainer && !needUpdate) {
