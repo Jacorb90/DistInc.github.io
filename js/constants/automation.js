@@ -77,7 +77,7 @@ const AUTOMATORS = {
 		return tmp.elm.bos.hasHiggs("1;2;0")
 	},
 	elementaries: function() {
-		return tmp.ach[133].has
+		return tmp.ach[133].has&&player.elementary.times.gt(0)
 	},
 };
 
