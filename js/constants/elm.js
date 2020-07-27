@@ -8,6 +8,9 @@ const ELM_TABS = {
 	theory: function () {
 		return player.elementary.theory.unl;
 	},
+	hc: function () {
+		return player.elementary.hc.unl;
+	},
 };
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
@@ -442,3 +445,5 @@ const DARK_EXPANDER_DESCS = {
 	4: "Unlock Graviton Boosts.",
 	5: "Unlock new Theory Tree Upgrades, and the Theoretical Boost formula is much slower.",
 }
+
+const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]

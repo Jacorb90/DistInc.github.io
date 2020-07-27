@@ -183,9 +183,22 @@ function loadTempFeatures() {
 			display: [formatDistance, showNum],
 			reached: function() { return player.elementary.theory.unl },
 			progress: function () {
-				return player.distance.plus(1).logBase(THEORY_REQ[0]).min(1).times(player.bestEP.div(THEORY_REQ[1]).min(1))
+				return ((player.options.featPerc=="logarithm")?player.distance.plus(1).logBase(THEORY_REQ[0]):player.distance.div(THEORY_REQ[0])).min(1).times(((player.options.featPerc=="logarithm")?player.bestEP.plus(1).logBase(THEORY_REQ[1]):player.bestEP.div(THEORY_REQ[1])).min(1))
 			},
 			spec: [false, false],
+		}),
+		"hadronic challenge": new Feature({
+			name: "hadronic challenge",
+			res_amt: 2,
+			req: HC_REQ,
+			res: ["distance", ["inf", "endorsements"]],
+			display: [formatDistance, showNum],
+			reached: function() { return player.elementary.hc.unl },
+			progress: function () {
+				if (player.options.featPerc=="logarithm") return player.distance.plus(1).logBase(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[2]).min(1))
+				else return player.distance.div(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[2]).min(1))
+			},
+			spec: [false, true],
 		}),
 	};
 }

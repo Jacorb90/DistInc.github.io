@@ -134,6 +134,8 @@ function ENString(obj) {
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount).toString();
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders).toString();
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0).toString();
+	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best).toString();
+	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons).toString();
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]]).toString();
 	return ret;
 }
@@ -150,7 +152,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.2 || !ret.inf.pantheon) ret.inf.pantheon = deepCopy(sc.inf.pantheon);
 	if (ret.version < 1.3 || !ret.inf.derivatives) ret.inf.derivatives = deepCopy(sc.inf.derivatives);
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
-	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory)
+	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory);
+	if (ret.version < 1.7 || !ret.elementary.hc) ret.elementary.hc = deepCopy(sc.elementary.hc);
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.autoModes === undefined) ret.autoModes = {};
 	if (ret.autoTxt === undefined) ret.autoTxt = {};
@@ -281,6 +284,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount);
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders);
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0);
+	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best);
+	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons);
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]])
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;

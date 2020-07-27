@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.6,
+	version: 1.7,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -192,6 +192,12 @@ const DEFAULT_START = {
 				amount: new ExpantaNum(0),
 				expanders: new ExpantaNum(0),
 			},
+		},
+		hc: {
+			unl: false,
+			best: new ExpantaNum(0),
+			hadrons: new ExpantaNum(0),
+			selectors: {},
 		},
 	}
 };
