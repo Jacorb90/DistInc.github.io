@@ -17,7 +17,7 @@ function updateTabs() {
 		var el = new Element(tabs[i].id);
 		el.setDisplay(isTabShown(tabs[i].id));
 		var elT = new Element(tabs[i].id + "tabbtn");
-		elT.setDisplay(getTabBtnsShown().includes(tabs[i].id));
+		elT.changeStyle("visibility", getTabBtnsShown().includes(tabs[i].id)?"visible":"hidden");
 	}
 }
 
