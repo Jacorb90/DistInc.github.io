@@ -48,6 +48,7 @@ function ENString(obj) {
 			ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]).toString();
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks).toString();
 	ret.bestDistance = new ExpantaNum(ret.bestDistance).toString()
+	ret.inf.bestDist = new ExpantaNum(ret.inf.bestDist).toString()
 	ret.bestV = new ExpantaNum(ret.bestV).toString()
 	ret.bestA = new ExpantaNum(ret.bestA).toString()
 	ret.bestEnd = new ExpantaNum(ret.bestEnd).toString()
@@ -193,6 +194,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 		for (const key in ret.inf.derivatives.amts)
 			ret.inf.derivatives.amts[key] = new ExpantaNum(ret.inf.derivatives.amts[key]);
 	ret.inf.derivatives.unlocks = new ExpantaNum(ret.inf.derivatives.unlocks);
+	ret.inf.bestDist = new ExpantaNum(ret.inf.bestDist);
 	ret.bestDistance = new ExpantaNum(ret.bestDistance)
 	ret.bestV = new ExpantaNum(ret.bestV)
 	ret.bestA = new ExpantaNum(ret.bestA)

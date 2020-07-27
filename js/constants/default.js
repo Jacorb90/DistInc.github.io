@@ -82,6 +82,7 @@ const DEFAULT_START = {
 	},
 	inf: {
 		unl: false,
+		bestDist: new ExpantaNum(0),
 		endorsements: new ExpantaNum(0),
 		knowledge: new ExpantaNum(0),
 		upgrades: [],

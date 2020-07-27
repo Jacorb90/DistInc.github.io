@@ -65,6 +65,7 @@ function tickWithTR(diff) {
 		.min(nerfActive("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
 	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(diff)).max(0);
+	player.inf.bestDist = player.inf.bestDist.max(player.distance)
 	player.bestDistance = player.bestDistance.max(player.distance)
 	player.bestV = player.bestV.max(player.velocity)
 	player.bestA = player.bestA.max(tmp.acc)

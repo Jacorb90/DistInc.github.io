@@ -258,7 +258,7 @@ function updateTempInf() {
 				.plus(1)
 				.floor();
 	}
-	tmp.inf.can = player.distance.gte(tmp.inf.req);
+	tmp.inf.can = player.inf.bestDist.gte(tmp.inf.req);
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true);
 	if (!tmp.inf.forceReset) tmp.inf.forceReset = function () {
 		infActive = true;
@@ -287,7 +287,6 @@ function updateTempInf() {
 	};
 	if (!tmp.inf.onReset) tmp.inf.onReset = function (prev) {
 		infActive = true;
-		if (!showContainer) closeHiddenDiv();
 		player.inf.stadium.current = "";
 		if (tmp.ach[81].has) {
 			player.automation.unl = prev.automation.unl;
@@ -306,6 +305,8 @@ function updateTempInf() {
 			save(player, true);
 			reload();
 		}
+		player.inf.bestDist = new ExpantaNum(0)
+		if (!showContainer) closeHiddenDiv();
 		infActive = false;
 	};
 	if (!tmp.inf.updateTabs) tmp.inf.updateTabs = function () {
