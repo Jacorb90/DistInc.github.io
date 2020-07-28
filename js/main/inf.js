@@ -532,7 +532,7 @@ function updateTempInf() {
 		tmp.inf.layer.reset(true);
 	};
 	if (!tmp.inf.stadium.active) tmp.inf.stadium.active = function (name, rank = 1) {
-		if (player.inf.pantheon.purge.active && name != "reality" && rank == 1) return true;
+		if ((player.inf.pantheon.purge.active||HCCBA("purge")) && name != "reality" && rank == 1) return true;
 		if (modeActive('extreme') && name == "solaris" && rank <= 4) return true;
 		let active = player.inf.stadium.current == name;
 		let l = player.inf.stadium.completions.length + 1;
@@ -542,7 +542,7 @@ function updateTempInf() {
 		return active;
 	};
 	if (!tmp.inf.stadium.anyActive) tmp.inf.stadium.anyActive = function () {
-		if (player.inf.pantheon.purge.active) return true;
+		if (player.inf.pantheon.purge.active||HCCBA("purge")) return true;
 		let active = player.inf.stadium.current != "";
 		return active;
 	};
@@ -697,7 +697,7 @@ function updateTempInf() {
 	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2);
 	if (tmp.inf.pantheon.soulBoost.gte(2.5)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.logBase(2.5).plus(1.5);
-	if (player.inf.pantheon.purge.active) {
+	if (player.inf.pantheon.purge.active||HCCBA("purge")) {
 		tmp.inf.pantheon.chipBoost = new ExpantaNum(1);
 		tmp.inf.pantheon.soulBoost = new ExpantaNum(1);
 	}
@@ -727,6 +727,7 @@ function updateTempInf() {
 		.times(tmp.inf.pantheon.purgeStart);
 	if (!tmp.inf.pantheon.startPurge) tmp.inf.pantheon.startPurge = function () {
 		if (!player.inf.pantheon.purge.unl) return;
+		if (HCCBA("purge")) return
 		if (player.inf.pantheon.purge.active)
 			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain);
 		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active;

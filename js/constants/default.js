@@ -195,6 +195,7 @@ const DEFAULT_START = {
 		},
 		hc: {
 			unl: false,
+			active: false,
 			best: new ExpantaNum(0),
 			hadrons: new ExpantaNum(0),
 			selectors: {},

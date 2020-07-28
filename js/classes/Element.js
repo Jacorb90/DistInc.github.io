@@ -21,6 +21,13 @@ class Element {
 	static setHTML(id, html) {
 		new Element(id).setHTML(html);
 	}
+	
+	addHTML(html) {
+		this.el.innerHTML += html;
+	}
+	static addHTML(id, html) {
+		new Element(id).addHTML(html);
+	}
 
 	setDisplay(bool) {
 		this.el.style.display = bool ? "" : "none";

@@ -447,3 +447,16 @@ const DARK_EXPANDER_DESCS = {
 }
 
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
+const HC_TABS = {
+	mainHC: function() {
+		return true
+	},
+}
+const HC_DATA = {
+	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
+	purge: ["checkbox", undefined, "inf"],
+}
+const HC_TITLE = {
+	goal: "Challenge goal (in uni)",
+	purge: "Trapped in Purge",
+}

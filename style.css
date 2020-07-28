@@ -186,6 +186,10 @@ body {
 	background-color: #a30b78;
 }
 
+.ylw {
+	background-color: #9ea60a;
+}
+
 .gld {
 	background: radial-gradient(
 			ellipse farthest-corner at right bottom,
@@ -1430,13 +1434,10 @@ table {
 	color: #61604e;
 	font-size: 12px;
 	font-weight: bold;
-	min-width: 200px;
-	max-width: 200px;
-	min-height: 150px;
-	max-height: 150px;
 	padding: 7px 25px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px white;
+	animation: hadron 10s ease infinite;
 }
 
 .btn.hc:hover {
@@ -1450,6 +1451,11 @@ table {
 	top: 3px;
 	left: 2px;
 	box-shadow: none;
+}
+
+.had {
+	color: #918f60;
+	font-size: 20px;
 }
 
 @keyframes grosstxt {
@@ -1599,6 +1605,24 @@ table {
 	100% {
 		color: #9dc4c4;
 		text-shadow: 0px -1px 0px #46b9f2;
+	}
+}
+
+@keyframes hadron {
+	0% {
+		transform: skew(0deg, 0deg);
+	}
+	25% {
+		transform: skew(4deg, 0deg);
+	}
+	50% {
+		transform: skew(0deg, 0deg);
+	}
+	75% {
+		transform: skew(-4deg, 0deg);
+	}
+	100% {
+		transform: skew(0deg, 0deg);
 	}
 }
 

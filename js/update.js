@@ -220,6 +220,24 @@ function setupHTML() {
 			"Cost3'></span> of these Gluons.</button></td></tr>";
 		tbl.setHTML(data);
 	}
+	
+	// Hadronic Challenge
+	let len = Object.keys(HC_DATA).length
+	for (let i=0;i<len;i++) {
+		let name = Object.keys(HC_DATA)[i]
+		let data = HC_DATA[name]
+		let tab = data[2]
+		let el;
+		el = new Element(tab+"HC")
+		
+		let html = "<br>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)'></input><br>"
+		el.addHTML(html)
+		let inp = new Element("hcSelector"+name)
+		if (data[0]=="checkbox") inp.el.checked = getHCSelector(name)
+		if (data[0]=="text") inp.el.value = new ExpantaNum(getHCSelector(name)).toString()
+	}
+	
+	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)
 	

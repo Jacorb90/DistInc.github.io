@@ -545,14 +545,14 @@ function updateHTML() {
 			tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
 			tmp.el.purgeDiv.setDisplay(player.inf.pantheon.purge.unl);
 			tmp.el.purgeBtn.setTxt(
-				player.inf.pantheon.purge.active
+				HCCBA("purge")?"Trapped in Purge":(player.inf.pantheon.purge.active
 					? "Exit Purge run" +
 							(tmp.inf.pantheon.purgeGain.gt(0)
 								? " for " + showNum(tmp.inf.pantheon.purgeGain) + " Purge Power."
 								: ". You need " +
 								  formatDistance(tmp.inf.pantheon.purgeNext) +
 								  " to gain more Purge Power.")
-					: "Start Purge run"
+					: "Start Purge run")
 			);
 			tmp.el.purgePower.setTxt(showNum(player.inf.pantheon.purge.power));
 			tmp.el.purgePowerEff.setTxt(showNum(tmp.inf.pantheon.ppe));
@@ -897,6 +897,11 @@ function updateHTML() {
 				if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
 				tmp.el.darkExpPast.setHTML(past)
 			}
+		}
+		if (elmTab=="hc") {
+			tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore))
+			tmp.el.startHC.setTxt((!(!player.elementary.hc.active))?(canCompleteHC()?"Complete Hadronic Challenge!":"Exit Hadronic Challenge early for no reward"):"Start Hadronic Challenge")
+			tmp.el.bestHadScore.setTxt(showNum(player.elementary.hc.best))
 		}
 	}
 

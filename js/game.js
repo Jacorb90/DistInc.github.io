@@ -17,6 +17,7 @@ var infActive = false;
 var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
+var hcTab = "mainHC";
 var gluonTab = "r";
 var thTab = "tv";
 var autoRobotTarget = 0

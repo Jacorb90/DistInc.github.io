@@ -553,6 +553,11 @@ function updateTempElementary() {
 		player.elementary.theory.tree.spent =player.elementary.theory.tree.spent.plus(cost)
 		player.elementary.theory.tree.upgrades[x] = bought.plus(1)
 	}
+	
+	// Hadronic Score
+	if (!tmp.elm.hc) tmp.elm.hc = {}
+	tmp.elm.hc.currScore = getProjectedHadronicScore()
+	updateHCTabs()
 }
 
 function elTick(diff) {
@@ -836,4 +841,92 @@ function importTree() {
 	} catch(e) {
 		notifier.error("Invalid tree")
 	}
+}
+
+// Hadronic Challenge
+
+function getProjectedHadronicScore() {
+	let score = new ExpantaNum(0)
+	
+	// Infinity Modifiers
+	if (getHCSelector("purge")) score = score.times(2).max(1)
+	
+	// Goal Modifier
+	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
+	
+	return score
+}
+
+function isHCTabShown(name) {
+	return hcTab == name;
+}
+
+function updateHCTabs() {
+	var tabs = document.getElementsByClassName("hcTab");
+	for (i = 0; i < tabs.length; i++) {
+		var el = new Element(tabs[i].id);
+		el.setDisplay(isHCTabShown(tabs[i].id));
+	}
+	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
+}
+
+function showHCTab(name) {
+	hcTab = name;
+}
+
+function getHCSelector(name) {
+	let base;
+	let data = HC_DATA[name]
+	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
+	else if (data[0]=="text") base = new ExpantaNum(data[1][0]).toString()
+	return player.elementary.hc.selectors[name]||base
+}
+
+function updateHCSelector(name) {
+	let data = HC_DATA[name]
+	let type = data[0]
+	let el = new Element("hcSelector"+name)
+	if (type=="checkbox") player.elementary.hc.selectors[name] = el.el.checked
+	else if (type=="text") {
+		let val = el.el.value||0
+		try {
+			let num = new ExpantaNum(val)
+			if (num.lt(data[1][0]) || num.isNaN()) num = new ExpantaNum(data[1][0])
+			if (num.gt(data[1][1])) num = new ExpantaNum(data[1][1])
+			player.elementary.hc.selectors[name] = num
+			el.el.value = disp(num, 8, 3, 10)
+		} catch(e) {
+			notifier.warn("Improper Hadronic Challenge input")
+		}
+	}
+}
+
+function canCompleteHC() {
+	return (!(!player.elementary.hc.active)) && player.distance.gte(getHCSelector("goal"))
+}
+
+function updateHCSelectorInputs() {
+	let len = Object.keys(HC_DATA).length
+	for (let i=0;i<len;i++) {
+		let el = new Element("hcSelector"+Object.keys(HC_DATA)[i])
+		el.el.disabled = !(!player.elementary.hc.active)
+	}
+}
+
+function startHC() {
+	if (!player.elementary.hc.unl) return
+	if (player.elementary.hc.active) {
+		if (canCompleteHC()) player.elementary.hc.best = player.elementary.hc.best.max(getProjectedHadronicScore())
+		else if (!confirm("Are you sure you want to exit the challenge early?")) return
+	} else if (getProjectedHadronicScore().lte(0)) {
+		alert("You cannot start a Hadronic Challenge with a Projected Hadronic Score of 0!")
+		return
+	}
+	player.elementary.hc.active = !player.elementary.hc.active
+	elmReset(true)
+	updateHCSelectorInputs()
+}
+
+function HCCBA(name) {
+	return player.elementary.hc.active && getHCSelector(name)
 }

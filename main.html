@@ -1254,7 +1254,31 @@
 				</div>
 			</div>
 			<div id="hc" class="elmtab" style="display: none;">
-				Nothing here quite yet ;)
+				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
+				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
+				<div class="band ylw">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('mainHC')">
+									Main Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('infHC')">
+									Infinity Selectors
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
+				<div id="mainHC" class="hcTab"></div>
+				<div id="infHC" class="hcTab"></div>
+				<br><br>
 			</div>
 		</div>
 	</div>

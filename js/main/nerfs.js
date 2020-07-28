@@ -72,7 +72,7 @@ function nerfActive(name) {
 	if (name == "noTS") {
 		let active = false;
 		active =
-			active || (tmp.inf ? (tmp.inf.stadium.active("eternity")&&!(tmp.ach[116].has && modeActive('extreme')&&player.inf.pantheon.purge.active)) || tmp.inf.stadium.active("reality", 2) : true);
+			active || (tmp.inf ? (tmp.inf.stadium.active("eternity")&&!(tmp.ach[116].has && modeActive('extreme')&&(player.inf.pantheon.purge.active||HCCBA("purge")))) || tmp.inf.stadium.active("reality", 2) : true);
 		return active;
 	}
 	if (name == "noCadavers") {
@@ -81,7 +81,7 @@ function nerfActive(name) {
 			active ||
 			(tmp.inf
 				? (((tmp.inf.stadium.active("solaris") && !modeActive("extreme")) ||
-				  tmp.inf.stadium.active("drigganiz", 5)) && !(player.inf.pantheon.purge.active&&(tmp.ach[147].has||modeActive("extreme"))))
+				  tmp.inf.stadium.active("drigganiz", 5)) && !((player.inf.pantheon.purge.active||HCCBA("purge"))&&(tmp.ach[147].has||modeActive("extreme"))))
 				: true);
 		return active;
 	}
@@ -103,7 +103,7 @@ function nerfActive(name) {
 			active ||
 			(tmp.inf
 				? ((tmp.inf.stadium.active("drigganiz") ||
-				  tmp.inf.stadium.active("eternity", 6)) && !((tmp.ach[147].has||modeActive("extreme"))&&player.inf.pantheon.purge.active)) ||
+				  tmp.inf.stadium.active("eternity", 6)) && !((tmp.ach[147].has||modeActive("extreme"))&&(player.inf.pantheon.purge.active||HCCBA("purge")))) ||
 				  tmp.inf.stadium.active("reality", 6)
 				: true);
 		return active;
@@ -161,7 +161,7 @@ function adjustGen(val, type) {
 	let exp = new ExpantaNum(1);
 	if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);
-	if (player.inf.pantheon.purge.active && type == "vel") exp = exp.div(modeActive('extreme')?1:3);
+	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?1:3);
 	if (player.elementary.theory.active && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
 	if (modeActive("extreme") && preinf) exp = exp.times(FCComp(4)?(tmp.ach[123].has?0.95:0.9):0.75);
 	return val.pow(exp);
