@@ -236,6 +236,7 @@ function setupHTML() {
 		if (data[0]=="checkbox") inp.el.checked = getHCSelector(name)
 		if (data[0]=="text") inp.el.value = new ExpantaNum(getHCSelector(name)).toString()
 	}
+	updateHCSelectorInputs()
 	
 	// Version
 	let v = new Element("version")
