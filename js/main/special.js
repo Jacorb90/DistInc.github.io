@@ -196,7 +196,7 @@ function loadTempFeatures() {
 			reached: function() { return player.elementary.hc.unl },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") return player.distance.plus(1).logBase(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1))
-				else return player.distance.div(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[2]).min(1))
+				else return player.distance.div(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1))
 			},
 			spec: [false, true],
 		}),
