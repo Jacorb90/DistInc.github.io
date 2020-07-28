@@ -232,9 +232,6 @@ function setupHTML() {
 		
 		let html = "<br>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)'></input><br>"
 		el.addHTML(html)
-		let inp = new Element("hcSelector"+name)
-		if (data[0]=="checkbox") inp.el.checked = getHCSelector(name)
-		if (data[0]=="text") inp.el.value = new ExpantaNum(getHCSelector(name)).toString()
 	}
 	updateHCSelectorInputs()
 	

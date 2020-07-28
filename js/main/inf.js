@@ -158,6 +158,7 @@ function updateTempInf() {
 		if (!tmp.inf.upgs.shown(id)) return;
 		if (player.inf.upgrades.includes(id)) return;
 		if (player.inf.knowledge.lt(INF_UPGS.costs[id])) return;
+		if (HCCBA("noIU")) return
 		player.inf.knowledge = player.inf.knowledge.sub(INF_UPGS.costs[id]);
 		player.inf.upgrades.push(id);
 	};
@@ -643,7 +644,7 @@ function updateTempInf() {
 	if (!tmp.inf.pantheon.collect) tmp.inf.pantheon.collect = function () {
 		let diff = tmp.inf.pantheon.bulk.sub(tmp.inf.pantheon.totalGems);
 		if (diff.lt(1)) return;
-		player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff);
+		if (!HCCBA("noGems")) player.inf.pantheon.gems = player.inf.pantheon.gems.plus(diff);
 	};
 	if (!tmp.inf.pantheon.transfer) tmp.inf.pantheon.transfer = function (type, bulk=new ExpantaNum(1)) {
 		if (player.inf.pantheon.gems.lt(bulk)) return;
@@ -739,8 +740,8 @@ function updateTempInf() {
 	tmp.inf.derv.maxShifts = new ExpantaNum(2);
 	if (!tmp.inf.derv.unlocked) tmp.inf.derv.unlocked = function (name) {
 		if (name == "distance" || name == "velocity" || name == "acceleration") return true;
-		if (name == "jerk" && player.inf.derivatives.unlocks.gte(1)) return true;
-		if (name == "snap" && player.inf.derivatives.unlocks.gte(2)) return true;
+		if (name == "jerk" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:1)) return true;
+		if (name == "snap" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:2)) return true;
 		return false;
 	};
 	if (!tmp.inf.derv.amt) tmp.inf.derv.amt = function (name) {
@@ -844,6 +845,7 @@ function updateTempInf() {
 	if (modeActive('easy')) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]());
 	tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.inf.derv.boostPow);
+	if (HCCBA("noDB")) tmp.inf.derv.boostMult = new ExpantaNum(1)
 	if (!tmp.inf.derv.mult) tmp.inf.derv.mult = function (name) {
 		let mult = new ExpantaNum(1);
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0);

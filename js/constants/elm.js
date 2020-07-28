@@ -447,16 +447,21 @@ const DARK_EXPANDER_DESCS = {
 }
 
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
-const HC_TABS = {
-	mainHC: function() {
-		return true
-	},
-}
 const HC_DATA = {
 	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
+	noIU: ["checkbox", undefined, "inf"],
+	noGems: ["checkbox", undefined, "inf"],
 	purge: ["checkbox", undefined, "inf"],
+	noDS: ["checkbox", undefined, "inf"],
+	noDB: ["checkbox", undefined, "inf"],
+	tv: ["number", [-1, 8], "elm"],
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
+	noIU: "You cannot buy Infinity Upgrades",
+	noGems: "You cannot gain Spectral Gems",
 	purge: "Trapped in Purge",
+	noDS: "Derivative Shifts do nothing",
+	noDB: "Derivative Boosts do nothing",
+	tv: "Trapped in Theoriverse Depth (disabled: -1)",
 }

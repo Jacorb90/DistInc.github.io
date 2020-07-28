@@ -494,9 +494,15 @@ function updateTempElementary() {
 	tmp.elm.theory.subbed = new ExpantaNum(0)
 	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
 	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
-	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).sub(3))
+	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).sub(3))
+	if (HCTVal("tv").gt(-1)) {
+		let d = HCTVal("tv")
+		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
+		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
+	}
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
+		if (HCTVal("tv").gt(-1)) return
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active
 	}
@@ -849,7 +855,14 @@ function getProjectedHadronicScore() {
 	let score = new ExpantaNum(0)
 	
 	// Infinity Modifiers
-	if (getHCSelector("purge")) score = score.times(2).max(1)
+	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
+	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
+	if (getHCSelector("purge")) score = score.times(2).plus(1)
+	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
+	if (getHCSelector("noDB")) score = score.times(1.03).plus(0.03)
+		
+	// Elementary Modifiers
+	score = score.times(new ExpantaNum(getHCSelector("tv")).plus(2).pow(0.25)).plus(new ExpantaNum(getHCSelector("tv")).plus(1).div(20))
 	
 	// Goal Modifier
 	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
@@ -878,7 +891,7 @@ function getHCSelector(name) {
 	let base;
 	let data = HC_DATA[name]
 	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
-	else if (data[0]=="text") base = new ExpantaNum(data[1][0]).toString()
+	else if (data[0]=="text"||data[0]=="number") base = new ExpantaNum(data[1][0]).toString()
 	return player.elementary.hc.selectors[name]||base
 }
 
@@ -887,10 +900,11 @@ function updateHCSelector(name) {
 	let type = data[0]
 	let el = new Element("hcSelector"+name)
 	if (type=="checkbox") player.elementary.hc.selectors[name] = el.el.checked
-	else if (type=="text") {
+	else if (type=="text"||type=="number") {
 		let val = el.el.value||0
 		try {
 			let num = new ExpantaNum(val)
+			if (type=="number") num = num.round()
 			if (num.lt(data[1][0]) || num.isNaN()) num = new ExpantaNum(data[1][0])
 			if (num.gt(data[1][1])) num = new ExpantaNum(data[1][1])
 			player.elementary.hc.selectors[name] = num
@@ -908,8 +922,12 @@ function canCompleteHC() {
 function updateHCSelectorInputs() {
 	let len = Object.keys(HC_DATA).length
 	for (let i=0;i<len;i++) {
-		let el = new Element("hcSelector"+Object.keys(HC_DATA)[i])
+		let name = Object.keys(HC_DATA)[i]
+		let data = HC_DATA[name]
+		let el = new Element("hcSelector"+name)
 		el.el.disabled = !(!player.elementary.hc.active)
+		if (data[0]=="checkbox") el.el.checked = getHCSelector(name)
+		if (data[0]=="text"||data[0]=="number") el.el.value = new ExpantaNum(getHCSelector(name)).toString()
 	}
 }
 
@@ -921,6 +939,9 @@ function startHC() {
 	} else if (getProjectedHadronicScore().lte(0)) {
 		alert("You cannot start a Hadronic Challenge with a Projected Hadronic Score of 0!")
 		return
+	} else if (player.elementary.theory.active) {
+		alert("You cannot start a Hadronic Challenge while in a Theoriverse run!")
+		return
 	}
 	player.elementary.hc.active = !player.elementary.hc.active
 	elmReset(true)
@@ -929,4 +950,8 @@ function startHC() {
 
 function HCCBA(name) {
 	return player.elementary.hc.active && getHCSelector(name)
+}
+
+function HCTVal(name) {
+	return !player.elementary.hc.active?new ExpantaNum(HC_DATA[name][1][0]):new ExpantaNum(getHCSelector(name))
 }

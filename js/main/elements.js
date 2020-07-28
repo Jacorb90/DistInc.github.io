@@ -830,7 +830,7 @@ function updateHTML() {
 		if (elmTab=="theory") {
 			tmp.el.thp.setTxt(showNum(player.elementary.theory.points))
 			if (thTab=="tv") {
-				tmp.el.theoriverse.setTxt(player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
+				tmp.el.theoriverse.setTxt(HCTVal("tv").gt(-1)?"Trapped in the Theoriverse!":player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
 				tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
 			}
 			if (thTab=="ss") {

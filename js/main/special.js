@@ -151,7 +151,7 @@ function loadTempFeatures() {
 			],
 			res: ["rockets", ["collapse", "cadavers"], ["inf", "endorsements"]],
 			display: [showNum, showNum, showNum],
-			reached: function() { return player.elementary.times.gt(0) },
+			reached: function() { return false },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.rockets
