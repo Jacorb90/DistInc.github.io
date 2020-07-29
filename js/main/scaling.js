@@ -18,8 +18,8 @@ function getScalingStart(type, name) {
 	let start = new ExpantaNum(SCALING_STARTS[type][name])
 	if (name=="rank") {
 		if (type=="scaled") {
-			if (player.tr.upgrades.includes(11)) start = start.plus(10)
-			if (player.tr.upgrades.includes(15)) start = start.plus(32)
+			if (player.tr.upgrades.includes(11) && !HCCBA("noTRU")) start = start.plus(10)
+			if (player.tr.upgrades.includes(15) && !HCCBA("noTRU")) start = start.plus(32)
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledRank")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {
@@ -30,8 +30,8 @@ function getScalingStart(type, name) {
 		}
 	} else if (name=="tier") {
 		if (type=="scaled") {
-			if (player.tr.upgrades.includes(12)) start = start.plus(2)
-			if (player.tr.upgrades.includes(14)) start = start.plus(tr14Eff()["ss"])
+			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)
+			if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) start = start.plus(tr14Eff()["ss"])
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledTier")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {

@@ -38,8 +38,8 @@ function updateTempDC() {
 	if (tmp.ach[75].has) tmp.dc.flow = tmp.dc.flow.times(1.1);
 	if (tmp.ach[83].has) tmp.dc.flow = tmp.dc.flow.times(1.2);
 	if (tmp.ach[131].has) tmp.dc.flow = tmp.dc.flow.times(1.5);
-	if (player.tr.upgrades.includes(11)) tmp.dc.flow = tmp.dc.flow.times(tr11Eff()["dcf"]);
-	if (player.tr.upgrades.includes(12)) tmp.dc.flow = tmp.dc.flow.times(tr12Eff());
+	if (player.tr.upgrades.includes(11) && !HCCBA("noTRU")) tmp.dc.flow = tmp.dc.flow.times(tr11Eff()["dcf"]);
+	if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) tmp.dc.flow = tmp.dc.flow.times(tr12Eff());
 	if (tmp.inf) {
 		if (tmp.inf.upgs.has("4;1")) tmp.dc.flow = tmp.dc.flow.times(2);
 		if (tmp.inf.upgs.has("5;1")) tmp.dc.flow = tmp.dc.flow.times(2);
@@ -55,7 +55,7 @@ function updateTempDC() {
 	if (tmp.elm) if (player.elementary.times.gt(0)) tmp.dc.flow = tmp.dc.flow.times(tmp.elm.bos.z2.max(1));
 	if (nerfActive("noDarkFlow")) tmp.dc.flow = new ExpantaNum(0);
 	tmp.dc.power = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(15)) tmp.dc.power = tmp.dc.power.times(tr15Eff());
+	if (player.tr.upgrades.includes(15) && !HCCBA("noTRU")) tmp.dc.power = tmp.dc.power.times(tr15Eff());
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power));
 	if (tmp.inf)
 		if (tmp.inf.upgs.has("6;8"))

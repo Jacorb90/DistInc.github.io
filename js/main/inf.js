@@ -686,6 +686,11 @@ function updateTempInf() {
 	}
 	if (tmp.inf.upgs.has("3;10")) tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(INF_UPGS.effects["3;10"]())
 	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(INF_UPGS.effects["10;4"]())
+	if (player.elementary.hc.unl) {
+		let mul = TREE_UPGS[29].effect(player.elementary.theory.tree.upgrades[29]||0)
+		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(mul)
+		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(mul)
+	}
 	let h = player.inf.pantheon.heavenlyChips;
 	let d = player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
@@ -903,5 +908,12 @@ function infTick(diff) {
 			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
 		);
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
+	}
+	
+	if (player.elementary.hc.unl) {
+		let autoPurgeMul = TREE_UPGS[28].effect(player.elementary.theory.tree.upgrades[28]||0)
+		if (autoPurgeMul.gt(0)) {
+			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.max(tmp.inf.pantheon.purgeGain.plus(player.inf.pantheon.purge.power).times(autoPurgeMul).floor());
+		}
 	}
 }

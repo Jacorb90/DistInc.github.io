@@ -860,6 +860,9 @@ function importTree() {
 function getProjectedHadronicScore() {
 	let score = new ExpantaNum(0)
 	
+	// Pre-Collapse Modifiers
+	if (getHCSelector("noTRU")) score = score.times(1.08).plus(0.08)
+	
 	// Collapse Modifiers
 	if (getHCSelector("noCad")) score = score.times(1.05).plus(0.05)
 	if (getHCSelector("noPU")) score = score.times(1.1).plus(0.1)
@@ -972,5 +975,22 @@ function claimHadronEff() {
 	if (diff.gte(1)) {
 		player.elementary.theory.points = player.elementary.theory.points.plus(diff)
 		player.elementary.hc.claimed = player.elementary.hc.claimed.plus(diff)
+	}
+}
+
+function exportHC() {
+	let data = btoa(JSON.stringify(player.elementary.hc.selectors))
+	notifier.info("Hadronic Challenge data exported!")
+	copyToClipboard(data)
+}
+
+function importHC() {
+	let toImport = prompt("Paste Hadronic Challenge data here.")
+	try {
+		let data = JSON.parse(atob(toImport))
+		player.elementary.hc.selectors = data
+		updateHCSelectorInputs()
+	} catch(e) {
+		notifier.warn("Invalid Hadronic Challenge data!")
 	}
 }

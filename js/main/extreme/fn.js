@@ -1,20 +1,20 @@
 function updateTempFurnace() {
 	if (!tmp.fn) tmp.fn = {};
 	let adj = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(17) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(17) && !HCCBA("noTRU") && modeActive("extreme"))
 		adj = adj.times(player.tr.cubes.plus(1).times(10).slog(10));
-	if (player.tr.upgrades.includes(26) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(26) && !HCCBA("noTRU") && modeActive("extreme"))
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf).sub(1).times(ExpantaNum.pow(inFC(4)?1:ExpantaNum.mul(FCComp(2)?25:3, FCComp(5)?player.furnace.upgrades[0].plus(1).pow(1/3):1), player.furnace.upgrades[0]));
-	if (player.tr.upgrades.includes(16) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.fn.gain = tmp.fn.gain.times(inFC(3)?1:player.tr.cubes.plus(1));
 	if (inFC(2)) tmp.fn.gain = tmp.fn.gain.pow(0.1)
 	tmp.fn.eff = player.furnace.coal.plus(1).log10().pow(0.6).div(5);
 	if (tmp.fn.eff.gte(1)) tmp.fn.eff = tmp.fn.eff.log10().plus(1);
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
-	if (player.tr.upgrades.includes(25) && modeActive("extreme")) tmp.fn.eff = tmp.fn.eff.times(2);
+	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU") && modeActive("extreme")) tmp.fn.eff = tmp.fn.eff.times(2);
 	tmp.fn.upgs = {
 		1: { base: new ExpantaNum(20) },
 		2: { base: new ExpantaNum(100) },

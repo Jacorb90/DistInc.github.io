@@ -4,8 +4,8 @@ function updateTempPathogens() {
 	if (modeActive("hard")) tmp.pathogens.lrm = tmp.pathogens.lrm.div(5);
 	if (modeActive("extreme")) tmp.pathogens.lrm = tmp.pathogens.lrm.times(20);
 	tmp.pathogens.upgPow = new ExpantaNum(1);
-	if (player.tr.upgrades.includes(13)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tr13Eff().max(0));
-	if (modeActive("extreme") && player.tr.upgrades.includes(27))
+	if (player.tr.upgrades.includes(13) && !HCCBA("noTRU")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(tr13Eff().max(0));
+	if (modeActive("extreme") && player.tr.upgrades.includes(27) && !HCCBA("noTRU"))
 		tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(
 			player.furnace.coal.plus(1).times(10).slog(10).sub(1).div(5).max(0)
 		);

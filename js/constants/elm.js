@@ -405,19 +405,19 @@ const TREE_UPGS = {
 	},
 	28: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return new ExpantaNum(1/0) },
-		cap: new ExpantaNum(1),
-		desc: "Not implemented yet.",
-		effect: function(bought) { return "???" },
-		effD: function(e) { return e },
+		cost: function(bought) { return ExpantaNum.mul(400, ExpantaNum.pow(bought, 2).times(2).plus(1)) },
+		cap: new ExpantaNum(20),
+		desc: "You gain Purge Power outside Purge runs, but at a reduced rate.",
+		effect: function(bought) { return ExpantaNum.mul(0.05, bought) },
+		effD: function(e) { return showNum(e)+"x" },
 	},
 	29: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return new ExpantaNum(1/0) },
-		cap: new ExpantaNum(1),
-		desc: "Not implemented yet.",
-		effect: function(bought) { return "???" },
-		effD: function(e) { return e },
+		cost: function(bought) { return ExpantaNum.pow(bought, 5).plus(25) },
+		cap: new ExpantaNum(20),
+		desc: "Heavenly Chips & Demonic Souls are generated faster based on your Purge Power.",
+		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.mul(0.001, bought).plus(1), player.inf.pantheon.purge.power).times(ExpantaNum.pow(player.inf.pantheon.purge.power.max(1), ExpantaNum.sqrt(bought))) },
+		effD: function(e) { return showNum(e)+"x" },
 	},
 	30: {
 		unl: function() { return player.elementary.hc.unl },
@@ -497,6 +497,7 @@ const DARK_EXPANDER_DESCS = {
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
 const HC_DATA = {
 	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
+	noTRU: ["checkbox", undefined, "pre"],
 	noCad: ["checkbox", undefined, "col"],
 	noPU: ["checkbox", undefined, "col"],
 	noDC: ["checkbox", undefined, "col"],
@@ -509,6 +510,7 @@ const HC_DATA = {
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
+	noTRU: "Time Reversal Upgrades do nothing",
 	noCad: "You do not gain Cadavers",
 	noPU: "Pathogen Upgrades do nothing",
 	noDC: "You cannot buy Dark Cores",

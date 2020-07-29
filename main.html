@@ -1258,6 +1258,7 @@
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
 				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next TP at <span id="hadronNext"></span> Hadrons)<br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
+				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button><br><br>
 				<div class="band ylw">
 					<table>
 						<tr>
@@ -1267,6 +1268,11 @@
 							<td>
 								<button class="btn tb hc" onclick="showHCTab('mainHC')">
 									Main Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('preHC')">
+									Pre-Collapse Selectors
 								</button>
 							</td>
 							<td>
@@ -1288,6 +1294,7 @@
 					</table>
 				</div><br><br>
 				<div id="mainHC" class="hcTab"></div>
+				<div id="preHC" class="hcTab"></div>
 				<div id="colHC" class="hcTab"></div>
 				<div id="infHC" class="hcTab"></div>
 				<div id="elmHC" class="hcTab"></div>

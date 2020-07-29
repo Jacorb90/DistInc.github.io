@@ -12,14 +12,14 @@ function getTimeCubeGain() {
 	let gain = new ExpantaNum(1);
 	if (modeActive("hard")) gain = gain.div(3);
 	if (modeActive("easy")) gain = gain.times(5).times(player.pathogens.amount.plus(1));
-	if (player.tr.upgrades.includes(1)) gain = gain.times(tr1Eff());
-	if (player.tr.upgrades.includes(4)) gain = gain.times(tr4Eff());
+	if (player.tr.upgrades.includes(1) && !HCCBA("noTRU")) gain = gain.times(tr1Eff());
+	if (player.tr.upgrades.includes(4) && !HCCBA("noTRU")) gain = gain.times(tr4Eff());
 	if (tmp.ach[55].has) gain = gain.times(1.1);
 	if (tmp.ach[72].has && modeActive("extreme")) {
 		let exp = ExpantaNum.add(5, player.dc.cores.sqrt().times(5));
 		gain = gain.times(player.furnace.coal.plus(1).log10().plus(1).pow(exp));
 	}
-	if (player.tr.upgrades.includes(16) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		gain = gain.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
 	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff());
 	if (tmp.dc) if (player.dc.unl) gain = gain.times(tmp.dc.deEff);

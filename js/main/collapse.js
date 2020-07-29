@@ -102,7 +102,7 @@ function getCadaverGainMult() {
 	if (tmp.ach[38].has) mult = mult.times(2);
 	if (tmp.ach[65].has) mult = mult.times(1.4);
 	if (tmp.ach[131].has) mult = mult.times(2);
-	if (player.tr.upgrades.includes(14)) mult = mult.times(tr14Eff()["cd"]);
+	if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) mult = mult.times(tr14Eff()["cd"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("3;2")) mult = mult.times(INF_UPGS.effects["3;2"]()["cadavers"]);
 	if (tmp.collapse) if (modeActive("hard") && (tmp.collapse.layer.gain.gte(10) || (tmp.clghm && tmp.collapse.layer.gain.gte(5)))) {
 		mult = mult.div(2);
