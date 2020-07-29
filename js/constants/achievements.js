@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 14,
+	rows: 15,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -127,6 +127,8 @@ const ACH_DATA = {
 		146: "True Infinity+",
 		147: "The Biggest Setback",
 		148: "The Impossible Task",
+		
+		151: "An infinity smaller than your fingertip",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -254,6 +256,8 @@ const ACH_DATA = {
 		146: "Reach showNum(1.8e308) Knowledge.",
 		147: "Reach Rank showNum(200) with ten Endorsements or less.",
 		148: "Reach Rank showNum(995).",
+		
+		151: "Unlock Hadronic Challenge.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

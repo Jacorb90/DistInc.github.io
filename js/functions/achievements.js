@@ -131,6 +131,8 @@ function updateAchievements() {
 	if (player.inf.knowledge.gte("1.8e308")) tmp.ach[146].grant()
 	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
 	if (player.rank.gte(995)) tmp.ach[148].grant()
+		
+	if (player.elementary.hc.unl) tmp.ach[151].grant()
 }
 
 function rowComplete(r) {

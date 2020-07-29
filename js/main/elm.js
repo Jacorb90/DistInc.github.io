@@ -240,7 +240,7 @@ function updateTempElementary() {
 			return ExpantaNum.pow(
 				player.inf.knowledge.max(0).plus(1).log10().plus(1).log10().plus(1),
 				lpts.max(0).times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).div(5).max(0.2)
-			);
+			).min(lpts.plus(1));
 		else if (name == "netrion")
 			return lpts.max(0).times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).max(1).sub(1).div(100).max(0);
 		else if (name == "vibrino")
@@ -564,6 +564,7 @@ function updateTempElementary() {
 	if (!tmp.elm.hc) tmp.elm.hc = {}
 	tmp.elm.hc.currScore = getProjectedHadronicScore()
 	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
+	tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(TREE_UPGS[31].effect(player.elementary.theory.tree.upgrades[31]||0))
 	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor()
 	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).plus(1))
@@ -692,6 +693,7 @@ function getEntangleGain() {
 		gain = gain.pow(exp.pow(-1)).times(ExpantaNum.pow(1e9, ExpantaNum.sub(1, exp.pow(-1))))
 	}
 	gain = gain.times(TREE_UPGS[6].effect(player.elementary.theory.tree.upgrades[6]||0))
+	gain = gain.times(TREE_UPGS[30].effect(player.elementary.theory.tree.upgrades[30]||0))
 	return gain
 }
 
@@ -772,6 +774,7 @@ function getAccelGain() {
 function getAccelEff() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(1)
 	let eff = player.elementary.theory.accelerons.amount.plus(1).pow(0.04)
+	if (eff.gte(2)) eff = eff.logBase(2).plus(1)
 	return eff
 }
 
