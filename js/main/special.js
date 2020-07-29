@@ -190,7 +190,10 @@ function loadTempFeatures() {
 		"hadronic challenge": new Feature({
 			name: "hadronic challenge",
 			res_amt: 2,
-			req: function() { return HC_REQ },
+			req: [
+				new ExpantaNum(HC_REQ[0]),
+				new ExpantaNum(HC_REQ[1]),
+			],
 			res: ["distance", ["inf", "endorsements"]],
 			display: [formatDistance, showNum],
 			reached: function() { return player.elementary.hc.unl },
