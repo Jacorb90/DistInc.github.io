@@ -2,7 +2,7 @@ function loadTempFeatures() {
 	tmp.features = {
 		rockets: new Feature({
 			name: "rockets",
-			req: ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm),
+			req: function() { return ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.rockets.gt(0) || player.rf.gt(0) },
@@ -17,7 +17,7 @@ function loadTempFeatures() {
 		}),
 		automation: new Feature({
 			name: "automation",
-			req: ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10),
+			req: function() { return ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.automation.unl },
@@ -32,7 +32,7 @@ function loadTempFeatures() {
 		}),
 		"time reversal": new Feature({
 			name: "time reversal",
-			req: new ExpantaNum(DISTANCES.ly),
+			req: function() { return new ExpantaNum(DISTANCES.ly) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.tr.unl },
@@ -43,7 +43,7 @@ function loadTempFeatures() {
 		}),
 		collapse: new Feature({
 			name: "collapse",
-			req: new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1),
+			req: function() { return new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.collapse.unl },
@@ -58,7 +58,7 @@ function loadTempFeatures() {
 		}),
 		pathogens: new Feature({
 			name: "pathogens",
-			req: new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1),
+			req: function() { return new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1) },
 			res: ["collapse", "cadavers"],
 			display: showNum,
 			reached: function() { return player.pathogens.unl },
@@ -73,7 +73,7 @@ function loadTempFeatures() {
 		}),
 		dc: new Feature({
 			name: "dc",
-			req: new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1),
+			req: function() { return new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.dc.unl },
@@ -89,7 +89,7 @@ function loadTempFeatures() {
 		}),
 		infinity: new Feature({
 			name: "infinity",
-			req: new ExpantaNum(INF_UNL),
+			req: function() { return new ExpantaNum(INF_UNL) },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.inf.unl },
@@ -100,7 +100,7 @@ function loadTempFeatures() {
 		}),
 		ascension: new Feature({
 			name: "ascension",
-			req: new ExpantaNum(10),
+			req: function() { return new ExpantaNum(10) },
 			res: ["inf", "endorsements"],
 			display: showNum,
 			reached: function() { return player.inf.endorsements.gte(10) },
@@ -110,7 +110,7 @@ function loadTempFeatures() {
 		}),
 		stadium: new Feature({
 			name: "stadium",
-			req: new ExpantaNum(15),
+			req: function() { return new ExpantaNum(15) },
 			res: ["inf", "endorsements"],
 			display: showNum,
 			reached: function() { return player.inf.endorsements.gte(15) },
@@ -121,7 +121,7 @@ function loadTempFeatures() {
 		}),
 		pantheon: new Feature({
 			name: "pantheon",
-			req: new ExpantaNum(21),
+			req: function() { return new ExpantaNum(21) },
 			res: ["inf", "endorsements"],
 			display: showNum,
 			reached: function() { return player.inf.endorsements.gte(21) },
@@ -132,7 +132,7 @@ function loadTempFeatures() {
 		}),
 		derivatives: new Feature({
 			name: "derivatives",
-			req: ExpantaNum.mul(DISTANCES.uni, "1e90000"),
+			req: function() { return ExpantaNum.mul(DISTANCES.uni, "1e90000") },
 			res: "distance",
 			display: formatDistance,
 			reached: function() { return player.inf.derivatives.unl },
@@ -190,7 +190,7 @@ function loadTempFeatures() {
 		"hadronic challenge": new Feature({
 			name: "hadronic challenge",
 			res_amt: 2,
-			req: HC_REQ,
+			req: function() { return HC_REQ },
 			res: ["distance", ["inf", "endorsements"]],
 			display: [formatDistance, showNum],
 			reached: function() { return player.elementary.hc.unl },

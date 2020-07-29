@@ -1178,18 +1178,18 @@
 						</tr></table>
 						<table><tr>
 							<td><button id="tree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
+							<td><button id="tree28" class="tree locked" onclick="tmp.elm.theory.tree.buy(28)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree29" class="tree locked" onclick="tmp.elm.theory.tree.buy(29)"></button></td>
 							<td><button id="tree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
 						</tr></table>
 						<table><tr>
 							<td><button id="tree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button id="tree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
 						</tr></table>
@@ -1197,8 +1197,8 @@
 							<td><button id="tree25" class="tree locked" onclick="tmp.elm.theory.tree.buy(25)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree32" class="tree locked" onclick="tmp.elm.theory.tree.buy(32)"></button></td>
+							<td><button id="tree33" class="tree locked" onclick="tmp.elm.theory.tree.buy(33)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button id="tree26" class="tree locked" onclick="tmp.elm.theory.tree.buy(26)"></button></td>
@@ -1254,7 +1254,9 @@
 				</div>
 			</div>
 			<div id="hc" class="elmtab" style="display: none;">
+				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next TP at <span id="hadronNext"></span> Hadrons)<br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
 				<div class="band ylw">
 					<table>
@@ -1265,6 +1267,11 @@
 							<td>
 								<button class="btn tb hc" onclick="showHCTab('mainHC')">
 									Main Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('colHC')">
+									Collapse Selectors
 								</button>
 							</td>
 							<td>
@@ -1279,9 +1286,9 @@
 							</td>
 						</tr>
 					</table>
-				</div>
-				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
+				</div><br><br>
 				<div id="mainHC" class="hcTab"></div>
+				<div id="colHC" class="hcTab"></div>
 				<div id="infHC" class="hcTab"></div>
 				<div id="elmHC" class="hcTab"></div>
 				<br><br>

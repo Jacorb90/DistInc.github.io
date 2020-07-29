@@ -403,6 +403,54 @@ const TREE_UPGS = {
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
+	28: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
+	29: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
+	30: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
+	31: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
+	32: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
+	33: {
+		unl: function() { return player.elementary.hc.unl },
+		cost: function(bought) { return new ExpantaNum(1/0) },
+		cap: new ExpantaNum(1),
+		desc: "Not implemented yet.",
+		effect: function(bought) { return "???" },
+		effD: function(e) { return e },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
@@ -449,6 +497,9 @@ const DARK_EXPANDER_DESCS = {
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
 const HC_DATA = {
 	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
+	noCad: ["checkbox", undefined, "col"],
+	noPU: ["checkbox", undefined, "col"],
+	noDC: ["checkbox", undefined, "col"],
 	noIU: ["checkbox", undefined, "inf"],
 	noGems: ["checkbox", undefined, "inf"],
 	purge: ["checkbox", undefined, "inf"],
@@ -458,6 +509,9 @@ const HC_DATA = {
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
+	noCad: "You do not gain Cadavers",
+	noPU: "Pathogen Upgrades do nothing",
+	noDC: "You cannot buy Dark Cores",
 	noIU: "You cannot buy Infinity Upgrades",
 	noGems: "You cannot gain Spectral Gems",
 	purge: "Trapped in Purge",

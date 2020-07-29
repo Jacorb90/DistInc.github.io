@@ -902,6 +902,10 @@ function updateHTML() {
 			tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore))
 			tmp.el.startHC.setTxt((!(!player.elementary.hc.active))?(canCompleteHC()?"Complete Hadronic Challenge!":"Exit Hadronic Challenge early for no reward"):"Start Hadronic Challenge")
 			tmp.el.bestHadScore.setTxt(showNum(player.elementary.hc.best))
+			tmp.el.hadrons.setTxt(showNum(player.elementary.hc.hadrons))
+			tmp.el.hadronGain.setTxt(showNum(adjustGen(tmp.elm.hc.hadronGain, "hc")))
+			tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
+			tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
 		}
 	}
 

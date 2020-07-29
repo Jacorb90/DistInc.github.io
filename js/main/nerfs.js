@@ -83,6 +83,7 @@ function nerfActive(name) {
 				? (((tmp.inf.stadium.active("solaris") && !modeActive("extreme")) ||
 				  tmp.inf.stadium.active("drigganiz", 5)) && !((player.inf.pantheon.purge.active||HCCBA("purge"))&&(tmp.ach[147].has||modeActive("extreme"))))
 				: true);
+		if (HCCBA("noCad")) active = true
 		return active;
 	}
 	if (name == "noLifeEssence") {
@@ -106,6 +107,7 @@ function nerfActive(name) {
 				  tmp.inf.stadium.active("eternity", 6)) && !((tmp.ach[147].has||modeActive("extreme"))&&(player.inf.pantheon.purge.active||HCCBA("purge")))) ||
 				  tmp.inf.stadium.active("reality", 6)
 				: true);
+		if (HCCBA("noPU")) active = true
 		return active;
 	}
 	if (name == "noDarkFlow") {
@@ -118,6 +120,7 @@ function nerfActive(name) {
 		active =
 			active ||
 			(tmp.inf ? tmp.inf.stadium.active("reality", 5) || tmp.inf.stadium.active("drigganiz", 6) : true);
+		if (HCCBA("noDC")) active = true
 		return active;
 	}
 	if (name == "noInf1;1") {
@@ -157,7 +160,7 @@ function adjustGen(val, type) {
 		type == "heavenlyChips" ||
 		type == "demonicSouls" ||
 		type == "derv" || preinf;
-	let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss" || type=="str" || type=="preons" || type=="accelerons";
+	let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss" || type=="str" || type=="preons" || type=="accelerons" || type=="hc";
 	let exp = new ExpantaNum(1);
 	if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);

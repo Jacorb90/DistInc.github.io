@@ -563,6 +563,11 @@ function updateTempElementary() {
 	// Hadronic Score
 	if (!tmp.elm.hc) tmp.elm.hc = {}
 	tmp.elm.hc.currScore = getProjectedHadronicScore()
+	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
+	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
+	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor()
+	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).plus(1))
+	claimHadronEff()
 	updateHCTabs()
 }
 
@@ -615,6 +620,7 @@ function elTick(diff) {
 	}
 	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
 	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
+	if (player.elementary.hc.unl) player.elementary.hc.hadrons = player.elementary.hc.hadrons.plus(adjustGen(tmp.elm.hc.hadronGain, "hc").times(diff))
 }
 
 function elmReset(force=false) {
@@ -854,10 +860,15 @@ function importTree() {
 function getProjectedHadronicScore() {
 	let score = new ExpantaNum(0)
 	
+	// Collapse Modifiers
+	if (getHCSelector("noCad")) score = score.times(1.05).plus(0.05)
+	if (getHCSelector("noPU")) score = score.times(1.1).plus(0.1)
+	if (getHCSelector("noDC")) score = score.times(1.04).plus(0.04)
+	
 	// Infinity Modifiers
 	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
 	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
-	if (getHCSelector("purge")) score = score.times(2).plus(1)
+	if (getHCSelector("purge")) score = score.times(3).plus(2)
 	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
 	if (getHCSelector("noDB")) score = score.times(1.03).plus(0.03)
 		
@@ -954,4 +965,12 @@ function HCCBA(name) {
 
 function HCTVal(name) {
 	return !player.elementary.hc.active?new ExpantaNum(HC_DATA[name][1][0]):new ExpantaNum(getHCSelector(name))
+}
+
+function claimHadronEff() {
+	let diff = tmp.elm.hc.hadronEff.sub(player.elementary.hc.claimed||0).floor()
+	if (diff.gte(1)) {
+		player.elementary.theory.points = player.elementary.theory.points.plus(diff)
+		player.elementary.hc.claimed = player.elementary.hc.claimed.plus(diff)
+	}
 }

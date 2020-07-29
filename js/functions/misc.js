@@ -136,6 +136,7 @@ function ENString(obj) {
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0).toString();
 	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best).toString();
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons).toString();
+	ret.elementary.hc.claimed = new ExpantaNum(ret.elementary.hc.claimed||0).toString();
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]]).toString();
 	return ret;
 }
@@ -286,6 +287,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0);
 	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best);
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons);
+	ret.elementary.hc.claimed = new ExpantaNum(ret.elementary.hc.claimed||0);
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]])
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
