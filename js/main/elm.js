@@ -846,7 +846,7 @@ function importTree() {
 			upgs[key] = new ExpantaNum(upgs[key])
 			if (upgs[key].lte(plyr[key])) continue
 			else {
-				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)))
+				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
 				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
 				if (player.elementary.theory.points.gte(totalCost)) {
 					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)

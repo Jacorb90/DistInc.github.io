@@ -437,7 +437,7 @@ const TREE_UPGS = {
 	},
 	32: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return new ExpantaNum(1.25e3) },
+		cost: function(bought) { return new ExpantaNum(100) },
 		cap: new ExpantaNum(1),
 		desc: "All Quark & Lepton effects are active at once.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
