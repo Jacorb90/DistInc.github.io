@@ -130,6 +130,8 @@ const ACH_DATA = {
 		
 		151: "An infinity smaller than your fingertip",
 		152: "Useless Theories",
+		153: "There is a tree",
+		154: "What even are Hadrons?",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -260,6 +262,8 @@ const ACH_DATA = {
 		
 		151: "Unlock Hadronic Challenge.",
 		152: "Get a Hadronic Score of at least showNum(2.3).",
+		153: "Reach formatDistance(4.4e8250026) without any Theory Tree Upgrades.",
+		154: "Get a Hadronic Score of at least 2.5 and reach formatDistance(e2.8e7), can be on separate runs.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -336,5 +340,6 @@ const ACH_DATA = {
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
+		154: "Purge Power gain is doubled.",
 	}
 };

@@ -711,6 +711,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("8;2"))
 		tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"]);
 	if (modeActive("easy")) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(4)
+	if (tmp.ach[154].has) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(2)
 	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni);
 	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5);
 	if (modeActive("easy")) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
@@ -723,13 +724,16 @@ function updateTempInf() {
 		.pow(tmp.inf.pantheon.purgeExp)
 		.times(tmp.inf.pantheon.purgeMult);
 	if (tmp.inf.pantheon.purgeGain.gte(600)) tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sqrt().times(Math.sqrt(600));
-	tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain
-		.sub(player.inf.pantheon.purge.power)
-		.floor()
-		.max(0);
+	tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sub(player.inf.pantheon.purge.power).floor().max(0);
 	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(
 		tmp.inf.pantheon.purgeBase,
 		player.inf.pantheon.purge.power.plus(1).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))
+	)
+		.sub(1)
+		.times(tmp.inf.pantheon.purgeStart);
+	if (player.inf.pantheon.purge.power.gte(600)) tmp.inf.pantheon.purgeNext = ExpantaNum.pow(
+		tmp.inf.pantheon.purgeBase,
+		player.inf.pantheon.purge.power.plus(1).pow(2).div(600).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))
 	)
 		.sub(1)
 		.times(tmp.inf.pantheon.purgeStart);

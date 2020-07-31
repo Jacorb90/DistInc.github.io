@@ -405,10 +405,10 @@ const TREE_UPGS = {
 	},
 	28: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return ExpantaNum.mul(400, ExpantaNum.pow(bought, 2).times(2).plus(1)) },
-		cap: new ExpantaNum(20),
+		cost: function(bought) { return ExpantaNum.mul(400, ExpantaNum.pow(bought, 2).times(1.5).plus(1)).round() },
+		cap: new ExpantaNum(10),
 		desc: "You gain Purge Power outside Purge runs, but at a reduced rate.",
-		effect: function(bought) { return ExpantaNum.mul(0.05, bought) },
+		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return showNum(e)+"x" },
 	},
 	29: {
@@ -445,11 +445,11 @@ const TREE_UPGS = {
 	},
 	33: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return new ExpantaNum(1/0) },
+		cost: function(bought) { return new ExpantaNum(1.5e3) },
 		cap: new ExpantaNum(1),
-		desc: "Not implemented yet.",
-		effect: function(bought) { return "???" },
-		effD: function(e) { return e },
+		desc: "The Hadron effect interval occurs twice as often.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
