@@ -26,6 +26,8 @@ function updateHTML() {
 		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
 		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"))
 		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd))
+		tmp.el.hcc.setTxt("Exit Hadronic Chall Confirmation: "+(player.options.hcc ? "ON" : "OFF"))
+		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden")
 	}
 
 	// Main

@@ -20,6 +20,7 @@ const DEFAULT_START = {
 		fonts: "courier",
 		hideAch: false,
 		visUpd: "every tick",
+		hcc: true,
 	},
 	modes: [],
 	time: new Date().getTime(),

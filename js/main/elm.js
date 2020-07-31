@@ -882,6 +882,12 @@ function getProjectedHadronicScore() {
 	
 	// Infinity Modifiers
 	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
+	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(36))
 	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
 	if (getHCSelector("purge")) score = score.times(3).plus(2)
 	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
@@ -942,7 +948,7 @@ function updateHCSelector(name) {
 }
 
 function canCompleteHC() {
-	return (!(!player.elementary.hc.active)) && player.distance.gte(getHCSelector("goal"))
+	return (!(!player.elementary.hc.active)) && player.distance.gte(ExpantaNum.mul(getHCSelector("goal"), DISTANCES.uni))
 }
 
 function updateHCSelectorInputs() {
@@ -961,7 +967,7 @@ function startHC() {
 	if (!player.elementary.hc.unl) return
 	if (player.elementary.hc.active) {
 		if (canCompleteHC()) player.elementary.hc.best = player.elementary.hc.best.max(getProjectedHadronicScore())
-		else if (!confirm("Are you sure you want to exit the challenge early?")) return
+		else if (player.options.hcc) if (!confirm("Are you sure you want to exit the challenge early?")) return
 	} else if (getProjectedHadronicScore().lte(0)) {
 		alert("You cannot start a Hadronic Challenge with a Projected Hadronic Score of 0!")
 		return

@@ -135,6 +135,7 @@ const ACH_DATA = {
 		155: "Real Growth",
 		156: "IMPOSSIBLE",
 		157: "The Principle of the Basics",
+		158: "The Repetition Continues",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -270,6 +271,7 @@ const ACH_DATA = {
 		155: "Unlock Inflatons",
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
+		158: "Get a Hadronic Score of at least showNum(3.75)",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

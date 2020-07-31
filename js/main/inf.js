@@ -534,6 +534,7 @@ function updateTempInf() {
 	};
 	if (!tmp.inf.stadium.active) tmp.inf.stadium.active = function (name, rank = 1) {
 		if ((player.inf.pantheon.purge.active||HCCBA("purge")) && name != "reality" && rank == 1) return true;
+		if (rank <= HCTVal(name)) return true;
 		if (modeActive('extreme') && name == "solaris" && rank <= 4) return true;
 		let active = player.inf.stadium.current == name;
 		let l = player.inf.stadium.completions.length + 1;
