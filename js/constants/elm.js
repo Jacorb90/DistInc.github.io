@@ -182,6 +182,9 @@ const TH_TABS = {
 	accelerons: function() {
 		return player.elementary.theory.preons.unl
 	},
+	inflatons: function() {
+		return player.elementary.hc.unl&&player.elementary.theory.accelerons.unl
+	},
 };
 
 const TREE_UPGS = {
@@ -222,7 +225,7 @@ const TREE_UPGS = {
 	},
 	5: {
 		cost: function(bought) { return ExpantaNum.pow(2, bought).times(4) },
-		cap: new ExpantaNum(80),
+		cap: new ExpantaNum(15),
 		desc: "Triple Supersymmetric Particle gain.",
 		effect: function(bought) { return ExpantaNum.pow(3, bought) },
 		effD: function(e) { return showNum(e)+"x" },
@@ -262,7 +265,7 @@ const TREE_UPGS = {
 	10: {
 		unl: function() { return player.elementary.theory.preons.unl },
 		cost: function(bought) { return ExpantaNum.add(14, bought.pow(3).times(7)) },
-		cap: new ExpantaNum(35),
+		cap: new ExpantaNum(10),
 		desc: "Theoretical Boosters cost less.",
 		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.add(bought, 1), 3) },
 		effD: function(e) { return showNum(e)+"x cheaper" },
@@ -286,7 +289,7 @@ const TREE_UPGS = {
 	13: {
 		unl: function() { return player.elementary.theory.accelerons.unl },
 		cost: function(bought) { return ExpantaNum.mul(5, bought.pow(2).plus(1)).plus(75) },
-		cap: new ExpantaNum(25),
+		cap: new ExpantaNum(10),
 		desc: "Pathogen Upgrades are stronger based on your Bosons.",
 		effect: function(bought) { return player.elementary.bosons.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)) },
 		effD: function(e) { return "+"+showNum(e.times(100))+"%" },
@@ -294,7 +297,7 @@ const TREE_UPGS = {
 	14: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Secondary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -302,7 +305,7 @@ const TREE_UPGS = {
 	15: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Tertiary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -310,7 +313,7 @@ const TREE_UPGS = {
 	16: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Quaternary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -318,7 +321,7 @@ const TREE_UPGS = {
 	17: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Quinary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -326,7 +329,7 @@ const TREE_UPGS = {
 	18: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Senary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -334,7 +337,7 @@ const TREE_UPGS = {
 	19: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
-		cap: new ExpantaNum(10),
+		cap: new ExpantaNum(5),
 		desc: "The Septenary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
 		effD: function(e) { return "^"+showNum(e.plus(1)) },
@@ -430,7 +433,7 @@ const TREE_UPGS = {
 	31: {
 		unl: function() { return player.elementary.hc.unl },
 		cost: function(bought) { return ExpantaNum.pow(bought, 2).plus(1).times(1e3) },
-		cap: new ExpantaNum(20),
+		cap: new ExpantaNum(4),
 		desc: "Hadron gain is boosted by your best-ever Endorsements.",
 		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.05, bought)), player.bestEnd) },
 		effD: function(e) { return showNum(e)+"x" },

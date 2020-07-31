@@ -132,6 +132,9 @@ const ACH_DATA = {
 		152: "Useless Theories",
 		153: "There is a tree",
 		154: "What even are Hadrons?",
+		155: "Real Growth",
+		156: "IMPOSSIBLE",
+		157: "The Principle of the Basics",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -264,6 +267,9 @@ const ACH_DATA = {
 		152: "Get a Hadronic Score of at least showNum(2.3).",
 		153: "Reach formatDistance(4.4e8250026) without any Theory Tree Upgrades.",
 		154: "Get a Hadronic Score of at least 2.5 and reach formatDistance(e2.8e7), can be on separate runs.",
+		155: "Unlock Inflatons",
+		156: "Complete The Theoriverse at Depth 8.",
+		157: "Reach formatDistance(4.4e76) of Primary String.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -341,5 +347,6 @@ const ACH_DATA = {
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 		154: "Purge Power gain is doubled.",
+		157: "All Strings are gained twice as fast.",
 	}
 };

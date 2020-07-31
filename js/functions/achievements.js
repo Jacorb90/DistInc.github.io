@@ -136,6 +136,9 @@ function updateAchievements() {
 	if (player.elementary.hc.best.gte(2.3)) tmp.ach[152].grant()
 	if (Object.keys(player.elementary.theory.tree.upgrades).length==0 && player.distance.gte("4.4e8250026")) tmp.ach[153].grant();
 	if (player.elementary.hc.best.gte(2.5) && player.bestDistance.gte("e2.8e7")) tmp.ach[154].grant();
+	if (player.elementary.theory.inflatons.unl) tmp.ach[155].grant();
+	if (player.elementary.theory.depth.gte(9)) tmp.ach[156].grant();
+	if (player.elementary.theory.strings.amounts[0].gte(4.4e76)) tmp.ach[157].grant();
 }
 
 function rowComplete(r) {

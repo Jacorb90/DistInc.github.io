@@ -888,7 +888,9 @@ function updateHTML() {
 				tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl)
 				tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl)
 				tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
-				tmp.el.accelGain.setTxt(showNum(adjustGen(getAccelGain(), "accelerons")))
+				let gain = getAccelGain()
+				tmp.el.accelGain.setTxt(showNum(adjustGen(gain, "accelerons")))
+				tmp.el.accelerSC.setHTML(gain.gte(1e6)?"<span class='sc'>(softcapped)</span>":"")
 				let accEff = getAccelEff()
 				tmp.el.accelEff.setHTML("<span class='thp'>"+showNum(accEff)+"</span>x later"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
 				let next = player.elementary.theory.accelerons.expanders.toNumber()+1
@@ -899,6 +901,16 @@ function updateHTML() {
 				if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
 				tmp.el.darkExpPast.setHTML(past)
 			}
+			if (thTab=="inflatons") {
+				tmp.el.inflatonsUnl.setDisplay(!player.elementary.theory.inflatons.unl)
+				tmp.el.inflatonsDiv.setDisplay(player.elementary.theory.inflatons.unl)
+				tmp.el.inflatonAmt.setTxt(showNum(player.elementary.theory.inflatons.amount))
+				let state = getInflatonState()
+				tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"))
+				tmp.el.inflatonGain.setTxt(showNum(adjustGen(getInflatonGain(), "inflatons")))
+				tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
+				tmp.el.inflaton2.setTxt(showNum(getInflatonEff2()))
+			}
 		}
 		if (elmTab=="hc") {
 			tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore))
@@ -908,6 +920,7 @@ function updateHTML() {
 			tmp.el.hadronGain.setTxt(showNum(adjustGen(tmp.elm.hc.hadronGain, "hc")))
 			tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
 			tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
+			tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
 		}
 	}
 

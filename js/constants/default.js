@@ -192,6 +192,10 @@ const DEFAULT_START = {
 				amount: new ExpantaNum(0),
 				expanders: new ExpantaNum(0),
 			},
+			inflatons: {
+				unl: false,
+				amount: new ExpantaNum(0),
+			},
 		},
 		hc: {
 			unl: false,

@@ -561,16 +561,19 @@ function updateTempElementary() {
 		player.elementary.theory.tree.upgrades[x] = bought.plus(1)
 	}
 	tmp.elm.theory.tree.costReduc = ach152Eff()
+	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
 	
 	// Hadronic Challenges
 	if (!tmp.elm.hc) tmp.elm.hc = {}
 	tmp.elm.hc.currScore = getProjectedHadronicScore()
+	tmp.elm.hc.hadronBulk = new ExpantaNum(1)
+	if (player.elementary.theory.inflatons.unl) tmp.elm.hc.hadronBulk = tmp.elm.hc.hadronBulk.plus(getInflatonEff2())
 	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
 	tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(TREE_UPGS[31].effect(player.elementary.theory.tree.upgrades[31]||0))
 	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
-	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor()
-	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).plus(1))
+	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
+	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
 	claimHadronEff()
 	updateHCTabs()
 }
@@ -624,6 +627,7 @@ function elTick(diff) {
 	}
 	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
 	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
+	if (player.elementary.theory.inflatons.unl) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(getInflatonGain(), "inflatons").times(diff))
 	if (player.elementary.hc.unl) player.elementary.hc.hadrons = player.elementary.hc.hadrons.plus(adjustGen(tmp.elm.hc.hadronGain, "hc").times(diff))
 }
 
@@ -682,6 +686,7 @@ function getStringGain(n) {
 	if (n<TOTAL_STR) gain = gain.times(getStringEff(n+1))
 	gain = gain.times(getEntangleEff())
 	if (tmp.ach[144].has) gain = gain.times(1.25)
+	if (tmp.ach[157].has) gain = gain.times(2)
 	return gain
 }
 
@@ -771,6 +776,7 @@ function getAccelGain() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(0)
 	let gain = tmp.acc.plus(1).log10().div(1e6).sqrt()
 	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
+	if (gain.gte(1e6)) gain = gain.cbrt().times(Math.pow(1e6, 2/3))
 	return gain
 }
 
@@ -999,4 +1005,43 @@ function importHC() {
 	} catch(e) {
 		notifier.warn("Invalid Hadronic Challenge data!")
 	}
+}
+
+// Inflatons
+
+function unlockInflatons() {
+	if (!player.elementary.theory.unl) return
+	if (!(player.elementary.hc.unl&&player.elementary.theory.accelerons.unl)) return
+	if (player.elementary.theory.inflatons.unl) return
+	if (player.elementary.theory.points.lt(1600)) return
+	if (!confirm("Are you sure you want to unlock Inflatons? You won't be able to get your Theory Points back!")) return
+	player.elementary.theory.points = player.elementary.theory.points.sub(1600)
+	player.elementary.theory.inflatons.unl = true
+}
+
+function getInflatonState() {
+	let x = player.elementary.theory.inflatons.amount.plus(1).log10()
+	if (x.gte(1e100)) return 1
+	return -1*Math.cos(x.toNumber())
+}
+
+function getInflatonGain() {
+	let gain = player.elementary.theory.inflatons.amount.plus(1).sqrt()
+	gain = gain.times(player.elementary.theory.inflatons.amount.plus(1).pow((getInflatonState()+1)/6))
+	return gain
+}
+
+function getInflatonEff1() {
+	let eff = player.elementary.theory.inflatons.amount.plus(1).log10().sqrt().plus(1)
+	return eff
+}
+
+function getInflatonEff2() {
+	let amt = player.elementary.theory.inflatons.amount
+	let eff = new ExpantaNum(0)
+	if (amt.gte(1e3)) eff = eff.plus(1)
+	if (amt.gte(1e4)) eff = eff.plus(1)
+	if (amt.gte(1e5)) eff = eff.plus(1)
+	eff = eff.plus(amt.plus(1).log10().plus(1).log10())
+	return eff.floor()
 }

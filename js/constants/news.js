@@ -69,6 +69,8 @@ const NEWS_DATA = {
 	m67: ['"The engineers have invaded Distance Incremental and have invented their own notation! Get out while you still can!" - A Scientist'],
 	m68: ['"I heard that Absurd Mode is fun, might try it out later" - Some new player who just finished normal mode'],
 	m69: ['"Nice." - The guy who made the 69th news ticker message'],
+	m70: ["A softcapped is you!"],
+	m71: ['"Absurd mode is just dumb." - A reddit user'],
 
 	// Distance-based Conditions
 	d1: [

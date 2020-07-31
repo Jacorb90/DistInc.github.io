@@ -259,7 +259,7 @@ function updateTempInf() {
 				.plus(1)
 				.floor();
 	}
-	tmp.inf.can = player.inf.bestDist.gte(tmp.inf.req);
+	tmp.inf.can = player.distance.gte(tmp.inf.req);
 	tmp.inf.layer = new Layer("inf", tmp.inf.can, "forced", true);
 	if (!tmp.inf.forceReset) tmp.inf.forceReset = function () {
 		infActive = true;

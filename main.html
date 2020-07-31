@@ -1127,6 +1127,11 @@
 									Accelerons
 								</button>
 							</td>
+							<td>
+								<button id="inflatonstabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('inflatons')">
+									Inflatons
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1246,18 +1251,28 @@
 					<br>
 					<button id="acceleronsUnl" class="btn th" onclick="unlockAccelerons()">Unlock Accelerons<br>Cost: 84 Theory Points</button>
 					<div id="acceleronsDiv">
-						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second.<br><br>
+						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second <span id="accelerSC"></span>.<br><br>
 						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff"></span><br><br><br>
 						<button id="darkExp" class="btn locked" onclick="darkExpand()"></button><br><br>
 						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br>
 						<span id="darkExpPast"></span><br><br><br>
 					</div>
 				</div>
+				<div id="inflatons" class="theorytab">
+					<br>
+					<button id="inflatonsUnl" class="btn th" onclick="unlockInflatons()">Unlock Inflatons<br>Cost: 1,600 Theory Points</button>
+					<div id="inflatonsDiv">
+						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second.<br>
+						You have <span id="inflatonAmt" class="thp"></span> Inflatons (<span id="inflatonPerc"></span>)<br><br>
+						Your Inflatons are making all Theory Tree Upgrades <span id="inflaton1" class="thp"></span>x cheaper.<br>
+						Your Inflatons are making each Hadron effect interval give <span id="inflaton2" class="thp"></span> more TP.<br><br><br>
+					</div>
+				</div>
 			</div>
 			<div id="hc" class="elmtab" style="display: none;">
 				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
-				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next TP at <span id="hadronNext"></span> Hadrons)<br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
 				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button><br><br>
 				<div class="band ylw">

@@ -133,6 +133,7 @@ function ENString(obj) {
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount).toString();
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders).toString();
+	ret.elementary.theory.inflatons.amount = new ExpantaNum(ret.elementary.theory.inflatons.amount).toString();
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0).toString();
 	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best).toString();
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons).toString();
@@ -156,6 +157,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory);
 	if (ret.version < 1.7 || !ret.elementary.hc) ret.elementary.hc = deepCopy(sc.elementary.hc);
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
+	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
 	if (ret.autoModes === undefined) ret.autoModes = {};
 	if (ret.autoTxt === undefined) ret.autoTxt = {};
 	ret.distance = new ExpantaNum(ret.distance);
@@ -284,6 +286,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
 	ret.elementary.theory.accelerons.amount = new ExpantaNum(ret.elementary.theory.accelerons.amount);
 	ret.elementary.theory.accelerons.expanders = new ExpantaNum(ret.elementary.theory.accelerons.expanders);
+	ret.elementary.theory.inflatons.amount = new ExpantaNum(ret.elementary.theory.inflatons.amount);
 	ret.elementary.time = new ExpantaNum(ret.elementary.time||0);
 	ret.elementary.hc.best = new ExpantaNum(ret.elementary.hc.best);
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons);
