@@ -129,6 +129,7 @@ const ACH_DATA = {
 		148: "The Impossible Task",
 		
 		151: "An infinity smaller than your fingertip",
+		152: "Useless Theories",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -258,6 +259,7 @@ const ACH_DATA = {
 		148: "Reach Rank showNum(995).",
 		
 		151: "Unlock Hadronic Challenge.",
+		152: "Get a Hadronic Score of at least showNum(2.3).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -332,5 +334,7 @@ const ACH_DATA = {
 		142: "Endorsements that are bought automatically do not reset anything.",
 		144: "All Strings are gained showNum(25)% faster.",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
+		
+		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 	}
 };

@@ -133,6 +133,7 @@ function updateAchievements() {
 	if (player.rank.gte(995)) tmp.ach[148].grant()
 		
 	if (player.elementary.hc.unl) tmp.ach[151].grant()
+	if (player.elementary.hc.best.gte(2.3)) tmp.ach[152].grant()
 }
 
 function rowComplete(r) {

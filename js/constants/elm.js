@@ -437,11 +437,11 @@ const TREE_UPGS = {
 	},
 	32: {
 		unl: function() { return player.elementary.hc.unl },
-		cost: function(bought) { return new ExpantaNum(1/0) },
+		cost: function(bought) { return new ExpantaNum(1.25e3) },
 		cap: new ExpantaNum(1),
-		desc: "Not implemented yet.",
-		effect: function(bought) { return "???" },
-		effD: function(e) { return e },
+		desc: "All Quark & Lepton effects are active at once.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
 	33: {
 		unl: function() { return player.elementary.hc.unl },
@@ -506,7 +506,7 @@ const HC_DATA = {
 	purge: ["checkbox", undefined, "inf"],
 	noDS: ["checkbox", undefined, "inf"],
 	noDB: ["checkbox", undefined, "inf"],
-	tv: ["number", [-1, 8], "elm"],
+	tv: ["number", [-1, 10], "elm"],
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",

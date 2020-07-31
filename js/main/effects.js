@@ -33,3 +33,9 @@ function ach112Eff() {
 	if (eff.gte(1e160)) eff = eff.log10().pow(72.6).min(eff)
 	return eff
 }
+
+function ach152Eff() {
+	let eff = new ExpantaNum(1)
+	if (tmp.ach) if (tmp.ach[152].has) eff = eff.times(player.elementary.hc.best.plus(1).pow(0.15))
+	return eff;
+}

@@ -721,7 +721,9 @@ function updateTempInf() {
 		.plus(1)
 		.logBase(tmp.inf.pantheon.purgeBase)
 		.pow(tmp.inf.pantheon.purgeExp)
-		.times(tmp.inf.pantheon.purgeMult)
+		.times(tmp.inf.pantheon.purgeMult);
+	if (tmp.inf.pantheon.purgeGain.gte(600)) tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sqrt().times(Math.sqrt(600));
+	tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain
 		.sub(player.inf.pantheon.purge.power)
 		.floor()
 		.max(0);

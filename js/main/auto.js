@@ -133,9 +133,9 @@ function autoTick(diff) {
 		let mode = player.autoModes["elementaries"]
 		let val = new ExpantaNum(player.autoTxt["elementaries"]||0)
 		if (mode=="AMOUNT") {
-			if (tmp.elm.layer.gain.gte(val)) elmReset()
+			if (tmp.elm.layer.gain.gte(val)) elmReset(false, true)
 		} else if (mode=="TIME") {
-			if (player.elementary.time.gte(val)) elmReset()
+			if (player.elementary.time.gte(val)) elmReset(false, true)
 		}
 	}
 	if (player.automators["spectral_gems"]) { // NEEDS to be last due to RETURNS

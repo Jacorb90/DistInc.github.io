@@ -30,12 +30,12 @@ class Layer {
 		else return tmp[this.tName + (this.addS ? "s" : "")].bulk.floor();
 	}
 
-	reset(force = false) {
+	reset(force=false, auto=false) {
 		if (!force) {
 			if (!this.avail || this.gain.lt(1)) return;
 			if (!this.spec) player[this.name] = player[this.name].plus(this.gain);
 			else {
-				let gc = tmp[this.tName].doGain();
+				let gc = tmp[this.tName].doGain(auto);
 				if (gc == "NO") return;
 			}
 		}
