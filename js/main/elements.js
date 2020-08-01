@@ -923,6 +923,11 @@ function updateHTML() {
 			tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
 			tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
 			tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
+			for (let i=0;i<6;i++) {
+				let x = ""
+				for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
+				tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
+			}
 		}
 	}
 

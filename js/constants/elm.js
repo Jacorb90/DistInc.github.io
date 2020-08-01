@@ -125,12 +125,12 @@ const HIGGS_UPGS = {
 		unl: function() { return player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;3") },
 	},
 	"1;3;0": {
-		cost: new ExpantaNum(1e13),
+		cost: new ExpantaNum(1e12),
 		desc: "Angels & Demons boost the Gauge Force effect.",
 		unl: function() { return player.elementary.bosons.scalar.higgs.upgrades.includes("1;2;0") },
 	},
 	"0;3;1": {
-		cost: new ExpantaNum(1e13),
+		cost: new ExpantaNum(1e12),
 		desc: "Purge Power boosts Quark & Lepton gain.",
 		unl: function() { return player.elementary.bosons.scalar.higgs.upgrades.includes("0;2;1") },
 	},
@@ -536,3 +536,4 @@ const HC_TITLE = {
 	noDB: "Derivative Boosts do nothing",
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
 }
+const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
