@@ -574,6 +574,9 @@ function updateTempElementary() {
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
 	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
+	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).log10()).min(1)
+	tmp.elm.hc.infState = getInflatonState()
+	tmp.elm.hc.infGain = getInflatonGain()
 	claimHadronEff()
 	updateHCTabs()
 }
@@ -627,7 +630,7 @@ function elTick(diff) {
 	}
 	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
 	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
-	if (player.elementary.theory.inflatons.unl) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(getInflatonGain(), "inflatons").times(diff))
+	if (player.elementary.theory.inflatons.unl) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(tmp.elm.hc.infGain, "inflatons").times(diff))
 	if (player.elementary.hc.unl) player.elementary.hc.hadrons = player.elementary.hc.hadrons.plus(adjustGen(tmp.elm.hc.hadronGain, "hc").times(diff))
 }
 
@@ -1027,13 +1030,14 @@ function unlockInflatons() {
 
 function getInflatonState() {
 	let x = player.elementary.theory.inflatons.amount.plus(1).log10()
-	if (x.gte(1e100)) return 1
+	if (x.gte(5.5)) x = x.sqrt().times(Math.sqrt(5.5)).div(2).plus(5.5/2)
+	if (x.gte(1e6)) return 1
 	return -1*Math.cos(x.toNumber())
 }
 
 function getInflatonGain() {
-	let gain = player.elementary.theory.inflatons.amount.plus(1).sqrt()
-	gain = gain.times(player.elementary.theory.inflatons.amount.plus(1).pow((getInflatonState()+1)/6))
+	let gain = player.elementary.theory.inflatons.amount.plus(1).pow(0.6)
+	gain = gain.times(player.elementary.theory.inflatons.amount.plus(1).pow((tmp.elm.hc.infState+1)/6))
 	return gain
 }
 
@@ -1048,6 +1052,7 @@ function getInflatonEff2() {
 	if (amt.gte(1e3)) eff = eff.plus(1)
 	if (amt.gte(1e4)) eff = eff.plus(1)
 	if (amt.gte(1e5)) eff = eff.plus(1)
+	if (amt.gte(1e6)) eff = eff.plus(1)
 	eff = eff.plus(amt.plus(1).log10().plus(1).log10())
 	return eff.floor()
 }

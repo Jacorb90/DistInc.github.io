@@ -184,7 +184,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
+	if (sav.elementary?(sav.elementary.hc?sav.elementary.hc.unl:false):false) {
+		info += "Best Hadronic Score: "+showNum(new ExpantaNum(sav.elementary.hc.best))+", Hadrons: "+showNum(new ExpantaNum(sav.elementary.hc.hadrons))+", "
+	} else if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
 		info += "Theory Points: "+showNum(new ExpantaNum(sav.elementary.theory.points))+", Theoriverse Depth: "+showNum(new ExpantaNum(sav.elementary.theory.depth))+", "
 	} else if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
 		info += "Elementaries: "+showNum(new ExpantaNum(sav.elementary.times))+", Fermions: "+showNum(new ExpantaNum(sav.elementary.fermions.amount))+", Bosons: "+showNum(new ExpantaNum(sav.elementary.bosons.amount))+", "

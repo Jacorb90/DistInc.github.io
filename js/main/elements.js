@@ -907,9 +907,9 @@ function updateHTML() {
 				tmp.el.inflatonsUnl.setDisplay(!player.elementary.theory.inflatons.unl)
 				tmp.el.inflatonsDiv.setDisplay(player.elementary.theory.inflatons.unl)
 				tmp.el.inflatonAmt.setTxt(showNum(player.elementary.theory.inflatons.amount))
-				let state = getInflatonState()
+				let state = tmp.elm.hc.infState
 				tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"))
-				tmp.el.inflatonGain.setTxt(showNum(adjustGen(getInflatonGain(), "inflatons")))
+				tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")))
 				tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
 				tmp.el.inflaton2.setTxt(showNum(getInflatonEff2()))
 			}
@@ -928,6 +928,7 @@ function updateHTML() {
 				for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
 				tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
 			}
+			tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
 		}
 	}
 
@@ -937,12 +938,12 @@ function updateHTML() {
 	);
 	tmp.el.body.changeStyle("background", tmp.bc);
 	let root = document.documentElement;
-	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? (player.options.fonts=="verdana"?"#d9d9d9":"white") : "black");
+	root.style.setProperty("--plaintxt", player.options.theme == "dark" ? (player.options.fonts!="courier"?"#d9d9d9":"white") : "black");
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
-	root.style.setProperty("--font", capitalFirst(player.options.fonts))
+	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
 
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)

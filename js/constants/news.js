@@ -71,6 +71,7 @@ const NEWS_DATA = {
 	m69: ['"Nice." - The guy who made the 69th news ticker message'],
 	m70: ["A softcapped is you!"],
 	m71: ['"Absurd mode is just dumb." - A reddit user'],
+	m72: ['I tried looking for some inflation, but suddenly I heard a quiet yet scary noise: "softcapped"'],
 
 	// Distance-based Conditions
 	d1: [
