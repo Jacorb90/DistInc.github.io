@@ -913,6 +913,7 @@ function updateHTML() {
 				tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")))
 				tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
 				tmp.el.inflaton2.setTxt(showNum(getInflatonEff2()))
+				tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
 			}
 		}
 		if (elmTab=="hc") {
@@ -965,6 +966,7 @@ function updateHTML() {
 		(INF_TABS.derivatives()?"Shift + P -> Toggle Purge\n":"")+
 		(INF_TABS.derivatives()?"Shift + D -> Derivative Shift/Boost\n":"")+
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
-		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")
+		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
+		(TH_TABS.strings()?"S -> Entangled String reset":"")
 	);
 }

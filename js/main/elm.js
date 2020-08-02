@@ -1031,7 +1031,7 @@ function unlockInflatons() {
 
 function getInflatonState() {
 	let x = player.elementary.theory.inflatons.amount.plus(1).log10()
-	if (x.gte(5.5)) x = x.sqrt().times(Math.sqrt(5.5)).div(2).plus(5.5/2)
+	if (x.gte(5.5)) x = x.sqrt().times(Math.sqrt(5.5)).plus(5.5).div(2)
 	if (x.gte(1e6)) return 1
 	return -1*Math.cos(x.toNumber())
 }
@@ -1039,6 +1039,7 @@ function getInflatonState() {
 function getInflatonGain() {
 	let gain = player.elementary.theory.inflatons.amount.plus(1).pow(0.6)
 	gain = gain.times(player.elementary.theory.inflatons.amount.plus(1).pow((tmp.elm.hc.infState+1)/6))
+	if (gain.gte(5e4)) gain = gain.times(5e4).sqrt()
 	return gain
 }
 

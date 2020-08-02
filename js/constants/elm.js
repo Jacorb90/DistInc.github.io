@@ -220,10 +220,7 @@ const TREE_UPGS = {
 		cost: function(bought) { return ExpantaNum.pow(5, bought).times(4) },
 		cap: new ExpantaNum(10),
 		desc: "The Theoriverse's nerf is weakened.",
-		effect: function(bought) { 
-			if (ExpantaNum.eq(bought, 1)) return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(10).max(0) 
-			return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(7.6).max(0) 
-		},
+		effect: function(bought) { return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(7.6).max(0) },
 		effD: function(e) { return "-"+showNum(e)+" Depths" },
 	},
 	5: {

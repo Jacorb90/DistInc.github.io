@@ -338,6 +338,9 @@ document.onkeydown = function(e) {
 			if (shiftDown && TABBTN_SHOWN.rockets()) tmp.rockets.layer.reset()
 			else tmp.ranks.layer.reset()
 			break;
+		case 83: 
+			if (TH_TABS.strings()) entangleStrings();
+			break;
 		case 84: 
 			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start()
 			else tmp.tiers.layer.reset()
