@@ -245,7 +245,7 @@ const NEWS_DATA = {
 
 	// Special Conditions
 	s1: [
-		"Patcail thought Jacorb took his collapse feature. But if he did then I guess Patcail should name his game Ordinal dimensions. - NiceManKSP.",
+		"Patcail thought Jacorb took his collapse feature. But if he did then I guess Patcail should name his game Ordinal Dimensions. - NiceManKSP",
 		function () {
 			return player.collapse.unl;
 		}
@@ -368,6 +368,12 @@ const NEWS_DATA = {
 		'"Help" - People who realized that Cadavers are just bodies',
 		function () {
 			return player.collapse.cadavers.gt(0)
+		}
+	],
+	s22: [
+		"Wait, Ordinal Dimensions is taken?",
+		function () {
+			return player.collapse.unl;
 		}
 	],
 };

@@ -11,7 +11,7 @@ const OPT_NAMES = {
 	theme: ["normal", "dark"],
 	saveImp: ["new save", "overwrite"],
 	featPerc: ["logarithm", "linear"],
-	fonts: ["verdana", "courier", "arial", "times"],
+	fonts: ["verdana", "courier", "arial", "times", "Comic Sans MS"],
 	visUpd: ["every tick", "every 2 ticks", "every 5 ticks", "every 20 ticks"],
 };
 const AUTOSAVE_TIME = 12;

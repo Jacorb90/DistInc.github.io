@@ -25,6 +25,7 @@ var betaID = "beta1.7";
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
+var robotActives = {}
 var correctLink = "Jacorb90.github.io/DistInc.github.io/main.html"
 
 // Game Loops

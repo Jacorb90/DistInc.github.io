@@ -192,6 +192,7 @@ function updateHTML() {
 				locked: player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost),
 				rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].magCost)
 			});
+			tmp.el.robotToggle.setTxt("Currently: "+((!player.automation.robots[player.automation.open][2])?"Active":"Inactive"))
 		}
 		tmp.el.robotMax.setDisplay(tmp.ach[48].has);
 

@@ -101,6 +101,7 @@ function updateTempElementary() {
 			player.pathogens.unl = true
 			player.dc.unl = true
 		}
+		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
 		
 		// Bugfixes
 		infTab = "infinity"

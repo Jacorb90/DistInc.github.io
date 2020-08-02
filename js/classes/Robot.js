@@ -21,6 +21,7 @@ class Robot {
 	}
 
 	get magnitude() {
+		if (player.automation.robots[this.name]?player.automation.robots[this.name][2]:true) return new ExpantaNum(0);
 		return this.unl
 			? this.m
 					.times(tmp.auto.magMod)
@@ -63,6 +64,7 @@ class Robot {
 			if (player.automation.scraps.lt(ROBOT_REQS[this.name])) return;
 			player.automation.scraps = player.automation.scraps.sub(ROBOT_REQS[this.name]);
 			player.automation.robots[this.name] = [new ExpantaNum(0), new ExpantaNum(0)];
+			player.automation.robots[this.name][2] = robotActives[this.name]
 		}
 	}
 

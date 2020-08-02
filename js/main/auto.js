@@ -151,3 +151,7 @@ function autoTick(diff) {
 		}
 	}
 }
+
+function toggleRobot(name) {
+	player.automation.robots[name][2] = !player.automation.robots[name][2]
+}
