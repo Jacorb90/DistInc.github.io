@@ -120,7 +120,9 @@ function setupHTML() {
 			"<div id='automatorDiv-" +
 			Object.keys(AUTOMATORS)[i] +
 			"'>" +
+			"<label for='automator-" + Object.keys(AUTOMATORS)[i] + "'>" +
 			(dp.includes("auto") || dp.includes("Auto") ? dp : "Auto-" + dp) +
+			"</label>" +
 			": <input id='automator-" +
 			Object.keys(AUTOMATORS)[i] +
 			"' type='checkbox'></input><br>";
