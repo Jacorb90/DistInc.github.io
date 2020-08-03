@@ -849,6 +849,7 @@ function updateTempInf() {
 		player.inf.knowledge = player.inf.knowledge.sub(tmp.inf.derv.unlCost);
 	};
 	tmp.inf.derv.boostPow = new ExpantaNum(1)
+	if (modeActive('extreme')) tmp.inf.derv.boostPow = tmp.inf.derv.boostPow.times(1.03)
 	if (tmp.elm) if (player.elementary.times.gt(0)) {
 		tmp.inf.derv.boostPow = tmp.inf.derv.boostPow.times(tmp.elm.ferm.leptonR("vibrino").plus(1))
 		tmp.inf.derv.boostPow = tmp.inf.derv.boostPow.times(tmp.elm.bos["higgs_0;2;1"]().div(100).plus(1))
