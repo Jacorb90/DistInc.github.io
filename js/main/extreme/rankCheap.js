@@ -1,3 +1,19 @@
+function getRankCheapEff() {
+	return player.rankCheap
+		.times(tmp.rankCheap.manPow)
+		.plus(tmp.rankCheap.free)
+		.times(tmp.rankCheap.pow)
+		.sqrt()
+		.plus(1);
+}
+
+function getRankCheapEff2() {
+	return ExpantaNum.pow(
+		2,
+		player.rankCheap.times(tmp.rankCheap.manPow).plus(tmp.rankCheap.free).times(tmp.rankCheap.pow)
+	);
+}
+
 function updateTempRankCheap() {
 	if (!tmp.rankCheap) tmp.rankCheap = {};
 	tmp.rankCheap.free = new ExpantaNum(0);
@@ -120,14 +136,6 @@ function updateTempRankCheap() {
 	if (player.tr.upgrades.includes(22) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.rankCheap.pow = tmp.rankCheap.pow.times(player.collapse.cadavers.plus(1).times(10).slog(10).sqrt());
 	tmp.rankCheap.manPow = new ExpantaNum(1);
-	tmp.rankCheap.eff = player.rankCheap
-		.times(tmp.rankCheap.manPow)
-		.plus(tmp.rankCheap.free)
-		.times(tmp.rankCheap.pow)
-		.sqrt()
-		.plus(1);
-	tmp.rankCheap.eff2 = ExpantaNum.pow(
-		2,
-		player.rankCheap.times(tmp.rankCheap.manPow).plus(tmp.rankCheap.free).times(tmp.rankCheap.pow)
-	);
+	tmp.rankCheap.eff = getRankCheapEff();
+	tmp.rankCheap.eff2 = getRankCheapEff2();
 }

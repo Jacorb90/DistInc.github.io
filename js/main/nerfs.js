@@ -167,6 +167,8 @@ function adjustGen(val, type) {
 	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?1:3);
 	if ((player.elementary.theory.active||HCTVal("tv").gt(-1)) && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
 	if (modeActive("extreme") && preinf) exp = exp.times(FCComp(4)?(tmp.ach[123].has?0.95:0.9):0.75);
-	return val.pow(exp);
+	let newVal = val.pow(exp);
+	if (modeActive("hard") && pre_elem) newVal = newVal.div(3.5)
+	return newVal;
 }
 

@@ -1128,7 +1128,7 @@ table {
 	border: 1px solid #ccbb9b;
 	display: inline-block;
 	cursor: pointer;
-	color: #787348;
+	color: #787348 !important;
 	font-size: 12px;
 	font-weight: bold;
 	max-width: 200px;
@@ -1140,7 +1140,7 @@ table {
 .btn.light:hover {
 	background: none;
 	background-color: #ffe44a;
-	color: #787348;
+	color: #787348 !important;
 }
 
 .btn.light:active {

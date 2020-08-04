@@ -266,9 +266,6 @@ function updateTempInf() {
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
 			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
-			((modeActive("hard")&&!modeActive("extreme"))
-				? ", however you need to exit your current mode to do so"
-				: "") +
 			".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
 		if (amActive)
 			message =
@@ -301,11 +298,6 @@ function updateTempInf() {
 		}
 		if (tmp.inf.upgs.has("7;3")) player.dc.unl = true;
 		tmp.doDervReset();
-		if (modeActive("hard") && !modeActive("extreme")) {
-			player.modes = player.modes.filter(x => x != "hard");
-			save(player, true);
-			reload();
-		}
 		player.inf.bestDist = new ExpantaNum(0)
 		if (!showContainer) closeHiddenDiv();
 		infActive = false;
