@@ -316,7 +316,7 @@ const ACH_DATA = {
 		75: "Dark Flow is showNum(10)% faster.",
 		76: "Rocket gain is increased by showNum(2)%",
 
-		81: "Keep automation stuff on all resets.",
+		81: "Keep automation stuff on Infinity.",
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
 		88: "Buying Pathogen Upgrades does not spend your Pathogens.",

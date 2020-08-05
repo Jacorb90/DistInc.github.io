@@ -931,7 +931,7 @@ function getHCSelector(name) {
 	let base;
 	let data = HC_DATA[name]
 	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
-	else if (data[0]=="text"||data[0]=="number") base = new ExpantaNum(data[1][0]).toString()
+	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = new ExpantaNum(data[1][0]).toString()
 	return player.elementary.hc.selectors[name]||base
 }
 
@@ -940,11 +940,11 @@ function updateHCSelector(name) {
 	let type = data[0]
 	let el = new Element("hcSelector"+name)
 	if (type=="checkbox") player.elementary.hc.selectors[name] = el.el.checked
-	else if (type=="text"||type=="number") {
+	else if (type=="text"||type=="number"||type=="range") {
 		let val = el.el.value||0
 		try {
 			let num = new ExpantaNum(val)
-			if (type=="number") num = num.round()
+			if (type=="number"||type=="range") num = num.round()
 			if (num.lt(data[1][0]) || num.isNaN()) num = new ExpantaNum(data[1][0])
 			if (num.gt(data[1][1])) num = new ExpantaNum(data[1][1])
 			player.elementary.hc.selectors[name] = num
@@ -967,7 +967,8 @@ function updateHCSelectorInputs() {
 		let el = new Element("hcSelector"+name)
 		el.el.disabled = !(!player.elementary.hc.active)
 		if (data[0]=="checkbox") el.el.checked = getHCSelector(name)
-		if (data[0]=="text"||data[0]=="number") el.el.value = new ExpantaNum(getHCSelector(name)).toString()
+		if (data[0]=="text"||data[0]=="number"||data[0]=="range") el.el.value = new ExpantaNum(getHCSelector(name)).toString()
+		updateHCSelector(name)
 	}
 }
 

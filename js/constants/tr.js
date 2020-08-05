@@ -204,8 +204,8 @@ const TR_UPGS = {
 			return showNum(x) + "x";
 		}
 	},
-	24: { cost: new ExpantaNum(1.2e30), desc: "The 'Time Doesnt Exist' achievement effect is 40% stronger." },
-	25: { cost: new ExpantaNum(1e34), desc: "Double the Coal effect." },
+	24: { cost: new ExpantaNum(1.2e30), desc: "The 'Time Doesnt Exist' achievement effect is 75% stronger." },
+	25: { cost: new ExpantaNum(1e32), desc: "Double the Coal effect, and quintuple Pathogen gain." },
 	26: {
 		cost: new ExpantaNum(1e96),
 		desc: "Dark Flow boosts Blue Flame.",

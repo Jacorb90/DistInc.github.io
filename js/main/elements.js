@@ -930,7 +930,9 @@ function updateHTML() {
 				for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
 				tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
 				tmp.el["hcSelectorSpan"+HC_CHALLS[i]].changeStyle("visibility", player.elementary.theory.inflatons.unl?"visible":"hidden")
+				tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])))
 			}
+			tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 			tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
 		}
 	}

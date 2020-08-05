@@ -215,6 +215,7 @@ function updateTempPathogens() {
 	if (modeActive("hard")) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
 	if (modeActive("easy")) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
 	tmp.pathogens.gain = tmp.pathogens.gain.times(pathogenUpg5Eff());
+	if (player.tr.upgrades.includes(25)&&modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(5)
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
