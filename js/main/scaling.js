@@ -114,7 +114,7 @@ function getScalingPower(type, name) {
 			if (FCComp(1)) power = power.times(0.1)
 		} else if (type=="hyper") {
 			if (FCComp(1)) power = power.times(0.1)
-			if (inFC(3)) power = power.times(9.99)
+			if (inFC(3)) power = new ExpantaNum(99.99)
 		}
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {

@@ -163,7 +163,7 @@ const INF_UPGS = {
 		"1;1": "Ranks & Tiers boost Time Speed.",
 		"1;2": "Knowledge boosts Rocket gain.",
 		"1;3": "Start with the first 2 rows of Time Reversal upgrades on reset.",
-		"1;4": "Start with all Time Reversal upgrades on reset.",
+		"1;4": "Keep Time Reversal upgrades on reset.",
 		"1;5": "Scaled Tier scaling is 20% weaker.",
 		"1;6": "Scaled Rank & Tier scaling starts 2 later.",
 		"1;7": "Before any other boosts, Knowledge gain is raised to the power of 1.25.",
@@ -420,6 +420,7 @@ const INF_UPGS = {
 		},
 		"2;2": function () {
 			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1) : new ExpantaNum(1);
+			if (modeActive('extreme')) ret = ret.div(2).max(1)
 			return ret;
 		},
 		"2;3": function () {
@@ -524,6 +525,7 @@ const INF_UPGS = {
 		},
 		"6;6": function () {
 			let ret = tmp.maxVel.plus(1).pow(0.075);
+			if (modeActive("extreme")) ret = ret.pow(0.1)
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
 			return ret;
 		},

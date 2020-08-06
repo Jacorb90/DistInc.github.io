@@ -75,6 +75,7 @@ function updateTempRockets() {
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(getRocketEffect()).plus(player.rockets).max(1);
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(getRocketEffect()).plus(1);
 	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(getRocketEffect()).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
+	if (modeActive("extreme") && tmp.fn) tmp.rockets.clPow = tmp.fn.gain.plus(1).log10().pow(getRocketEffect()).plus(1);
 	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {
 		tmp.inf.derv.resetDervs();
 	};

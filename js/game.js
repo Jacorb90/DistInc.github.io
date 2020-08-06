@@ -75,7 +75,7 @@ function tickWithTR(diff) {
 	autoTick(diff);
 	if (modeActive("extreme")) {
 		if (player.rf.gt(0)) {
-			player.furnace.coal = player.furnace.coal.plus(adjustGen(tmp.fn.gain, "fn").times(diff)).max(0);
+			player.furnace.coal = player.furnace.coal.plus(adjustGen(tmp.fn.gain, "fn").times(ExpantaNum.div(diff, (inFC(5)?tmp.timeSpeed:1)))).max(0);
 		}
 	}
 }

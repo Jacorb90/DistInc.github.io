@@ -186,6 +186,7 @@ function updateTempInf() {
 	if (tmp.inf.upgs.has("9;9"))
 		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2).times(modeActive('extreme')?50:1));
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5);
+	if (FCComp(3)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3.2);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1));
@@ -290,7 +291,7 @@ function updateTempInf() {
 			player.automation.unl = prev.automation.unl;
 			player.automation.robots = prev.automation.robots;
 		}
-		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = modeActive("extreme")?player.tr.upgrades:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+		if (tmp.inf.upgs.has("1;4") || tmp.elm.bos.hasHiggs("0;0;0")) player.tr.upgrades = prev.tr.upgrades
 		else if (tmp.inf.upgs.has("1;3")) player.tr.upgrades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		if (tmp.inf.upgs.has("3;1")) {
 			player.collapse.unl = true;

@@ -113,7 +113,7 @@ const MODE_VARS = {
 		rankCheap: new ExpantaNum(0),
 		furnace: {
 			coal: new ExpantaNum(0),
-			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			blueFlame: new ExpantaNum(0)
 		},
 		activeFC: 0,
@@ -129,7 +129,8 @@ const MODE_EX = {
 			new ExpantaNum(source.furnace.upgrades[0]),
 			new ExpantaNum(source.furnace.upgrades[1]),
 			new ExpantaNum(source.furnace.upgrades[2]),
-			new ExpantaNum(source.furnace.upgrades[3]||0)
+			new ExpantaNum(source.furnace.upgrades[3]||0),
+			new ExpantaNum(source.furnace.upgrades[4]||0),
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		return source;

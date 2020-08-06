@@ -86,7 +86,9 @@ function collapseMile8Eff() {
 }
 
 function collapseMile10Eff() {
-	let eff = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(8);
+	let exp = 8
+	if (modeActive("extreme")) exp = 3
+	let eff = player.collapse.lifeEssence.plus(1).log10().plus(1).sqrt().pow(exp);
 	if (eff.gte(40)) eff = eff.times(2.5).log10().times(20);
 	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[27]||new ExpantaNum(0)).gte(1)) {
 		eff = player.collapse.lifeEssence.plus(1).pow(0.1)
@@ -108,6 +110,7 @@ function getCadaverGainMult() {
 		mult = mult.div(2);
 		tmp.clghm = true;
 	}
+	if (modeActive("extreme") && FCComp(5)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[4]))
 	if (tmp.ach[68].has && modeActive("extreme")) mult = mult.times(5);
 	if (tmp.collapse) if (modeActive("easy")) mult = mult.times(3);
 	if (tmp.elm) if (player.elementary.times.gt(0)) mult = mult.times(tmp.elm.ferm.quarkR("down").max(1));
