@@ -169,7 +169,7 @@ function adjustGen(val, type) {
 	if (modeActive("extreme") && preinf) exp = exp.times(FCComp(4)?(tmp.ach[123].has?0.95:0.9):0.75);
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && pre_elem) newVal = newVal.div(3.2)
-	if (modeActive("hard") && type=="pathogens") newVal = newVal.times(2)
+	if (modeActive("hard") && type=="pathogens") newVal = newVal.times(3)
 	return newVal;
 }
 

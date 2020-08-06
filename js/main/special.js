@@ -37,8 +37,9 @@ function loadTempFeatures() {
 			display: formatDistance,
 			reached: function() { return player.tr.unl },
 			progress: function () {
-				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10());
-				else return player.distance.div(DISTANCES.ly)
+				if (player.options.featPerc=="logarithm") {
+					return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10());
+				} else return ExpantaNum.div(DISTANCES.ly, player.distance).pow(-1)
 			}
 		}),
 		collapse: new Feature({

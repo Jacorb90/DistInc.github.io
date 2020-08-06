@@ -148,7 +148,7 @@ const ACH_DATA = {
 		18: "Perform a Universal Collapse reset.",
 
 		21: "Go at least boolean(extreme,thirty,five hundred) km.",
-		22: "Reach Rank boolean(extreme, six, eight).",
+		22: "Reach Rankboolean(extreme, six, eight).",
 		23: "Reach Tier showNum(3).",
 		24: "Reach showNum(2) Rockets.",
 		25: "Get at least showNum(2) rocket fuel.",
@@ -276,7 +276,7 @@ const ACH_DATA = {
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
 		14: "Acceleration & Maximum Velocity are showNum(50)% higher.",
-		15: "Rocket gain is increased by showNum(5)%.",
+		15: "Rocket gain is increased by showNum(5)%boolean(extreme, and unlock The Furnace).",
 		17: "Time goes by showNum(1)% faster.",
 		18: "Time goes by showNum(50)% faster.",
 

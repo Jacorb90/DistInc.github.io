@@ -634,6 +634,7 @@ function updateHTML() {
 				if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
 				tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
 			}
+			tmp.el.fnu1eff.setTxt(showNum(tmp.fn1base))
 		}
 	}
 	

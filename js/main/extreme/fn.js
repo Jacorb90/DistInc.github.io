@@ -7,7 +7,8 @@ function updateTempFurnace() {
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
-	tmp.fn.gain = ExpantaNum.pow(2, player.rf).sub(1).times(ExpantaNum.pow(inFC(4)?1:ExpantaNum.mul(FCComp(2)?25:3, FCComp(5)?player.furnace.upgrades[0].plus(1).pow(1/3):1), player.furnace.upgrades[0]));
+	tmp.fn1base = inFC(4)?1:ExpantaNum.mul(FCComp(2)?25:3, FCComp(5)?player.furnace.upgrades[0].plus(1).pow(1/3):1)
+	tmp.fn.gain = ExpantaNum.pow(2, player.rf).sub(1).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.fn.gain = tmp.fn.gain.times(inFC(3)?1:player.tr.cubes.plus(1));
 	if (inFC(2)) tmp.fn.gain = tmp.fn.gain.pow(0.1)
