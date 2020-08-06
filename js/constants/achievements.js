@@ -281,8 +281,9 @@ const ACH_DATA = {
 		18: "Time goes by showNum(50)% faster.",
 
 		21: "Maximum Velocity is showNum(10)% higherboolean(extreme, and you get one extra Rank Cheapener for every Tier).",
+		22: "Acceleration is showNum(5)% higherboolean(extreme, and you start with one Rank Cheapener on Tier reset)",
 		23: "Acceleration is showNum(20)% higher.",
-		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is ten times as fast).",
+		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is twice as fast for each achievement unlocked in this column).",
 		26: "Rocket gain is increased by showNum(10)%.",
 		27: "Time goes by showNum(10)% faster.",
 

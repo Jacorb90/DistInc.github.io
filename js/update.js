@@ -319,7 +319,8 @@ document.onkeydown = function(e) {
 			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(4)
 			break;
 		case 67: 
-			if (TABBTN_SHOWN.collapse()) tmp.collapse.layer.reset()
+			if (TABBTN_SHOWN.collapse() && !shiftDown) tmp.collapse.layer.reset()
+			else if (modeActive("extreme") && shiftDown) tmp.rankCheap.layer.reset();
 			break;
 		case 68:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.derv.doUnl()

@@ -236,6 +236,7 @@ function updateHTML() {
 		tmp.el.trRow4.setDisplay(modeActive("extreme"));
 		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
 		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
+		tmp.el.trRow7.setDisplay(modeActive("extreme") && player.inf.endorsements.gt(0))
 	}
 
 	// Universal Collapse
@@ -611,7 +612,7 @@ function updateHTML() {
 						"/sec)")
 			);
 			tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
-			for (let i = 1; i <= 3; i++) {
+			for (let i = 1; i <= 4; i++) {
 				tmp.el["fnu" + i].setClasses({
 					btn: true,
 					locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost),
@@ -621,6 +622,7 @@ function updateHTML() {
 				tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
 				tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
 			}
+			tmp.el.fnu4.setDisplay(player.tr.upgrades.includes(31))
 			tmp.el.bf.setClasses({
 				btn: true,
 				locked: player.furnace.coal.lt(tmp.fn.bfReq),
@@ -957,6 +959,7 @@ function updateHTML() {
 	tmp.el.newsticker.setDisplay(player.options.newst);
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
+		(modeActive("extreme")?"Shift + C -> Rank Cheapener Reset\n":"")+
 		"T -> Tier Reset\n"+
 		(TABBTN_SHOWN.rockets()?"Shift + R -> Rocket Reset\n":"")+
 		(TABBTN_SHOWN.rockets()?"F -> Rocket Fuel Reset\n":"")+

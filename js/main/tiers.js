@@ -147,7 +147,10 @@ function updateTempTiers() {
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced");
 	if (!tmp.tier) tmp.tier = {};
 	if (!tmp.tier.onReset) tmp.tier.onReset = function (prev) {
-		if (hasCollapseMilestone(11)) player.rank = prev.rank;
+		if (modeActive('extreme')) if (tmp.ach[22].has) player.rankCheap = new ExpantaNum(1)
+		if (hasCollapseMilestone(11)) {
+			player.rank = prev.rank;
+		}
 		if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) {
 			player.distance = prev.distance;
 			player.velocity = prev.velocity;

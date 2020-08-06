@@ -56,7 +56,8 @@ class Layer {
 		if (!this.avail) return;
 		if (!(this.type == "forced" || this.type == "semi-forced")) return;
 		let m = player[this.name].plus(mag).min(this.fcBulk).floor();
+		let pre = player[this.name]
 		player[this.name] = player[this.name].max(m);
-		this.reset(true);
+		if (m.gt(pre)) this.reset(true);
 	}
 }

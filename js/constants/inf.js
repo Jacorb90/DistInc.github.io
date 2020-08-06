@@ -495,6 +495,7 @@ const INF_UPGS = {
 		"5;5": function () {
 			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1);
 			let exp = player.inf.endorsements.sqrt();
+			if (modeActive("extreme")) exp = exp.times(1.5)
 			let ret = base.pow(exp);
 			return ret;
 		},

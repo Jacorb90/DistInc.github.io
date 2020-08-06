@@ -7,7 +7,7 @@ function updateTempFurnace() {
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
-	tmp.fn1base = inFC(4)?1:ExpantaNum.mul(FCComp(2)?25:3, FCComp(5)?player.furnace.upgrades[0].plus(1).pow(1/3):1)
+	tmp.fn1base = inFC(4)?1:(ExpantaNum.mul(FCComp(2)?25:3, FCComp(5)?player.furnace.upgrades[0].plus(1).pow(1/3):1).plus(ExpantaNum.mul(0.15, player.furnace.upgrades[3].min(HCCBA("noTRU")?0:(1/0)))))
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf).sub(1).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.fn.gain = tmp.fn.gain.times(inFC(3)?1:player.tr.cubes.plus(1));
@@ -15,13 +15,16 @@ function updateTempFurnace() {
 	tmp.fn.eff = player.furnace.coal.plus(1).log10().pow(0.6).div(5);
 	if (tmp.fn.eff.gte(1)) tmp.fn.eff = tmp.fn.eff.log10().plus(1);
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
-	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU") && modeActive("extreme")) tmp.fn.eff = tmp.fn.eff.times(2);
+	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(2);
+	if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(1.8);
 	tmp.fn.upgs = {
 		1: { base: new ExpantaNum(20) },
 		2: { base: new ExpantaNum(100) },
-		3: { base: new ExpantaNum(1.5e3) }
+		3: { base: new ExpantaNum(1.5e3) },
+		4: { base: new ExpantaNum(1e100) },
 	};
-	for (let n = 1; n <= 3; n++) {
+	let cap = player.tr.upgrades.includes(31)?4:3
+	for (let n = 1; n <= cap; n++) {
 		tmp.fn.upgs[n].cost = ExpantaNum.pow(
 			tmp.fn.upgs[n].base.div(10),
 			player.furnace.upgrades[n - 1].pow(tmp.fn.bfEff.times(2))
@@ -135,7 +138,7 @@ function updateTempFurnace() {
 	if (!tmp.fn.bfReset) tmp.fn.bfReset = function () {
 		if (player.furnace.coal.lt(tmp.fn.bfReq)) return;
 		player.furnace.coal = new ExpantaNum(0);
-		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
+		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 		player.furnace.blueFlame = player.furnace.blueFlame.plus(1);
 	};
 }

@@ -97,7 +97,8 @@ function autoTick(diff) {
 
 	// Automators
 	if (player.automators["furnace"] && modeActive("extreme")) {
-		for (let i = 1; i <= 3; i++) tmp.fn.upgs[i].max();
+		let cap = (player.tr.upgrades.includes(31)?4:3)
+		for (let i = 1; i <= cap; i++) tmp.fn.upgs[i].max();
 		player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor());
 	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();

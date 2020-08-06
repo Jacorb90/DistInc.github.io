@@ -255,6 +255,11 @@ const TR_UPGS = {
 		disp: function (x) {
 			return "^" + showNum(x);
 		}
-	}
+	},
+	31: { cost: new ExpantaNum("1e700"), desc: "Unlock a fourth Furnace Upgrade, the Coal effect is 80% stronger, and Time Speed is nerfed less by Extreme Mode." },
+	32: { cost: new ExpantaNum(1/0), desc: "???" },
+	33: { cost: new ExpantaNum(1/0), desc: "???" },
+	34: { cost: new ExpantaNum(1/0), desc: "???" },
+	35: { cost: new ExpantaNum(1/0), desc: "???" },
 };
 const TR_UPG_AMT = Object.keys(TR_UPGS).length;
