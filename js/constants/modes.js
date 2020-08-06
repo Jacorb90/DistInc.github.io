@@ -129,7 +129,7 @@ const MODE_EX = {
 			new ExpantaNum(source.furnace.upgrades[0]),
 			new ExpantaNum(source.furnace.upgrades[1]),
 			new ExpantaNum(source.furnace.upgrades[2]),
-			new ExpantaNum(source.furnace.upgrades[3])
+			new ExpantaNum(source.furnace.upgrades[3]||0)
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		return source;
