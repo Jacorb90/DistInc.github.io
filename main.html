@@ -678,7 +678,7 @@
 				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button
 				><br /><br />
 				Note: Perks do nothing in Stadium Challenges<br />
-				Note 2: Each Challenge completion makes the others harder, with the exception being Reality, which
+				Note 2: Each Challenge completion makes the others<span id="extremeStadDesc"></span> harder, with the exception being Reality, which
 				actually gets easier.<br />
 				<span id="stadiumProg"></span><br><br>
 				<table>
@@ -736,6 +736,26 @@
 							>
 								Start</button
 							><br /><br /><span id="drigganizBtm" class="stadiumDesc"></span>
+						</td>
+					</tr>
+					<tr id="extremeStadium">
+						<td id="flamisDiv" class="stadiumChall" tooltip="Flamis Challenge Description">
+							<div class="flamis">Flamis</div><br /><button
+								id="flamisChall"
+								class="btn locked"
+								onclick="startExtremeStadium('flamis')"
+							>
+								Start</button
+							><br /><br /><span id="flamisBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="craniusDiv" class="stadiumChall" tooltip="Cranius Challenge Description">
+							<div class="cranius">Cranius</div><br /><button
+								id="craniusChall"
+								class="btn locked"
+								onclick="startExtremeStadium('cranius')"
+							>
+								Start</button
+							><br /><br /><span id="craniusBtm" class="stadiumDesc"></span>
 						</td>
 					</tr>
 				</table>
@@ -1428,6 +1448,7 @@
 
 	<script type="text/javascript" src="js/main/extreme/rankCheap.js"></script>
 	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
+	<script type="text/javascript" src="js/main/extreme/stadium.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>

@@ -692,6 +692,20 @@ table {
 	font-weight: bold;
 }
 
+.flamis {
+	color: #eb8f34;
+	-webkit-text-stroke: 1px black;
+	text-stroke: 1px black;
+	font-weight: bold;
+}
+
+.cranius {
+	color: #a462f0;
+	-webkit-text-stroke: 1px #eb34de;
+	text-stroke: 1px #eb34de;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);

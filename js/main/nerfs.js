@@ -80,7 +80,7 @@ function nerfActive(name) {
 		active =
 			active ||
 			(tmp.inf
-				? (((tmp.inf.stadium.active("solaris") && !modeActive("extreme")) ||
+				? (((tmp.inf.stadium.active("solaris") && (!modeActive("extreme") || player.inf.stadium.current=="solaris")) ||
 				  tmp.inf.stadium.active("drigganiz", 5)) && !((player.inf.pantheon.purge.active||HCCBA("purge"))&&(tmp.ach[147].has||modeActive("extreme"))))
 				: true);
 		if (HCCBA("noCad")) active = true

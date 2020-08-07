@@ -866,6 +866,33 @@ const STADIUM_GOALS = {
 	]
 };
 
+const EXTREME_STADIUM_DATA = {
+	flamis: {
+		descs: [
+			"Rank Cheapeners & Furnace Challenge rewards do nothing",
+			"Time Reversal Upgrade 30 does nothing",
+		],
+		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
+		goals: [
+			new ExpantaNum("1e1600").times(DISTANCES.uni),
+			new ExpantaNum("1e1750").times(DISTANCES.uni),
+		],
+	},
+	cranius: {
+		descs: [
+			"You are trapped in all Furnace Challenges at once",
+			"You get 90% less Free Rank Cheapeners"
+		],
+		reward: "Knowledge gain is boosted by second row Stadium Completions.",
+		goals: [
+			new ExpantaNum("1e1390").times(DISTANCES.uni),
+			new ExpantaNum("1e1500").times(DISTANCES.uni),
+		],
+		effect: function() { return ExpantaNum.pow(4.8, (player.extremeStad||[]).length) },
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x" },
+	},
+}
+
 // Derivatives
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];

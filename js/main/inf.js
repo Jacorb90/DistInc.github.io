@@ -187,6 +187,7 @@ function updateTempInf() {
 		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.inf.ascension.power.plus(1).pow(0.2).times(modeActive('extreme')?50:1));
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5);
 	if (FCComp(3)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3.2);
+	if (extremeStadiumComplete("cranius")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(EXTREME_STADIUM_DATA.cranius.effect())
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1));
@@ -318,7 +319,8 @@ function updateTempInf() {
 	if (!tmp.inf.manualReset) {
 		tmp.inf.manualReset = function (noStadium=false) {
 			if (tmp.canCompleteStadium&&!noStadium) {
-				if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
+				if (Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current) && modeActive("extreme")) if (!player.extremeStad.includes(player.inf.stadium.current)) player.extremeStad.push(player.inf.stadium.current)
+				else if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
 					player.inf.stadium.completions.push(player.inf.stadium.current);
 				player.inf.stadium.current = "";
 				tmp.inf.layer.reset(true);
@@ -518,6 +520,7 @@ function updateTempInf() {
 	if (!tmp.inf.stadium.reset) tmp.inf.stadium.reset = function () {
 		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return;
 		player.inf.stadium.completions = [];
+		if (modeActive("extreme")) player.extremeStad = []
 		tmp.inf.layer.reset(true);
 	};
 	if (!tmp.inf.stadium.exit) tmp.inf.stadium.exit = function () {
@@ -552,7 +555,7 @@ function updateTempInf() {
 	tmp.inf.stadium.canComplete =
 		player.inf.endorsements.gte(15) &&
 		player.inf.stadium.current != "" &&
-		player.distance.gte(tmp.inf.stadium.goal(player.inf.stadium.current));
+		player.distance.gte(Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current)?extremeStadiumGoal(player.inf.stadium.current):tmp.inf.stadium.goal(player.inf.stadium.current));
 	if (!tmp.inf.stadium.start) tmp.inf.stadium.start = function (name) {
 		if (tmp.inf.stadium.active(name)&&!(name=="solaris"&&modeActive("extreme")&&player.inf.stadium.current!=name)) return;
 		if (player.inf.stadium.current != "") return;
@@ -577,7 +580,7 @@ function updateTempInf() {
 	if (!tmp.inf.stadium.progress) tmp.inf.stadium.progress = function() {
 		let current = player.inf.stadium.current
 		if (current=="") return new ExpantaNum(0)
-		let goal = tmp.inf.stadium.goal(current)
+		let goal = Object.keys(EXTREME_STADIUM_DATA).includes(current)?extremeStadiumGoal(current):tmp.inf.stadium.goal(current)
 		return player.distance.max(1).log10().div(goal.log10()).times(100).min(100)
 	}
 

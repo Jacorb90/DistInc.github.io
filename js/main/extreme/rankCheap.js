@@ -1,4 +1,5 @@
 function getRankCheapEff() {
+	if (extremeStadiumActive("flamis")) return new ExpantaNum(1)
 	return player.rankCheap
 		.times(tmp.rankCheap.manPow)
 		.plus(tmp.rankCheap.free)
@@ -8,6 +9,7 @@ function getRankCheapEff() {
 }
 
 function getRankCheapEff2() {
+	if (extremeStadiumActive("flamis")) return new ExpantaNum(1)
 	return ExpantaNum.pow(
 		2,
 		player.rankCheap.times(tmp.rankCheap.manPow).plus(tmp.rankCheap.free).times(tmp.rankCheap.pow)
@@ -20,6 +22,7 @@ function updateTempRankCheap() {
 	if (tmp.ach[21].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
 	if (tmp.ach[34].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(1);
 	if (player.rf.gt(0)) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.furnace.upgrades[1]);
+	if (extremeStadiumActive("cranius", 2)) tmp.rankCheap.free = tmp.rankCheap.free.div(10).floor();
 	tmp.rankCheap.fp = new ExpantaNum(1);
 	tmp.rankCheap.bc = new ExpantaNum(30);
 	tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(

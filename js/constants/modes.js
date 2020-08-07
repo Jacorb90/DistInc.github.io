@@ -118,6 +118,7 @@ const MODE_VARS = {
 		},
 		activeFC: 0,
 		furnChalls: [],
+		extremeStad: [],
 	}
 };
 
@@ -133,6 +134,7 @@ const MODE_EX = {
 			new ExpantaNum(source.furnace.upgrades[4]||0),
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
+		if (!source.extremeStad) source.extremeStad = []
 		return source;
 	}
 };

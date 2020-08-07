@@ -91,6 +91,8 @@ function getScalingPower(type, name) {
 	} else if (name=="rankCheap" && modeActive("extreme")) {
 		if (type=="scaled") {
 			if (FCComp(3)) power = power.times(0.1)
+		} else if (type=="superscaled") {
+			if (extremeStadiumComplete("flamis")) power = power.times(0.1)
 		}
 	} else if (name=="tier") {
 		if (type=="scaled") {

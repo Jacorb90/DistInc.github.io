@@ -450,10 +450,10 @@ function updateHTML() {
 					inf: !(tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks) && !tmp.inf.asc.perkActive(i),
 					locked: tmp.inf.asc.perksActive() >= tmp.inf.asc.maxPerks && !tmp.inf.asc.perkActive(i)
 				});
-				tmp.el["perk" + i].setTxt(
+				tmp.el["perk" + i].setHTML(
 					capitalFirst(PERK_NAMES[i - 1]) +
 						" Perk" +
-						(tmp.inf.asc.perkActive(i) ? ": " + formatTime(player.inf.ascension.time[i - 1]) : "")
+						(tmp.inf.asc.perkActive(i) ? (": " + formatTime(player.inf.ascension.time[i - 1])+(player.automators["perks"]?"":"<br>(click to disable)")) : "")
 				);
 				tmp.el["perkEff" + i].setTxt(showNum(tmp.inf.asc.perkEff(i)));
 				tmp.el["enl" + i].setTxt(showNum(player.inf.ascension.enlightenments[i - 1]));
@@ -510,6 +510,37 @@ function updateHTML() {
 			}
 			tmp.el.exitStad.setDisplay(player.inf.stadium.current != "");
 			tmp.el.stadiumProg.setTxt(player.inf.stadium.current==""?"":"Progress to Completion: "+showNum(tmp.inf.stadium.progress())+"%")
+			tmp.el.extremeStadDesc.setTxt(modeActive("extreme")?" in the same row":"")
+			tmp.el.extremeStadium.setDisplay(modeActive("extreme"))
+			if (modeActive("extreme")) {
+				for (let i=0;i<Object.keys(EXTREME_STADIUM_DATA).length;i++) {
+					let name = Object.keys(EXTREME_STADIUM_DATA)[i]
+					tmp.el[name+"Div"].setTooltip(extremeStadiumTooltip(name));
+					tmp.el[name+"Div"].setClasses({
+						stadiumChall: true,
+						comp: player.extremeStad.includes(name),
+					})
+					let active = player.inf.stadium.current == name;
+					let trapped = !active && extremeStadiumActive(name);
+					let comp = player.extremeStad.includes(name);
+					tmp.el[name + "Chall"].setTxt(trapped ? "Trapped" : active ? "Active" : comp ? "Completed" : "Start");
+					tmp.el[name + "Chall"].setClasses({
+						btn: true,
+						bought: trapped || active,
+						locked: player.inf.stadium.current != "" && !(trapped || active),
+						inf: !(trapped || active || player.inf.stadium.current != "")
+					});
+					let showCurrent = EXTREME_STADIUM_DATA[name].effect !== undefined;
+					tmp.el[name + "Btm"].setHTML(
+						"Goal: " +
+							formatDistance(extremeStadiumGoal(name)) + // extremeStadiumGoal
+							"<br>Reward: " +
+							EXTREME_STADIUM_DATA[name].reward +
+							"<br>" +
+							(showCurrent ? "Currently: " + EXTREME_STADIUM_DATA[name].disp() : "")
+					);
+				}
+			}
 		}
 
 		// The Pantheon

@@ -145,7 +145,7 @@ function updateTempFurnace() {
 	if (!tmp.fn.bfReset) tmp.fn.bfReset = function () {
 		if (player.furnace.coal.lt(tmp.fn.bfReq)) return;
 		player.furnace.coal = new ExpantaNum(0);
-		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
+		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 		player.furnace.blueFlame = player.furnace.blueFlame.plus(1);
 	};
 }
@@ -168,9 +168,14 @@ function FCEnd() {
 
 function inAnyFC() { return player.activeFC!=0&&modeActive("extreme") }
 
-function inFC(x) { return modeActive("extreme")?(player.activeFC==x):false }
+function inFC(x) { 
+	let active = modeActive("extreme")?(player.activeFC==x):false 
+	if (extremeStadiumActive("cranius")) active = true
+	return active
+}
 
 function FCComp(x) {
+	if (extremeStadiumActive("flamis")) return false
 	return modeActive("extreme")?(player.furnChalls.includes(x)):false
 }
 
