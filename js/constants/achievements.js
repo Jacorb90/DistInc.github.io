@@ -219,13 +219,13 @@ const ACH_DATA = {
 		97: "Reach formatDistance(4.4e416) without any Pathogen Upgrades.",
 		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
 
-		101: "Complete one Stadium Challenge.",
+		101: "Complete oneboolean(extreme, first row) Stadium Challenge.",
 		102: "Purchase showNum(2) of each Enlightenment.",
 		103: "Reach showNum(1e18) Dark Matter.",
-		104: "Complete three Stadium Challenges.",
+		104: "Complete threeboolean(extreme, first row) Stadium Challenges.",
 		105: "Reach a Time Speed of showNum(2.22e2222)x.",
 		106: "Reach showNum(20) Endorsements.",
-		107: "Complete six Stadium Challenges.",
+		107: "Complete sixboolean(extreme, first row) Stadium Challenges.",
 		108: "Unlock Velocital Energy.",
 
 		111: "Have an interval below 1s for Fuelbot.",

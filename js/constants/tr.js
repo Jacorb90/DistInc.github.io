@@ -210,7 +210,9 @@ const TR_UPGS = {
 		cost: new ExpantaNum(1e100),
 		desc: "Dark Flow boosts Blue Flame.",
 		current: function () {
-			return tmp.dc.flow.max(1).log10().plus(1);
+			let ret = tmp.dc.flow.max(1).log10().plus(1);
+			if (ret.gte(6)) ret = ret.logBase(6).plus(5).min(ret);
+			return ret;
 		},
 		disp: function (x) {
 			return showNum(x) + "x";

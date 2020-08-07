@@ -436,7 +436,7 @@ const INF_UPGS = {
 			};
 		},
 		"2;7": function () {
-			let ret = ExpantaNum.pow(player.inf.stadium.completions.length, 0.8).div(4);
+			let ret = ExpantaNum.pow(player.inf.stadium.completions.length+(player.extremeStad?player.extremeStad.length:0), 0.8).div(modeActive("extreme")?10:4);
 			if (ret.gte(0.9)) ret = new ExpantaNum(0.9);
 			return ret;
 		},
@@ -530,7 +530,9 @@ const INF_UPGS = {
 			return ret;
 		},
 		"7;1": function () {
-			let ret = ExpantaNum.mul(0.2, player.inf.stadium.completions.length).add(1);
+			let base = new ExpantaNum(0.2)
+			if (modeActive("extreme")) base = new ExpantaNum(0.08)
+			let ret = ExpantaNum.mul(base, player.inf.stadium.completions.length+(player.extremeStad?player.extremeStad.length:0)).add(1);
 			return ret;
 		},
 		"7;2": function () {
@@ -545,11 +547,14 @@ const INF_UPGS = {
 			let exp = player.pathogens.amount.plus(1).slog(10);
 			let base = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1);
 			let ret = base.pow(exp);
-			if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret);
+			if (modeActive("extreme")) {
+				if (ret.gte(4)) ret = ret.logBase(4).times(4).min(ret);
+			} else if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret);
 			return ret;
 		},
 		"7;5": function () {
 			let ret = player.pathogens.upgrades[5].plus(1).sqrt();
+			if (modeActive("extreme")) ret = player.pathogens.upgrades[5].plus(1).cbrt();
 			return ret;
 		},
 		"7;6": function () {

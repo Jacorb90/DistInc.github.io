@@ -951,6 +951,7 @@ function updateHCSelector(name) {
 			el.el.value = disp(num, 8, 3, 10)
 		} catch(e) {
 			notifier.warn("Improper Hadronic Challenge input")
+			console.log(e)
 		}
 	}
 }

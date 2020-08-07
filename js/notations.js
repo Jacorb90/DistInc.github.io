@@ -5,7 +5,7 @@ notations.scientific = function (val, places, locs) {
 };
 
 notations.engineering = function(val, places=(player.options.sf - 1), locs) {
-	if (val.lt(0.1)) return "1/" + notations.engineering(val.pow(-1), places, locs)
+	if (val.lt(0.001)) return notations.scientific(val, places, locs)
 	else if (val.lt(1e3)) return decimalPlaces(val, places)
 	else if (val.lt("1e10000")) {
 		let back = val.logBase(1e3).floor().times(3)
@@ -23,7 +23,7 @@ notations.engineering = function(val, places=(player.options.sf - 1), locs) {
 }
 
 notations.standard = function (val, places, locs) {
-	if (val.lt(0.1)) return "1/" + notations.standard(val.pow(-1), places, locs);
+	if (val.lt(0.001)) return notations.scientific(val, places, locs);
 	else if (val.lt(1e3)) return decimalPlaces(val, places);
 	else if (val.lt(1e33)) {
 		return (
@@ -117,7 +117,7 @@ notations.standard = function (val, places, locs) {
 };
 
 notations.mixed = function (val, places, locs) {
-	if (val.lt(0.1)) return "1/" + notations.mixed(val.pow(-1), places, locs);
+	if (val.lt(0.001)) return notations.scientific(val, places, locs);
 	else if (val.lt(1e33)) return notations.standard(val, places, locs);
 	else if (val.lt(ExpantaNum.pow(10, ExpantaNum.pow(10, places - 1)))) return notations.scientific(val, places, locs);
 	else if (val.lt("ee33")) return "e" + notations.standard(val.log10(), places, locs);

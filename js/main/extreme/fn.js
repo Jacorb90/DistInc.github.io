@@ -5,6 +5,7 @@ function updateTempFurnace() {
 		adj = adj.times(player.tr.cubes.plus(1).times(10).slog(10));
 	if (player.tr.upgrades.includes(26) && !HCCBA("noTRU") && modeActive("extreme"))
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
+	if (inFC(5)) adj = adj.times(0.725)
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn4base = new ExpantaNum(0.15)

@@ -319,8 +319,9 @@ function updateTempInf() {
 	if (!tmp.inf.manualReset) {
 		tmp.inf.manualReset = function (noStadium=false) {
 			if (tmp.canCompleteStadium&&!noStadium) {
-				if (Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current) && modeActive("extreme")) if (!player.extremeStad.includes(player.inf.stadium.current)) player.extremeStad.push(player.inf.stadium.current)
-				else if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
+				if (Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current) && modeActive("extreme")) {
+					if (!player.extremeStad.includes(player.inf.stadium.current)) player.extremeStad.push(player.inf.stadium.current)
+				} else if (!player.inf.stadium.completions.includes(player.inf.stadium.current))
 					player.inf.stadium.completions.push(player.inf.stadium.current);
 				player.inf.stadium.current = "";
 				tmp.inf.layer.reset(true);
@@ -714,6 +715,7 @@ function updateTempInf() {
 	if (modeActive("easy")) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
 	tmp.inf.pantheon.purgeExp = new ExpantaNum(1 / 2);
 	if (modeActive("easy")) tmp.inf.pantheon.purgeExp = new ExpantaNum(2 / 3)
+	if (!tmp.inf.pantheon.purgeUpdated) tmp.inf.pantheon.purgeUpdated = true
 	tmp.inf.pantheon.purgeGain = player.distance
 		.div(tmp.inf.pantheon.purgeStart)
 		.plus(1)
@@ -736,9 +738,11 @@ function updateTempInf() {
 		.times(tmp.inf.pantheon.purgeStart);
 	if (!tmp.inf.pantheon.startPurge) tmp.inf.pantheon.startPurge = function () {
 		if (!player.inf.pantheon.purge.unl) return;
-		if (HCCBA("purge")) return
+		if (HCCBA("purge")) return;
+		if (!tmp.inf.pantheon.purgeUpdated) return;
 		if (player.inf.pantheon.purge.active)
 			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.plus(tmp.inf.pantheon.purgeGain);
+		tmp.inf.pantheon.purgeUpdated = false
 		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active;
 		tmp.inf.layer.reset(true);
 	};
