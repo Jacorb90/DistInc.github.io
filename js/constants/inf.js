@@ -882,12 +882,14 @@ const EXTREME_STADIUM_DATA = {
 			"Rank Cheapeners & Furnace Challenge rewards do nothing",
 			"Time Reversal Upgrade 30 does nothing",
 			"Pathogen Upgrades are half as strong",
+			"Furnace Upgrade 4 does nothing",
 		],
 		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
 		goals: [
 			new ExpantaNum("1e1600").times(DISTANCES.uni),
 			new ExpantaNum("1e1750").times(DISTANCES.uni),
-			new ExpantaNum("1e2350").times(DISTANCES.uni),
+			new ExpantaNum("1e1950").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
 		],
 	},
 	cranius: {
@@ -895,14 +897,21 @@ const EXTREME_STADIUM_DATA = {
 			"You are trapped in all Furnace Challenges at once",
 			"You get 90% less Free Rank Cheapeners",
 			"Time Reversal Upgrades do nothing",
+			"Pathogen Upgrades are weaker based on your Tier",
 		],
 		reward: "Knowledge gain is boosted by second row Stadium Completions.",
 		goals: [
 			new ExpantaNum("1e1390").times(DISTANCES.uni),
 			new ExpantaNum("1e1500").times(DISTANCES.uni),
 			new ExpantaNum("1e1600").times(DISTANCES.uni),
+			new ExpantaNum("1e1750").times(DISTANCES.uni),
 		],
-		effect: function() { return ExpantaNum.pow(4.8, (player.extremeStad||[]).length) },
+		effect: function() { 
+			let x = (player.extremeStad||[]).length
+			if (x>=2) x = x*2-2
+			let ret = ExpantaNum.pow(4.8, x);
+			return ret;
+		},
 		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x" },
 	},
 	spectra: {
@@ -910,15 +919,32 @@ const EXTREME_STADIUM_DATA = {
 			"The Extreme mode reduction to pre-Infinity resource gain is twice as lethal",
 			"Coal does nothing",
 			"All Stadium Challenge rewards do nothing",
+			"Dark Fluid does nothing",
 		],
 		reward: "Rank Cheapeners use a weaker cost formula based on their amount.",
 		goals: [
 			new ExpantaNum("1e3200").times(DISTANCES.uni),
 			new ExpantaNum("1e3750").times(DISTANCES.uni),
 			new ExpantaNum("1e4000").times(DISTANCES.uni),
+			new ExpantaNum("1e4125").times(DISTANCES.uni),
 		],
 		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
 		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
+	},
+	aqualon: {
+		descs: [
+			"All pre-Infinity resource generation is divided by 9e15",
+			"You cannot buy Rocket Fuel",
+			"Pathogen Upgrades are weaker based on your Rank",
+			"You cannot Tier up",
+		],
+		reward: "All pre-Infinity resources are generated 3x faster.",
+		goals: [
+			new ExpantaNum("1e1500").times(DISTANCES.uni),
+			new ExpantaNum("1e1625").times(DISTANCES.uni),
+			new ExpantaNum("1e1700").times(DISTANCES.uni),
+			new ExpantaNum("1e1800").times(DISTANCES.uni),
+		],
 	},
 }
 

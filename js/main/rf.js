@@ -204,6 +204,7 @@ function updateTempRF() {
 	}
 
 	tmp.rf.can = player.rockets.gte(tmp.rf.req);
+	if (extremeStadiumActive("aqualon", 2)) tmp.rf.can = false
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced");
 	if (!tmp.rf.onReset) tmp.rf.onReset = function (prev) {
 		if (player.tr.upgrades.includes(17) && !HCCBA("noTRU") && modeActive("extreme")) player.rockets = new ExpantaNum(prev.rockets);

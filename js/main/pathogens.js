@@ -29,6 +29,8 @@ function updateTempPathogens() {
 	if (tmp.inf) if (tmp.inf.upgs.has("9;10")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(INF_UPGS.effects["9;10"]().sub(1).max(0))
 	if (player.elementary.theory.tree.unl) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(TREE_UPGS[13].effect(player.elementary.theory.tree.upgrades[13]||0))
 	if (hasDE(5)) if ((player.elementary.theory.tree.upgrades[25]||new ExpantaNum(0)).gte(1)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.plus(1.5)
+	if (extremeStadiumActive("aqualon", 3)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(player.rank.plus(1).pow(0.05).times(1.01))
+	if (extremeStadiumActive("cranius", 4)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(player.tier.plus(1).pow(0.1).times(1.02))
 	if (nerfActive("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10);
 	if (extremeStadiumActive("flamis", 3)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(2);
 	if (nerfActive("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0);

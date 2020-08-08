@@ -86,7 +86,7 @@ function updateTempDC() {
 					)
 					.pow(10)
 			);
-	tmp.dc.dfEff = player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power);
+	tmp.dc.dfEff = extremeStadiumActive("spectra", 4)?new ExpantaNum(0):(player.dc.fluid.times(tmp.dc.flow).plus(1).log10().plus(1).log10().times(tmp.dc.power));
 	tmp.dc.coreEff =
 		player.dc.cores.gte(modeActive("extreme")?21:12)
 			? player.dc.cores.pow(7).div(ExpantaNum.pow(modeActive("extreme")?21:12, 6).times(8)).plus(1).log10().plus(1).logBase(modeActive("extreme")?1e3:10)

@@ -713,6 +713,13 @@ table {
 	font-weight: bold;
 }
 
+.aqualon {
+	color: white;
+	-webkit-text-stroke: 1px #42f5ef;
+	text-stroke: 1px #42f5ef;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);

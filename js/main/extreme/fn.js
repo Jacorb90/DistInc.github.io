@@ -15,6 +15,7 @@ function updateTempFurnace() {
 		if (player.tr.upgrades.includes(35)&&!HCCBA("noTRU")) tmp.fn4base = tmp.fn4base.plus(1).sqrt().sub(1)
 		else tmp.fn4base = new ExpantaNum(0)
 	}
+	if (extremeStadiumActive("flamis", 4)) tmp.fn4base = new ExpantaNum(0);
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3])))
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf.min(inFC(5)?1:(1/0))).sub(1).max(player.rf.gt(0)?1:0).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))

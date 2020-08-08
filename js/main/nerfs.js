@@ -36,6 +36,7 @@ function nerfActive(name) {
 	if (name == "noTier") {
 		let active = false;
 		active = active || (tmp.inf ? tmp.inf.stadium.active("infinity") : true);
+		if (extremeStadiumActive("aqualon", 4)) active = true;
 		return active;
 	}
 	if (name == "noRockets") {
@@ -173,7 +174,8 @@ function adjustGen(val, type) {
 	}
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && pre_elem) newVal = newVal.div(3.2)
-	if (modeActive("hard") && type=="pathogens") newVal = newVal.times(3)
+	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
+	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)
 	return newVal;
 }
 
