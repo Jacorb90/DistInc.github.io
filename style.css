@@ -706,6 +706,13 @@ table {
 	font-weight: bold;
 }
 
+.spectra {
+	color: black;
+	-webkit-text-stroke: 1px #d787ff;
+	text-stroke: 1px #d787ff;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);

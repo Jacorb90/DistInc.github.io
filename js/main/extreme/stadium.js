@@ -42,5 +42,6 @@ function startExtremeStadium(name) {
 }
 
 function extremeStadiumComplete(name) {
+	if (extremeStadiumActive("spectra", 3)) return false
 	return modeActive("extreme")?player.extremeStad.includes(name):false;
 }

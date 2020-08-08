@@ -876,25 +876,44 @@ const EXTREME_STADIUM_DATA = {
 		descs: [
 			"Rank Cheapeners & Furnace Challenge rewards do nothing",
 			"Time Reversal Upgrade 30 does nothing",
+			"Pathogen Upgrades are half as strong",
 		],
 		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
 		goals: [
 			new ExpantaNum("1e1600").times(DISTANCES.uni),
 			new ExpantaNum("1e1750").times(DISTANCES.uni),
+			new ExpantaNum("1e2350").times(DISTANCES.uni),
 		],
 	},
 	cranius: {
 		descs: [
 			"You are trapped in all Furnace Challenges at once",
-			"You get 90% less Free Rank Cheapeners"
+			"You get 90% less Free Rank Cheapeners",
+			"Time Reversal Upgrades do nothing",
 		],
 		reward: "Knowledge gain is boosted by second row Stadium Completions.",
 		goals: [
 			new ExpantaNum("1e1390").times(DISTANCES.uni),
 			new ExpantaNum("1e1500").times(DISTANCES.uni),
+			new ExpantaNum("1e1600").times(DISTANCES.uni),
 		],
 		effect: function() { return ExpantaNum.pow(4.8, (player.extremeStad||[]).length) },
 		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x" },
+	},
+	spectra: {
+		descs: [
+			"The Extreme mode reduction to pre-Infinity resource gain is twice as lethal",
+			"Coal does nothing",
+			"All Stadium Challenge rewards do nothing",
+		],
+		reward: "Rank Cheapeners use a weaker cost formula based on their amount.",
+		goals: [
+			new ExpantaNum("1e3200").times(DISTANCES.uni),
+			new ExpantaNum("1e3750").times(DISTANCES.uni),
+			new ExpantaNum("1e4000").times(DISTANCES.uni),
+		],
+		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
 	},
 }
 

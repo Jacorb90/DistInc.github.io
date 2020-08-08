@@ -576,6 +576,7 @@ function updateTempInf() {
 		return tooltip;
 	};
 	if (!tmp.inf.stadium.completed) tmp.inf.stadium.completed = function (name) {
+		if (extremeStadiumActive("spectra", 3)) return false
 		return player.inf.endorsements.gte(15) && player.inf.stadium.completions.includes(name);
 	};
 	if (!tmp.inf.stadium.progress) tmp.inf.stadium.progress = function() {

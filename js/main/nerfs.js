@@ -166,7 +166,11 @@ function adjustGen(val, type) {
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);
 	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?1:3);
 	if ((player.elementary.theory.active||HCTVal("tv").gt(-1)) && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
-	if (modeActive("extreme") && preinf) exp = exp.times(FCComp(4)?0.825:0.75);
+	if (modeActive("extreme") && preinf) {
+		let e = new ExpantaNum(FCComp(4)?0.825:0.75);
+		if (extremeStadiumActive("spectra")) e = e.pow(2)
+		exp = exp.times(e);
+	}
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && pre_elem) newVal = newVal.div(3.2)
 	if (modeActive("hard") && type=="pathogens") newVal = newVal.times(3)

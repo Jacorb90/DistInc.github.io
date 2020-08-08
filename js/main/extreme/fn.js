@@ -7,6 +7,7 @@ function updateTempFurnace() {
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	if (inFC(5)) adj = adj.times(0.725)
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
+	if (tmp.fn.bfEff.lt(0.008)) tmp.fn.bfEff = tmp.fn.bfEff.logBase(0.008).sub(0.992)
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0]))
@@ -25,6 +26,7 @@ function updateTempFurnace() {
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(1.8);
+	if (extremeStadiumActive("spectra", 2)) tmp.fn.eff = new ExpantaNum(0)
 	tmp.fn.upgs = {
 		1: { base: new ExpantaNum(20) },
 		2: { base: new ExpantaNum(100) },

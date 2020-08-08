@@ -24,6 +24,7 @@ function updateTempRankCheap() {
 	if (player.rf.gt(0)) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.furnace.upgrades[1]);
 	if (extremeStadiumActive("cranius", 2)) tmp.rankCheap.free = tmp.rankCheap.free.div(10).floor();
 	tmp.rankCheap.fp = new ExpantaNum(1);
+	if (extremeStadiumComplete("spectra")) tmp.rankCheap.fp = tmp.rankCheap.fp.times(EXTREME_STADIUM_DATA.spectra.effect())
 	tmp.rankCheap.bc = new ExpantaNum(30);
 	tmp.rankCheap.req = new ExpantaNum(tmp.rankCheap.bc).times(
 		ExpantaNum.pow(2, player.rankCheap.div(tmp.rankCheap.fp).max(1).sub(1).pow(2))
@@ -130,8 +131,6 @@ function updateTempRankCheap() {
 			.add(1)
 			.floor();
 	}
-	if (tmp.rankCheap.bulk.lt(tmp.rankCheap.fp.plus(1)))
-		tmp.rankCheap.bulk = tmp.rankCheap.bulk.max(tmp.rankCheap.fp.plus(1));
 	tmp.rankCheap.can = player.distance.gte(tmp.rankCheap.req);
 	tmp.rankCheap.layer = new Layer("rankCheap", tmp.rankCheap.can, "semi-forced");
 	tmp.rankCheap.pow = new ExpantaNum(1);

@@ -991,6 +991,7 @@ function startHC() {
 }
 
 function HCCBA(name) {
+	if (name=="noTRU" && extremeStadiumActive("cranius", 3)) return true
 	return player.elementary.hc.active && getHCSelector(name)
 }
 
