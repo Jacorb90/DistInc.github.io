@@ -66,6 +66,10 @@ function getScalingStart(type, name) {
 			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
 			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
 		}
+	} else if (name=="enlightenments") {
+		if (type=="scaled") {
+			if (modeActive("extreme")) start = start.sub(4)
+		}
 	}
 	if (type!=="atomic") if (Object.values(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1][name]!==undefined) start = start.min(getScalingStart(Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1], name))
 	return start

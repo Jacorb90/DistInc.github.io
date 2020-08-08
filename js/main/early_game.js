@@ -39,7 +39,7 @@ function updateTempEarlyGame() {
 			).max(1)
 		);
 	if (modeActive("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
-	if (modeActive("extreme") && tmp.acc.gte("1e40000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e40000"))
+	if (modeActive("extreme") && tmp.acc.gte("1e10000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e10000"))
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1);

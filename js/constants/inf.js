@@ -476,7 +476,7 @@ const INF_UPGS = {
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
 			let exp = 0.3
-			if (player.modes.includes("extreme")) exp = 0.5
+			if (player.modes.includes("extreme")) exp = 0.125
 			let ret = speed.pow(exp);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
@@ -567,6 +567,11 @@ const INF_UPGS = {
 				ts: (tmp.maxVel ? tmp.maxVel : new ExpantaNum(0)).plus(1).pow(0.06)
 			};
 			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve);
+			if (modeActive("extreme")) {
+				ret.ae = ret.ae.sqrt();
+				ret.ve = ret.ve.cbrt();
+				ret.ts = ret.ts.pow(0.1);
+			}
 			return ret;
 		},
 		"7;8": function () {
