@@ -275,7 +275,7 @@ const ACH_DATA = {
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
-		14: "Acceleration & Maximum Velocity are showNum(50)% higher.",
+		14: "Acceleration & Maximum Velocity are showNum(50)% higherboolean(extreme, and you start with one Rank Cheapener on Rocket reset).",
 		15: "Rocket gain is increased by showNum(5)%boolean(extreme, and unlock The Furnace).",
 		17: "Time goes by showNum(1)% faster.",
 		18: "Time goes by showNum(50)% faster.",

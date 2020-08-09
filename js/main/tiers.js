@@ -162,6 +162,7 @@ function updateTempTiers() {
 function getTierFP() {
 	let fp = new ExpantaNum(1)
 	if (player.tr.upgrades.includes(20) && !HCCBA("noTRU") && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
+	if (extremeStadiumActive("cranius", 5)) fp = fp.div(player.rankCheap.plus(1))
 	return fp
 }
 

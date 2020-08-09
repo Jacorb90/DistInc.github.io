@@ -383,7 +383,7 @@ const INF_UPGS = {
 	},
 	effects: {
 		"1;1": function () {
-			if (nerfActive("noInf1;1")) return new ExpantaNum(1);
+			if (nerfActive("noInf1;1") || extremeStadiumActive("spectra", 5)) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
 			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
@@ -883,6 +883,7 @@ const EXTREME_STADIUM_DATA = {
 			"Time Reversal Upgrade 30 does nothing",
 			"Pathogen Upgrades are half as strong",
 			"Furnace Upgrade 4 does nothing",
+			"Coal gain is raised to the power of 0.2",
 		],
 		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
 		goals: [
@@ -890,6 +891,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1750").times(DISTANCES.uni),
 			new ExpantaNum("1e1950").times(DISTANCES.uni),
 			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2500").times(DISTANCES.uni),
 		],
 	},
 	cranius: {
@@ -898,6 +900,7 @@ const EXTREME_STADIUM_DATA = {
 			"You get 90% less Free Rank Cheapeners",
 			"Time Reversal Upgrades do nothing",
 			"Pathogen Upgrades are weaker based on your Tier",
+			"Rank Cheapeners make Tiers more expensive",
 		],
 		reward: "Knowledge gain is boosted by second row Stadium Completions.",
 		goals: [
@@ -905,6 +908,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1500").times(DISTANCES.uni),
 			new ExpantaNum("1e1600").times(DISTANCES.uni),
 			new ExpantaNum("1e1750").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
 		],
 		effect: function() { 
 			let x = (player.extremeStad||[]).length
@@ -920,6 +924,7 @@ const EXTREME_STADIUM_DATA = {
 			"Coal does nothing",
 			"All Stadium Challenge rewards do nothing",
 			"Dark Fluid does nothing",
+			"inf1;1 does nothing",
 		],
 		reward: "Rank Cheapeners use a weaker cost formula based on their amount.",
 		goals: [
@@ -927,6 +932,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e3750").times(DISTANCES.uni),
 			new ExpantaNum("1e4000").times(DISTANCES.uni),
 			new ExpantaNum("1e4125").times(DISTANCES.uni),
+			new ExpantaNum("1e4500").times(DISTANCES.uni),
 		],
 		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
 		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
@@ -937,6 +943,7 @@ const EXTREME_STADIUM_DATA = {
 			"You cannot buy Rocket Fuel",
 			"Pathogen Upgrades are weaker based on your Rank",
 			"You cannot Tier up",
+			"Time Speed is raised to the power of 0.1",
 		],
 		reward: "All pre-Infinity resources are generated 3x faster.",
 		goals: [
@@ -944,6 +951,24 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1625").times(DISTANCES.uni),
 			new ExpantaNum("1e1700").times(DISTANCES.uni),
 			new ExpantaNum("1e1800").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+		],
+	},
+	nullum: {
+		descs: [
+			"60% of the exponent of your acceleration is nullified (increases by 5% for each difficulty level after 1)",
+			"10% of the exponent of your maximum velocity is nullified (increases by 2% for each difficulty level after 2)",
+			"20% of your Pathogen Upgrade Power is nullified",
+			"25% of the exponent of your Rockets is nullified",
+			"Furnace Upgrade 4 does nothing",
+		],
+		reward: "All perks are 25% stronger.",
+		goals: [
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2250").times(DISTANCES.uni),
+			new ExpantaNum("1e2325").times(DISTANCES.uni),
+			new ExpantaNum("1e2500").times(DISTANCES.uni),
+			new ExpantaNum("1e2645").times(DISTANCES.uni),
 		],
 	},
 }

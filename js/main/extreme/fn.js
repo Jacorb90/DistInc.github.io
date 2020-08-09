@@ -15,13 +15,14 @@ function updateTempFurnace() {
 		if (player.tr.upgrades.includes(35)&&!HCCBA("noTRU")) tmp.fn4base = tmp.fn4base.plus(1).sqrt().sub(1)
 		else tmp.fn4base = new ExpantaNum(0)
 	}
-	if (extremeStadiumActive("flamis", 4)) tmp.fn4base = new ExpantaNum(0);
+	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5)) tmp.fn4base = new ExpantaNum(0);
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3])))
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf.min(inFC(5)?1:(1/0))).sub(1).max(player.rf.gt(0)?1:0).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.fn.gain = tmp.fn.gain.times((inFC(3)||inFC(5))?1:player.tr.cubes.plus(1));
 	if (player.tr.upgrades.includes(33) && !HCCBA("noTRU") && (tmp.rockets?tmp.rockets.clPow:false)) tmp.fn.gain = tmp.fn.gain.times(new ExpantaNum(tmp.rockets.clPow.max(1)||1).min(inFC(5)?1:(1/0)))
 	if (inFC(2)) tmp.fn.gain = tmp.fn.gain.pow(0.075)
+	if (extremeStadiumActive("flamis", 5)) tmp.fn.gain = tmp.fn.gain.pow(0.2)
 	tmp.fn.eff = player.furnace.coal.plus(1).log10().pow(0.6).div(5);
 	if (tmp.fn.eff.gte(1)) tmp.fn.eff = tmp.fn.eff.log10().plus(1);
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
@@ -167,7 +168,7 @@ function startFurnChall(x) {
 }
 
 function FCEnd() {
-	return tmp.collapse.can && player.furnace.blueFlame.gte(FC_GOAL[player.activeFC])
+	return player.furnace.blueFlame.gte(FC_GOAL[player.activeFC])
 }
 
 function inAnyFC() { return player.activeFC!=0&&modeActive("extreme") }

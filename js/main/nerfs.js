@@ -68,6 +68,7 @@ function nerfActive(name) {
 		active =
 			active ||
 			(tmp.inf ? tmp.inf.stadium.active("drigganiz") || tmp.inf.stadium.active("spaceon", 2) : true);
+		if (extremeStadiumActive("aqualon", 5)) active = true
 		return active;
 	}
 	if (name == "noTS") {

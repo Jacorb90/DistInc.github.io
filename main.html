@@ -7,7 +7,7 @@
 	<div id="loading">
 		<br><br><br><br>
 		<img src="images/game_icon.ico" style="width: 200px; height: 200px;"></img>
-		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa">Help</a></span></span>
+		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa" target="_blank">Help</a></span></span>
 	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
@@ -252,10 +252,10 @@
 			</div>
 			<br /><br />
 			<div id="footer">
-				Notice: You are currently playing in v<span id="version"></span>. This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a> by
-				Hevipelle, and it uses <a href="https://jquery.com/">jQuery.js</a>,
-				<a href="https://notifyjs.jpillora.com/">notify.js</a>, and
-				<a href="https://naruyoko.github.io/OmegaNum.js/index.html">OmegaNum.js</a>, none of which I take credit for.
+				Notice: You are currently playing in v<span id="version"></span>. This game was inspired by <a href="https://ivark.github.io/" target="_blank">Antimatter Dimensions</a> by
+				Hevipelle, and it uses <a href="https://jquery.com/" target="_blank">jQuery.js</a>,
+				<a href="https://notifyjs.jpillora.com/" target="_blank">notify.js</a>, and
+				<a href="https://naruyoko.github.io/OmegaNum.js/index.html" target="_blank">OmegaNum.js</a>, none of which I take credit for.
 				If you would like to create a mod of this game, that's fine, just give credit, let me know in the
 				discord (preferrably with a game link), and name it something slightly different (like Distance
 				Incremental NG+ or something of the sort)...<br /><br />
@@ -264,7 +264,7 @@
 					target="_blank"
 					>Distances</a
 				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
@@ -774,6 +774,15 @@
 							>
 								Start</button
 							><br /><br /><span id="aqualonBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="nullumDiv" class="stadiumChall" tooltip="Nullum Challenge Description">
+							<div class="nullum">Nullum</div><br /><button
+								id="nullumChall"
+								class="btn locked"
+								onclick="startExtremeStadium('nullum')"
+							>
+								Start</button
+							><br /><br /><span id="nullumBtm" class="stadiumDesc"></span>
 						</td>
 					</tr>
 				</table>

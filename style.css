@@ -720,6 +720,13 @@ table {
 	font-weight: bold;
 }
 
+.nullum {
+	color: black;
+	-webkit-text-stroke: 1px #7d7d7d;
+	text-stroke: 1px #7d7d7d;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);
@@ -1406,6 +1413,7 @@ table {
 	height: 40px;
 	background-color: #fcb377;
 	border-color: #e66700;
+	color: black;
 	font-size: 10px;
 }
 

@@ -358,6 +358,7 @@ function updateTempInf() {
 		return eff;
 	};
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff);
+	if (extremeStadiumComplete("nullum")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.plus(0.25)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]());
 	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost ? tmp.soulBoost : 1);
 	if (tmp.elm)

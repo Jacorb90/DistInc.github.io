@@ -12,6 +12,12 @@ function extremeStadiumTooltip(name) {
 	return tooltip;
 }
 
+function extremeStadDiffLevel(name) {
+	let l = player.extremeStad.length + 1;
+	if (player.extremeStad.includes(name)) l = Math.min(player.extremeStad.indexOf(name) + 1, l);
+	return l
+}
+
 function extremeStadiumActive(name, rank=1) {
 	if (!modeActive("extreme")) return false
 	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && rank == 1) return true;

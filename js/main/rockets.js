@@ -16,6 +16,7 @@ function getRocketEffectSoftcapStart() {
 
 function getRocketEffect() {
 	let r = player.rockets;
+	if (extremeStadiumActive("nullum", 4)) r = ExpantaNum.pow(10, r.log10().times(0.75))
 	if (r.gte(10)) r = r.log10().times(10);
 	if (player.rf.gt(0)) r = r.plus(getFuelEff2());
 	let eff = r.plus(1).logBase(3).times(getFuelEff());
@@ -77,6 +78,7 @@ function updateTempRockets() {
 	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(getRocketEffect()).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
 	if (modeActive("extreme") && tmp.fn) tmp.rockets.clPow = tmp.fn.gain.plus(1).log10().pow(getRocketEffect()).plus(1);
 	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {
+		if (modeActive('extreme')) if (tmp.ach[14].has) player.rankCheap = new ExpantaNum(1)
 		tmp.inf.derv.resetDervs();
 	};
 }

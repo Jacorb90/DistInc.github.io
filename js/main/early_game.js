@@ -40,6 +40,7 @@ function updateTempEarlyGame() {
 		);
 	if (modeActive("extreme") && tmp.acc.gte(Number.MAX_VALUE)) tmp.acc = tmp.acc.pow(0.75).times(ExpantaNum.pow(Number.MAX_VALUE, 0.25))
 	if (modeActive("extreme") && tmp.acc.gte("1e10000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e10000"))
+	if (extremeStadiumActive("nullum")) tmp.acc = ExpantaNum.pow(10, tmp.acc.log10().times(0.4-0.05*(extremeStadDiffLevel("nullum")-1)))
 
 	// Max Velocity
 	tmp.maxVel = new ExpantaNum(1);
@@ -65,6 +66,7 @@ function updateTempEarlyGame() {
 	if (tmp.inf) if (tmp.inf.upgs.has("7;7")) tmp.maxVel = tmp.maxVel.times(INF_UPGS.effects["7;7"]()["ve"]);
 	if (tmp.rockets) tmp.maxVel = tmp.maxVel.times(tmp.rockets.mvPow);
 	if (nerfActive("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1);
+	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 
 	// Accelerational Energy
 	tmp.accEn = new ExpantaNum(0);

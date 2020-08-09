@@ -33,6 +33,7 @@ function updateTempPathogens() {
 	if (extremeStadiumActive("cranius", 4)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(player.tier.plus(1).pow(0.1).times(1.02))
 	if (nerfActive("weakPathogenUpgs")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(10);
 	if (extremeStadiumActive("flamis", 3)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.div(2);
+	if (extremeStadiumActive("nullum", 3)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.8);
 	if (nerfActive("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0);
 	if (tmp.pathogens.upgPow.gte(10)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.sqrt().times(Math.sqrt(10))
 	if (!tmp.pathogens.extra) tmp.pathogens.extra = function (n) {
