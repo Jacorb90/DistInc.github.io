@@ -22,6 +22,10 @@ function updateTempInf() {
 
 	// Infinity Upgrades
 	if (!tmp.inf.upgs) tmp.inf.upgs = {};
+	if (!tmp.inf.upgCostMult) tmp.inf.upgCostMult = function(id) {
+		if (!modeActive("extreme")) return 1
+		return EXTREME_INF_UPG_COST_MODS[id]||1
+	}
 	if (!tmp.inf.upgs.repealed) tmp.inf.upgs.repealed = function (id) {
 		if (modeActive("easy")) return false
 		if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
@@ -133,7 +137,7 @@ function updateTempInf() {
 			"<br>" +
 			(!tmp.inf.upgs.has(sel)
 				? "Cost: " +
-				  showNum(INF_UPGS.costs[sel]) +
+				  showNum(ExpantaNum.mul(INF_UPGS.costs[sel], tmp.inf.upgCostMult(sel))) +
 				  " knowledge<br>" +
 				  (INF_UPGS.reqs[sel]
 						? "Req: inf" +
@@ -157,9 +161,10 @@ function updateTempInf() {
 		if (!tmp.inf.upgs.canBuy(id)) return;
 		if (!tmp.inf.upgs.shown(id)) return;
 		if (player.inf.upgrades.includes(id)) return;
-		if (player.inf.knowledge.lt(INF_UPGS.costs[id])) return;
+		let m = tmp.inf.upgCostMult(id)
+		if (player.inf.knowledge.lt(ExpantaNum.mul(INF_UPGS.costs[id], m))) return;
 		if (HCCBA("noIU")) return
-		player.inf.knowledge = player.inf.knowledge.sub(INF_UPGS.costs[id]);
+		player.inf.knowledge = player.inf.knowledge.sub(ExpantaNum.mul(INF_UPGS.costs[id], m));
 		player.inf.upgrades.push(id);
 	};
 
@@ -538,6 +543,14 @@ function updateTempInf() {
 		let l = player.inf.stadium.completions.length + 1;
 		if (player.inf.stadium.completions.includes(name))
 			l = Math.min(player.inf.stadium.completions.indexOf(name) + 1, l);
+		if (modeActive("extreme") && !active) {
+			if (extremeStadiumActive("flamis", 6) && name=="spaceon") active = true
+			if (extremeStadiumActive("cranius", 6) && name=="solaris") active = true
+			if (extremeStadiumActive("spectra", 6) && name=="infinity") active = true
+			if (extremeStadiumActive("aqualon", 6) && name=="eternity") active = true
+			if (extremeStadiumActive("nullum", 6) && name=="reality") active = true
+			if (extremeStadiumActive("quantron", 6) && name=="drigganiz") active = true
+		}
 		if (rank > 1) active = active && l >= rank;
 		return active;
 	};

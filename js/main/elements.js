@@ -421,7 +421,7 @@ function updateHTML() {
 					if (tmp.inf.upgs.repealed(r+";"+c) && !modeActive("easy")) state = "repealed";
 					else if (!tmp.inf.upgs.canBuy(r+";"+c)) state = "locked";
 					else if (player.inf.upgrades.includes(r+";"+c)) state = "bought";
-					else if (player.inf.knowledge.gte(INF_UPGS.costs[r+";"+c])) state = "unbought";
+					else if (player.inf.knowledge.gte(ExpantaNum.mul(INF_UPGS.costs[r+";"+c], tmp.inf.upgCostMult(r+";"+c)))) state = "unbought";
 					else state = "locked";
 					tmp.el["inf" + (r+";"+c)].setDisplay(tmp.inf.upgs.shown(r+";"+c));
 					tmp.el["inf" + (r+";"+c)].setClasses({
@@ -541,6 +541,7 @@ function updateHTML() {
 					);
 				}
 			}
+			tmp.el.extremeStadReset.setDisplay(modeActive("extreme"));
 		}
 
 		// The Pantheon

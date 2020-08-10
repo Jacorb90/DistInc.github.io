@@ -51,3 +51,10 @@ function extremeStadiumComplete(name) {
 	if (extremeStadiumActive("spectra", 3)) return false
 	return modeActive("extreme")?player.extremeStad.includes(name):false;
 }
+
+function resetExtremeStad() {
+	if (!modeActive("extreme")) return;
+	if (!confirm("Are you sure you want to do this? You will need to do the second row all again!")) return
+	player.extremeStad = []
+	tmp.inf.reset(true)
+}

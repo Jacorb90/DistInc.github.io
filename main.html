@@ -673,7 +673,7 @@
 				<br /><br />
 			</div>
 			<div id="stadium" class="inftab">
-				<br /><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button
+				<br /><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button>&nbsp;&nbsp;<button id="extremeStadReset" class="btn inf" onclick="resetExtremeStad()">Reset Second-Row Stadium completions</button
 				><br /><br />
 				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button
 				><br /><br />
@@ -783,6 +783,15 @@
 							>
 								Start</button
 							><br /><br /><span id="nullumBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="quantronDiv" class="stadiumChall" tooltip="Quantron Challenge Description">
+							<div class="quantron">Quantron</div><br /><button
+								id="quantronChall"
+								class="btn locked"
+								onclick="startExtremeStadium('quantron')"
+							>
+								Start</button
+							><br /><br /><span id="quantronBtm" class="stadiumDesc"></span>
 						</td>
 					</tr>
 				</table>

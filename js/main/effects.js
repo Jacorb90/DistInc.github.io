@@ -22,7 +22,6 @@ function ach63Eff() {
 
 function ach112Pow() {
 	let pow = new ExpantaNum(1)
-	if (modeActive("extreme")) pow = pow.times(25)
 	if (tmp.inf) if (tmp.inf.upgs.has("4;10")) pow = pow.times(INF_UPGS.effects["4;10"]().max(1))
 	return pow
 }

@@ -211,7 +211,6 @@ const TR_UPGS = {
 		desc: "Dark Flow boosts Blue Flame.",
 		current: function () {
 			let ret = tmp.dc.flow.max(1).log10().plus(1);
-			if (ret.gte(6)) ret = ret.logBase(6).plus(5).min(ret);
 			return ret;
 		},
 		disp: function (x) {

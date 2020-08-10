@@ -884,6 +884,7 @@ const EXTREME_STADIUM_DATA = {
 			"Pathogen Upgrades are half as strong",
 			"Furnace Upgrade 4 does nothing",
 			"Coal gain is raised to the power of 0.2",
+			"You are trapped in Spaceon's Stadium Challenge at its set difficulty.",
 		],
 		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
 		goals: [
@@ -892,6 +893,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1950").times(DISTANCES.uni),
 			new ExpantaNum("1e2000").times(DISTANCES.uni),
 			new ExpantaNum("1e2500").times(DISTANCES.uni),
+			new ExpantaNum("1e2600").times(DISTANCES.uni),
 		],
 	},
 	cranius: {
@@ -901,6 +903,7 @@ const EXTREME_STADIUM_DATA = {
 			"Time Reversal Upgrades do nothing",
 			"Pathogen Upgrades are weaker based on your Tier",
 			"Rank Cheapeners make Tiers more expensive",
+			"You are trapped in Solaris's Stadium Challenge at its set difficulty.",
 		],
 		reward: "Knowledge gain is boosted by second row Stadium Completions.",
 		goals: [
@@ -909,6 +912,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1600").times(DISTANCES.uni),
 			new ExpantaNum("1e1750").times(DISTANCES.uni),
 			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2050").times(DISTANCES.uni),
 		],
 		effect: function() { 
 			let x = (player.extremeStad||[]).length
@@ -925,6 +929,7 @@ const EXTREME_STADIUM_DATA = {
 			"All Stadium Challenge rewards do nothing",
 			"Dark Fluid does nothing",
 			"inf1;1 does nothing",
+			"You are trapped in Infinity's Stadium Challenge at its set difficulty.",
 		],
 		reward: "Rank Cheapeners use a weaker cost formula based on their amount.",
 		goals: [
@@ -933,6 +938,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e4000").times(DISTANCES.uni),
 			new ExpantaNum("1e4125").times(DISTANCES.uni),
 			new ExpantaNum("1e4500").times(DISTANCES.uni),
+			new ExpantaNum("1e4650").times(DISTANCES.uni),
 		],
 		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
 		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
@@ -944,6 +950,7 @@ const EXTREME_STADIUM_DATA = {
 			"Pathogen Upgrades are weaker based on your Rank",
 			"You cannot Tier up",
 			"Time Speed is raised to the power of 0.1",
+			"You are trapped in Eternity's Stadium Challenge at its set difficulty.",
 		],
 		reward: "All pre-Infinity resources are generated 3x faster.",
 		goals: [
@@ -952,6 +959,7 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e1700").times(DISTANCES.uni),
 			new ExpantaNum("1e1800").times(DISTANCES.uni),
 			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2050").times(DISTANCES.uni),
 		],
 	},
 	nullum: {
@@ -961,6 +969,7 @@ const EXTREME_STADIUM_DATA = {
 			"20% of your Pathogen Upgrade Power is nullified",
 			"25% of the exponent of your Rockets is nullified",
 			"Furnace Upgrade 4 does nothing",
+			"You are trapped in Reality's Stadium Challenge at its set difficulty.",
 		],
 		reward: "All perks are 25% stronger.",
 		goals: [
@@ -969,7 +978,34 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e2325").times(DISTANCES.uni),
 			new ExpantaNum("1e2500").times(DISTANCES.uni),
 			new ExpantaNum("1e2645").times(DISTANCES.uni),
+			new ExpantaNum("1e2650").times(DISTANCES.uni),
 		],
+	},
+	quantron: {
+		descs: [
+			"Pathogen Upgrades are slightly weaker",
+			"Blue Flame is slightly weaker",
+			"Furnace Upgrade 4 does nothing",
+			"Furnace Upgrade 1 is weaker",
+			"Dark Flow is slightly weaker",
+			"You are trapped in Drigganiz's Stadium Challenge at its set difficulty.",
+		],
+		reward: "Pathogen Upgrades are stronger based on your Coal.",
+		goals: [
+			new ExpantaNum("1e3000").times(DISTANCES.uni),
+			new ExpantaNum("1e3100").times(DISTANCES.uni),
+			new ExpantaNum("1e2900").times(DISTANCES.uni),
+			new ExpantaNum("1e3200").times(DISTANCES.uni),
+			new ExpantaNum("1e2800").times(DISTANCES.uni),
+			new ExpantaNum("1e720").times(DISTANCES.uni),
+		],
+		effect: function() { 
+			let ret = player.furnace.coal.plus(1).log10().plus(1).log10().div(6.09);
+			if (ret.gte(0.75)) ret = ret.div(3).plus(0.75*2/3)
+			if (ret.gte(1)) ret = ret.log10().plus(1).min(ret);
+			return ret;
+		},
+		disp: function() { return "+"+showNum(EXTREME_STADIUM_DATA.quantron.effect().times(100))+"%" },
 	},
 }
 
@@ -977,3 +1013,23 @@ const EXTREME_STADIUM_DATA = {
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];
 const DERV_INCR = ["acceleration", "jerk", "snap"];
+
+// More Extreme Stuff
+
+const EXTREME_INF_UPG_COST_MODS = {
+	"1;8": new ExpantaNum(1e4),
+	"2;8": new ExpantaNum(1e4),
+	"3;8": new ExpantaNum(1e4),
+	"4;8": new ExpantaNum(1e4),
+	"5;8": new ExpantaNum(1e4),
+	"6;8": new ExpantaNum(1e4),
+	"7;8": new ExpantaNum(1e4),
+	"8;1": new ExpantaNum(1e4),
+	"8;2": new ExpantaNum(1e4),
+	"8;3": new ExpantaNum(1e4),
+	"8;4": new ExpantaNum(1e4),
+	"8;5": new ExpantaNum(1e4),
+	"8;6": new ExpantaNum(1e4),
+	"8;7": new ExpantaNum(1e4),
+	"8;8": new ExpantaNum(1e4),
+}

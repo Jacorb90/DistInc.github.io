@@ -727,6 +727,14 @@ table {
 	font-weight: bold;
 }
 
+.quantron {
+	color: white;
+	-webkit-text-stroke: 1px #f2619b;
+	text-stroke: 1px #f2619b;
+	text-shadow: 0px 1px 0px #000000;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);

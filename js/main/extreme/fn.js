@@ -6,8 +6,9 @@ function updateTempFurnace() {
 	if (player.tr.upgrades.includes(26) && !HCCBA("noTRU") && modeActive("extreme"))
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	if (inFC(5)) adj = adj.times(0.725)
+	if (extremeStadiumActive("quantron", 2)) adj = adj.times(0.95)
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
-	if (tmp.fn.bfEff.lt(0.008)) tmp.fn.bfEff = tmp.fn.bfEff.logBase(0.008).sub(0.992)
+	if (tmp.fn.bfEff.lt(0.0098)) tmp.fn.bfEff = tmp.fn.bfEff.sqrt().times(Math.sqrt(0.0098));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0]))
@@ -15,8 +16,9 @@ function updateTempFurnace() {
 		if (player.tr.upgrades.includes(35)&&!HCCBA("noTRU")) tmp.fn4base = tmp.fn4base.plus(1).sqrt().sub(1)
 		else tmp.fn4base = new ExpantaNum(0)
 	}
-	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5)) tmp.fn4base = new ExpantaNum(0);
+	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5) || extremeStadiumActive("quantron", 3)) tmp.fn4base = new ExpantaNum(0);
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3])))
+	if (extremeStadiumActive("quantron", 4)) tmp.fn1base = tmp.fn1base.sqrt();
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf.min(inFC(5)?1:(1/0))).sub(1).max(player.rf.gt(0)?1:0).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.fn.gain = tmp.fn.gain.times((inFC(3)||inFC(5))?1:player.tr.cubes.plus(1));
