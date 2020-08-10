@@ -51,4 +51,5 @@ function updateTempTimeSpeed() {
 		if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.pow(0.725).times(Math.pow(Number.MAX_VALUE, 0.275))
 		else tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
 	}
+	if (modeActive("extreme")) if (tmp.fn) tmp.timeSpeed = tmp.timeSpeed.times(tmp.fn.enh.eff2)
 }

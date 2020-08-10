@@ -114,7 +114,9 @@ const MODE_VARS = {
 		furnace: {
 			coal: new ExpantaNum(0),
 			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
-			blueFlame: new ExpantaNum(0)
+			blueFlame: new ExpantaNum(0),
+			enhancedCoal: new ExpantaNum(0),
+			enhancedUpgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 		},
 		activeFC: 0,
 		furnChalls: [],
@@ -132,6 +134,22 @@ const MODE_EX = {
 			new ExpantaNum(source.furnace.upgrades[2]),
 			new ExpantaNum(source.furnace.upgrades[3]||0),
 			new ExpantaNum(source.furnace.upgrades[4]||0),
+		];
+		source.furnace.enhancedCoal = new ExpantaNum(source.furnace.enhancedCoal||0);
+		source.furnace.enhancedUpgrades = [
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[0]),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[1]),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[2]),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[3]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[4]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[5]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[6]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[7]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[8]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[9]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[10]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[11]||0),
+			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[12]||0),
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		if (!source.extremeStad) source.extremeStad = []

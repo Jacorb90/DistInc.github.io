@@ -72,6 +72,7 @@ const NEWS_DATA = {
 	m70: ["A softcapped is you!"],
 	m71: ['"Absurd mode is just dumb." - A reddit user'],
 	m72: ['I tried looking for some inflation, but suddenly I heard a quiet yet scary noise: "softcapped"'],
+	m73: ["1 Star Rating: Egg isn't the next mechanic"],
 
 	// Distance-based Conditions
 	d1: [

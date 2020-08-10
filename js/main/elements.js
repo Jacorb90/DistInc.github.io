@@ -636,43 +636,71 @@ function updateHTML() {
 
 		// The Furnace
 		if (player.tab=="furnace") {
-			tmp.el.coal.setTxt(
-				showNum(player.furnace.coal) +
-					" Coal" +
-					(" (+" +
-						showNum(adjustGen(tmp.fn.gain, "fn").times((nerfActive("noTS")||inFC(5)) ? 1 : tmp.timeSpeed)) +
-						"/sec)")
-			);
-			tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
-			for (let i = 1; i <= 5; i++) {
-				tmp.el["fnu" + i].setClasses({
+			if (fnTab=="nfn") {
+				tmp.el.coal.setTxt(
+					showNum(player.furnace.coal) +
+						" Coal" +
+						(" (+" +
+							showNum(adjustGen(tmp.fn.gain, "fn").times((nerfActive("noTS")||inFC(5)) ? 1 : tmp.timeSpeed)) +
+							"/sec)")
+				);
+				tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
+				for (let i = 1; i <= 5; i++) {
+					tmp.el["fnu" + i].setClasses({
+						btn: true,
+						locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost),
+						fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
+					});
+					tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
+					tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
+					tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
+				}
+				tmp.el.fnu4.setDisplay(player.tr.upgrades.includes(31))
+				tmp.el.fnu5.setDisplay(FCComp(5))
+				tmp.el.bf.setClasses({
 					btn: true,
-					locked: player.furnace.coal.lt(tmp.fn.upgs[i].cost),
-					fn: player.furnace.coal.gte(tmp.fn.upgs[i].cost)
+					locked: player.furnace.coal.lt(tmp.fn.bfReq),
+					fn: player.furnace.coal.gte(tmp.fn.bfReq)
 				});
-				tmp.el["fnu" + i + "cost"].setTxt(showNum(tmp.fn.upgs[i].cost));
-				tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
-				tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
+				tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
+				tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame)+(tmp.fn.enh.eff.gt(0)?(" + "+showNum(tmp.fn.enh.eff)):""));
+				tmp.el.blueFlameName.setTxt(getScalingName("bf"))
+				tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
+				tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
+				for (let i=1;i<=5;i++) {
+					if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
+					tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]))
+					tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
+				}
+				tmp.el.fnu1eff.setTxt(showNum(tmp.fn1base))
+				tmp.el.fnu4eff.setTxt(showNum(tmp.fn4base))
+				tmp.el.fu4dc.setTxt((player.tr.upgrades.includes(35)&&!HCCBA("noTRU"))?"is weaker":"does nothing")
+			} 
+			if (fnTab=="efn") {
+				tmp.el.eCoal.setTxt(
+					showNum(player.furnace.enhancedCoal) +
+						" Enhanced Coal" +
+						(" (+" +
+							showNum(adjustGen(tmp.fn.enh.gain, "fn")) +
+							"/sec)")
+				);
+				tmp.el.eCoalEff.setTxt(showNum(tmp.fn.enh.eff));
+				tmp.el.eCoalEff2.setTxt(showNum(tmp.fn.enh.eff2))
+				for (let i = 1; i <= 13; i++) {
+					tmp.el["efnu" + i].setClasses({
+						btn: true,
+						locked: player.furnace.enhancedCoal.lt(tmp.fn.enh.upgs[i].cost),
+						fn: player.furnace.enhancedCoal.gte(tmp.fn.enh.upgs[i].cost)
+					});
+					tmp.el["efnu" + i + "cost"].setTxt(showNum(tmp.fn.enh.upgs[i].cost));
+					tmp.el["efnu" + i + "name"].setTxt(getScalingName("efn", i));
+					tmp.el["efnu" + i + "lvl"].setTxt(showNum(player.furnace.enhancedUpgrades[i - 1])+(tmp.fn.enh.upgs[i].extra.gt(0)?(" + "+showNum(tmp.fn.enh.upgs[i].extra)):""));
+				}
+				tmp.el.efnu1eff.setTxt(showNum(tmp.fn.enh.upg1eff))
+				tmp.el.efnu2eff.setTxt(showNum(tmp.fn.enh.upg2eff.times(100)))
+				tmp.el.efnu3eff.setTxt(showNum(tmp.fn.enh.upg3eff))
+				tmp.el.efnu13eff.setTxt(showNum(tmp.fn.enh.upg13eff))
 			}
-			tmp.el.fnu4.setDisplay(player.tr.upgrades.includes(31))
-			tmp.el.fnu5.setDisplay(FCComp(5))
-			tmp.el.bf.setClasses({
-				btn: true,
-				locked: player.furnace.coal.lt(tmp.fn.bfReq),
-				fn: player.furnace.coal.gte(tmp.fn.bfReq)
-			});
-			tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
-			tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame));
-			tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
-			tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
-			for (let i=1;i<=5;i++) {
-				if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
-				tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]))
-				tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
-			}
-			tmp.el.fnu1eff.setTxt(showNum(tmp.fn1base))
-			tmp.el.fnu4eff.setTxt(showNum(tmp.fn4base))
-			tmp.el.fu4dc.setTxt((player.tr.upgrades.includes(35)&&!HCCBA("noTRU"))?"is weaker":"does nothing")
 		}
 	}
 	

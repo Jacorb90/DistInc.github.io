@@ -301,91 +301,295 @@
 			<span id="rfEff"></span>%, and adds <span id="rf2"></span> additional rockets to their effect.
 		</div>
 		<div id="furnace" class="tab" style="display: none;">
-			You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added
-			Rocket effect.<br /><br />
-			<table>
-				<tr>
-					<td>
-						<button
-							id="fnu1"
-							class="btn locked"
-							onclick="tmp.fn.upgs[1].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Multiply Coal gain by <span id="fnu1eff"></span> (before Extreme Mode reduction)<br />Cost:
-							<span id="fnu1cost"></span> Coal<br /><span id="fnu1name"></span>Level:
-							<span id="fnu1lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu2"
-							class="btn locked"
-							onclick="tmp.fn.upgs[2].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Gain an extra Rank Cheapener<br />Cost: <span id="fnu2cost"></span> Coal<br /><span
-								id="fnu2name"
-							></span
-							>Level: <span id="fnu2lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu3"
-							class="btn locked"
-							onclick="tmp.fn.upgs[3].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Double Rocket gain<br />Cost: <span id="fnu3cost"></span> Coal<br /><span
-								id="fnu3name"
-							></span
-							>Level: <span id="fnu3lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu4"
-							class="btn locked"
-							onclick="tmp.fn.upgs[4].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Increase the power of Furnace Upgrade 1 by <span id="fnu4eff"></span>x<br />Cost: <span id="fnu4cost"></span> Coal<br /><span
-								id="fnu4name"
-							></span
-							>Level: <span id="fnu4lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu5"
-							class="btn locked"
-							onclick="tmp.fn.upgs[5].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Double Cadaver gain<br />Cost: <span id="fnu5cost"></span> Coal<br /><span
-								id="fnu5name"
-							></span
-							>Level: <span id="fnu5lvl"></span>
-						</button>
-					</td>
-				</tr>
-			</table>
-			<br /><br /><br />
-			<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">
-				Reset all Furnace progress to gain a Blue Flame<br />Req: <span id="bfReq"></span> Coal</button
-			><br /><br />
-			You have <span id="bfAmt" class="blfl"></span> Blue Flame, which makes the cost of all Furnace Upgrades
-			scale <span id="bfEff" class="blfl"></span>% slower.<br><br><br>
-			<div id="furnChalls">
-				Notice: Furnace Challenges will perform a Collapse reset. When in a Furnace Challenge, Furnace Upgrade 4 <span id="fu4dc">does nothing</span>.<br>
-				<table><tr>
-					<td class="furnChall"><br><b>Blue Flame does nothing.</b><br>Goal: <span id="fnc1goal"></span> Blue Flame<br><button id="fns1" class="btn fn" onclick="startFurnChall(1)"></button><br><br>Reward: Superscaled & Hyper Furnace Upgrade scalings are 90% weaker.<br><br></td>
-					<td id="fnc2" class="furnChall"><br><b>Coal gain is raised to the power of 0.075 (before reduction)</b><br>Goal: <span id="fnc2goal"></span> Blue Flame<br><button id="fns2" class="btn fn" onclick="startFurnChall(2)"></button><br><br>Reward: Furnace Upgrade 1's effect is increased by 25x.<br><br></td>
-					<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 9,999% strength</b><br>Goal: <span id="fnc3goal"></span> Blue Flame<br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker, and Knowledge gain is 3.2x faster.<br><br></td>
-					<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br>Goal: <span id="fnc4goal"></span> Blue Flame<br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.825)<br><br></td>
-					<td id="fnc5" class="furnChall"><br><b>All Coal generation boosts from outside The Furnace is disabled (which includes Time Speed), and Blue Flame is weaker</b><br>Goal: <span id="fnc5goal"></span> Blue Flame<br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 4's effect is increased by 0.0001x for each Furnace Upgrade 1 bought, and unlock Furnace Upgrade 5<br><br></td>
-				</tr></table>
+			<div class="band or">
+				<table>
+					<tr>
+						<td><button class="btn tb fn" style="visibility: hidden;"></button></td>
+					</tr>
+					<tr>
+						<td>
+							<button id="nfntabbtn" class="btn tb fn main" onclick="showFurnaceTab('nfn')">
+								The Furnace
+							</button>
+						</td>
+						<td>
+							<button id="efntabbtn" class="btn tb fn main" onclick="showFurnaceTab('efn')">
+								Enhanced Furnace
+							</button>
+						</td>
+					</tr>
+				</table><br>
+			</div><br>
+			<div id="nfn" class="furnaceTab">
+				You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added
+				Rocket effect.<br /><br />
+				<table>
+					<tr>
+						<td>
+							<button
+								id="fnu1"
+								class="btn locked"
+								onclick="tmp.fn.upgs[1].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Multiply Coal gain by <span id="fnu1eff"></span> (before Extreme Mode reduction)<br />Cost:
+								<span id="fnu1cost"></span> Coal<br /><span id="fnu1name"></span>Level:
+								<span id="fnu1lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu2"
+								class="btn locked"
+								onclick="tmp.fn.upgs[2].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Gain an extra Rank Cheapener<br />Cost: <span id="fnu2cost"></span> Coal<br /><span
+									id="fnu2name"
+								></span
+								>Level: <span id="fnu2lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu3"
+								class="btn locked"
+								onclick="tmp.fn.upgs[3].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Double Rocket gain<br />Cost: <span id="fnu3cost"></span> Coal<br /><span
+									id="fnu3name"
+								></span
+								>Level: <span id="fnu3lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu4"
+								class="btn locked"
+								onclick="tmp.fn.upgs[4].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Increase the power of Furnace Upgrade 1 by <span id="fnu4eff"></span>x<br />Cost: <span id="fnu4cost"></span> Coal<br /><span
+									id="fnu4name"
+								></span
+								>Level: <span id="fnu4lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu5"
+								class="btn locked"
+								onclick="tmp.fn.upgs[5].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Double Cadaver gain<br />Cost: <span id="fnu5cost"></span> Coal<br /><span
+									id="fnu5name"
+								></span
+								>Level: <span id="fnu5lvl"></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+				<br /><br /><br />
+				<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">
+					Reset all Furnace progress to gain a Blue Flame<br />Req: <span id="bfReq"></span> Coal</button
+				><br /><br />
+				You have <span id="bfAmt" class="blfl"></span> <span id="blueFlameName"></span>Blue Flame, which makes the cost of all Furnace Upgrades
+				scale <span id="bfEff" class="blfl"></span>% slower.<br><br><br>
+				<div id="furnChalls">
+					Notice: Furnace Challenges will perform a Collapse reset. When in a Furnace Challenge, Furnace Upgrade 4 <span id="fu4dc">does nothing</span>.<br>
+					<table><tr>
+						<td class="furnChall"><br><b>Blue Flame does nothing.</b><br>Goal: <span id="fnc1goal"></span> Blue Flame<br><button id="fns1" class="btn fn" onclick="startFurnChall(1)"></button><br><br>Reward: Superscaled & Hyper Furnace Upgrade scalings are 90% weaker.<br><br></td>
+						<td id="fnc2" class="furnChall"><br><b>Coal gain is raised to the power of 0.075 (before reduction)</b><br>Goal: <span id="fnc2goal"></span> Blue Flame<br><button id="fns2" class="btn fn" onclick="startFurnChall(2)"></button><br><br>Reward: Furnace Upgrade 1's effect is increased by 25x.<br><br></td>
+						<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 9,999% strength</b><br>Goal: <span id="fnc3goal"></span> Blue Flame<br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker, and Knowledge gain is 3.2x faster.<br><br></td>
+						<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br>Goal: <span id="fnc4goal"></span> Blue Flame<br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.825)<br><br></td>
+						<td id="fnc5" class="furnChall"><br><b>All Coal generation boosts from outside The Furnace is disabled (which includes Time Speed), and Blue Flame is weaker</b><br>Goal: <span id="fnc5goal"></span> Blue Flame<br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 4's effect is increased by 0.0001x for each Furnace Upgrade 1 bought, and unlock Furnace Upgrade 5<br><br></td>
+					</tr></table>
+				</div>
+			</div>
+			<div id="efn" class="furnaceTab" style="display: none;">
+				You have <span id="eCoal" class="char"></span>, translated to <span id="eCoalEff" class="char"></span> free Blue Flame, and multiply Time Speed by <span id="eCoalEff2" class="char"></span>x.<br /><br />
+				<table>
+					<tr>
+						<td>
+							<button
+								id="efnu1"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[1].buy()"
+								style="min-height: 100px; max-height: 100px; font-size: 10px"
+							>
+								Multiply Enhanced Coal gain by <span id="efnu1eff"></span> (before Extreme Mode reduction, boosted by Coal and Endorsements)<br />Cost:
+								<span id="efnu1cost"></span> Enhanced Coal<br /><span id="efnu1name"></span>Level:
+								<span id="efnu1lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu2"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[2].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Non-free Rank Cheapeners are <span id="efnu2eff"></span>% stronger (additive)<br />Cost: <span id="efnu2cost"></span> Enhanced Coal<br /><span
+									id="efnu2name"
+								></span
+								>Level: <span id="efnu2lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu3"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[3].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Increase the power of Furnace Upgrade 4 by <span id="efnu3eff"></span>x<br />Cost: <span id="efnu3cost"></span> Enhanced Coal<br /><span
+									id="efnu3name"
+								></span
+								>Level: <span id="efnu3lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu4"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[4].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost:
+								<span id="efnu4cost"></span> Enhanced Coal<br /><span id="efnu4name"></span>Level:
+								<span id="efnu4lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu5"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[5].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu5cost"></span> Enhanced Coal<br /><span
+									id="efnu5name"
+								></span
+								>Level: <span id="efnu5lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu6"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[6].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu6cost"></span> Enhanced Coal<br /><span
+									id="efnu6name"
+								></span
+								>Level: <span id="efnu6lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu7"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[7].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost:
+								<span id="efnu7cost"></span> Enhanced Coal<br /><span id="efnu7name"></span>Level:
+								<span id="efnu7lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu8"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[8].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu8cost"></span> Enhanced Coal<br /><span
+									id="efnu8name"
+								></span
+								>Level: <span id="efnu8lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu9"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[9].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu9cost"></span> Enhanced Coal<br /><span
+									id="efnu9name"
+								></span
+								>Level: <span id="efnu9lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu10"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[10].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost:
+								<span id="efnu10cost"></span> Enhanced Coal<br /><span id="efnu10name"></span>Level:
+								<span id="efnu10lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu11"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[11].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost: <span id="efnu11cost"></span> Enhanced Coal<br /><span
+									id="efnu11name"
+								></span
+								>Level: <span id="efnu11lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu12"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[12].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost: <span id="efnu12cost"></span> Enhanced Coal<br /><span
+									id="efnu12name"
+								></span
+								>Level: <span id="efnu12lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button
+								id="efnu13"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[13].buy()"
+								style="min-height: 100px; max-height: 100px; font-size: 10px;"
+							>
+								Increase the exponent of Enhanced Coal's boost to Time Speed (+<span id="efnu13eff"></span>) and add an extra level to all previous upgrades<br />Cost: <span id="efnu13cost"></span> Enhanced Coal<br /><span
+									id="efnu13name"
+								></span
+								>Level: <span id="efnu13lvl"></span>
+							</button>
+						</td>
+						<td></td>
+					</tr>
+					</tr>
+				</table><br><br>
 			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">

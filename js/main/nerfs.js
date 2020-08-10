@@ -166,7 +166,7 @@ function adjustGen(val, type) {
 	let exp = new ExpantaNum(1);
 	if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);
-	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?1:3);
+	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?0.925:3);
 	if ((player.elementary.theory.active||HCTVal("tv").gt(-1)) && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
 	if (modeActive("extreme") && preinf) {
 		let e = new ExpantaNum(FCComp(4)?0.825:0.75);

@@ -737,6 +737,7 @@ function updateTempInf() {
 		.logBase(tmp.inf.pantheon.purgeBase)
 		.pow(tmp.inf.pantheon.purgeExp)
 		.times(tmp.inf.pantheon.purgeMult);
+	if (modeActive("extreme")) tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sqrt()
 	if (tmp.inf.pantheon.purgeGain.gte(600)) tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sqrt().times(Math.sqrt(600));
 	tmp.inf.pantheon.purgeGain = tmp.inf.pantheon.purgeGain.sub(player.inf.pantheon.purge.power).floor().max(0);
 	tmp.inf.pantheon.purgeNext = ExpantaNum.pow(
@@ -745,9 +746,15 @@ function updateTempInf() {
 	)
 		.sub(1)
 		.times(tmp.inf.pantheon.purgeStart);
+	if (modeActive("extreme")) tmp.inf.pantheon.purgeNext = ExpantaNum.pow(
+		tmp.inf.pantheon.purgeBase,
+		player.inf.pantheon.purge.power.plus(1).pow(2).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))
+	)
+		.sub(1)
+		.times(tmp.inf.pantheon.purgeStart);
 	if (player.inf.pantheon.purge.power.gte(600)) tmp.inf.pantheon.purgeNext = ExpantaNum.pow(
 		tmp.inf.pantheon.purgeBase,
-		player.inf.pantheon.purge.power.plus(1).pow(2).div(600).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))
+		player.inf.pantheon.purge.power.plus(1).pow(modeActive("extreme")?4:2).div(600).div(tmp.inf.pantheon.purgeMult).pow(tmp.inf.pantheon.purgeExp.pow(-1))
 	)
 		.sub(1)
 		.times(tmp.inf.pantheon.purgeStart);
@@ -802,23 +809,25 @@ function updateTempInf() {
 				);
 		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
 	};
-	tmp.inf.derv.unlCost = ExpantaNum.pow(2, player.inf.derivatives.unlocks.pow(3)).times(2.5e29);
-	tmp.inf.derv.unlBulk = player.inf.knowledge.div(2.5e29).max(1).logBase(2).cbrt().plus(1).floor();
+	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?1e35:2.5e29)
+	tmp.inf.derv.costLB = new ExpantaNum(modeActive("extreme")?5:2)
+	tmp.inf.derv.unlCost = ExpantaNum.pow(tmp.inf.derv.costLB, player.inf.derivatives.unlocks.pow(3)).times(tmp.inf.derv.costBase);
+	tmp.inf.derv.unlBulk = player.inf.knowledge.div(tmp.inf.derv.costBase).max(1).logBase(tmp.inf.derv.costLB).cbrt().plus(1).floor();
 	if (scalingActive("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {
 		let start = getScalingStart("scaled", "dervBoost");
 		let power = getScalingPower("scaled", "dervBoost");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.inf.derv.unlCost = ExpantaNum.pow(
-			2,
+			tmp.inf.derv.costLB,
 			player.inf.derivatives.unlocks
 				.pow(exp)
 				.div(start.pow(exp.sub(1)))
 				.pow(3)
-		).times(2.5e29);
+		).times(tmp.inf.derv.costBase);
 		tmp.inf.derv.unlBulk = player.inf.knowledge
-			.div(2.5e29)
+			.div(tmp.inf.derv.costBase)
 			.max(1)
-			.logBase(2)
+			.logBase(tmp.inf.derv.costLB)
 			.cbrt()
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
@@ -833,18 +842,18 @@ function updateTempInf() {
 		let power = getScalingPower("scaled", "dervBoost");
 		let exp = ExpantaNum.pow(2, power);
 		tmp.inf.derv.unlCost = ExpantaNum.pow(
-			2,
+			tmp.inf.derv.costLB,
 			player.inf.derivatives.unlocks
 				.pow(exp2)
 				.div(start2.pow(exp2.sub(1)))
 				.pow(exp)
 				.div(start.pow(exp.sub(1)))
 				.pow(3)
-		).times(2.5e29);
+		).times(tmp.inf.derv.costBase);
 		tmp.inf.derv.unlBulk = player.inf.knowledge
-			.div(2.5e29)
+			.div(tmp.inf.derv.costBase)
 			.max(1)
-			.logBase(2)
+			.logBase(tmp.inf.derv.costLB)
 			.cbrt()
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))

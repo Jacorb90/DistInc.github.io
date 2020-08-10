@@ -577,7 +577,9 @@ const INF_UPGS = {
 		"7;8": function () {
 			let amt = new ExpantaNum(0);
 			if (tmp.inf) amt = tmp.inf.pantheon.totalGems;
-			let ret = ExpantaNum.pow(1e25, amt.sqrt());
+			let base = 1e25
+			if (modeActive("extreme")) base = 1e35
+			let ret = ExpantaNum.pow(base, amt.sqrt());
 			return ret;
 		},
 		"8;2": function () {
@@ -599,7 +601,9 @@ const INF_UPGS = {
 			return ret;
 		},
 		"8;8": function () {
-			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10);
+			let power = player.inf.pantheon.purge.power
+			if (modeActive("extreme")) power = power.pow(2)
+			let ret = power.plus(1).times(10).slog(10);
 			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1));
 			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5));
 			return ret;
@@ -1017,19 +1021,36 @@ const DERV_INCR = ["acceleration", "jerk", "snap"];
 // More Extreme Stuff
 
 const EXTREME_INF_UPG_COST_MODS = {
-	"1;8": new ExpantaNum(1e4),
-	"2;8": new ExpantaNum(1e4),
-	"3;8": new ExpantaNum(1e4),
-	"4;8": new ExpantaNum(1e4),
-	"5;8": new ExpantaNum(1e4),
-	"6;8": new ExpantaNum(1e4),
-	"7;8": new ExpantaNum(1e4),
-	"8;1": new ExpantaNum(1e4),
-	"8;2": new ExpantaNum(1e4),
-	"8;3": new ExpantaNum(1e4),
-	"8;4": new ExpantaNum(1e4),
-	"8;5": new ExpantaNum(1e4),
+	"1;8": new ExpantaNum(2e4),
+	"2;8": new ExpantaNum(2.1e4),
+	"3;8": new ExpantaNum(2.2e4),
+	"4;8": new ExpantaNum(2.3e4),
+	"5;8": new ExpantaNum(2.4e4),
+	"6;8": new ExpantaNum(2.5e4),
+	"7;8": new ExpantaNum(2.6e4),
+	"8;1": new ExpantaNum(2e4),
+	"8;2": new ExpantaNum(2.1e4),
+	"8;3": new ExpantaNum(2.2e4),
+	"8;4": new ExpantaNum(2.3e4),
+	"8;5": new ExpantaNum(2.4e4),
 	"8;6": new ExpantaNum(1e4),
 	"8;7": new ExpantaNum(1e4),
 	"8;8": new ExpantaNum(1e4),
+	"9;1": new ExpantaNum(3e4),
+	"9;2": new ExpantaNum(3e4),
+	"9;3": new ExpantaNum(3e4),
+	"9;4": new ExpantaNum(3e4),
+	"9;5": new ExpantaNum(3e4),
+	"9;6": new ExpantaNum(3e4),
+	"9;7": new ExpantaNum(3e4),
+	"9;8": new ExpantaNum(3e4),
+	"1;9": new ExpantaNum(3e4),
+	"2;9": new ExpantaNum(3e4),
+	"3;9": new ExpantaNum(3e4),
+	"4;9": new ExpantaNum(3e4),
+	"5;9": new ExpantaNum(3e4),
+	"6;9": new ExpantaNum(3e4),
+	"7;9": new ExpantaNum(3e4),
+	"8;9": new ExpantaNum(3e4),
+	"9;9": new ExpantaNum(3e4),
 }

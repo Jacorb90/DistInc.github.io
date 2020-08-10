@@ -331,11 +331,11 @@ const ACH_DATA = {
 		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
 		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
 
-		111: "You can activate all four perks at once.",
-		112: "Time Speed boosts Knowledge gain at a reduced rate.",
-		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs).",
+		111: "You can activate all four perks at onceboolean(extreme, and unlock the Enhanced Furnace).",
+		112: "Time Speed boosts Knowledge gain at a reduced rateboolean(extreme, and Rank Cheapeners do not reset anything).",
+		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs and Enhanced Coal gain is 40% faster for each Purge Power you have).",
 
-		123: "The Universe Doesn't Exist uses a slightly better formula.",
+		123: "The Universe Doesn't Exist achievement uses a slightly better formula.",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 

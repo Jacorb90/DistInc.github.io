@@ -14,6 +14,7 @@ var notifier = new Notifier();
 var saveTimer = 0;
 var showContainer = true;
 var infActive = false;
+var fnTab = "nfn";
 var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
@@ -59,6 +60,9 @@ function tickWithoutTS(diff) {
 	
 	if (player.dc.unl) tmp.dc.tick(diff);
 	if (player.inf.unl) infTick(diff);
+	if (modeActive("extreme")?tmp.fn.enh.unl:false) {
+		player.furnace.enhancedCoal = player.furnace.enhancedCoal.plus(adjustGen(tmp.fn.enh.gain, "fn").times(diff));
+	}
 	if (player.elementary.times.gt(0)) elTick(diff);
 }
 

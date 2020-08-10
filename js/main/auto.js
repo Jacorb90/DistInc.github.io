@@ -100,6 +100,7 @@ function autoTick(diff) {
 		let cap = (FCComp(5)?5:(player.tr.upgrades.includes(31)?4:3))
 		for (let i = 1; i <= cap; i++) tmp.fn.upgs[i].max();
 		if (player.furnace.coal.gte(tmp.fn.bfReq)) player.furnace.blueFlame = player.furnace.blueFlame.max(tmp.fn.bfBulk.floor());
+		for (let i=1;i<=13;i++) tmp.fn.enh.upgs[i].max();
 	}
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();
 	if (player.automators["cores"] && player.collapse.cadavers.gt(tmp.dc.coreCost)) tmp.dc.maxCores();

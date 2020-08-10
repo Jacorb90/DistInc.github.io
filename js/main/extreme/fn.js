@@ -7,11 +7,12 @@ function updateTempFurnace() {
 		adj = adj.times(tmp.dc.flow.max(1).log10().plus(1));
 	if (inFC(5)) adj = adj.times(0.725)
 	if (extremeStadiumActive("quantron", 2)) adj = adj.times(0.95)
-	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.times(adj).div(4).plus(1));
+	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.plus(tmp.fn.enh?tmp.fn.enh.eff:0).times(adj).div(4).plus(1));
 	if (tmp.fn.bfEff.lt(0.0098)) tmp.fn.bfEff = tmp.fn.bfEff.sqrt().times(Math.sqrt(0.0098));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0]))
+	if (tmp.fn.enh) if (tmp.fn.enh.unl) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra)))
 	if (HCCBA("noTRU")||inAnyFC()) {
 		if (player.tr.upgrades.includes(35)&&!HCCBA("noTRU")) tmp.fn4base = tmp.fn4base.plus(1).sqrt().sub(1)
 		else tmp.fn4base = new ExpantaNum(0)
@@ -142,12 +143,16 @@ function updateTempFurnace() {
 			player.furnace.upgrades[n - 1] = player.furnace.upgrades[n - 1].max(tmp.fn.upgs[n].bulk.floor());
 		};
 	}
-	tmp.fn.bfReq = ExpantaNum.pow(10, ExpantaNum.pow(2, player.furnace.blueFlame).sub(1)).times(1e6);
-	tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).log10().add(1).logBase(2).add(1);
-	if (inFC(4)) {
-		let base = 3.618
-		tmp.fn.bfReq = ExpantaNum.pow(160, ExpantaNum.pow(base, player.furnace.blueFlame).sub(4)).times(1e6);
-		tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(160).add(4).logBase(base).add(1);
+	tmp.fn.bfBase = inFC(4)?3.618:2
+	tmp.fn.bfLB = inFC(4)?160:10
+	tmp.fn.bfReq = ExpantaNum.pow(tmp.fn.bfLB, ExpantaNum.pow(tmp.fn.bfBase, player.furnace.blueFlame).sub(1)).times(1e6);
+	tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(tmp.fn.bfLB).add(1).logBase(tmp.fn.bfBase).add(1);
+	if (scalingActive("bf", player.furnace.blueFlame.max(tmp.fn.bfBulk), "scaled")) {
+		let start = getScalingStart("scaled", "bf")
+		let power = getScalingPower("scaled", "bf")
+		let exp = ExpantaNum.pow(2, power);
+		tmp.fn.bfReq = ExpantaNum.pow(tmp.fn.bfLB, ExpantaNum.pow(tmp.fn.bfBase, player.furnace.blueFlame.pow(exp).div(start.pow(exp.sub(1)))).sub(1)).times(1e6);
+		tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(tmp.fn.bfLB).add(1).logBase(tmp.fn.bfBase).times(start.pow(exp.sub(1))).pow(exp.pow(-1)).add(1);
 	}
 	if (!tmp.fn.bfReset) tmp.fn.bfReset = function () {
 		if (player.furnace.coal.lt(tmp.fn.bfReq)) return;
@@ -155,6 +160,76 @@ function updateTempFurnace() {
 		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 		player.furnace.blueFlame = player.furnace.blueFlame.plus(1);
 	};
+	updateFNTabs();
+	if (!tmp.fn.enh) tmp.fn.enh = {}
+	tmp.fn.enh.unl = tmp.ach[111].has
+	tmp.fn.enh.gain = ExpantaNum.pow(1.1, tmp.fn.enh.unl?player.furnace.blueFlame:0).sub(1).times(ExpantaNum.pow(tmp.fn.enh.upg1eff?tmp.fn.enh.upg1eff:1, player.furnace.enhancedUpgrades[0].plus(tmp.fn.enh.upgs?tmp.fn.enh.upgs[1].extra:0)))
+	if (tmp.ach[116].has) tmp.fn.enh.gain = tmp.fn.enh.gain.times(ExpantaNum.pow(1.4, player.inf.pantheon.purge.power))
+	tmp.fn.enh.eff = tmp.fn.enh.unl?(player.furnace.enhancedCoal.plus(1).log10().plus(1).log10().plus(1).log10().times(5)):new ExpantaNum(0)
+	tmp.fn.enh.eff2exp = ExpantaNum.mul(player.furnace.enhancedUpgrades[12], tmp.fn.enh.upg13eff?tmp.fn.enh.upg13eff:0).plus(100)
+	tmp.fn.enh.eff2 = tmp.fn.enh.unl?player.furnace.enhancedCoal.plus(1).pow(tmp.fn.enh.eff2exp):new ExpantaNum(1)
+	if (!tmp.fn.enh.upgs) tmp.fn.enh.upgs = {
+		1: { base: new ExpantaNum(100) },
+		2: { base: new ExpantaNum(250) },
+		3: { base: new ExpantaNum(400) },
+		4: { base: new ExpantaNum(1e4) },
+		5: { base: new ExpantaNum(1.25e5) },
+		6: { base: new ExpantaNum(1.6e6) },
+		7: { base: new ExpantaNum(1e9) },
+		8: { base: new ExpantaNum(6.25e10) },
+		9: { base: new ExpantaNum(6.4e12) },
+		10: { base: new ExpantaNum(1e32) },
+		11: { base: new ExpantaNum(1e34) },
+		12: { base: new ExpantaNum(1e36) },
+		13: { base: new ExpantaNum(1e40) },
+	};
+	tmp.fn.enh.upgs[13].costAdj = new ExpantaNum(0.75)
+	for (let n = 1; n <= 13; n++) {
+		tmp.fn.enh.upgs[n].cost = ExpantaNum.pow(
+			tmp.fn.enh.upgs[n].base.div(10).pow(tmp.fn.enh.upgs[n].costAdj||1),
+			player.furnace.enhancedUpgrades[n - 1]
+		).times(tmp.fn.enh.upgs[n].base);
+		tmp.fn.enh.upgs[n].bulk = player.furnace.enhancedCoal
+			.div(tmp.fn.enh.upgs[n].base)
+			.logBase(tmp.fn.enh.upgs[n].base.div(10).pow(tmp.fn.enh.upgs[n].costAdj||1))
+			.plus(1)
+			.floor();
+		tmp.fn.enh.upgs[n].extra = (n<=9?((player.furnace.enhancedUpgrades[n+2]||new ExpantaNum(0)).plus(tmp.fn.enh.upgs[n+3]?(tmp.fn.enh.upgs[n+3].extra?tmp.fn.enh.upgs[n+3].extra:0):0)):new ExpantaNum(0)).times((n>6)?2:1)
+		if (n<13) tmp.fn.enh.upgs[n].extra = tmp.fn.enh.upgs[n].extra.plus(player.furnace.enhancedUpgrades[12])
+		if (scalingActive("efn", player.furnace.enhancedUpgrades[n - 1].max(tmp.fn.enh.upgs[n].bulk), "scaled")) {
+			let start = getScalingStart("scaled", "efn")
+			let power = getScalingPower("scaled", "efn")
+			let exp = ExpantaNum.pow(2, power);
+			tmp.fn.enh.upgs[n].cost = ExpantaNum.pow(
+				tmp.fn.enh.upgs[n].base.div(10).pow(tmp.fn.enh.upgs[n].costAdj||1),
+				player.furnace.enhancedUpgrades[n - 1]
+					.pow(exp)
+					.div(start.pow(exp.sub(1)))
+			).times(tmp.fn.enh.upgs[n].base);
+			tmp.fn.enh.upgs[n].bulk = player.furnace.enhancedCoal
+				.div(tmp.fn.enh.upgs[n].base)
+				.logBase(tmp.fn.enh.upgs[n].base.div(10).pow(tmp.fn.enh.upgs[n].costAdj||1))
+				.times(start.pow(exp.sub(1)))
+				.pow(exp.pow(-1))
+				.plus(1)
+				.floor();
+		}
+		if (!tmp.fn.enh.upgs[n].buy) tmp.fn.enh.upgs[n].buy = function () {
+			if (player.furnace.enhancedCoal.lt(tmp.fn.enh.upgs[n].cost)) return;
+			player.furnace.enhancedCoal = player.furnace.enhancedCoal.sub(tmp.fn.enh.upgs[n].cost);
+			player.furnace.enhancedUpgrades[n - 1] = player.furnace.enhancedUpgrades[n - 1].plus(1);
+		};
+		if (!tmp.fn.enh.upgs[n].max) tmp.fn.enh.upgs[n].max = function () {
+			if (player.furnace.enhancedCoal.lt(tmp.fn.enh.upgs[n].cost)) return;
+			if (tmp.fn.enh.upgs[n].bulk.floor().lte(player.furnace.enhancedUpgrades[n - 1])) player.furnace.enhancedUpgrades[n - 1] = player.furnace.enhancedUpgrades[n - 1].plus(1);
+			player.furnace.enhancedUpgrades[n - 1] = player.furnace.enhancedUpgrades[n - 1].max(tmp.fn.enh.upgs[n].bulk.floor());
+		};
+	}
+	let endMod = player.inf.endorsements.sub(25).max(0)
+	tmp.fn.enh.upg1eff = ExpantaNum.pow(ExpantaNum.add(3, ExpantaNum.mul(0.1, endMod)), player.furnace.coal.plus(1).log10().plus(1).log10().plus(1).log10().plus(1)).times(ExpantaNum.pow(1.2, endMod))
+	tmp.fn.enh.upg2eff = new ExpantaNum(0.9)
+	tmp.fn.enh.upg3eff = new ExpantaNum(2.5)
+	tmp.fn.enh.upg13eff = ExpantaNum.add(60, player.inf.endorsements.sub(25).max(0).div(3).floor().times(10))
 }
 
 function startFurnChall(x) {
@@ -193,4 +268,36 @@ const FC_GOAL = {
 	3: new ExpantaNum(10),
 	4: new ExpantaNum(6),
 	5: new ExpantaNum(12),
+}
+
+// Furnace Tabs
+
+const FN_TABBTN_SHOWN = {
+	nfn: function() { return true },
+	efn: function() { return tmp.ach[111].has },
+}
+
+function isFNTabShown(name) {
+	return fnTab == name;
+}
+
+function getFNTabBtnsShown() {
+	let btns = [];
+	for (j = 0; j < Object.keys(FN_TABBTN_SHOWN).length; j++)
+		if (Object.values(FN_TABBTN_SHOWN)[i]()) btns.push(Object.keys(FN_TABBTN_SHOWN)[i]);
+	return btns;
+}
+
+function updateFNTabs() {
+	var tabs = document.getElementsByClassName("furnaceTab");
+	for (i = 0; i < tabs.length; i++) {
+		var el = new Element(tabs[i].id);
+		el.setDisplay(isFNTabShown(tabs[i].id));
+		var elT = new Element(tabs[i].id + "tabbtn");
+		elT.changeStyle("visibility", getFNTabBtnsShown().includes(tabs[i].id)?"visible":"hidden");
+	}
+}
+
+function showFurnaceTab(name) {
+	fnTab = name;
 }
