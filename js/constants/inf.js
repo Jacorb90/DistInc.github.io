@@ -405,6 +405,7 @@ const INF_UPGS = {
 		},
 		"1;9": function () {
 			let ret = player.tier.sqrt().div(2).plus(1);
+			if (modeActive("extreme") && player.inf.upgrades.includes("9;9")) ret = ret.pow(1.35)
 			return ret;
 		},
 		"1;10": function() {
@@ -610,7 +611,7 @@ const INF_UPGS = {
 		},
 		"9;1": function () {
 			let jerk = player.inf.derivatives.amts.jerk ? player.inf.derivatives.amts.jerk : new ExpantaNum(0);
-			let ret = jerk.plus(1).pow(0.0001);
+			let ret = jerk.plus(1).pow(modeActive("extreme")?0.00001:0.0001);
 			if (ret.gte(1e100)) ret = ret.log10().pow(50);
 			return ret;
 		},
@@ -1041,16 +1042,9 @@ const EXTREME_INF_UPG_COST_MODS = {
 	"9;3": new ExpantaNum(3e4),
 	"9;4": new ExpantaNum(3e4),
 	"9;5": new ExpantaNum(3e4),
-	"9;6": new ExpantaNum(3e4),
-	"9;7": new ExpantaNum(3e4),
-	"9;8": new ExpantaNum(3e4),
-	"1;9": new ExpantaNum(3e4),
-	"2;9": new ExpantaNum(3e4),
-	"3;9": new ExpantaNum(3e4),
-	"4;9": new ExpantaNum(3e4),
-	"5;9": new ExpantaNum(3e4),
-	"6;9": new ExpantaNum(3e4),
-	"7;9": new ExpantaNum(3e4),
-	"8;9": new ExpantaNum(3e4),
-	"9;9": new ExpantaNum(3e4),
+	"9;6": new ExpantaNum(2.4e4),
+	"9;7": new ExpantaNum(1e4),
+	"9;8": new ExpantaNum(1e4),
+	"1;9": new ExpantaNum(3e3),
+	"2;9": new ExpantaNum(3e3),
 }

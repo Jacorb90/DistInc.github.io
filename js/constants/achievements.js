@@ -240,7 +240,7 @@ const ACH_DATA = {
 		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Difficulty Level 6.",
 		122: "Purchase two Derivative Shifts.",
 		123: "Reach showNum(2.5e5) Ascension Power.",
-		124: "Reach showNum(30) Purge Power.",
+		124: "Reach boolean(extreme,nine,thirty) Purge Power.",
 		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Difficulty Level 6.",
 		126: "Have a magnitude of showNum(1e200) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",

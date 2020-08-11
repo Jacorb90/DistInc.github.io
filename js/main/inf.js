@@ -206,6 +206,7 @@ function updateTempInf() {
 	if (tmp.ach[112].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(ach112Eff())
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
 	if (modeActive('easy')) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
+	if (modeActive("hard") && tmp.fn) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.fn.enh.moltBrEff2)
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
 	else
@@ -809,8 +810,8 @@ function updateTempInf() {
 				);
 		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
 	};
-	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?1e35:2.5e29)
-	tmp.inf.derv.costLB = new ExpantaNum(modeActive("extreme")?5:2)
+	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?4e34:2.5e29)
+	tmp.inf.derv.costLB = new ExpantaNum(modeActive("extreme")?2.5:2)
 	tmp.inf.derv.unlCost = ExpantaNum.pow(tmp.inf.derv.costLB, player.inf.derivatives.unlocks.pow(3)).times(tmp.inf.derv.costBase);
 	tmp.inf.derv.unlBulk = player.inf.knowledge.div(tmp.inf.derv.costBase).max(1).logBase(tmp.inf.derv.costLB).cbrt().plus(1).floor();
 	if (scalingActive("dervBoost", player.inf.derivatives.unlocks.max(tmp.inf.derv.unlBulk), "scaled")) {

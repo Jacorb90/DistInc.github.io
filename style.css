@@ -1166,7 +1166,7 @@ table {
 .btn.light {
 	box-shadow: 3px 4px 0px 0px #fcca4c;
 	background: none;
-	background-color: #f7ec83;
+	background-color: #a39c5d;
 	border-radius: 18px;
 	border: 1px solid #ccbb9b;
 	display: inline-block;
@@ -1182,7 +1182,7 @@ table {
 
 .btn.light:hover {
 	background: none;
-	background-color: #ffe44a;
+	background-color: #a89734;
 	color: #787348 !important;
 }
 

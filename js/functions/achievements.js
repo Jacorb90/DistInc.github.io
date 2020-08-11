@@ -107,7 +107,7 @@ function updateAchievements() {
 	if (player.distance.gte(2.5e4) && tmp.inf.stadium.active("reality", 6)) tmp.ach[121].grant();
 	if (player.inf.derivatives.unlocks.gte(2)) tmp.ach[122].grant();
 	if (player.inf.ascension.power.gte(2.5e5)) tmp.ach[123].grant();
-	if (player.inf.pantheon.purge.power.gte(30)) tmp.ach[124].grant();
+	if (player.inf.pantheon.purge.power.gte(modeActive("extreme")?9:30)) tmp.ach[124].grant();
 	if (player.distance.gte(1e4) && tmp.inf.stadium.active("reality", 6) && player.inf.pantheon.purge.active)
 		tmp.ach[125].grant();
 	if (tmp.auto.rankbot.magnitude.gte(1e200)) tmp.ach[126].grant();

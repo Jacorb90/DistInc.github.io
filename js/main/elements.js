@@ -700,6 +700,10 @@ function updateHTML() {
 				tmp.el.efnu2eff.setTxt(showNum(tmp.fn.enh.upg2eff.times(100)))
 				tmp.el.efnu3eff.setTxt(showNum(tmp.fn.enh.upg3eff))
 				tmp.el.efnu13eff.setTxt(showNum(tmp.fn.enh.upg13eff))
+				tmp.el.moltBr.setDisplay(tmp.fn.enh.moltBr.gte(1))
+				tmp.el.moltBrAmt.setTxt(showNum(tmp.fn.enh.moltBr))
+				tmp.el.moltBrEff.setTxt(showNum(tmp.fn.enh.moltBrEff))
+				tmp.el.moltBrEff2.setTxt(showNum(tmp.fn.enh.moltBrEff2))
 			}
 		}
 	}
