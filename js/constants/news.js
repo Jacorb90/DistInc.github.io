@@ -108,13 +108,19 @@ const NEWS_DATA = {
 	d6: [
 		"Stop grinding or you'll go insane within the next 5 hours!",
 		function () {
-			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e4200000"));
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e2000000"));
 		}
 	],
 	d7: [
 		"Uni sounds like a prestige currency",
 		function () {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, 5));
+		}
+	],
+	d8: [
+		"The new feature in v1.8 will be <span style='color: white;'>Quantum Foam</span>",
+		function() {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
 		}
 	],
 
