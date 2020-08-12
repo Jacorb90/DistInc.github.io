@@ -16,15 +16,15 @@ const COMBOS = {
 		balanceCheck: true
 	},
 	easy: {
-		balancing: "balanced up to Infinity",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false
 	},
 	easy_hard: {
-		balancing: "balanced up to Infinity",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false
 	},
 	extreme: {
-		balancing: "balanced up to Infinity",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false
 	}
 };
@@ -32,8 +32,8 @@ const COMBOS = {
 const MODES = {
 	hard: {
 		desc:
-			"The game is harder & slower, with slight compensation to help you slowly grind to the end (ends at Infinity).",
-		balancing: "balanced up to Infinity",
+			"The game is harder & slower, with slight compensation to help you slowly grind to the end (ends at Elementary).",
+		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
