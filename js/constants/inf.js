@@ -163,7 +163,7 @@ const INF_UPGS = {
 		"1;1": "Ranks & Tiers boost Time Speed.",
 		"1;2": "Knowledge boosts Rocket gain.",
 		"1;3": "Start with the first 2 rows of Time Reversal upgrades on reset.",
-		"1;4": "Start with all Time Reversal upgrades on reset.",
+		"1;4": "Keep Time Reversal upgrades on reset.",
 		"1;5": "Scaled Tier scaling is 20% weaker.",
 		"1;6": "Scaled Rank & Tier scaling starts 2 later.",
 		"1;7": "Before any other boosts, Knowledge gain is raised to the power of 1.25.",
@@ -383,7 +383,7 @@ const INF_UPGS = {
 	},
 	effects: {
 		"1;1": function () {
-			if (nerfActive("noInf1;1")) return new ExpantaNum(1);
+			if (nerfActive("noInf1;1") || extremeStadiumActive("spectra", 5)) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
 			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
@@ -405,6 +405,7 @@ const INF_UPGS = {
 		},
 		"1;9": function () {
 			let ret = player.tier.sqrt().div(2).plus(1);
+			if (modeActive("extreme") && player.inf.upgrades.includes("9;9")) ret = ret.pow(1.35)
 			return ret;
 		},
 		"1;10": function() {
@@ -420,6 +421,7 @@ const INF_UPGS = {
 		},
 		"2;2": function () {
 			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1) : new ExpantaNum(1);
+			if (modeActive('extreme')) ret = ret.div(2).max(1)
 			return ret;
 		},
 		"2;3": function () {
@@ -435,7 +437,7 @@ const INF_UPGS = {
 			};
 		},
 		"2;7": function () {
-			let ret = ExpantaNum.pow(player.inf.stadium.completions.length, 0.8).div(4);
+			let ret = ExpantaNum.pow(player.inf.stadium.completions.length+(player.extremeStad?player.extremeStad.length:0), 0.8).div(modeActive("extreme")?10:4);
 			if (ret.gte(0.9)) ret = new ExpantaNum(0.9);
 			return ret;
 		},
@@ -475,17 +477,17 @@ const INF_UPGS = {
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
 			let exp = 0.3
-			if (player.modes.includes("extreme")) exp = 0.5
+			if (player.modes.includes("extreme")) exp = 0.125
 			let ret = speed.pow(exp);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
 		},
 		"4;10": function() {
 			let times = new ExpantaNum(player.elementary.times)
-			if (times.gte(100)) times = times.sqrt().times(Math.sqrt(100))
+			if (times.gte(50)) times = times.sqrt().times(Math.sqrt(50))
 			let exp = new ExpantaNum(5)
 			if (player.elementary.theory.tree.unl) exp = exp.plus(TREE_UPGS[3].effect(player.elementary.theory.tree.upgrades[3]||0))
-			let ret = times.plus(1).log10().plus(1).pow(exp)
+			let ret = times.plus(1).times(2).log10().plus(1).pow(exp)
 			return ret
 		},
 		"5;4": function () {
@@ -495,6 +497,7 @@ const INF_UPGS = {
 		"5;5": function () {
 			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1);
 			let exp = player.inf.endorsements.sqrt();
+			if (modeActive("extreme")) exp = exp.times(1.5)
 			let ret = base.pow(exp);
 			return ret;
 		},
@@ -523,11 +526,14 @@ const INF_UPGS = {
 		},
 		"6;6": function () {
 			let ret = tmp.maxVel.plus(1).pow(0.075);
+			if (modeActive("extreme")) ret = ret.pow(0.1)
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
 			return ret;
 		},
 		"7;1": function () {
-			let ret = ExpantaNum.mul(0.2, player.inf.stadium.completions.length).add(1);
+			let base = new ExpantaNum(0.2)
+			if (modeActive("extreme")) base = new ExpantaNum(0.08)
+			let ret = ExpantaNum.mul(base, player.inf.stadium.completions.length+(player.extremeStad?player.extremeStad.length:0)).add(1);
 			return ret;
 		},
 		"7;2": function () {
@@ -542,11 +548,14 @@ const INF_UPGS = {
 			let exp = player.pathogens.amount.plus(1).slog(10);
 			let base = player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1);
 			let ret = base.pow(exp);
-			if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret);
+			if (modeActive("extreme")) {
+				if (ret.gte(4)) ret = ret.logBase(4).times(4).min(ret);
+			} else if (ret.gte(7.5)) ret = ret.logBase(7.5).times(7.5).min(ret);
 			return ret;
 		},
 		"7;5": function () {
 			let ret = player.pathogens.upgrades[5].plus(1).sqrt();
+			if (modeActive("extreme")) ret = player.pathogens.upgrades[5].plus(1).cbrt();
 			return ret;
 		},
 		"7;6": function () {
@@ -559,12 +568,19 @@ const INF_UPGS = {
 				ts: (tmp.maxVel ? tmp.maxVel : new ExpantaNum(0)).plus(1).pow(0.06)
 			};
 			if (ret.ve.gte("1e10000")) ret.ve = ret.ve.log10().pow(2500).min(ret.ve);
+			if (modeActive("extreme")) {
+				ret.ae = ret.ae.sqrt();
+				ret.ve = ret.ve.cbrt();
+				ret.ts = ret.ts.pow(0.1);
+			}
 			return ret;
 		},
 		"7;8": function () {
 			let amt = new ExpantaNum(0);
 			if (tmp.inf) amt = tmp.inf.pantheon.totalGems;
-			let ret = ExpantaNum.pow(1e25, amt.sqrt());
+			let base = 1e25
+			if (modeActive("extreme")) base = 1e35
+			let ret = ExpantaNum.pow(base, amt.sqrt());
 			return ret;
 		},
 		"8;2": function () {
@@ -586,14 +602,16 @@ const INF_UPGS = {
 			return ret;
 		},
 		"8;8": function () {
-			let ret = player.inf.pantheon.purge.power.plus(1).times(10).slog(10);
+			let power = player.inf.pantheon.purge.power
+			if (modeActive("extreme")) power = power.pow(2)
+			let ret = power.plus(1).times(10).slog(10);
 			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1));
 			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5));
 			return ret;
 		},
 		"9;1": function () {
 			let jerk = player.inf.derivatives.amts.jerk ? player.inf.derivatives.amts.jerk : new ExpantaNum(0);
-			let ret = jerk.plus(1).pow(0.0001);
+			let ret = jerk.plus(1).pow(modeActive("extreme")?0.00001:0.0001);
 			if (ret.gte(1e100)) ret = ret.log10().pow(50);
 			return ret;
 		},
@@ -863,7 +881,170 @@ const STADIUM_GOALS = {
 	]
 };
 
+const EXTREME_STADIUM_DATA = {
+	flamis: {
+		descs: [
+			"Rank Cheapeners & Furnace Challenge rewards do nothing",
+			"Time Reversal Upgrade 30 does nothing",
+			"Pathogen Upgrades are half as strong",
+			"Furnace Upgrade 4 does nothing",
+			"Coal gain is raised to the power of 0.2",
+			"You are trapped in Spaceon's Stadium Challenge at its set difficulty.",
+		],
+		reward: "Superscaled Rank Cheapener scaling is 90% weaker.",
+		goals: [
+			new ExpantaNum("1e1600").times(DISTANCES.uni),
+			new ExpantaNum("1e1750").times(DISTANCES.uni),
+			new ExpantaNum("1e1950").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2500").times(DISTANCES.uni),
+			new ExpantaNum("1e2600").times(DISTANCES.uni),
+		],
+	},
+	cranius: {
+		descs: [
+			"You are trapped in all Furnace Challenges at once",
+			"You get 90% less Free Rank Cheapeners",
+			"Time Reversal Upgrades do nothing",
+			"Pathogen Upgrades are weaker based on your Tier",
+			"Rank Cheapeners make Tiers more expensive",
+			"You are trapped in Solaris's Stadium Challenge at its set difficulty.",
+		],
+		reward: "Knowledge gain is boosted by second row Stadium Completions.",
+		goals: [
+			new ExpantaNum("1e1390").times(DISTANCES.uni),
+			new ExpantaNum("1e1500").times(DISTANCES.uni),
+			new ExpantaNum("1e1600").times(DISTANCES.uni),
+			new ExpantaNum("1e1750").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2050").times(DISTANCES.uni),
+		],
+		effect: function() { 
+			let x = (player.extremeStad||[]).length
+			if (x>=2) x = x*2-2
+			let ret = ExpantaNum.pow(4.8, x);
+			return ret;
+		},
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x" },
+	},
+	spectra: {
+		descs: [
+			"The Extreme mode reduction to pre-Infinity resource gain is twice as lethal",
+			"Coal does nothing",
+			"All Stadium Challenge rewards do nothing",
+			"Dark Fluid does nothing",
+			"inf1;1 does nothing",
+			"You are trapped in Infinity's Stadium Challenge at its set difficulty.",
+		],
+		reward: "Rank Cheapeners use a weaker cost formula based on their amount.",
+		goals: [
+			new ExpantaNum("1e3200").times(DISTANCES.uni),
+			new ExpantaNum("1e3750").times(DISTANCES.uni),
+			new ExpantaNum("1e4000").times(DISTANCES.uni),
+			new ExpantaNum("1e4125").times(DISTANCES.uni),
+			new ExpantaNum("1e4500").times(DISTANCES.uni),
+			new ExpantaNum("1e4650").times(DISTANCES.uni),
+		],
+		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
+	},
+	aqualon: {
+		descs: [
+			"All pre-Infinity resource generation is divided by 9e15",
+			"You cannot buy Rocket Fuel",
+			"Pathogen Upgrades are weaker based on your Rank",
+			"You cannot Tier up",
+			"Time Speed is raised to the power of 0.1",
+			"You are trapped in Eternity's Stadium Challenge at its set difficulty.",
+		],
+		reward: "All pre-Infinity resources are generated 3x faster.",
+		goals: [
+			new ExpantaNum("1e1500").times(DISTANCES.uni),
+			new ExpantaNum("1e1625").times(DISTANCES.uni),
+			new ExpantaNum("1e1700").times(DISTANCES.uni),
+			new ExpantaNum("1e1800").times(DISTANCES.uni),
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2050").times(DISTANCES.uni),
+		],
+	},
+	nullum: {
+		descs: [
+			"60% of the exponent of your acceleration is nullified (increases by 5% for each difficulty level after 1)",
+			"10% of the exponent of your maximum velocity is nullified (increases by 2% for each difficulty level after 2)",
+			"20% of your Pathogen Upgrade Power is nullified",
+			"25% of the exponent of your Rockets is nullified",
+			"Furnace Upgrade 4 does nothing",
+			"You are trapped in Reality's Stadium Challenge at its set difficulty.",
+		],
+		reward: "All perks are 25% stronger.",
+		goals: [
+			new ExpantaNum("1e2000").times(DISTANCES.uni),
+			new ExpantaNum("1e2250").times(DISTANCES.uni),
+			new ExpantaNum("1e2325").times(DISTANCES.uni),
+			new ExpantaNum("1e2500").times(DISTANCES.uni),
+			new ExpantaNum("1e2645").times(DISTANCES.uni),
+			new ExpantaNum("1e2650").times(DISTANCES.uni),
+		],
+	},
+	quantron: {
+		descs: [
+			"Pathogen Upgrades are slightly weaker",
+			"Blue Flame is slightly weaker",
+			"Furnace Upgrade 4 does nothing",
+			"Furnace Upgrade 1 is weaker",
+			"Dark Flow is slightly weaker",
+			"You are trapped in Drigganiz's Stadium Challenge at its set difficulty.",
+		],
+		reward: "Pathogen Upgrades are stronger based on your Coal.",
+		goals: [
+			new ExpantaNum("1e3000").times(DISTANCES.uni),
+			new ExpantaNum("1e3100").times(DISTANCES.uni),
+			new ExpantaNum("1e2900").times(DISTANCES.uni),
+			new ExpantaNum("1e3200").times(DISTANCES.uni),
+			new ExpantaNum("1e2800").times(DISTANCES.uni),
+			new ExpantaNum("1e720").times(DISTANCES.uni),
+		],
+		effect: function() { 
+			let ret = player.furnace.coal.plus(1).log10().plus(1).log10().div(6.09);
+			if (ret.gte(0.75)) ret = ret.div(3).plus(0.75*2/3)
+			if (ret.gte(1)) ret = ret.log10().plus(1).min(ret);
+			return ret;
+		},
+		disp: function() { return "+"+showNum(EXTREME_STADIUM_DATA.quantron.effect().times(100))+"%" },
+	},
+}
+
 // Derivatives
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];
 const DERV_INCR = ["acceleration", "jerk", "snap"];
+
+// More Extreme Stuff
+
+const EXTREME_INF_UPG_COST_MODS = {
+	"1;8": new ExpantaNum(2e4),
+	"2;8": new ExpantaNum(2.1e4),
+	"3;8": new ExpantaNum(2.2e4),
+	"4;8": new ExpantaNum(2.3e4),
+	"5;8": new ExpantaNum(2.4e4),
+	"6;8": new ExpantaNum(2.5e4),
+	"7;8": new ExpantaNum(2.6e4),
+	"8;1": new ExpantaNum(2e4),
+	"8;2": new ExpantaNum(2.1e4),
+	"8;3": new ExpantaNum(2.2e4),
+	"8;4": new ExpantaNum(2.3e4),
+	"8;5": new ExpantaNum(2.4e4),
+	"8;6": new ExpantaNum(1e4),
+	"8;7": new ExpantaNum(1e4),
+	"8;8": new ExpantaNum(1e4),
+	"9;1": new ExpantaNum(3e4),
+	"9;2": new ExpantaNum(3e4),
+	"9;3": new ExpantaNum(3e4),
+	"9;4": new ExpantaNum(3e4),
+	"9;5": new ExpantaNum(3e4),
+	"9;6": new ExpantaNum(2.4e4),
+	"9;7": new ExpantaNum(1e4),
+	"9;8": new ExpantaNum(1e4),
+	"1;9": new ExpantaNum(3e3),
+	"2;9": new ExpantaNum(3e3),
+}

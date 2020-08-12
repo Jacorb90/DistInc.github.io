@@ -16,6 +16,7 @@ function getRocketEffectSoftcapStart() {
 
 function getRocketEffect() {
 	let r = player.rockets;
+	if (extremeStadiumActive("nullum", 4)) r = ExpantaNum.pow(10, r.log10().times(0.75))
 	if (r.gte(10)) r = r.log10().times(10);
 	if (player.rf.gt(0)) r = r.plus(getFuelEff2());
 	let eff = r.plus(1).logBase(3).times(getFuelEff());
@@ -38,9 +39,9 @@ function getRocketGainMult() {
 	if (tmp.ach[131].has) mult = mult.times(2);
 	if (modeActive("extreme") && player.rf.gt(0)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[2]));
 	if (player.rank.gt(100)) mult = mult.times(2);
-	if (player.tr.upgrades.includes(10)) mult = mult.times(tr10Eff().max(1));
-	if (player.tr.upgrades.includes(28) && modeActive("extreme")) mult = mult.times(player.furnace.coal.plus(1).pow(0.15));
-	if (player.tr.upgrades.includes(29) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(10) && !HCCBA("noTRU")) mult = mult.times(tr10Eff().max(1));
+	if (player.tr.upgrades.includes(28) && !HCCBA("noTRU") && modeActive("extreme")) mult = mult.times(player.furnace.coal.plus(1).pow(0.15));
+	if (player.tr.upgrades.includes(29) && !HCCBA("noTRU") && modeActive("extreme"))
 		mult = mult.times(
 			player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1))
 		);
@@ -75,7 +76,9 @@ function updateTempRockets() {
 	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(getRocketEffect()).plus(player.rockets).max(1);
 	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(getRocketEffect()).plus(1);
 	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(getRocketEffect()).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
+	if (modeActive("extreme") && tmp.fn) tmp.rockets.clPow = tmp.fn.gain.plus(1).log10().pow(getRocketEffect()).plus(1);
 	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {
+		if (modeActive('extreme')) if (tmp.ach[14].has) player.rankCheap = new ExpantaNum(1)
 		tmp.inf.derv.resetDervs();
 	};
 }

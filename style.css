@@ -186,6 +186,10 @@ body {
 	background-color: #a30b78;
 }
 
+.ylw {
+	background-color: #9ea60a;
+}
+
 .gld {
 	background: radial-gradient(
 			ellipse farthest-corner at right bottom,
@@ -224,7 +228,7 @@ table {
 #robotTab {
 	background-color: var(--rbt);
 	width: 100%;
-	height: 200px;
+	height: 275px;
 }
 
 .blocked {
@@ -688,6 +692,49 @@ table {
 	font-weight: bold;
 }
 
+.flamis {
+	color: #eb8f34;
+	-webkit-text-stroke: 1px black;
+	text-stroke: 1px black;
+	font-weight: bold;
+}
+
+.cranius {
+	color: #a462f0;
+	-webkit-text-stroke: 1px #eb34de;
+	text-stroke: 1px #eb34de;
+	font-weight: bold;
+}
+
+.spectra {
+	color: black;
+	-webkit-text-stroke: 1px #d787ff;
+	text-stroke: 1px #d787ff;
+	font-weight: bold;
+}
+
+.aqualon {
+	color: black;
+	-webkit-text-stroke: 1px #42f5ef;
+	text-stroke: 1px #42f5ef;
+	font-weight: bold;
+}
+
+.nullum {
+	color: black;
+	-webkit-text-stroke: 1px #7d7d7d;
+	text-stroke: 1px #7d7d7d;
+	font-weight: bold;
+}
+
+.quantron {
+	color: white;
+	-webkit-text-stroke: 1px #f2619b;
+	text-stroke: 1px #f2619b;
+	text-shadow: 0px 1px 0px #000000;
+	font-weight: bold;
+}
+
 .btn.repealed {
 	box-shadow: 3px 4px 0px 0px #000000;
 	background: linear-gradient(to bottom, black 5%, black 100%);
@@ -1119,12 +1166,12 @@ table {
 .btn.light {
 	box-shadow: 3px 4px 0px 0px #fcca4c;
 	background: none;
-	background-color: #f7ec83;
+	background-color: #a39c5d;
 	border-radius: 18px;
 	border: 1px solid #ccbb9b;
 	display: inline-block;
 	cursor: pointer;
-	color: #787348;
+	color: #787348 !important;
 	font-size: 12px;
 	font-weight: bold;
 	max-width: 200px;
@@ -1135,8 +1182,8 @@ table {
 
 .btn.light:hover {
 	background: none;
-	background-color: #ffe44a;
-	color: #787348;
+	background-color: #a89734;
+	color: #787348 !important;
 }
 
 .btn.light:active {
@@ -1374,6 +1421,7 @@ table {
 	height: 40px;
 	background-color: #fcb377;
 	border-color: #e66700;
+	color: black;
 	font-size: 10px;
 }
 
@@ -1417,6 +1465,41 @@ table {
 .ob_t {
 	min-height: 50px;
 	min-width: 100px;
+}
+
+.btn.hc {
+	box-shadow: 3px 4px 0px 0px #9da832;
+	background: none;
+	background-color: #f2ec7e;
+	border-radius: 18px;
+	border: 1px solid #303000;
+	display: inline-block;
+	cursor: pointer;
+	color: #61604e;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	animation: hadron 10s ease infinite;
+}
+
+.btn.hc:hover {
+	background: none;
+	background-color: #f0ff47;
+	color: #676955;
+}
+
+.btn.hc:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.had {
+	color: #918f60;
+	font-size: 20px;
 }
 
 @keyframes grosstxt {
@@ -1566,6 +1649,24 @@ table {
 	100% {
 		color: #9dc4c4;
 		text-shadow: 0px -1px 0px #46b9f2;
+	}
+}
+
+@keyframes hadron {
+	0% {
+		transform: skew(0deg, 0deg);
+	}
+	25% {
+		transform: skew(4deg, 0deg);
+	}
+	50% {
+		transform: skew(0deg, 0deg);
+	}
+	75% {
+		transform: skew(-4deg, 0deg);
+	}
+	100% {
+		transform: skew(0deg, 0deg);
 	}
 }
 

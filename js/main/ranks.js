@@ -5,7 +5,7 @@ function updateTempRanks() {
 	tmp.ranks.req = new ExpantaNum(bc).times(
 		ExpantaNum.pow(2, player.rank.div(fp).max(1).sub(1).pow(2))
 	);
-	tmp.ranks.bulk = player.distance.div(bc).logBase(2).sqrt().plus(1).times(fp).plus(1).round();
+	tmp.ranks.bulk = player.distance.div(bc).max(1).logBase(2).sqrt().plus(1).times(fp).plus(1).round();
 	if (scalingActive("rank", player.rank.max(tmp.ranks.bulk), "scaled")) {
 		let start = getScalingStart("scaled", "rank");
 		let power = getScalingPower("scaled", "rank");
@@ -163,7 +163,6 @@ function updateTempRanks() {
 			.floor();
 	}
 
-	if (tmp.ranks.bulk.lt(fp.plus(1))) tmp.ranks.bulk = tmp.ranks.bulk.max(fp.plus(1));
 	tmp.ranks.desc = player.rank.lt(Number.MAX_VALUE)
 		? RANK_DESCS[player.rank.toNumber()]
 			? RANK_DESCS[player.rank.toNumber()]
@@ -188,14 +187,14 @@ function getRankFP() {
 	if (player.tier.gt(0)) fp = fp.times(1.25)
 	if (player.tier.gt(2)) fp = fp.times(tier3Eff())
 	if (tmp.ach) if (tmp.ach[43].has) fp = fp.times(1.025)
-	if (player.tr.upgrades.includes(3)) fp = fp.times(1.1)
-	if (tmp.rankCheap && modeActive("extreme")) fp = fp.times(tmp.rankCheap.eff)
+	if (player.tr.upgrades.includes(3) && !HCCBA("noTRU")) fp = fp.times(1.1)
+	if (tmp.rankCheap && modeActive("extreme")) fp = fp.times(getRankCheapEff())
 	return fp
 }
 
 function getRankBaseCost() {
 	let bc = new ExpantaNum(10)
-	if (modeActive("hard") && player.rank < 3) bc = bc.times(2)
+	if (modeActive("extreme") && player.rank < 3) bc = bc.times(2)
 	if (modeActive("easy") && player.rank < 3) bc = bc.div(3)
 	if (tmp.inf) if (tmp.inf.stadium.active("spaceon", 5) || tmp.inf.stadium.active("solaris", 6)) bc = bc.times(10)
 	if (tmp.rankCheap && modeActive("extreme")) bc = bc.div(tmp.rankCheap.eff2).max(1e-100)

@@ -16,13 +16,9 @@ function save(sav=player, force=false) {
 }
 
 function setSave(ns, cod=false) {
+	saveTimer = 0 // safety thing ;)
 	save(cod ? transformToEN(JSON.parse(atob(ns))) : transformToEN(ns));
 	reload();
-	notifier.error("Could not open new window.");
-	let el = document.createElement("a");
-	el.href = "main.html";
-	el.click();
-	window.location.reload();
 }
 
 function deleteSave(loc) {
@@ -119,28 +115,15 @@ function setDropdown(dropdown, els, load=false) {
 
 function changeOpt(name, type) {
 	let dropdown = new Element("dropDown");
-	if (type != 3)
+	if (type != 3 && type != 0)
 		dropdown.changeStyle(
 			"display",
 			dropdown.style.display != "none" && name == ddState ? "none" : "inline-block"
 		);
 	else dropdown.changeStyle("display", "none");
 	let els = {};
-	if (type == 0) {
-		els["true"] = {
-			txt: "ON",
-			onclick:
-				"player.options[&quot;" + name + "&quot;] = true; this.parentElement.style.display=&quot;none&quot;"
-		};
-		els["false"] = {
-			txt: "OFF",
-			onclick:
-				"player.options[&quot;" +
-				name +
-				"&quot;] = false; this.parentElement.style.display=&quot;none&quot;"
-		};
-	}
-	if (type == 1) {
+	if (type == 0) player.options[name] = !player.options[name]
+	else if (type == 1) {
 		let max = OPT_CHNG_MAX[name];
 		let min = OPT_CHNG_MIN[name];
 		for (x = min; x <= max; x++)
@@ -174,8 +157,10 @@ function changeOpt(name, type) {
 		save();
 		return;
 	}
-	setDropdown(dropdown, els);
-	ddState = name;
+	if (type>0) {
+		setDropdown(dropdown, els);
+		ddState = name;
+	}
 }
 
 function getInfo(sav) {
@@ -184,7 +169,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
+	if (sav.elementary?(sav.elementary.hc?sav.elementary.hc.unl:false):false) {
+		info += "Best Hadronic Score: "+showNum(new ExpantaNum(sav.elementary.hc.best))+", Hadrons: "+showNum(new ExpantaNum(sav.elementary.hc.hadrons))+", "
+	} else if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
 		info += "Theory Points: "+showNum(new ExpantaNum(sav.elementary.theory.points))+", Theoriverse Depth: "+showNum(new ExpantaNum(sav.elementary.theory.depth))+", "
 	} else if (sav.elementary?new ExpantaNum(sav.elementary.times).gt(0):false)
 		info += "Elementaries: "+showNum(new ExpantaNum(sav.elementary.times))+", Fermions: "+showNum(new ExpantaNum(sav.elementary.fermions.amount))+", Bosons: "+showNum(new ExpantaNum(sav.elementary.bosons.amount))+", "

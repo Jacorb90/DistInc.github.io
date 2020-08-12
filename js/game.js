@@ -14,16 +14,20 @@ var notifier = new Notifier();
 var saveTimer = 0;
 var showContainer = true;
 var infActive = false;
+var fnTab = "nfn";
 var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
+var hcTab = "mainHC";
 var gluonTab = "r";
 var thTab = "tv";
 var autoRobotTarget = 0
-var betaID = "";
+var betaID = ""; // beta1.7
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
+var robotActives = {}
+var correctLink = "Jacorb90.github.io/DistInc.github.io/main.html"
 
 // Game Loops
 
@@ -56,6 +60,9 @@ function tickWithoutTS(diff) {
 	
 	if (player.dc.unl) tmp.dc.tick(diff);
 	if (player.inf.unl) infTick(diff);
+	if (modeActive("extreme")?tmp.fn.enh.unl:false) {
+		player.furnace.enhancedCoal = player.furnace.enhancedCoal.plus(adjustGen(tmp.fn.enh.gain, "fn").times(diff));
+	}
 	if (player.elementary.times.gt(0)) elTick(diff);
 }
 
@@ -72,7 +79,7 @@ function tickWithTR(diff) {
 	autoTick(diff);
 	if (modeActive("extreme")) {
 		if (player.rf.gt(0)) {
-			player.furnace.coal = player.furnace.coal.plus(adjustGen(tmp.fn.gain, "fn").times(diff)).max(0);
+			player.furnace.coal = player.furnace.coal.plus(adjustGen(tmp.fn.gain, "fn").times(ExpantaNum.div(diff, (inFC(5)?tmp.timeSpeed:1)))).max(0);
 		}
 	}
 }

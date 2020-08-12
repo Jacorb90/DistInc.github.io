@@ -42,9 +42,13 @@ function updateTempElementary() {
 		return gain.floor();
 	});
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
-	if (!tmp.elm.doGain) tmp.elm.doGain = function () {
+	if (!tmp.elm.doGain) tmp.elm.doGain = function (auto=false) {
 		// Gains
-		if (player.options.elc) if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("extreme"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
+		if (player.options.elc && !auto) {
+			if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("hard"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
+			if (modeActive("easy")||modeActive("hard")) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
+			if (modeActive("easy")||modeActive("hard")) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, OR EXTREME MODE PROGRESS IF YOU CONTINUE!")) return "NO";
+		}
 		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
 			player.elementary.theory.depth = player.elementary.theory.depth.plus(1)
@@ -101,12 +105,13 @@ function updateTempElementary() {
 			player.pathogens.unl = true
 			player.dc.unl = true
 		}
+		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
 		
 		// Bugfixes
 		infTab = "infinity"
 		
 		// Modes
-		if (modeActive("easy")||modeActive("extreme")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme")
+		if (modeActive("easy")||modeActive("hard")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme")
 	};
 
 	// Elementary Tab System
@@ -183,7 +188,7 @@ function updateTempElementary() {
 			return ExpantaNum.pow(ExpantaNum.mul(0.4, qks.plus(1).log10()).plus(1), stacks.plus(1));
 	};
 	if (!tmp.elm.ferm.quarkR) tmp.elm.ferm.quarkR = function (name) {
-		if (name == QUARK_NAMES[player.elementary.fermions.quarks.type - 1]) return tmp.elm.ferm.quarkEff(name);
+		if ((name == QUARK_NAMES[player.elementary.fermions.quarks.type - 1]) || ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1)) return tmp.elm.ferm.quarkEff(name);
 		else return new ExpantaNum(1);
 	};
 	if (!tmp.elm.ferm.quarkDesc) tmp.elm.ferm.quarkDesc = function (name) {
@@ -234,27 +239,28 @@ function updateTempElementary() {
 				.pow(ExpantaNum.mul(0.1, stacks.plus(1).log10().plus(1)))
 				.sub(1)
 				.div(10)
-				.max(0);
+				.max(0)
+				.plus(1);
 		else if (name == "muon") return lpts.times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).sqrt().max(1);
 		else if (name == "tau")
 			return ExpantaNum.pow(
 				player.inf.knowledge.max(0).plus(1).log10().plus(1).log10().plus(1),
 				lpts.max(0).times(ExpantaNum.pow(2.5, stacks)).plus(1).times(10).slog(10).div(5).max(0.2)
-			);
+			).min(lpts.plus(1));
 		else if (name == "netrion")
-			return lpts.max(0).times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).max(1).sub(1).div(100).max(0);
+			return lpts.max(0).times(ExpantaNum.pow(2, stacks)).plus(1).times(10).slog(10).max(1).sub(1).div(100).max(0).plus(1);
 		else if (name == "vibrino")
-			return lpts.max(0).times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).max(1).sub(1).div(250).max(0);
+			return lpts.max(0).times(ExpantaNum.pow(1.4, stacks)).plus(1).times(16).slog(16).max(1).sub(1).div(250).max(0).plus(1);
 		else if (name == "psi") return lpts.max(0).plus(1).log10().plus(1).pow(stacks.plus(0.5)).max(1);
 	};
 	if (!tmp.elm.ferm.leptonR) tmp.elm.ferm.leptonR = function (name) {
-		if (name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1]) return tmp.elm.ferm.leptonEff(name);
+		if ((name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1])||ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1)) return tmp.elm.ferm.leptonEff(name);
 		else return new ExpantaNum(1);
 	};
 	if (!tmp.elm.ferm.leptonDesc) tmp.elm.ferm.leptonDesc = function (name) {
 		let desc = LEPTON_DESCS[name] + "      Currently: ";
 		let eff = tmp.elm.ferm.leptonEff(name);
-		if (name == "electron" || name == "netrion" || name == "vibrino") desc += "+" + showNum(eff.times(100)) + "%";
+		if (name == "electron" || name == "netrion" || name == "vibrino") desc += "+" + showNum(eff.sub(1).times(100)) + "%";
 		else if (name == "muon") desc += "^" + showNum(eff);
 		else desc += showNum(eff) + "x";
 		return desc;
@@ -494,9 +500,15 @@ function updateTempElementary() {
 	tmp.elm.theory.subbed = new ExpantaNum(0)
 	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
 	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
-	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).sub(3))
+	if (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).sub(3))
+	if (HCTVal("tv").gt(-1)) {
+		let d = HCTVal("tv")
+		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
+		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
+	}
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
+		if (HCTVal("tv").gt(-1)) return
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active
 	}
@@ -547,12 +559,31 @@ function updateTempElementary() {
 		if (!player.elementary.theory.tree.unl) return
 		let bought = tmp.elm.theory.tree.bought(x)
 		if (bought.gte(TREE_UPGS[x].cap)) return
-		let cost = TREE_UPGS[x].cost(bought)
+		let cost = TREE_UPGS[x].cost(bought).div(tmp.elm.theory.tree.costReduc).round()
 		if (player.elementary.theory.points.lt(cost)) return
 		player.elementary.theory.points = player.elementary.theory.points.sub(cost)
 		player.elementary.theory.tree.spent =player.elementary.theory.tree.spent.plus(cost)
 		player.elementary.theory.tree.upgrades[x] = bought.plus(1)
 	}
+	tmp.elm.theory.tree.costReduc = ach152Eff()
+	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
+	
+	// Hadronic Challenges
+	if (!tmp.elm.hc) tmp.elm.hc = {}
+	tmp.elm.hc.currScore = getProjectedHadronicScore()
+	tmp.elm.hc.hadronBulk = new ExpantaNum(1)
+	if (player.elementary.theory.inflatons.unl) tmp.elm.hc.hadronBulk = tmp.elm.hc.hadronBulk.plus(getInflatonEff2())
+	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
+	tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(TREE_UPGS[31].effect(player.elementary.theory.tree.upgrades[31]||0))
+	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
+	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
+	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
+	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).log10()).min(1)
+	tmp.elm.hc.infState = getInflatonState()
+	tmp.elm.hc.infGain = getInflatonGain()
+	claimHadronEff()
+	updateHCTabs()
 }
 
 function elTick(diff) {
@@ -604,14 +635,16 @@ function elTick(diff) {
 	}
 	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
 	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
+	if (player.elementary.theory.inflatons.unl) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(tmp.elm.hc.infGain, "inflatons").times(diff))
+	if (player.elementary.hc.unl) player.elementary.hc.hadrons = player.elementary.hc.hadrons.plus(adjustGen(tmp.elm.hc.hadronGain, "hc").times(diff))
 }
 
-function elmReset(force=false) {
+function elmReset(force=false, auto=false) {
 	let c = player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
 		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&
 		player.inf.endorsements.gte(LAYER_REQS.elementary[2][1]);
 	let L = new Layer("elementary", c, "multi-res", true, "elm");
-	L.reset(force)
+	L.reset(force, auto)
 }
 
 function resetTheoryTree(force=false) {
@@ -661,6 +694,7 @@ function getStringGain(n) {
 	if (n<TOTAL_STR) gain = gain.times(getStringEff(n+1))
 	gain = gain.times(getEntangleEff())
 	if (tmp.ach[144].has) gain = gain.times(1.25)
+	if (tmp.ach[157].has) gain = gain.times(2)
 	return gain
 }
 
@@ -675,6 +709,7 @@ function getEntangleGain() {
 		gain = gain.pow(exp.pow(-1)).times(ExpantaNum.pow(1e9, ExpantaNum.sub(1, exp.pow(-1))))
 	}
 	gain = gain.times(TREE_UPGS[6].effect(player.elementary.theory.tree.upgrades[6]||0))
+	gain = gain.times(TREE_UPGS[30].effect(player.elementary.theory.tree.upgrades[30]||0))
 	return gain
 }
 
@@ -749,12 +784,14 @@ function getAccelGain() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(0)
 	let gain = tmp.acc.plus(1).log10().div(1e6).sqrt()
 	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
+	if (gain.gte(1e6)) gain = gain.cbrt().times(Math.pow(1e6, 2/3))
 	return gain
 }
 
 function getAccelEff() {
 	if (!player.elementary.theory.accelerons.unl) return new ExpantaNum(1)
 	let eff = player.elementary.theory.accelerons.amount.plus(1).pow(0.04)
+	if (eff.gte(2)) eff = eff.logBase(2).plus(1)
 	return eff
 }
 
@@ -824,7 +861,7 @@ function importTree() {
 			upgs[key] = new ExpantaNum(upgs[key])
 			if (upgs[key].lte(plyr[key])) continue
 			else {
-				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)))
+				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
 				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
 				if (player.elementary.theory.points.gte(totalCost)) {
 					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
@@ -836,4 +873,195 @@ function importTree() {
 	} catch(e) {
 		notifier.error("Invalid tree")
 	}
+}
+
+// Hadronic Challenge
+
+function getProjectedHadronicScore() {
+	let score = new ExpantaNum(0)
+	
+	// Pre-Collapse Modifiers
+	if (getHCSelector("noTRU")) score = score.times(1.08).plus(0.08)
+	
+	// Collapse Modifiers
+	if (getHCSelector("noCad")) score = score.times(1.05).plus(0.05)
+	if (getHCSelector("noPU")) score = score.times(1.1).plus(0.1)
+	if (getHCSelector("noDC")) score = score.times(1.04).plus(0.04)
+	
+	// Infinity Modifiers
+	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
+	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(36))
+	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(36))
+	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
+	if (getHCSelector("purge")) score = score.times(3).plus(2)
+	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
+	if (getHCSelector("noDB")) score = score.times(1.03).plus(0.03)
+		
+	// Elementary Modifiers
+	score = score.times(new ExpantaNum(getHCSelector("tv")).plus(2).pow(0.25)).plus(new ExpantaNum(getHCSelector("tv")).plus(1).div(20))
+	
+	// Goal Modifier
+	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
+	
+	return score
+}
+
+function isHCTabShown(name) {
+	return hcTab == name;
+}
+
+function updateHCTabs() {
+	var tabs = document.getElementsByClassName("hcTab");
+	for (i = 0; i < tabs.length; i++) {
+		var el = new Element(tabs[i].id);
+		el.setDisplay(isHCTabShown(tabs[i].id));
+	}
+	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
+}
+
+function showHCTab(name) {
+	hcTab = name;
+}
+
+function getHCSelector(name) {
+	let base;
+	let data = HC_DATA[name]
+	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
+	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = new ExpantaNum(data[1][0]).toString()
+	return player.elementary.hc.selectors[name]||base
+}
+
+function updateHCSelector(name) {
+	let data = HC_DATA[name]
+	let type = data[0]
+	let el = new Element("hcSelector"+name)
+	if (type=="checkbox") player.elementary.hc.selectors[name] = el.el.checked
+	else if (type=="text"||type=="number"||type=="range") {
+		let val = el.el.value||0
+		try {
+			let num = new ExpantaNum(val)
+			if (type=="number"||type=="range") num = num.round()
+			if (num.lt(data[1][0]) || num.isNaN()) num = new ExpantaNum(data[1][0])
+			if (num.gt(data[1][1])) num = new ExpantaNum(data[1][1])
+			player.elementary.hc.selectors[name] = num
+			el.el.value = disp(num, 8, 3, 10)
+		} catch(e) {
+			notifier.warn("Improper Hadronic Challenge input")
+			console.log(e)
+		}
+	}
+}
+
+function canCompleteHC() {
+	return (!(!player.elementary.hc.active)) && player.distance.gte(ExpantaNum.mul(getHCSelector("goal"), DISTANCES.uni))
+}
+
+function updateHCSelectorInputs() {
+	let len = Object.keys(HC_DATA).length
+	for (let i=0;i<len;i++) {
+		let name = Object.keys(HC_DATA)[i]
+		let data = HC_DATA[name]
+		let el = new Element("hcSelector"+name)
+		el.el.disabled = !(!player.elementary.hc.active)
+		if (data[0]=="checkbox") el.el.checked = getHCSelector(name)
+		if (data[0]=="text"||data[0]=="number"||data[0]=="range") el.el.value = new ExpantaNum(getHCSelector(name)).toString()
+		updateHCSelector(name)
+	}
+}
+
+function startHC() {
+	if (!player.elementary.hc.unl) return
+	if (player.elementary.hc.active) {
+		if (canCompleteHC()) player.elementary.hc.best = player.elementary.hc.best.max(getProjectedHadronicScore())
+		else if (player.options.hcc) if (!confirm("Are you sure you want to exit the challenge early?")) return
+	} else if (getProjectedHadronicScore().lte(0)) {
+		alert("You cannot start a Hadronic Challenge with a Projected Hadronic Score of 0!")
+		return
+	} else if (player.elementary.theory.active) {
+		alert("You cannot start a Hadronic Challenge while in a Theoriverse run!")
+		return
+	}
+	player.elementary.hc.active = !player.elementary.hc.active
+	elmReset(true)
+	updateHCSelectorInputs()
+}
+
+function HCCBA(name) {
+	if (name=="noTRU" && extremeStadiumActive("cranius", 3)) return true
+	return player.elementary.hc.active && getHCSelector(name)
+}
+
+function HCTVal(name) {
+	return !player.elementary.hc.active?new ExpantaNum(HC_DATA[name][1][0]):new ExpantaNum(getHCSelector(name))
+}
+
+function claimHadronEff() {
+	let diff = tmp.elm.hc.hadronEff.sub(player.elementary.hc.claimed||0).floor()
+	if (diff.gte(1)) {
+		player.elementary.theory.points = player.elementary.theory.points.plus(diff)
+		player.elementary.hc.claimed = player.elementary.hc.claimed.plus(diff)
+	}
+}
+
+function exportHC() {
+	let data = btoa(JSON.stringify(player.elementary.hc.selectors))
+	notifier.info("Hadronic Challenge data exported!")
+	copyToClipboard(data)
+}
+
+function importHC() {
+	let toImport = prompt("Paste Hadronic Challenge data here.")
+	try {
+		let data = JSON.parse(atob(toImport))
+		player.elementary.hc.selectors = data
+		updateHCSelectorInputs()
+	} catch(e) {
+		notifier.warn("Invalid Hadronic Challenge data!")
+	}
+}
+
+// Inflatons
+
+function unlockInflatons() {
+	if (!player.elementary.theory.unl) return
+	if (!(player.elementary.hc.unl&&player.elementary.theory.accelerons.unl)) return
+	if (player.elementary.theory.inflatons.unl) return
+	if (player.elementary.theory.points.lt(1600)) return
+	if (!confirm("Are you sure you want to unlock Inflatons? You won't be able to get your Theory Points back!")) return
+	player.elementary.theory.points = player.elementary.theory.points.sub(1600)
+	player.elementary.theory.inflatons.unl = true
+}
+
+function getInflatonState() {
+	let x = player.elementary.theory.inflatons.amount.plus(1).log10()
+	if (x.gte(5.5)) x = x.sqrt().times(Math.sqrt(5.5)).plus(5.5).div(2)
+	if (x.gte(1e6)) return 1
+	return -1*Math.cos(x.toNumber())
+}
+
+function getInflatonGain() {
+	let gain = player.elementary.theory.inflatons.amount.plus(1).pow(0.6)
+	gain = gain.times(player.elementary.theory.inflatons.amount.plus(1).pow((tmp.elm.hc.infState+1)/6))
+	if (gain.gte(5e4)) gain = gain.times(5e4).sqrt()
+	return gain
+}
+
+function getInflatonEff1() {
+	let eff = player.elementary.theory.inflatons.amount.plus(1).log10().sqrt().plus(1)
+	return eff
+}
+
+function getInflatonEff2() {
+	let amt = player.elementary.theory.inflatons.amount
+	let eff = new ExpantaNum(0)
+	if (amt.gte(1e3)) eff = eff.plus(1)
+	if (amt.gte(1e4)) eff = eff.plus(1)
+	if (amt.gte(1e5)) eff = eff.plus(1)
+	if (amt.gte(1e6)) eff = eff.plus(1)
+	eff = eff.plus(amt.plus(1).log10().plus(1).log10())
+	return eff.floor()
 }

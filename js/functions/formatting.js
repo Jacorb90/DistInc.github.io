@@ -38,11 +38,17 @@ function decimalPlaces(value, places, base = 10) {
 	var numDigits = Math.ceil(Math.log10(Math.max(Math.abs(value), 1)));
 	var rounded = Math.round(value * Math.pow(10, len - numDigits)) * Math.pow(10, numDigits - len);
 	if (base == 10) {
-		if (value<Math.pow(10, places)||value<1000) return addZeroes(value, parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), places))), len - numDigits);
-		else {
+		if (value<0.001) {
+			if (value<=1e-100) return "0"
+			let e = Math.floor(-1*Math.log10(value))
+			let m = value*Math.pow(10, e+1)
+			return decimalPlaces(m, places, base)+"e-"+decimalPlaces(e, places, base)
+		} else if (value<Math.pow(10, places)||value<1000) {
+			return addZeroes(value, parseFloat(rounded.toFixed(Math.min(Math.max(len - numDigits, 0), places))), len - numDigits);
+		} else {
 			let e = Math.floor(Math.log10(value))
 			let m = value/Math.pow(10, e)
-			return decimalPlaces(m, places, base)+"e+"+e
+			return decimalPlaces(m, places, base)+"e"+e
 		}
 	} else {
 		if (value.toString(base).split(".")[0].length < places + 2) {

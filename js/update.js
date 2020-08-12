@@ -222,8 +222,30 @@ function setupHTML() {
 			"Cost3'></span> of these Gluons.</button></td></tr>";
 		tbl.setHTML(data);
 	}
+	
+	// Hadronic Challenge
+	let len = Object.keys(HC_DATA).length
+	for (let i=0;i<len;i++) {
+		let name = Object.keys(HC_DATA)[i]
+		let data = HC_DATA[name]
+		let tab = data[2]
+		let el;
+		el = new Element(tab+"HC")
+		
+		let html = "<br><span id='hcSelectorSpan"+name+"'>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+data[1][0]+"' max='"+data[1][1]+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")+"<br>"
+		if (data[0]=="range") html += "<span id='hcCurrent"+name+"'></span><br>"
+		html += "</span>"
+		el.addHTML(html)
+	}
+	updateHCSelectorInputs()
+	
+	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)
+	
+	// Main Link
+	let span = new Element("linkToGame")
+	span.setHTML((betaID==""&&!window.location.href.includes(correctLink))?"Please migrate to <a href='http://"+correctLink+"'>"+correctLink+"</a><br>":"")
 	
 	// Element Setup
 	tmp.el = {}
@@ -277,6 +299,7 @@ function updateUnlocks() {
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
+	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
 }
 
 document.onkeydown = function(e) {
@@ -297,7 +320,8 @@ document.onkeydown = function(e) {
 			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(4)
 			break;
 		case 67: 
-			if (TABBTN_SHOWN.collapse()) tmp.collapse.layer.reset()
+			if (TABBTN_SHOWN.collapse() && !shiftDown) tmp.collapse.layer.reset()
+			else if (modeActive("extreme") && shiftDown) tmp.rankCheap.layer.reset();
 			break;
 		case 68:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.derv.doUnl()
@@ -318,6 +342,9 @@ document.onkeydown = function(e) {
 		case 82:
 			if (shiftDown && TABBTN_SHOWN.rockets()) tmp.rockets.layer.reset()
 			else tmp.ranks.layer.reset()
+			break;
+		case 83: 
+			if (TH_TABS.strings()) entangleStrings();
 			break;
 		case 84: 
 			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start()

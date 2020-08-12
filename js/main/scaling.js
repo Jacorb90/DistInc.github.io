@@ -18,8 +18,8 @@ function getScalingStart(type, name) {
 	let start = new ExpantaNum(SCALING_STARTS[type][name])
 	if (name=="rank") {
 		if (type=="scaled") {
-			if (player.tr.upgrades.includes(11)) start = start.plus(10)
-			if (player.tr.upgrades.includes(15)) start = start.plus(32)
+			if (player.tr.upgrades.includes(11) && !HCCBA("noTRU")) start = start.plus(10)
+			if (player.tr.upgrades.includes(15) && !HCCBA("noTRU")) start = start.plus(32)
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledRank")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {
@@ -30,8 +30,8 @@ function getScalingStart(type, name) {
 		}
 	} else if (name=="tier") {
 		if (type=="scaled") {
-			if (player.tr.upgrades.includes(12)) start = start.plus(2)
-			if (player.tr.upgrades.includes(14)) start = start.plus(tr14Eff()["ss"])
+			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)
+			if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) start = start.plus(tr14Eff()["ss"])
 			if (tmp.inf) if (tmp.inf.upgs.has("1;6")) start = start.plus(2)
 			if (nerfActive("scaledTier")) start = new ExpantaNum(1)
 		} else if (type=="superscaled") {
@@ -66,6 +66,10 @@ function getScalingStart(type, name) {
 			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
 			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
 		}
+	} else if (name=="enlightenments") {
+		if (type=="scaled") {
+			if (modeActive("extreme")) start = start.sub(4)
+		}
 	}
 	if (type!=="atomic") if (Object.values(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1][name]!==undefined) start = start.min(getScalingStart(Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1], name))
 	return start
@@ -91,6 +95,8 @@ function getScalingPower(type, name) {
 	} else if (name=="rankCheap" && modeActive("extreme")) {
 		if (type=="scaled") {
 			if (FCComp(3)) power = power.times(0.1)
+		} else if (type=="superscaled") {
+			if (extremeStadiumComplete("flamis")) power = power.times(0.1)
 		}
 	} else if (name=="tier") {
 		if (type=="scaled") {
@@ -114,7 +120,7 @@ function getScalingPower(type, name) {
 			if (FCComp(1)) power = power.times(0.1)
 		} else if (type=="hyper") {
 			if (FCComp(1)) power = power.times(0.1)
-			if (inFC(3)) power = power.times(9.99)
+			if (inFC(3)) power = new ExpantaNum(99.99)
 		}
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {

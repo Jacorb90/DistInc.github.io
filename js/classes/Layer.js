@@ -19,7 +19,8 @@ class Layer {
 		if (tmp[this.tName].sc !== undefined) sc = tmp[this.tName].sc;
 		if (gain.gte(sc)) gain = gain.sqrt().times(ExpantaNum.sqrt(sc));
 		if (tmp.lm) if (tmp.lm[this.name]) gain = gain.times(tmp.lm[this.name]);
-		if (this.name=="collapse"&&player.inf.pantheon.purge.active) gain = gain.plus(1).pow(gain.plus(1).times(10).slog(10).pow(-1)).min(gain)
+		if (this.name=="collapse"&&(player.inf.pantheon.purge.active||HCCBA("purge"))) gain = gain.plus(1).pow(gain.plus(1).times(10).slog(10).pow(-1)).min(gain)
+		if (this.name=="collapse"&&modeActive("extreme")) gain = gain.sub(2).max(0)
 		return gain.floor();
 	}
 
@@ -30,12 +31,12 @@ class Layer {
 		else return tmp[this.tName + (this.addS ? "s" : "")].bulk.floor();
 	}
 
-	reset(force = false) {
+	reset(force=false, auto=false) {
 		if (!force) {
 			if (!this.avail || this.gain.lt(1)) return;
 			if (!this.spec) player[this.name] = player[this.name].plus(this.gain);
 			else {
-				let gc = tmp[this.tName].doGain();
+				let gc = tmp[this.tName].doGain(auto);
 				if (gc == "NO") return;
 			}
 		}
@@ -56,7 +57,8 @@ class Layer {
 		if (!this.avail) return;
 		if (!(this.type == "forced" || this.type == "semi-forced")) return;
 		let m = player[this.name].plus(mag).min(this.fcBulk).floor();
+		let pre = player[this.name]
 		player[this.name] = player[this.name].max(m);
-		this.reset(true);
+		if (m.gt(pre)) this.reset(true);
 	}
 }

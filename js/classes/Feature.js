@@ -34,7 +34,7 @@ class Feature {
 			let bool = true;
 			for (let i = 1; i <= this.res_amt; i++) bool = (bool && this.amt(i).gte(this.req[i - 1])) || this.r();
 			return bool;
-		} else return this.amt().gte(this.req) || this.r();
+		} else return this.amt().gte(this.req()) || this.r();
 	}
 
 	get desc() {
@@ -56,7 +56,7 @@ class Feature {
 			return this.reached
 				? ""
 				: "Reach " +
-						this.display(this.req) +
+						this.display(this.req()) +
 						" " +
 						(this.res == "distance" ? "" : this.dispAmt()) +
 						" to unlock " +

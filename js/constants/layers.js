@@ -30,7 +30,7 @@ const LAYER_RESETS_EXTRA = {
 	rf: [],
 	collapse: ["rankCheap", "furnace"],
 	inf: ["rankCheap", "furnace", "activeFC"],
-	elementary: ["rankCheap", "furnace", "activeFC", "furnChalls"]
+	elementary: ["rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
 };
 
 const LAYER_REQS = {

@@ -3,11 +3,11 @@ function updateTempTimeSpeed() {
 	if (modeActive("hard")) tmp.timeSpeed = tmp.timeSpeed.times(0.75);
 	if (modeActive("easy")) tmp.timeSpeed = tmp.timeSpeed.times(2.5);
 	if (modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.times(0.7);
-	if (player.tr.upgrades.includes(2)) tmp.timeSpeed = tmp.timeSpeed.times(tr2Eff());
-	if (player.tr.upgrades.includes(7)) tmp.timeSpeed = tmp.timeSpeed.times(tr7Eff());
-	if (player.tr.upgrades.includes(18) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(2) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.times(tr2Eff());
+	if (player.tr.upgrades.includes(7) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.times(tr7Eff());
+	if (player.tr.upgrades.includes(18) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(2, player.rankCheap.sqrt()));
-	if (player.tr.upgrades.includes(23) && modeActive("extreme"))
+	if (player.tr.upgrades.includes(23) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.times(ExpantaNum.pow(2.5, player.furnace.blueFlame));
 	if (tmp.ach[17].has) tmp.timeSpeed = tmp.timeSpeed.times(1.01);
 	if (tmp.ach[27].has) tmp.timeSpeed = tmp.timeSpeed.times(1.1);
@@ -37,14 +37,19 @@ function updateTempTimeSpeed() {
 	if (player.tier.gt(20)) tmp.timeSpeed = tmp.timeSpeed.times(2);
 	tmp.timeSpeed = tmp.timeSpeed.times(getCadaverEff().max(1));
 	if (hasCollapseMilestone(1)) tmp.timeSpeed = tmp.timeSpeed.times(collapseMile1Eff());
-	if (hasCollapseMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(5);
+	if (hasCollapseMilestone(2)) tmp.timeSpeed = tmp.timeSpeed.times(modeActive("extreme")?2:5);
 	if (tmp.inf.upgs.has("1;1")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["1;1"]());
 	if (tmp.inf.upgs.has("7;7")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["7;7"]()["ts"]);
 	if (tmp.inf.upgs.has("9;4")) tmp.timeSpeed = tmp.timeSpeed.times(INF_UPGS.effects["9;4"]());
 	if (tmp.inf.stadium.completed("eternity")) tmp.timeSpeed = tmp.timeSpeed.times(STADIUM_REWARDS.effects.eternity());
+	if (player.tr.upgrades.includes(34) && !HCCBA("noTRU") && modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.times(TR_UPGS[34].current())
 	if (nerfActive("nerfTS")) tmp.timeSpeed = tmp.timeSpeed.pow(0.1);
-	if (player.tr.upgrades.includes(30) && modeActive("extreme"))
-		tmp.timeSpeed = tmp.timeSpeed.pow(player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.7));
+	if (player.tr.upgrades.includes(30) && !HCCBA("noTRU") && modeActive("extreme"))
+		tmp.timeSpeed = tmp.timeSpeed.pow(player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.2));
 	if (tmp.rockets) tmp.timeSpeed = tmp.timeSpeed.times(tmp.rockets.tsPow)
-	if (modeActive("extreme") && tmp.timeSpeed.gte(Number.MAX_VALUE)) tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
+	if (modeActive("extreme") && tmp.timeSpeed.gte(Number.MAX_VALUE)) {
+		if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.pow(0.725).times(Math.pow(Number.MAX_VALUE, 0.275))
+		else tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
+	}
+	if (modeActive("extreme")) if (tmp.fn) tmp.timeSpeed = tmp.timeSpeed.times(tmp.fn.enh.eff2)
 }

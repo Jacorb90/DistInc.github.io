@@ -69,6 +69,10 @@ const NEWS_DATA = {
 	m67: ['"The engineers have invaded Distance Incremental and have invented their own notation! Get out while you still can!" - A Scientist'],
 	m68: ['"I heard that Absurd Mode is fun, might try it out later" - Some new player who just finished normal mode'],
 	m69: ['"Nice." - The guy who made the 69th news ticker message'],
+	m70: ["A softcapped is you!"],
+	m71: ['"Absurd mode is just dumb." - A reddit user'],
+	m72: ['I tried looking for some inflation, but suddenly I heard a quiet yet scary noise: "softcapped"'],
+	m73: ["1 Star Rating: Egg isn't the next mechanic"],
 
 	// Distance-based Conditions
 	d1: [
@@ -104,13 +108,19 @@ const NEWS_DATA = {
 	d6: [
 		"Stop grinding or you'll go insane within the next 5 hours!",
 		function () {
-			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e4200000"));
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e2000000"));
 		}
 	],
 	d7: [
 		"Uni sounds like a prestige currency",
 		function () {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, 5));
+		}
+	],
+	d8: [
+		"The new feature in v1.8 will be <span style='color: white;'>Quantum Foam</span>",
+		function() {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
 		}
 	],
 
@@ -242,7 +252,7 @@ const NEWS_DATA = {
 
 	// Special Conditions
 	s1: [
-		"Patcail thought Jacorb took his collapse feature. But if he did then I guess Patcail should name his game Ordinal dimensions. - NiceManKSP.",
+		"Patcail thought Jacorb took his collapse feature. But if he did then I guess Patcail should name his game Ordinal Dimensions. - NiceManKSP",
 		function () {
 			return player.collapse.unl;
 		}
@@ -365,6 +375,12 @@ const NEWS_DATA = {
 		'"Help" - People who realized that Cadavers are just bodies',
 		function () {
 			return player.collapse.cadavers.gt(0)
+		}
+	],
+	s22: [
+		"Wait, Ordinal Dimensions is taken?",
+		function () {
+			return player.collapse.unl;
 		}
 	],
 };

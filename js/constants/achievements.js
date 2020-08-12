@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 14,
+	rows: 15,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -127,6 +127,15 @@ const ACH_DATA = {
 		146: "True Infinity+",
 		147: "The Biggest Setback",
 		148: "The Impossible Task",
+		
+		151: "An infinity smaller than your fingertip",
+		152: "Useless Theories",
+		153: "There is a tree",
+		154: "What even are Hadrons?",
+		155: "Real Growth",
+		156: "IMPOSSIBLE",
+		157: "The Principle of the Basics",
+		158: "The Repetition Continues",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -139,7 +148,7 @@ const ACH_DATA = {
 		18: "Perform a Universal Collapse reset.",
 
 		21: "Go at least boolean(extreme,thirty,five hundred) km.",
-		22: "Reach Rank boolean(extreme, six, eight).",
+		22: "Reach Rankboolean(extreme, six, eight).",
 		23: "Reach Tier showNum(3).",
 		24: "Reach showNum(2) Rockets.",
 		25: "Get at least showNum(2) rocket fuel.",
@@ -210,13 +219,13 @@ const ACH_DATA = {
 		97: "Reach formatDistance(4.4e416) without any Pathogen Upgrades.",
 		98: "Reach formatDistance(4.4e786) without any Dark Cores.",
 
-		101: "Complete one Stadium Challenge.",
+		101: "Complete oneboolean(extreme, first row) Stadium Challenge.",
 		102: "Purchase showNum(2) of each Enlightenment.",
 		103: "Reach showNum(1e18) Dark Matter.",
-		104: "Complete three Stadium Challenges.",
+		104: "Complete threeboolean(extreme, first row) Stadium Challenges.",
 		105: "Reach a Time Speed of showNum(2.22e2222)x.",
 		106: "Reach showNum(20) Endorsements.",
-		107: "Complete six Stadium Challenges.",
+		107: "Complete sixboolean(extreme, first row) Stadium Challenges.",
 		108: "Unlock Velocital Energy.",
 
 		111: "Have an interval below 1s for Fuelbot.",
@@ -231,7 +240,7 @@ const ACH_DATA = {
 		121: "Reach formatDistance(2.5e4) while in Reality's Stadium challenge at Difficulty Level 6.",
 		122: "Purchase two Derivative Shifts.",
 		123: "Reach showNum(2.5e5) Ascension Power.",
-		124: "Reach showNum(30) Purge Power.",
+		124: "Reach boolean(extreme,nine,thirty) Purge Power.",
 		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Difficulty Level 6.",
 		126: "Have a magnitude of showNum(1e200) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
@@ -254,17 +263,27 @@ const ACH_DATA = {
 		146: "Reach showNum(1.8e308) Knowledge.",
 		147: "Reach Rank showNum(200) with ten Endorsements or less.",
 		148: "Reach Rank showNum(995).",
+		
+		151: "Unlock Hadronic Challenge.",
+		152: "Get a Hadronic Score of at least showNum(2.3).",
+		153: "Reach formatDistance(4.4e8250026) without any Theory Tree Upgrades.",
+		154: "Get a Hadronic Score of at least 2.5 and reach formatDistance(e2.8e7), can be on separate runs.",
+		155: "Unlock Inflatons",
+		156: "Complete The Theoriverse at Depth 8.",
+		157: "Reach formatDistance(4.4e76) of Primary String.",
+		158: "Get a Hadronic Score of at least showNum(3.75)",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
-		14: "Acceleration & Maximum Velocity are showNum(50)% higher.",
-		15: "Rocket gain is increased by showNum(5)%.",
+		14: "Acceleration & Maximum Velocity are showNum(50)% higherboolean(extreme, and you start with one Rank Cheapener on Rocket reset).",
+		15: "Rocket gain is increased by showNum(5)%boolean(extreme, and unlock The Furnace).",
 		17: "Time goes by showNum(1)% faster.",
 		18: "Time goes by showNum(50)% faster.",
 
 		21: "Maximum Velocity is showNum(10)% higherboolean(extreme, and you get one extra Rank Cheapener for every Tier).",
+		22: "Acceleration is showNum(5)% higherboolean(extreme, and you start with one Rank Cheapener on Tier reset)",
 		23: "Acceleration is showNum(20)% higher.",
-		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is ten times as fast).",
+		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is twice as fast for each achievement unlocked in this column).",
 		26: "Rocket gain is increased by showNum(10)%.",
 		27: "Time goes by showNum(10)% faster.",
 
@@ -298,10 +317,10 @@ const ACH_DATA = {
 		75: "Dark Flow is showNum(10)% faster.",
 		76: "Rocket gain is increased by showNum(2)%",
 
-		81: "Keep automation stuff on all resets.",
+		81: "Keep automation stuff on Infinity.",
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
-		88: "Buying Pathogen Upgrades does not spend your Pathogens.",
+		88: "Buying Pathogen Upgrades does not spend your Pathogensboolean(extreme, and you unlock Furnace Challenges).",
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",
 		95: "Gain showNum(100)% of Rocket gain every second.",
@@ -312,11 +331,11 @@ const ACH_DATA = {
 		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
 		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
 
-		111: "You can activate all four perks at once.",
-		112: "Time Speed boosts Knowledge gain at a reduced rate.",
-		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs).",
+		111: "You can activate all four perks at onceboolean(extreme, and unlock the Enhanced Furnace).",
+		112: "Time Speed boosts Knowledge gain at a reduced rateboolean(extreme, and Rank Cheapeners do not reset anything).",
+		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs and Enhanced Coal gain is 40% faster for each Purge Power you have).",
 
-		123: "The Universe Doesn't Exist uses a slightly better formulaboolean(extreme, and Furnace Challenge 4's reward is slightly better [^0.9 -> ^0.95]).",
+		123: "The Universe Doesn't Exist achievement uses a slightly better formula.",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
@@ -328,5 +347,9 @@ const ACH_DATA = {
 		142: "Endorsements that are bought automatically do not reset anything.",
 		144: "All Strings are gained showNum(25)% faster.",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
+		
+		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
+		154: "Purge Power gain is doubled.",
+		157: "All Strings are gained twice as fast.",
 	}
 };

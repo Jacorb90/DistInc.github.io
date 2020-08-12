@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.6,
+	version: 1.7,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -20,6 +20,7 @@ const DEFAULT_START = {
 		fonts: "courier",
 		hideAch: false,
 		visUpd: "every tick",
+		hcc: true,
 	},
 	modes: [],
 	time: new Date().getTime(),
@@ -192,6 +193,18 @@ const DEFAULT_START = {
 				amount: new ExpantaNum(0),
 				expanders: new ExpantaNum(0),
 			},
+			inflatons: {
+				unl: false,
+				amount: new ExpantaNum(0),
+			},
+		},
+		hc: {
+			unl: false,
+			active: false,
+			best: new ExpantaNum(0),
+			hadrons: new ExpantaNum(0),
+			claimed: new ExpantaNum(0),
+			selectors: {},
 		},
 	}
 };

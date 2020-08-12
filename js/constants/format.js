@@ -1,5 +1,4 @@
 const DISTANCES = {
-	cm: 1 / 100,
 	m: 1,
 	km: 1e3,
 	Mm: 1e6,

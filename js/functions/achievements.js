@@ -107,7 +107,7 @@ function updateAchievements() {
 	if (player.distance.gte(2.5e4) && tmp.inf.stadium.active("reality", 6)) tmp.ach[121].grant();
 	if (player.inf.derivatives.unlocks.gte(2)) tmp.ach[122].grant();
 	if (player.inf.ascension.power.gte(2.5e5)) tmp.ach[123].grant();
-	if (player.inf.pantheon.purge.power.gte(30)) tmp.ach[124].grant();
+	if (player.inf.pantheon.purge.power.gte(modeActive("extreme")?9:30)) tmp.ach[124].grant();
 	if (player.distance.gte(1e4) && tmp.inf.stadium.active("reality", 6) && player.inf.pantheon.purge.active)
 		tmp.ach[125].grant();
 	if (tmp.auto.rankbot.magnitude.gte(1e200)) tmp.ach[126].grant();
@@ -131,6 +131,15 @@ function updateAchievements() {
 	if (player.inf.knowledge.gte("1.8e308")) tmp.ach[146].grant()
 	if (player.inf.endorsements.lte(10) && player.rank.gte(200)) tmp.ach[147].grant()
 	if (player.rank.gte(995)) tmp.ach[148].grant()
+		
+	if (player.elementary.hc.unl) tmp.ach[151].grant()
+	if (player.elementary.hc.best.gte(2.3)) tmp.ach[152].grant()
+	if (Object.keys(player.elementary.theory.tree.upgrades).length==0 && player.distance.gte("4.4e8250026")) tmp.ach[153].grant();
+	if (player.elementary.hc.best.gte(2.5) && player.bestDistance.gte("e2.8e7")) tmp.ach[154].grant();
+	if (player.elementary.theory.inflatons.unl) tmp.ach[155].grant();
+	if (player.elementary.theory.depth.gte(9)) tmp.ach[156].grant();
+	if (player.elementary.theory.strings.amounts[0].gte(4.4e76)) tmp.ach[157].grant();
+	if (player.elementary.hc.best.gte(3.75)) tmp.ach[158].grant();
 }
 
 function rowComplete(r) {

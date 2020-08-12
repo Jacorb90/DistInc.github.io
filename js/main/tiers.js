@@ -147,8 +147,11 @@ function updateTempTiers() {
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced");
 	if (!tmp.tier) tmp.tier = {};
 	if (!tmp.tier.onReset) tmp.tier.onReset = function (prev) {
-		if (hasCollapseMilestone(11)) player.rank = prev.rank;
-		if (player.tr.upgrades.includes(14)) {
+		if (modeActive('extreme')) if (tmp.ach[22].has) player.rankCheap = new ExpantaNum(1)
+		if (hasCollapseMilestone(11)) {
+			player.rank = prev.rank;
+		}
+		if (player.tr.upgrades.includes(14) && !HCCBA("noTRU")) {
 			player.distance = prev.distance;
 			player.velocity = prev.velocity;
 		}
@@ -158,13 +161,14 @@ function updateTempTiers() {
 
 function getTierFP() {
 	let fp = new ExpantaNum(1)
-	if (player.tr.upgrades.includes(20) && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
+	if (player.tr.upgrades.includes(20) && !HCCBA("noTRU") && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
+	if (extremeStadiumActive("cranius", 5)) fp = fp.div(player.rankCheap.plus(1))
 	return fp
 }
 
 function getTierBaseCost() {
 	let bc = new ExpantaNum(3)
-	if (modeActive("hard") && player.tier < 2) bc = bc.plus(1);
+	if (modeActive("extreme") && player.tier < 2) bc = bc.plus(1);
 	if (modeActive("easy") && player.tier < 2) bc = bc.sub(1);
 	if (tmp.inf) if (tmp.inf.stadium.active("solaris", 5) || tmp.inf.stadium.active("spaceon", 6)) bc = bc.plus(25);
 	return bc

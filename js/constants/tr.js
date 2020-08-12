@@ -204,30 +204,33 @@ const TR_UPGS = {
 			return showNum(x) + "x";
 		}
 	},
-	24: { cost: new ExpantaNum(1.2e30), desc: "The 'Time Doesnt Exist' achievement effect is 40% stronger." },
-	25: { cost: new ExpantaNum(1e34), desc: "Double the Coal effect." },
+	24: { cost: new ExpantaNum(1.2e30), desc: "The 'Time Doesnt Exist' achievement effect is 75% stronger." },
+	25: { cost: new ExpantaNum(1e32), desc: "Double the Coal effect, and quintuple Pathogen gain." },
 	26: {
-		cost: new ExpantaNum(1e96),
+		cost: new ExpantaNum(1e100),
 		desc: "Dark Flow boosts Blue Flame.",
 		current: function () {
-			return tmp.dc.flow.max(1).log10().plus(1);
+			let ret = tmp.dc.flow.max(1).log10().plus(1);
+			return ret;
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
 		}
 	},
 	27: {
-		cost: new ExpantaNum(1e100),
+		cost: new ExpantaNum(1e136),
 		desc: "Coal boosts Pathogen Upgrade Power.",
 		current: function () {
-			return player.furnace.coal.plus(1).times(10).slog(10).sub(1).div(5).max(0);
+			let ret = player.furnace.coal.plus(1).times(10).slog(10).sub(1).div(5).max(0);
+			if (player.tr.upgrades.includes(32)) return player.furnace.coal.plus(1).log10().plus(1).log10().div(7.5).max(ret).times(1.04);
+			else return ret
 		},
 		disp: function (x) {
 			return "+" + showNum(x.times(100)) + "%";
 		}
 	},
 	28: {
-		cost: new ExpantaNum(1e136),
+		cost: new ExpantaNum(1e162),
 		desc: "Coal boosts Rocket gain.",
 		current: function () {
 			return player.furnace.coal.plus(1).pow(0.15);
@@ -237,24 +240,38 @@ const TR_UPGS = {
 		}
 	},
 	29: {
-		cost: new ExpantaNum(1e150),
+		cost: new ExpantaNum(1e178),
 		desc: "Dark Fluid & Rockets boost Rocket gain.",
 		current: function () {
-			return player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2));
+			return player.rockets.plus(1).logBase(2).pow(player.dc.fluid.plus(1).times(10).slog(10).pow(2).max(1));
 		},
 		disp: function (x) {
 			return showNum(x) + "x";
 		}
 	},
 	30: {
-		cost: new ExpantaNum(1e152),
+		cost: new ExpantaNum(1e190),
 		desc: "Time Speed is raised to a power based on your Pathogens.",
 		current: function () {
-			return player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.7);
+			return extremeStadiumActive("flamis", 2)?new ExpantaNum(1):player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.2);
 		},
 		disp: function (x) {
 			return "^" + showNum(x);
 		}
-	}
+	},
+	31: { cost: new ExpantaNum("1e700"), desc: "Unlock a fourth Furnace Upgrade, the Coal effect is 80% stronger, and Time Speed is nerfed less by Extreme Mode." },
+	32: { cost: new ExpantaNum("8.8e880"), desc: "The above upgrade uses a better formula." },
+	33: { cost: new ExpantaNum("1e960"), desc: "The rocket effect also affects Coal gain." },
+	34: { 
+		cost: new ExpantaNum("1e980"), 
+		desc: "Time Speed is faster based on your Blue Flame.",
+		current: function() {
+			return ExpantaNum.pow(10, player.furnace.blueFlame.pow(1.725));
+		},
+		disp: function(x) {
+			return showNum(x)+"x"
+		},
+	},
+	35: { cost: new ExpantaNum("1e1350"), desc: "Furnace Upgrade 4 works in Furnace Challenges, but it is weaker in them." },
 };
 const TR_UPG_AMT = Object.keys(TR_UPGS).length;

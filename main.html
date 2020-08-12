@@ -7,11 +7,11 @@
 	<div id="loading">
 		<br><br><br><br>
 		<img src="images/game_icon.ico" style="width: 200px; height: 200px;"></img>
-		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa">Help</a></span></span>
+		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa" target="_blank">Help</a></span></span>
 	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
-			<p class="halfline">&nbsp;</p><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
+			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
 			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
 				<table>
@@ -240,7 +240,11 @@
 								Elementary Confirmation: ON
 							</button>
 						</td>
-						<td></td>
+						<td>
+							<button id="hcc" class="btn tb opt ob_t" onclick="changeOpt('hcc', 0)">
+								Exit Hadronic Chall Confirmation: ON
+							</button>
+						</td>
 					</tr>
 				</table>
 				<br />
@@ -248,10 +252,10 @@
 			</div>
 			<br /><br />
 			<div id="footer">
-				Notice: You are currently playing in v<span id="version"></span>. This game was inspired by <a href="https://ivark.github.io/">Antimatter Dimensions</a> by
-				Hevipelle, and it uses <a href="https://jquery.com/">jQuery.js</a>,
-				<a href="https://notifyjs.jpillora.com/">notify.js</a>, and
-				<a href="https://naruyoko.github.io/OmegaNum.js/index.html">OmegaNum.js</a>, none of which I take credit for.
+				Notice: You are currently playing in v<span id="version"></span>. This game was inspired by <a href="https://ivark.github.io/" target="_blank">Antimatter Dimensions</a> by
+				Hevipelle, and it uses <a href="https://jquery.com/" target="_blank">jQuery.js</a>,
+				<a href="https://notifyjs.jpillora.com/" target="_blank">notify.js</a>, and
+				<a href="https://naruyoko.github.io/OmegaNum.js/index.html" target="_blank">OmegaNum.js</a>, none of which I take credit for.
 				If you would like to create a mod of this game, that's fine, just give credit, let me know in the
 				discord (preferrably with a game link), and name it something slightly different (like Distance
 				Incremental NG+ or something of the sort)...<br /><br />
@@ -260,7 +264,7 @@
 					target="_blank"
 					>Distances</a
 				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://plaza.dsolver.ca/m/Jacorb90">Plaza dSolver</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa">Discord</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
@@ -297,65 +301,296 @@
 			<span id="rfEff"></span>%, and adds <span id="rf2"></span> additional rockets to their effect.
 		</div>
 		<div id="furnace" class="tab" style="display: none;">
-			You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added
-			Rocket effect.<br /><br />
-			<table>
-				<tr>
-					<td>
-						<button
-							id="fnu1"
-							class="btn locked"
-							onclick="tmp.fn.upgs[1].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Triple Coal gain (before Extreme Mode reduction)<br />Cost:
-							<span id="fnu1cost"></span> Coal<br /><span id="fnu1name"></span>Level:
-							<span id="fnu1lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu2"
-							class="btn locked"
-							onclick="tmp.fn.upgs[2].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Gain an extra Rank Cheapener<br />Cost: <span id="fnu2cost"></span> Coal<br /><span
-								id="fnu2name"
-							></span
-							>Level: <span id="fnu2lvl"></span>
-						</button>
-					</td>
-					<td>
-						<button
-							id="fnu3"
-							class="btn locked"
-							onclick="tmp.fn.upgs[3].buy()"
-							style="min-height: 100px; max-height: 100px;"
-						>
-							Double Rocket gain<br />Cost: <span id="fnu3cost"></span> Coal<br /><span
-								id="fnu3name"
-							></span
-							>Level: <span id="fnu3lvl"></span>
-						</button>
-					</td>
-				</tr>
-			</table>
-			<br /><br /><br />
-			<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">
-				Reset all Furnace progress to gain a Blue Flame<br />Req: <span id="bfReq"></span> Coal</button
-			><br /><br />
-			You have <span id="bfAmt" class="blfl"></span> Blue Flame, which makes the cost of all Furnace Upgrades
-			scale <span id="bfEff" class="blfl"></span>% slower.<br><br><br>
-			<div id="furnChalls">
-				Notice: Furnace Challenges will perform a Collapse reset, and in order to complete them, you need to reach 10 Blue Flame.<br>
-				<table><tr>
-					<td class="furnChall"><br><b>Blue Flame does nothing</b><br><button id="fns1" class="btn fn" onclick="startFurnChall(1)"></button><br><br>Reward: Superscaled & Hyper Furnace Upgrade scalings are 90% weaker.<br><br></td>
-					<td id="fnc2" class="furnChall"><br><b>Coal gain is raised to the power of 0.1 (before reduction)</b><br><button id="fns2" class="btn fn" onclick="startFurnChall(2)"></button><br><br>Reward: Furnace Upgrade 1 multiplies Coal gain by 25 instead.<br><br></td>
-					<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 999% strength</b><br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker.<br><br></td>
-					<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.9)<br><br></td>
-					<td id="fnc5" class="furnChall"><br><b>You are trapped in Furnace Challenges 2 & 3</b><br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 1 boosts itself<br><br></td>
-				</tr></table>
+			<div class="band or">
+				<table>
+					<tr>
+						<td><button class="btn tb fn" style="visibility: hidden;"></button></td>
+					</tr>
+					<tr>
+						<td>
+							<button id="nfntabbtn" class="btn tb fn main" onclick="showFurnaceTab('nfn')">
+								The Furnace
+							</button>
+						</td>
+						<td>
+							<button id="efntabbtn" class="btn tb fn main" onclick="showFurnaceTab('efn')">
+								Enhanced Furnace
+							</button>
+						</td>
+					</tr>
+				</table><br>
+			</div><br>
+			<div id="nfn" class="furnaceTab">
+				You have <span id="coal" class="char"></span>, translated to <span id="coalEff" class="char"></span> added
+				Rocket effect.<br /><br />
+				<table>
+					<tr>
+						<td>
+							<button
+								id="fnu1"
+								class="btn locked"
+								onclick="tmp.fn.upgs[1].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Multiply Coal gain by <span id="fnu1eff"></span> (before Extreme Mode reduction)<br />Cost:
+								<span id="fnu1cost"></span> Coal<br /><span id="fnu1name"></span>Level:
+								<span id="fnu1lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu2"
+								class="btn locked"
+								onclick="tmp.fn.upgs[2].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Gain an extra Rank Cheapener<br />Cost: <span id="fnu2cost"></span> Coal<br /><span
+									id="fnu2name"
+								></span
+								>Level: <span id="fnu2lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu3"
+								class="btn locked"
+								onclick="tmp.fn.upgs[3].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Double Rocket gain<br />Cost: <span id="fnu3cost"></span> Coal<br /><span
+									id="fnu3name"
+								></span
+								>Level: <span id="fnu3lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu4"
+								class="btn locked"
+								onclick="tmp.fn.upgs[4].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Increase the power of Furnace Upgrade 1 by <span id="fnu4eff"></span>x<br />Cost: <span id="fnu4cost"></span> Coal<br /><span
+									id="fnu4name"
+								></span
+								>Level: <span id="fnu4lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="fnu5"
+								class="btn locked"
+								onclick="tmp.fn.upgs[5].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Double Cadaver gain<br />Cost: <span id="fnu5cost"></span> Coal<br /><span
+									id="fnu5name"
+								></span
+								>Level: <span id="fnu5lvl"></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+				<br /><br /><br />
+				<button id="bf" class="btn locked" onclick="tmp.fn.bfReset()">
+					Reset all Furnace progress to gain a Blue Flame<br />Req: <span id="bfReq"></span> Coal</button
+				><br /><br />
+				You have <span id="bfAmt" class="blfl"></span> <span id="blueFlameName"></span>Blue Flame, which makes the cost of all Furnace Upgrades
+				scale <span id="bfEff" class="blfl"></span>% slower.<br><br><br>
+				<div id="furnChalls">
+					Notice: Furnace Challenges will perform a Collapse reset. When in a Furnace Challenge, Furnace Upgrade 4 <span id="fu4dc">does nothing</span>.<br>
+					<table><tr>
+						<td class="furnChall"><br><b>Blue Flame does nothing.</b><br>Goal: <span id="fnc1goal"></span> Blue Flame<br><button id="fns1" class="btn fn" onclick="startFurnChall(1)"></button><br><br>Reward: Superscaled & Hyper Furnace Upgrade scalings are 90% weaker.<br><br></td>
+						<td id="fnc2" class="furnChall"><br><b>Coal gain is raised to the power of 0.075 (before reduction)</b><br>Goal: <span id="fnc2goal"></span> Blue Flame<br><button id="fns2" class="btn fn" onclick="startFurnChall(2)"></button><br><br>Reward: Furnace Upgrade 1's effect is increased by 25x.<br><br></td>
+						<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 9,999% strength</b><br>Goal: <span id="fnc3goal"></span> Blue Flame<br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker, and Knowledge gain is 3.2x faster.<br><br></td>
+						<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br>Goal: <span id="fnc4goal"></span> Blue Flame<br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.825)<br><br></td>
+						<td id="fnc5" class="furnChall"><br><b>All Coal generation boosts from outside The Furnace is disabled (which includes Time Speed), and Blue Flame is weaker</b><br>Goal: <span id="fnc5goal"></span> Blue Flame<br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 4's effect is increased by 0.0001x for each Furnace Upgrade 1 bought, and unlock Furnace Upgrade 5<br><br></td>
+					</tr></table>
+				</div>
+			</div>
+			<div id="efn" class="furnaceTab" style="display: none;">
+				You have <span id="eCoal" class="char"></span>, translated to <span id="eCoalEff" class="char"></span> free Blue Flame, and multiply Time Speed by <span id="eCoalEff2" class="char"></span>x.<br /><br />
+				<table>
+					<tr>
+						<td>
+							<button
+								id="efnu1"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[1].buy()"
+								style="min-height: 100px; max-height: 100px; font-size: 10px"
+							>
+								Multiply Enhanced Coal gain by <span id="efnu1eff"></span> (before Extreme Mode reduction, boosted by Coal and Endorsements)<br />Cost:
+								<span id="efnu1cost"></span> Enhanced Coal<br /><span id="efnu1name"></span>Level:
+								<span id="efnu1lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu2"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[2].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Non-free Rank Cheapeners are <span id="efnu2eff"></span>% stronger (additive)<br />Cost: <span id="efnu2cost"></span> Enhanced Coal<br /><span
+									id="efnu2name"
+								></span
+								>Level: <span id="efnu2lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu3"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[3].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Increase the power of Furnace Upgrade 4 by <span id="efnu3eff"></span>x<br />Cost: <span id="efnu3cost"></span> Enhanced Coal<br /><span
+									id="efnu3name"
+								></span
+								>Level: <span id="efnu3lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu4"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[4].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost:
+								<span id="efnu4cost"></span> Enhanced Coal<br /><span id="efnu4name"></span>Level:
+								<span id="efnu4lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu5"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[5].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu5cost"></span> Enhanced Coal<br /><span
+									id="efnu5name"
+								></span
+								>Level: <span id="efnu5lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu6"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[6].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu6cost"></span> Enhanced Coal<br /><span
+									id="efnu6name"
+								></span
+								>Level: <span id="efnu6lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu7"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[7].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost:
+								<span id="efnu7cost"></span> Enhanced Coal<br /><span id="efnu7name"></span>Level:
+								<span id="efnu7lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu8"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[8].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu8cost"></span> Enhanced Coal<br /><span
+									id="efnu8name"
+								></span
+								>Level: <span id="efnu8lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu9"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[9].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add an extra level to the above upgrade<br />Cost: <span id="efnu9cost"></span> Enhanced Coal<br /><span
+									id="efnu9name"
+								></span
+								>Level: <span id="efnu9lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button
+								id="efnu10"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[10].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost:
+								<span id="efnu10cost"></span> Enhanced Coal<br /><span id="efnu10name"></span>Level:
+								<span id="efnu10lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu11"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[11].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost: <span id="efnu11cost"></span> Enhanced Coal<br /><span
+									id="efnu11name"
+								></span
+								>Level: <span id="efnu11lvl"></span>
+							</button>
+						</td>
+						<td>
+							<button
+								id="efnu12"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[12].buy()"
+								style="min-height: 100px; max-height: 100px;"
+							>
+								Add two extra levels to the above upgrade<br />Cost: <span id="efnu12cost"></span> Enhanced Coal<br /><span
+									id="efnu12name"
+								></span
+								>Level: <span id="efnu12lvl"></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button
+								id="efnu13"
+								class="btn locked"
+								onclick="tmp.fn.enh.upgs[13].buy()"
+								style="min-height: 100px; max-height: 100px; font-size: 10px;"
+							>
+								Increase the exponent of Enhanced Coal's boost to Time Speed (+<span id="efnu13eff"></span>) and add an extra level to all previous upgrades<br />Cost: <span id="efnu13cost"></span> Enhanced Coal<br /><span
+									id="efnu13name"
+								></span
+								>Level: <span id="efnu13lvl"></span>
+							</button>
+						</td>
+						<td></td>
+					</tr>
+					</tr>
+				</table><br><br>
+				<span id="moltBr">Your Enhanced Coal has granted you <span id="moltBrAmt" class="char"></span> Molten Bricks, which boost Pathogen gain & Enhanced Coal gain by <span id="moltBrEff" class="char"></span>x, and boost Knowledge gain by <span id="moltBrEff2" class="char"></span>x</span><br><br>
 			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
@@ -405,7 +640,8 @@
 							></button>
 						</td>
 					</tr>
-				</table>
+				</table><br><br>
+				<button id="robotToggle" class="btn rckt" onclick="toggleRobot(player.automation.open)"></button>
 			</div>
 			<br />
 			<div id="automator"></div>
@@ -642,12 +878,12 @@
 				<br /><br />
 			</div>
 			<div id="stadium" class="inftab">
-				<br /><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button
+				<br /><button class="btn inf" onclick="tmp.inf.stadium.reset()">Reset Stadium completions</button>&nbsp;&nbsp;<button id="extremeStadReset" class="btn inf" onclick="resetExtremeStad()">Reset Second-Row Stadium completions</button
 				><br /><br />
 				<button id="exitStad" class="btn inf" onclick="tmp.inf.stadium.exit()">Exit Stadium Challenge</button
 				><br /><br />
 				Note: Perks do nothing in Stadium Challenges<br />
-				Note 2: Each Challenge completion makes the others harder, with the exception being Reality, which
+				Note 2: Each Challenge completion makes the others<span id="extremeStadDesc"></span> harder, with the exception being Reality, which
 				actually gets easier.<br />
 				<span id="stadiumProg"></span><br><br>
 				<table>
@@ -705,6 +941,62 @@
 							>
 								Start</button
 							><br /><br /><span id="drigganizBtm" class="stadiumDesc"></span>
+						</td>
+					</tr>
+					<tr id="extremeStadium">
+						<td id="flamisDiv" class="stadiumChall" tooltip="Flamis Challenge Description">
+							<div class="flamis">Flamis</div><br /><button
+								id="flamisChall"
+								class="btn locked"
+								onclick="startExtremeStadium('flamis')"
+							>
+								Start</button
+							><br /><br /><span id="flamisBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="craniusDiv" class="stadiumChall" tooltip="Cranius Challenge Description">
+							<div class="cranius">Cranius</div><br /><button
+								id="craniusChall"
+								class="btn locked"
+								onclick="startExtremeStadium('cranius')"
+							>
+								Start</button
+							><br /><br /><span id="craniusBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="spectraDiv" class="stadiumChall" tooltip="Spectra Challenge Description">
+							<div class="spectra">Spectra</div><br /><button
+								id="spectraChall"
+								class="btn locked"
+								onclick="startExtremeStadium('spectra')"
+							>
+								Start</button
+							><br /><br /><span id="spectraBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="aqualonDiv" class="stadiumChall" tooltip="Aqualon Challenge Description">
+							<div class="aqualon">Aqualon</div><br /><button
+								id="aqualonChall"
+								class="btn locked"
+								onclick="startExtremeStadium('aqualon')"
+							>
+								Start</button
+							><br /><br /><span id="aqualonBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="nullumDiv" class="stadiumChall" tooltip="Nullum Challenge Description">
+							<div class="nullum">Nullum</div><br /><button
+								id="nullumChall"
+								class="btn locked"
+								onclick="startExtremeStadium('nullum')"
+							>
+								Start</button
+							><br /><br /><span id="nullumBtm" class="stadiumDesc"></span>
+						</td>
+						<td id="quantronDiv" class="stadiumChall" tooltip="Quantron Challenge Description">
+							<div class="quantron">Quantron</div><br /><button
+								id="quantronChall"
+								class="btn locked"
+								onclick="startExtremeStadium('quantron')"
+							>
+								Start</button
+							><br /><br /><span id="quantronBtm" class="stadiumDesc"></span>
 						</td>
 					</tr>
 				</table>
@@ -779,6 +1071,11 @@
 						<td>
 							<button id="theorytabbtn" class="btn tb th main" onclick="tmp.elm.showTab('theory')">
 								Theories
+							</button>
+						</td>
+						<td>
+							<button id="hctabbtn" class="btn tb hc main" onclick="tmp.elm.showTab('hc')">
+								Hadronic Challenge
 							</button>
 						</td>
 					</tr>
@@ -869,33 +1166,33 @@
 								<td>
 									<button id="photon1" class="btn locked" onclick="tmp.elm.bos.buyLU(1)">
 										Triple Pathogen gain<br />
-										<span id="photonLvl1" style="color: white;"></span><br />Currently:
-										<span id="photonDesc1" style="color: white;"></span><br />Cost:
-										<span id="photonCost1" style="color: white;"></span> Photons
+										<span id="photonLvl1"></span><br />Currently:
+										<span id="photonDesc1"></span><br />Cost:
+										<span id="photonCost1"></span> Photons
 									</button>
 								</td>
 								<td>
 									<button id="photon2" class="btn locked" onclick="tmp.elm.bos.buyLU(2)">
 										Boost Knowledge gain by 50%<br />
-										<span id="photonLvl2" style="color: white;"></span><br />Currently:
-										<span id="photonDesc2" style="color: white;"></span><br />Cost:
-										<span id="photonCost2" style="color: white;"></span> Photons
+										<span id="photonLvl2"></span><br />Currently:
+										<span id="photonDesc2"></span><br />Cost:
+										<span id="photonCost2"></span> Photons
 									</button>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<button id="photon3" class="btn locked" onclick="tmp.elm.bos.buyLU(3)">
-										Double Photon & Gluon gain<br /><span id="photonLvl3" style="color: white;"></span
-										><br />Currently: <span id="photonDesc3" style="color: white;"></span
-										><br />Cost: <span id="photonCost3" style="color: white;"></span> Photons
+										Double Photon & Gluon gain<br /><span id="photonLvl3"></span
+										><br />Currently: <span id="photonDesc3"></span
+										><br />Cost: <span id="photonCost3"></span> Photons
 									</button>
 								</td>
 								<td>
 									<button id="photon4" class="btn locked" onclick="tmp.elm.bos.buyLU(4)">
-										Double Elementary Particle gain<br /><span id="photonLvl4" style="color: white;"></span
-										><br />Currently: <span id="photonDesc4" style="color: white;"></span
-										><br />Cost: <span id="photonCost4" style="color: white;"></span> Photons
+										Double Elementary Particle gain<br /><span id="photonLvl4"></span
+										><br />Currently: <span id="photonDesc4"></span
+										><br />Cost: <span id="photonCost4"></span> Photons
 									</button>
 								</td>
 							</tr>
@@ -1122,6 +1419,11 @@
 									Accelerons
 								</button>
 							</td>
+							<td>
+								<button id="inflatonstabbtn" class="btn tb th" onclick="tmp.elm.theory.showTab('inflatons')">
+									Inflatons
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1144,6 +1446,7 @@
 					<br>
 					<button id="treeUnl" class="btn th" onclick="tmp.elm.theory.tree.unl()">Unlock The Theory Tree<br>Cost: 1 Theory Point</button>
 					<div id="treeDiv">
+						<span id="ach152Eff"></span>
 						<button id="treeRespec" class="btn th" onclick="resetTheoryTree()"></button><br><br>
 						<button class="btn th" onclick="exportTree()">Export</button>&nbsp;<button class="btn th" onclick="importTree()">Import</button><br><br>
 						<table><tr>
@@ -1173,18 +1476,18 @@
 						</tr></table>
 						<table><tr>
 							<td><button id="tree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
+							<td><button id="tree28" class="tree locked" onclick="tmp.elm.theory.tree.buy(28)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree29" class="tree locked" onclick="tmp.elm.theory.tree.buy(29)"></button></td>
 							<td><button id="tree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
 						</tr></table>
 						<table><tr>
 							<td><button id="tree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button id="tree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
 						</tr></table>
@@ -1192,8 +1495,8 @@
 							<td><button id="tree25" class="tree locked" onclick="tmp.elm.theory.tree.buy(25)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
+							<td><button id="tree32" class="tree locked" onclick="tmp.elm.theory.tree.buy(32)"></button></td>
+							<td><button id="tree33" class="tree locked" onclick="tmp.elm.theory.tree.buy(33)"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button class="tree locked" style="visibility: hidden;"></button></td>
 							<td><button id="tree26" class="tree locked" onclick="tmp.elm.theory.tree.buy(26)"></button></td>
@@ -1240,13 +1543,71 @@
 					<br>
 					<button id="acceleronsUnl" class="btn th" onclick="unlockAccelerons()">Unlock Accelerons<br>Cost: 84 Theory Points</button>
 					<div id="acceleronsDiv">
-						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second.<br><br>
-						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff" class="thp"></span>x later.<br><br><br>
+						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second <span id="accelerSC"></span>.<br><br>
+						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff"></span><br><br><br>
 						<button id="darkExp" class="btn locked" onclick="darkExpand()"></button><br><br>
 						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br>
 						<span id="darkExpPast"></span><br><br><br>
 					</div>
 				</div>
+				<div id="inflatons" class="theorytab">
+					<br>
+					<button id="inflatonsUnl" class="btn th" onclick="unlockInflatons()">Unlock Inflatons<br>Cost: 1,600 Theory Points</button>
+					<div id="inflatonsDiv">
+						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second <span id="inflatonSC" class="sc"></span>.<br>
+						You have <span id="inflatonAmt" class="thp"></span> Inflatons (<span id="inflatonPerc"></span>)<br><br>
+						Your Inflatons are making all Theory Tree Upgrades <span id="inflaton1" class="thp"></span>x cheaper.<br>
+						Your Inflatons are making each Hadron effect interval give <span id="inflaton2" class="thp"></span> more TP.<br><br><br>
+					</div>
+				</div>
+			</div>
+			<div id="hc" class="elmtab" style="display: none;">
+				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
+				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
+				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
+				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button><br><br>
+				<span id="hcPerc"></span><br><br>
+				<div class="band ylw">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('mainHC')">
+									Main Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('preHC')">
+									Pre-Collapse Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('colHC')">
+									Collapse Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('infHC')">
+									Infinity Selectors
+								</button>
+							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('elmHC')">
+									Elementary Selectors
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div><br><br>
+				<div id="mainHC" class="hcTab"></div>
+				<div id="preHC" class="hcTab"></div>
+				<div id="colHC" class="hcTab"></div>
+				<div id="infHC" class="hcTab"></div>
+				<div id="elmHC" class="hcTab"></div>
+				<br><br>
 			</div>
 		</div>
 	</div>
@@ -1328,6 +1689,7 @@
 
 	<script type="text/javascript" src="js/main/extreme/rankCheap.js"></script>
 	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
+	<script type="text/javascript" src="js/main/extreme/stadium.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>
