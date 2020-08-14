@@ -1014,6 +1014,10 @@ function exportHC() {
 }
 
 function importHC() {
+	if (player.elementary.hc.active) {
+		notifier.warn("You cannot import a Hadronic Challenge while in one!")
+		return;
+	}
 	let toImport = prompt("Paste Hadronic Challenge data here.")
 	try {
 		let data = JSON.parse(atob(toImport))
