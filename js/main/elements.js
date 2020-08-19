@@ -37,12 +37,12 @@ function updateHTML() {
 			formatDistance(player.distance) +
 				" (+" +
 				formatDistance(
-					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?player.energy.div(100):1)
 				) +
 				"/sec)"
 		);
 		tmp.el.velocity.setTxt(
-			formatDistance(player.velocity) +
+			formatDistance(player.velocity.times(modeActive("hikers_dream")?player.energy.div(100):1)) +
 				"/s (+" +
 				formatDistance(adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 				"/sec)"
@@ -68,7 +68,10 @@ function updateHTML() {
 		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
 		
-		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+".<br>":"")
+		// Hiker's Dream
+		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(-5))+"x faster.<br>":"")
+		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
+		
 	}
 
 	// Rockets
@@ -1008,6 +1011,12 @@ function updateHTML() {
 			tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 			tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
 		}
+	}
+	
+	// Energy
+	if (player.tab == "energy") {
+		tmp.el.energyAmt.setTxt(showNum(player.energy))
+		tmp.el.energyEff.setTxt(showNum(player.energy.div(100)))
 	}
 
 	// Miscellaneous

@@ -71,7 +71,7 @@ function tickWithTR(diff) {
 		.plus(adjustGen(tmp.acc, "vel").times(diff))
 		.min(nerfActive("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
-	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(diff)).max(0);
+	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(modeActive("hikers_dream")?player.energy.div(100):1).times(diff)).max(0);
 	player.inf.bestDist = player.inf.bestDist.max(player.distance)
 	player.bestDistance = player.bestDistance.max(player.distance)
 	player.bestV = player.bestV.max(player.velocity)
@@ -90,6 +90,9 @@ function tickWithTS(diff) {
 	else if (tmp.ach[72].has && player.tr.unl && !nerfActive("noTimeCubes"))
 		player.tr.cubes = player.tr.cubes.plus(adjustGen(getTimeCubeGain(), "tc").times(diff.div(2)));
 	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff);
+	if (modeActive("hikers_dream")) {
+		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
+	}
 	tickWithTR(diff.times(player.tr.active ? -1 : 1));
 }
 

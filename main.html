@@ -29,6 +29,16 @@
 							</button>
 						</td>
 						<td>
+							<button
+								id="energytabbtn"
+								class="btn tb en main"
+								onclick="showTab('energy')"
+								style="visibility: hidden;"
+							>
+								Energy
+							</button>
+						</td>
+						<td>
 							<button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">
 								Rockets
 							</button>
@@ -100,7 +110,8 @@
 			<button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">
 				Reset your ranks, but <span id="tierDesc" class="based"></span><br />Req: Rank
 				<span id="tierReq" class="based"></span>.
-			</button><br><br><br>
+			</button><br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="quickReset" class="btn" onclick="quickReset()" style="min-width: 200px;">Quick Reset</button><br><br><br>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -289,6 +300,9 @@
 			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
 			<div id="achFin"></div>
+		</div>
+		<div id="energy" class="tab" style="display: none;">
+			You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">

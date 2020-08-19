@@ -117,7 +117,7 @@ const MODES = {
 		ext: ["hard"]
 	},
 	hikers_dream: {
-		desc: "This mode is a mode where the game plays as normal, except you have to do it while climbing up a hill that gets steeper and steeper as you go, however there are new buffs to compensate for this steep hill (ends at Elementary).",
+		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill (ends at Elementary).",
 		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
