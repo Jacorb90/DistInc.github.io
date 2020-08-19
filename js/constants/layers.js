@@ -23,14 +23,14 @@ const LAYER_RESETS = {
 };
 
 const LAYER_RESETS_EXTRA = {
-	rank: [],
-	rankCheap: [],
-	tier: ["rankCheap"],
-	rockets: ["rankCheap"],
+	rank: ["energy"],
+	rankCheap: ["energy"],
+	tier: ["energy", "rankCheap"],
+	rockets: ["energy", "rankCheap"],
 	rf: [],
-	collapse: ["rankCheap", "furnace"],
-	inf: ["rankCheap", "furnace", "activeFC"],
-	elementary: ["rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
+	collapse: ["energy", "rankCheap", "furnace"],
+	inf: ["energy", "rankCheap", "furnace", "activeFC"],
+	elementary: ["energy", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
 };
 
 const LAYER_REQS = {
