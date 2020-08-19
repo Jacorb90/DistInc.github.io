@@ -67,6 +67,8 @@ function updateHTML() {
 		// Misc
 		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
+		
+		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+".<br>":"")
 	}
 
 	// Rockets

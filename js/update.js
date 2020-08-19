@@ -21,6 +21,10 @@ function updateTemp() {
 		updateTempRankCheap();
 		updateTempFurnace();
 	}
+	
+	if (modeActive("hikers_dream")) {
+		updateTempHikersDream()
+	}
 }
 
 function setupHTML() {
