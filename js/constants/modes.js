@@ -146,7 +146,7 @@ const MODE_VARS = {
 		extremeStad: [],
 	},
 	hikers_dream: {
-		energy: new ExpantaNum(0),
+		energy: new ExpantaNum(100),
 		energyUpgs: [],
 	},
 };
