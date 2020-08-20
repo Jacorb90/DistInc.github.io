@@ -303,7 +303,16 @@
 		</div>
 		<div id="energy" class="tab" style="display: none;">
 			You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.<br><br>
-			<button id="energyRefill" class="btn en" onclick="refillEnergy()">Refill Energy (can only be done once per reset)</button><br><br><br>
+			<button id="energyRefill" class="btn en" onclick="refillEnergy()">Refill Energy (can only be done once per reset)</button><br><br>
+			You have <span id="motive" class="energy"></span> Motive<br><br>
+			<button class="btn en" onclick="respecEnergyUpgs()">Respec Energy Upgrades</button><br><br>
+			<table>
+				<tr>
+					<td><button id="energyUpg1" class="btn locked" onclick="buyEnergyUpg(1)"><h3>Optimization</h3><br>The energy effect is boosted by your Motive<br><br>Cost: <span id="energyUpg1Cost"></span> Motive<br>Currently: <span id="energyUpg1Current"></span>x<br></button></td>
+					<td><button id="energyUpg2" class="btn locked" onclick="buyEnergyUpg(2)"><h3>Endurance</h3><br>Energy decreases slower based on your Motive<br><br>Cost: <span id="energyUpg2Cost"></span> Motive<br>Currently: /<span id="energyUpg2Current"></span></button></td>
+					<td><button id="energyUpg3" class="btn locked" onclick="buyEnergyUpg(3)"><h3>Confidence</h3><br>Your Motive is higher based on the Incline<br><br>Cost: <span id="energyUpg3Cost"></span> Motive<br>Currently: <span id="energyUpg3Current"></span>x</button></td>
+				</tr>
+			</table><br><br><br>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">

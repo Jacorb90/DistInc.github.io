@@ -37,12 +37,12 @@ function updateHTML() {
 			formatDistance(player.distance) +
 				" (+" +
 				formatDistance(
-					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?player.energy.div(100):1)
+					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?tmp.hd.enEff:1)
 				) +
 				"/sec)"
 		);
 		tmp.el.velocity.setTxt(
-			formatDistance(player.velocity.times(modeActive("hikers_dream")?player.energy.div(100):1)) +
+			formatDistance(player.velocity.times(modeActive("hikers_dream")?tmp.hd.enEff:1)) +
 				"/s (+" +
 				formatDistance(adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 				"/sec)"
@@ -1016,12 +1016,24 @@ function updateHTML() {
 	// Energy
 	if (player.tab == "energy") {
 		tmp.el.energyAmt.setTxt(showNum(player.energy))
-		tmp.el.energyEff.setTxt(showNum(player.energy.div(100)))
+		tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
 		tmp.el.energyRefill.setClasses({
 			btn: true,
 			en: player.canRefill,
 			locked: !player.canRefill,
 		})
+		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
+		for (let i=1;i<=3;i++) {
+			let cost = ENERGY_UPG_COSTS[i]
+			tmp.el["energyUpg"+i].setClasses({
+				btn: true,
+				bought: player.energyUpgs.includes(i),
+				locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
+				en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
+			})
+			tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
+			tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
+		}
 	}
 
 	// Miscellaneous
