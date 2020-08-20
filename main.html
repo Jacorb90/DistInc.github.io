@@ -111,7 +111,7 @@
 				Reset your ranks, but <span id="tierDesc" class="based"></span><br />Req: Rank
 				<span id="tierReq" class="based"></span>.
 			</button><br><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="quickReset" class="btn" onclick="quickReset()" style="min-width: 200px;">Quick Reset</button><br><br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="quickReset" class="btn" onclick="quickReset()" style="min-width: 200px;" tooltip="Performs a Rank reset (without the reward)">Quick Reset</button><br><br><br>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -302,7 +302,8 @@
 			<div id="achFin"></div>
 		</div>
 		<div id="energy" class="tab" style="display: none;">
-			You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.
+			You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.<br><br>
+			<button id="energyRefill" class="btn en" onclick="refillEnergy()">Refill Energy (can only be done once per reset)</button><br><br><br>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">

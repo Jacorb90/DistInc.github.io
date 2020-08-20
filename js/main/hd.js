@@ -8,3 +8,9 @@ function updateTempHikersDream() {
 function quickReset() {
 	tmp.ranks.layer.reset(true)
 }
+
+function refillEnergy() {
+	if (!player.canRefill) return
+	player.energy = new ExpantaNum(100)
+	player.canRefill = false
+}

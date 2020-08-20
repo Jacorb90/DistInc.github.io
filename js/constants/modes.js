@@ -147,6 +147,7 @@ const MODE_VARS = {
 	},
 	hikers_dream: {
 		energy: new ExpantaNum(100),
+		canRefill: true,
 		energyUpgs: [],
 	},
 };
@@ -184,6 +185,7 @@ const MODE_EX = {
 	},
 	hikers_dream: function(source) {
 		source.energy = new ExpantaNum(source.energy)
+		if (source.canRefill===undefined) source.canRefill = true;
 		return source;
 	},
 };

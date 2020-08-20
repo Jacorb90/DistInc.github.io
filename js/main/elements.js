@@ -1017,6 +1017,11 @@ function updateHTML() {
 	if (player.tab == "energy") {
 		tmp.el.energyAmt.setTxt(showNum(player.energy))
 		tmp.el.energyEff.setTxt(showNum(player.energy.div(100)))
+		tmp.el.energyRefill.setClasses({
+			btn: true,
+			en: player.canRefill,
+			locked: !player.canRefill,
+		})
 	}
 
 	// Miscellaneous
