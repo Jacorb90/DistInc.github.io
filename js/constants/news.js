@@ -161,6 +161,18 @@ const NEWS_DATA = {
 			return player.modes.includes("absurd");
 		}
 	],
+	mod7: [
+		"If you're really a hiker, then go for a hike.",
+		function () {
+			return player.modes.includes("hikers_dream")
+		}
+	],
+	mod8: [
+		"Hiker's Dream was brought to you by ~reda~ (if you're angry about anything in this mode, it's his fault)",
+		function () {
+			return player.modes.includes("hikers_dream")
+		}
+	],
 
 	// Chance-based Conditions
 	c1: [

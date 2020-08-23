@@ -1023,7 +1023,7 @@ function updateHTML() {
 			locked: !player.canRefill,
 		})
 		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
-		for (let i=1;i<=3;i++) {
+		for (let i=1;i<=8;i++) {
 			let cost = ENERGY_UPG_COSTS[i]
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,
@@ -1031,6 +1031,7 @@ function updateHTML() {
 				locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
 				en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
 			})
+			tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i))
 			tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
 			tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
 		}
