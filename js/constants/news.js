@@ -45,7 +45,7 @@ const NEWS_DATA = {
 	m43: ['"Playing the game 5 times is fun" - Bugged out Ink'],
 	m44: ['"Gaming." - Danny DeVito'],
 	m45: ['"I need a raise" - Ink after wasting his life actually enjoying something'],
-	m46: ["And the winner is, Leonardo DiCarlo"],
+	m46: ["And the winner is, Leonardo DiCaprio"],
 	m47: ['"But thats just a theory, a game theory!"- Matpat'],
 	m48: ['"But thats just a theory, a film theory!"- Matpat'],
 	m49: ['"But thats just a theory, a food theory!"- Patmat'],

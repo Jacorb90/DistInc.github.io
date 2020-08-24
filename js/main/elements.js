@@ -1023,7 +1023,8 @@ function updateHTML() {
 			locked: !player.canRefill,
 		})
 		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
-		for (let i=1;i<=8;i++) {
+		tmp.el.nextMotive.setHTML(tmp.hd.motive.eq(0)?("[<span class='energy'>"+showNum(player.spentMotive.sub(tmp.hd.totalMotive))+"</span> left]"):"")
+		for (let i=1;i<=13;i++) {
 			let cost = ENERGY_UPG_COSTS[i]
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,

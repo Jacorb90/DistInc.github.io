@@ -304,7 +304,7 @@
 		<div id="energy" class="tab" style="display: none;">
 			You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.<br><br>
 			<button id="energyRefill" class="btn en" onclick="refillEnergy()">Rejuvenate (can only be done once per reset)</button><br><br>
-			You have <span id="motive" class="energy"></span> Motive (based on Ranks, Tiers, & Incline)<br><br>
+			You have <span id="motive" class="energy"></span> Motive (based on Ranks, Tiers, & Incline) <span id="nextMotive"></span><br><br>
 			<button class="btn en" onclick="respecEnergyUpgs()">Respec Energy Upgrades</button><br><br>
 			<table>
 				<tr>
@@ -312,12 +312,19 @@
 					<td><button id="energyUpg2" class="btn locked" onclick="buyEnergyUpg(2)"><h2>Endurance</h2><br>Energy decreases slower based on your Motive<br><br>Cost: <span id="energyUpg2Cost"></span> Motive<br>Currently: /<span id="energyUpg2Current"></span></button></td>
 					<td><button id="energyUpg3" class="btn locked" onclick="buyEnergyUpg(3)"><h2>Confidence</h2><br>Your Motive is higher based on the Incline<br><br>Cost: <span id="energyUpg3Cost"></span> Motive<br>Currently: <span id="energyUpg3Current"></span>x</button></td>
 					<td><button id="energyUpg4" class="btn locked" onclick="buyEnergyUpg(4)"><h2>Thrusters</h2><br>The Incline nerf to max velocity & acceleration is reduced based on your Rockets<br><br>Cost: <span id="energyUpg4Cost"></span> Motive<br>Currently: <span id="energyUpg4Current"></span>th root</button></td>
+					<td><button id="energyUpg13" class="btn locked" onclick="buyEnergyUpg(13)"><h2>Hill-Bending</h2><br>All Energy Upgrades that are based on The Incline have a better incline in their effect<br><br>Cost: <span id="energyUpg13Cost"></span> Motive<br>Currently: +<span id="energyUpg13Current"></span>&deg;</button></td>
 				</tr>
 				<tr>
 					<td><button id="energyUpg5" class="btn locked" onclick="buyEnergyUpg(5)"><h2>Optimization II</h2><br>The above upgrade is stronger based on your Energy<br><br>Cost: <span id="energyUpg5Cost"></span> Motive<br>Currently: <span id="energyUpg5Current"></span>% stronger<br></button></td>
 					<td><button id="energyUpg6" class="btn locked" onclick="buyEnergyUpg(6)"><h2>Endurance II</h2><br>The above upgrade is stronger based on your Energy<br><br>Cost: <span id="energyUpg6Cost"></span> Motive<br>Currently: <span id="energyUpg6Current"></span>% stronger<br></button></td>
 					<td><button id="energyUpg7" class="btn locked" onclick="buyEnergyUpg(7)"><h2>Confidence II</h2><br>The above upgrade is stronger based on your Total Motive<br><br>Cost: <span id="energyUpg7Cost"></span> Motive<br>Currently: <span id="energyUpg7Current"></span>% stronger<br></button></td>
-					<td><button id="energyUpg8" class="btn locked" onclick="buyEnergyUpg(8)"><h2>Thrusters II</h2><br>The above upgrade is stronger based on your Incline<br><br>Cost: <span id="energyUpg8Cost"></span> Motive<br>Currently: <span id="energyUpg8Current"></span>% stronger<br></button></td>
+					<td><button id="energyUpg8" class="btn locked" onclick="buyEnergyUpg(8)"><h2>Thrusters II</h2><br>The above upgrade is stronger based on the Incline<br><br>Cost: <span id="energyUpg8Cost"></span> Motive<br>Currently: <span id="energyUpg8Current"></span>% stronger<br></button></td>
+				</tr>
+				<tr>
+					<td><button id="energyUpg9" class="btn locked" onclick="buyEnergyUpg(9)"><h2>Optimization III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg9Cost"></span> Motive<br>Currently: <span id="energyUpg9Current"></span>% stronger<br></button></td>
+					<td><button id="energyUpg10" class="btn locked" onclick="buyEnergyUpg(10)"><h2>Endurance III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg10Cost"></span> Motive<br>Currently: <span id="energyUpg10Current"></span>% stronger<br></button></td>
+					<td><button id="energyUpg11" class="btn locked" onclick="buyEnergyUpg(11)"><h2>Confidence III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg11Cost"></span> Motive<br>Currently: <span id="energyUpg11Current"></span>% stronger<br></button></td>
+					<td><button id="energyUpg12" class="btn locked" onclick="buyEnergyUpg(12)"><h2>Thrusters III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg12Cost"></span> Motive<br>Currently: <span id="energyUpg12Current"></span>% stronger<br></button></td>
 				</tr>
 			</table><br><br><br>
 		</div>

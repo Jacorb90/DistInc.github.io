@@ -64,6 +64,9 @@ function tickWithoutTS(diff) {
 		player.furnace.enhancedCoal = player.furnace.enhancedCoal.plus(adjustGen(tmp.fn.enh.gain, "fn").times(diff));
 	}
 	if (player.elementary.times.gt(0)) elTick(diff);
+	if (modeActive("hikers_dream")) {
+		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
+	}
 }
 
 function tickWithTR(diff) {
@@ -90,9 +93,6 @@ function tickWithTS(diff) {
 	else if (tmp.ach[72].has && player.tr.unl && !nerfActive("noTimeCubes"))
 		player.tr.cubes = player.tr.cubes.plus(adjustGen(getTimeCubeGain(), "tc").times(diff.div(2)));
 	if (player.inf.derivatives.unl) tmp.inf.derv.tick(diff);
-	if (modeActive("hikers_dream")) {
-		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
-	}
 	tickWithTR(diff.times(player.tr.active ? -1 : 1));
 }
 
