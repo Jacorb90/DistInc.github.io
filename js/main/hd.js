@@ -25,7 +25,7 @@ function updateTempHikersDream() {
 	tmp.hd.inclineRed = ExpantaNum.sub(90, tmp.hd.incline).div(90).root(tmp.hd.inclinePow)
 	tmp.hd.energyLoss = tmp.hd.inclineRed.pow(-5)
 	if (player.energyUpgs.includes(2) && tmp.hd.enerUpgs) tmp.hd.energyLoss = tmp.hd.energyLoss.div(tmp.hd.enerUpgs[2])
-	tmp.hd.totalMotive = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus(player.energyUpgs.includes(13) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	tmp.hd.totalMotive = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
 	if (player.energyUpgs.includes(3) && tmp.hd.enerUpgs) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.enerUpgs[3])
 	tmp.hd.motive = tmp.hd.totalMotive.sub(player.spentMotive).max(0);
 	tmp.hd.enEff = player.energy.div(100)
@@ -34,12 +34,12 @@ function updateTempHikersDream() {
 	if (!tmp.hd.enerUpgs) tmp.hd.enerUpgs = {}
 	tmp.hd.enerUpgs[1] = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1)
 	tmp.hd.enerUpgs[2] = tmp.hd.motive.max(player.energyUpgs.includes(6)?1:0).plus(1).log10().times(2).plus(1).pow((player.energyUpgs.includes(6)&&tmp.hd.enerUpgs[6]) ? tmp.hd.enerUpgs[6].div(100).plus(1) : 1)
-	tmp.hd.enerUpgs[3] = tmp.hd.incline.plus(player.energyUpgs.includes(13) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1)
+	tmp.hd.enerUpgs[3] = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1)
 	tmp.hd.enerUpgs[4] = player.rockets.plus(1).times(10).slog(10).times((player.energyUpgs.includes(8)&&tmp.hd.enerUpgs[8]) ? (tmp.hd.enerUpgs[8].div(100).plus(1)) : 1)
 	tmp.hd.enerUpgs[5] = player.energy.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(9)&&tmp.hd.enerUpgs[9])?tmp.hd.enerUpgs[9].div(100).plus(1):1)
 	tmp.hd.enerUpgs[6] = player.energy.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(10)&&tmp.hd.enerUpgs[10])?tmp.hd.enerUpgs[10].div(100).plus(1):1)
 	tmp.hd.enerUpgs[7] = tmp.hd.totalMotive.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(11)&&tmp.hd.enerUpgs[11])?tmp.hd.enerUpgs[11].div(100).plus(1):1)
-	tmp.hd.enerUpgs[8] = tmp.hd.incline.plus(player.energyUpgs.includes(13) ? tmp.hd.enerUpgs[13] : 0).div(90).times(100).times((player.energyUpgs.includes(12)&&tmp.hd.enerUpgs[12])?tmp.hd.enerUpgs[12].div(100).plus(1):1)
+	tmp.hd.enerUpgs[8] = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).times(100).times((player.energyUpgs.includes(12)&&tmp.hd.enerUpgs[12])?tmp.hd.enerUpgs[12].div(100).plus(1):1)
 	tmp.hd.enerUpgs[9] = player.tr.cubes.plus(1).log10().plus(1).log10().times(100)
 	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10)
 	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50)
