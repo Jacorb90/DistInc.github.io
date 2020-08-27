@@ -12,6 +12,13 @@ const ENERGY_UPG_COSTS = {
 	11: new ExpantaNum(6000),
 	12: new ExpantaNum(10000),
 	13: new ExpantaNum(5000),
+	14: new ExpantaNum(500000),
+	15: new ExpantaNum(1e6),
+	16: new ExpantaNum(56000),
+	17: new ExpantaNum(80000),
+	18: new ExpantaNum(120000),
+	19: new ExpantaNum(250000),
+	20: new ExpantaNum(1.75e6),
 }
 
 function updateTempHikersDream() {
@@ -40,11 +47,18 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[6] = player.energy.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(10)&&tmp.hd.enerUpgs[10])?tmp.hd.enerUpgs[10].div(100).plus(1):1)
 	tmp.hd.enerUpgs[7] = tmp.hd.totalMotive.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(11)&&tmp.hd.enerUpgs[11])?tmp.hd.enerUpgs[11].div(100).plus(1):1)
 	tmp.hd.enerUpgs[8] = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).times(100).times((player.energyUpgs.includes(12)&&tmp.hd.enerUpgs[12])?tmp.hd.enerUpgs[12].div(100).plus(1):1)
-	tmp.hd.enerUpgs[9] = player.tr.cubes.plus(1).log10().plus(1).log10().times(100)
-	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10)
-	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50)
-	tmp.hd.enerUpgs[12] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.2).times(20)
-	tmp.hd.enerUpgs[13] = new ExpantaNum(6)
+	tmp.hd.enerUpgs[9] = player.tr.cubes.plus(1).log10().plus(1).log10().times(100).times((player.energyUpgs.includes(16)&&tmp.hd.enerUpgs[16])?tmp.hd.enerUpgs[16].div(100).plus(1):1)
+	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10).times((player.energyUpgs.includes(17)&&tmp.hd.enerUpgs[17])?tmp.hd.enerUpgs[17].div(100).plus(1):1)
+	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50).times((player.energyUpgs.includes(18)&&tmp.hd.enerUpgs[18])?tmp.hd.enerUpgs[18].div(100).plus(1):1)
+	tmp.hd.enerUpgs[12] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.2).times(20).times((player.energyUpgs.includes(19)&&tmp.hd.enerUpgs[19])?tmp.hd.enerUpgs[19].div(100).plus(1):1)
+	tmp.hd.enerUpgs[13] = new ExpantaNum(6).times((player.energyUpgs.includes(14)&&tmp.hd.enerUpgs[14]) ? tmp.hd.enerUpgs[14].div(100).plus(1) : 1)
+	tmp.hd.enerUpgs[14] = ExpantaNum.sub(3, ExpantaNum.div(2, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1))).times((player.energyUpgs.includes(15)&&tmp.hd.enerUpgs[15]) ? tmp.hd.enerUpgs[15].div(100).plus(1) : 1).sub(1).times(100)
+	tmp.hd.enerUpgs[15] = ExpantaNum.sub(1.5, ExpantaNum.div(0.5, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).log10().plus(1))).sub(1).times(100)
+	tmp.hd.enerUpgs[16] = player.collapse.cadavers.plus(1).log10().plus(1).log10().times((player.energyUpgs.includes(20)&&tmp.hd.enerUpgs[20]) ? tmp.hd.enerUpgs[20].div(100).plus(1) : 1).times(100)
+	tmp.hd.enerUpgs[17] = player.collapse.lifeEssence.plus(1).log10().plus(1).log10().pow(0.1).times((player.energyUpgs.includes(20)&&tmp.hd.enerUpgs[20]) ? tmp.hd.enerUpgs[20].div(100).plus(1) : 1).times(10)
+	tmp.hd.enerUpgs[18] = player.pathogens.amount.plus(1).log10().plus(1).log10().sqrt().times((player.energyUpgs.includes(20)&&tmp.hd.enerUpgs[20]) ? tmp.hd.enerUpgs[20].div(100).plus(1) : 1).times(50)
+	tmp.hd.enerUpgs[19] = player.pathogens.amount.plus(1).log10().plus(1).log10().pow(0.2).times((player.energyUpgs.includes(20)&&tmp.hd.enerUpgs[20]) ? tmp.hd.enerUpgs[20].div(100).plus(1) : 1).times(100)
+	tmp.hd.enerUpgs[20] = tmp.hd.motive.plus(2).log10().times(player.energy.div(4.5).plus(10))
 }
 
 function quickReset() {
@@ -77,6 +91,7 @@ function isEnergyUpgShown(x) {
 	if (x<=3) return true;
 	else if (x<=8) return player.rf.gte(1)||player.automation.unl||player.collapse.unl||player.inf.unl
 	else if (x<=13) return player.tr.unl||player.collapse.unl||player.inf.unl
+	else if (x<=20) return player.pathogens.unl||player.inf.unl
 	
 	return false;
 }
