@@ -21,6 +21,7 @@ var bosTab = "gauge";
 var hcTab = "mainHC";
 var gluonTab = "r";
 var thTab = "tv";
+var enTab = "mainEN";
 var autoRobotTarget = 0
 var betaID = "beta1.71"; // beta1.71
 var needUpdate = true
@@ -66,6 +67,7 @@ function tickWithoutTS(diff) {
 	if (player.elementary.times.gt(0)) elTick(diff);
 	if (modeActive("hikers_dream")) {
 		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
+		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
 	}
 }
 

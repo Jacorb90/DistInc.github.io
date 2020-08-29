@@ -527,6 +527,7 @@ const INF_UPGS = {
 		"6;6": function () {
 			let ret = tmp.maxVel.plus(1).pow(0.075);
 			if (modeActive("extreme")) ret = ret.pow(0.1)
+			if (modeActive("hikers_dream")) ret = ret.pow(2)
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
 			return ret;
 		},

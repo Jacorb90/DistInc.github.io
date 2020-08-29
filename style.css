@@ -906,6 +906,13 @@ table {
 	box-shadow: none;
 }
 
+.enBox {
+	min-height: 200px;
+	max-height: 200px;
+	min-width: 200px;
+	max-width: 200px;
+}
+
 .char {
 	font-size: 20px;
 	color: var(--plaintxt);

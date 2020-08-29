@@ -1015,26 +1015,44 @@ function updateHTML() {
 	
 	// Energy
 	if (player.tab == "energy") {
-		tmp.el.energyAmt.setTxt(showNum(player.energy))
-		tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
-		tmp.el.energyRefill.setClasses({
-			btn: true,
-			en: player.canRefill,
-			locked: !player.canRefill,
-		})
-		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
-		tmp.el.nextMotive.setHTML(tmp.hd.motive.eq(0)?("[<span class='energy'>"+showNum(player.spentMotive.sub(tmp.hd.totalMotive))+"</span> left]"):"")
-		for (let i=1;i<=20;i++) {
-			let cost = ENERGY_UPG_COSTS[i]
-			tmp.el["energyUpg"+i].setClasses({
+		updateENTabs()
+		if (enTab=="mainEN") {
+			tmp.el.energyAmt.setTxt(showNum(player.energy))
+			tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
+			tmp.el.energyRefill.setClasses({
 				btn: true,
-				bought: player.energyUpgs.includes(i),
-				locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
-				en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
+				en: player.canRefill,
+				locked: !player.canRefill,
 			})
-			tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i))
-			tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
-			tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
+			tmp.el.motive.setTxt(showNum(tmp.hd.motive))
+			tmp.el.nextMotive.setHTML(tmp.hd.motive.eq(0)?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive))+"</span> left]"):"")
+			for (let i=1;i<=23;i++) {
+				let cost = ENERGY_UPG_COSTS[i]
+				tmp.el["energyUpg"+i].setClasses({
+					btn: true,
+					bought: player.energyUpgs.includes(i),
+					locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
+					en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
+					enBox: true,
+				})
+				tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i))
+				tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
+				tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
+			}
+		} else if (enTab=="generator") {
+			tmp.el.genLvl.setTxt(showNum(player.genLvl))
+			tmp.el.energyGen.setTxt(showNum(tmp.hd.energyGen))
+			tmp.el.energyLim.setTxt(showNum(getEnergyLim()))
+			let cost = getGenCost()
+			tmp.el.buyGen.setClasses({
+				btn: true,
+				locked: tmp.hd.motive.lt(cost),
+				en: tmp.hd.motive.gte(cost),
+				enBox: true,
+			})
+			tmp.el.genCost.setTxt(showNum(cost))
+			tmp.el.superEn.setTxt(showNum(tmp.hd.superEn))
+			tmp.el.superEnEff.setTxt(showNum(tmp.hd.superEnEff))
 		}
 	}
 
