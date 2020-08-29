@@ -189,7 +189,9 @@ function getEnergyLim() {
 }
 
 function getGenCost() {
-	let cost = ExpantaNum.pow(8, ExpantaNum.pow(2, player.genLvl.pow(0.75)).sub(1)).times(2.5e9)
+	let g = player.genLvl
+	if (g.gte(5)) g = ExpantaNum.pow(1.2, g.sub(5)).times(g)
+	let cost = ExpantaNum.pow(8, ExpantaNum.pow(2, g.pow(0.75)).sub(1)).times(2.5e9)
 	return cost
 }
 
