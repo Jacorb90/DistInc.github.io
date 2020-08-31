@@ -68,6 +68,7 @@ function tickWithoutTS(diff) {
 	if (modeActive("hikers_dream")) {
 		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
 		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
+		player.bestMotive = player.bestMotive.max(tmp.hd.motive)
 	}
 }
 

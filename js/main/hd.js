@@ -22,6 +22,8 @@ const ENERGY_UPG_COSTS = {
 	21: new ExpantaNum(4e10),
 	22: new ExpantaNum(4e12),
 	23: new ExpantaNum(2.5e14),
+	24: new ExpantaNum(4e16),
+	25: new ExpantaNum(1e25),
 }
 
 function updateTempHikersDream() {
@@ -45,6 +47,7 @@ function updateTempHikersDream() {
 	if (player.energyUpgs.includes(3) && tmp.hd.enerUpgs) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.enerUpgs[3])
 	if (player.inf.endorsements.gte(10)) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.superEnEff)
 	tmp.hd.motive = tmp.hd.totalMotive.sub(player.spentMotive).sub(player.spentMotiveGens).max(0);
+	if (player.energyUpgs.includes(24)) tmp.hd.motive = tmp.hd.motive.max(tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : 0)
 	tmp.hd.enEff = player.energy.div(100)
 	if (player.energyUpgs.includes(1) && tmp.hd.enerUpgs) tmp.hd.enEff = tmp.hd.enEff.times(tmp.hd.enerUpgs[1])
 
@@ -52,8 +55,10 @@ function updateTempHikersDream() {
 	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
 	if (!tmp.hd.enerUpgs) tmp.hd.enerUpgs = {}
 	tmp.hd.enerUpgs[1] = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1)
+	if (tmp.hd.enerUpgs[1].gte("1e2500")) tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].logBase("1e2500").pow(825).times("1e2500").min(tmp.hd.enerUpgs[1])
 	tmp.hd.enerUpgs[2] = tmp.hd.motive.max(player.energyUpgs.includes(6)?1:0).plus(1).log10().times(2).plus(1).pow((player.energyUpgs.includes(6)&&tmp.hd.enerUpgs[6]) ? tmp.hd.enerUpgs[6].div(100).plus(1) : 1)
 	tmp.hd.enerUpgs[3] = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1)
+	if (tmp.hd.enerUpgs[3].gte(1e24)) tmp.hd.enerUpgs[3] = tmp.hd.enerUpgs[3].log10().pow(1.5).times(1e24/24).min(tmp.hd.enerUpgs[3])
 	tmp.hd.enerUpgs[4] = player.rockets.plus(1).times(10).slog(10).times((player.energyUpgs.includes(8)&&tmp.hd.enerUpgs[8]) ? (tmp.hd.enerUpgs[8].div(100).plus(1)) : 1)
 	tmp.hd.enerUpgs[5] = tmp.hd.simEn.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(9)&&tmp.hd.enerUpgs[9])?tmp.hd.enerUpgs[9].div(100).plus(1):1)
 	tmp.hd.enerUpgs[6] = tmp.hd.simEn.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(10)&&tmp.hd.enerUpgs[10])?tmp.hd.enerUpgs[10].div(100).plus(1):1)
@@ -74,6 +79,8 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[21] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(100).times((player.energyUpgs.includes(22)&&tmp.hd.enerUpgs[22]) ? tmp.hd.enerUpgs[22].div(100).plus(1) : 1).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1)
 	tmp.hd.enerUpgs[22] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sub(1).times(135).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1)
 	tmp.hd.enerUpgs[23] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(105)
+	tmp.hd.enerUpgs[24] = player.bestMotive.sqrt()
+	tmp.hd.enerUpgs[25] = player.bestMotive.plus(1).log10().plus(1).log10().plus(1).log10().plus(1)
 	
 	tmp.hd.energyGen = ExpantaNum.pow(2, player.genLvl.times(player.energy.plus(1).logBase(1.004).sqrt()).sqrt()).sub(1)
 }
@@ -110,6 +117,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=13) return player.tr.unl||player.collapse.unl||player.inf.unl
 	else if (x<=20) return player.pathogens.unl||player.inf.unl
 	else if (x<=23) return player.inf.endorsements.gte(10)
+	else if (x<=25) return player.inf.endorsements.gte(15)
 	
 	return false;
 }
@@ -133,7 +141,7 @@ function calcInclines() {
 	let a = tmp.acc||new ExpantaNum(1/0)
 	let iter = 0
 	tmp.hd.futureIncl = []
-	while (newIncl.div(incl).gt(maxError)&&iter<10) {
+	while (newIncl.div(incl).gt(maxError)&&iter<25) {
 		incl = baseIncline(d)
 		reduc = ExpantaNum.sub(90, incl).div(90)
 		v = v.plus(a.pow(reduc).div(50))
@@ -182,9 +190,11 @@ function getEnergyLim() {
 	let lim = new ExpantaNum(100)
 	if (player.inf.endorsements.gte(10)) {
 		let lvl = player.genLvl
+		if (lvl.gte(6)) lvl = lvl.times(6).sqrt()
 		if (lvl.gte(3)) lvl = lvl.times(1.1).sub(0.3)
 		lim = lim.times(ExpantaNum.pow(5, lvl.pow(0.75)))
 	}
+	if (player.energyUpgs.includes(25)) lim = lim.times(tmp.hd.enerUpgs ? tmp.hd.enerUpgs[25] : 1).max(1)
 	return lim
 }
 

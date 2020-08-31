@@ -42,7 +42,10 @@ function loadGame() {
 	player.savePos = c;
 	modeLoad([]);
 	setupHTML();
-	if (modeActive("hikers_dream")) calcInclines();
+	if (modeActive("hikers_dream")) {
+		updateTempHikersDream();
+		calcInclines();
+	}
 	interval = setInterval(function () {
 		simulateTime();
 	}, 50);

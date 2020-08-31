@@ -152,6 +152,7 @@ const MODE_VARS = {
 		energyUpgs: [],
 		genLvl: new ExpantaNum(0),
 		spentMotiveGens: new ExpantaNum(0),
+		bestMotive: new ExpantaNum(0),
 	},
 };
 
@@ -192,6 +193,7 @@ const MODE_EX = {
 		source.spentMotive = new ExpantaNum(source.spentMotive||0)
 		source.genLvl = new ExpantaNum(source.genLvl||0)
 		source.spentMotiveGens = new ExpantaNum(source.spentMotiveGens||0)
+		source.bestMotive = new ExpantaNum(source.bestMotive||0)
 		return source;
 	},
 };
