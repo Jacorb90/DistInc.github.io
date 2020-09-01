@@ -92,9 +92,10 @@ function quickReset() {
 }
 
 function refillEnergy() {
+	if (modeActive('hard') && player.energy.neq(0)) return
 	if (!player.canRefill) return
 	player.energy = new ExpantaNum(100)
-	player.canRefill = false
+	player.canRefill = modeActive('hard')
 }
 
 function respecEnergyUpgs() {
