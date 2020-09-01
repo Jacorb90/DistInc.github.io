@@ -931,8 +931,8 @@ function getHCSelector(name) {
 	let base;
 	let data = HC_DATA[name]
 	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
-	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = new ExpantaNum(data[1][0]).toString()
-	return player.elementary.hc.selectors[name]||base
+	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = data[1][0]
+	return new ExpantaNum(player.elementary.hc.selectors[name]||base).max(data[1][0]).min(data[1][1]).toString()
 }
 
 function updateHCSelector(name) {
