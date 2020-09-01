@@ -1040,6 +1040,8 @@ function updateHTML() {
 				tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
 			}
 		} else if (enTab=="generator") {
+			let plural = player.geners.gt(1)
+			tmp.el.geners.setHTML(plural?("<span class='energy'>"+showNum(player.geners)+"</span> Generators are"):"Generator is")
 			tmp.el.genLvl.setTxt(showNum(player.genLvl))
 			tmp.el.energyGen.setTxt(showNum(tmp.hd.energyGen))
 			tmp.el.energyLim.setTxt(showNum(getEnergyLim()))
@@ -1053,6 +1055,17 @@ function updateHTML() {
 			tmp.el.genCost.setTxt(showNum(cost))
 			tmp.el.superEn.setTxt(showNum(tmp.hd.superEn))
 			tmp.el.superEnEff.setTxt(showNum(tmp.hd.superEnEff))
+			tmp.el.superEnEff2Div.setDisplay(player.geners.gt(1))
+			tmp.el.superEnEff2.setTxt(showNum(tmp.hd.superEnEff2.sub(1).times(100)))
+			tmp.el.newGen.setDisplay(player.inf.endorsements.gte(21))
+			let cost2 = getNewGenCost()
+			tmp.el.newGen.setClasses({
+				btn: true,
+				locked: tmp.hd.motive.lt(cost2),
+				en: tmp.hd.motive.gte(cost2),
+				enBox: true,
+			})
+			tmp.el.newGenCost.setTxt(showNum(cost2))
 		}
 	}
 

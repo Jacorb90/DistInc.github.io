@@ -34,7 +34,7 @@ const ESSENCE_MILESTONES = {
 	},
 	9: {
 		req: new ExpantaNum(75),
-		desc: "Gain 1% of Rocket gain every second (does nothing when Time is Reversed, but unaffected by Time Speed)."
+		desc: "Gain 1% of Rocket gain every second (unaffected by Time Speed)."
 	},
 	10: {
 		req: new ExpantaNum(100),

@@ -150,6 +150,7 @@ const MODE_VARS = {
 		spentMotive: new ExpantaNum(0),
 		canRefill: true,
 		energyUpgs: [],
+		geners: new ExpantaNum(1),
 		genLvl: new ExpantaNum(0),
 		spentMotiveGens: new ExpantaNum(0),
 		bestMotive: new ExpantaNum(0),
@@ -191,6 +192,7 @@ const MODE_EX = {
 		source.energy = new ExpantaNum(source.energy)
 		if (source.canRefill===undefined) source.canRefill = true;
 		source.spentMotive = new ExpantaNum(source.spentMotive||0)
+		source.geners = new ExpantaNum(source.geners||1)
 		source.genLvl = new ExpantaNum(source.genLvl||0)
 		source.spentMotiveGens = new ExpantaNum(source.spentMotiveGens||0)
 		source.bestMotive = new ExpantaNum(source.bestMotive||0)
