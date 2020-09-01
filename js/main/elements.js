@@ -1019,6 +1019,7 @@ function updateHTML() {
 		if (enTab=="mainEN") {
 			tmp.el.energyAmt.setTxt(showNum(player.energy))
 			tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
+			tmp.el.energyRefillOnce.setDisplay(!modeActive("hard"))
 			tmp.el.energyRefill.setClasses({
 				btn: true,
 				en: player.canRefill,
