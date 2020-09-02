@@ -362,11 +362,18 @@
 						<td><button id="energyUpg24" class="btn locked" onclick="buyEnergyUpg(24)"><h2>Consistency</h2><br>Your Motive cannot be lower than X, which is based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg24Cost"></span> Motive<br>Currently: <span id="energyUpg24Current"></span><br></button></td>
 						<td><button id="energyUpg25" class="btn locked" onclick="buyEnergyUpg(25)"><h2>Storage</h2><br>The Energy cap is increased based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg25Cost"></span> Motive<br>Currently: <span id="energyUpg25Current"></span>x<br></button></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><button id="energyUpg26" class="btn locked" onclick="buyEnergyUpg(26)"><h2>Meta Omnipotence</h2><br>Super-Energy's second effect is stronger based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg26Cost"></span> Motive<br>Currently: <span id="energyUpg26Current"></span>% stronger<br></button></td>
+						<td></td>
+						<td></td>
+					</tr>
 				</table><br><br><br>
 			</div><div id="generator" class="enTab">
 				<br><br>The <span id="geners"></span> currently at Level <span id="genLvl" class="energy"></span>, and so it is generating <span id="energyGen" class="energy"></span> Energy/sec, with a limit of <span id="energyLim" class="energy"></span> Energy<br><br>
 				The Generators have also granted you <span id="superEn" class="energy"></span> Super-Energy, which makes you get <span id="superEnEff" class="energy"></span>x more Motive.<br>
-				<span id="superEnEff2Div">Your Super Energy is also making all Energy Upgrades <span id="superEnEff2" class="energy"></span>% stronger.</span><br><br>
+				<span id="superEnEff2Div">Your Super Energy is also making the first 25 Energy Upgrades <span id="superEnEff2" class="energy"></span>% stronger.</span><br><br>
 				<button class="btn en" onclick="respecGens()">Respec The Generators</button><br><br>
 				<button id="buyGen" class="btn locked" onclick="buyGen()"><h2>Upgrade Generators</h2><br><h3>Cost: <span id="genCost"></span> Motive</h3></button>&nbsp;&nbsp;&nbsp;<button id="newGen" class="btn locked" onclick="newGen()"><h2>Buy a new Generator</h2><br><h3>Cost: <span id="newGenCost"></span> Motive</h3></button><br><br>
 			</div>

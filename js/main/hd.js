@@ -24,6 +24,7 @@ const ENERGY_UPG_COSTS = {
 	23: new ExpantaNum(2.5e14),
 	24: new ExpantaNum(4e16),
 	25: new ExpantaNum(1e25),
+	26: new ExpantaNum(2.975e33),
 }
 
 function updateTempHikersDream() {
@@ -31,7 +32,7 @@ function updateTempHikersDream() {
 	
 	tmp.hd.superEn = player.genLvl.pow(2).times(player.geners).floor()
 	tmp.hd.superEnEff = tmp.hd.superEn.plus(1).pow(player.geners).log10().plus(1).log10().plus(1).pow(2).times(player.geners)
-	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1)
+	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1).times((tmp.hd.enerUpgs&&player.energyUpgs.includes(26)) ? tmp.hd.enerUpgs[26].div(100).plus(1) : 1)
 	
 	if (tmp.hd.futureIncl?tmp.hd.futureIncl.length>0:false) {
 		tmp.hd.incline = tmp.hd.futureIncl[0]
@@ -83,6 +84,7 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[23] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(105).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[24] = player.bestMotive.sqrt().times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[25] = player.bestMotive.plus(1).log10().plus(1).log10().plus(1).log10().plus(1).times(tmp.hd.superEnEff2)
+	tmp.hd.enerUpgs[26] = player.bestMotive.plus(1).times(10).slog(10).max(1).sub(1).times(12)
 	
 	tmp.hd.energyGen = ExpantaNum.pow(2, player.genLvl.times(player.energy.plus(1).logBase(1.004).sqrt()).sqrt()).sub(1).times(player.geners)
 }
@@ -121,6 +123,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=20) return player.pathogens.unl||player.inf.unl
 	else if (x<=23) return player.inf.endorsements.gte(10)
 	else if (x<=25) return player.inf.endorsements.gte(15)
+	else if (x<=26) return player.inf.endorsements.gte(28)
 	
 	return false;
 }
