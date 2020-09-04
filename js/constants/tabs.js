@@ -11,6 +11,9 @@ const TABBTN_SHOWN = {
 	achievements: function () {
 		return true;
 	},
+	energy: function() {
+		return modeActive("hikers_dream");
+	},
 	rockets: function () {
 		return tmp.rockets ? tmp.rockets.canRocket || player.rockets.gt(0) || player.rf.gt(0) : false;
 	},

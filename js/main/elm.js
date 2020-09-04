@@ -45,9 +45,9 @@ function updateTempElementary() {
 	if (!tmp.elm.doGain) tmp.elm.doGain = function (auto=false) {
 		// Gains
 		if (player.options.elc && !auto) {
-			if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("hard"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
-			if (modeActive("easy")||modeActive("hard")) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
-			if (modeActive("easy")||modeActive("hard")) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, OR EXTREME MODE PROGRESS IF YOU CONTINUE!")) return "NO";
+			if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("hard")||modeActive("hikers_dream"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
+			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
+			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, EXTREME, OR HIKER'S DREAM MODE PROGRESS IF YOU CONTINUE!")) return "NO";
 		}
 		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
@@ -111,7 +111,7 @@ function updateTempElementary() {
 		infTab = "infinity"
 		
 		// Modes
-		if (modeActive("easy")||modeActive("hard")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme")
+		if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme" && x != "hikers_dream")
 	};
 
 	// Elementary Tab System
@@ -931,8 +931,8 @@ function getHCSelector(name) {
 	let base;
 	let data = HC_DATA[name]
 	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
-	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = new ExpantaNum(data[1][0]).toString()
-	return player.elementary.hc.selectors[name]||base
+	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = data[1][0]
+	return new ExpantaNum(player.elementary.hc.selectors[name]||base).max(data[1][0]).min(data[1][1]).toString()
 }
 
 function updateHCSelector(name) {

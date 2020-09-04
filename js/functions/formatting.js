@@ -29,7 +29,9 @@ function showNum(val) {
 
 function addZeroes(orig, num, digits) {
 	if (typeof(num)=="string") num = parseFloat(num)
-	return orig==Math.round(orig)?Math.round(num):num.toLocaleString("en", {useGrouping: false, minimumFractionDigits: Math.max(digits, 1)})
+	let result = orig==Math.round(orig)?Math.round(num).toString():num.toLocaleString("en", {useGrouping: false, minimumFractionDigits: Math.max(digits, 1)})
+	if (result[result.length-1]=="0"&&num<1) result = result.substring(0, result.length - 1);
+	return result
 }
 
 function decimalPlaces(value, places, base = 10) {

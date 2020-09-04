@@ -166,7 +166,7 @@ function changeOpt(name, type) {
 function getInfo(sav) {
 	let mds = "";
 	if (sav.modes.length > 1) mds = sav.modes.reduce((x, y) => capitalFirst(x) + ", " + capitalFirst(y));
-	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0]);
+	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
 	if (sav.elementary?(sav.elementary.hc?sav.elementary.hc.unl:false):false) {

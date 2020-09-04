@@ -26,7 +26,11 @@ const COMBOS = {
 	extreme: {
 		balancing: "balanced up to Elementary",
 		balanceCheck: false
-	}
+	},
+	hikers_dream: {
+		balancing: "balanced up to Elementary",
+		balanceCheck: false,
+	},
 };
 
 const MODES = {
@@ -40,7 +44,8 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
 		},
 		dis: ["extreme"]
 	},
@@ -53,7 +58,8 @@ const MODES = {
 			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
 		}
 	},
 	na: {
@@ -65,7 +71,8 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.extreme)),
 		}
 	},
 	absurd: {
@@ -77,7 +84,8 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
 			easy: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.absurd))
+			extreme: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.absurd)),
 		}
 	},
 	easy: {
@@ -89,7 +97,8 @@ const MODES = {
 			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
 			na: JSON.parse(JSON.stringify(COMBOS.easy)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme))
+			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
 		}
 	},
 	extreme: {
@@ -98,14 +107,28 @@ const MODES = {
 		balancing: "balanced up to Elementary",
 		balanceCheck: false,
 		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
-			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
-			na: JSON.parse(JSON.stringify(COMBOS.easy)),
+			hard: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			aau: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			na: JSON.parse(JSON.stringify(COMBOS.extreme)),
 			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.extreme))
+			easy: JSON.parse(JSON.stringify(COMBOS.extreme)),
+			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
 		},
 		ext: ["hard"]
-	}
+	},
+	hikers_dream: {
+		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill (ends at Elementary).",
+		balancing: "balanced up to Elementary",
+		balanceCheck: false,
+		combos: {
+			hard: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
+			aau: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
+			na: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
+			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
+			easy: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
+			extreme: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
+		},
+	},
 };
 
 const MODE_VARS = {
@@ -121,7 +144,17 @@ const MODE_VARS = {
 		activeFC: 0,
 		furnChalls: [],
 		extremeStad: [],
-	}
+	},
+	hikers_dream: {
+		energy: new ExpantaNum(100),
+		spentMotive: new ExpantaNum(0),
+		canRefill: true,
+		energyUpgs: [],
+		geners: new ExpantaNum(1),
+		genLvl: new ExpantaNum(0),
+		spentMotiveGens: new ExpantaNum(0),
+		bestMotive: new ExpantaNum(0),
+	},
 };
 
 const MODE_EX = {
@@ -154,5 +187,15 @@ const MODE_EX = {
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		if (!source.extremeStad) source.extremeStad = []
 		return source;
-	}
+	},
+	hikers_dream: function(source) {
+		source.energy = new ExpantaNum(source.energy)
+		if (source.canRefill===undefined) source.canRefill = true;
+		source.spentMotive = new ExpantaNum(source.spentMotive||0)
+		source.geners = new ExpantaNum(source.geners||1)
+		source.genLvl = new ExpantaNum(source.genLvl||0)
+		source.spentMotiveGens = new ExpantaNum(source.spentMotiveGens||0)
+		source.bestMotive = new ExpantaNum(source.bestMotive||0)
+		return source;
+	},
 };

@@ -29,6 +29,16 @@
 							</button>
 						</td>
 						<td>
+							<button
+								id="energytabbtn"
+								class="btn tb en main"
+								onclick="showTab('energy')"
+								style="visibility: hidden;"
+							>
+								Energy
+							</button>
+						</td>
+						<td>
 							<button id="rocketstabbtn" class="btn tb rckt main" onclick="showTab('rockets')">
 								Rockets
 							</button>
@@ -71,6 +81,7 @@
 		<br />
 		<div id="main" class="tab">
 			<span id="ts"></span>
+			<span id="incline"></span>
 			You have gone a total of <span id="distance"></span>.<br />
 			Your current velocity is <span id="velocity"></span> (<span id="mvName"></span>
 			<span id="maxVel"></span>/s).<br />
@@ -99,7 +110,8 @@
 			<button id="tierUp" class="btn locked" onclick="tmp.tiers.layer.reset()">
 				Reset your ranks, but <span id="tierDesc" class="based"></span><br />Req: Rank
 				<span id="tierReq" class="based"></span>.
-			</button><br><br><br>
+			</button><br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="quickReset" class="btn" onclick="quickReset()" style="min-width: 200px;" tooltip="Performs a Rank reset (without the reward)">Quick Reset</button><br><br><br>
 		</div>
 		<div id="options" class="tab" style="display: none;">
 			<table>
@@ -157,6 +169,9 @@
 						</td>
 						<td>
 							<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
+						</td>
+						<td>
+							<button id="hikers_dreamMode" class="btn tb opt ob" onclick="selectMode('hikers_dream')" style="z-index: 0">Hiker's Dream</button>
 						</td>
 					</tr>
 				</table>
@@ -285,6 +300,83 @@
 			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
 			<div id="achFin"></div>
+		</div>
+		<div id="energy" class="tab" style="display: none;">
+			<div class="band ylw">
+				<table>
+					<tr>
+						<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+					</tr>
+					<tr>
+						<td>
+							<button id="mainENtabbtn" class="btn tb en main" onclick="showENTab('mainEN')">
+								Main
+							</button>
+						</td>
+						<td>
+							<button id="generatortabbtn" class="btn tb en main" onclick="showENTab('generator')">
+								The Generators
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="mainEN" class="enTab">
+				You have <span id="energyAmt" class="energy"></span> Energy, which is multiplying your velocity by <span id="energyEff" class="energy"></span>.<br><br>
+				<button id="energyRefill" class="btn en" onclick="refillEnergy()">Rejuvenate <div id="energyRefillOnce" style="color: black;">(can only be done once per reset)</div></button><br><br>
+				You have <span id="motive" class="energy"></span> Motive (based on Ranks, Tiers, & Incline) <span id="nextMotive"></span><br><br>
+				<button class="btn en" onclick="respecEnergyUpgs()">Respec Energy Upgrades</button><br><br>
+				<table>
+					<tr>
+						<td><button id="energyUpg1" class="btn locked" onclick="buyEnergyUpg(1)"><h2>Optimization</h2><br>The energy effect is boosted by your Motive<br><br>Cost: <span id="energyUpg1Cost"></span> Motive<br>Currently: <span id="energyUpg1Current"></span>x<br></button></td>
+						<td><button id="energyUpg2" class="btn locked" onclick="buyEnergyUpg(2)"><h2>Endurance</h2><br>Energy decreases slower based on your Motive<br><br>Cost: <span id="energyUpg2Cost"></span> Motive<br>Currently: /<span id="energyUpg2Current"></span></button></td>
+						<td><button id="energyUpg3" class="btn locked" onclick="buyEnergyUpg(3)"><h2>Confidence</h2><br>Your Motive is higher based on the Incline<br><br>Cost: <span id="energyUpg3Cost"></span> Motive<br>Currently: <span id="energyUpg3Current"></span>x</button></td>
+						<td><button id="energyUpg4" class="btn locked" onclick="buyEnergyUpg(4)"><h2>Thrusters</h2><br>The Incline nerf to max velocity & acceleration is reduced based on your Rockets<br><br>Cost: <span id="energyUpg4Cost"></span> Motive<br>Currently: <span id="energyUpg4Current"></span>th root</button></td>
+						<td><button id="energyUpg13" class="btn locked" onclick="buyEnergyUpg(13)"><h2>Hill-Bending</h2><br>All Energy Upgrades that are based on The Incline have a better incline in their effect<br><br>Cost: <span id="energyUpg13Cost"></span> Motive<br>Currently: +<span id="energyUpg13Current"></span>&deg;</button></td>
+					</tr>
+					<tr>
+						<td><button id="energyUpg5" class="btn locked" onclick="buyEnergyUpg(5)"><h2>Optimization II</h2><br>The above upgrade is stronger based on your Energy<br><br>Cost: <span id="energyUpg5Cost"></span> Motive<br>Currently: <span id="energyUpg5Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg6" class="btn locked" onclick="buyEnergyUpg(6)"><h2>Endurance II</h2><br>The above upgrade is stronger based on your Energy<br><br>Cost: <span id="energyUpg6Cost"></span> Motive<br>Currently: <span id="energyUpg6Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg7" class="btn locked" onclick="buyEnergyUpg(7)"><h2>Confidence II</h2><br>The above upgrade is stronger based on your Total Motive<br><br>Cost: <span id="energyUpg7Cost"></span> Motive<br>Currently: <span id="energyUpg7Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg8" class="btn locked" onclick="buyEnergyUpg(8)"><h2>Thrusters II</h2><br>The above upgrade is stronger based on the Incline<br><br>Cost: <span id="energyUpg8Cost"></span> Motive<br>Currently: <span id="energyUpg8Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg14" class="btn locked" onclick="buyEnergyUpg(14)"><h2>Hill-Bending II</h2><br>The above upgrade is stronger based on your Pathogens<br><br>Cost: <span id="energyUpg14Cost"></span> Motive<br>Currently: <span id="energyUpg14Current"></span>% stronger</button></td>
+					</tr>
+					<tr>
+						<td><button id="energyUpg9" class="btn locked" onclick="buyEnergyUpg(9)"><h2>Optimization III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg9Cost"></span> Motive<br>Currently: <span id="energyUpg9Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg10" class="btn locked" onclick="buyEnergyUpg(10)"><h2>Endurance III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg10Cost"></span> Motive<br>Currently: <span id="energyUpg10Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg11" class="btn locked" onclick="buyEnergyUpg(11)"><h2>Confidence III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg11Cost"></span> Motive<br>Currently: <span id="energyUpg11Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg12" class="btn locked" onclick="buyEnergyUpg(12)"><h2>Thrusters III</h2><br>The above upgrade is stronger based on your Time Cubes<br><br>Cost: <span id="energyUpg12Cost"></span> Motive<br>Currently: <span id="energyUpg12Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg15" class="btn locked" onclick="buyEnergyUpg(15)"><h2>Hill-Bending III</h2><br>The above upgrade is stronger based on your Pathogens<br><br>Cost: <span id="energyUpg15Cost"></span> Motive<br>Currently: <span id="energyUpg15Current"></span>% stronger</button></td>
+					</tr>
+					<tr>
+						<td><button id="energyUpg16" class="btn locked" onclick="buyEnergyUpg(16)"><h2>Optimization IV</h2><br>The above upgrade is stronger based on your Cadavers<br><br>Cost: <span id="energyUpg16Cost"></span> Motive<br>Currently: <span id="energyUpg16Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg17" class="btn locked" onclick="buyEnergyUpg(17)"><h2>Endurance IV</h2><br>The above upgrade is stronger based on your Life Essence<br><br>Cost: <span id="energyUpg17Cost"></span> Motive<br>Currently: <span id="energyUpg17Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg18" class="btn locked" onclick="buyEnergyUpg(18)"><h2>Confidence IV</h2><br>The above upgrade is stronger based on your Pathogens<br><br>Cost: <span id="energyUpg18Cost"></span> Motive<br>Currently: <span id="energyUpg18Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg19" class="btn locked" onclick="buyEnergyUpg(19)"><h2>Thrusters IV</h2><br>The above upgrade is stronger based on your Pathogens<br><br>Cost: <span id="energyUpg19Cost"></span> Motive<br>Currently: <span id="energyUpg19Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg20" class="btn locked" onclick="buyEnergyUpg(20)"><h2>Omnipotence</h2><br>All other upgrades in this row are stronger based on your Motive and Energy<br><br>Cost: <span id="energyUpg20Cost"></span> Motive<br>Currently: <span id="energyUpg20Current"></span>% stronger<br></button></td>
+					</tr>
+					<tr>
+						<td><button id="energyUpg21" class="btn locked" onclick="buyEnergyUpg(21)"><h2>Omnipotence II</h2><br><b>Omnipotence</b> is stronger based on your Super-Energy<br><br>Cost: <span id="energyUpg21Cost"></span> Motive<br>Currently: <span id="energyUpg21Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg22" class="btn locked" onclick="buyEnergyUpg(22)"><h2>Omnipotence III</h2><br><b>Omnipotence II</b> is stronger based on your Super-Energy<br><br>Cost: <span id="energyUpg22Cost"></span> Motive<br>Currently: <span id="energyUpg22Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg23" class="btn locked" onclick="buyEnergyUpg(23)"><h2>Omnipotence IV</h2><br><b>Omnipotence II</b> and <b>Omnipotence III</b> are stronger based on your Super-Energy<br><br>Cost: <span id="energyUpg23Cost"></span> Motive<br>Currently: <span id="energyUpg23Current"></span>% stronger<br></button></td>
+						<td><button id="energyUpg24" class="btn locked" onclick="buyEnergyUpg(24)"><h2>Consistency</h2><br>Your Motive cannot be lower than X, which is based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg24Cost"></span> Motive<br>Currently: <span id="energyUpg24Current"></span><br></button></td>
+						<td><button id="energyUpg25" class="btn locked" onclick="buyEnergyUpg(25)"><h2>Storage</h2><br>The Energy cap is increased based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg25Cost"></span> Motive<br>Currently: <span id="energyUpg25Current"></span>x<br></button></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><button id="energyUpg26" class="btn locked" onclick="buyEnergyUpg(26)"><h2>Meta Omnipotence</h2><br>Super-Energy's second effect is stronger based on your Best-Ever Motive<br><br>Cost: <span id="energyUpg26Cost"></span> Motive<br>Currently: <span id="energyUpg26Current"></span>% stronger<br></button></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table><br><br><br>
+			</div><div id="generator" class="enTab">
+				<br><br>The <span id="geners"></span> currently at Level <span id="genLvl" class="energy"></span>, and so it is generating <span id="energyGen" class="energy"></span> Energy/sec, with a limit of <span id="energyLim" class="energy"></span> Energy<br><br>
+				The Generators have also granted you <span id="superEn" class="energy"></span> Super-Energy, which makes you get <span id="superEnEff" class="energy"></span>x more Motive.<br>
+				<span id="superEnEff2Div">Your Super Energy is also making the first 25 Energy Upgrades <span id="superEnEff2" class="energy"></span>% stronger.</span><br><br>
+				<button class="btn en" onclick="respecGens()">Respec The Generators</button><br><br>
+				<button id="buyGen" class="btn locked" onclick="buyGen()"><h2>Upgrade Generators</h2><br><h3>Cost: <span id="genCost"></span> Motive</h3></button>&nbsp;&nbsp;&nbsp;<button id="newGen" class="btn locked" onclick="newGen()"><h2>Buy a new Generator</h2><br><h3>Cost: <span id="newGenCost"></span> Motive</h3></button><br><br>
+			</div>
 		</div>
 		<div id="rockets" class="tab" style="display: none;">
 			<button id="rocketReset" class="btn locked" onclick="tmp.rockets.layer.reset()">
@@ -1684,6 +1776,7 @@
 	<script type="text/javascript" src="js/main/elm.js"></script>
 	<script type="text/javascript" src="js/main/misc.js"></script>
 	<script type="text/javascript" src="js/main/timeSpeed.js"></script>
+	<script type="text/javascript" src="js/main/hd.js"></script>
 
 	<!-- Extreme Mode File Data -->
 

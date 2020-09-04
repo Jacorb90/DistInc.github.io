@@ -37,12 +37,12 @@ function updateHTML() {
 			formatDistance(player.distance) +
 				" (+" +
 				formatDistance(
-					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+					adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?tmp.hd.enEff:1)
 				) +
 				"/sec)"
 		);
 		tmp.el.velocity.setTxt(
-			formatDistance(player.velocity) +
+			formatDistance(player.velocity.times(modeActive("hikers_dream")?tmp.hd.enEff:1)) +
 				"/s (+" +
 				formatDistance(adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 				"/sec)"
@@ -67,6 +67,11 @@ function updateHTML() {
 		// Misc
 		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
+		
+		// Hiker's Dream
+		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(-5))+"x faster.<br>":"")
+		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
+		
 	}
 
 	// Rockets
@@ -1005,6 +1010,63 @@ function updateHTML() {
 			}
 			tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 			tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
+		}
+	}
+	
+	// Energy
+	if (player.tab == "energy") {
+		updateENTabs()
+		if (enTab=="mainEN") {
+			tmp.el.energyAmt.setTxt(showNum(player.energy))
+			tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
+			tmp.el.energyRefillOnce.setDisplay(!modeActive("hard"))
+			tmp.el.energyRefill.setClasses({
+				btn: true,
+				en: player.canRefill,
+				locked: !player.canRefill,
+			})
+			tmp.el.motive.setTxt(showNum(tmp.hd.motive))
+			tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"")
+			for (let i=1;i<=26;i++) {
+				let cost = ENERGY_UPG_COSTS[i]
+				tmp.el["energyUpg"+i].setClasses({
+					btn: true,
+					bought: player.energyUpgs.includes(i),
+					locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
+					en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
+					enBox: true,
+				})
+				tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i))
+				tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
+				tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
+			}
+		} else if (enTab=="generator") {
+			let plural = player.geners.gt(1)
+			tmp.el.geners.setHTML(plural?("<span class='energy'>"+showNum(player.geners)+"</span> Generators are"):"Generator is")
+			tmp.el.genLvl.setTxt(showNum(player.genLvl))
+			tmp.el.energyGen.setTxt(showNum(tmp.hd.energyGen))
+			tmp.el.energyLim.setTxt(showNum(getEnergyLim()))
+			let cost = getGenCost()
+			tmp.el.buyGen.setClasses({
+				btn: true,
+				locked: tmp.hd.motive.lt(cost),
+				en: tmp.hd.motive.gte(cost),
+				enBox: true,
+			})
+			tmp.el.genCost.setTxt(showNum(cost))
+			tmp.el.superEn.setTxt(showNum(tmp.hd.superEn))
+			tmp.el.superEnEff.setTxt(showNum(tmp.hd.superEnEff))
+			tmp.el.superEnEff2Div.setDisplay(player.geners.gt(1))
+			tmp.el.superEnEff2.setTxt(showNum(tmp.hd.superEnEff2.sub(1).times(100)))
+			tmp.el.newGen.setDisplay(player.inf.endorsements.gte(21))
+			let cost2 = getNewGenCost()
+			tmp.el.newGen.setClasses({
+				btn: true,
+				locked: tmp.hd.motive.lt(cost2),
+				en: tmp.hd.motive.gte(cost2),
+				enBox: true,
+			})
+			tmp.el.newGenCost.setTxt(showNum(cost2))
 		}
 	}
 
