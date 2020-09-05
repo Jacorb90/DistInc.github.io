@@ -339,6 +339,8 @@ document.onkeydown = function(e) {
 			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset()
 			else if (TABBTN_SHOWN.rockets()) tmp.rf.layer.reset()
 			break;
+		case 74:
+			if (modeActive("hikers_dream")) refillEnergy()
 		case 80:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()
 			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll()

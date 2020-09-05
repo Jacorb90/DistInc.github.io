@@ -1090,6 +1090,7 @@ function updateHTML() {
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
 		(modeActive("extreme")?"Shift + C -> Rank Cheapener Reset\n":"")+
+		(modeActive("hikers_dream")?"J -> Rejuvenate\n":"")+
 		"T -> Tier Reset\n"+
 		(TABBTN_SHOWN.rockets()?"Shift + R -> Rocket Reset\n":"")+
 		(TABBTN_SHOWN.rockets()?"F -> Rocket Fuel Reset\n":"")+

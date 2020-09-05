@@ -66,8 +66,12 @@ function getRocketGainMult() {
 function updateTempRockets() {
 	if (!tmp.rockets) tmp.rockets = {};
 	tmp.rockets.lrm = new ExpantaNum(1);
-	if (modeActive("hard") && !modeActive("hikers_dream")) tmp.rockets.lrm = tmp.rockets.lrm.times(2);
-	if (modeActive("extreme") && !modeActive("hikers_dream")) tmp.rockets.lrm = tmp.rockets.lrm.div(100);
+	if (modeActive("hikers_dream")){
+		if (modeActive("extreme")) tmp.rockets.lrm = new ExpantaNum(.1)
+	} else {
+		if (modeActive("hard")) tmp.rockets.lrm = tmp.rockets.lrm.times(2);
+		if (modeActive("extreme")) tmp.rockets.lrm = tmp.rockets.lrm.div(100);
+	}
 	tmp.rockets.sc = getRocketSoftcapStart();
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm));
 	if (nerfActive("noRockets")) tmp.rockets.canRocket = false;
