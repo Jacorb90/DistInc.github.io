@@ -20,6 +20,7 @@ function updateTabs() {
 		elT.changeStyle("visibility", getTabBtnsShown().includes(tabs[i].id)?"visible":"hidden");
 	}
 	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
+	new Element("energytabbtn").setDisplay(player.modes.includes("hikers_dream"))
 }
 
 function showTab(name) {

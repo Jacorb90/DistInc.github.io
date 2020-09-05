@@ -21,15 +21,16 @@ var bosTab = "gauge";
 var hcTab = "mainHC";
 var gluonTab = "r";
 var thTab = "tv";
+var enTab = "mainEN";
 var autoRobotTarget = 0
-var betaID = ""; // beta1.7
+var betaID = ""; // beta1.71
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
 var robotActives = {}
 var correctLink = "jacorb90.github.io"
 
-// Game Loops
+// Game Loops 
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
@@ -64,6 +65,11 @@ function tickWithoutTS(diff) {
 		player.furnace.enhancedCoal = player.furnace.enhancedCoal.plus(adjustGen(tmp.fn.enh.gain, "fn").times(diff));
 	}
 	if (player.elementary.times.gt(0)) elTick(diff);
+	if (modeActive("hikers_dream")) {
+		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
+		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
+		player.bestMotive = player.bestMotive.max(tmp.hd.motive)
+	}
 }
 
 function tickWithTR(diff) {
@@ -71,7 +77,7 @@ function tickWithTR(diff) {
 		.plus(adjustGen(tmp.acc, "vel").times(diff))
 		.min(nerfActive("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
-	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(diff)).max(0);
+	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(modeActive("hikers_dream")?tmp.hd.enEff:1).times(diff)).max(0);
 	player.inf.bestDist = player.inf.bestDist.max(player.distance)
 	player.bestDistance = player.bestDistance.max(player.distance)
 	player.bestV = player.bestV.max(player.velocity)

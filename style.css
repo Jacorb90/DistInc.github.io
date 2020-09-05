@@ -878,6 +878,41 @@ table {
 	box-shadow: none;
 }
 
+.btn.en {
+	box-shadow: 3px 4px 0px 0px black;
+	background: linear-gradient(to bottom, #c2ba1d 5%, #e5eb36 100%);
+	background-color: #c2ba1d;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #6e6704;
+}
+
+.btn.en:hover {
+	background: linear-gradient(to bottom, #e5eb36 5%, #c2ba1d 100%);
+	background-color: #e5eb36;
+}
+
+.btn.en:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.enBox {
+	min-height: 200px;
+	max-height: 200px;
+	min-width: 200px;
+	max-width: 200px;
+}
+
 .char {
 	font-size: 20px;
 	color: var(--plaintxt);
@@ -1500,6 +1535,12 @@ table {
 .had {
 	color: #918f60;
 	font-size: 20px;
+}
+
+.energy {
+	font-size: 24px;
+	font-weight: bold;
+	color: yellow;
 }
 
 @keyframes grosstxt {

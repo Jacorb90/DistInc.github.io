@@ -50,6 +50,7 @@ class Layer {
 		player = transformToEN(player, DEFAULT_START);
 		modeLoad(LAYER_RESETS_EXTRA[this.name]);
 		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev);
+		if (this.name!="rf"&&modeActive("hikers_dream")) calcInclines();
 		needUpdate = true
 	}
 
