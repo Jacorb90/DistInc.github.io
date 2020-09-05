@@ -6,7 +6,7 @@ class Achievement {
 	get has() { return player.achievements.includes(this.name) }
 
 	parse(txt) {
-		c = 0
+		let c = 0
 		while (txt.indexOf("boolean") != -1 && c < 10) {
 			c++
 			let txt2 = txt.split("boolean")[1];

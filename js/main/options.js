@@ -343,7 +343,7 @@ function confirmModes() {
 }
 
 function modeActive(name) {
-	l = name.split("+")
+	let l = name.split("+")
 	for (let i = 0; i < l.length; i++) {
 		if (!player.modes.includes(l[i])) return false
 	}

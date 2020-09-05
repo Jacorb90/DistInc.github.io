@@ -38,7 +38,7 @@ function getBaseMotive(){
 }
 
 function getTotalFurnaceUpgrades(){
-	x = ExpantaNum(0)
+	let x = ExpantaNum(0)
 	for (let i=0; i<player.furnace.upgrades.length; i++){
 		x = x.plus(player.furnace.upgrades[i])
 	}
@@ -46,12 +46,12 @@ function getTotalFurnaceUpgrades(){
 }
 
 function getOptimizationOneScalingStart(){
-	e = ExpantaNum(1.1).pow(getTotalFurnaceUpgrades())
+	let e = ExpantaNum(1.1).pow(getTotalFurnaceUpgrades())
 	return ExpantaNum(100).times(player.achievements.includes(36)?e:1)
 }
 
 function getOptimizationOneEffect(){
-	op1 = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	let op1 = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
 	if (op1.gt(getOptimizationOneScalingStart()) && modeActive("extreme")) {
 		e = getOptimizationOneScalingStart().logBase(getOptimizationOneScalingStart().log10().times(5))
 		return op1.log10().times(5).pow(e)
@@ -60,7 +60,7 @@ function getOptimizationOneEffect(){
 }
 
 function getConfidenceOneEffect(){
-	co1 = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	let co1 = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
 	if (co1 > 3 && modeActive("extreme")) return co1.div(3).pow(.5).times(3)
 	return co1
 }
