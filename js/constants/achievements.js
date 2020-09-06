@@ -292,7 +292,7 @@ const ACH_DATA = {
 		34: "Rocket gain is increased by showNum(10)%boolean(extreme, and you get another extra Rank Cheapener).",
 		35: "Acceleration is showNum(80)% higherboolean(extreme, and the Coal effect is doubled).",
 		36: "Scrap & intelligence gain are increased by showNum(50)%boolean(extreme+hikers_dream, and each furnace upgrade increase the Optimization softcap start by 10%).",
-		38: "Cadaver gain is doubled.",
+		38: "Cadaver gain is doubledboolean(extreme+hikers_dream, and multiplied by the square of energy upgrades (minimum 1)).",
 
 		41: "Maximum Velocity is showNum(50)% higher.",
 		43: "The Rank requirement formula is showNum(2.5)% slower.",
@@ -307,9 +307,9 @@ const ACH_DATA = {
 		57: "Time goes by showNum(10)% faster.",
 		58: "The Rocket Fuel reset only resets Rockets to showNum(50)% of their current amount.",
 
-		61: "Maximum Velocity is showNum(60)% higher.",
+		61: "Maximum Velocity is showNum(60)% higherboolean(extreme+hikers_dream, and divide energy loss by time cube upgrades (minimum 1)).",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
-		65: "Cadaver gain is increased by showNum(40)%boolean(hard, and Pathogen Upgrades softcap five later).",
+		65: "Cadaver gain is increased by showNum(40)%boolean(extreme+hikers_dream, increase the Confidence softcap by one third per Pathogen upgrade)boolean(hard, and Pathogen Upgrades softcap five later)",
 		67: "Time goes by showNum(11.11)% faster.",
 		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme, and Cadaver gain is quintupled).",
 
