@@ -9,7 +9,7 @@ function updatePathogensGain(){
 	if (tmp.ach) if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(ach63Eff());
 	if (tmp.ach) if (tmp.ach[68].has) {
 		tmp.pathogens.gain = tmp.pathogens.gain.times(2.5);
-		if (modeActive("extreme+hikers_dream")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.hd.enerUpgs[3)
+		if (modeActive("extreme+hikers_dream")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.hd.enerUpgs[3])
 	}
 	let a84 = tmp.dc ? tmp.dc.flow.max(1) : new ExpantaNum(1);
 	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)));
