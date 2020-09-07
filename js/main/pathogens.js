@@ -1,3 +1,34 @@
+function updatePathogensGain(){
+	tmp.pathogens.st = new ExpantaNum(1.25);
+	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1);
+	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1);
+	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart);
+	if (tmp.pathogens.gain.gte(tmp.pathogens.st))
+		tmp.pathogens.gain = tmp.pathogens.gain.sqrt().times(tmp.pathogens.st.sqrt());
+	tmp.pathogens.baseGain = new ExpantaNum(tmp.pathogens.gain);
+	if (tmp.ach) if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(ach63Eff());
+	if (tmp.ach) if (tmp.ach[68].has) {
+		tmp.pathogens.gain = tmp.pathogens.gain.times(2.5);
+		if (modeActive("extreme+hikers_dream")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.hd.enerUpgs[3)
+	}
+	let a84 = tmp.dc ? tmp.dc.flow.max(1) : new ExpantaNum(1);
+	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)));
+	if (tmp.ach[84].has) tmp.pathogens.gain = tmp.pathogens.gain.times(a84);
+	if (tmp.ach[131].has) tmp.pathogens.gain = tmp.pathogens.gain.times(2);
+	if (modeActive("hard")) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
+	if (modeActive("easy")) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
+	tmp.pathogens.gain = tmp.pathogens.gain.times(pathogenUpg5Eff());
+	if (player.tr.upgrades.includes(25)&&modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(5)
+	if (tmp.elm)
+		if (player.elementary.times.gt(0))
+			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
+	if (tmp.elm) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.bos.photonEff(1).max(1));
+	if (tmp.inf) if (tmp.inf.upgs.has("5;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["5;10"]().pth)
+	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;5"]())
+	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;10"]())
+	if (tmp.fn && modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.fn.enh.moltBrEff||1)
+}
+
 function updateTempPathogens() {
 	if (!tmp.pathogens) tmp.pathogens = {};
 	tmp.pathogens.lrm = new ExpantaNum(1);
@@ -205,31 +236,7 @@ function updateTempPathogens() {
 			if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[i].cost);
 		}
 	};
-	tmp.pathogens.st = new ExpantaNum(1.25);
-	tmp.pathogens.gainLEpart = player.collapse.lifeEssence.plus(1).log10().plus(1).pow(0.1).sub(1);
-	tmp.pathogens.gainPTHpart = player.pathogens.amount.plus(1).log10().plus(1);
-	tmp.pathogens.gain = tmp.pathogens.gainLEpart.times(tmp.pathogens.gainPTHpart);
-	if (tmp.pathogens.gain.gte(tmp.pathogens.st))
-		tmp.pathogens.gain = tmp.pathogens.gain.sqrt().times(tmp.pathogens.st.sqrt());
-	tmp.pathogens.baseGain = new ExpantaNum(tmp.pathogens.gain);
-	if (tmp.ach[63].has) tmp.pathogens.gain = tmp.pathogens.gain.times(ach63Eff());
-	if (tmp.ach[68].has) tmp.pathogens.gain = tmp.pathogens.gain.times(2.5);
-	let a84 = tmp.dc ? tmp.dc.flow.max(1) : new ExpantaNum(1);
-	if (a84.gte(50)) a84 = a84.log10().times(ExpantaNum.div(50, Math.log10(50)));
-	if (tmp.ach[84].has) tmp.pathogens.gain = tmp.pathogens.gain.times(a84);
-	if (tmp.ach[131].has) tmp.pathogens.gain = tmp.pathogens.gain.times(2);
-	if (modeActive("hard")) tmp.pathogens.gain = tmp.pathogens.gain.div(3);
-	if (modeActive("easy")) tmp.pathogens.gain = tmp.pathogens.gain.times(2.4);
-	tmp.pathogens.gain = tmp.pathogens.gain.times(pathogenUpg5Eff());
-	if (player.tr.upgrades.includes(25)&&modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(5)
-	if (tmp.elm)
-		if (player.elementary.times.gt(0))
-			tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.ferm.quarkR("strange").max(1));
-	if (tmp.elm) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.bos.photonEff(1).max(1));
-	if (tmp.inf) if (tmp.inf.upgs.has("5;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["5;10"]().pth)
-	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;5"]())
-	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;10"]())
-	if (tmp.fn && modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.fn.enh.moltBrEff||1)
+	updatePathogensGain()
 }
 
 function getPathogenUpgData(i) {

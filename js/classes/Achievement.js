@@ -10,7 +10,7 @@ class Achievement {
 		while (txt.indexOf("boolean") != -1 && c < 10) {
 			c++
 			let txt2 = txt.split("boolean")[1];
-			l = txt.split("boolean")
+			let l = txt.split("boolean")
 			let content = txt2.slice(1, txt2.indexOf(")")).split(",");
 			let newTxt = txt.split("boolean")[0];
 			if (modeActive(content[0])) newTxt += content[1];

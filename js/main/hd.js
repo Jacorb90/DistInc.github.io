@@ -46,8 +46,10 @@ function getTotalFurnaceUpgrades(){
 }
 
 function getOptimizationOneScalingStart(){
+	let b = ExpantaNum(100)
+	if (tmp.ach) if (tmp.ach[67].has) b = b.times(5)
 	let e = ExpantaNum(1.1).pow(getTotalFurnaceUpgrades())
-	return ExpantaNum(100).times(player.achievements.includes(36)?e:1)
+	return b.times(player.achievements.includes(36) ? e : 1)
 }
 
 function getOptimizationOneEffect(){
@@ -68,8 +70,10 @@ function getTotalPathogenUpgrades(){
 }
 
 function getConfidenceOneScalingStart(){
-	x = player.achievements.includes(65) ? getTotalPathogenUpgrades().div(3) : ExpantaNum(0)
+	x = ExpantaNum(0)
+	if (tmp.ach) x = tmp.ach[65].has ? getTotalPathogenUpgrades().div(3) : ExpantaNum(0)
 	if (x.gt(3)) x = x.logBase(3).plus(2)
+	if (tmp.ach) x = x.plus(tmp.ach[67].has ? 1 : 0)
 	return x.plus(3)
 }
 
@@ -84,8 +88,8 @@ function updateEnergyLoss(){
 	tmp.hd.energyLoss = tmp.hd.inclineRed.pow(getEnergyLossExp())
 	if (player.energyUpgs.includes(2) && tmp.hd.enerUpgs) tmp.hd.energyLoss = tmp.hd.energyLoss.div(tmp.hd.enerUpgs[2])
 	if (modeActive("extreme")){
-		if (player.achievements.includes(61)) tmp.hd.energyLoss = tmp.hd.energyLoss.div(Math.max(player.tr.upgrades.length, 1))
-		if (tmp.timeSpeed.gt(1e20)) tmp.hd.energyLoss = tmp.hd.energyLoss.times(tmp.timeSpeed.log10().div(20))
+		if (tmp.ach) if (tmp.ach[61].has) tmp.hd.energyLoss = tmp.hd.energyLoss.div(Math.max(player.tr.upgrades.length, 1))
+		if (tmp.timeSpeed) if (tmp.timeSpeed.gt(1e20)) tmp.hd.energyLoss = tmp.hd.energyLoss.times(tmp.timeSpeed.log10().div(20))
 	} 
 }
 
@@ -133,6 +137,7 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10).times((player.energyUpgs.includes(17)&&tmp.hd.enerUpgs[17])?tmp.hd.enerUpgs[17].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50).times((player.energyUpgs.includes(18)&&tmp.hd.enerUpgs[18])?tmp.hd.enerUpgs[18].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[12] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.2).times(20).times((player.energyUpgs.includes(19)&&tmp.hd.enerUpgs[19])?tmp.hd.enerUpgs[19].div(100).plus(1):1).times(tmp.hd.superEnEff2)
+	if (tmp.ach) if (tmp.hd.enerUpgs[12] && modeActive("extreme+hikers_dream") && tmp.ach.has[66]) tmp.hd.enerUpgs[12] += ExpantaNum.min(40, ExpantaNum.sqrt(tmp.hd.enerUpgs[12]).times(4))
 	tmp.hd.enerUpgs[13] = new ExpantaNum(6).times((player.energyUpgs.includes(14)&&tmp.hd.enerUpgs[14]) ? tmp.hd.enerUpgs[14].div(100).plus(1) : 1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[14] = ExpantaNum.sub(3, ExpantaNum.div(2, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1))).times((player.energyUpgs.includes(15)&&tmp.hd.enerUpgs[15]) ? tmp.hd.enerUpgs[15].div(100).plus(1) : 1).sub(1).times(100).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[15] = ExpantaNum.sub(1.5, ExpantaNum.div(0.5, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).log10().plus(1))).sub(1).times(100).times(tmp.hd.superEnEff2)

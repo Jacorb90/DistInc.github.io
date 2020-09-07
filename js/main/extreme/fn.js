@@ -1,11 +1,11 @@
 function updateCoalGain(){
 	tmp.fn.gain = ExpantaNum.pow(2, player.rf.min(inFC(5)?1:(1/0))).sub(1).max(player.rf.gt(0)?1:0).times(ExpantaNum.pow(tmp.fn1base, player.furnace.upgrades[0]));
 	if (modeActive("extreme+hikers_dream")){
-		if (player.achievements.includes(16)) {
+		if (player.achievements.includes(16) && tmp.hd.totalMotive) {
 			let eff = tmp.hd.totalMotive.max(100).div(100)
 			tmp.fn.gain = tmp.fn.gain.times(eff)
 		}
-		if (player.achievements.includes(26)) {
+		if (player.achievements.includes(26) && tmp.hd.enerUpgs[1]) {
 			let eff = tmp.hd.enerUpgs[1].plus(10).log10().pow(3)
 			if (tmp.hd.enerUpgs[1].gt(250)) eff = eff.times(3)
 			tmp.fn.gain = tmp.fn.gain.times(eff)
