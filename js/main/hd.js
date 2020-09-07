@@ -12,7 +12,7 @@ const ENERGY_UPG_COSTS = {
 	11: new ExpantaNum(6000),
 	12: new ExpantaNum(10000),
 	13: new ExpantaNum(5000),
-	14: new ExpantaNum(500000),
+	14: new ExpantaNum(5e5),
 	15: new ExpantaNum(1e6),
 	16: new ExpantaNum(56000),
 	17: new ExpantaNum(80000),
@@ -27,14 +27,31 @@ const ENERGY_UPG_COSTS = {
 	26: new ExpantaNum(2.975e33),
 }
 
+function getEnergyUpgCost(n){
+	baseCost = ENERGY_UPG_COSTS[n]
+	exCost = ExpantaNum(1)
+	if (modeActive("extreme") && n > 13) exCost = exCost.times(10)
+	return baseCost.times(exCost)
+}
+
 function getEnergyLossExp(){
 	return modeActive("extreme") ? -10 : -5
 }
 
+function getBaseMotiveScalingStart(){
+	y = ExpantaNum(125)
+	if (tmp.ach) if (tmp.ach[77].has) {
+		y = y.plus(player.rockets.plus(10).log10()) // may be nerfed
+		//prb will be nerfed
+	}
+	return y
+}
+
 function getBaseMotive(){
-	x = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
-	if (x.gt(125) && modeActive("extreme")) return x.div(125).pow(.5).times(125)
-	return x
+	z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	y = getBaseMotiveScalingStart()
+	if (z.gt(y) && modeActive("extreme")) return z.div(y).pow(.5).times(y)
+	return z
 }
 
 function getTotalFurnaceUpgrades(){
@@ -180,7 +197,7 @@ function respecEnergyUpgs() {
 
 function buyEnergyUpg(x) {
 	if (player.energyUpgs.includes(x)) return
-	let cost = ENERGY_UPG_COSTS[x]
+	let cost = getEnergyUpgCost(x)
 	if (tmp.hd.motive.lt(cost)) return
 	player.spentMotive = player.spentMotive.plus(cost)
 	player.energyUpgs.push(x)
@@ -190,7 +207,7 @@ function isEnergyUpgShown(x) {
 	if (x<=3) return true;
 	else if (x<=8) return player.rf.gte(1) || player.automation.unl || player.collapse.unl||player.inf.unl
 	else if (x<=13) return player.tr.unl || player.collapse.unl || player.inf.unl
-	else if (x<=20) return (player.pathogens.unl && !modeActive("hikers_dream")) || player.inf.unl || player.dc.unl
+	else if (x<=20) return (player.pathogens.unl && !modeActive("extreme")) || player.inf.unl 
 	else if (x<=23) return player.inf.endorsements.gte(10)
 	else if (x<=25) return player.inf.endorsements.gte(15)
 	else if (x<=26) return player.inf.endorsements.gte(28)

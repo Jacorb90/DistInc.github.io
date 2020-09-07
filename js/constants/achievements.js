@@ -318,6 +318,7 @@ const ACH_DATA = {
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
 		76: "Rocket gain is increased by showNum(2)%",
+		77: "boolean(extreme+hikers_dream,Increase the base motivation softcap based on rockets.)",
 
 		81: "Keep automation stuff on Infinity.",
 		83: "Dark Flow is showNum(20)% faster.",

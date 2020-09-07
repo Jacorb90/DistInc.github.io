@@ -275,7 +275,7 @@ const TR_UPGS = {
 	},
 	28: {
 		cost: function(){
-			return new ExpantaNum(1e162)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e182 : 1e162)
 		},
 		desc: "Coal boosts Rocket gain.",
 		current: function () {
@@ -287,7 +287,7 @@ const TR_UPGS = {
 	},
 	29: {
 		cost: function(){
-			return new ExpantaNum(1e178)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e190 : 1e178)
 		},
 		desc: "Dark Fluid & Rockets boost Rocket gain.",
 		current: function () {
@@ -299,7 +299,7 @@ const TR_UPGS = {
 	},
 	30: {
 		cost: function(){
-			return new ExpantaNum(1e190)
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? 1e210 : 1e190)
 		},
 		desc: "Time Speed is raised to a power based on your Pathogens.",
 		current: function () {

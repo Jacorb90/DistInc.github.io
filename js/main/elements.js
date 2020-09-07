@@ -242,9 +242,9 @@ function updateTimeReversalHTML(){
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
 			tmp.el["tr" + i].setClasses({
 				btn: true,
-				locked: !player.tr.upgrades.includes(i) && player.tr.cubes.lt(upg.cost),
+				locked: !player.tr.upgrades.includes(i) && player.tr.cubes.lt(upg.cost()),
 				bought: player.tr.upgrades.includes(i),
-				rt: !player.tr.upgrades.includes(i) && player.tr.cubes.gte(upg.cost)
+				rt: !player.tr.upgrades.includes(i) && player.tr.cubes.gte(upg.cost())
 			});
 		}
 		tmp.el.trRow3.setDisplay(player.dc.unl || tmp.inf.upgs.has("1;4"));
@@ -1149,7 +1149,7 @@ function updateMainEnergyTabHTML(){
 		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
 		tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"")
 		for (let i=1;i<=26;i++) {
-			let cost = ENERGY_UPG_COSTS[i]
+			let cost = getEnergyUpgCost(i)
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,
 				bought: player.energyUpgs.includes(i),
