@@ -54,6 +54,9 @@ function getOptimizationOneScalingStart(){
 
 function getOptimizationOneEffect(){
 	let op1 = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	if (modeActive("extreme")){
+		if (tmp.ach) if (tmp.ach[66].has) op1 = op1.times(ExpantaNum.pow(player.furnace.coal.plus(10).log10(), 2))
+	}
 	if (op1.gt(getOptimizationOneScalingStart()) && modeActive("extreme")) {
 		e = getOptimizationOneScalingStart().logBase(getOptimizationOneScalingStart().log10().times(5))
 		return op1.log10().times(5).pow(e)

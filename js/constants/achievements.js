@@ -310,9 +310,9 @@ const ACH_DATA = {
 		61: "Maximum Velocity is showNum(60)% higherboolean(extreme+hikers_dream, and divide energy loss by time cube upgrades (minimum 1)).",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
 		65: "Cadaver gain is increased by showNum(40)%boolean(extreme+hikers_dream, increase the Confidence softcap by one third per Pathogen upgrade)boolean(hard, and Pathogen Upgrades softcap five later)",
-		66: "boolean(extreme+hikers_dream, Buff Thrusters III.)",
+		66: "boolean(extreme+hikers_dream,Buff Thrusters III and Coal boosts Optimization.)",
 		67: "Time goes by showNum(11.11)% fasterboolean(extreme+hikers_dream, increase the Optimization softcap by 5 times and increase the Confidence softcap by 1).",
-		68: "Pathogen gain is showNum(2.5)x fasterboolean(exteme+hikers_dream, Confidence boosts Pathogen gain)boolean(extreme, and Cadaver gain is quintupled).",
+		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme+hikers_dream, Confidence boosts Pathogen gain)boolean(extreme, and Cadaver gain is quintupled).",
 
 		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
