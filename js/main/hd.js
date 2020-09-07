@@ -137,7 +137,7 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10).times((player.energyUpgs.includes(17)&&tmp.hd.enerUpgs[17])?tmp.hd.enerUpgs[17].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50).times((player.energyUpgs.includes(18)&&tmp.hd.enerUpgs[18])?tmp.hd.enerUpgs[18].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[12] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.2).times(20).times((player.energyUpgs.includes(19)&&tmp.hd.enerUpgs[19])?tmp.hd.enerUpgs[19].div(100).plus(1):1).times(tmp.hd.superEnEff2)
-	if (tmp.ach) if (tmp.hd.enerUpgs[12] && modeActive("extreme+hikers_dream") && tmp.ach.has[66]) tmp.hd.enerUpgs[12] += ExpantaNum.min(40, ExpantaNum.sqrt(tmp.hd.enerUpgs[12]).times(4))
+	if (tmp.ach) if (tmp.hd.enerUpgs[12] && modeActive("extreme+hikers_dream") && tmp.ach[66].has) tmp.hd.enerUpgs[12] += ExpantaNum.min(40, ExpantaNum.sqrt(tmp.hd.enerUpgs[12]).times(4))
 	tmp.hd.enerUpgs[13] = new ExpantaNum(6).times((player.energyUpgs.includes(14)&&tmp.hd.enerUpgs[14]) ? tmp.hd.enerUpgs[14].div(100).plus(1) : 1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[14] = ExpantaNum.sub(3, ExpantaNum.div(2, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1))).times((player.energyUpgs.includes(15)&&tmp.hd.enerUpgs[15]) ? tmp.hd.enerUpgs[15].div(100).plus(1) : 1).sub(1).times(100).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[15] = ExpantaNum.sub(1.5, ExpantaNum.div(0.5, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).log10().plus(1))).sub(1).times(100).times(tmp.hd.superEnEff2)
