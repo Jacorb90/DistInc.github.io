@@ -1,3 +1,58 @@
+function setElementaryResetFunction(){
+	if (!tmp.elm.onReset) tmp.elm.onReset = function (prev) {
+		player.elementary.time = new ExpantaNum(0);
+		
+		// Reset Quarks, Leptons, & Gauge Boson sub-resources
+		player.elementary.fermions.quarks.amount = new ExpantaNum(0);
+		player.elementary.fermions.leptons.amount = new ExpantaNum(0);
+		player.elementary.bosons.gauge = {
+			amount: new ExpantaNum(0),
+			force: new ExpantaNum(0),
+			photons: {
+				amount: new ExpantaNum(0),
+				upgrades: player.elementary.bosons.gauge.photons.upgrades
+			},
+			w: new ExpantaNum(0),
+			z: new ExpantaNum(0),
+			gluons: {
+				r: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
+				g: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.g.upgrades },
+				b: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.b.upgrades },
+				ar: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ar.upgrades },
+				ag: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ag.upgrades },
+				ab: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ab.upgrades }
+			},
+			gravitons: new ExpantaNum(0)
+		};
+		player.elementary.bosons.scalar.amount = new ExpantaNum(0);
+		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(0);
+		
+		// Keep stuff on Elementary reset
+		if (tmp.elm.bos.hasHiggs("0;0;0")) {
+			player.tr.upgrades = prev.tr.upgrades
+			player.automation.unl = true
+		}
+		if (tmp.elm.bos.hasHiggs("0;0;1")) {
+			player.inf.endorsements = new ExpantaNum(10)
+			player.inf.unl = true
+		}
+		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
+		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
+		if (player.elementary.times.gte(3)) {
+			player.pathogens.unl = true
+			player.dc.unl = true
+		}
+		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
+		
+		// Bugfixes
+		infTab = "infinity"
+		
+		// Modes
+		if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme" && x != "hikers_dream")
+	};
+}
+
+
 function updateTempElementary() {
 	if (tmp.elm) {
 		tmp.psiEff = tmp.elm.ferm.leptonR("psi");
@@ -62,57 +117,7 @@ function updateTempElementary() {
 		// Achievement Rewards
 		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
-	if (!tmp.elm.onReset) tmp.elm.onReset = function (prev) {
-		player.elementary.time = new ExpantaNum(0);
-		
-		// Reset Quarks, Leptons, & Gauge Boson sub-resources
-		player.elementary.fermions.quarks.amount = new ExpantaNum(0);
-		player.elementary.fermions.leptons.amount = new ExpantaNum(0);
-		player.elementary.bosons.gauge = {
-			amount: new ExpantaNum(0),
-			force: new ExpantaNum(0),
-			photons: {
-				amount: new ExpantaNum(0),
-				upgrades: player.elementary.bosons.gauge.photons.upgrades
-			},
-			w: new ExpantaNum(0),
-			z: new ExpantaNum(0),
-			gluons: {
-				r: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.r.upgrades },
-				g: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.g.upgrades },
-				b: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.b.upgrades },
-				ar: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ar.upgrades },
-				ag: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ag.upgrades },
-				ab: { amount: new ExpantaNum(0), upgrades: player.elementary.bosons.gauge.gluons.ab.upgrades }
-			},
-			gravitons: new ExpantaNum(0)
-		};
-		player.elementary.bosons.scalar.amount = new ExpantaNum(0);
-		player.elementary.bosons.scalar.higgs.amount = new ExpantaNum(0);
-		
-		// Keep stuff on Elementary reset
-		if (tmp.elm.bos.hasHiggs("0;0;0")) {
-			player.tr.upgrades = prev.tr.upgrades
-			player.automation.unl = true
-		}
-		if (tmp.elm.bos.hasHiggs("0;0;1")) {
-			player.inf.endorsements = new ExpantaNum(10)
-			player.inf.unl = true
-		}
-		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
-		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
-		if (player.elementary.times.gte(3)) {
-			player.pathogens.unl = true
-			player.dc.unl = true
-		}
-		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
-		
-		// Bugfixes
-		infTab = "infinity"
-		
-		// Modes
-		if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme" && x != "hikers_dream")
-	};
+	setElementaryResetFunction()
 
 	// Elementary Tab System
 	if (!tmp.elm.updateTabs) tmp.elm.updateTabs = function () {
