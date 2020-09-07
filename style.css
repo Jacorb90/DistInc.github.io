@@ -6,6 +6,7 @@
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
+	--news-right-start: -10%;
 }
 
 * {
@@ -382,7 +383,7 @@ table {
 	max-width: 200px;
 	padding: 7px 25px;
 	text-decoration: none;
-	text-shadow: 0px 1px 0px ##abdeae;
+	text-shadow: 0px 1px 0px #abdeae;
 }
 
 .btn.optSelected:hover {
@@ -1131,6 +1132,20 @@ table {
 	min-height: 18px;
 	max-height: 18px;
 	position: relative;
+}
+
+.slidenews {
+	display: inline-block;
+	animation: 20s linear slidenews;
+}
+
+@keyframes slidenews {
+	from {
+		right: var(--news-right-start);
+	}
+	to {
+		right: 110%;
+	}
 }
 
 .btn.elm {

@@ -291,7 +291,6 @@ function updateAfterTick() {
 	updateTabs();
 	if (player.tab == "options") updateOptionsTabs();
 	updateAchievements();
-	updateNews();
 }
 
 function updateUnlocks() {
@@ -359,3 +358,32 @@ document.onkeydown = function(e) {
 			break;
 	}
 }
+
+function getNews() {
+	let possible = Object.values(NEWS_DATA).filter(data =>
+		(function () {
+			if (data[1] === undefined) return true;
+			else return data[1]();
+		})()
+	);
+	let txt = "";
+	if (possible.length == 0) txt = "Sorry, we are out of news for the day... try again later?";
+	else if (possible.length == 1) txt = possible[0][0];
+	else {
+		let n = Math.floor(Math.random() * possible.length);
+		txt = possible[n][0];
+	}
+	return txt;
+}
+
+document.getElementById("news").addEventListener("animationend", function(){
+	if (!player.options.newst) return
+	document.getElementById("news").innerHTML = "";
+	document.getElementById("news").classList.remove("slidenews");
+	document.documentElement.style.setProperty("--news-right-start", 0 - NEWS_ADJ + "%");
+	setTimeout(function(){
+		document.getElementById("news").innerHTML = getNews();
+		document.getElementById("news").classList.add("slidenews");
+	}, 1000)		
+})
+document.getElementById("news").innerHTML = getNews();
