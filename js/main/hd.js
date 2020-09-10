@@ -55,6 +55,7 @@ function getBaseMotive(){
 }
 
 function getTotalFurnaceUpgrades(){
+	if (!modeActive("extreme")) return new ExpantaNum(0)
 	let x = ExpantaNum(0)
 	for (let i=0; i<player.furnace.upgrades.length; i++){
 		x = x.plus(player.furnace.upgrades[i])
