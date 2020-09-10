@@ -310,11 +310,21 @@ const TR_UPGS = {
 		}
 	},
 	31: { cost: function(){return new ExpantaNum("1e700")}, desc: "Unlock a fourth Furnace Upgrade, the Coal effect is 80% stronger, and Time Speed is nerfed less by Extreme Mode." },
-	32: { cost: function(){return new ExpantaNum("8.8e880")}, desc: "The above upgrade uses a better formula." },
-	33: { cost: function(){return new ExpantaNum("1e960")}, desc: "The rocket effect also affects Coal gain." },
+	32: { 
+		cost: function(){
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? "8.8e888" : "8.8e880")
+		}, 
+		desc: "The above upgrade uses a better formula." 
+	},
+	33: { 
+		cost: function(){
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? "1e1010" : "1e960")
+		}, 
+		desc: "The rocket effect also affects Coal gain." 
+	},
 	34: { 
 		cost: function(){
-			return new ExpantaNum("1e980")
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? "1e1275" : "1e980")
 		}, 
 		desc: "Time Speed is faster based on your Blue Flame.",
 		current: function() {
@@ -324,6 +334,11 @@ const TR_UPGS = {
 			return showNum(x)+"x"
 		},
 	},
-	35: { cost: function(){return new ExpantaNum("1e1350")}, desc: "Furnace Upgrade 4 works in Furnace Challenges, but it is weaker in them." },
+	35: { 
+		cost: function(){
+			return new ExpantaNum(modeActive("extreme+hikers_dream") ? "1e1500" : "1e1350")
+		}, 
+		desc: "Furnace Upgrade 4 works in Furnace Challenges, but it is weaker in them." 
+	},
 };
 const TR_UPG_AMT = Object.keys(TR_UPGS).length;
