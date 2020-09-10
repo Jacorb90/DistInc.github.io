@@ -91,17 +91,23 @@ function getTotalPathogenUpgrades(){
 }
 
 function getConfidenceOneScalingStart(){
-	x = ExpantaNum(0)
+	let x = ExpantaNum(0)
 	if (tmp.ach) x = tmp.ach[65].has ? getTotalPathogenUpgrades().div(3) : ExpantaNum(0)
 	if (x.gt(3)) x = x.logBase(3).plus(2)
 	if (tmp.ach) x = x.plus(tmp.ach[67].has ? 1 : 0)
-	return x.plus(3)
+	x = x.plus(3) 
+	if (tmp.ach) if (tmp.ach[86].has) x = x.pow(2)
+	if (tmp.ach) if (tmp.ach[93].has) x = x.pow(2)
+	if (tmp.ach) if (tmp.ach[97].has) x = x.times(tmp.hd.enerUpgs[1].plus(1e100).log10())
+	if (tmp.ach) if (tmp.ach[102].has) x = x.times(player.inf.endorsements.plus(1))
+	return x
 }
 
 function getConfidenceOneEffect(){
 	let co1 = tmp.hd.incline.plus((player.energyUpgs.includes(13) && tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
-	s = getConfidenceOneScalingStart()
-	if (co1.gt(s) && modeActive("extreme")) return co1.div(s).pow(.5).times(s)
+	let s = getConfidenceOneScalingStart()
+	if (tmp.ach) if (co1.gt(s) && modeActive("extreme") && !tmp.ach[117].has) return co1.div(s).pow(.5).times(s)
+	
 	return co1
 }
 
@@ -149,6 +155,7 @@ function updateTempHikersDream() {
 	if (tmp.ach) if (tmp.ach[85].has && modeActive("extreme+hikers_dream")) tmp.hd.enerUpgs[2] = tmp.hd.enerUpgs[2].pow(2)
 	tmp.hd.enerUpgs[3] = getConfidenceOneEffect()
 	if (tmp.hd.enerUpgs[3].gte(1e24)) tmp.hd.enerUpgs[3] = tmp.hd.enerUpgs[3].log10().pow(1.5).times(1e24/24).min(tmp.hd.enerUpgs[3])
+	if (tmp.ach) if (tmp.ach[123].has) tmp.hd.enerUpgs[3] = tmp.hd.enerUpgs[3].times(10)
 	tmp.hd.enerUpgs[4] = player.rockets.plus(1).times(10).slog(10).times((player.energyUpgs.includes(8)&&tmp.hd.enerUpgs[8]) ? (tmp.hd.enerUpgs[8].div(100).plus(1)) : 1).times(tmp.hd.superEnEff2)
 	if (tmp.hd.enerUpgs[4].gte(32.5)) tmp.hd.enerUpgs[4] = tmp.hd.enerUpgs[4].logBase(2).pow(2.157034).min(tmp.hd.enerUpgs[4])
 	tmp.hd.enerUpgs[5] = tmp.hd.simEn.plus(1).times(10).slog(10).sub(1).times(100).times((player.energyUpgs.includes(9)&&tmp.hd.enerUpgs[9])?tmp.hd.enerUpgs[9].div(100).plus(1):1).times(tmp.hd.superEnEff2)

@@ -116,7 +116,11 @@ function getScalingPower(type, name) {
 			if (player.elementary.theory.tree.unl) power = power.times(ExpantaNum.sub(1, TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0))).max(0)
 		}
 	} else if (name=="fn" && modeActive("extreme")) {
-		if (type=="superscaled") {
+		if (type == "scaled" && modeActive("hikers_dream")){
+			let a = Math.max(player.achievements.length - 74, 20)
+			if (a >= 22) a += 10
+			if (tmp.ach) if (tmp.ach[124].has) power = power.times(20 / a)
+		} else if (type=="superscaled") {
 			if (FCComp(1)) power = power.times(0.1)
 		} else if (type=="hyper") {
 			if (FCComp(1)) power = power.times(0.1)

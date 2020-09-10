@@ -324,14 +324,17 @@ const ACH_DATA = {
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
 		85: "boolean(hard+hikers_dream,You can rejuvinate whenever)boolean(extreme+hikers_dream, and square Endurance)boolean(hard+hikers_dream,.)",
+		86: "boolean(extreme+hikers_dream,Pathogens multiply time cube gain and square Confidence softcap start.)",
 		87: "boolean(extreme+hikers_dream,Remove the base motivation softcap and time cubes boost pathogens.)",
 		88: "Buying Pathogen Upgrades does not spend your Pathogensboolean(extreme, and you unlock Furnace Challenges).",
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",
+		93: "boolean(extreme+hikers_dream,Square Confidence softcap start.)",
 		95: "Gain showNum(100)% of Rocket gain every second.",
 		96: "Gain showNum(100)% of Cadaver gain every second.",
-		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
+		97: "Transfer showNum(100)% of Cadavers to Life Essence every secondboolean(extreme+hikers_dream, and Optimization increases Confidence softcap start).",
 
+		102: "boolean(extreme+hikers_dream,Endorsements multiply Confidence softcap start.)",
 		103: "You can activate one extra perk at any given time.",
 		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
 		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
@@ -339,8 +342,9 @@ const ACH_DATA = {
 		111: "You can activate all four perks at onceboolean(extreme, and unlock the Enhanced Furnace).",
 		112: "Time Speed boosts Knowledge gain at a reduced rateboolean(extreme, and Rank Cheapeners do not reset anything).",
 		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs and Enhanced Coal gain is 40% faster for each Purge Power you have).",
+		117: "boolean(extreme+hikers_dream,Remove the Confidence softcap.)",
 
-		123: "The Universe Doesn't Exist achievement uses a slightly better formula.",
+		123: "The Universe Doesn't Exist achievement uses a slightly better formulaboolean(extreme+hikers_dream, and Confidence is ten times stronger).",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
