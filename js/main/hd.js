@@ -12,7 +12,7 @@ const ENERGY_UPG_COSTS = {
 	11: new ExpantaNum(6000),
 	12: new ExpantaNum(10000),
 	13: new ExpantaNum(5000),
-	14: new ExpantaNum(500000),
+	14: new ExpantaNum(5e5),
 	15: new ExpantaNum(1e6),
 	16: new ExpantaNum(56000),
 	17: new ExpantaNum(80000),
@@ -25,6 +25,92 @@ const ENERGY_UPG_COSTS = {
 	24: new ExpantaNum(4e16),
 	25: new ExpantaNum(1e25),
 	26: new ExpantaNum(2.975e33),
+}
+
+function getEnergyUpgCost(n){
+	baseCost = ENERGY_UPG_COSTS[n]
+	exCost = ExpantaNum(1)
+	if (modeActive("extreme") && n > 13) exCost = exCost.times(10)
+	return baseCost.times(exCost)
+}
+
+function getEnergyLossExp(){
+	return modeActive("extreme") ? -10 : -5
+}
+
+function getBaseMotiveScalingStart(){
+	let y = ExpantaNum(125)
+	if (tmp.ach) if (tmp.ach[77].has) {
+		y = y.plus(player.rockets.plus(10).log10()) // may be nerfed
+		//prb will be nerfed
+	}
+	return y
+}
+
+function getBaseMotive(){
+	let z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	let y = getBaseMotiveScalingStart()
+	if (tmp.ach) if (z.gt(y) && modeActive("extreme") && !tmp.ach[87].has) return z.div(y).pow(.5).times(y)
+	return z
+}
+
+function getTotalFurnaceUpgrades(){
+	let x = ExpantaNum(0)
+	for (let i=0; i<player.furnace.upgrades.length; i++){
+		x = x.plus(player.furnace.upgrades[i])
+	}
+	return x
+}
+
+function getOptimizationOneScalingStart(){
+	let b = ExpantaNum(100)
+	if (tmp.ach) if (tmp.ach[67].has) b = b.times(5)
+	let e = ExpantaNum(1.1).pow(getTotalFurnaceUpgrades())
+	return b.times(player.achievements.includes(36) ? e : 1)
+}
+
+function getOptimizationOneEffect(){
+	let op1 = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	if (modeActive("extreme")){
+		if (tmp.ach) if (tmp.ach[66].has) op1 = op1.times(ExpantaNum.pow(player.furnace.coal.plus(10).log10(), 2))
+	}
+	if (op1.gt(getOptimizationOneScalingStart()) && modeActive("extreme")) {
+		e = getOptimizationOneScalingStart().logBase(getOptimizationOneScalingStart().log10().times(5))
+		return op1.log10().times(5).pow(e)
+	}
+	return op1
+}
+
+function getTotalPathogenUpgrades(){
+	let x = ExpantaNum(0)
+	for (var i in player.pathogens.upgrades){
+		x = x.plus(player.pathogens.upgrades[i])
+	}
+	return x
+}
+
+function getConfidenceOneScalingStart(){
+	x = ExpantaNum(0)
+	if (tmp.ach) x = tmp.ach[65].has ? getTotalPathogenUpgrades().div(3) : ExpantaNum(0)
+	if (x.gt(3)) x = x.logBase(3).plus(2)
+	if (tmp.ach) x = x.plus(tmp.ach[67].has ? 1 : 0)
+	return x.plus(3)
+}
+
+function getConfidenceOneEffect(){
+	let co1 = tmp.hd.incline.plus((player.energyUpgs.includes(13) && tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	s = getConfidenceOneScalingStart()
+	if (co1.gt(s) && modeActive("extreme")) return co1.div(s).pow(.5).times(s)
+	return co1
+}
+
+function updateEnergyLoss(){
+	tmp.hd.energyLoss = tmp.hd.inclineRed.pow(getEnergyLossExp())
+	if (player.energyUpgs.includes(2) && tmp.hd.enerUpgs) tmp.hd.energyLoss = tmp.hd.energyLoss.div(tmp.hd.enerUpgs[2])
+	if (modeActive("extreme")){
+		if (tmp.ach) if (tmp.ach[61].has) tmp.hd.energyLoss = tmp.hd.energyLoss.div(Math.max(player.tr.upgrades.length, 1))
+		if (tmp.timeSpeed) if (tmp.timeSpeed.gt(1e20)) tmp.hd.energyLoss = tmp.hd.energyLoss.times(tmp.timeSpeed.log10().div(20))
+	} 
 }
 
 function updateTempHikersDream() {
@@ -43,9 +129,9 @@ function updateTempHikersDream() {
 	let incl = tmp.hd.incline
 	if (incl.gte(89.95)) incl = ExpantaNum.sub(90, ExpantaNum.div(90, ExpantaNum.div(90, ExpantaNum.sub(90, incl)).pow(2).div(1800)))
 	tmp.hd.inclineRed = ExpantaNum.sub(90, incl).div(90).root(tmp.hd.inclinePow)
-	tmp.hd.energyLoss = tmp.hd.inclineRed.pow(-5)
-	if (player.energyUpgs.includes(2) && tmp.hd.enerUpgs) tmp.hd.energyLoss = tmp.hd.energyLoss.div(tmp.hd.enerUpgs[2])
-	tmp.hd.totalMotive = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	updateEnergyLoss()
+	
+	tmp.hd.totalMotive = getBaseMotive()
 	if (player.energyUpgs.includes(3) && tmp.hd.enerUpgs) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.enerUpgs[3])
 	if (player.inf.endorsements.gte(10)) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.superEnEff)
 	tmp.hd.motive = tmp.hd.totalMotive.sub(player.spentMotive).sub(player.spentMotiveGens).max(0);
@@ -56,10 +142,11 @@ function updateTempHikersDream() {
 	tmp.hd.simEn = player.energy.min(getEnergyLim()).max(tmp.hd.superEn)
 	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
 	if (!tmp.hd.enerUpgs) tmp.hd.enerUpgs = {}
-	tmp.hd.enerUpgs[1] = tmp.hd.motive.max(player.energyUpgs.includes(5)?1:0).plus(1).pow(0.75).pow((player.energyUpgs.includes(5)&&tmp.hd.enerUpgs[5]) ? tmp.hd.enerUpgs[5].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	tmp.hd.enerUpgs[1] = getOptimizationOneEffect()
 	if (tmp.hd.enerUpgs[1].gte("1e2500")) tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].logBase("1e2500").pow(825).times("1e2500").min(tmp.hd.enerUpgs[1])
 	tmp.hd.enerUpgs[2] = tmp.hd.motive.max(player.energyUpgs.includes(6)?1:0).plus(1).log10().times(2).plus(1).pow((player.energyUpgs.includes(6)&&tmp.hd.enerUpgs[6]) ? tmp.hd.enerUpgs[6].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
-	tmp.hd.enerUpgs[3] = tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs[13]) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1).pow(3).pow((player.energyUpgs.includes(7)&&tmp.hd.enerUpgs[7]) ? tmp.hd.enerUpgs[7].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	if (tmp.ach) if (tmp.ach[85].has && modeActive("extreme+hikers_dream")) tmp.hd.enerUpgs[2] = tmp.hd.enerUpgs[2].pow(2)
+	tmp.hd.enerUpgs[3] = getConfidenceOneEffect()
 	if (tmp.hd.enerUpgs[3].gte(1e24)) tmp.hd.enerUpgs[3] = tmp.hd.enerUpgs[3].log10().pow(1.5).times(1e24/24).min(tmp.hd.enerUpgs[3])
 	tmp.hd.enerUpgs[4] = player.rockets.plus(1).times(10).slog(10).times((player.energyUpgs.includes(8)&&tmp.hd.enerUpgs[8]) ? (tmp.hd.enerUpgs[8].div(100).plus(1)) : 1).times(tmp.hd.superEnEff2)
 	if (tmp.hd.enerUpgs[4].gte(32.5)) tmp.hd.enerUpgs[4] = tmp.hd.enerUpgs[4].logBase(2).pow(2.157034).min(tmp.hd.enerUpgs[4])
@@ -71,6 +158,7 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[10] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.1).times(10).times((player.energyUpgs.includes(17)&&tmp.hd.enerUpgs[17])?tmp.hd.enerUpgs[17].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[11] = player.tr.cubes.plus(1).log10().plus(1).log10().sqrt().times(50).times((player.energyUpgs.includes(18)&&tmp.hd.enerUpgs[18])?tmp.hd.enerUpgs[18].div(100).plus(1):1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[12] = player.tr.cubes.plus(1).log10().plus(1).log10().pow(0.2).times(20).times((player.energyUpgs.includes(19)&&tmp.hd.enerUpgs[19])?tmp.hd.enerUpgs[19].div(100).plus(1):1).times(tmp.hd.superEnEff2)
+	if (tmp.ach) if (tmp.hd.enerUpgs[12] && modeActive("extreme+hikers_dream") && tmp.ach[66].has) tmp.hd.enerUpgs[12] = tmp.hd.enerUpgs[12].plus(ExpantaNum.min(40, ExpantaNum.sqrt(tmp.hd.enerUpgs[12]).times(4)))
 	tmp.hd.enerUpgs[13] = new ExpantaNum(6).times((player.energyUpgs.includes(14)&&tmp.hd.enerUpgs[14]) ? tmp.hd.enerUpgs[14].div(100).plus(1) : 1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[14] = ExpantaNum.sub(3, ExpantaNum.div(2, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1))).times((player.energyUpgs.includes(15)&&tmp.hd.enerUpgs[15]) ? tmp.hd.enerUpgs[15].div(100).plus(1) : 1).sub(1).times(100).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[15] = ExpantaNum.sub(1.5, ExpantaNum.div(0.5, player.pathogens.amount.plus(1).log10().plus(1).log10().plus(1).log10().plus(1))).sub(1).times(100).times(tmp.hd.superEnEff2)
@@ -94,7 +182,8 @@ function quickReset() {
 }
 
 function refillEnergy() {
-	if (modeActive('hard') && player.energy.neq(0)) return
+	if (!tmp.ach) return
+	if (modeActive('hard') && player.energy.neq(0) && !tmp.ach[85].has) return
 	if (!player.canRefill) return
 	player.energy = new ExpantaNum(100)
 	player.canRefill = modeActive('hard')
@@ -110,7 +199,7 @@ function respecEnergyUpgs() {
 
 function buyEnergyUpg(x) {
 	if (player.energyUpgs.includes(x)) return
-	let cost = ENERGY_UPG_COSTS[x]
+	let cost = getEnergyUpgCost(x)
 	if (tmp.hd.motive.lt(cost)) return
 	player.spentMotive = player.spentMotive.plus(cost)
 	player.energyUpgs.push(x)
@@ -118,9 +207,9 @@ function buyEnergyUpg(x) {
 
 function isEnergyUpgShown(x) {
 	if (x<=3) return true;
-	else if (x<=8) return player.rf.gte(1)||player.automation.unl||player.collapse.unl||player.inf.unl
-	else if (x<=13) return player.tr.unl||player.collapse.unl||player.inf.unl
-	else if (x<=20) return player.pathogens.unl||player.inf.unl
+	else if (x<=8) return player.rf.gte(1) || player.automation.unl || player.collapse.unl||player.inf.unl
+	else if (x<=13) return player.tr.unl || player.collapse.unl || player.inf.unl
+	else if (x<=20) return (player.pathogens.unl && !modeActive("extreme")) || player.inf.unl 
 	else if (x<=23) return player.inf.endorsements.gte(10)
 	else if (x<=25) return player.inf.endorsements.gte(15)
 	else if (x<=26) return player.inf.endorsements.gte(28)

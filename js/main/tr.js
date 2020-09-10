@@ -35,8 +35,8 @@ function reverseTime(force = false) {
 
 function buyTRUpg(n) {
 	if (player.tr.upgrades.includes(n)) return;
-	if (player.tr.cubes.lt(TR_UPGS[n].cost)) return;
-	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost);
+	if (player.tr.cubes.lt(TR_UPGS[n].cost())) return;
+	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost());
 	player.tr.upgrades.push(n);
 }
 

@@ -30,7 +30,7 @@ var visUpdTicks = 1/0
 var robotActives = {}
 var correctLink = "jacorb90.github.io"
 
-// Game Loops
+// Game Loops 
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
