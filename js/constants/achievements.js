@@ -323,6 +323,8 @@ const ACH_DATA = {
 		81: "Keep automation stuff on Infinity.",
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
+		85: "boolean(hard+hikers_dream,You can rejuvinate whenever)boolean(extreme+hikers_dream, and square Endurance)boolean(hard+hikers_dream,.)",
+		87: "boolean(extreme+hikers_dream,Remove the base motivation softcap and time cubes boost pathogens.)",
 		88: "Buying Pathogen Upgrades does not spend your Pathogensboolean(extreme, and you unlock Furnace Challenges).",
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",

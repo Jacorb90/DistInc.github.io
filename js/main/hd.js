@@ -39,7 +39,7 @@ function getEnergyLossExp(){
 }
 
 function getBaseMotiveScalingStart(){
-	y = ExpantaNum(125)
+	let y = ExpantaNum(125)
 	if (tmp.ach) if (tmp.ach[77].has) {
 		y = y.plus(player.rockets.plus(10).log10()) // may be nerfed
 		//prb will be nerfed
@@ -48,9 +48,9 @@ function getBaseMotiveScalingStart(){
 }
 
 function getBaseMotive(){
-	z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
-	y = getBaseMotiveScalingStart()
-	if (z.gt(y) && modeActive("extreme")) return z.div(y).pow(.5).times(y)
+	let z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	let y = getBaseMotiveScalingStart()
+	if (z.gt(y) && modeActive("extreme") && !tmp.ach[87].has) return z.div(y).pow(.5).times(y)
 	return z
 }
 
@@ -145,6 +145,7 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[1] = getOptimizationOneEffect()
 	if (tmp.hd.enerUpgs[1].gte("1e2500")) tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].logBase("1e2500").pow(825).times("1e2500").min(tmp.hd.enerUpgs[1])
 	tmp.hd.enerUpgs[2] = tmp.hd.motive.max(player.energyUpgs.includes(6)?1:0).plus(1).log10().times(2).plus(1).pow((player.energyUpgs.includes(6)&&tmp.hd.enerUpgs[6]) ? tmp.hd.enerUpgs[6].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
+	if (tmp.ach) if (tmp.ach[85].has && modeActive("extreme+hikers_dream")) tmp.hd.enerUpgs[2] = tmp.hd.enerUpgs[2].pow(2)
 	tmp.hd.enerUpgs[3] = getConfidenceOneEffect()
 	if (tmp.hd.enerUpgs[3].gte(1e24)) tmp.hd.enerUpgs[3] = tmp.hd.enerUpgs[3].log10().pow(1.5).times(1e24/24).min(tmp.hd.enerUpgs[3])
 	tmp.hd.enerUpgs[4] = player.rockets.plus(1).times(10).slog(10).times((player.energyUpgs.includes(8)&&tmp.hd.enerUpgs[8]) ? (tmp.hd.enerUpgs[8].div(100).plus(1)) : 1).times(tmp.hd.superEnEff2)
@@ -181,7 +182,8 @@ function quickReset() {
 }
 
 function refillEnergy() {
-	if (modeActive('hard') && player.energy.neq(0)) return
+	if (!tmp.ach) return
+	if (modeActive('hard') && player.energy.neq(0) && !tmp.ach[85].has) return
 	if (!player.canRefill) return
 	player.energy = new ExpantaNum(100)
 	player.canRefill = modeActive('hard')
