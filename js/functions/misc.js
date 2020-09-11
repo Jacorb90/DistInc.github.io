@@ -139,6 +139,9 @@ function ENString(obj) {
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons).toString();
 	ret.elementary.hc.claimed = new ExpantaNum(ret.elementary.hc.claimed||0).toString();
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]]).toString();
+	for (let i=0;i<5;i++) ret.elementary.foam.amounts[i] = new ExpantaNum(ret.elementary.foam.amounts[i]||0).toString();
+	ret.elementary.foam.maxDepth = new ExpantaNum(ret.elementary.foam.maxDepth||0).toString();
+	for (let i=0;i<15;i++) ret.elementary.foam.upgrades[i] = new ExpantaNum(ret.elementary.foam.upgrades[i]||0).toString();
 	return ret;
 }
 
@@ -156,6 +159,8 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.5 || !ret.elementary) ret.elementary = deepCopy(sc.elementary);
 	if (ret.version < 1.6 || !ret.elementary.theory) ret.elementary.theory = deepCopy(sc.elementary.theory);
 	if (ret.version < 1.7 || !ret.elementary.hc) ret.elementary.hc = deepCopy(sc.elementary.hc);
+	if (ret.version < 1.8 || !ret.elementary.foam) ret.elementary.foam = deepCopy(sc.elementary.foam);
+	if (ret.version < 1.8 || !ret.elementary.foam.amounts) ret.elementary.foam.amounts = deepCopy(sc.elementary.foam.amounts);
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
 	if (ret.autoModes === undefined) ret.autoModes = {};
@@ -292,6 +297,9 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.hc.hadrons = new ExpantaNum(ret.elementary.hc.hadrons);
 	ret.elementary.hc.claimed = new ExpantaNum(ret.elementary.hc.claimed||0);
 	if (Object.keys(ret.autoTxt).length>0) for (let i=0;i<Object.keys(ret.autoTxt).length;i++) ret.autoTxt[Object.keys(ret.autoTxt)[i]] = new ExpantaNum(ret.autoTxt[Object.keys(ret.autoTxt)[i]])
+	for (let i=0;i<5;i++) ret.elementary.foam.amounts[i] = new ExpantaNum(ret.elementary.foam.amounts[i]||0);
+	ret.elementary.foam.maxDepth = new ExpantaNum(ret.elementary.foam.maxDepth||0);
+	for (let i=0;i<15;i++) ret.elementary.foam.upgrades[i] = new ExpantaNum(ret.elementary.foam.upgrades[i]||0);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }

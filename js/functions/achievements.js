@@ -140,6 +140,8 @@ function updateAchievements() {
 	if (player.elementary.theory.depth.gte(9)) tmp.ach[156].grant();
 	if (player.elementary.theory.strings.amounts[0].gte(4.4e76)) tmp.ach[157].grant();
 	if (player.elementary.hc.best.gte(3.75)) tmp.ach[158].grant();
+	
+	if (player.elementary.foam.unl) tmp.ach[161].grant()
 }
 
 function rowComplete(r) {

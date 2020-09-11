@@ -1170,6 +1170,11 @@
 								Hadronic Challenge
 							</button>
 						</td>
+						<td>
+							<button id="foamtabbtn" class="btn tb foam main" onclick="tmp.elm.showTab('foam')">
+								Quantum Foam
+							</button>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -1700,6 +1705,50 @@
 				<div id="infHC" class="hcTab"></div>
 				<div id="elmHC" class="hcTab"></div>
 				<br><br>
+			</div>
+			<div id="foam" class="elmtab" style="display: none;">
+				<div class="band pnk">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button id="foamBooststabbtn" class="btn tb foam" onclick="tmp.elm.qf.showTab('foamBoosts')">
+									Boosts
+								</button>
+							</td>
+							<td>
+								<button id="qf1tabbtn" class="btn tb foam" onclick="tmp.elm.qf.showTab('qf1')">
+									Quantum Foam
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><br><br>
+				<div id="foamBoosts" class="foamTab" style="display: none;">
+					<span id="qfb1">Foam Boost [<span id="qfb1amt"></span>]: Multiply Quantum Foam gain by <span id="qfb1eff"></span>.</span><br>
+					<span id="qfb2">Fermion Boost [<span id="qfb2amt"></span>]: Multiply Fermion gain by <span id="qfb2eff"></span>.</span><br>
+					<span id="qfb3">Entangle Boost [<span id="qfb3amt"></span>]: Multiply Entangled String gain by <span id="qfb3eff"></span>.</span><br>
+					<span id="qfb4">Inflaton Boost [<span id="qfb4amt"></span>]: Multiply Inflaton gain by <span id="qfb4eff"></span>.</span><br>
+					<span id="qfb5">Meta-Boost [<span id="qfb5amt"></span>]: Add <span id="qfb5eff"></span> levels to all above boosts (based on your Knowledge).</span><br>
+					<br><br><br><br><br>
+				</div>
+				<div id="qf1" class="foamTab">
+					You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam (+<span id="qf1Gain"></span>/sec).<br><br>
+					<table>
+						<tr>
+							<td><button id="qf1Boost1" class="btn locked" onclick="qfBoost(1, 1)">Embiggen Quantum Foam by 1m in height<br>Cost: <span id="qf1Cost1" style="color: black !important;"></span> Quantum Foam</button></td>
+							<td><button id="qf1Boost2" class="btn locked" onclick="qfBoost(1, 2)">Embiggen Quantum Foam by 1m in width<br>Cost: <span id="qf1Cost2" style="color: black !important;"></span> Quantum Foam</button></td>
+							<td><button id="qf1Boost3" class="btn locked" onclick="qfBoost(1, 3)">Embiggen Quantum Foam by 1m in depth<br>Cost: <span id="qf1Cost3" style="color: black !important;"></span> Quantum Foam</button></td>
+						</tr><tr>
+							<td>Height: <span id="qf1Bought1"></span></td>
+							<td>Width: <span id="qf1Bought2"></span></td>
+							<td>Depth: <span id="qf1Bought3"></span></td>
+						</tr>
+					</table><br><br><br><br><br>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -19,6 +19,7 @@ var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
 var hcTab = "mainHC";
+var foamTab = "qf1";
 var gluonTab = "r";
 var thTab = "tv";
 var enTab = "mainEN";

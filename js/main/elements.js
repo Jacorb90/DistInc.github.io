@@ -1202,6 +1202,7 @@ function updateOverallElementaryHTML(){
 		updateBosonsMainHTML()
 		updateTheoryverseMainHTML()
 		updateHadronicChallenges()
+		updateQFHTML()
 	}
 }
 
@@ -1248,6 +1249,32 @@ function updateOverallEnergyHTML(){
 	if (player.tab == "energy") {
 		updateMainEnergyTabHTML()
 		updateGeneratorsHTML()
+	}
+}
+
+function updateQFHTML() {
+	if (elmTab=="foam") {
+		if (foamTab=="foamBoosts") {
+		}
+		for (let x=1;x<=1;x++) if (foamTab=="qf"+x) {
+			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
+			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
+			for (let i=1;i<=3;i++) {
+				let cost = getQFBoostCost(x, i)
+				tmp.el["qf"+x+"Boost"+i].setClasses({
+					btn: true,
+					locked: player.elementary.foam.amounts[x-1].lt(cost),
+					foam: player.elementary.foam.amounts[x-1].gte(cost),
+				})
+				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
+				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
+			}
+		}
+		for (let b=1;b<=5;b++) {
+			tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
+			tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+((b<5&&tmp.elm.qf.boost5.gt(0))?(" + "+showNum(tmp.elm.qf.boost5)):""))
+			tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
+		}
 	}
 }
 

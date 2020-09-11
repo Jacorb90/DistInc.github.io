@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 15,
+	rows: 16,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -136,6 +136,8 @@ const ACH_DATA = {
 		156: "IMPOSSIBLE",
 		157: "The Principle of the Basics",
 		158: "The Repetition Continues",
+		
+		161: "We're kids again",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -272,6 +274,8 @@ const ACH_DATA = {
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
 		158: "Get a Hadronic Score of at least showNum(3.75)",
+		
+		161: "Unlock Quantum Foam.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

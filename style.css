@@ -1558,6 +1558,42 @@ table {
 	color: yellow;
 }
 
+.btn.foam {
+	box-shadow: 3px 4px 0px 0px #b3b3b3;
+	background: none;
+	background-color: white;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
+.btn.foam:hover {
+	background: none;
+	background-color: #d3e8cc;
+	box-shadow: 3px 4px 0px 0px #d3e8cc;
+	color: black;
+}
+
+.btn.foam:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.foamtxt {
+	color: #d3e8cc;
+	font-size: 20px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

@@ -206,5 +206,12 @@ const DEFAULT_START = {
 			claimed: new ExpantaNum(0),
 			selectors: {},
 		},
+		foam: {
+			unl: false,
+			amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			maxDepth: new ExpantaNum(1),
+			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			autoUnl: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+		},
 	}
 };

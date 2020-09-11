@@ -11,6 +11,9 @@ const ELM_TABS = {
 	hc: function () {
 		return player.elementary.hc.unl;
 	},
+	foam: function() {
+		return player.elementary.foam.unl;
+	},
 };
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
@@ -537,3 +540,28 @@ const HC_TITLE = {
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
+
+const FOAM_REQ = new ExpantaNum("1e42000000")
+const FOAM_TABS = {
+	foamBoosts: function() { return true },
+	qf1: function() { return true },
+}
+const FOAM_BOOST_COSTS = {
+	1: {
+		1: {
+			start: new ExpantaNum(10),
+			base: new ExpantaNum(2.5),
+			exp: new ExpantaNum(1.2),
+		},
+		2: {
+			start: new ExpantaNum(30),
+			base: new ExpantaNum(3),
+			exp: new ExpantaNum(1.25),
+		},
+		3: {
+			start: new ExpantaNum(75),
+			base: new ExpantaNum(3.5),
+			exp: new ExpantaNum(1.3),
+		},
+	},
+}
