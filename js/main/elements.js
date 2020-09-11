@@ -1258,7 +1258,7 @@ function updateQFHTML() {
 	if (elmTab=="foam") {
 		if (foamTab=="foamBoosts") {
 		}
-		for (let x=1;x<=2;x++) if (foamTab=="qf"+x) {
+		for (let x=1;x<=3;x++) if (foamTab=="qf"+x) {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
 			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
 			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
@@ -1271,6 +1271,8 @@ function updateQFHTML() {
 				})
 				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
 				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
+				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.foam.maxDepth.gte(x+2))
+				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
 			}
 			tmp.el["qf"+x+"NextUnl"].setDisplay(player.elementary.foam.maxDepth.eq(x))
 			tmp.el["qf"+x+"NextUnl"].setClasses({
@@ -1280,9 +1282,9 @@ function updateQFHTML() {
 			})
 			tmp.el["qf"+x+"Cost4"].setTxt(showNum(QF_NEXTLAYER_COST[x]))
 		}
-		for (let b=1;b<=10;b++) {
+		for (let b=1;b<=15;b++) {
 			tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
-			tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+((b<5&&tmp.elm.qf.boost5.gt(0))?(" + "+showNum(tmp.elm.qf.boost5)):""))
+			tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).gt(0))||(b<13&&tmp.elm.qf.boost13.gt(0)))?(" + "+showNum(tmp.elm.qf.boost13.plus(b>=5?0:tmp.elm.qf.boost5))):""))
 			tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
 		}
 	}

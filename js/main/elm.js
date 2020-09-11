@@ -94,6 +94,7 @@ function updateTempElementary() {
 		let exp = new ExpantaNum(1/4)
 		if (hasDE(5) && (player.elementary.theory.tree.upgrades[20]||new ExpantaNum(0)).gte(1)) exp = exp.times(2)
 		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(exp).times(ExpantaNum.pow(tmp.elm.softcap, ExpantaNum.sub(1, exp)))
+		if (player.elementary.foam.unl && tmp.elm.qf) gain = gain.times(tmp.elm.qf.boost12) // not affected by softcap hehe
 		return gain.floor();
 	});
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
@@ -613,26 +614,32 @@ function updateTempElementary() {
 	
 	// Quantum Foam Boosts
 	tmp.elm.qf.boostData = getQFBoostData()
-	tmp.elm.qf.boost10 = tmp.elm.qf.boostData[10].times(2).sqrt()
-	tmp.elm.qf.boost9 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[9])
-	tmp.elm.qf.boost8 = tmp.elm.qf.boostData[8].plus(1).pow(3)
-	tmp.elm.qf.boost7 = ExpantaNum.pow(1e8, tmp.elm.qf.boostData[7].sqrt())
-	tmp.elm.qf.boost6 = player.elementary.foam.amounts[0].plus(1).sqrt().log10().plus(1).pow(tmp.elm.qf.boostData[6].pow(0.9))
-	tmp.elm.qf.boost5 = tmp.elm.qf.boostData[5].sqrt().div(3).times(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1))
-	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5))
-	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5))
-	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5))
-	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5))
+	tmp.elm.qf.boost15 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[15].pow(0.8))
+	tmp.elm.qf.boost14 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[14].pow(0.95))
+	tmp.elm.qf.boost13 = tmp.elm.qf.boostData[13].sqrt().div(3).times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1))
+	tmp.elm.qf.boost12 = ExpantaNum.pow(100, tmp.elm.qf.boostData[12].plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost11 = player.elementary.foam.amounts[1].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[11].plus(tmp.elm.qf.boost13).pow(0.8))
+	tmp.elm.qf.boost10 = tmp.elm.qf.boostData[10].plus(tmp.elm.qf.boost13).times(2).sqrt()
+	tmp.elm.qf.boost9 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[9].plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost8 = tmp.elm.qf.boostData[8].plus(tmp.elm.qf.boost13).plus(1).pow(3)
+	tmp.elm.qf.boost7 = ExpantaNum.pow(1e8, tmp.elm.qf.boostData[7].plus(tmp.elm.qf.boost13).sqrt())
+	tmp.elm.qf.boost6 = player.elementary.foam.amounts[0].plus(1).sqrt().log10().plus(1).pow(tmp.elm.qf.boostData[6].plus(tmp.elm.qf.boost13).pow(0.9))
+	tmp.elm.qf.boost5 = tmp.elm.qf.boostData[5].plus(tmp.elm.qf.boost13).sqrt().div(3).times(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1))
+	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
 	
 	// Quantum Foam Effects
 	if (!tmp.elm.qf.eff) tmp.elm.qf.eff = {}
-	for (let i=2;i<=2;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
+	for (let i=2;i<=3;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
 	
 	// Quantum Foam Gain
 	if (!tmp.elm.qf.gain) tmp.elm.qf.gain = {}
-	for (let i=1;i<=2;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
-	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2])
-	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6)
+	for (let i=1;i<=3;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
+	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3])
+	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6).times(tmp.elm.qf.eff[3])
+	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11)
 }
 
 function elTick(diff) {
@@ -745,6 +752,7 @@ function getStringGain(n) {
 	gain = gain.times(getEntangleEff())
 	if (tmp.ach[144].has) gain = gain.times(1.25)
 	if (tmp.ach[157].has) gain = gain.times(2)
+	if (player.elementary.foam.unl && tmp.elm.qf) gain = gain.times(tmp.elm.qf.boost15)
 	return gain
 }
 
@@ -1125,11 +1133,14 @@ function getInflatonEff2() {
 // Quantum Foam
 
 function qfTick(diff) {
-	for (let i=0;i<2;i++) if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
+	for (let i=0;i<3;i++) {
+		if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
+		for (let b=0;b<5;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.foam.maxDepth.gte(i+3)) qfMax(i+1, b+1)
+	}
 }
 
 function getQuantumFoamGain(x) {
-	let gain = new ExpantaNum(x<=2?1:0)
+	let gain = new ExpantaNum(x<=3?1:0)
 	return gain
 }
 
@@ -1143,6 +1154,16 @@ function getQFBoostCost(x, b) {
 	return cost;
 }
 
+function getQFBoostTarg(x, b) {
+	let start = FOAM_BOOST_COSTS[x][b].start
+	let base = FOAM_BOOST_COSTS[x][b].base
+	let exp = FOAM_BOOST_COSTS[x][b].exp
+	let id = (x-1)*3+(b-1)
+	let res = player.elementary.foam.amounts[x-1]
+	let targ = res.div(start).max(1).logBase(base).pow(exp.pow(-1))
+	return targ.plus(1).floor();
+}
+
 function qfBoost(x, b) {
 	let cost = getQFBoostCost(x, b) 
 	if (player.elementary.foam.amounts[x-1].lt(cost)) return;
@@ -1151,10 +1172,20 @@ function qfBoost(x, b) {
 	player.elementary.foam.upgrades[id] = player.elementary.foam.upgrades[id].plus(1)
 }
 
+function qfMax(x, b) {
+	let cost = getQFBoostCost(x, b)
+	let target = getQFBoostTarg(x, b)
+	if (player.elementary.foam.amounts[x-1].lt(cost)) return;
+	let id = (x-1)*3+(b-1)
+	if (target.lte(player.elementary.foam.upgrades[id])) return;
+	player.elementary.foam.amounts[x-1] = player.elementary.foam.amounts[x-1].sub(cost)
+	player.elementary.foam.upgrades[id] = player.elementary.foam.upgrades[id].max(target)
+}
+
 function getQFBoostData() {
 	let data = {}
-	for (let b=0;b<2;b++) {
-		let amt = player.elementary.foam.upgrades.filter((x,i) => ((i+1)>=b*5-1&&(i+1)<b*5+5)).reduce((a,b) => ExpantaNum.add(a, b))
+	for (let b=0;b<3;b++) {
+		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
 			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0)
@@ -1179,4 +1210,8 @@ function qfUnl(x) {
 function getQuantumFoamEff(x) {
 	let eff = player.elementary.foam.amounts[x-1].plus(1).pow(1/x)
 	return eff;
+}
+
+function toggleAutoFoam(x, b) {
+	player.elementary.foam.autoUnl[(x-1)*3+(b-1)] = !player.elementary.foam.autoUnl[(x-1)*3+(b-1)]
 }

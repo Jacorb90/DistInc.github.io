@@ -406,6 +406,7 @@ function updateTempInf() {
 		if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.bos["higgs_0;0;4"]())
 	}
 	if (modeActive('easy')) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
+	if (player.elementary.foam.unl && tmp.elm) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.qf.boost14)
 	if (!tmp.inf.asc.activatePerk) tmp.inf.asc.activatePerk = function (n) {
 		if (player.inf.endorsements.lt(10)) return;
 		if (tmp.inf.asc.perkActive(n)) {
