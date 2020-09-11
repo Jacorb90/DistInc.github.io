@@ -65,6 +65,8 @@ function getScalingStart(type, name) {
 			if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) start = start.plus(1)
 			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
 			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
+		} else if (type=="superscaled") {
+			if (player.elementary.foam.unl && tmp.elm ? tmp.elm.qf : false) start = start.plus(tmp.elm.qf.boost10)
 		}
 	} else if (name=="enlightenments") {
 		if (type=="scaled") {

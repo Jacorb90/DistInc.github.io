@@ -537,6 +537,7 @@ function updateTempElementary() {
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[5].effect(player.elementary.theory.tree.upgrades[5]||0))
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(getStringEff(1))
+			if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(tmp.elm.qf.boost9)
 		}
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 		if (tmp.elm.theory.ss[type+"Eff"].gte(1e9)) tmp.elm.theory.ss[type+"Eff"] = tmp.elm.theory.ss[type+"Eff"].cbrt().times(1e6)
@@ -574,6 +575,7 @@ function updateTempElementary() {
 	}
 	tmp.elm.theory.tree.costReduc = ach152Eff()
 	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(tmp.elm.qf.boost8)
 	
 	// Hadronic Challenges
 	if (!tmp.elm.hc) tmp.elm.hc = {}
@@ -582,6 +584,7 @@ function updateTempElementary() {
 	if (player.elementary.theory.inflatons.unl) tmp.elm.hc.hadronBulk = tmp.elm.hc.hadronBulk.plus(getInflatonEff2())
 	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
 	tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(TREE_UPGS[31].effect(player.elementary.theory.tree.upgrades[31]||0))
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(tmp.elm.qf.boost7)
 	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
@@ -610,16 +613,26 @@ function updateTempElementary() {
 	
 	// Quantum Foam Boosts
 	tmp.elm.qf.boostData = getQFBoostData()
+	tmp.elm.qf.boost10 = tmp.elm.qf.boostData[10].times(2).sqrt()
+	tmp.elm.qf.boost9 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[9])
+	tmp.elm.qf.boost8 = tmp.elm.qf.boostData[8].plus(1).pow(3)
+	tmp.elm.qf.boost7 = ExpantaNum.pow(1e8, tmp.elm.qf.boostData[7].sqrt())
+	tmp.elm.qf.boost6 = player.elementary.foam.amounts[0].plus(1).sqrt().log10().plus(1).pow(tmp.elm.qf.boostData[6].pow(0.9))
 	tmp.elm.qf.boost5 = tmp.elm.qf.boostData[5].sqrt().div(3).times(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1))
 	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5))
 	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5))
 	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5))
 	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5))
 	
+	// Quantum Foam Effects
+	if (!tmp.elm.qf.eff) tmp.elm.qf.eff = {}
+	for (let i=2;i<=2;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
+	
 	// Quantum Foam Gain
 	if (!tmp.elm.qf.gain) tmp.elm.qf.gain = {}
-	for (let i=1;i<=1;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
-	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1)
+	for (let i=1;i<=2;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
+	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2])
+	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6)
 }
 
 function elTick(diff) {
@@ -1112,11 +1125,11 @@ function getInflatonEff2() {
 // Quantum Foam
 
 function qfTick(diff) {
-	for (let i=0;i<1;i++) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
+	for (let i=0;i<2;i++) if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
 }
 
 function getQuantumFoamGain(x) {
-	let gain = new ExpantaNum(x==1?1:0)
+	let gain = new ExpantaNum(x<=2?1:0)
 	return gain
 }
 
@@ -1140,7 +1153,7 @@ function qfBoost(x, b) {
 
 function getQFBoostData() {
 	let data = {}
-	for (let b=0;b<1;b++) {
+	for (let b=0;b<2;b++) {
 		let amt = player.elementary.foam.upgrades.filter((x,i) => ((i+1)>=b*5-1&&(i+1)<b*5+5)).reduce((a,b) => ExpantaNum.add(a, b))
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
@@ -1148,4 +1161,22 @@ function getQFBoostData() {
 		}
 	}
 	return data
+}
+
+function qfUnl(x) {
+	if (!player.elementary.foam.maxDepth.eq(x)) return;
+	let cost = QF_NEXTLAYER_COST[x]
+	if (player.elementary.foam.amounts[x-1].lt(cost)) return
+	player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1)
+	let resetted = 0
+	while (resetted<x) {
+		player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
+		for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
+		resetted++
+	}
+}
+
+function getQuantumFoamEff(x) {
+	let eff = player.elementary.foam.amounts[x-1].plus(1).pow(1/x)
+	return eff;
 }

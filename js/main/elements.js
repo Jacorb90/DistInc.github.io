@@ -1070,8 +1070,10 @@ function updateInfatonsHTML(){
 		tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"))
 		tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")))
 		tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
-		tmp.el.inflaton2.setTxt(showNum(getInflatonEff2()))
+		let eff2 = getInflatonEff2()
+		tmp.el.inflaton2.setTxt(showNum(eff2))
 		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
+		tmp.el.inflaton2sc.setTxt(eff2.gte(5)?"(extremely softcapped)":"")
 	}
 }
 
@@ -1256,9 +1258,10 @@ function updateQFHTML() {
 	if (elmTab=="foam") {
 		if (foamTab=="foamBoosts") {
 		}
-		for (let x=1;x<=1;x++) if (foamTab=="qf"+x) {
+		for (let x=1;x<=2;x++) if (foamTab=="qf"+x) {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
 			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
+			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
 			for (let i=1;i<=3;i++) {
 				let cost = getQFBoostCost(x, i)
 				tmp.el["qf"+x+"Boost"+i].setClasses({
@@ -1269,8 +1272,15 @@ function updateQFHTML() {
 				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
 				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
 			}
+			tmp.el["qf"+x+"NextUnl"].setDisplay(player.elementary.foam.maxDepth.eq(x))
+			tmp.el["qf"+x+"NextUnl"].setClasses({
+				btn: true,
+				locked: player.elementary.foam.amounts[x-1].lt(QF_NEXTLAYER_COST[x]),
+				foam: player.elementary.foam.amounts[x-1].gte(QF_NEXTLAYER_COST[x]),
+			})
+			tmp.el["qf"+x+"Cost4"].setTxt(showNum(QF_NEXTLAYER_COST[x]))
 		}
-		for (let b=1;b<=5;b++) {
+		for (let b=1;b<=10;b++) {
 			tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
 			tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+((b<5&&tmp.elm.qf.boost5.gt(0))?(" + "+showNum(tmp.elm.qf.boost5)):""))
 			tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
