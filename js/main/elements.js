@@ -1266,7 +1266,7 @@ function updateQFHTML() {
 			tmp.el.ach162span.setDisplay(tmp.ach[162].has)
 			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()))
 		}
-		for (let x=1;x<=4;x++) if (foamTab=="qf"+x) {
+		for (let x=1;x<=4;x++) {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
 			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
 			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
@@ -1289,6 +1289,10 @@ function updateQFHTML() {
 				foam: player.elementary.foam.amounts[x-1].gte(QF_NEXTLAYER_COST[x]),
 			})
 			tmp.el["qf"+x+"Cost4"].setTxt(showNum(QF_NEXTLAYER_COST[x]))
+
+			if (x===1) continue
+			const foamRows = document.querySelectorAll(`.qf${x}row`)
+			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none" } catch (_) {}
 		}
 	}
 }
