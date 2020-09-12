@@ -1258,15 +1258,15 @@ function updateOverallEnergyHTML(){
 function updateQFHTML() {
 	if (elmTab=="foam") {
 		if (foamTab=="foamBoosts") {
-			for (let b=1;b<=20;b++) {
+			for (let b=1;b<=25;b++) {
 				tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
-				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).gt(0))||(b<13&&tmp.elm.qf.boost13.gt(0)))?(" + "+showNum(tmp.elm.qf.boost13.plus(b>=5?0:tmp.elm.qf.boost5))):""))
+				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).gt(0))||(b<13&&tmp.elm.qf.boost13.plus(tmp.elm.qf.boost25).gt(0))||(b<25&&tmp.elm.qf.boost25.gt(0)))?(" + "+showNum(tmp.elm.qf.boost25.plus(b>=13?0:tmp.elm.qf.boost13).plus(b>=5?0:tmp.elm.qf.boost5))):""))
 				tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
 			}
 			tmp.el.ach162span.setDisplay(tmp.ach[162].has)
 			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()))
 		}
-		for (let x=1;x<=4;x++) {
+		for (let x=1;x<=5;x++) if (foamTab=="qf1") {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
 			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
 			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))

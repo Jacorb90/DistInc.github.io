@@ -489,6 +489,10 @@ function updateTempElementary() {
 		broken: new ExpantaNum(1e6),
 	}
 	if (player.elementary.theory.accelerons.unl) tmp.elm.pa.stateStarts.weakened = tmp.elm.pa.stateStarts.weakened.times(getAccelEff())
+	if (player.elementary.foam.unl && tmp.elm.qf) {
+		tmp.elm.pa.stateStarts.weakened = tmp.elm.pa.stateStarts.weakened.times(tmp.elm.qf.boost22)
+		tmp.elm.pa.stateStarts.broken = tmp.elm.pa.stateStarts.broken.times(tmp.elm.qf.boost22)
+	}
 	tmp.elm.pa.state = ""
 	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
 	if (tmp.elm.pa.speedBoost.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
@@ -635,38 +639,43 @@ function updateTempElementary() {
 	
 	// Quantum Foam Boosts
 	tmp.elm.qf.boostData = getQFBoostData()
-	tmp.elm.qf.boost20 = tmp.elm.qf.boostData[20].plus(1).sqrt()
-	tmp.elm.qf.boost19 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[19].times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1)))
-	tmp.elm.qf.boost18 = player.elementary.foam.amounts[0].plus(1).log10().plus(1).pow(tmp.elm.qf.boostData[18])
-	tmp.elm.qf.boost17 = tmp.elm.qf.boostData[17].pow(0.8).times(10).floor()
-	tmp.elm.qf.boost16 = player.elementary.foam.amounts[2].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[16].pow(0.8))
-	tmp.elm.qf.boost15 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[15].pow(0.8))
-	tmp.elm.qf.boost14 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[14].pow(0.95))
-	tmp.elm.qf.boost13 = tmp.elm.qf.boostData[13].sqrt().div(3).times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1))
-	tmp.elm.qf.boost12 = ExpantaNum.pow(100, tmp.elm.qf.boostData[12].plus(tmp.elm.qf.boost13))
-	tmp.elm.qf.boost11 = player.elementary.foam.amounts[1].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[11].plus(tmp.elm.qf.boost13).pow(0.8))
-	tmp.elm.qf.boost10 = tmp.elm.qf.boostData[10].plus(tmp.elm.qf.boost13).times(2).sqrt()
-	tmp.elm.qf.boost9 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[9].plus(tmp.elm.qf.boost13))
-	tmp.elm.qf.boost8 = tmp.elm.qf.boostData[8].plus(tmp.elm.qf.boost13).plus(1).pow(3)
-	tmp.elm.qf.boost7 = ExpantaNum.pow(1e8, tmp.elm.qf.boostData[7].plus(tmp.elm.qf.boost13).sqrt())
-	tmp.elm.qf.boost6 = player.elementary.foam.amounts[0].plus(1).sqrt().log10().plus(1).pow(tmp.elm.qf.boostData[6].plus(tmp.elm.qf.boost13).pow(0.9))
-	tmp.elm.qf.boost5 = tmp.elm.qf.boostData[5].plus(tmp.elm.qf.boost13).sqrt().div(3).times(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1))
-	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
-	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
-	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
-	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost25 = tmp.elm.qf.boostData[25].times(tmp.elm.qf.boostData[25].plus(1).cbrt()).div(2)
+	tmp.elm.qf.boost24 = player.elementary.foam.amounts[0].plus(1).log10().plus(1).pow(tmp.elm.qf.boostData[24].plus(tmp.elm.qf.boost25).times(60))
+	tmp.elm.qf.boost23 = ExpantaNum.pow(10, tmp.elm.qf.boostData[23].plus(tmp.elm.qf.boost25).pow(0.75))
+	tmp.elm.qf.boost22 = ExpantaNum.pow(8, tmp.elm.qf.boostData[22].plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost21 = player.elementary.foam.amounts[3].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[21].plus(tmp.elm.qf.boost25).pow(0.8))
+	tmp.elm.qf.boost20 = tmp.elm.qf.boostData[20].plus(tmp.elm.qf.boost25).plus(1).sqrt()
+	tmp.elm.qf.boost19 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[19].plus(tmp.elm.qf.boost25).times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1)))
+	tmp.elm.qf.boost18 = player.elementary.foam.amounts[0].plus(1).log10().plus(1).pow(tmp.elm.qf.boostData[18].plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost17 = tmp.elm.qf.boostData[17].plus(tmp.elm.qf.boost25).pow(0.8).times(10).floor()
+	tmp.elm.qf.boost16 = player.elementary.foam.amounts[2].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[16].plus(tmp.elm.qf.boost25).pow(0.8))
+	tmp.elm.qf.boost15 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[15].plus(tmp.elm.qf.boost25).pow(0.8))
+	tmp.elm.qf.boost14 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[14].plus(tmp.elm.qf.boost25).pow(0.95))
+	tmp.elm.qf.boost13 = tmp.elm.qf.boostData[13].plus(tmp.elm.qf.boost25).sqrt().div(3).times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1))
+	tmp.elm.qf.boost12 = ExpantaNum.pow(100, tmp.elm.qf.boostData[12].plus(tmp.elm.qf.boost25).plus(tmp.elm.qf.boost13))
+	tmp.elm.qf.boost11 = player.elementary.foam.amounts[1].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[11].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).pow(0.8))
+	tmp.elm.qf.boost10 = tmp.elm.qf.boostData[10].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).times(2).sqrt()
+	tmp.elm.qf.boost9 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[9].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost8 = tmp.elm.qf.boostData[8].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).plus(1).pow(3)
+	tmp.elm.qf.boost7 = ExpantaNum.pow(1e8, tmp.elm.qf.boostData[7].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).sqrt())
+	tmp.elm.qf.boost6 = player.elementary.foam.amounts[0].plus(1).sqrt().log10().plus(1).pow(tmp.elm.qf.boostData[6].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).pow(0.9))
+	tmp.elm.qf.boost5 = tmp.elm.qf.boostData[5].plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).sqrt().div(3).times(player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1))
+	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
+	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 	
 	// Quantum Foam Effects
 	if (!tmp.elm.qf.eff) tmp.elm.qf.eff = {}
-	for (let i=2;i<=4;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
+	for (let i=2;i<=5;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
 	
 	// Quantum Foam Gain
 	if (!tmp.elm.qf.gain) tmp.elm.qf.gain = {}
-	for (let i=1;i<=4;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
-	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4])
-	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4])
-	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11).times(tmp.elm.qf.eff[4])
-	tmp.elm.qf.gain[4] = tmp.elm.qf.gain[4].times(tmp.elm.qf.boost16)
+	for (let i=1;i<=5;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
+	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
+	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
+	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
+	tmp.elm.qf.gain[4] = tmp.elm.qf.gain[4].times(tmp.elm.qf.boost16).times(tmp.elm.qf.eff[5])
 }
 
 function elTick(diff) {
@@ -947,16 +956,15 @@ function importTree() {
 			upgs[key] = new ExpantaNum(upgs[key])
 			if (upgs[key].lte(plyr[key])) continue
 			else {
-				if (tmp.ach[162].has) tmp.elm.theory.tree.buy(key, true);
-				else {
-					let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
-					let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
-					if (player.elementary.theory.points.gte(totalCost)) {
-						player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
-						player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
-						player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], TREE_UPGS[key].cap)
-					} else notifier.warn("You could not afford some of your requested Tree upgrades!")
-				}
+				let cap = getTreeUpgCap(key)
+				let costs = Array.from({length: Math.min(upgs[key].toNumber(), cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
+				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
+				if (tmp.ach[162].has) totalCost = TREE_UPGS[key].cost(upgs[key]).div(tmp.elm.theory.tree.costReduc).min(totalCost)
+				if (player.elementary.theory.points.gte(totalCost)) {
+					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
+					player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
+					player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], cap)
+				} else notifier.warn("You could not afford some of your requested Tree upgrades!")
 			}
 		}
 	} catch(e) {
@@ -1163,15 +1171,19 @@ function getInflatonEff2() {
 // Quantum Foam
 
 function qfTick(diff) {
-	for (let i=0;i<4;i++) {
+	for (let i=0;i<5;i++) {
 		if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
 		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.foam.maxDepth.gte(i+3)) qfMax(i+1, b+1)
 	}
 }
 
 function getQuantumFoamGain(x) {
-	let gain = new ExpantaNum(x<=4?1:0)
+	let gain = new ExpantaNum(1)
 	if (tmp.ach[162].has) gain = gain.times(getAch162Eff())
+	if (tmp.elm) if (tmp.elm.qf) {
+		gain = gain.times(tmp.elm.qf.boost21)
+		gain = gain.times(tmp.elm.qf.boost23)
+	}
 	return gain
 }
 
@@ -1215,7 +1227,7 @@ function qfMax(x, b) {
 
 function getQFBoostData() {
 	let data = {}
-	for (let b=0;b<4;b++) {
+	for (let b=0;b<5;b++) {
 		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
@@ -1233,7 +1245,7 @@ function qfUnl(x) {
 	let resetted = 0
 	while (resetted<x) {
 		player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
-		for (let i=0;i<4;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
+		for (let i=0;i<5;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
 		resetted++
 	}
 }
@@ -1255,6 +1267,6 @@ function getAch162Eff() {
 
 function getTreeUpgCap(x) {
 	let cap = new ExpantaNum(TREE_UPGS[x].cap)
-	if (player.elementary.foam.unl && tmp.elm.qf) if (QFB17_TARGETS.includes(x)) cap = cap.plus(tmp.elm.qf.boost17)
+	if (player.elementary.foam.unl && tmp.elm.qf && QFB17_TARGETS.includes(parseInt(x+""))) cap = cap.plus(tmp.elm.qf.boost17)
 	return cap;
 }

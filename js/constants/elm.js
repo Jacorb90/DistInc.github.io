@@ -568,9 +568,6 @@ const FOAM_REQ = new ExpantaNum("1e42000000")
 const FOAM_TABS = {
 	foamBoosts: function() { return true },
 	qf1: function() { return true },
-	qf2: function() { return player.elementary.foam.maxDepth.gte(2) },
-	qf3: function() { return player.elementary.foam.maxDepth.gte(3) },
-	qf4: function() { return player.elementary.foam.maxDepth.gte(4) },
 }
 const FOAM_BOOST_COSTS = {
 	1: {
@@ -641,11 +638,29 @@ const FOAM_BOOST_COSTS = {
 			exp: new ExpantaNum(1.75),
 		},
 	},
+	5: {
+		1: {
+			start: new ExpantaNum(250),
+			base: new ExpantaNum(8.5),
+			exp: new ExpantaNum(1.8),
+		},
+		2: {
+			start: new ExpantaNum(1e3),
+			base: new ExpantaNum(9),
+			exp: new ExpantaNum(1.85),
+		},
+		3: {
+			start: new ExpantaNum(1/0),
+			base: new ExpantaNum(9.5),
+			exp: new ExpantaNum(1.9),
+		},
+	},
 }
 const QF_NEXTLAYER_COST = {
 	1: new ExpantaNum(1e4),
 	2: new ExpantaNum(5e3),
 	3: new ExpantaNum(1e4),
-	4: new ExpantaNum(1/0),
+	4: new ExpantaNum(1.75e3),
+	5: new ExpantaNum(1/0),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
