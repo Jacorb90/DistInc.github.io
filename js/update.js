@@ -306,7 +306,12 @@ function updateUnlocks() {
 	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
 }
 
+document.onkeyup = function(e) {
+	outerShiftDown = !(!e.shiftKey);
+}
+
 document.onkeydown = function(e) {
+	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
 	let shiftDown = e.shiftKey
 	let key = e.which

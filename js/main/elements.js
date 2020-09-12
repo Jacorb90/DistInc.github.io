@@ -1000,9 +1000,10 @@ function updateTheoryTreeHTML(){
 		for (let i=1;i<=TREE_AMT;i++) {
 			let bought = tmp.elm.theory.tree.bought(i)
 			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
-			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(TREE_UPGS[i].cap))
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
-			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(TREE_UPGS[i].cap), unl: (!(bought.gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
+			let cap = getTreeUpgCap(i)
+			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
+			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
 		}
 		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
@@ -1257,8 +1258,15 @@ function updateOverallEnergyHTML(){
 function updateQFHTML() {
 	if (elmTab=="foam") {
 		if (foamTab=="foamBoosts") {
+			for (let b=1;b<=20;b++) {
+				tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
+				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).gt(0))||(b<13&&tmp.elm.qf.boost13.gt(0)))?(" + "+showNum(tmp.elm.qf.boost13.plus(b>=5?0:tmp.elm.qf.boost5))):""))
+				tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
+			}
+			tmp.el.ach162span.setDisplay(tmp.ach[162].has)
+			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()))
 		}
-		for (let x=1;x<=3;x++) if (foamTab=="qf"+x) {
+		for (let x=1;x<=4;x++) if (foamTab=="qf"+x) {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
 			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
 			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
@@ -1281,11 +1289,6 @@ function updateQFHTML() {
 				foam: player.elementary.foam.amounts[x-1].gte(QF_NEXTLAYER_COST[x]),
 			})
 			tmp.el["qf"+x+"Cost4"].setTxt(showNum(QF_NEXTLAYER_COST[x]))
-		}
-		for (let b=1;b<=15;b++) {
-			tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
-			tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).gt(0))||(b<13&&tmp.elm.qf.boost13.gt(0)))?(" + "+showNum(tmp.elm.qf.boost13.plus(b>=5?0:tmp.elm.qf.boost5))):""))
-			tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
 		}
 	}
 }

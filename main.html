@@ -1733,11 +1733,18 @@
 									Subspatial Foam
 								</button>
 							</td>
+							<td>
+								<button id="qf4tabbtn" class="btn tb foam" onclick="tmp.elm.qf.showTab('qf4')" style="display: none;">
+									Infinitesimal Foam
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
 				<br><br><br>
 				<div id="foamBoosts" class="foamTab" style="display: none;">
+					<span id="ach162span">"Actually Useless Theories": Multiply the generation of all Foam types by <span id="ach162eff"></span>.<br><br></span>
+				
 					<span id="qfb1">Quantum Boost [<span id="qfb1amt"></span>]: Multiply Quantum Foam gain by <span id="qfb1eff"></span>.</span><br>
 					<span id="qfb2">Fermion Boost [<span id="qfb2amt"></span>]: Multiply Fermion gain by <span id="qfb2eff"></span>.</span><br>
 					<span id="qfb3">Entangle Boost [<span id="qfb3amt"></span>]: Multiply Entangled String gain by <span id="qfb3eff"></span>.</span><br>
@@ -1754,8 +1761,14 @@
 					<span id="qfb12">Elementary Boost [<span id="qfb12amt"></span>]: Multiply Elementary Particle gain by <span id="qfb12eff"></span> (not affected by softcap).</span><br>
 					<span id="qfb13">Meta-Boost II [<span id="qfb13amt"></span>]: Add <span id="qfb13eff"></span> levels to all above boosts (based on your Quantum Foam).</span><br>
 					<span id="qfb14">Ascension Boost [<span id="qfb14amt"></span>]: Multiply Ascension Power gain by <span id="qfb14eff"></span>.</span><br>
-					<span id="qfb15">String Boost [<span id="qfb15amt"></span>]: Multiply String gain by <span id="qfb15eff"></span>.</span><br>
-					<br><br><br><br><br>
+					<span id="qfb15">String Boost [<span id="qfb15amt"></span>]: Multiply String gain by <span id="qfb15eff"></span>.</span><br><br>
+					
+					<span id="qfb16">Infinitesimal Boost [<span id="qfb16amt"></span>]: Multiply Infinitesimal Foam gain by <span id="qfb16eff"></span> (based on your Subspatial Foam).</span><br>
+					<span id="qfb17">Advanced Theory Boost [<span id="qfb17amt"></span>]: Certain Theory Tree Upgrades cap <span id="qfb17eff"></span> later.</span><br>
+					<span id="qfb18">Gauge Boost [<span id="qfb18amt"></span>]: Multiply Gauge Force gain by <span id="qfb18eff"></span> (based on your Quantum Foam).</span><br>
+					<span id="qfb19">Boson Boost [<span id="qfb19amt"></span>]: Multiply Gluon, W Boson, & Z Boson gain by <span id="qfb19eff"></span> (based on your Quantum Foam).</span><br>
+					<span id="qfb20">Rocket Boost [<span id="qfb20amt"></span>]: Multiply the Rocket effect by <span id="qfb20eff"></span>.</span><br><br>
+					<br><br><br><br>
 				</div>
 				<div id="qf1" class="foamTab">
 					You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam (+<span id="qf1Gain"></span>/sec).<br><br>
@@ -1814,6 +1827,26 @@
 						</tr>
 					</table><br><br><br><br><br>
 				</div>
+				<div id="qf4" class="foamTab">
+					You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam (+<span id="qf4Gain"></span>/sec), which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.<br><br>
+					<table>
+						<tr>
+							<td><button id="qf4Boost1" class="btn locked" onclick="qfBoost(4, 1)">Embiggen Infinitesimal Foam by 1m in height<br>Cost: <span id="qf4Cost1" style="color: black !important;"></span> Infinitesimal Foam</button></td>
+							<td><button id="qf4Boost2" class="btn locked" onclick="qfBoost(4, 2)">Embiggen Infinitesimal Foam by 1m in width<br>Cost: <span id="qf4Cost2" style="color: black !important;"></span> Infinitesimal Foam</button></td>
+							<td><button id="qf4Boost3" class="btn locked" onclick="qfBoost(4, 3)">Embiggen Infinitesimal Foam by 1m in depth<br>Cost: <span id="qf4Cost3" style="color: black !important;"></span> Infinitesimal Foam</button></td>
+							<td><button id="qf4NextUnl" class="btn locked" onclick="qfUnl(4)">Unlock a new type of Foam<br>Cost: <span id="qf4Cost4" style="color: black !important;"></span> Infinitesimal Foam</button></td>
+						</tr><tr>
+							<td><button id="qf4Auto1" class="btn foam" onclick="toggleAutoFoam(4, 1)"></button></td>
+							<td><button id="qf4Auto2" class="btn foam" onclick="toggleAutoFoam(4, 2)"></button></td>
+							<td><button id="qf4Auto3" class="btn foam" onclick="toggleAutoFoam(4, 3)"></button></td>
+						</tr><tr>
+							<td>Height: <span id="qf4Bought1"></span></td>
+							<td>Width: <span id="qf4Bought2"></span></td>
+							<td>Depth: <span id="qf4Bought3"></span></td>
+						</tr>
+					</table><br><br><br><br><br>
+				</div>
+
 			</div>
 		</div>
 	</div>

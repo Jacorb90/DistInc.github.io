@@ -138,6 +138,7 @@ const ACH_DATA = {
 		158: "The Repetition Continues",
 		
 		161: "We're kids again",
+		162: "Actually Useless Theories",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -276,6 +277,7 @@ const ACH_DATA = {
 		158: "Get a Hadronic Score of at least showNum(3.75)",
 		
 		161: "Unlock Quantum Foam.",
+		162: "Reach formatDistance(4.4e251) of Primary String.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -364,5 +366,7 @@ const ACH_DATA = {
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 		154: "Purge Power gain is doubled.",
 		157: "All Strings are gained twice as fast.",
+		
+		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
 	}
 };

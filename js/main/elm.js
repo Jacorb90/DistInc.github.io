@@ -305,6 +305,7 @@ function updateTempElementary() {
 	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1));
 	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
 	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.elm.qf.boost18);
 	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
 	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(0.08))
 	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
@@ -347,10 +348,12 @@ function updateTempElementary() {
 
 	// W & Z Bosons
 	tmp.elm.bos.wg = gaugeSpeed.times(0.4).times(tmp.z1 || 1);
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.wg = tmp.elm.bos.wg.times(tmp.elm.qf.boost19)
 	tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).log10().div(10).plus(1);
 	if (player.inf.upgrades.includes("7;10")) tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).pow(0.25).max(tmp.elm.bos.w1)
 	tmp.elm.bos.w2 = player.elementary.bosons.gauge.w.plus(1).log10().sqrt().plus(1);
 	tmp.elm.bos.zg = gaugeSpeed.times(0.1).times(tmp.elm.bos.w1);
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.zg = tmp.elm.bos.zg.times(tmp.elm.qf.boost19)
 	tmp.elm.bos.z1 = player.elementary.bosons.gauge.z.plus(1).pow(0.04);
 	if (tmp.elm.bos.z1.gte(1.4)) tmp.elm.bos.z1 = tmp.elm.bos.z1.logBase(1.4).times(1.4).min(tmp.elm.bos.z1)
 	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2);
@@ -378,6 +381,14 @@ function updateTempElementary() {
 	tmp.elm.bos.arg = gaugeSpeed.div(10).times(tmp.elm.bos.gluonEff("r", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.agg = gaugeSpeed.div(9.8).times(tmp.elm.bos.gluonEff("g", 1)).times(tmp.elm.bos.photonEff(3).max(1));
 	tmp.elm.bos.abg = gaugeSpeed.div(10.2).times(tmp.elm.bos.gluonEff("b", 1)).times(tmp.elm.bos.photonEff(3).max(1));
+	if (player.elementary.foam.unl && tmp.elm.qf) {
+		tmp.elm.bos.rg = tmp.elm.bos.rg.times(tmp.elm.qf.boost19)
+		tmp.elm.bos.gg = tmp.elm.bos.gg.times(tmp.elm.qf.boost19)
+		tmp.elm.bos.bg = tmp.elm.bos.bg.times(tmp.elm.qf.boost19)
+		tmp.elm.bos.arg = tmp.elm.bos.arg.times(tmp.elm.qf.boost19)
+		tmp.elm.bos.agg = tmp.elm.bos.agg.times(tmp.elm.qf.boost19)
+		tmp.elm.bos.abg = tmp.elm.bos.abg.times(tmp.elm.qf.boost19)
+	}
 	if (!tmp.elm.bos.gluonCost) tmp.elm.bos.gluonCost = function (col, x) {
 		let bought = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1]||new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(2, bought.pow(2.5).times(2)).times(100);
@@ -563,16 +574,26 @@ function updateTempElementary() {
 		player.elementary.theory.tree.unl = true
 	}
 	tmp.elm.theory.tree.bought = function(i) { return new ExpantaNum(player.elementary.theory.tree.upgrades[i]||0) }
-	if (!tmp.elm.theory.tree.buy) tmp.elm.theory.tree.buy = function(x) {
+	if (!tmp.elm.theory.tree.buy) tmp.elm.theory.tree.buy = function(x, max=false) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
 		let bought = tmp.elm.theory.tree.bought(x)
-		if (bought.gte(TREE_UPGS[x].cap)) return
+		let cap = getTreeUpgCap(x)
+		if (bought.gte(cap)) return
 		let cost = TREE_UPGS[x].cost(bought).div(tmp.elm.theory.tree.costReduc).round()
 		if (player.elementary.theory.points.lt(cost)) return
-		player.elementary.theory.points = player.elementary.theory.points.sub(cost)
-		player.elementary.theory.tree.spent =player.elementary.theory.tree.spent.plus(cost)
-		player.elementary.theory.tree.upgrades[x] = bought.plus(1)
+		if (tmp.ach[162].has && (outerShiftDown||max) && TREE_UPGS[x].target!==undefined) {
+			let target = TREE_UPGS[x].target(player.elementary.theory.points.times(tmp.elm.theory.tree.costReduc)).max(0).min(cap);
+			if (target.lte(bought)||target.lt(1)) return;
+			let newCost = TREE_UPGS[x].cost(target.sub(1)).div(tmp.elm.theory.tree.costReduc).round();
+			player.elementary.theory.points = player.elementary.theory.points.sub(newCost);
+			player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(newCost);
+			player.elementary.theory.tree.upgrades[x] = bought.max(target)
+		} else {
+			player.elementary.theory.points = player.elementary.theory.points.sub(cost)
+			player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(cost)
+			player.elementary.theory.tree.upgrades[x] = bought.plus(1)
+		}
 	}
 	tmp.elm.theory.tree.costReduc = ach152Eff()
 	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
@@ -614,6 +635,11 @@ function updateTempElementary() {
 	
 	// Quantum Foam Boosts
 	tmp.elm.qf.boostData = getQFBoostData()
+	tmp.elm.qf.boost20 = tmp.elm.qf.boostData[20].plus(1).sqrt()
+	tmp.elm.qf.boost19 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[19].times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1)))
+	tmp.elm.qf.boost18 = player.elementary.foam.amounts[0].plus(1).log10().plus(1).pow(tmp.elm.qf.boostData[18])
+	tmp.elm.qf.boost17 = tmp.elm.qf.boostData[17].pow(0.8).times(10).floor()
+	tmp.elm.qf.boost16 = player.elementary.foam.amounts[2].plus(1).pow(0.75).log10().plus(1).pow(tmp.elm.qf.boostData[16].pow(0.8))
 	tmp.elm.qf.boost15 = ExpantaNum.pow(1e6, tmp.elm.qf.boostData[15].pow(0.8))
 	tmp.elm.qf.boost14 = ExpantaNum.pow(1e15, tmp.elm.qf.boostData[14].pow(0.95))
 	tmp.elm.qf.boost13 = tmp.elm.qf.boostData[13].sqrt().div(3).times(player.elementary.foam.amounts[0].plus(1).log10().plus(1).log10().plus(1))
@@ -632,14 +658,15 @@ function updateTempElementary() {
 	
 	// Quantum Foam Effects
 	if (!tmp.elm.qf.eff) tmp.elm.qf.eff = {}
-	for (let i=2;i<=3;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
+	for (let i=2;i<=4;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
 	
 	// Quantum Foam Gain
 	if (!tmp.elm.qf.gain) tmp.elm.qf.gain = {}
-	for (let i=1;i<=3;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
-	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3])
-	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6).times(tmp.elm.qf.eff[3])
-	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11)
+	for (let i=1;i<=4;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
+	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4])
+	tmp.elm.qf.gain[2] = tmp.elm.qf.gain[2].times(tmp.elm.qf.boost6).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4])
+	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11).times(tmp.elm.qf.eff[4])
+	tmp.elm.qf.gain[4] = tmp.elm.qf.gain[4].times(tmp.elm.qf.boost16)
 }
 
 function elTick(diff) {
@@ -920,13 +947,16 @@ function importTree() {
 			upgs[key] = new ExpantaNum(upgs[key])
 			if (upgs[key].lte(plyr[key])) continue
 			else {
-				let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
-				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
-				if (player.elementary.theory.points.gte(totalCost)) {
-					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
-					player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
-					player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], TREE_UPGS[key].cap)
-				} else notifier.warn("You could not afford some of your requested Tree upgrades!")
+				if (tmp.ach[162].has) tmp.elm.theory.tree.buy(key, true);
+				else {
+					let costs = Array.from({length: Math.min(upgs[key].toNumber(), TREE_UPGS[key].cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
+					let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
+					if (player.elementary.theory.points.gte(totalCost)) {
+						player.elementary.theory.points = player.elementary.theory.points.sub(totalCost)
+						player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
+						player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], TREE_UPGS[key].cap)
+					} else notifier.warn("You could not afford some of your requested Tree upgrades!")
+				}
 			}
 		}
 	} catch(e) {
@@ -1133,14 +1163,15 @@ function getInflatonEff2() {
 // Quantum Foam
 
 function qfTick(diff) {
-	for (let i=0;i<3;i++) {
+	for (let i=0;i<4;i++) {
 		if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
-		for (let b=0;b<5;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.foam.maxDepth.gte(i+3)) qfMax(i+1, b+1)
+		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.foam.maxDepth.gte(i+3)) qfMax(i+1, b+1)
 	}
 }
 
 function getQuantumFoamGain(x) {
-	let gain = new ExpantaNum(x<=3?1:0)
+	let gain = new ExpantaNum(x<=4?1:0)
+	if (tmp.ach[162].has) gain = gain.times(getAch162Eff())
 	return gain
 }
 
@@ -1184,7 +1215,7 @@ function qfMax(x, b) {
 
 function getQFBoostData() {
 	let data = {}
-	for (let b=0;b<3;b++) {
+	for (let b=0;b<4;b++) {
 		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
@@ -1202,7 +1233,7 @@ function qfUnl(x) {
 	let resetted = 0
 	while (resetted<x) {
 		player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
-		for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
+		for (let i=0;i<4;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
 		resetted++
 	}
 }
@@ -1214,4 +1245,16 @@ function getQuantumFoamEff(x) {
 
 function toggleAutoFoam(x, b) {
 	player.elementary.foam.autoUnl[(x-1)*3+(b-1)] = !player.elementary.foam.autoUnl[(x-1)*3+(b-1)]
+}
+
+function getAch162Eff() {
+	if (!tmp.ach) return new ExpantaNum(1)
+	if (!tmp.ach[162].has) return new ExpantaNum(1)
+	return player.elementary.theory.points.plus(1).log10().plus(1).cbrt()
+}
+
+function getTreeUpgCap(x) {
+	let cap = new ExpantaNum(TREE_UPGS[x].cap)
+	if (player.elementary.foam.unl && tmp.elm.qf) if (QFB17_TARGETS.includes(x)) cap = cap.plus(tmp.elm.qf.boost17)
+	return cap;
 }
