@@ -12,7 +12,7 @@ function save(sav=player, force=false) {
 		all[sav.savePos - 1] = ENString(sav);
 	} else all.push(ENString(sav));
 	localStorage.setItem("dist-inc-saves" + betaID, btoa(JSON.stringify(all)));
-	notifier.success("Game saved!");
+	if (document.hasFocus()) notifier.success("Game saved!");
 }
 
 function setSave(ns, cod=false) {
