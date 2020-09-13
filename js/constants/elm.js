@@ -263,7 +263,7 @@ const TREE_UPGS = {
 		cap: new ExpantaNum(16),
 		desc: "Superscaled Rocket Fuel scaling is weaker.",
 		effect: function(bought) { 
-			if (bought.gte(16)) bought = ExpantaNum.sub(20, ExpantaNum.div(20, ExpantaNum.sub(bought, 11)));
+			if (new ExpantaNum(bought).gte(16)) bought = ExpantaNum.sub(20, ExpantaNum.div(20, ExpantaNum.sub(bought, 11)));
 			return ExpantaNum.mul(0.05, bought) 
 		},
 		effD: function(e) { return showNum(e.times(100))+"% weaker" },
