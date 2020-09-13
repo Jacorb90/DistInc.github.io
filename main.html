@@ -1723,6 +1723,11 @@
 									Quantum Foam
 								</button>
 							</td>
+							<td>
+								<button id="entropytabbtn" class="btn tb foam" onclick="tmp.elm.qf.showTab('entropy')">
+									Entropy
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -1871,6 +1876,13 @@
 							<td>Depth: <span id="qf5Bought3"></span></td>
 						</tr>
 					</table>
+				</div>
+				<div id="entropy" class="foamTab">
+					<button id="entropyReset" class="btn locked" onclick="entropyReset()">Reset all Foam progress to gain <span id="entropyGain" style="color: black;"></span> Entropy<br><span id="entropyNext" style="color: black;"></span></button><br><br>
+					You have <span id="entropyAmt" class="entropy"></span> Entropy.<br>
+					Your best Entropy is <span id="entropyBest" class="entropy"></span>, which is multiplying the production of all Foam types by <span id="entropyEff" class="entropy"></span>.<br><br>
+					You have <span id="omegaParticles" class="entropy"></span> &Omega; Particles (next at <span id="nextOmega"></span> Entropy), which are adding <span id="omegaEff" class="entropy"></span> levels to all Foam Boosts.<br>
+					<br><br><br><br><br>
 				</div>
 			</div>
 		</div>

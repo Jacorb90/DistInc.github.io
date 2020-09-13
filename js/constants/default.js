@@ -213,5 +213,12 @@ const DEFAULT_START = {
 			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 			autoUnl: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
 		},
+		entropy: {
+			unl: false,
+			bestDepth: new ExpantaNum(1),
+			amount: new ExpantaNum(0),
+			best: new ExpantaNum(0),
+			upgrades: [],
+		},
 	}
 };

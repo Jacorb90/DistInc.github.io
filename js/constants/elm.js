@@ -261,8 +261,11 @@ const TREE_UPGS = {
 		cost: function(bought) { return ExpantaNum.add(10, bought.pow(2).times(2)) },
 		target: function(points) { return points.sub(10).div(2).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(16),
-		desc: "Superscaled Rocket Fuel scaling is 5% weaker (non-compounding).",
-		effect: function(bought) { return ExpantaNum.mul(0.05, bought) },
+		desc: "Superscaled Rocket Fuel scaling is weaker.",
+		effect: function(bought) { 
+			if (bought.gte(16)) bought = ExpantaNum.sub(20, ExpantaNum.div(20, ExpantaNum.sub(bought, 11)));
+			return ExpantaNum.mul(0.05, bought) 
+		},
 		effD: function(e) { return showNum(e.times(100))+"% weaker" },
 	},
 	9: {
@@ -568,6 +571,7 @@ const FOAM_REQ = new ExpantaNum("1e42000000")
 const FOAM_TABS = {
 	foamBoosts: function() { return true },
 	qf1: function() { return true },
+	entropy: function() { return player.elementary.entropy.unl },
 }
 const FOAM_BOOST_COSTS = {
 	1: {

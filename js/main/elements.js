@@ -1279,7 +1279,7 @@ function updateQFHTML() {
 				})
 				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
 				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
-				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.foam.maxDepth.gte(x+2))
+				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2))
 				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
 			}
 			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x))
@@ -1296,6 +1296,22 @@ function updateQFHTML() {
 			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none" } catch (_) {}
 		}
 		if (foamTab=="qf1") tmp.el.qf5type.setHTML(player.elementary.foam.maxDepth.gt(5)?("<sup>"+showNum(player.elementary.foam.maxDepth.sub(4))+"</sup>"):"")
+		if (foamTab=="entropy") {
+			let entGain = tmp.elm.entropy.gain
+			tmp.el.entropyReset.setClasses({
+				btn: true,
+				foam: entGain.gte(1),
+				locked: entGain.lt(1),
+			})
+			tmp.el.entropyGain.setTxt(showNum(entGain))
+			tmp.el.entropyNext.setTxt(entGain.lt(1e3)?("Next at "+showNum(getEntropyNext())+" Quantum Foam"):"")
+			tmp.el.entropyAmt.setTxt(showNum(player.elementary.entropy.amount))
+			tmp.el.entropyBest.setTxt(showNum(player.elementary.entropy.best))
+			tmp.el.entropyEff.setTxt(showNum(tmp.elm.entropy.eff))
+			tmp.el.omegaParticles.setTxt(showNum(tmp.elm.entropy.omega))
+			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
+			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
+		}
 	}
 }
 

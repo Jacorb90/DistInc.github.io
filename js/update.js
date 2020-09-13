@@ -304,6 +304,7 @@ function updateUnlocks() {
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
 	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
 }
 
 document.onkeyup = function(e) {

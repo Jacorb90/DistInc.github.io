@@ -677,6 +677,13 @@ function updateTempElementary() {
 	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
 	tmp.elm.qf.gain[4] = tmp.elm.qf.gain[4].times(tmp.elm.qf.boost16).times(tmp.elm.qf.eff[5])
 	tmp.elm.qf.gain[5] = tmp.elm.qf.gain[5].times(ExpantaNum.pow(10, player.elementary.foam.maxDepth.sub(5).max(0)))
+	
+	// Entropy
+	if (!tmp.elm.entropy) tmp.elm.entropy = {}
+	tmp.elm.entropy.eff = getEntropyEff()
+	tmp.elm.entropy.gain = getEntropyGain()
+	tmp.elm.entropy.omega = getOmegaParticles()
+	tmp.elm.entropy.omegaEff = getOmegaEff()
 }
 
 function elTick(diff) {
@@ -1175,16 +1182,20 @@ function getInflatonEff2() {
 function qfTick(diff) {
 	for (let i=0;i<5;i++) {
 		if (player.elementary.foam.maxDepth.gt(i)) player.elementary.foam.amounts[i] = player.elementary.foam.amounts[i].plus(tmp.elm.qf.gain[i+1].times(diff))
-		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.foam.maxDepth.gte(i+3)) qfMax(i+1, b+1)
+		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.entropy.bestDepth.gte(i+3)) qfMax(i+1, b+1)
 	}
+	player.elementary.entropy.bestDepth = player.elementary.entropy.bestDepth.max(player.elementary.foam.maxDepth);
 }
 
 function getQuantumFoamGain(x) {
 	let gain = new ExpantaNum(1)
 	if (tmp.ach[162].has) gain = gain.times(getAch162Eff())
-	if (tmp.elm) if (tmp.elm.qf) {
-		gain = gain.times(tmp.elm.qf.boost21)
-		gain = gain.times(tmp.elm.qf.boost23)
+	if (tmp.elm) {
+		if (tmp.elm.qf) {
+			gain = gain.times(tmp.elm.qf.boost21)
+			gain = gain.times(tmp.elm.qf.boost23)
+		}
+		if (tmp.elm.entropy && player.elementary.entropy.unl) gain = gain.times(tmp.elm.entropy.eff)
 	}
 	return gain
 }
@@ -1234,6 +1245,7 @@ function getQFBoostData() {
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
 			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0)
+			if (player.elementary.entropy.unl && tmp.elm.entropy) data[i] = data[i].plus(tmp.elm.entropy.omegaEff)
 		}
 	}
 	return data
@@ -1291,4 +1303,58 @@ function refoam() {
 		for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
 		resetted++
 	}
+}
+
+// Entropy
+
+function getEntropyEff() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(1);
+	let entropy = player.elementary.entropy.amount;
+	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
+	return entropy.plus(1).pow(2.5);
+}
+
+function getEntropyGain() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(0);
+	let foam = player.elementary.foam.amounts[0]
+	let gain = foam.div(1e50).pow(0.05)
+	if (gain.gte(5)) gain = gain.times(25).cbrt()
+	return gain.floor().sub(player.elementary.entropy.amount).max(0)
+}
+
+function getEntropyNext() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
+	let gain = tmp.elm.entropy.gain.plus(player.elementary.entropy.amount).plus(1);
+	if (gain.gte(5)) gain = gain.pow(3).div(25)
+	return gain.pow(20).times(1e50);
+}
+
+function entropyReset() {
+	if (!player.elementary.entropy.unl) return;
+	let gain = tmp.elm.entropy.gain;
+	if (gain.lt(1)) return;
+	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
+	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
+	
+	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+	player.elementary.foam.maxDepth = new ExpantaNum(1)
+	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+}
+
+function getOmegaParticles() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
+	let amt = player.elementary.entropy.best.plus(1).logBase(2)
+	return amt.floor()
+}
+
+function getNextOmega() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
+	let omega = tmp.elm.entropy.omega.plus(1)
+	return ExpantaNum.pow(2, omega).sub(1)
+}
+
+function getOmegaEff() {
+	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
+	let eff = tmp.elm.entropy.omega.div(10)
+	return eff
 }

@@ -140,6 +140,7 @@ const ACH_DATA = {
 		161: "We're kids again",
 		162: "Actually Useless Theories",
 		163: "String Clickers",
+		164: "There are only so many",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -280,6 +281,7 @@ const ACH_DATA = {
 		161: "Unlock Quantum Foam.",
 		162: "Reach formatDistance(4.4e251) of Primary String.",
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
+		164: "Unlock Entropy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
