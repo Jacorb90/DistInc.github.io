@@ -680,7 +680,10 @@ function updateTempElementary() {
 	
 	// Entropy
 	if (!tmp.elm.entropy) tmp.elm.entropy = {}
+	if (!tmp.elm.entropy.upgEff) tmp.elm.entropy.upgEff = {}
+	for (let i in ENTROPY_UPG_EFFS) tmp.elm.entropy.upgEff[i] = ENTROPY_UPG_EFFS[i]();
 	tmp.elm.entropy.eff = getEntropyEff()
+	tmp.elm.entropy.gainMult = getEntropyGainMult()
 	tmp.elm.entropy.gain = getEntropyGain()
 	tmp.elm.entropy.omega = getOmegaParticles()
 	tmp.elm.entropy.omegaEff = getOmegaEff()
@@ -1195,7 +1198,10 @@ function getQuantumFoamGain(x) {
 			gain = gain.times(tmp.elm.qf.boost21)
 			gain = gain.times(tmp.elm.qf.boost23)
 		}
-		if (tmp.elm.entropy && player.elementary.entropy.unl) gain = gain.times(tmp.elm.entropy.eff)
+		if (tmp.elm.entropy && player.elementary.entropy.unl) {
+			gain = gain.times(tmp.elm.entropy.eff)
+			if (player.elementary.entropy.upgrades.includes(2)) gain = gain.times(tmp.elm.entropy.upgEff[2])
+		}
 	}
 	return gain
 }
@@ -1288,7 +1294,7 @@ function getTreeUpgCap(x) {
 
 function getRefoamCost() {
 	let bought = player.elementary.foam.maxDepth.sub(5)
-	let cost = QF_NEXTLAYER_COST[5].times(ExpantaNum.pow(10, ExpantaNum.pow(10, bought).sub(1)))
+	let cost = QF_NEXTLAYER_COST[5].times(ExpantaNum.pow(10, ExpantaNum.pow(10, bought.pow(0.45)).sub(1)))
 	return cost
 }
 
@@ -1314,17 +1320,25 @@ function getEntropyEff() {
 	return entropy.plus(1).pow(2.5);
 }
 
+function getEntropyGainMult() {
+	let mult = new ExpantaNum(1)
+	if (player.elementary.entropy.upgrades.includes(3)) mult = mult.times(tmp.elm.entropy.upgEff[3])
+	return mult;
+}
+
 function getEntropyGain() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0);
 	let foam = player.elementary.foam.amounts[0]
 	let gain = foam.div(1e50).pow(0.05)
 	if (gain.gte(5)) gain = gain.times(25).cbrt()
-	return gain.floor().sub(player.elementary.entropy.amount).max(0)
+	if (gain.gte(100)) gain = gain.times(1e6).pow(0.25)
+	return gain.times(tmp.elm.entropy.gainMult).floor().sub(player.elementary.entropy.amount).max(0)
 }
 
 function getEntropyNext() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
-	let gain = tmp.elm.entropy.gain.plus(player.elementary.entropy.amount).plus(1);
+	let gain = tmp.elm.entropy.gain.plus(player.elementary.entropy.amount).div(tmp.elm.entropy.gainMult).plus(1);
+	if (gain.gte(100)) gain = gain.pow(4).div(1e6)
 	if (gain.gte(5)) gain = gain.pow(3).div(25)
 	return gain.pow(20).times(1e50);
 }
@@ -1357,4 +1371,13 @@ function getOmegaEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
 	let eff = tmp.elm.entropy.omega.div(10)
 	return eff
+}
+
+function buyEntropyUpg(x) {
+	if (!player.elementary.entropy.unl) return;
+	if (player.elementary.entropy.upgrades.includes(x)) return;
+	let cost = ENTROPY_UPG_COSTS[x]
+	if (player.elementary.entropy.amount.lt(cost)) return;
+	player.elementary.entropy.amount = player.elementary.entropy.amount.sub(cost)
+	player.elementary.entropy.upgrades.push(x)
 }

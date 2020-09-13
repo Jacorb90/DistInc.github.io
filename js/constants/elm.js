@@ -668,3 +668,13 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
+const ENTROPY_UPGS = 3
+const ENTROPY_UPG_COSTS = {
+	1: new ExpantaNum(4),
+	2: new ExpantaNum(10),
+	3: new ExpantaNum(25),
+}
+const ENTROPY_UPG_EFFS = {
+	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
+	3: function() { return ExpantaNum.pow(1.0015, player.rf) },
+}

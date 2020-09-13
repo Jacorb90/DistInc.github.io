@@ -1589,6 +1589,23 @@ table {
 	box-shadow: none;
 }
 
+.btn.foamBought {
+	box-shadow: 3px 4px 0px 0px #abbd84;
+	background: none;
+	background-color: #abbd84;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: default;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
 .foamtxt {
 	color: #d3e8cc;
 	font-size: 20px;

@@ -140,6 +140,10 @@ function autoTick(diff) {
 			if (player.elementary.time.gte(val)) elmReset(false, true)
 		}
 	}
+	if (player.automators["foam_unlocks"]) {
+		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
+		else refoam();
+	}
 	if (player.automators["spectral_gems"]) { // NEEDS to be last due to RETURNS
 		if (player.inf.pantheon.gems.eq(0)) return
 		let types = ["angels", "demons"]

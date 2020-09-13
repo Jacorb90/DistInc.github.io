@@ -79,6 +79,9 @@ const AUTOMATORS = {
 	elementaries: function() {
 		return tmp.ach[133].has&&player.elementary.times.gt(0)
 	},
+	foam_unlocks: function() {
+		return player.elementary.entropy.upgrades.includes(1)
+	},
 };
 
 const AUTOMATOR_X = {

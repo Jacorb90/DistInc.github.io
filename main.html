@@ -1881,7 +1881,14 @@
 					<button id="entropyReset" class="btn locked" onclick="entropyReset()">Reset all Foam progress to gain <span id="entropyGain" style="color: black;"></span> Entropy<br><span id="entropyNext" style="color: black;"></span></button><br><br>
 					You have <span id="entropyAmt" class="entropy"></span> Entropy.<br>
 					Your best Entropy is <span id="entropyBest" class="entropy"></span>, which is multiplying the production of all Foam types by <span id="entropyEff" class="entropy"></span>.<br><br>
-					You have <span id="omegaParticles" class="entropy"></span> &Omega; Particles (next at <span id="nextOmega"></span> Entropy), which are adding <span id="omegaEff" class="entropy"></span> levels to all Foam Boosts.<br>
+					You have <span id="omegaParticles" class="entropy"></span> &Omega; Particles (next at <span id="nextOmega"></span> Entropy), which are adding <span id="omegaEff" class="entropy"></span> levels to all Foam Boosts.<br><br><br>
+					<table>
+						<tr>
+							<td><button id="entropy1" class="btn locked" onclick="buyEntropyUpg(1)" style="min-height: 100px;">Unlock Auto-Foam Unlocks (in automation tab)<br>Cost: <span id="entropyCost1" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy2" class="btn locked" onclick="buyEntropyUpg(2)" style="min-height: 100px;">Gain more of all types of Foam based on your Theoriverse completions<br>Cost: <span id="entropyCost2" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff2" style="color: black;"></span>x</button></td>
+							<td><button id="entropy3" class="btn locked" onclick="buyEntropyUpg(3)" style="min-height: 100px;">Rocket Fuel boosts Entropy Gain<br>Cost: <span id="entropyCost3" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff3" style="color: black;"></span>x</button></td>
+						</tr>
+					</table>
 					<br><br><br><br><br>
 				</div>
 			</div>

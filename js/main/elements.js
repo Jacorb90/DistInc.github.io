@@ -1311,6 +1311,17 @@ function updateQFHTML() {
 			tmp.el.omegaParticles.setTxt(showNum(tmp.elm.entropy.omega))
 			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
 			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
+			for (let i=1;i<=ENTROPY_UPGS;i++) {
+				let cost = ENTROPY_UPG_COSTS[i]
+				tmp.el["entropy"+i].setClasses({
+					btn: true,
+					foamBought: player.elementary.entropy.upgrades.includes(i),
+					foam: player.elementary.entropy.amount.gte(cost)&&!player.elementary.entropy.upgrades.includes(i),
+					locked: player.elementary.entropy.amount.lt(cost)&&!player.elementary.entropy.upgrades.includes(i),
+				})
+				tmp.el["entropyCost"+i].setTxt(showNum(cost))
+				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]))
+			}
 		}
 	}
 }
