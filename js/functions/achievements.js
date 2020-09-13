@@ -143,6 +143,7 @@ function updateAchievements() {
 	
 	if (player.elementary.foam.unl) tmp.ach[161].grant()
 	if (player.elementary.theory.strings.amounts[0].gte(4.4e251)) tmp.ach[162].grant();
+	if (player.elementary.theory.strings.entangled.gte(4.4e126)) tmp.ach[163].grant();
 }
 
 function rowComplete(r) {

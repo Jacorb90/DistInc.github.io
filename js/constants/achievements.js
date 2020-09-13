@@ -139,6 +139,7 @@ const ACH_DATA = {
 		
 		161: "We're kids again",
 		162: "Actually Useless Theories",
+		163: "String Clickers",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -278,6 +279,7 @@ const ACH_DATA = {
 		
 		161: "Unlock Quantum Foam.",
 		162: "Reach formatDistance(4.4e251) of Primary String.",
+		163: "Reach formatDistance(4.4e126) of Entangled String.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -368,5 +370,6 @@ const ACH_DATA = {
 		157: "All Strings are gained twice as fast.",
 		
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
+		163: "Gain 10% of your Entangled String gain every second.",
 	}
 };

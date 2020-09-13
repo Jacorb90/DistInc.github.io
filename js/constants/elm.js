@@ -650,7 +650,7 @@ const FOAM_BOOST_COSTS = {
 			exp: new ExpantaNum(1.85),
 		},
 		3: {
-			start: new ExpantaNum(1/0),
+			start: new ExpantaNum(5e3),
 			base: new ExpantaNum(9.5),
 			exp: new ExpantaNum(1.9),
 		},
@@ -661,6 +661,6 @@ const QF_NEXTLAYER_COST = {
 	2: new ExpantaNum(5e3),
 	3: new ExpantaNum(1e4),
 	4: new ExpantaNum(1.75e3),
-	5: new ExpantaNum(1/0),
+	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]

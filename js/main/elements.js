@@ -1282,18 +1282,20 @@ function updateQFHTML() {
 				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.foam.maxDepth.gte(x+2))
 				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
 			}
-			tmp.el["qf"+x+"NextUnl"].setDisplay(player.elementary.foam.maxDepth.eq(x))
+			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x))
+			let refoamCost = getRefoamCost()
 			tmp.el["qf"+x+"NextUnl"].setClasses({
 				btn: true,
-				locked: player.elementary.foam.amounts[x-1].lt(QF_NEXTLAYER_COST[x]),
-				foam: player.elementary.foam.amounts[x-1].gte(QF_NEXTLAYER_COST[x]),
+				locked: player.elementary.foam.amounts[x-1].lt((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
+				foam: player.elementary.foam.amounts[x-1].gte((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
 			})
-			tmp.el["qf"+x+"Cost4"].setTxt(showNum(QF_NEXTLAYER_COST[x]))
+			tmp.el["qf"+x+"Cost4"].setTxt(showNum((x==5)?refoamCost:QF_NEXTLAYER_COST[x]))
 
 			if (x===1) continue
 			const foamRows = document.querySelectorAll(`.qf${x}row`)
 			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none" } catch (_) {}
 		}
+		if (foamTab=="qf1") tmp.el.qf5type.setHTML(player.elementary.foam.maxDepth.gt(5)?("<sup>"+showNum(player.elementary.foam.maxDepth.sub(4))+"</sup>"):"")
 	}
 }
 

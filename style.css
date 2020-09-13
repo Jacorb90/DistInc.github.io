@@ -1459,7 +1459,7 @@ table {
 	height: 40px;
 	background-color: grey;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.locked:hover {
@@ -1472,7 +1472,7 @@ table {
 	background-color: #fcb377;
 	border-color: #e66700;
 	color: black;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.unl:hover {
@@ -1484,7 +1484,7 @@ table {
 	height: 40px;
 	background-color: green;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 #rocketReset, #collapseReset {
