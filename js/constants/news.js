@@ -73,6 +73,9 @@ const NEWS_DATA = {
 	m71: ['"Absurd mode is just dumb." - A reddit user'],
 	m72: ['I tried looking for some inflation, but suddenly I heard a quiet yet scary noise: "softcapped"'],
 	m73: ["1 Star Rating: Egg isn't the next mechanic"],
+	m74: ["Crackle comes in the egg update in 5 minutes"],
+	m75: ["Does fome even exist?"],
+	m76: ["There are at least 2 rick rolls in the news... can you collec them all???"],
 
 	// Distance-based Conditions
 	d1: [
@@ -394,6 +397,14 @@ const NEWS_DATA = {
 		function () {
 			return player.collapse.unl;
 		}
+	],
+	s23: [
+		"Fome does exist!",
+		function() { return player.elementary.foam.unl },
+	],
+	s24: [
+		"Time to refoam your protofoam.",
+		function() { return player.elementary.foam.maxDepth.gte(5) },
 	],
 };
 

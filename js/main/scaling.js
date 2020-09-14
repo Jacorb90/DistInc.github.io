@@ -52,6 +52,8 @@ function getScalingStart(type, name) {
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("4;5")) start = start.plus(2)
+		} else if (type=="hyper") {
+			if (player.elementary.entropy.upgrades.includes(4) && tmp.elm) start = start.plus(tmp.elm.entropy.upgEff[4])
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {

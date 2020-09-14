@@ -145,6 +145,7 @@ function updateAchievements() {
 	if (player.elementary.theory.strings.amounts[0].gte(4.4e251)) tmp.ach[162].grant();
 	if (player.elementary.theory.strings.entangled.gte(4.4e126)) tmp.ach[163].grant();
 	if (player.elementary.entropy.unl) tmp.ach[164].grant();
+	if (player.elementary.hc.best.gte(8)) tmp.ach[165].grant();
 }
 
 function rowComplete(r) {

@@ -141,6 +141,7 @@ const ACH_DATA = {
 		162: "Actually Useless Theories",
 		163: "String Clickers",
 		164: "There are only so many",
+		165: "Is there even a point to these anymore?",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -282,6 +283,7 @@ const ACH_DATA = {
 		162: "Reach formatDistance(4.4e251) of Primary String.",
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
 		164: "Unlock Entropy.",
+		165: "Get a Hadronic Score of at least showNum(8)",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

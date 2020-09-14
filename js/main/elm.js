@@ -615,7 +615,7 @@ function updateTempElementary() {
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
 	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
-	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).log10()).min(1)
+	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).times(4.4e26).log10()).min(1)
 	tmp.elm.hc.infState = getInflatonState()
 	tmp.elm.hc.infGain = getInflatonGain()
 	claimHadronEff()
@@ -685,6 +685,7 @@ function updateTempElementary() {
 	tmp.elm.entropy.eff = getEntropyEff()
 	tmp.elm.entropy.gainMult = getEntropyGainMult()
 	tmp.elm.entropy.gain = getEntropyGain()
+	tmp.elm.entropy.omegaDiv = getOmegaParticleReqDiv()
 	tmp.elm.entropy.omega = getOmegaParticles()
 	tmp.elm.entropy.omegaEff = getOmegaEff()
 }
@@ -1283,6 +1284,7 @@ function toggleAutoFoam(x, b) {
 function getAch162Eff() {
 	if (!tmp.ach) return new ExpantaNum(1)
 	if (!tmp.ach[162].has) return new ExpantaNum(1)
+	if (player.elementary.entropy.upgrades.includes(6)) return player.elementary.theory.points.plus(1).pow(0.75)
 	return player.elementary.theory.points.plus(1).log10().plus(1).cbrt()
 }
 
@@ -1315,7 +1317,7 @@ function refoam() {
 
 function getEntropyEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1);
-	let entropy = player.elementary.entropy.amount;
+	let entropy = player.elementary.entropy.best;
 	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
 	return entropy.plus(1).pow(2.5);
 }
@@ -1355,16 +1357,22 @@ function entropyReset() {
 	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }
 
+function getOmegaParticleReqDiv() {
+	let div = new ExpantaNum(1)
+	if (player.elementary.entropy.upgrades.includes(5)) div = div.times(tmp.elm.entropy.upgEff[5])
+	return div
+}
+
 function getOmegaParticles() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
-	let amt = player.elementary.entropy.best.plus(1).logBase(2)
+	let amt = player.elementary.entropy.best.times(tmp.elm.entropy.omegaDiv).plus(1).logBase(2)
 	return amt.floor()
 }
 
 function getNextOmega() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
 	let omega = tmp.elm.entropy.omega.plus(1)
-	return ExpantaNum.pow(2, omega).sub(1)
+	return ExpantaNum.pow(2, omega).sub(1).div(tmp.elm.entropy.omegaDiv)
 }
 
 function getOmegaEff() {
