@@ -640,6 +640,7 @@ function updateTempElementary() {
 	// Quantum Foam Boosts
 	tmp.elm.qf.boostData = getQFBoostData()
 	tmp.elm.qf.boost25 = tmp.elm.qf.boostData[25].times(tmp.elm.qf.boostData[25].plus(1).cbrt()).div(2)
+	if (tmp.elm.qf.boost25.gte(3.5)) tmp.elm.qf.boost25 = tmp.elm.qf.boost25.sqrt().times(Math.sqrt(3.5))
 	tmp.elm.qf.boost24 = player.elementary.foam.amounts[0].plus(1).log10().plus(1).pow(tmp.elm.qf.boostData[24].plus(tmp.elm.qf.boost25).times(60))
 	tmp.elm.qf.boost23 = ExpantaNum.pow(10, tmp.elm.qf.boostData[23].plus(tmp.elm.qf.boost25).pow(0.75))
 	tmp.elm.qf.boost22 = ExpantaNum.pow(8, tmp.elm.qf.boostData[22].plus(tmp.elm.qf.boost25))
@@ -1284,7 +1285,11 @@ function toggleAutoFoam(x, b) {
 function getAch162Eff() {
 	if (!tmp.ach) return new ExpantaNum(1)
 	if (!tmp.ach[162].has) return new ExpantaNum(1)
-	if (player.elementary.entropy.upgrades.includes(6)) return player.elementary.theory.points.plus(1).pow(0.75)
+	if (player.elementary.entropy.upgrades.includes(6)) {
+		let ret = player.elementary.theory.points.plus(1).pow(0.75);
+		if (ret.gte(2500)) ret = ret.log10().times(2500/Math.log10(2500))
+		return ret;
+	}
 	return player.elementary.theory.points.plus(1).log10().plus(1).cbrt()
 }
 
@@ -1325,6 +1330,7 @@ function getEntropyEff() {
 function getEntropyGainMult() {
 	let mult = new ExpantaNum(1)
 	if (player.elementary.entropy.upgrades.includes(3)) mult = mult.times(tmp.elm.entropy.upgEff[3])
+	if (player.elementary.entropy.upgrades.includes(8)) mult = mult.times(tmp.elm.entropy.upgEff[8])
 	return mult;
 }
 
@@ -1378,6 +1384,7 @@ function getNextOmega() {
 function getOmegaEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
 	let eff = tmp.elm.entropy.omega.div(10)
+	if (player.elementary.entropy.upgrades.includes(7)) eff = eff.times(tmp.elm.entropy.upgEff[7].div(100).plus(1))
 	return eff
 }
 
