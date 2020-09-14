@@ -75,7 +75,8 @@ const NEWS_DATA = {
 	m73: ["1 Star Rating: Egg isn't the next mechanic"],
 	m74: ["Crackle comes in the egg update in 5 minutes"],
 	m75: ["Does fome even exist?"],
-	m76: ["There are at least 2 rick rolls in the news... can you collec them all???"],
+	m76: ["There are at least 2 rick rolls in the news... can you collect them all???"],
+	m77: ["&quot;It's Siivagunner, not Silvagunner&quot; - somebody that once told me that they were gonna give me up"],
 
 	// Distance-based Conditions
 	d1: [

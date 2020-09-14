@@ -336,14 +336,55 @@ function updateTempElementary() {
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
 		if (x == 3||x == 4) return ExpantaNum.pow(2, bought);
 	};
-	if (!tmp.elm.bos.buyLU) tmp.elm.bos.buyLU = function (x) {
+	if (!tmp.elm.bos.buyLU) tmp.elm.bos.buyLU = function (x, max=false) {
 		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return;
+		let target;
+		if (max) {
+			let amt = player.elementary.bosons.gauge.photons.amount
+			switch(x) {
+				case 1: 
+					target = amt.div(25).max(1).logBase(5).sqrt().plus(1).floor();
+					if (scalingActive("photons", target, "scaled")) {
+						let power = getScalingPower("scaled", "photons")
+						let exp = ExpantaNum.pow(2, power)
+						let s = getScalingStart("scaled", "photons")
+						target = amt.div(25).max(1).logBase(5).sqrt().times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+					}
+					break;
+				case 2: 
+					target = amt.div(40).max(1).logBase(4).sqrt().plus(1).floor();
+					if (scalingActive("photons", target, "scaled")) {
+						let power = getScalingPower("scaled", "photons")
+						let exp = ExpantaNum.pow(2, power)
+						let s = getScalingStart("scaled", "photons")
+						target = amt.div(40).max(1).logBase(4).sqrt().times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+					}
+					break;
+				case 3: 
+					target = amt.div(1e4).max(1).log10().plus(1).floor();
+					if (scalingActive("photons", target, "scaled")) {
+						let power = getScalingPower("scaled", "photons")
+						let exp = ExpantaNum.pow(2, power)
+						let s = getScalingStart("scaled", "photons")
+						target = amt.div(1e4).max(1).log10().times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+					}
+					break;
+				case 4: 
+					target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).plus(1).floor()
+					if (scalingActive("photons", target, "scaled")) {
+						let power = getScalingPower("scaled", "photons")
+						let exp = ExpantaNum.pow(2, power)
+						let s = getScalingStart("scaled", "photons")
+						target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+					}
+					break;
+			}
+		}
 		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
 		).sub(tmp.elm.bos.photonCost[x]);
-		player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(
-			player.elementary.bosons.gauge.photons.upgrades[x - 1]
-		).plus(1);
+		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).max(target)
+		else player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).plus(1);
 	};
 
 	// W & Z Bosons
@@ -395,11 +436,20 @@ function updateTempElementary() {
 		else if (x==2) return ExpantaNum.pow(3, ExpantaNum.pow(3, bought)).times(1e3 / 3);
 		else return ExpantaNum.pow(10, bought.pow(2)).times(1e7)
 	};
-	tmp.elm.bos.buy = function (col, x) {
+	if (!tmp.elm.bos.gluonTarg) tmp.elm.bos.gluonTarg = function (col, x) {
+		let amt = player.elementary.bosons.gauge.gluons[col].amount||new ExpantaNum(0);
+		if (x == 1) return amt.div(100).max(1).logBase(2).div(2).pow(1/2.5).plus(1).floor();
+		else if (x==2) return amt.div(1e3 / 3).max(1).logBase(3).max(1).logBase(3).plus(1).floor();
+		else return amt.div(1e7).max(1).log10().sqrt().plus(1).floor();
+	};
+	tmp.elm.bos.buy = function (col, x, max=false) {
 		let amt = player.elementary.bosons.gauge.gluons[col].amount;
 		if (amt.lt(tmp.elm.bos.gluonCost(col, x))) return;
+		let target;
+		if (max) target = tmp.elm.bos.gluonTarg(col, x);
 		player.elementary.bosons.gauge.gluons[col].amount = amt.sub(tmp.elm.bos.gluonCost(col, x));
-		player.elementary.bosons.gauge.gluons[col].upgrades[x - 1] = player.elementary.bosons.gauge.gluons[
+		if (max) player.elementary.bosons.gauge.gluons[col].upgrades[x - 1] = player.elementary.bosons.gauge.gluons[col].upgrades[x - 1].max(target)
+		else player.elementary.bosons.gauge.gluons[col].upgrades[x - 1] = player.elementary.bosons.gauge.gluons[
 			col
 		].upgrades[x - 1].plus(1);
 	};

@@ -142,6 +142,9 @@ const ACH_DATA = {
 		163: "String Clickers",
 		164: "There are only so many",
 		165: "Is there even a point to these anymore?",
+		166: "True Inflation",
+		167: "How is the Multiverse containing your power?",
+		168: "There is only one Fome",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -277,13 +280,16 @@ const ACH_DATA = {
 		155: "Unlock Inflatons",
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
-		158: "Get a Hadronic Score of at least showNum(3.75)",
+		158: "Get a Hadronic Score of at least showNum(3.75).",
 		
 		161: "Unlock Quantum Foam.",
 		162: "Reach formatDistance(4.4e251) of Primary String.",
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
 		164: "Unlock Entropy.",
-		165: "Get a Hadronic Score of at least showNum(8)",
+		165: "Get a Hadronic Score of at least showNum(8).",
+		166: "Reach showNum(1e160) Inflatons.",
+		167: "Reach showNum(1e108000000) uni.",
+		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -375,5 +381,6 @@ const ACH_DATA = {
 		
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
 		163: "Gain 10% of your Entangled String gain every second.",
+		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 	}
 };
