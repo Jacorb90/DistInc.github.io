@@ -151,4 +151,5 @@ function updateTempRankCheap() {
 			player.velocity = prev.velocity;
 		}
 	};
+	if (!tmp.rankCheap.updateOnReset) tmp.rankCheap.updateOnReset = function() { updateTempRankCheapCost(); }
 }

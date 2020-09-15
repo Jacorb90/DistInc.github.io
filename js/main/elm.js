@@ -52,31 +52,7 @@ function setElementaryResetFunction(){
 	};
 }
 
-
-function updateTempElementary() {
-	if (tmp.elm) {
-		tmp.psiEff = tmp.elm.ferm.leptonR("psi");
-		tmp.z1 = tmp.elm.bos.z1;
-		tmp.glu2 = tmp.elm.bos.gluon2total;
-		tmp.gravEff = tmp.elm.bos.gravEff;
-		tmp.higgs110 = tmp.elm.bos["higgs_1;1;0"]()
-		tmp.higgs011 = tmp.elm.bos["higgs_0;1;1"]()
-		tmp.higgs300 = tmp.elm.bos["higgs_3;0;0"]()
-		tmp.higgs130 = tmp.elm.bos["higgs_1;3;0"]()
-		tmp.higgs031 = tmp.elm.bos["higgs_0;3;1"]()
-		tmp.inf510 = tmp.inf.upgs.has("5;10")
-		tmp.lu3 = tmp.elm.bos.photonEff(3)
-		tmp.lu4 = tmp.elm.bos.photonEff(4)
-		tmp.thGain = tmp.elm.theory.gain
-		tmp.sqEff = tmp.elm.theory.ss.squarkEff
-		tmp.slEff = tmp.elm.theory.ss.sleptonEff
-		tmp.neuEff = tmp.elm.theory.ss.neutralinoEff
-		tmp.chEff = tmp.elm.theory.ss.charginoEff
-		tmp.hh410 = tmp.elm.bos.hasHiggs("4;1;0")
-	}
-
-	// Elementary Layer
-	if (!tmp.elm) tmp.elm = {};
+function updateElementaryLayer() {
 	tmp.elm.can =
 		player.rockets.gte(LAYER_REQS.elementary[0][1]) &&
 		player.collapse.cadavers.gte(LAYER_REQS.elementary[1][1]) &&
@@ -119,8 +95,30 @@ function updateTempElementary() {
 		if (player.inf.derivatives.unlocks.lte(tmp.inf.derv.maxShifts)) tmp.ach[137].grant()
 	};
 	setElementaryResetFunction()
+}
 
-	// Elementary Tab System
+function setTempElementaryStuff() {
+	tmp.psiEff = tmp.elm.ferm.leptonR("psi");
+	tmp.z1 = tmp.elm.bos.z1;
+	tmp.glu2 = tmp.elm.bos.gluon2total;
+	tmp.gravEff = tmp.elm.bos.gravEff;
+	tmp.higgs110 = tmp.elm.bos["higgs_1;1;0"]()
+	tmp.higgs011 = tmp.elm.bos["higgs_0;1;1"]()
+	tmp.higgs300 = tmp.elm.bos["higgs_3;0;0"]()
+	tmp.higgs130 = tmp.elm.bos["higgs_1;3;0"]()
+	tmp.higgs031 = tmp.elm.bos["higgs_0;3;1"]()
+	tmp.inf510 = tmp.inf.upgs.has("5;10")
+	tmp.lu3 = tmp.elm.bos.photonEff(3)
+	tmp.lu4 = tmp.elm.bos.photonEff(4)
+	tmp.thGain = tmp.elm.theory.gain
+	tmp.sqEff = tmp.elm.theory.ss.squarkEff
+	tmp.slEff = tmp.elm.theory.ss.sleptonEff
+	tmp.neuEff = tmp.elm.theory.ss.neutralinoEff
+	tmp.chEff = tmp.elm.theory.ss.charginoEff
+	tmp.hh410 = tmp.elm.bos.hasHiggs("4;1;0")
+}
+
+function updateElementaryTabs() {
 	if (!tmp.elm.updateTabs) tmp.elm.updateTabs = function () {
 		let tabs = Element.allFromClass("elmtab");
 		for (let i = 0; i < tabs.length; i++) {
@@ -134,21 +132,9 @@ function updateTempElementary() {
 		tmp.elm.updateTabs();
 	};
 	tmp.elm.updateTabs();
+}
 
-	// Fermions
-	if (!tmp.elm.ferm) tmp.elm.ferm = {};
-	if (!tmp.elm.ferm.transfer1) tmp.elm.ferm.transfer1 = function () {
-		if (player.elementary.particles.lt(1)) return;
-		player.elementary.particles = player.elementary.particles.sub(1);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1);
-	};
-	if (!tmp.elm.ferm.transfer) tmp.elm.ferm.transfer = function (ratio) {
-		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
-		let toSub = player.elementary.particles.times(ratio).floor();
-		player.elementary.particles = player.elementary.particles.sub(toSub);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub);
-	};
-	// Quarks
+function updateTempQuarks() {
 	tmp.elm.ferm.quarkGain = player.elementary.fermions.amount
 		.times(player.inf.endorsements.plus(1).sqrt())
 		.times((tmp.psiEff ? tmp.psiEff : new ExpantaNum(0)).max(1));
@@ -206,8 +192,9 @@ function updateTempElementary() {
 	if (!tmp.elm.ferm.changeQuark) tmp.elm.ferm.changeQuark = function () {
 		player.elementary.fermions.quarks.type = (player.elementary.fermions.quarks.type % 6) + 1;
 	};
+}
 
-	// Leptons
+function updateTempLeptons() {
 	tmp.elm.ferm.leptonGain = player.elementary.fermions.amount
 		.times(tmp.inf.pantheon.totalGems.plus(1))
 		.div(2.5)
@@ -276,20 +263,27 @@ function updateTempElementary() {
 	if (!tmp.elm.ferm.changeLepton) tmp.elm.ferm.changeLepton = function () {
 		player.elementary.fermions.leptons.type = (player.elementary.fermions.leptons.type % 6) + 1;
 	};
+}
 
-	// Bosons
-	if (!tmp.elm.bos) tmp.elm.bos = {};
-	if (!tmp.elm.bos.transfer1) tmp.elm.bos.transfer1 = function () {
+function updateTempFermions() {
+	if (!tmp.elm.ferm) tmp.elm.ferm = {};
+	if (!tmp.elm.ferm.transfer1) tmp.elm.ferm.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
-		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(1);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1);
 	};
-	if (!tmp.elm.bos.transfer) tmp.elm.bos.transfer = function (ratio) {
+	if (!tmp.elm.ferm.transfer) tmp.elm.ferm.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
-		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub);
 	};
+	
+	updateTempQuarks();
+	updateTempLeptons();
+}
+
+function updateGluonTabs() {
 	if (!tmp.elm.bos.updateGluonTabs) tmp.elm.bos.updateGluonTabs = function () {
 		let tabs = Element.allFromClass("gluontab");
 		for (let i = 0; i < tabs.length; i++) tabs[i].setDisplay(gluonTab == tabs[i].id);
@@ -300,19 +294,9 @@ function updateTempElementary() {
 		tmp.elm.bos.updateGluonTabs();
 	};
 	tmp.elm.bos.updateGluonTabs();
+}
 
-	// Gauge Bosons
-	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1));
-	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
-	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
-	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.elm.qf.boost18);
-	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
-	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(0.08))
-	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
-	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
-	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
-
-	// Photons
+function updateTempPhotons(gaugeSpeed) {
 	tmp.elm.bos.photonGain = gaugeSpeed;
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
@@ -386,8 +370,9 @@ function updateTempElementary() {
 		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).max(target)
 		else player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).plus(1);
 	};
+}
 
-	// W & Z Bosons
+function updateTempWZB(gaugeSpeed) {
 	tmp.elm.bos.wg = gaugeSpeed.times(0.4).times(tmp.z1 || 1);
 	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.wg = tmp.elm.bos.wg.times(tmp.elm.qf.boost19)
 	tmp.elm.bos.w1 = player.elementary.bosons.gauge.w.plus(1).log10().div(10).plus(1);
@@ -398,8 +383,9 @@ function updateTempElementary() {
 	tmp.elm.bos.z1 = player.elementary.bosons.gauge.z.plus(1).pow(0.04);
 	if (tmp.elm.bos.z1.gte(1.4)) tmp.elm.bos.z1 = tmp.elm.bos.z1.logBase(1.4).times(1.4).min(tmp.elm.bos.z1)
 	tmp.elm.bos.z2 = player.elementary.bosons.gauge.z.plus(1).pow(2);
+}
 
-	// Gluons
+function updateTempGluons(gaugeSpeed) {
 	if (!tmp.elm.bos.updateTabs) tmp.elm.bos.updateTabs = function () {
 		let tabs = Element.allFromClass("bostab");
 		for (let i = 0; i < tabs.length; i++) tabs[i].setDisplay(bosTab == tabs[i].id);
@@ -458,8 +444,9 @@ function updateTempElementary() {
 		tmp.elm.bos.gluon2total = tmp.elm.bos.gluon2total.times(tmp.elm.bos.gluonEff(GLUON_COLOURS[i], 2));
 		if (tmp.hh410) tmp.elm.bos[GLUON_COLOURS[i]+"g"] = tmp.elm.bos[GLUON_COLOURS[i]+"g"].times(666)
 	}
+}
 
-	// Gravitons
+function updateTempGravitons(gaugeSpeed) {
 	tmp.elm.bos.gravGain = gaugeSpeed.div(1.75);
 	if (player.inf.upgrades.includes("10;9")) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(100)
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.gravGain = tmp.elm.bos.gravGain.times(tmp.neuEff||1)
@@ -470,21 +457,26 @@ function updateTempElementary() {
 		.div(10)
 		.plus(1)
 		.pow(2.25);
+}
 
-	// Scalar Bosons
-	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
-	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
-	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
-	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
-	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
-	if (!tmp.elm.bos.buyHiggs) tmp.elm.bos.buyHiggs = function(id) {
-		let data = HIGGS_UPGS[id]
-		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
-		player.elementary.bosons.scalar.higgs.amount = player.elementary.bosons.scalar.higgs.amount.sub(data.cost)
-		player.elementary.bosons.scalar.higgs.upgrades.push(id)
-		if (id=="0;0;2") for (let i=1;i<=4;i++) tmp.inf.asc.activatePerk(i)
-	}
-	if (!tmp.elm.bos.hasHiggs) tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
+function updateTempGauge() {
+	tmp.elm.bos.gaugeGain = player.elementary.bosons.amount.times(player.inf.ascension.power.plus(1).log10().plus(1));
+	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
+	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
+	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.elm.qf.boost18);
+	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
+	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(0.08))
+	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
+	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
+	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
+
+	updateTempPhotons(gaugeSpeed);
+	updateTempWZB(gaugeSpeed);
+	updateTempGluons(gaugeSpeed);
+	updateTempGravitons(gaugeSpeed);
+}
+
+function updateHiggsUpgradeEffects() {
 	if (!tmp.elm.bos["higgs_1;1;0"]) tmp.elm.bos["higgs_1;1;0"] = function(disp=false) {
 		if (!disp) if (!tmp.elm.bos.hasHiggs("1;1;0")) return new ExpantaNum(1)
 		let f1 = player.elementary.fermions.quarks.amount.plus(1).log10().pow(0.2).plus(1)
@@ -530,8 +522,45 @@ function updateTempElementary() {
 		let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).times(10).slog(10).pow(2.5).sub(1).times(18)
 		return ret
 	}
+}
+
+function updateTempScalar() {
+	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
+	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
+	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
+	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
+	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
+	if (!tmp.elm.bos.buyHiggs) tmp.elm.bos.buyHiggs = function(id) {
+		let data = HIGGS_UPGS[id]
+		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
+		player.elementary.bosons.scalar.higgs.amount = player.elementary.bosons.scalar.higgs.amount.sub(data.cost)
+		player.elementary.bosons.scalar.higgs.upgrades.push(id)
+		if (id=="0;0;2") for (let i=1;i<=4;i++) tmp.inf.asc.activatePerk(i)
+	}
+	if (!tmp.elm.bos.hasHiggs) tmp.elm.bos.hasHiggs = function(id) { return player.elementary.bosons.scalar.higgs.upgrades.includes(id) }
+	updateHiggsUpgradeEffects();
+}
+
+function updateTempBosons() {
+	if (!tmp.elm.bos) tmp.elm.bos = {};
+	if (!tmp.elm.bos.transfer1) tmp.elm.bos.transfer1 = function () {
+		if (player.elementary.particles.lt(1)) return;
+		player.elementary.particles = player.elementary.particles.sub(1);
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(1);
+	};
+	if (!tmp.elm.bos.transfer) tmp.elm.bos.transfer = function (ratio) {
+		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
+		let toSub = player.elementary.particles.times(ratio).floor();
+		player.elementary.particles = player.elementary.particles.sub(toSub);
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub);
+	};
 	
-	// Perk Acceleration
+	updateGluonTabs();
+	updateTempGauge();
+	updateTempScalar();
+}
+
+function updateTempPerkAccelerator() {
 	tmp.elm.pa = {}
 	tmp.elm.pa.active = tmp.elm.bos.hasHiggs("0;0;2")
 	tmp.elm.pa.stateStarts = {
@@ -552,9 +581,9 @@ function updateTempElementary() {
 	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
 	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
 	if (tmp.elm.pa.boost.gte(6.75)) tmp.elm.pa.boost = tmp.elm.pa.boost.logBase(6.75).plus(5.75)
-		
-	// Theories
-	tmp.elm.theory = {}
+}
+
+function updateTheoryTabs() {
 	if (!tmp.elm.theory.updateTabs) tmp.elm.theory.updateTabs = function () {
 		let tabs = Element.allFromClass("theorytab");
 		for (let i = 0; i < tabs.length; i++) {
@@ -568,8 +597,9 @@ function updateTempElementary() {
 		tmp.elm.theory.updateTabs();
 	};
 	tmp.elm.theory.updateTabs();
-	
-	// The Theoriverse
+}
+
+function updateTempTheoriverse() {
 	tmp.elm.theory.subbed = new ExpantaNum(0)
 	if (player.elementary.theory.tree.unl) tmp.elm.theory.subbed = tmp.elm.theory.subbed.plus(TREE_UPGS[4].effect(player.elementary.theory.tree.upgrades[4]||0))
 	tmp.elm.theory.nerf = (player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, player.elementary.theory.depth.minus(tmp.elm.theory.subbed).max(1).cbrt()))
@@ -586,8 +616,9 @@ function updateTempElementary() {
 		player.elementary.theory.active = !player.elementary.theory.active
 	}
 	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth)
-	
-	// Supersymmetry
+}
+
+function updateTempSupersymmetry() {
 	if (!tmp.elm.theory.ss) tmp.elm.theory.ss = {}
 	if (!tmp.elm.theory.ss.unl) tmp.elm.theory.ss.unl = function() {
 		if (!player.elementary.theory.unl) return
@@ -616,8 +647,9 @@ function updateTempElementary() {
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
 	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
 	if (tmp.elm.theory.ss.waveEff.gte(1e13)) tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.waveEff.pow(1/4).times(Math.pow(1e13, 3/4))
-	
-	// The Theory Tree
+}
+
+function updateTempTheoryTree() {
 	if (!tmp.elm.theory.tree) tmp.elm.theory.tree = {}
 	if (!tmp.elm.theory.tree.unl) tmp.elm.theory.tree.unl = function() {
 		if (!player.elementary.theory.unl) return
@@ -652,8 +684,18 @@ function updateTempElementary() {
 	tmp.elm.theory.tree.costReduc = ach152Eff()
 	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
 	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(tmp.elm.qf.boost8)
+}
+
+function updateTempTheories() {
+	if (!tmp.elm.theory) tmp.elm.theory = {}
 	
-	// Hadronic Challenges
+	updateTheoryTabs()
+	updateTempTheoriverse();
+	updateTempSupersymmetry();
+	updateTempTheoryTree();
+}
+
+function updateTempHC() {
 	if (!tmp.elm.hc) tmp.elm.hc = {}
 	tmp.elm.hc.currScore = getProjectedHadronicScore()
 	tmp.elm.hc.hadronBulk = new ExpantaNum(1)
@@ -670,9 +712,9 @@ function updateTempElementary() {
 	tmp.elm.hc.infGain = getInflatonGain()
 	claimHadronEff()
 	updateHCTabs()
-	
-	// Quantum Foam Tabs
-	if (!tmp.elm.qf) tmp.elm.qf = {}
+}
+
+function updateQuantumFoamTabs() {
 	if (!tmp.elm.qf.updateTabs) tmp.elm.qf.updateTabs = function () {
 		let tabs = Element.allFromClass("foamTab");
 		for (let i = 0; i < tabs.length; i++) {
@@ -686,8 +728,9 @@ function updateTempElementary() {
 		tmp.elm.qf.updateTabs();
 	};
 	tmp.elm.qf.updateTabs();
-	
-	// Quantum Foam Boosts
+}
+
+function updateQuantumFoamBoosts() {
 	tmp.elm.qf.boostData = getQFBoostData()
 	tmp.elm.qf.boost25 = tmp.elm.qf.boostData[25].times(tmp.elm.qf.boostData[25].plus(1).cbrt()).div(2)
 	if (tmp.elm.qf.boost25.gte(3.5)) tmp.elm.qf.boost25 = tmp.elm.qf.boost25.sqrt().times(Math.sqrt(3.5))
@@ -715,12 +758,14 @@ function updateTempElementary() {
 	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
-	
-	// Quantum Foam Effects
+}
+
+function updateQuantumFoamEffects() {
 	if (!tmp.elm.qf.eff) tmp.elm.qf.eff = {}
 	for (let i=2;i<=5;i++) tmp.elm.qf.eff[i] = getQuantumFoamEff(i)
-	
-	// Quantum Foam Gain
+}
+
+function updateQuantumFoamGain() {
 	if (!tmp.elm.qf.gain) tmp.elm.qf.gain = {}
 	for (let i=1;i<=5;i++) tmp.elm.qf.gain[i] = getQuantumFoamGain(i)
 	tmp.elm.qf.gain[1] = tmp.elm.qf.gain[1].times(tmp.elm.qf.boost1).times(tmp.elm.qf.eff[2]).times(tmp.elm.qf.eff[3]).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
@@ -728,8 +773,9 @@ function updateTempElementary() {
 	tmp.elm.qf.gain[3] = tmp.elm.qf.gain[3].times(tmp.elm.qf.boost11).times(tmp.elm.qf.eff[4]).times(tmp.elm.qf.eff[5])
 	tmp.elm.qf.gain[4] = tmp.elm.qf.gain[4].times(tmp.elm.qf.boost16).times(tmp.elm.qf.eff[5])
 	tmp.elm.qf.gain[5] = tmp.elm.qf.gain[5].times(ExpantaNum.pow(10, player.elementary.foam.maxDepth.sub(5).max(0)))
-	
-	// Entropy
+}
+
+function updateTempEntropy() {
 	if (!tmp.elm.entropy) tmp.elm.entropy = {}
 	if (!tmp.elm.entropy.upgEff) tmp.elm.entropy.upgEff = {}
 	for (let i in ENTROPY_UPG_EFFS) tmp.elm.entropy.upgEff[i] = ENTROPY_UPG_EFFS[i]();
@@ -739,6 +785,29 @@ function updateTempElementary() {
 	tmp.elm.entropy.omegaDiv = getOmegaParticleReqDiv()
 	tmp.elm.entropy.omega = getOmegaParticles()
 	tmp.elm.entropy.omegaEff = getOmegaEff()
+}
+
+function updateTempQuantumFoam() {
+	if (!tmp.elm.qf) tmp.elm.qf = {}
+	
+	updateQuantumFoamTabs();
+	updateQuantumFoamBoosts();
+	updateQuantumFoamEffects();
+	updateQuantumFoamGain();
+	updateTempEntropy();
+}
+
+function updateTempElementary() {
+	if (tmp.elm) setTempElementaryStuff();
+	else tmp.elm = {};
+	updateElementaryLayer();
+	updateElementaryTabs(); 
+	updateTempFermions();
+	updateTempBosons();
+	updateTempPerkAccelerator();
+	updateTempTheories();
+	updateTempHC();
+	updateTempQuantumFoam();
 }
 
 function elTick(diff) {
