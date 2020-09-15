@@ -1413,6 +1413,13 @@ function entropyReset() {
 	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }
 
+function forceEntropyReset() {
+	if (!confirm("Are you sure you want to force an Entropy reset? You won't get anything out of it!")) return;
+	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+	player.elementary.foam.maxDepth = new ExpantaNum(1)
+	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+}
+
 function getOmegaParticleReqDiv() {
 	let div = new ExpantaNum(1)
 	if (player.elementary.entropy.upgrades.includes(5)) div = div.times(tmp.elm.entropy.upgEff[5])
