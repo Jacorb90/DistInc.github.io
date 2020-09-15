@@ -91,7 +91,7 @@
 				<tr>
 					<td>
 						<span id="rankName"></span> <span id="rank"></span>:
-						<button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset()">
+						<button id="rankUp" class="btn locked" onclick="tmp.ranks.layer.reset(false, false)">
 							Reset your journey, but <span id="rankDesc" class="based"></span><br />Req:
 							<span id="rankReq" class="based"></span>.
 						</button>
@@ -797,7 +797,7 @@
 					<td
 						id="darkCore"
 						class="darkcore locked inactive"
-						onclick="tmp.dc.buyCore()"
+						onclick="tmp.dc.buyCore(true)"
 						widetooltip="Generation in the Dark Circle is shown by the arrows. For example, Dark Cores generate Dark Matter, which is indicated by the above arrow."
 					></td>
 					<td class="darkcircleHidden"></td>

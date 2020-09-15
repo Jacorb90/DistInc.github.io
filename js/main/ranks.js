@@ -180,6 +180,7 @@ function updateTempRanks() {
 			}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
+	if (!tmp.rank.updateOnReset) tmp.rank.updateOnReset = function() { updateTempRanks(); }
 }
 
 function getRankFP() {

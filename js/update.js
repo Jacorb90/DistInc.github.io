@@ -87,7 +87,7 @@ function setupHTML() {
 				pID +
 				"' class='btn locked' onclick='tmp.pathogens[" +
 				pID +
-				"].buy()' style='height: 150px;'></button></td>";
+				"].buy(true)' style='height: 150px;'></button></td>";
 		}
 		data += "</tr></table>";
 	}
