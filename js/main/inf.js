@@ -1,13 +1,4 @@
-function updateTempInf() {
-	if (tmp.inf) {
-		if (!tmp.forceInfReset) tmp.forceInfReset = function () {
-			tmp.inf.layer.reset(true);
-		};
-		tmp.canCompleteStadium = tmp.inf.stadium.canComplete;
-		if (!tmp.soulBoost) tmp.soulBoost = tmp.inf.pantheon.soulBoost;
-		if (!tmp.doDervReset) tmp.doDervReset = tmp.inf.derv.resetDervs;
-	}
-
+function updateTempInfUpgs() {
 	// Unrepealed Infinity Upgrades
 	tmp.infUr = [];
 	if (tmp.inf)
@@ -167,8 +158,9 @@ function updateTempInf() {
 		player.inf.knowledge = player.inf.knowledge.sub(ExpantaNum.mul(INF_UPGS.costs[id], m));
 		player.inf.upgrades.push(id);
 	};
+}
 
-	// Infinity Reset Layer
+function updateTempInfLayer() {
 	tmp.inf.fp = new ExpantaNum(1);
 	tmp.inf.bc = INF_UNL;
 	tmp.inf.emPow = new ExpantaNum(1);
@@ -274,10 +266,10 @@ function updateTempInf() {
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
 			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
-			".<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
+			".<br><button class='btn inf' onclick='tmp.inf.layer.reset(false, false)'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
 		if (amActive)
 			message =
-				"The High God <span class='infinity'>Infinity</span> has admired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset()'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>";
+				"The High God <span class='infinity'>Infinity</span> has admired your prowess, and would like to give you the ability to ascend this world and become a High God yourself.<br><button class='btn inf' onclick='tmp.inf.layer.reset(false, false)'>Allow <span class='infinity'>Infinity</span> to endorse you and turn you into a High God</button>";
 		showHiddenDiv({
 			color: "orange",
 			title: "You have reached <span class='infinity'>Infinity</span>!",
@@ -310,6 +302,7 @@ function updateTempInf() {
 		if (!showContainer) closeHiddenDiv();
 		infActive = false;
 	};
+	if (!tmp.inf.updateOnReset) tmp.inf.updateOnReset = function() { updateTempInfLayer(); }
 	if (!tmp.inf.updateTabs) tmp.inf.updateTabs = function () {
 		let tabs = Element.allFromClass("inftab");
 		for (let i = 0; i < tabs.length; i++) {
@@ -331,7 +324,7 @@ function updateTempInf() {
 					player.inf.stadium.completions.push(player.inf.stadium.current);
 				player.inf.stadium.current = "";
 				tmp.inf.layer.reset(true);
-			} else tmp.inf.layer.reset();
+			} else tmp.inf.layer.reset(false, false);
 		};
 	}
 	if (!tmp.inf.maxEndorse) tmp.inf.maxEndorse = function (keep) {
@@ -339,8 +332,9 @@ function updateTempInf() {
 		player.inf.endorsements = player.inf.endorsements.max(tmp.inf.bulk.floor().max(player.inf.endorsements.plus(1)))
 		if (!keep) tmp.inf.layer.reset(true)
 	};
+}
 
-	// Ascension
+function updateTempAscension() {
 	if (!tmp.inf.asc) tmp.inf.asc = {};
 	tmp.inf.asc.perkTime = new ExpantaNum(BASE_PERK_TIME);
 	if (tmp.inf.upgs.has("5;6")) tmp.inf.asc.perkTime = tmp.inf.asc.perkTime.times(INF_UPGS.effects["5;6"]());
@@ -428,6 +422,9 @@ function updateTempInf() {
 		else if (n == 4) return ExpantaNum.pow(1e10, pow);
 		return undefined;
 	};
+}
+
+function updateTempEnlightenments() {
 	if (!tmp.inf.asc.costData) tmp.inf.asc.costData = { base: new ExpantaNum(modeActive('extreme')?1.5:2.5), start: new ExpantaNum(modeActive("extreme")?100:500), exp: new ExpantaNum(modeActive('extreme')?2:1.5) };
 	if (!tmp.inf.asc.enlCost) tmp.inf.asc.enlCost = function (n) {
 		let enl = player.inf.ascension.enlightenments[n - 1];
@@ -509,8 +506,9 @@ function updateTempInf() {
 		}
 		return bulk;
 	};
-	if (!tmp.inf.asc.buyEnl) tmp.inf.asc.buyEnl = function (n) {
+	if (!tmp.inf.asc.buyEnl) tmp.inf.asc.buyEnl = function (n, manual=false) {
 		let ap = player.inf.ascension.power;
+		if (manual) updateTempEnlightenments();
 		let cost = tmp.inf.asc.enlCost(n);
 		if (ap.lt(cost)) return;
 		player.inf.ascension.power = ap.sub(cost);
@@ -523,8 +521,9 @@ function updateTempInf() {
 		player.inf.ascension.enlightenments[n - 1] = player.inf.ascension.enlightenments[n - 1].max(tmp.inf.asc.enlBulk(n));
 		player.inf.ascension.power = ap.sub(cost);
 	};
+}
 
-	// Stadium
+function updateTempStadium() {
 	if (!tmp.inf.stadium) tmp.inf.stadium = {};
 	if (!tmp.inf.stadium.reset) tmp.inf.stadium.reset = function () {
 		if (!confirm("Are you sure you want to do this? You will lose all of your Stadium completions!")) return;
@@ -601,8 +600,9 @@ function updateTempInf() {
 		let goal = Object.keys(EXTREME_STADIUM_DATA).includes(current)?extremeStadiumGoal(current):tmp.inf.stadium.goal(current)
 		return player.distance.max(1).log10().div(goal.log10()).times(100).min(100)
 	}
+}
 
-	// The Pantheon
+function updateTempPantheon() {
 	if (!tmp.inf.pantheon) tmp.inf.pantheon = {};
 	tmp.inf.pantheon.totalGems = player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons);
 	tmp.inf.pantheon.bc = new ExpantaNum(21);
@@ -722,6 +722,9 @@ function updateTempInf() {
 		tmp.inf.pantheon.chipBoost = new ExpantaNum(1);
 		tmp.inf.pantheon.soulBoost = new ExpantaNum(1);
 	}
+}
+
+function updateTempPurge() {
 	tmp.inf.pantheon.purgeMult = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("8;2"))
 		tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"]);
@@ -770,8 +773,9 @@ function updateTempInf() {
 		player.inf.pantheon.purge.active = !player.inf.pantheon.purge.active;
 		tmp.inf.layer.reset(true);
 	};
+}
 
-	// Derivatives
+function updateTempDerivatives() {
 	if (!tmp.inf.derv) tmp.inf.derv = {};
 	tmp.inf.derv.maxShifts = new ExpantaNum(2);
 	if (!tmp.inf.derv.unlocked) tmp.inf.derv.unlocked = function (name) {
@@ -915,7 +919,28 @@ function updateTempInf() {
 		for (key in player.inf.derivatives.amts) {
 			player.inf.derivatives.amts[key] = tmp.inf.derv.unlocked(key) ? new ExpantaNum(1) : new ExpantaNum(0);
 		}
+		updateTempDerivatives();
 	};
+}
+
+function updateTempInf() {
+	if (tmp.inf) {
+		if (!tmp.forceInfReset) tmp.forceInfReset = function () {
+			tmp.inf.layer.reset(true);
+		};
+		tmp.canCompleteStadium = tmp.inf.stadium.canComplete;
+		if (!tmp.soulBoost) tmp.soulBoost = tmp.inf.pantheon.soulBoost;
+		if (!tmp.doDervReset) tmp.doDervReset = tmp.inf.derv.resetDervs;
+	}
+	
+	updateTempInfUpgs();
+	updateTempInfLayer();
+	updateTempAscension();
+	updateTempEnlightenments();
+	updateTempStadium();
+	updateTempPantheon();
+	updateTempPurge();
+	updateTempDerivatives();
 }
 
 function infTick(diff) {
