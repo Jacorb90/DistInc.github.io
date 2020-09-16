@@ -71,6 +71,24 @@ function importSave() {
 	}
 }
 
+function checkForBeta() {
+	for (let i=0;i<Object.keys(checkForBetas).length;i++) {
+		let key = Object.keys(checkForBetas)[i];
+		let data = localStorage.getItem("dist-inc"+key)
+		if (!(data===null||data===undefined)) if (confirm("We have detected that you had a save in the beta branch of version "+checkForBetas[key]+". Would you like to recover that save and bring it here?")) {
+			let s = transformToEN(JSON.parse(atob(data)));
+			let all = getAllSaves();
+			if (player.options.saveImp=="overwrite" || s.saveID==player.saveID) s.savePos = deepCopy(player.savePos)
+			else {
+				if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+				else s.savePos = all.length + 1;
+				if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+			}
+			setSave(s);
+		}
+	}
+}
+
 function exportSave() {
 	let toExport = btoa(JSON.stringify(ENString(player)));
 	notifier.info("Save exported");
