@@ -19,7 +19,7 @@ function updateTempInfUpgs() {
 	}
 	if (!tmp.inf.upgs.repealed) tmp.inf.upgs.repealed = function (id) {
 		if (modeActive("easy")) return false
-		if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
+		if (tmp.elm) if (tmp.elm.bos) if (tmp.elm.bos.hasHiggs("0;1;0")) return false
 		let rep = INF_UPGS.repealed[id] ? INF_UPGS.repealed[id].some(x => player.inf.upgrades.includes(x)) : false;
 		if (tmp.infUr.includes(id)) rep = false;
 		return rep;
