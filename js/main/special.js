@@ -204,6 +204,17 @@ function loadTempFeatures() {
 			},
 			spec: [false, true],
 		}),
+		"quantum foam": new Feature({
+			name: "quantum foam",
+			req: function() { return new ExpantaNum(FOAM_REQ) },
+			res: "distance",
+			display: formatDistance,
+			reached: function() { return player.elementary.foam.unl },
+			progress: function () {
+				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ).log10());
+				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ))
+			}
+		}),
 	};
 }
 

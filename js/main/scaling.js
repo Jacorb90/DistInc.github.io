@@ -52,6 +52,8 @@ function getScalingStart(type, name) {
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("4;5")) start = start.plus(2)
+		} else if (type=="hyper") {
+			if (player.elementary.entropy.upgrades.includes(4) && tmp.elm) start = start.plus(tmp.elm.entropy.upgEff[4])
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {
@@ -65,6 +67,9 @@ function getScalingStart(type, name) {
 			if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) start = start.plus(1)
 			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
 			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
+		} else if (type=="superscaled") {
+			if (modeActive("extreme+hikers_dream")) start = start.min(35)
+			if (player.elementary.foam.unl && tmp.elm ? tmp.elm.qf : false) start = start.plus(tmp.elm.qf.boost10)
 		}
 	} else if (name=="enlightenments") {
 		if (type=="scaled") {
@@ -116,7 +121,11 @@ function getScalingPower(type, name) {
 			if (player.elementary.theory.tree.unl) power = power.times(ExpantaNum.sub(1, TREE_UPGS[8].effect(player.elementary.theory.tree.upgrades[8]||0))).max(0)
 		}
 	} else if (name=="fn" && modeActive("extreme")) {
-		if (type=="superscaled") {
+		if (type == "scaled" && modeActive("hikers_dream")){
+			let a = Math.max(player.achievements.length - 74, 20)
+			if (a >= 22) a += 10
+			if (tmp.ach) if (tmp.ach[124].has) power = power.times(20 / a)
+		} else if (type=="superscaled") {
 			if (FCComp(1)) power = power.times(0.1)
 		} else if (type=="hyper") {
 			if (FCComp(1)) power = power.times(0.1)

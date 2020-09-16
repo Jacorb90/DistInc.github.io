@@ -51,6 +51,10 @@ function loadGame() {
 	}, 50);
 }
 
+function onVersionChange() {
+	return;
+}
+
 function simulateTime() {
 	let time = nerfOfflineProg(new ExpantaNum(getCurrentTime()).sub(player.time!==undefined?player.time:getCurrentTime()));
 	if (time.isNaN()) time = new ExpantaNum(0) 

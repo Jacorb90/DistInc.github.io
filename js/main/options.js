@@ -12,7 +12,7 @@ function save(sav=player, force=false) {
 		all[sav.savePos - 1] = ENString(sav);
 	} else all.push(ENString(sav));
 	localStorage.setItem("dist-inc-saves" + betaID, btoa(JSON.stringify(all)));
-	notifier.success("Game saved!");
+	if (document.hasFocus()) notifier.success("Game saved!");
 }
 
 function setSave(ns, cod=false) {
@@ -67,6 +67,24 @@ function importSave() {
 			setSave(s);
 		} catch (e) {
 			notifier.error("Invalid Save");
+		}
+	}
+}
+
+function checkForBeta() {
+	for (let i=0;i<Object.keys(checkForBetas).length;i++) {
+		let key = Object.keys(checkForBetas)[i];
+		let data = localStorage.getItem("dist-inc"+key)
+		if (!(data===null||data===undefined)) if (confirm("We have detected that you had a save in the beta branch of version "+checkForBetas[key]+". Would you like to recover that save and bring it here?")) {
+			let s = transformToEN(JSON.parse(atob(data)));
+			let all = getAllSaves();
+			if (player.options.saveImp=="overwrite" || s.saveID==player.saveID) s.savePos = deepCopy(player.savePos)
+			else {
+				if (all.indexOf(null) > -1) s.savePos = all.indexOf(null) + 1;
+				else s.savePos = all.length + 1;
+				if (s.savePos > MAX_SAVES) s.savePos = MAX_SAVES;
+			}
+			setSave(s);
 		}
 	}
 }
@@ -169,7 +187,12 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.hc?sav.elementary.hc.unl:false):false) {
+	if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
+		info += "Quantum Foam: "+showNum(new ExpantaNum(sav.elementary.foam.amounts[0]))+", "
+		if (sav.elementary.entropy?sav.elementary.entropy.unl:false) {
+			info += "Entropy: "+showNum(new ExpantaNum(sav.elementary.entropy.amount))+", "
+		}
+	} else if (sav.elementary?(sav.elementary.hc?sav.elementary.hc.unl:false):false) {
 		info += "Best Hadronic Score: "+showNum(new ExpantaNum(sav.elementary.hc.best))+", Hadrons: "+showNum(new ExpantaNum(sav.elementary.hc.hadrons))+", "
 	} else if (sav.elementary?(sav.elementary.theory?sav.elementary.theory.unl:false):false) {
 		info += "Theory Points: "+showNum(new ExpantaNum(sav.elementary.theory.points))+", Theoriverse Depth: "+showNum(new ExpantaNum(sav.elementary.theory.depth))+", "
@@ -343,5 +366,10 @@ function confirmModes() {
 }
 
 function modeActive(name) {
-	return player.modes.includes(name)
+	if (name[0] == "!") return !modeActive(name.slice(1))
+	let l = name.split("+")
+	for (let i = 0; i < l.length; i++) {
+		if (!player.modes.includes(l[i])) return false
+	}
+	return true
 }

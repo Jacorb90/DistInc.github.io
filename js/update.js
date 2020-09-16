@@ -87,7 +87,7 @@ function setupHTML() {
 				pID +
 				"' class='btn locked' onclick='tmp.pathogens[" +
 				pID +
-				"].buy()' style='height: 150px;'></button></td>";
+				"].buy(true)' style='height: 150px;'></button></td>";
 		}
 		data += "</tr></table>";
 	}
@@ -303,9 +303,16 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
+	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+}
+
+document.onkeyup = function(e) {
+	outerShiftDown = !(!e.shiftKey);
 }
 
 document.onkeydown = function(e) {
+	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
 	let shiftDown = e.shiftKey
 	let key = e.which
@@ -338,6 +345,8 @@ document.onkeydown = function(e) {
 			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset()
 			else if (TABBTN_SHOWN.rockets()) tmp.rf.layer.reset()
 			break;
+		case 74:
+			if (modeActive("hikers_dream")) refillEnergy()
 		case 80:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()
 			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll()

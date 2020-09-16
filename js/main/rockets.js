@@ -26,6 +26,7 @@ function getRocketEffect() {
 	if (tmp.inf) if (tmp.inf.upgs.has("2;1")) eff = eff.times(INF_UPGS.effects["2;1"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("9;2")) eff = eff.plus(INF_UPGS.effects["9;2"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("6;10")) eff = eff.times(16)
+	if (player.elementary.foam.unl && tmp.elm) eff = eff.times(tmp.elm.qf.boost20)
 	return eff;
 }
 
@@ -66,8 +67,12 @@ function getRocketGainMult() {
 function updateTempRockets() {
 	if (!tmp.rockets) tmp.rockets = {};
 	tmp.rockets.lrm = new ExpantaNum(1);
-	if (modeActive("hard")) tmp.rockets.lrm = tmp.rockets.lrm.times(2);
-	if (modeActive("extreme")) tmp.rockets.lrm = tmp.rockets.lrm.div(100);
+	if (modeActive("hikers_dream")){
+		if (modeActive("extreme")) tmp.rockets.lrm = new ExpantaNum(.1)
+	} else {
+		if (modeActive("hard")) tmp.rockets.lrm = tmp.rockets.lrm.times(2);
+		if (modeActive("extreme")) tmp.rockets.lrm = tmp.rockets.lrm.div(100);
+	}
 	tmp.rockets.sc = getRocketSoftcapStart();
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm));
 	if (nerfActive("noRockets")) tmp.rockets.canRocket = false;

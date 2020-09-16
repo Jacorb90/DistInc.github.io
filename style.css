@@ -1459,7 +1459,7 @@ table {
 	height: 40px;
 	background-color: grey;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.locked:hover {
@@ -1472,7 +1472,7 @@ table {
 	background-color: #fcb377;
 	border-color: #e66700;
 	color: black;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.unl:hover {
@@ -1484,7 +1484,7 @@ table {
 	height: 40px;
 	background-color: green;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 #rocketReset, #collapseReset {
@@ -1556,6 +1556,69 @@ table {
 	font-size: 24px;
 	font-weight: bold;
 	color: yellow;
+}
+
+.btn.foam {
+	box-shadow: 3px 4px 0px 0px #b3b3b3;
+	background: none;
+	background-color: white;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
+.btn.foam:hover {
+	background: none;
+	background-color: #d3e8cc;
+	box-shadow: 3px 4px 0px 0px #d3e8cc;
+	color: black;
+}
+
+.btn.foam:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.btn.foamBought {
+	box-shadow: 3px 4px 0px 0px #abbd84;
+	background: none;
+	background-color: #abbd84;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: default;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
+.foamtxt {
+	color: #d3e8cc;
+	font-size: 20px;
+}
+
+.foamTextThing {
+	width: 30%;
+}
+
+.entropy {
+	color: #dbaca9;
+	font-size: 20px;
+	animation: entropy 8s ease infinite;
 }
 
 @keyframes grosstxt {
@@ -1723,6 +1786,18 @@ table {
 	}
 	100% {
 		transform: skew(0deg, 0deg);
+	}
+}
+
+@keyframes entropy {
+	0% {
+		transform: scale(100%, 100%);
+	}
+	50% {
+		transform: scale(90%, 90%);
+	}
+	100% {
+		transform: scale(100%, 100%);
 	}
 }
 

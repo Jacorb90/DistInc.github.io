@@ -211,4 +211,5 @@ function updateTempRF() {
 		else if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10);
 		else if (hasCollapseMilestone(3)) player.rockets = new ExpantaNum(10);
 	};
+	if (!tmp.rf.updateOnReset) tmp.rf.updateOnReset = function() { updateTempRF(); }
 }

@@ -6,15 +6,22 @@ class Achievement {
 	get has() { return player.achievements.includes(this.name) }
 
 	parse(txt) {
-		if (txt.indexOf("boolean") != -1) {
+		let c = 0
+		while (txt.indexOf("boolean") != -1 && c < 10) {
+			c++
 			let txt2 = txt.split("boolean")[1];
+			let l = txt.split("boolean")
 			let content = txt2.slice(1, txt2.indexOf(")")).split(",");
 			let newTxt = txt.split("boolean")[0];
 			if (modeActive(content[0])) newTxt += content[1];
 			else if (content.length > 2) newTxt += content[2];
 			newTxt += txt2.split(")")[1];
 			txt = newTxt;
+			for (i = 0; i< l.length-2; i++){ 
+				txt += "boolean" + l[i+2]
+			}
 		}
+    
 		if (txt.indexOf("showNum") != -1) {
 			let txt2 = txt.split("showNum")[1];
 			return txt.split("showNum")[0] + showNum(txt2.slice(1, txt2.indexOf(")"))) + txt2.split(")")[1];

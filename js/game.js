@@ -19,18 +19,21 @@ var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
 var hcTab = "mainHC";
+var foamTab = "qf1";
 var gluonTab = "r";
 var thTab = "tv";
 var enTab = "mainEN";
 var autoRobotTarget = 0
-var betaID = ""; // beta1.71
+var betaID = ""; // beta1.8
+var checkForBetas = {"beta1.8": 1.8}
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
 var robotActives = {}
 var correctLink = "jacorb90.github.io"
+var outerShiftDown = false
 
-// Game Loops
+// Game Loops 
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();

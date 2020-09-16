@@ -19,6 +19,9 @@ function getTimeCubeGain() {
 		let exp = ExpantaNum.add(5, player.dc.cores.sqrt().times(5));
 		gain = gain.times(player.furnace.coal.plus(1).log10().plus(1).pow(exp));
 	}
+	if (tmp.ach[86].has && modeActive("extreme+hikers_dream")) {
+		gain = gain.times(player.pathogens.amount.plus(1))
+	}
 	if (player.tr.upgrades.includes(16) && !HCCBA("noTRU") && modeActive("extreme"))
 		gain = gain.times(player.furnace.coal.plus(1).log10().sqrt().plus(1));
 	if (tmp.pathogens && player.pathogens.unl) gain = gain.times(tmp.pathogens[3].eff());
@@ -35,8 +38,8 @@ function reverseTime(force = false) {
 
 function buyTRUpg(n) {
 	if (player.tr.upgrades.includes(n)) return;
-	if (player.tr.cubes.lt(TR_UPGS[n].cost)) return;
-	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost);
+	if (player.tr.cubes.lt(TR_UPGS[n].cost())) return;
+	player.tr.cubes = player.tr.cubes.sub(TR_UPGS[n].cost());
 	player.tr.upgrades.push(n);
 }
 

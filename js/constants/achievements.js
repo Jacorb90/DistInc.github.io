@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 15,
+	rows: 16,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -136,6 +136,15 @@ const ACH_DATA = {
 		156: "IMPOSSIBLE",
 		157: "The Principle of the Basics",
 		158: "The Repetition Continues",
+		
+		161: "We're kids again",
+		162: "Actually Useless Theories",
+		163: "String Clickers",
+		164: "There are only so many",
+		165: "Is there even a point to these anymore?",
+		166: "True Inflation",
+		167: "How is the Multiverse containing your power?",
+		168: "There is only one Fome",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -271,12 +280,22 @@ const ACH_DATA = {
 		155: "Unlock Inflatons",
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
-		158: "Get a Hadronic Score of at least showNum(3.75)",
+		158: "Get a Hadronic Score of at least showNum(3.75).",
+		
+		161: "Unlock Quantum Foam.",
+		162: "Reach formatDistance(4.4e251) of Primary String.",
+		163: "Reach formatDistance(4.4e126) of Entangled String.",
+		164: "Unlock Entropy.",
+		165: "Get a Hadronic Score of at least showNum(8).",
+		166: "Reach showNum(1e160) Inflatons.",
+		167: "Reach showNum(1e108000000) uni.",
+		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
 		14: "Acceleration & Maximum Velocity are showNum(50)% higherboolean(extreme, and you start with one Rank Cheapener on Rocket reset).",
 		15: "Rocket gain is increased by showNum(5)%boolean(extreme, and unlock The Furnace).",
+		16: "boolean(extreme+hikers_dream,Total motive boosts coal gain.)",
 		17: "Time goes by showNum(1)% faster.",
 		18: "Time goes by showNum(50)% faster.",
 
@@ -284,14 +303,14 @@ const ACH_DATA = {
 		22: "Acceleration is showNum(5)% higherboolean(extreme, and you start with one Rank Cheapener on Tier reset)",
 		23: "Acceleration is showNum(20)% higher.",
 		24: "Maximum Velocity is showNum(25)% higherboolean(extreme, and acceleration is twice as fast for each achievement unlocked in this column).",
-		26: "Rocket gain is increased by showNum(10)%.",
+		26: "Rocket gain is increased by showNum(10)%boolean(extreme+hikers_dream, and Optimization boosts coal gain at reduced rate).",
 		27: "Time goes by showNum(10)% faster.",
 
 		32: "Acceleration is showNum(80)% higher.",
 		34: "Rocket gain is increased by showNum(10)%boolean(extreme, and you get another extra Rank Cheapener).",
 		35: "Acceleration is showNum(80)% higherboolean(extreme, and the Coal effect is doubled).",
-		36: "Scrap & intelligence gain are increased by showNum(50)%.",
-		38: "Cadaver gain is doubled.",
+		36: "Scrap & intelligence gain are increased by showNum(50)%boolean(extreme+hikers_dream, and each furnace upgrade increase the Optimization softcap start by 10%).",
+		38: "Cadaver gain is doubledboolean(extreme+hikers_dream, and multiplied by the square of energy upgrades (minimum 1)).",
 
 		41: "Maximum Velocity is showNum(50)% higher.",
 		43: "The Rank requirement formula is showNum(2.5)% slower.",
@@ -306,27 +325,34 @@ const ACH_DATA = {
 		57: "Time goes by showNum(10)% faster.",
 		58: "The Rocket Fuel reset only resets Rockets to showNum(50)% of their current amount.",
 
-		61: "Maximum Velocity is showNum(60)% higher.",
+		61: "Maximum Velocity is showNum(60)% higherboolean(extreme+hikers_dream, and divide energy loss by time cube upgrades (minimum 1)).",
 		63: "Time Speed boosts Pathogen gain at a reduced rate.",
-		65: "Cadaver gain is increased by showNum(40)%boolean(hard, and Pathogen Upgrades softcap five later).",
-		67: "Time goes by showNum(11.11)% faster.",
-		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme, and Cadaver gain is quintupled).",
+		65: "Cadaver gain is increased by showNum(40)%boolean(extreme+hikers_dream, increase the Confidence softcap by one third per Pathogen upgrade)boolean(hard, and Pathogen Upgrades softcap five later)",
+		66: "boolean(extreme+hikers_dream,Buff Thrusters III and Coal boosts Optimization.)",
+		67: "Time goes by showNum(11.11)% fasterboolean(extreme+hikers_dream, increase the Optimization softcap by 5 times and increase the Confidence softcap by 1).",
+		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme+hikers_dream, Confidence boosts Pathogen gain)boolean(extreme, and Cadaver gain is quintupled).",
 
 		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
 		75: "Dark Flow is showNum(10)% faster.",
 		76: "Rocket gain is increased by showNum(2)%",
+		77: "boolean(extreme+hikers_dream,Increase the base motivation softcap based on rockets.)",
 
 		81: "Keep automation stuff on Infinity.",
 		83: "Dark Flow is showNum(20)% faster.",
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
+		85: "boolean(hard+hikers_dream,You can rejuvinate whenever)boolean(extreme+hikers_dream, and square Endurance)boolean(hard+hikers_dream,.)",
+		86: "boolean(extreme+hikers_dream,Pathogens multiply time cube gain and square Confidence softcap start.)",
+		87: "boolean(extreme+hikers_dream,Remove the base motivation softcap and time cubes boost pathogens.)",
 		88: "Buying Pathogen Upgrades does not spend your Pathogensboolean(extreme, and you unlock Furnace Challenges).",
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",
+		93: "boolean(extreme+hikers_dream,Square Confidence softcap start.)",
 		95: "Gain showNum(100)% of Rocket gain every second.",
 		96: "Gain showNum(100)% of Cadaver gain every second.",
-		97: "Transfer showNum(100)% of Cadavers to Life Essence every second.",
+		97: "Transfer showNum(100)% of Cadavers to Life Essence every secondboolean(extreme+hikers_dream, and Optimization increases Confidence softcap start).",
 
+		102: "boolean(extreme+hikers_dream,Endorsements multiply Confidence softcap start.)",
 		103: "You can activate one extra perk at any given time.",
 		105: "Acceleration is showNum(300)% fasterboolean(extreme, and Rankbot & Tierbot's magnitudes are boosted by their intervals even more).",
 		108: "Knowledge gain is showNum(50)% fasterboolean(extreme, and Scaled Endorsement scaling starts 2 Endorsements later).",
@@ -334,8 +360,9 @@ const ACH_DATA = {
 		111: "You can activate all four perks at onceboolean(extreme, and unlock the Enhanced Furnace).",
 		112: "Time Speed boosts Knowledge gain at a reduced rateboolean(extreme, and Rank Cheapeners do not reset anything).",
 		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs and Enhanced Coal gain is 40% faster for each Purge Power you have).",
+		117: "boolean(extreme+hikers_dream,Remove the Confidence softcap.)",
 
-		123: "The Universe Doesn't Exist achievement uses a slightly better formula.",
+		123: "The Universe Doesn't Exist achievement uses a slightly better formulaboolean(extreme+hikers_dream, and Confidence is ten times stronger).",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
@@ -351,5 +378,9 @@ const ACH_DATA = {
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 		154: "Purge Power gain is doubled.",
 		157: "All Strings are gained twice as fast.",
+		
+		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
+		163: "Gain 10% of your Entangled String gain every second.",
+		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 	}
 };
