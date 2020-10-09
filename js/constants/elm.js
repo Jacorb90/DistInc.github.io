@@ -14,6 +14,9 @@ const ELM_TABS = {
 	foam: function() {
 		return player.elementary.foam.unl;
 	},
+	sky: function() {
+		return player.elementary.sky.unl;
+	},
 };
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
@@ -668,7 +671,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 8
+const ENTROPY_UPGS = 20
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -686,4 +689,15 @@ const ENTROPY_UPG_EFFS = {
 	5: function() { return ExpantaNum.pow(1.03, player.elementary.theory.preons.boosters) },
 	7: function() { return player.elementary.hc.hadrons.plus(1).times(10).slog(10).times(25) },
 	8: function() { return player.elementary.theory.accelerons.amount.plus(1).times(player.elementary.theory.inflatons.amount.plus(1)).log10().plus(1).log10().plus(1).sqrt() },
+	9: function() { return player.elementary.sky.amount.plus(1).logBase(2).times(3).plus(1) },
 }
+
+const SKY_REQ = [
+	"4.4e108000026",
+	"1e575",
+	"1e550"
+]
+const SKY_TABS = {
+	skyrmions() { return true },
+}
+const KEEP_ENTUPGS_SKY = [1, 10, 11, 12]

@@ -305,6 +305,7 @@ function updateUnlocks() {
 	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
 	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
 	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+	if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
 }
 
 document.onkeyup = function(e) {

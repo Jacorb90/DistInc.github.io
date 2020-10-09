@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 16,
+	rows: 17,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -145,6 +145,8 @@ const ACH_DATA = {
 		166: "True Inflation",
 		167: "How is the Multiverse containing your power?",
 		168: "There is only one Fome",
+		
+		171: "TRANSFOOOOORM!",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -290,6 +292,8 @@ const ACH_DATA = {
 		166: "Reach showNum(1e160) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
+		
+		171: "Get a Skyrmion.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -382,5 +386,8 @@ const ACH_DATA = {
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
 		163: "Gain 10% of your Entangled String gain every second.",
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
+		168: "Unlock Auto-Theory Tree Upgrades.",
+		
+		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
 	}
 };

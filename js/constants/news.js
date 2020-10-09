@@ -77,6 +77,7 @@ const NEWS_DATA = {
 	m75: ["Does fome even exist?"],
 	m76: ["There are at least 2 rick rolls in the news... can you collect them all???"],
 	m77: ["&quot;It's Siivagunner, not Silvagunner&quot; - somebody that once told me that they were gonna give me up"],
+	m78: ["Breaking News: Florida man starts speaking French after another news ticker tells him that he's officially Canadian"],
 
 	// Distance-based Conditions
 	d1: [
@@ -122,7 +123,7 @@ const NEWS_DATA = {
 		}
 	],
 	d8: [
-		"The new feature in v1.8 will be <span style='color: white;'>Quantum Foam</span>",
+		"Welcome to the Fome Club...",
 		function() {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
 		}
@@ -207,6 +208,18 @@ const NEWS_DATA = {
 		"Your luck skills have broke the universe",
 		function () {
 			return Math.random() < 1e-15;
+		}
+	],
+	c6: [
+		"Your luck skills have broke the multiverse, and everything within it",
+		function() {
+			return Math.random() < 1e-30;
+		}
+	],
+	c7: [
+		"If you went through 1 news ticker every planck time, and waited until the end of the universe's life, you still should not see this",
+		function() {
+			return Math.random() < 1e-80;
 		}
 	],
 
@@ -406,6 +419,18 @@ const NEWS_DATA = {
 	s24: [
 		"Time to refoam your protofoam.",
 		function() { return player.elementary.foam.maxDepth.gte(5) },
+	],
+	s25: [
+		"Entropy is the arrow of time, leading you to the future (hopefully it doesn't take you too far into the future)",
+		function() { return player.elementary.entropy.unl },
+	],
+	s26: [
+		"I guess it's time to sacrifice your Fermions into Skyrmions!",
+		function() { return player.elementary.sky.unl },
+	],
+	s27: [
+		"This isn't an Aarex game, there is no Elementary News Ticker...",
+		function() { return player.elementary.particles.gt(0) },
 	],
 };
 

@@ -1206,6 +1206,7 @@ function updateOverallElementaryHTML(){
 		updateTheoryverseMainHTML()
 		updateHadronicChallenges()
 		updateQFHTML()
+		updateSkyHTML()
 	}
 }
 
@@ -1312,7 +1313,8 @@ function updateQFHTML() {
 			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
 			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
 			for (let i=1;i<=ENTROPY_UPGS;i++) {
-				let cost = ENTROPY_UPG_COSTS[i]
+				let cost = ENTROPY_UPG_COSTS[i]||new ExpantaNum(1/0)
+				tmp.el["entropy"+i].setDisplay(entropyUpgShown(i))
 				tmp.el["entropy"+i].setClasses({
 					btn: true,
 					foamBought: player.elementary.entropy.upgrades.includes(i),
@@ -1322,6 +1324,22 @@ function updateQFHTML() {
 				tmp.el["entropyCost"+i].setTxt(showNum(cost))
 				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]))
 			}
+		}
+	}
+}
+
+function updateSkyHTML() {
+	if (elmTab == "sky") {
+		if (skyTab == "skyrmions") {
+			let canReset = canSkyReset()
+			tmp.el.skyrmionReset.setClasses({
+				btn: true,
+				locked: !canReset,
+				sky: canReset,
+			})
+			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0))
+			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount))
+			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff))
 		}
 	}
 }

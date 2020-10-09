@@ -1182,6 +1182,11 @@
 								Quantum Foam
 							</button>
 						</td>
+						<td>
+							<button id="skytabbtn" class="btn tb sky main" onclick="tmp.elm.showTab('sky')">
+								Skyrmions
+							</button>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -1903,7 +1908,48 @@
 							<td><button id="entropy7" class="btn locked" onclick="buyEntropyUpg(7)" style="min-height: 100px;">&Omega; Particles are stronger based on your Hadrons<br>Cost: <span id="entropyCost7" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff7" style="color: black;"></span>% stronger</button></td>
 							<td><button id="entropy8" class="btn locked" onclick="buyEntropyUpg(8)" style="min-height: 100px;">Accelerons & Inflatons boost Entropy gain<br>Cost: <span id="entropyCost8" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff8" style="color: black;"></span>x</button></td>
 						</tr>
+						<tr>
+							<td><button id="entropy9" class="btn locked" onclick="buyEntropyUpg(9)" style="min-height: 125px;">Skyrmions also make &Omega; Particles require less Entropy<br>Cost: <span id="entropyCost9" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff9" style="color: black;"></span>x less</button></td>
+							<td><button id="entropy10" class="btn locked" onclick="buyEntropyUpg(10)" style="min-height: 125px;">Unlock Auto-Entropy, and gain 50% more Entropy (kept on Skyrmion reset)<br>Cost: <span id="entropyCost10" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy11" class="btn locked" onclick="buyEntropyUpg(11)" style="min-height: 125px;">Unlock Auto-Entropy Upgrades, and all Foam types are gained 10x faster (kept on Skyrmion reset)<br>Cost: <span id="entropyCost11" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy12" class="btn locked" onclick="buyEntropyUpg(12)" style="min-height: 125px;">Gain 1% of Elementary Particle, Fermion, & Boson gain every second (kept on Skyrmion reset)<br>Cost: <span id="entropyCost12" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy13" class="btn locked" onclick="buyEntropyUpg(13)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost13" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy14" class="btn locked" onclick="buyEntropyUpg(14)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost14" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy15" class="btn locked" onclick="buyEntropyUpg(15)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost15" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy16" class="btn locked" onclick="buyEntropyUpg(16)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost16" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy17" class="btn locked" onclick="buyEntropyUpg(17)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost17" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy18" class="btn locked" onclick="buyEntropyUpg(18)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost18" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy19" class="btn locked" onclick="buyEntropyUpg(19)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost19" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy20" class="btn locked" onclick="buyEntropyUpg(20)" style="min-height: 100px;">???<br>Cost: <span id="entropyCost20" style="color: black;"></span> Entropy</button></td>
+						</tr>
 					</table>
+					<br><br><br><br><br>
+				</div>
+			</div>
+			<div id="sky" class="elmtab" style="display: none;">
+				<div class="band bl">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button id="skyrmionstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('skyrmions')">
+									Skyrmions
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><br>
+				<div id="skyrmionstab" class="skytab">
+					Unstabilizing the topology of your multiverse will force an Entropy & Elementary reset, and will also reset your Purge Power, Elementary Particles, Fermions, Bosons, Photon & Gluon Upgrades, Supersymmetric Particles, Theory Tree Upgrades, Strings (and Entangled Strings), Preon amount, Acceleron amount, Inflatons, Hadrons, Entropy, & Entropy Upgrades (except the first one).<br><br>
+					<button id="skyrmionReset" class="btn locked" onclick="skyrmionReset()">Unstabilize the topology of your multiverse to gain <span id="skyrmionGain"></span> Skyrmions</button><br><br>
+					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which add <span id="skyrmionEff" class="skytxt"></span> to Quark/Lepton exponents.
 					<br><br><br><br><br>
 				</div>
 			</div>

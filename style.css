@@ -1621,6 +1621,45 @@ table {
 	animation: entropy 8s ease infinite;
 }
 
+.btn.sky {
+	box-shadow: 3px 4px 0px 0px #6f5485;
+	background: none;
+	background-color: #a875d1;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: #33174a;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #8e57ba;
+	transition-duration: 0.5s;
+}
+
+.btn.sky:hover {
+	background: none;
+	background-color: #e7cce8;
+	box-shadow: 3px 4px 0px 0px #e7cce8;
+	text-shadow: none;
+	color: black;
+}
+
+.btn.sky:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.skytxt {
+	color: #a875d1;
+	text-shadow: 1px 0px 0px #8e57ba;
+	font-weight: bold;
+	font-size: 18px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

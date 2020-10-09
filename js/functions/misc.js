@@ -145,6 +145,11 @@ function ENString(obj) {
 	ret.elementary.entropy.bestDepth = new ExpantaNum(ret.elementary.entropy.bestDepth||1).toString();
 	ret.elementary.entropy.amount = new ExpantaNum(ret.elementary.entropy.amount||0).toString();
 	ret.elementary.entropy.best = new ExpantaNum(ret.elementary.entropy.best||0).toString();
+	ret.elementary.sky.amount = new ExpantaNum(ret.elementary.sky.amount||0).toString();
+	ret.elementary.sky.pions.amount = new ExpantaNum(ret.elementary.sky.pions.amount||0).toString();
+	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0).toString();
+	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0).toString();
+	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0).toString();
 	return ret;
 }
 
@@ -165,6 +170,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.8 || !ret.elementary.foam) ret.elementary.foam = deepCopy(sc.elementary.foam);
 	if (ret.version < 1.8 || !ret.elementary.foam.amounts) ret.elementary.foam.amounts = deepCopy(sc.elementary.foam.amounts);
 	if (ret.version < 1.8 || !ret.elementary.entropy) ret.elementary.entropy = deepCopy(sc.elementary.entropy);
+	if (ret.version < 1.9 || !ret.elementary.sky) ret.elementary.sky = deepCopy(sc.elementary.sky);
 	if (ret.version < sc.version) onVersionChange();
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
@@ -308,6 +314,11 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.entropy.bestDepth = new ExpantaNum(ret.elementary.entropy.bestDepth||1);
 	ret.elementary.entropy.amount = new ExpantaNum(ret.elementary.entropy.amount||0);
 	ret.elementary.entropy.best = new ExpantaNum(ret.elementary.entropy.best||0);
+	ret.elementary.sky.amount = new ExpantaNum(ret.elementary.sky.amount||0);
+	ret.elementary.sky.pions.amount = new ExpantaNum(ret.elementary.sky.pions.amount||0);
+	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0);
+	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0);
+	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }

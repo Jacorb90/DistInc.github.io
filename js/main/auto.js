@@ -140,26 +140,46 @@ function autoTick(diff) {
 			if (player.elementary.time.gte(val)) elmReset(false, true)
 		}
 	}
-	if (player.automators["foam_unlocks"]) {
-		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
-		else refoam();
+	if (player.automators["spectral_gems"]) {
+		if (!player.inf.pantheon.gems.eq(0)) {
+			let types = ["angels", "demons"]
+			let taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
+			if (taken[0].gt(taken[1])) tmp.inf.pantheon.transfer("demons", taken[0].sub(taken[1]).min(player.inf.pantheon.gems))
+			else if (taken[1].gt(taken[0])) tmp.inf.pantheon.transfer("angels", taken[1].sub(taken[0]).min(player.inf.pantheon.gems))
+			if (player.inf.pantheon.gems.gt(0)) {
+				taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
+				tmp.inf.pantheon.transfer("demons", player.inf.pantheon.gems.div(2).floor())
+				tmp.inf.pantheon.transfer("angels", player.inf.pantheon.gems)
+			}
+		}
 	}
 	if (player.automators["photon_upgrades"]) for (let i=1;i<=4;i++) tmp.elm.bos.buyLU(i, true)
 	if (player.automators["gluon_upgrades"]) for (let i = 0; i < GLUON_COLOURS.length; i++) {
 		let col = GLUON_COLOURS[i];
 		for (let x=1;x<=(hasDE(1)?3:2);x++) tmp.elm.bos.buy(col, x, true)
 	}
-	if (player.automators["spectral_gems"]) { // NEEDS to be last due to RETURNS
-		if (player.inf.pantheon.gems.eq(0)) return
-		let types = ["angels", "demons"]
-		let taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
-		if (taken[0].gt(taken[1])) tmp.inf.pantheon.transfer("demons", taken[0].sub(taken[1]).min(player.inf.pantheon.gems))
-		else if (taken[1].gt(taken[0])) tmp.inf.pantheon.transfer("angels", taken[1].sub(taken[0]).min(player.inf.pantheon.gems))
-		if (player.inf.pantheon.gems.gt(0)) {
-			taken = [player.inf.pantheon.angels, player.inf.pantheon.demons]
-			tmp.inf.pantheon.transfer("demons", player.inf.pantheon.gems.div(2).floor())
-			tmp.inf.pantheon.transfer("angels", player.inf.pantheon.gems)
+	if (player.automators["tree_upgrades"]) {
+		if (player.elementary.theory.tree.unl) {
+			tmp.elm.theory.tree.buy(ttaid, true)
+			tmp.elm.theory.tree.buy(ttaid)
+			ttaid = (ttaid%(Object.keys(TREE_UPGS).length))+1
 		}
+	}
+	if (player.automators["entropy"] && player.elementary.entropy.unl) {
+		player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
+		player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
+	}
+	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
+		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x));
+		let nextUpg = toBuy.reduce((a,c) => Math.min(a,c));
+		buyEntropyUpg(nextUpg)
+	}
+}
+
+function autoPerSec() {
+	if (player.automators["foam_unlocks"]) {
+		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
+		else refoam();
 	}
 }
 
