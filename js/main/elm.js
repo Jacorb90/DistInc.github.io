@@ -1537,7 +1537,7 @@ function entropyReset() {
 	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 	player.elementary.foam.maxDepth = new ExpantaNum(1)
 	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
-
+  
 	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(gain)
 	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
 }
