@@ -226,8 +226,7 @@ const INF_UPGS = {
 		"7;4": "inf2;3 & inf3;2 are stronger based on your Pathogens.",
 		"7;5": "The fifth Pathogen Upgrade boosts itself.",
 		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
-		"7;7":
-			"Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
+		"7;7": "Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
 		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
 		"7;9": "Hyper Rank scaling is 2% weaker.",
 		"7;10": "The W Boson boost to Z Boson gain uses a better formula.",
