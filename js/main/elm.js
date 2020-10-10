@@ -1531,14 +1531,14 @@ function getEntropyNext() {
 
 function entropyReset() {
 	if (!player.elementary.entropy.unl) return;
-	let gain = tmp.elm.entropy.gain;
+	let gain = getEntropyGain();
 	if (gain.lt(1)) return;
-	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
-	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
-	
 	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 	player.elementary.foam.maxDepth = new ExpantaNum(1)
 	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+	
+	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(gain)
+	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
 }
 
 function forceEntropyReset(trueForce=false) {
@@ -1609,7 +1609,7 @@ function getSkyGain() {
 function skyrmionReset(force=false) {
 	if (!force) {
 		if (!canSkyReset()) return;
-		player.elementary.sky.amount = player.elementary.sky.amount.plus(tmp.elm.sky.gain);
+		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain());
 	};
 	
 	player.inf.pantheon.purge.power = new ExpantaNum(0);
