@@ -1660,6 +1660,58 @@ table {
 	font-size: 18px;
 }
 
+.hexContainer {
+	width: 30px;
+	min-width: 30px; 
+	max-width: 30px; 
+}
+
+.hexBtn {
+	position: relative;
+	width: 30px; 
+	min-width: 30px; 
+	max-width: 30px; 
+	height: 17.321px;
+	background-color: #a875d1;
+	margin: 8.660px 0;
+	cursor: pointer;
+}
+
+.hexBtn:before,
+.hexBtn:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+}
+
+.hexBtn:before {
+	bottom: 100%;
+	border-bottom: 8.660px solid #a875d1;
+	transform: translate(-10px);
+}
+
+.hexBtn:after {
+	top: 100%;
+	width: 0;
+	border-top: 8.660px solid #a875d1;
+	transform: translate(-20px);
+}
+
+.hexBtn.locked {
+	cursor: not-allowed;
+	background-color: #c62d1f;
+}
+
+.hexBtn.locked:before {
+	border-bottom: 8.660px solid #c62d1f;
+}
+
+.hexBtn.locked:after {
+	border-top: 8.660px solid #c62d1f;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

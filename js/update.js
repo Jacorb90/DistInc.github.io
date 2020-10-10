@@ -243,6 +243,10 @@ function setupHTML() {
 	}
 	updateHCSelectorInputs()
 	
+	// Pion/Spinor Fields
+	setupSkyField("pion")
+	setupSkyField("spinor")
+	
 	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)

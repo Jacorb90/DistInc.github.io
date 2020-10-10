@@ -78,6 +78,8 @@ const NEWS_DATA = {
 	m76: ["There are at least 2 rick rolls in the news... can you collect them all???"],
 	m77: ["&quot;It's Siivagunner, not Silvagunner&quot; - somebody that once told me that they were gonna give me up"],
 	m78: ["Breaking News: Florida man starts speaking French after another news ticker tells him that he's officially Canadian"],
+	m79: ["I'm gonna add some new news ticker messages, so I need ideas"],
+	m80: ["Jacorbian balancing is liked now, but in 10 years, incremental games will be completable in under 3 minutes."],
 
 	// Distance-based Conditions
 	d1: [
@@ -126,6 +128,12 @@ const NEWS_DATA = {
 		"Welcome to the Fome Club...",
 		function() {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
+		}
+	],
+	d9: [
+		"Heya. You've been busy, huh? So, i've got a question for ya. Do you think even the worst person can change? That everybody can be a good person, if they just try? Heh heh heh he... All right. Well here's a better question. Do you wanna have a bad time? 'Cause if you take another step forward... You are REALLY not going to like what happens next. Welp. Sorry, old lady. This is why i never make promises.",
+		function() {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e108000000"));
 		}
 	],
 
@@ -435,4 +443,3 @@ const NEWS_DATA = {
 };
 
 const NEWS_ADJ = 110;
-const NEWS_TIME = 8;

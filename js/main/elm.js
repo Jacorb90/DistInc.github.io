@@ -152,7 +152,7 @@ function updateTempQuarks() {
 	tmp.elm.ferm.quarkEff = function (name) {
 		let qks = player.elementary.fermions.quarks.amount.max(0);
 		let stacks = getQuarkStacks(tmp.elm.ferm.quarkRewards)
-		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8));
+		if (stacks.gte(8) && player.elementary.sky.amount.eq(0)) stacks = stacks.sqrt().times(Math.sqrt(8));
 		if (name == "up") return qks.plus(1).pow(ExpantaNum.mul(5, stacks));
 		else if (name == "down") return qks.plus(1).pow(ExpantaNum.mul(Math.sqrt(2), stacks.sqrt()));
 		else if (name == "charm") return qks.plus(1).pow(ExpantaNum.mul(0.1, stacks.cbrt()));
@@ -204,7 +204,7 @@ function updateTempLeptons() {
 	tmp.elm.ferm.leptonEff = function (name) {
 		let lpts = player.elementary.fermions.leptons.amount;
 		let stacks = getLeptonStacks(tmp.elm.ferm.leptonRewards)
-		if (stacks.gte(8)) stacks = stacks.sqrt().times(Math.sqrt(8));
+		if (stacks.gte(8) && player.elementary.sky.amount.eq(0)) stacks = stacks.sqrt().times(Math.sqrt(8));
 		if (name == "electron")
 			return lpts.max(0)
 				.plus(1)
@@ -654,12 +654,16 @@ function updateTempTheoryTree() {
 			let target = TREE_UPGS[x].target(pts.times(tmp.elm.theory.tree.costReduc)).max(0).min(cap);
 			if (target.lte(bought)||target.lt(1)) return;
 			let newCost = TREE_UPGS[x].cost(target.sub(1)).div(tmp.elm.theory.tree.costReduc).round();
-			player.elementary.theory.points = player.elementary.theory.points.sub(newCost).max(0);
-			player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(newCost);
+			if (!player.elementary.entropy.upgrades.includes(13)) {
+				player.elementary.theory.points = player.elementary.theory.points.sub(newCost).max(0);
+				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(newCost);
+			}
 			player.elementary.theory.tree.upgrades[x] = bought.max(target)
 		} else {
-			player.elementary.theory.points = player.elementary.theory.points.sub(cost).max(0)
-			player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(cost)
+			if (!player.elementary.entropy.upgrades.includes(13)) {
+				player.elementary.theory.points = player.elementary.theory.points.sub(cost).max(0)
+				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(cost)
+			}
 			player.elementary.theory.tree.upgrades[x] = bought.plus(1)
 		}
 	}
@@ -800,11 +804,25 @@ function updateSkyrmionMain() {
 	tmp.elm.sky.eff = getSkyEff();
 }
 
+function updatePions() {
+	tmp.elm.sky.pionGain = getPionGain();
+	if (!tmp.elm.sky.pionEff) tmp.elm.sky.pionEff = {}
+	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.pionEff[i] = SKY_FIELDS[i].pionEff(player.elementary.sky.pions.field[i]||0)
+}
+
+function updateSpinors() {
+	tmp.elm.sky.spinorGain = getSpinorGain();
+	if (!tmp.elm.sky.spinorEff) tmp.elm.sky.spinorEff = {}
+	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.spinorEff[i] = SKY_FIELDS[i].spinorEff(player.elementary.sky.spinors.field[i]||0)
+}
+
 function updateTempSkyrmions() {
 	if (!tmp.elm.sky) tmp.elm.sky = {}
 	
 	updateSkyrmionTabs();
 	updateSkyrmionMain();
+	updatePions();
+	updateSpinors();
 }
 
 function updateTempElementary() {
@@ -879,6 +897,10 @@ function elTick(diff) {
 		player.bestEP = player.bestEP.max(tmp.elm.layer.gain.div(100))
 		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(player.elementary.particles.times(diff).div(100))
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(player.elementary.particles.times(diff).div(100))
+	}
+	if (player.elementary.sky.unl) {
+		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(tmp.elm.sky.pionGain.times(diff));
+		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(tmp.elm.sky.spinorGain.times(diff));
 	}
 }
 
@@ -1067,6 +1089,7 @@ function getGravBoosts() {
 function getGravBoostBase() {
 	let base = new ExpantaNum(2)
 	if (hasDE(5)&&(player.elementary.theory.tree.upgrades[21]||new ExpantaNum(0)).gte(1)) base = base.pow(2)
+	if (player.elementary.sky.unl && tmp.elm.sky) base = base.pow(tmp.elm.sky.spinorEff[2])
 	return base
 }
 
@@ -1111,8 +1134,10 @@ function importTree() {
 				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
 				if (tmp.ach[162].has) totalCost = TREE_UPGS[key].cost(upgs[key]).div(tmp.elm.theory.tree.costReduc).min(totalCost).round()
 				if (player.elementary.theory.points.gte(totalCost)) {
-					player.elementary.theory.points = player.elementary.theory.points.sub(totalCost).max(0)
-					player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
+					if (!player.elementary.entropy.upgrades.includes(13)) {
+						player.elementary.theory.points = player.elementary.theory.points.sub(totalCost).max(0)
+						player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(totalCost)
+					}
 					player.elementary.theory.tree.upgrades[key] = ExpantaNum.min(upgs[key], cap)
 				} else notifier.warn("You could not afford some of your requested Tree upgrades!")
 			}
@@ -1389,14 +1414,21 @@ function qfMax(x, b) {
 	player.elementary.foam.upgrades[id] = player.elementary.foam.upgrades[id].max(target)
 }
 
+function addToAllFoamBoosts() {
+	let toAdd = new ExpantaNum(0)
+	if (player.elementary.entropy.unl && tmp.elm.entropy) toAdd = toAdd.plus(tmp.elm.entropy.omegaEff)
+	if (player.elementary.sky.unl && tmp.elm.sky) toAdd = toAdd.plus(tmp.elm.sky.spinorEff[1])
+	return toAdd
+}
+
 function getQFBoostData() {
 	let data = {}
+	let toAdd = addToAllFoamBoosts()
 	for (let b=0;b<5;b++) {
 		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
-			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0)
-			if (player.elementary.entropy.unl && tmp.elm.entropy) data[i] = data[i].plus(tmp.elm.entropy.omegaEff)
+			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0).plus(toAdd)
 		}
 	}
 	return data
@@ -1476,6 +1508,7 @@ function getEntropyGainMult() {
 	if (player.elementary.entropy.upgrades.includes(3)) mult = mult.times(tmp.elm.entropy.upgEff[3])
 	if (player.elementary.entropy.upgrades.includes(8)) mult = mult.times(tmp.elm.entropy.upgEff[8])
 	if (player.elementary.entropy.upgrades.includes(10)) mult = mult.times(1.5)
+	if (player.elementary.sky.unl && tmp.elm.sky) mult = mult.times(tmp.elm.sky.spinorEff[3])
 	return mult;
 }
 
@@ -1568,7 +1601,8 @@ function canSkyReset() {
 
 function getSkyGain() {
 	if (!canSkyReset()) return false;
-	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2]));
+	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2])).pow(2);
+	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
 	return gain.floor();
 }
 
@@ -1610,7 +1644,7 @@ function skyrmionReset(force=false) {
 
 function getSkyEff() {
 	if (!player.elementary.sky.unl) return new ExpantaNum(0);
-	let eff = player.elementary.sky.amount.plus(1).logBase(2).sqrt().div(2)
+	let eff = player.elementary.sky.amount.plus(1).logBase(2).sqrt().times(2.5).plus(1)
 	return eff;
 }
 
@@ -1621,7 +1655,7 @@ function getQuarkStacks(x) {
 			.plus(1)
 			.ceil()
 			.max(0);
-	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.plus(tmp.elm.sky.eff);
+	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
 	return stacks;
 }
 
@@ -1632,6 +1666,62 @@ function getLeptonStacks(x) {
 			.plus(1)
 			.ceil()
 			.max(0);
-	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.plus(tmp.elm.sky.eff);
+	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
 	return stacks;
+}
+
+function getPionGain() {
+	let gain = player.elementary.sky.amount.pow(2).times(5)
+	return gain;
+}
+
+function getSpinorGain() {
+	let gain = player.elementary.sky.amount.pow(2).times(5)
+	return gain;
+}
+
+function setupSkyField(type) {
+	let field = new Element(type+"Field")
+	let data = SKY_FIELDS;
+	let html = ""
+	for (let i=0;i<data.placements.length;i++) {
+		html += "<table><tr>"
+		for (let j=0;j<data.placements[i].length;j++) {
+			let id = data.placements[i][j]
+			html += "<td class='hexContainer'><div id='"+type+"Upg"+id+"' class='hexBtn' onmouseover='"+type+"Sel = "+id+";' onclick='buySkyUpg(&quot;"+type+"&quot;, "+id+")'>&"+GREEK_LETTERS[id]+";</div></td>"
+		}
+		html += "</tr></table>"
+	}
+	field.setHTML(html)
+}
+
+function getFieldUpgCost(type, id) {
+	let data = SKY_FIELDS[id];
+	let bought = ExpantaNum.pow(ExpantaNum.add(player.elementary.sky.pions.field[id]||0, player.elementary.sky.spinors.field[id]||0), 2)
+	let cost = ExpantaNum.pow(data.costMult, bought).times(data.baseCost);
+	return cost;
+}
+
+function buySkyUpg(type, id) {
+	if (!player.elementary.sky.unl) return;
+	if (player.elementary.sky.amount.lt(SKY_FIELDS[id].req)) return;
+	let cost = getFieldUpgCost(type, id)
+	if (player.elementary.sky[type+"s"].amount.lt(cost)) return;
+	player.elementary.sky[type+"s"].amount = player.elementary.sky[type+"s"].amount.sub(cost)
+	player.elementary.sky[type+"s"].field[id] = ExpantaNum.add(player.elementary.sky[type+"s"].field[id]||0, 1)
+}
+
+function respecBothFields() {
+	if ((Object.keys(player.elementary.sky.pions.field).length+Object.keys(player.elementary.sky.spinors.field).length)==0) return;
+	if (!confirm("Are you sure you want to reset both fields? This will also force a Skyrmion reset!")) return;
+	player.elementary.sky.pions.field = {}
+	player.elementary.sky.spinors.field = {}
+	skyrmionReset(true)
+}
+
+function respecField(type) {
+	if (Object.keys(player.elementary.sky[type].field).length==0) return;
+	if (!confirm("Are you sure you want to reset this field? This will also force a Skyrmion reset!")) return;
+	player.elementary.sky[type].field = {}
+	skyrmionReset(true)
 }

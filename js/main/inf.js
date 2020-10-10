@@ -730,6 +730,7 @@ function updateTempPurge() {
 		tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(INF_UPGS.effects["8;2"]()["power"]);
 	if (modeActive("easy")) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(4)
 	if (tmp.ach[154].has) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(2)
+	if (player.elementary.sky.unl && tmp.elm) tmp.inf.pantheon.purgeMult = tmp.inf.pantheon.purgeMult.times(tmp.elm.sky.pionEff[3])
 	tmp.inf.pantheon.purgeStart = ExpantaNum.mul(Number.MAX_VALUE, DISTANCES.uni);
 	tmp.inf.pantheon.purgeBase = new ExpantaNum(1e5);
 	if (modeActive("easy")) tmp.inf.pantheon.purgeBase = new ExpantaNum(1e3)
