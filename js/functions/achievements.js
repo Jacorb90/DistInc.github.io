@@ -140,6 +140,17 @@ function updateAchievements() {
 	if (player.elementary.theory.depth.gte(9)) tmp.ach[156].grant();
 	if (player.elementary.theory.strings.amounts[0].gte(4.4e76)) tmp.ach[157].grant();
 	if (player.elementary.hc.best.gte(3.75)) tmp.ach[158].grant();
+	
+	if (player.elementary.foam.unl) tmp.ach[161].grant();
+	if (player.elementary.theory.strings.amounts[0].gte(4.4e251)) tmp.ach[162].grant();
+	if (player.elementary.theory.strings.entangled.gte(4.4e126)) tmp.ach[163].grant();
+	if (player.elementary.entropy.unl) tmp.ach[164].grant();
+	if (player.elementary.hc.best.gte(8)) tmp.ach[165].grant();
+	if (player.elementary.theory.inflatons.amount.gte(1e160)) tmp.ach[166].grant();
+	if (player.distance.gte(ExpantaNum.mul("1e108000000", 4.4e26))) tmp.ach[167].grant();
+	if (player.elementary.foam.amounts[0].gte(1e25) && player.elementary.foam.maxDepth.lte(1)) tmp.ach[168].grant();
+	
+	if (player.elementary.sky.amount.gt(0)) tmp.ach[171].grant();
 }
 
 function rowComplete(r) {

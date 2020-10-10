@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 15,
+	rows: 17,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -136,6 +136,17 @@ const ACH_DATA = {
 		156: "IMPOSSIBLE",
 		157: "The Principle of the Basics",
 		158: "The Repetition Continues",
+		
+		161: "We're kids again",
+		162: "Actually Useless Theories",
+		163: "String Clickers",
+		164: "There are only so many",
+		165: "Is there even a point to these anymore?",
+		166: "True Inflation",
+		167: "How is the Multiverse containing your power?",
+		168: "There is only one Fome",
+		
+		171: "TRANSFOOOOORM!",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -271,7 +282,18 @@ const ACH_DATA = {
 		155: "Unlock Inflatons",
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
-		158: "Get a Hadronic Score of at least showNum(3.75)",
+		158: "Get a Hadronic Score of at least showNum(3.75).",
+		
+		161: "Unlock Quantum Foam.",
+		162: "Reach formatDistance(4.4e251) of Primary String.",
+		163: "Reach formatDistance(4.4e126) of Entangled String.",
+		164: "Unlock Entropy.",
+		165: "Get a Hadronic Score of at least showNum(8).",
+		166: "Reach showNum(1e160) Inflatons.",
+		167: "Reach showNum(1e108000000) uni.",
+		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
+		
+		171: "Get a Skyrmion.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -360,5 +382,12 @@ const ACH_DATA = {
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 		154: "Purge Power gain is doubled.",
 		157: "All Strings are gained twice as fast.",
+		
+		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
+		163: "Gain 10% of your Entangled String gain every second.",
+		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
+		168: "Unlock Auto-Theory Tree Upgrades.",
+		
+		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
 	}
 };

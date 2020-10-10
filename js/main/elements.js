@@ -1000,9 +1000,10 @@ function updateTheoryTreeHTML(){
 		for (let i=1;i<=TREE_AMT;i++) {
 			let bought = tmp.elm.theory.tree.bought(i)
 			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
-			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(TREE_UPGS[i].cap))
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(TREE_UPGS[i].cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
-			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(TREE_UPGS[i].cap), unl: (!(bought.gte(TREE_UPGS[i].cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(TREE_UPGS[i].cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
+			let cap = getTreeUpgCap(i)
+			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
+			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
 		}
 		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
@@ -1070,8 +1071,10 @@ function updateInfatonsHTML(){
 		tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"))
 		tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")))
 		tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
-		tmp.el.inflaton2.setTxt(showNum(getInflatonEff2()))
+		let eff2 = getInflatonEff2()
+		tmp.el.inflaton2.setTxt(showNum(eff2))
 		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
+		tmp.el.inflaton2sc.setTxt(eff2.gte(5)?"(extremely softcapped)":"")
 	}
 }
 
@@ -1202,6 +1205,8 @@ function updateOverallElementaryHTML(){
 		updateBosonsMainHTML()
 		updateTheoryverseMainHTML()
 		updateHadronicChallenges()
+		updateQFHTML()
+		updateSkyHTML()
 	}
 }
 
@@ -1248,6 +1253,122 @@ function updateOverallEnergyHTML(){
 	if (player.tab == "energy") {
 		updateMainEnergyTabHTML()
 		updateGeneratorsHTML()
+	}
+}
+
+function updateQFHTML() {
+	if (elmTab=="foam") {
+		if (foamTab=="foamBoosts") {
+			for (let b=1;b<=25;b++) {
+				tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
+				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).gt(0))||(b<13&&tmp.elm.qf.boost13.plus(tmp.elm.qf.boost25).gt(0))||(b<25&&tmp.elm.qf.boost25.gt(0)))?(" + "+showNum(tmp.elm.qf.boost25.plus(b>=13?0:tmp.elm.qf.boost13).plus(b>=5?0:tmp.elm.qf.boost5))):""))
+				tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
+			}
+			tmp.el.ach162span.setDisplay(tmp.ach[162].has)
+			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()))
+		}
+		for (let x=1;x<=5;x++) if (foamTab=="qf1") {
+			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
+			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
+			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
+			for (let i=1;i<=3;i++) {
+				let cost = getQFBoostCost(x, i)
+				tmp.el["qf"+x+"Boost"+i].setClasses({
+					btn: true,
+					locked: player.elementary.foam.amounts[x-1].lt(cost),
+					foam: player.elementary.foam.amounts[x-1].gte(cost),
+				})
+				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
+				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
+				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2))
+				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
+			}
+			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x))
+			let refoamCost = getRefoamCost()
+			tmp.el["qf"+x+"NextUnl"].setClasses({
+				btn: true,
+				locked: player.elementary.foam.amounts[x-1].lt((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
+				foam: player.elementary.foam.amounts[x-1].gte((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
+			})
+			tmp.el["qf"+x+"Cost4"].setTxt(showNum((x==5)?refoamCost:QF_NEXTLAYER_COST[x]))
+
+			if (x===1) continue
+			const foamRows = document.querySelectorAll(`.qf${x}row`)
+			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none" } catch (_) {}
+		}
+		if (foamTab=="qf1") tmp.el.qf5type.setHTML(player.elementary.foam.maxDepth.gt(5)?("<sup>"+showNum(player.elementary.foam.maxDepth.sub(4))+"</sup>"):"")
+		if (foamTab=="entropy") {
+			let entGain = tmp.elm.entropy.gain
+			tmp.el.entropyReset.setClasses({
+				btn: true,
+				foam: entGain.gte(1),
+				locked: entGain.lt(1),
+			})
+			tmp.el.entropyGain.setTxt(showNum(entGain))
+			tmp.el.entropyNext.setTxt(entGain.lt(1e3)?("Next at "+showNum(getEntropyNext())+" Quantum Foam"):"")
+			tmp.el.entropyAmt.setTxt(showNum(player.elementary.entropy.amount))
+			tmp.el.entropyBest.setTxt(showNum(player.elementary.entropy.best))
+			tmp.el.entropyEff.setTxt(showNum(tmp.elm.entropy.eff))
+			tmp.el.omegaParticles.setTxt(showNum(tmp.elm.entropy.omega))
+			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
+			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
+			for (let i=1;i<=ENTROPY_UPGS;i++) {
+				let cost = ENTROPY_UPG_COSTS[i]||new ExpantaNum(1/0)
+				tmp.el["entropy"+i].setDisplay(entropyUpgShown(i))
+				tmp.el["entropy"+i].setClasses({
+					btn: true,
+					foamBought: player.elementary.entropy.upgrades.includes(i),
+					foam: player.elementary.entropy.amount.gte(cost)&&!player.elementary.entropy.upgrades.includes(i),
+					locked: player.elementary.entropy.amount.lt(cost)&&!player.elementary.entropy.upgrades.includes(i),
+				})
+				tmp.el["entropyCost"+i].setTxt(showNum(cost))
+				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]))
+			}
+		}
+	}
+}
+
+function updateSkyHTML() {
+	if (elmTab == "sky") {
+		let nextFieldReq = SKY_FIELD_UPGS_REQS.reduce(function(a,c) {
+			if (player.elementary.sky.amount.lt(a)) return new ExpantaNum(a);
+			return ExpantaNum.max(a,c)
+		})
+		if (skyTab == "skyrmions") {
+			let canReset = canSkyReset()
+			tmp.el.skyrmionReset.setClasses({
+				btn: true,
+				locked: !canReset,
+				sky: canReset,
+			})
+			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0))
+			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount))
+			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff))
+		} else if (skyTab == "pions") {
+			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
+			tmp.el.pionAmt.setTxt(showNum(player.elementary.sky.pions.amount))
+			tmp.el.pionGain.setTxt(showNum(tmp.elm.sky.pionGain))
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["pionUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.pions.amount.lt(getFieldUpgCost("pions", id)),
+				})
+				tmp.el["pionUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
+			}
+			tmp.el.pionData.setHTML(pionSel==0?"":("Pion Upgrade &"+GREEK_LETTERS[pionSel]+"; ("+showNum(player.elementary.sky.pions.field[pionSel]||0)+")<br>"+SKY_FIELDS[pionSel].pionDesc+"<br>Currently: "+SKY_FIELDS[pionSel].desc(tmp.elm.sky.pionEff[pionSel])+"<br>Cost: "+showNum(getFieldUpgCost("pions", pionSel))+" Pions"))
+		} else if (skyTab == "spinors") {
+			tmp.el.nextSpinorUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
+			tmp.el.spinorAmt.setTxt(showNum(player.elementary.sky.spinors.amount))
+			tmp.el.spinorGain.setTxt(showNum(tmp.elm.sky.spinorGain))
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["spinorUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.spinors.amount.lt(getFieldUpgCost("spinors", id)),
+				})
+				tmp.el["spinorUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
+			}
+			tmp.el.spinorData.setHTML(spinorSel==0?"":("Spinor Upgrade &"+GREEK_LETTERS[spinorSel]+"; ("+showNum(player.elementary.sky.spinors.field[spinorSel]||0)+")<br>"+SKY_FIELDS[spinorSel].spinorDesc+"<br>Currently: "+SKY_FIELDS[spinorSel].desc(tmp.elm.sky.spinorEff[spinorSel])+"<br>Cost: "+showNum(getFieldUpgCost("spinors", spinorSel))+" Spinors"))
+		}
 	}
 }
 

@@ -6,6 +6,7 @@
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
+	--news-right-start: -10%;
 }
 
 * {
@@ -382,7 +383,7 @@ table {
 	max-width: 200px;
 	padding: 7px 25px;
 	text-decoration: none;
-	text-shadow: 0px 1px 0px ##abdeae;
+	text-shadow: 0px 1px 0px #abdeae;
 }
 
 .btn.optSelected:hover {
@@ -1133,6 +1134,20 @@ table {
 	position: relative;
 }
 
+.slidenews {
+	display: inline-block;
+	animation: 20s linear slidenews;
+}
+
+@keyframes slidenews {
+	from {
+		right: var(--news-right-start);
+	}
+	to {
+		right: 110%;
+	}
+}
+
 .btn.elm {
 	box-shadow: 3px 4px 0px 0px #308a88;
 	background: none;
@@ -1444,7 +1459,7 @@ table {
 	height: 40px;
 	background-color: grey;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.locked:hover {
@@ -1457,7 +1472,7 @@ table {
 	background-color: #fcb377;
 	border-color: #e66700;
 	color: black;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 .tree.unl:hover {
@@ -1469,7 +1484,7 @@ table {
 	height: 40px;
 	background-color: green;
 	border-color: #e66700;
-	font-size: 10px;
+	font-size: 9px;
 }
 
 #rocketReset, #collapseReset {
@@ -1541,6 +1556,160 @@ table {
 	font-size: 24px;
 	font-weight: bold;
 	color: yellow;
+}
+
+.btn.foam {
+	box-shadow: 3px 4px 0px 0px #b3b3b3;
+	background: none;
+	background-color: white;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
+.btn.foam:hover {
+	background: none;
+	background-color: #d3e8cc;
+	box-shadow: 3px 4px 0px 0px #d3e8cc;
+	color: black;
+}
+
+.btn.foam:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.btn.foamBought {
+	box-shadow: 3px 4px 0px 0px #abbd84;
+	background: none;
+	background-color: #abbd84;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: default;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px white;
+	transition-duration: 0.5s;
+}
+
+.foamtxt {
+	color: #d3e8cc;
+	font-size: 20px;
+}
+
+.foamTextThing {
+	width: 30%;
+}
+
+.entropy {
+	color: #dbaca9;
+	font-size: 20px;
+	animation: entropy 8s ease infinite;
+}
+
+.btn.sky {
+	box-shadow: 3px 4px 0px 0px #6f5485;
+	background: none;
+	background-color: #a875d1;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: #33174a;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #8e57ba;
+	transition-duration: 0.5s;
+}
+
+.btn.sky:hover {
+	background: none;
+	background-color: #e7cce8;
+	box-shadow: 3px 4px 0px 0px #e7cce8;
+	text-shadow: none;
+	color: black;
+}
+
+.btn.sky:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.skytxt {
+	color: #a875d1;
+	text-shadow: 1px 0px 0px #8e57ba;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.hexContainer {
+	width: 30px;
+	min-width: 30px; 
+	max-width: 30px; 
+}
+
+.hexBtn {
+	position: relative;
+	width: 30px; 
+	min-width: 30px; 
+	max-width: 30px; 
+	height: 17.321px;
+	background-color: #a875d1;
+	margin: 8.660px 0;
+	cursor: pointer;
+}
+
+.hexBtn:before,
+.hexBtn:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+}
+
+.hexBtn:before {
+	bottom: 100%;
+	border-bottom: 8.660px solid #a875d1;
+	transform: translate(-10px);
+}
+
+.hexBtn:after {
+	top: 100%;
+	width: 0;
+	border-top: 8.660px solid #a875d1;
+	transform: translate(-20px);
+}
+
+.hexBtn.locked {
+	cursor: not-allowed;
+	background-color: #c62d1f;
+}
+
+.hexBtn.locked:before {
+	border-bottom: 8.660px solid #c62d1f;
+}
+
+.hexBtn.locked:after {
+	border-top: 8.660px solid #c62d1f;
 }
 
 @keyframes grosstxt {
@@ -1708,6 +1877,18 @@ table {
 	}
 	100% {
 		transform: skew(0deg, 0deg);
+	}
+}
+
+@keyframes entropy {
+	0% {
+		transform: scale(100%, 100%);
+	}
+	50% {
+		transform: scale(90%, 90%);
+	}
+	100% {
+		transform: scale(100%, 100%);
 	}
 }
 

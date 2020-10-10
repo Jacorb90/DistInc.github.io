@@ -79,6 +79,24 @@ const AUTOMATORS = {
 	elementaries: function() {
 		return tmp.ach[133].has&&player.elementary.times.gt(0)
 	},
+	foam_unlocks: function() {
+		return player.elementary.entropy.upgrades.includes(1)
+	},
+	photon_upgrades: function() {
+		return tmp.ach[166].has
+	},
+	gluon_upgrades: function() {
+		return tmp.ach[166].has
+	},
+	tree_upgrades: function() {
+		return tmp.ach[168].has
+	},
+	entropy: function() {
+		return player.elementary.entropy.upgrades.includes(10)
+	},
+	entropy_upgrades: function() {
+		return player.elementary.entropy.upgrades.includes(11)
+	},
 };
 
 const AUTOMATOR_X = {

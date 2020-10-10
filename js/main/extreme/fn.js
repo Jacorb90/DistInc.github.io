@@ -116,6 +116,7 @@ function updateFurnaceUpgradeCosts(){
 			if (player.furnace.coal.lt(tmp.fn.upgs[n].cost)) return;
 			player.furnace.coal = player.furnace.coal.sub(tmp.fn.upgs[n].cost);
 			player.furnace.upgrades[n - 1] = player.furnace.upgrades[n - 1].plus(1);
+			updateFurnaceUpgradeCosts();
 		};
 		if (!tmp.fn.upgs[n].max) tmp.fn.upgs[n].max = function () {
 			if (player.furnace.coal.lt(tmp.fn.upgs[n].cost)) return;
@@ -178,6 +179,7 @@ function updateTempFurnace() {
 		player.furnace.coal = new ExpantaNum(0);
 		player.furnace.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 		player.furnace.blueFlame = player.furnace.blueFlame.plus(1);
+		updateFurnaceUpgradeCosts();
 	};
 	updateFNTabs();
 	if (!tmp.fn.enh) tmp.fn.enh = {}
@@ -238,6 +240,7 @@ function updateTempFurnace() {
 			if (player.furnace.enhancedCoal.lt(tmp.fn.enh.upgs[n].cost)) return;
 			player.furnace.enhancedCoal = player.furnace.enhancedCoal.sub(tmp.fn.enh.upgs[n].cost);
 			player.furnace.enhancedUpgrades[n - 1] = player.furnace.enhancedUpgrades[n - 1].plus(1);
+			updateTempFurnace();
 		};
 		if (!tmp.fn.enh.upgs[n].max) tmp.fn.enh.upgs[n].max = function () {
 			if (player.furnace.enhancedCoal.lt(tmp.fn.enh.upgs[n].cost)) return;

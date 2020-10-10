@@ -73,6 +73,13 @@ const NEWS_DATA = {
 	m71: ['"Absurd mode is just dumb." - A reddit user'],
 	m72: ['I tried looking for some inflation, but suddenly I heard a quiet yet scary noise: "softcapped"'],
 	m73: ["1 Star Rating: Egg isn't the next mechanic"],
+	m74: ["Crackle comes in the egg update in 5 minutes"],
+	m75: ["Does fome even exist?"],
+	m76: ["There are at least 2 rick rolls in the news... can you collect them all???"],
+	m77: ["&quot;It's Siivagunner, not Silvagunner&quot; - somebody that once told me that they were gonna give me up"],
+	m78: ["Breaking News: Florida man starts speaking French after another news ticker tells him that he's officially Canadian"],
+	m79: ["I'm gonna add some new news ticker messages, so I need ideas"],
+	m80: ["Jacorbian balancing is liked now, but in 10 years, incremental games will be completable in under 3 minutes."],
 
 	// Distance-based Conditions
 	d1: [
@@ -118,9 +125,15 @@ const NEWS_DATA = {
 		}
 	],
 	d8: [
-		"The new feature in v1.8 will be <span style='color: white;'>Quantum Foam</span>",
+		"Welcome to the Fome Club...",
 		function() {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
+		}
+	],
+	d9: [
+		"Heya. You've been busy, huh? So, i've got a question for ya. Do you think even the worst person can change? That everybody can be a good person, if they just try? Heh heh heh he... All right. Well here's a better question. Do you wanna have a bad time? 'Cause if you take another step forward... You are REALLY not going to like what happens next. Welp. Sorry, old lady. This is why i never make promises.",
+		function() {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e108000000"));
 		}
 	],
 
@@ -203,6 +216,18 @@ const NEWS_DATA = {
 		"Your luck skills have broke the universe",
 		function () {
 			return Math.random() < 1e-15;
+		}
+	],
+	c6: [
+		"Your luck skills have broke the multiverse, and everything within it",
+		function() {
+			return Math.random() < 1e-30;
+		}
+	],
+	c7: [
+		"If you went through 1 news ticker every planck time, and waited until the end of the universe's life, you still should not see this",
+		function() {
+			return Math.random() < 1e-80;
 		}
 	],
 
@@ -395,7 +420,26 @@ const NEWS_DATA = {
 			return player.collapse.unl;
 		}
 	],
+	s23: [
+		"Fome does exist!",
+		function() { return player.elementary.foam.unl },
+	],
+	s24: [
+		"Time to refoam your protofoam.",
+		function() { return player.elementary.foam.maxDepth.gte(5) },
+	],
+	s25: [
+		"Entropy is the arrow of time, leading you to the future (hopefully it doesn't take you too far into the future)",
+		function() { return player.elementary.entropy.unl },
+	],
+	s26: [
+		"I guess it's time to sacrifice your Fermions into Skyrmions!",
+		function() { return player.elementary.sky.unl },
+	],
+	s27: [
+		"This isn't an Aarex game, there is no Elementary News Ticker...",
+		function() { return player.elementary.particles.gt(0) },
+	],
 };
 
 const NEWS_ADJ = 110;
-const NEWS_TIME = 8;

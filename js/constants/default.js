@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.71,
+	version: 1.9,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -205,6 +205,32 @@ const DEFAULT_START = {
 			hadrons: new ExpantaNum(0),
 			claimed: new ExpantaNum(0),
 			selectors: {},
+		},
+		foam: {
+			unl: false,
+			amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			maxDepth: new ExpantaNum(1),
+			upgrades: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+			autoUnl: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+		},
+		entropy: {
+			unl: false,
+			bestDepth: new ExpantaNum(1),
+			amount: new ExpantaNum(0),
+			best: new ExpantaNum(0),
+			upgrades: [],
+		},
+		sky: {
+			unl: false,
+			amount: new ExpantaNum(0),
+			pions: {
+				amount: new ExpantaNum(0),
+				field: {},
+			},
+			spinors: {
+				amount: new ExpantaNum(0),
+				field: {},
+			},
 		},
 	}
 };

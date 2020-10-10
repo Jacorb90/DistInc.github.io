@@ -87,7 +87,7 @@ function setupHTML() {
 				pID +
 				"' class='btn locked' onclick='tmp.pathogens[" +
 				pID +
-				"].buy()' style='height: 150px;'></button></td>";
+				"].buy(true)' style='height: 150px;'></button></td>";
 		}
 		data += "</tr></table>";
 	}
@@ -243,6 +243,10 @@ function setupHTML() {
 	}
 	updateHCSelectorInputs()
 	
+	// Pion/Spinor Fields
+	setupSkyField("pion")
+	setupSkyField("spinor")
+	
 	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)
@@ -291,7 +295,6 @@ function updateAfterTick() {
 	updateTabs();
 	if (player.tab == "options") updateOptionsTabs();
 	updateAchievements();
-	updateNews();
 }
 
 function updateUnlocks() {
@@ -304,9 +307,17 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
+	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+	if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
+}
+
+document.onkeyup = function(e) {
+	outerShiftDown = !(!e.shiftKey);
 }
 
 document.onkeydown = function(e) {
+	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
 	let shiftDown = e.shiftKey
 	let key = e.which
@@ -361,3 +372,32 @@ document.onkeydown = function(e) {
 			break;
 	}
 }
+
+function getNews() {
+	let possible = Object.values(NEWS_DATA).filter(data =>
+		(function () {
+			if (data[1] === undefined) return true;
+			else return data[1]();
+		})()
+	);
+	let txt = "";
+	if (possible.length == 0) txt = "Sorry, we are out of news for the day... try again later?";
+	else if (possible.length == 1) txt = possible[0][0];
+	else {
+		let n = Math.floor(Math.random() * possible.length);
+		txt = possible[n][0];
+	}
+	return txt;
+}
+
+document.getElementById("news").addEventListener("animationend", function(){
+	if (!player.options.newst) return
+	document.getElementById("news").innerHTML = "";
+	document.getElementById("news").classList.remove("slidenews");
+	document.documentElement.style.setProperty("--news-right-start", 0 - NEWS_ADJ + "%");
+	setTimeout(function(){
+		document.getElementById("news").innerHTML = getNews();
+		document.getElementById("news").classList.add("slidenews");
+	}, 1000)		
+})
+document.getElementById("news").innerHTML = getNews();

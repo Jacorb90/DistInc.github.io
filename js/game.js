@@ -3,6 +3,7 @@
 var player = transformToEN(DEFAULT_START, DEFAULT_START);
 var loaded = false;
 var interval;
+var intervalPerSec;
 var autoTimes = {};
 for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) autoTimes[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(0);
 var tmp = {};
@@ -19,16 +20,23 @@ var infTab = "infinity";
 var elmTab = "fermions";
 var bosTab = "gauge";
 var hcTab = "mainHC";
+var foamTab = "qf1";
+var skyTab = "skyrmions";
+var pionSel = 0;
+var spinorSel = 0;
+var ttaid = 1;
 var gluonTab = "r";
 var thTab = "tv";
 var enTab = "mainEN";
 var autoRobotTarget = 0
-var betaID = ""; // beta1.71
+var betaID = "beta1.9";
+var checkForBetas = {"beta1.9": 1.9, "beta1.8": 1.8}
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
 var robotActives = {}
 var correctLink = "jacorb90.github.io"
+var outerShiftDown = false
 
 // Game Loops 
 
@@ -103,7 +111,7 @@ function gameLoop(diff) {
 	visUpdTicks++
 	if (needUpdate) updating = true
 	updateBeforeTick();
-	if (showContainer && !needUpdate) {
+	if (showContainer && !needUpdate && !infActive) {
 		tickWithoutTS(diff);
 		tickWithTS(diff.times(nerfActive("noTS") ? 1 : tmp.timeSpeed));
 	}

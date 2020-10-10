@@ -11,6 +11,12 @@ const ELM_TABS = {
 	hc: function () {
 		return player.elementary.hc.unl;
 	},
+	foam: function() {
+		return player.elementary.foam.unl;
+	},
+	sky: function() {
+		return player.elementary.sky.unl;
+	},
 };
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
@@ -190,6 +196,7 @@ const TH_TABS = {
 const TREE_UPGS = {
 	1: {
 		cost: function(bought) { return bought.plus(1) },
+		target: function(points) { return points.floor() },
 		cap: new ExpantaNum(100),
 		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
 		effect: function(bought) { 
@@ -204,6 +211,7 @@ const TREE_UPGS = {
 	},
 	2: {
 		cost: function(bought) { return bought.pow(2).plus(1) },
+		target: function(points) { return points.sub(1).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(50),
 		desc: "Boost Knowledge gain & Higgs Boson gain.",
 		effect: function(bought) { return ExpantaNum.pow(100, new ExpantaNum(bought).sqrt()) },
@@ -211,6 +219,7 @@ const TREE_UPGS = {
 	},
 	3: {
 		cost: function(bought) { return bought.pow(3).plus(1) },
+		target: function(points) { return points.sub(1).cbrt().plus(1).floor() },
 		cap: new ExpantaNum(20),
 		desc: "inf4;10 is stronger based on your # of achievements gotten.",
 		effect: function(bought) { return ExpantaNum.mul(player.achievements.length, ExpantaNum.mul(0.0001, bought)) },
@@ -218,6 +227,7 @@ const TREE_UPGS = {
 	},
 	4: {
 		cost: function(bought) { return ExpantaNum.pow(5, bought).times(4) },
+		target: function(points) { return points.div(4).max(1).logBase(5).plus(1).floor() },
 		cap: new ExpantaNum(10),
 		desc: "The Theoriverse's nerf is weakened.",
 		effect: function(bought) { return new ExpantaNum(bought).plus(1).times(10).slog(10).sub(1).times(7.6).max(0) },
@@ -225,6 +235,7 @@ const TREE_UPGS = {
 	},
 	5: {
 		cost: function(bought) { return ExpantaNum.pow(2, bought).times(4) },
+		target: function(points) { return points.div(4).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(15),
 		desc: "Triple Supersymmetric Particle gain.",
 		effect: function(bought) { return ExpantaNum.pow(3, bought) },
@@ -233,6 +244,7 @@ const TREE_UPGS = {
 	6: {
 		unl: function() { return player.elementary.theory.strings.unl },
 		cost: function(bought) { return ExpantaNum.add(bought.times(2), 6) },
+		target: function(points) { return points.sub(6).div(2).plus(1).floor() },
 		cap: new ExpantaNum(40),
 		desc: "Entangled String gain is boosted by your Elementaries.",
 		effect: function(bought) { return player.elementary.times.plus(1).pow(new ExpantaNum(bought).pow(0.15).div(5)) },
@@ -241,6 +253,7 @@ const TREE_UPGS = {
 	7: {
 		unl: function() { return player.elementary.theory.strings.unl },
 		cost: function(bought) { return ExpantaNum.add(bought.times(3), 2) },
+		target: function(points) { return points.sub(2).div(3).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "Scaled Endorsement scaling starts later based on your Primary Strings, and Knowledge gain is boosted in Theoriverse runs.",
 		effect: function(bought) { return player.elementary.theory.strings.amounts[0].plus(1).times(10).slog(10).log10().div(5).times(new ExpantaNum(bought).times(75)) },
@@ -249,14 +262,19 @@ const TREE_UPGS = {
 	8: {
 		unl: function() { return player.elementary.theory.preons.unl },
 		cost: function(bought) { return ExpantaNum.add(10, bought.pow(2).times(2)) },
+		target: function(points) { return points.sub(10).div(2).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(16),
-		desc: "Superscaled Rocket Fuel scaling is 5% weaker (non-compounding).",
-		effect: function(bought) { return ExpantaNum.mul(0.05, bought) },
+		desc: "Superscaled Rocket Fuel scaling is weaker.",
+		effect: function(bought) { 
+			if (new ExpantaNum(bought).gte(16)) bought = ExpantaNum.sub(20, ExpantaNum.div(20, ExpantaNum.sub(bought, 11)));
+			return ExpantaNum.mul(0.05, bought) 
+		},
 		effD: function(e) { return showNum(e.times(100))+"% weaker" },
 	},
 	9: {
 		unl: function() { return player.elementary.theory.preons.unl },
 		cost: function(bought) { return ExpantaNum.add(9, bought.times(3)) },
+		target: function(points) { return points.sub(9).div(3).plus(1).floor() },
 		cap: new ExpantaNum(90),
 		desc: "Preons are gained faster based on your Fermions.",
 		effect: function(bought) { return player.elementary.fermions.amount.pow(0.2).times(new ExpantaNum(bought).pow(2)).plus(1) },
@@ -265,6 +283,7 @@ const TREE_UPGS = {
 	10: {
 		unl: function() { return player.elementary.theory.preons.unl },
 		cost: function(bought) { return ExpantaNum.add(14, bought.pow(3).times(7)) },
+		target: function(points) { return points.sub(14).div(7).cbrt().plus(1).floor() },
 		cap: new ExpantaNum(10),
 		desc: "Theoretical Boosters cost less.",
 		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.add(bought, 1), 3) },
@@ -273,6 +292,7 @@ const TREE_UPGS = {
 	11: {
 		unl: function() { return player.elementary.theory.preons.unl },
 		cost: function(bought) { return ExpantaNum.mul(20, bought.div(2).plus(1)) },
+		target: function(points) { return points.div(20).sub(1).times(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The above upgrade gets extra levels added to its effect based on your Preons.",
 		effect: function(bought) { return player.elementary.theory.preons.amount.plus(1).times(10).slog(10).times(bought) },
@@ -281,6 +301,7 @@ const TREE_UPGS = {
 	12: {
 		unl: function() { return player.elementary.theory.accelerons.unl },
 		cost: function(bought) { return ExpantaNum.mul(100, bought.sqrt().plus(1)).floor() },
+		target: function(points) { return points.div(100).sub(1).pow(2).plus(1).floor() },
 		cap: new ExpantaNum(12),
 		desc: "Accelerons are generated faster based on your Supersymmetric Wave length.",
 		effect: function(bought) { return tmp.elm.theory.ss.wavelength.plus(1).pow(0.04).pow(bought) },
@@ -289,6 +310,7 @@ const TREE_UPGS = {
 	13: {
 		unl: function() { return player.elementary.theory.accelerons.unl },
 		cost: function(bought) { return ExpantaNum.mul(5, bought.pow(2).plus(1)).plus(75) },
+		target: function(points) { return points.sub(75).div(5).sub(1).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(10),
 		desc: "Pathogen Upgrades are stronger based on your Bosons.",
 		effect: function(bought) { return player.elementary.bosons.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)) },
@@ -297,6 +319,7 @@ const TREE_UPGS = {
 	14: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Secondary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -305,6 +328,7 @@ const TREE_UPGS = {
 	15: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Tertiary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -313,6 +337,7 @@ const TREE_UPGS = {
 	16: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Quaternary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -321,6 +346,7 @@ const TREE_UPGS = {
 	17: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Quinary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -329,6 +355,7 @@ const TREE_UPGS = {
 	18: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Senary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -337,6 +364,7 @@ const TREE_UPGS = {
 	19: {
 		unl: function() { return hasDE(5) },
 		cost: function(bought) { return ExpantaNum.pow(2, ExpantaNum.pow(2, bought)).times(25) },
+		target: function(points) { return points.div(25).max(1).logBase(2).max(1).logBase(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The Septenary String effect is stronger.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -409,6 +437,7 @@ const TREE_UPGS = {
 	28: {
 		unl: function() { return player.elementary.hc.unl },
 		cost: function(bought) { return ExpantaNum.mul(400, ExpantaNum.pow(bought, 2).times(1.5).plus(1)).round() },
+		target: function(points) { return points.div(400).sub(1).div(1.5).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(10),
 		desc: "You gain Purge Power outside Purge runs, but at a reduced rate.",
 		effect: function(bought) { return ExpantaNum.mul(0.1, bought) },
@@ -417,6 +446,7 @@ const TREE_UPGS = {
 	29: {
 		unl: function() { return player.elementary.hc.unl },
 		cost: function(bought) { return ExpantaNum.pow(bought, 5).plus(25) },
+		target: function(points) { return points.sub(25).pow(0.2).plus(1).floor() },
 		cap: new ExpantaNum(20),
 		desc: "Heavenly Chips & Demonic Souls are generated faster based on your Purge Power.",
 		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.mul(0.001, bought).plus(1), player.inf.pantheon.purge.power).times(ExpantaNum.pow(player.inf.pantheon.purge.power.max(1), ExpantaNum.sqrt(bought))) },
@@ -425,6 +455,7 @@ const TREE_UPGS = {
 	30: {
 		unl: function() { return player.elementary.hc.unl },
 		cost: function(bought) { return ExpantaNum.mul(750, ExpantaNum.add(bought, 1)) },
+		target: function(points) { return points.div(750).floor() },
 		cap: new ExpantaNum(5),
 		desc: "Entangled String gain is boosted by your Hadrons.",
 		effect: function(bought) { return ExpantaNum.pow(player.elementary.hc.hadrons.plus(1), ExpantaNum.sqrt(bought).div(2)) },
@@ -433,6 +464,7 @@ const TREE_UPGS = {
 	31: {
 		unl: function() { return player.elementary.hc.unl },
 		cost: function(bought) { return ExpantaNum.pow(bought, 2).plus(1).times(1e3) },
+		target: function(points) { return points.div(1e3).sub(1).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(4),
 		desc: "Hadron gain is boosted by your best-ever Endorsements.",
 		effect: function(bought) { return ExpantaNum.pow(ExpantaNum.add(1, ExpantaNum.mul(0.05, bought)), player.bestEnd) },
@@ -537,3 +569,178 @@ const HC_TITLE = {
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
+
+const FOAM_REQ = new ExpantaNum("1e42000000")
+const FOAM_TABS = {
+	foamBoosts: function() { return true },
+	qf1: function() { return true },
+	entropy: function() { return player.elementary.entropy.unl },
+}
+const FOAM_BOOST_COSTS = {
+	1: {
+		1: {
+			start: new ExpantaNum(10),
+			base: new ExpantaNum(2.5),
+			exp: new ExpantaNum(1.2),
+		},
+		2: {
+			start: new ExpantaNum(30),
+			base: new ExpantaNum(3),
+			exp: new ExpantaNum(1.25),
+		},
+		3: {
+			start: new ExpantaNum(75),
+			base: new ExpantaNum(3.5),
+			exp: new ExpantaNum(1.3),
+		},
+	},
+	2: {
+		1: {
+			start: new ExpantaNum(40),
+			base: new ExpantaNum(4),
+			exp: new ExpantaNum(1.35),
+		},
+		2: {
+			start: new ExpantaNum(250),
+			base: new ExpantaNum(4.5),
+			exp: new ExpantaNum(1.4),
+		},
+		3: {
+			start: new ExpantaNum(500),
+			base: new ExpantaNum(5),
+			exp: new ExpantaNum(1.45),
+		},
+	},
+	3: {
+		1: {
+			start: new ExpantaNum(100),
+			base: new ExpantaNum(5.5),
+			exp: new ExpantaNum(1.5),
+		},
+		2: {
+			start: new ExpantaNum(400),
+			base: new ExpantaNum(6),
+			exp: new ExpantaNum(1.55),
+		},
+		3: {
+			start: new ExpantaNum(1e3),
+			base: new ExpantaNum(6.5),
+			exp: new ExpantaNum(1.6),
+		},
+	},
+	4: {
+		1: {
+			start: new ExpantaNum(200),
+			base: new ExpantaNum(7),
+			exp: new ExpantaNum(1.65),
+		},
+		2: {
+			start: new ExpantaNum(750),
+			base: new ExpantaNum(7.5),
+			exp: new ExpantaNum(1.7),
+		},
+		3: {
+			start: new ExpantaNum(1.2e3),
+			base: new ExpantaNum(8),
+			exp: new ExpantaNum(1.75),
+		},
+	},
+	5: {
+		1: {
+			start: new ExpantaNum(250),
+			base: new ExpantaNum(8.5),
+			exp: new ExpantaNum(1.8),
+		},
+		2: {
+			start: new ExpantaNum(1e3),
+			base: new ExpantaNum(9),
+			exp: new ExpantaNum(1.85),
+		},
+		3: {
+			start: new ExpantaNum(5e3),
+			base: new ExpantaNum(9.5),
+			exp: new ExpantaNum(1.9),
+		},
+	},
+}
+const QF_NEXTLAYER_COST = {
+	1: new ExpantaNum(1e4),
+	2: new ExpantaNum(5e3),
+	3: new ExpantaNum(1e4),
+	4: new ExpantaNum(1.75e3),
+	5: new ExpantaNum(1e6),
+}
+const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
+const ENTROPY_UPGS = 20
+const ENTROPY_UPG_COSTS = {
+	1: new ExpantaNum(4),
+	2: new ExpantaNum(10),
+	3: new ExpantaNum(25),
+	4: new ExpantaNum(100),
+	5: new ExpantaNum(135),
+	6: new ExpantaNum(150),
+	7: new ExpantaNum(215),
+	8: new ExpantaNum(235),
+	9: new ExpantaNum(550),
+	10: new ExpantaNum(700),
+	11: new ExpantaNum(1500),
+	12: new ExpantaNum(1850),
+}
+const ENTROPY_UPG_EFFS = {
+	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
+	3: function() { return ExpantaNum.pow(1.0015, player.rf) },
+	4: function() { return (tmp.elm?tmp.elm.entropy.omega:false)?(tmp.elm.entropy.omega.times(2)):new ExpantaNum(0) },
+	5: function() { return ExpantaNum.pow(1.03, player.elementary.theory.preons.boosters) },
+	7: function() { return player.elementary.hc.hadrons.plus(1).times(10).slog(10).times(25) },
+	8: function() { return player.elementary.theory.accelerons.amount.plus(1).times(player.elementary.theory.inflatons.amount.plus(1)).log10().plus(1).log10().plus(1).sqrt() },
+	9: function() { return player.elementary.sky.amount.plus(1).logBase(2).times(3).plus(1) },
+	14: function() { return player.elementary.entropy.best.plus(1).log10().sqrt().div(6).plus(1) },
+}
+
+const SKY_REQ = [
+	"4.4e108000026",
+	"1e575",
+	"1e550"
+]
+const SKY_TABS = {
+	skyrmions() { return true },
+	pions() { return true },
+	spinors() { return true },
+}
+const KEEP_ENTUPGS_SKY = [1, 10, 11, 12]
+const SKY_FIELD_UPGS_REQS = [1,5]
+const SKY_FIELDS = {
+	upgs: 3,
+	placements: [[2,3],[1]],
+	1: {
+		req: 1,
+		pionDesc: "All Rank/Tier scalings start later based on your Pions.",
+		spinorDesc: "Add to all Foam Boosts based on your Spinors.",
+		baseCost: new ExpantaNum(100),
+		costMult: new ExpantaNum(5),
+		pionEff(bought) { return player.elementary.sky.pions.amount.plus(1).log10().div(5).pow(0.8).times(25).times(ExpantaNum.sqrt(bought)) },
+		spinorEff(bought) { return player.elementary.sky.spinors.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.pow(bought, 1/4)) },
+		desc(eff) { return "+"+showNum(eff) },
+	},
+	2: {
+		req: 5,
+		pionDesc: "Pathogen Upgrades are stronger (unaffected by softcap).",
+		spinorDesc: "Graviton Boosts are stronger.",
+		baseCost: new ExpantaNum(1e4),
+		costMult: new ExpantaNum(20),
+		pionEff(bought) { return ExpantaNum.mul(ExpantaNum.sqrt(bought), 0.15).plus(1).pow(0.8) },
+		spinorEff(bought) { return ExpantaNum.mul(ExpantaNum.sqrt(bought), 0.4).plus(1).pow(0.9) },
+		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+	3: {
+		req: 5,
+		pionDesc: "Skyrmions boost Purge Power gain.",
+		spinorDesc: "Skyrmions boost Entropy gain.",
+		baseCost: new ExpantaNum(1e4),
+		costMult: new ExpantaNum(100),
+		pionEff(bought) { return player.elementary.sky.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)).sqrt().plus(1) },
+		spinorEff(bought) { return player.elementary.sky.amount.plus(1).log10().times(ExpantaNum.sqrt(bought)).plus(1).sqrt() },
+		desc(eff) { return showNum(eff)+"x" },
+	},
+}
+const GREEK_LETTERS = [null, "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi", "rho", "sigmaf", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"];

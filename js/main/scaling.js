@@ -28,6 +28,7 @@ function getScalingStart(type, name) {
 		} else if (type=="atomic") {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
+		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
 	} else if (name=="tier") {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)
@@ -37,6 +38,7 @@ function getScalingStart(type, name) {
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("5;7")) start = start.plus(INF_UPGS.effects["5;7"]());
 		}
+		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
 	} else if (name=="rf") {
 		if (type=="scaled") {
 			if (player.dc.unl && tmp.dc) start = start.plus(tmp.dc.dfEff)
@@ -52,6 +54,8 @@ function getScalingStart(type, name) {
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("4;5")) start = start.plus(2)
+		} else if (type=="hyper") {
+			if (player.elementary.entropy.upgrades.includes(4) && tmp.elm) start = start.plus(tmp.elm.entropy.upgEff[4])
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {
@@ -65,8 +69,9 @@ function getScalingStart(type, name) {
 			if (tmp.ach) if (tmp.ach[108].has && modeActive("extreme")) start = start.plus(1)
 			if (tmp.inf) if (tmp.inf.upgs.has("9;3")) start = start.plus(1)
 			if (player.elementary.theory.tree.unl) start = start.plus(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))))
-		} else if (type == "superscaled") {
+		} else if (type=="superscaled") {
 			if (modeActive("extreme+hikers_dream")) start = start.min(35)
+			if (player.elementary.foam.unl && tmp.elm ? tmp.elm.qf : false) start = start.plus(tmp.elm.qf.boost10)
 		}
 	} else if (name=="enlightenments") {
 		if (type=="scaled") {

@@ -157,6 +157,7 @@ function updateTempTiers() {
 		}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
+	if (!tmp.tier.updateOnReset) tmp.tier.updateOnReset = function() { updateTempTiers(); }
 }
 
 function getTierFP() {

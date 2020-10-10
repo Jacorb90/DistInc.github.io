@@ -204,6 +204,49 @@ function loadTempFeatures() {
 			},
 			spec: [false, true],
 		}),
+		"quantum foam": new Feature({
+			name: "quantum foam",
+			req: function() { return new ExpantaNum(FOAM_REQ) },
+			res: "distance",
+			display: formatDistance,
+			reached: function() { return player.elementary.foam.unl },
+			progress: function () {
+				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ).log10());
+				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ))
+			}
+		}),
+		skyrmions: new Feature({
+			name: "skyrmions",
+			res_amt: 3,
+			req: [
+				new ExpantaNum(SKY_REQ[0]),
+				new ExpantaNum(SKY_REQ[1]),
+				new ExpantaNum(SKY_REQ[2])
+			],
+			res: ["distance", function() { return player.elementary.fermions.quarks.amount }, function() { return player.elementary.fermions.leptons.amount }],
+			resName: ["distance", "quarks", "leptons"],
+			display: [formatDistance, showNum, showNum],
+			reached: function() { return false },
+			progress: function () {
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(new ExpantaNum(SKY_REQ[0]).log10())
+						.min(1)
+						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[1]).log10()).min(1))
+						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[2]).log10()).min(1));
+				} else {
+					return player.distance
+						.div(SKY_REQ[0])
+						.min(1)
+						.times(player.elementary.fermions.quarks.amount.div(SKY_REQ[1]).min(1))
+						.times(player.elementary.fermions.leptons.amount.div(SKY_REQ[2]).min(1));
+				}
+			},
+			spec: [false, true, true],
+			superSpec: [false, true, true],
+		}),
 	};
 }
 

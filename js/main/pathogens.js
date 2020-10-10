@@ -34,6 +34,7 @@ function updatePathogensGain(){
 	if (tmp.inf) if (tmp.inf.upgs.has("10;5")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;5"]())
 	if (tmp.inf) if (tmp.inf.upgs.has("10;10")) tmp.pathogens.gain = tmp.pathogens.gain.times(INF_UPGS.effects["10;10"]())
 	if (tmp.fn && modeActive("extreme")) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.fn.enh.moltBrEff||1)
+	if (player.elementary.foam.unl && tmp.elm) tmp.pathogens.gain = tmp.pathogens.gain.times(tmp.elm.qf.boost24)
 }
 
 function updateTempPathogens() {
@@ -76,16 +77,20 @@ function updateTempPathogens() {
 	if (extremeStadiumActive("quantron")) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(0.9);
 	if (nerfActive("noPathogenUpgs")) tmp.pathogens.upgPow = new ExpantaNum(0);
 	if (tmp.pathogens.upgPow.gte(10)) tmp.pathogens.upgPow = tmp.pathogens.upgPow.sqrt().times(Math.sqrt(10))
+	if (player.elementary.sky.unl && tmp.elm) tmp.pathogens.upgPow = tmp.pathogens.upgPow.times(tmp.elm.sky.pionEff[2])
 	if (!tmp.pathogens.extra) tmp.pathogens.extra = function (n) {
 		let extra = new ExpantaNum(0);
 		if (tmp.inf) if (tmp.inf.asc) extra = extra.plus(tmp.inf.asc.perkEff(2));
 		if (n == 5 && tmp.pathogens[13]) extra = extra.plus(pathogenUpg13Eff());
 		return extra;
 	};
-	if (!tmp.pathogens.buy) tmp.pathogens.buy = function (n) {
+	if (!tmp.pathogens.buy) tmp.pathogens.buy = function (n, manual=false) {
 		if (PTH_UPGS[n].unl ? !PTH_UPGS[n].unl() : false) return;
-		if (player.pathogens.amount.lt(tmp.pathogens[n].cost)) return;
-		if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(tmp.pathogens[n].cost);
+		let cost;
+		if (manual) cost = getPathogenUpgData(n).cost
+		else cost = tmp.pathogens[n].cost
+		if (player.pathogens.amount.lt(cost)) return;
+		if (!tmp.ach[88].has) player.pathogens.amount = player.pathogens.amount.sub(cost);
 		player.pathogens.upgrades[n] = player.pathogens.upgrades[n].plus(1);
 	};
 	if (!tmp.pathogens.eff) tmp.pathogens.eff = function (n) {
@@ -229,7 +234,7 @@ function updateTempPathogens() {
 		tmp.pathogens[i].cost = data.cost
 		tmp.pathogens[i].bulk = data.bulk
 		if (!tmp.pathogens[i].extra) tmp.pathogens[i].extra = function() { return tmp.pathogens.extra(i) }
-		if (!tmp.pathogens[i].buy) tmp.pathogens[i].buy = function() { tmp.pathogens.buy(i) }
+		if (!tmp.pathogens[i].buy) tmp.pathogens[i].buy = function(manual=false) { tmp.pathogens.buy(i, manual) }
 		if (!tmp.pathogens[i].eff) tmp.pathogens[i].eff = function() { return tmp.pathogens.eff(i) }
 		if (!tmp.pathogens[i].disp) tmp.pathogens[i].disp = function() { return tmp.pathogens.disp(i) }
 	}

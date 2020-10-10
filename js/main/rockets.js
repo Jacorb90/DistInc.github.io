@@ -26,6 +26,7 @@ function getRocketEffect() {
 	if (tmp.inf) if (tmp.inf.upgs.has("2;1")) eff = eff.times(INF_UPGS.effects["2;1"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("9;2")) eff = eff.plus(INF_UPGS.effects["9;2"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("6;10")) eff = eff.times(16)
+	if (player.elementary.foam.unl && tmp.elm) eff = eff.times(tmp.elm.qf.boost20)
 	return eff;
 }
 

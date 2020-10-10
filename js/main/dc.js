@@ -202,7 +202,8 @@ function updateTempDC() {
 			? player.dc.cores.pow(7).div(ExpantaNum.pow(modeActive("extreme")?21:12, 6).times(8)).plus(1).log10().plus(1).logBase(modeActive("extreme")?1e3:10)
 			: new ExpantaNum(0);
 	updateTempDarkCoreCost()
-	if (!tmp.dc.buyCore) tmp.dc.buyCore = function () {
+	if (!tmp.dc.buyCore) tmp.dc.buyCore = function (manual=false) {
+		if (manual) updateTempDarkCoreCost()
 		if (player.collapse.cadavers.lt(tmp.dc.coreCost) || nerfActive("noDarkCores")) return;
 		if (!player.dc.unl) return;
 		if (!tmp.ach[92].has) player.collapse.cadavers = player.collapse.cadavers.sub(tmp.dc.coreCost);
