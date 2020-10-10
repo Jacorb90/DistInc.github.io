@@ -147,6 +147,8 @@ const ACH_DATA = {
 		168: "There is only one Fome",
 		
 		171: "TRANSFOOOOORM!",
+		172: "This must have taken years",
+		173: "Extensionless Fome",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -294,6 +296,8 @@ const ACH_DATA = {
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 		
 		171: "Get a Skyrmion.",
+		172: "Elementary showNum(1e12) times.",
+		173: "Reach showNum(1e140) Quantum Foam without any Entropy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -389,5 +393,6 @@ const ACH_DATA = {
 		168: "Unlock Auto-Theory Tree Upgrades.",
 		
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
+		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 	}
 };

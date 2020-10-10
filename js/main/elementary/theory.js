@@ -50,6 +50,7 @@ function updateTempSupersymmetry() {
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[5].effect(player.elementary.theory.tree.upgrades[5]||0))
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(getStringEff(1))
 			if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(tmp.elm.qf.boost9)
+			if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(tmp.elm.sky.spinorEff[5])
 		}
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 		if (tmp.elm.theory.ss[type+"Eff"].gte(1e9)) tmp.elm.theory.ss[type+"Eff"] = tmp.elm.theory.ss[type+"Eff"].cbrt().times(1e6)
@@ -366,6 +367,7 @@ function getInflatonEff2() {
 	if (amt.gte(1e4)) eff = eff.plus(1)
 	if (amt.gte(1e5)) eff = eff.plus(1)
 	if (amt.gte(1e6)) eff = eff.plus(1)
+	if (player.elementary.entropy.upgrades.includes(13)) eff = eff.plus(amt.div(1e6).max(1).log10())
 	eff = eff.plus(amt.plus(1).log10().plus(1).log10())
 	return eff.floor()
 }

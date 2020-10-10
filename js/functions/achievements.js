@@ -178,8 +178,8 @@ function checkR16Ach(){
 
 function checkR17Ach(){
 	if (player.elementary.sky.amount.gt(0)) tmp.ach[171].grant();
-	// A172 DNE
-	// A173 DNE
+	if (player.elementary.times.gte(1e12)) tmp.ach[172].grant();
+	if (player.elementary.foam.amounts[0].gte(1e140) && player.elementary.entropy.best.eq(0)) tmp.ach[173].grant();
 	// A174 DNE
 	// A175 DNE
 	// A176 DNE

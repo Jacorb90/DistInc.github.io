@@ -894,6 +894,7 @@ function updateTempDerivatives() {
 	if (!tmp.inf.derv.mult) tmp.inf.derv.mult = function (name) {
 		let mult = new ExpantaNum(1);
 		let boosts = player.inf.derivatives.unlocks.sub(tmp.inf.derv.maxShifts).max(0);
+		if (player.elementary.sky.unl && tmp.elm) boosts = boosts.times(tmp.elm.sky.pionEff[7])
 		mult = mult.times(ExpantaNum.pow(tmp.inf.derv.boostMult, boosts));
 		if (tmp.inf.upgs.has("6;9")) mult = mult.pow(4); // NICE
 		return mult;

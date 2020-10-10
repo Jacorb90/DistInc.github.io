@@ -30,7 +30,7 @@ function showNum(val) {
 function addZeroes(orig, num, digits) {
 	if (typeof(num)=="string") num = parseFloat(num)
 	let result = orig==Math.round(orig)?Math.round(num).toString():num.toLocaleString("en", {useGrouping: false, minimumFractionDigits: Math.max(digits, 1)})
-	if (result[result.length-1]=="0"&&num<1) result = result.substring(0, result.length - 1);
+	if (orig*Math.pow(10, digits-1)==Math.round(orig*Math.pow(10, digits-1)) && result[result.length-1]=="0" && result.includes(".")) result = result.substring(0, result.length-1)
 	return result
 }
 

@@ -92,9 +92,15 @@ function skyrmionReset(force=false) {
 	updateTempElementary();
 }
 
+function getSkyPow() {
+	let pow = new ExpantaNum(1)
+	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) pow = pow.times(tmp.elm.sky.spinorEff[4])
+	return pow;
+}
+
 function getSkyEff() {
 	if (!player.elementary.sky.unl) return new ExpantaNum(0);
-	let eff = player.elementary.sky.amount.plus(1).logBase(2).sqrt().times(2.5).plus(1)
+	let eff = player.elementary.sky.amount.plus(1).logBase(2).sqrt().times(2.5).times(getSkyPow()).plus(1)
 	return eff;
 }
 
@@ -122,11 +128,15 @@ function getLeptonStacks(x) {
 
 function getPionGain() {
 	let gain = player.elementary.sky.amount.pow(2).times(5)
+	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
+	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	return gain;
 }
 
 function getSpinorGain() {
 	let gain = player.elementary.sky.amount.pow(2).times(5)
+	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
+	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	return gain;
 }
 
@@ -145,9 +155,16 @@ function setupSkyField(type) {
 	field.setHTML(html)
 }
 
+function getFieldUpgCostIncExp() {
+	let exp = 1
+	if (player.elementary.entropy.upgrades.includes(16)) exp /= 4;
+	return exp;
+}
+
 function getFieldUpgCost(type, id) {
 	let data = SKY_FIELDS[id];
-	let bought = ExpantaNum.pow(ExpantaNum.add(player.elementary.sky.pions.field[id]||0, player.elementary.sky.spinors.field[id]||0), 2)
+	let otherType = ["pions","spinors"].filter(x => x!=type)[0]
+	let bought = ExpantaNum.pow(ExpantaNum.add(player.elementary.sky[type].field[id]||0, ExpantaNum.mul(player.elementary.sky[otherType].field[id]||0, getFieldUpgCostIncExp())), 2)
 	let cost = ExpantaNum.pow(data.costMult, bought).times(data.baseCost);
 	return cost;
 }
@@ -155,7 +172,7 @@ function getFieldUpgCost(type, id) {
 function buySkyUpg(type, id) {
 	if (!player.elementary.sky.unl) return;
 	if (player.elementary.sky.amount.lt(SKY_FIELDS[id].req)) return;
-	let cost = getFieldUpgCost(type, id)
+	let cost = getFieldUpgCost(type+"s", id)
 	if (player.elementary.sky[type+"s"].amount.lt(cost)) return;
 	player.elementary.sky[type+"s"].amount = player.elementary.sky[type+"s"].amount.sub(cost)
 	player.elementary.sky[type+"s"].field[id] = ExpantaNum.add(player.elementary.sky[type+"s"].field[id]||0, 1)

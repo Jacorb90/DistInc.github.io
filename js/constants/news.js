@@ -80,6 +80,9 @@ const NEWS_DATA = {
 	m78: ["Breaking News: Florida man starts speaking French after another news ticker tells him that he's officially Canadian"],
 	m79: ["I'm gonna add some new news ticker messages, so I need ideas"],
 	m80: ["Jacorbian balancing is liked now, but in 10 years, incremental games will be completable in under 3 minutes."],
+	m81: ["Maybe this is a meta joke. Maybe this is a bored game dev running out of news ticker ideas. Who knows!"],
+	m82: ["This game is brought to you by Jacorb, the incremental game dev who has no idea what he's doing"],
+	m83: ["In an alternate universe, all the (softcapped) are replaced with (obscured), the scalings have no names, and Distance Incremental has weeklong timewalls."],
 
 	// Distance-based Conditions
 	d1: [
@@ -439,6 +442,10 @@ const NEWS_DATA = {
 	s27: [
 		"This isn't an Aarex game, there is no Elementary News Ticker...",
 		function() { return player.elementary.particles.gt(0) },
+	],
+	s28: [
+		"Believe it or not, the news ticker is this game's only source of RNG.",
+		function() { return player.distance.gte(1e86)&&player.distance.lte("1e10000") },
 	],
 };
 

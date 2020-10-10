@@ -186,7 +186,10 @@ function spectralGemAutoTick(){
 }
 
 function photonsAutoTick(){
-	if (player.automators["photon_upgrades"]) for (let i=1;i<=4;i++) tmp.elm.bos.buyLU(i, true)
+	if (player.automators["photon_upgrades"]) for (let i=1;i<=4;i++) {
+		tmp.elm.bos.buyLU(i, true)
+		tmp.elm.bos.buyLU(i)
+	}
 }
 
 function gluonAutoTick(){

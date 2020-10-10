@@ -27,6 +27,7 @@ function getCadaverEff() {
 	eff = eff.pow(
 		tmp.elm && player.elementary.times.gt(0) ? tmp.elm.ferm.leptonR("muon").max(1) : 1
 	);
+	if (player.elementary.sky.unl && tmp.elm) eff = eff.pow(tmp.elm.sky.pionEff[4])
 	return eff;
 }
 

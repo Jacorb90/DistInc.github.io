@@ -1073,7 +1073,7 @@ function updateInfatonsHTML(){
 		let eff2 = getInflatonEff2()
 		tmp.el.inflaton2.setTxt(showNum(eff2))
 		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
-		tmp.el.inflaton2sc.setTxt(eff2.gte(5)?"(extremely softcapped)":"")
+		tmp.el.inflaton2sc.setTxt((eff2.gte(5)&&!player.elementary.entropy.upgrades.includes(13))?"(extremely softcapped)":"")
 	}
 }
 

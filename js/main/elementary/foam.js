@@ -300,6 +300,7 @@ function getOmegaEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
 	let eff = tmp.elm.entropy.omega.div(10)
 	if (player.elementary.entropy.upgrades.includes(7)) eff = eff.times(tmp.elm.entropy.upgEff[7].div(100).plus(1))
+	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[7])
 	return eff
 }
 
