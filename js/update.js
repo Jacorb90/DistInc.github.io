@@ -373,6 +373,9 @@ document.onkeydown = function(e) {
 	}
 }
 
+let newsTimeouts = []
+let newsElement = document.getElementById("news")
+
 function getNews() {
 	let possible = Object.values(NEWS_DATA).filter(data =>
 		(function () {
@@ -390,14 +393,19 @@ function getNews() {
 	return txt;
 }
 
-document.getElementById("news").addEventListener("animationend", function(){
+function slideNews() {
 	if (!player.options.newst) return
-	document.getElementById("news").innerHTML = "";
-	document.getElementById("news").classList.remove("slidenews");
+	newsTimeouts.forEach(function(timeout){clearTimeout(timeout)})
+	newsTimeouts = []
+	newsElement.innerHTML = "";
+	newsElement.classList.remove("slidenews");
 	document.documentElement.style.setProperty("--news-right-start", 0 - NEWS_ADJ + "%");
-	setTimeout(function(){
-		document.getElementById("news").innerHTML = getNews();
-		document.getElementById("news").classList.add("slidenews");
-	}, 1000)		
-})
-document.getElementById("news").innerHTML = getNews();
+	newsTimeouts.push(setTimeout(function(){
+		newsElement.innerHTML = getNews();
+		newsElement.classList.add("slidenews");
+	}, 1000))
+}
+
+document.addEventListener("visibilitychange", function(){if (document.hasFocus()) slideNews()})
+newsElement.addEventListener("animationend", slideNews)
+newsElement.innerHTML = getNews();

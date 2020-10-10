@@ -46,14 +46,13 @@ class Achievement {
 	}
 
 	get desc() {
+		let desc = ACH_DATA.descs[this.name] !== undefined
+			? this.parse(ACH_DATA.descs[this.name])
+			: "Not currently implemented."
 		return (
-			this.title +
-			"\n" +
-			(ACH_DATA.descs[this.name] !== undefined
-				? this.parse(ACH_DATA.descs[this.name])
-				: "Not currently implemented.") +
-			"\n" +
-			(this.reward === "" ? "" : "Reward: " + this.reward)
+			(this.title !== "" ? this.title + "\n" : "")
+			+ desc +
+			(this.reward === "" ? "" : "\nReward: " + this.reward)
 		);
 	}
 
