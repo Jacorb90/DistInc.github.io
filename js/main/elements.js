@@ -77,7 +77,6 @@ function updateMainHTML(){
 		// Hiker's Dream
 		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>":"")
 		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
-		
 	}
 }
 

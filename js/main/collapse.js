@@ -24,7 +24,7 @@ function getCadaverEff() {
 			.log10()
 			.pow(scp.pow(-1))
 			.times(scs.div(scs.log10().pow(scp.pow(-1))));
-	eff =eff.pow(
+	eff = eff.pow(
 		tmp.elm && player.elementary.times.gt(0) ? tmp.elm.ferm.leptonR("muon").max(1) : 1
 	);
 	return eff;
@@ -42,6 +42,19 @@ function hasCollapseMilestone(n) {
 	return player.collapse.lifeEssence.gte(ESSENCE_MILESTONES[n].req);
 }
 
+function calcCollpaseSCS(){
+	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"]);
+	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sc = tmp.collapse.sc.times(tmp.pathogens[9].eff());
+	if (tmp.inf) tmp.collapse.sc = tmp.collapse.sc.times(tmp.inf.asc.perkEff(4));
+}
+
+function calcCollapseSacEff(){
+	tmp.collapse.sacEff = new ExpantaNum(1);
+	if (modeActive("hard")) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4);
+	if (modeActive("easy")) tmp.collapse.sacEff = tmp.collapse.sacEff.times(1.6);
+	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff());
+}
+
 function updateTempCollapse() {
 	if (!tmp.collapse) {
 		tmp.collapse = {};
@@ -52,9 +65,7 @@ function updateTempCollapse() {
 			tmp.inf.derv.resetDervs();
 		};
 	}
-	tmp.collapse.sc = new ExpantaNum(LAYER_SC["collapse"]);
-	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sc = tmp.collapse.sc.times(tmp.pathogens[9].eff());
-	if (tmp.inf) tmp.collapse.sc = tmp.collapse.sc.times(tmp.inf.asc.perkEff(4));
+	calcCollpaseSCS()
 	tmp.collapse.lrm = new ExpantaNum(1);
 	if (modeActive("hard")) tmp.collapse.lrm = tmp.collapse.lrm.div(50);
 	tmp.collapse.can = player.distance.gte(ExpantaNum.mul(LAYER_REQS["collapse"][1], tmp.collapse.lrm));
@@ -63,10 +74,7 @@ function updateTempCollapse() {
 	tmp.collapse.doGain = function () {
 		player.collapse.cadavers = player.collapse.cadavers.plus(tmp.collapse.layer.gain);
 	};
-	tmp.collapse.sacEff = new ExpantaNum(1);
-	if (modeActive("hard")) tmp.collapse.sacEff = tmp.collapse.sacEff.div(1.4);
-	if (modeActive("easy")) tmp.collapse.sacEff = tmp.collapse.sacEff.times(1.6);
-	if (tmp.pathogens && player.pathogens.unl) tmp.collapse.sacEff = tmp.collapse.sacEff.times(tmp.pathogens[6].eff());
+	calcCollapseSacEff()
 }
 
 function collapseMile1Eff() {

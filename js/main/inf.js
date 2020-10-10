@@ -160,13 +160,8 @@ function updateTempInfUpgs() {
 	};
 }
 
-function updateTempInfLayer() {
-	tmp.inf.fp = new ExpantaNum(1);
-	tmp.inf.bc = INF_UNL;
-	tmp.inf.emPow = new ExpantaNum(1);
-	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(
-		player.inf.endorsements
-	);
+function calcKnowledgeGain(){
+	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements);
 	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]());
 	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(3)
 	tmp.inf.knowledgeExp = new ExpantaNum(1);
@@ -185,12 +180,10 @@ function updateTempInfLayer() {
 	if (tmp.ach[108].has) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(1.5);
 	if (FCComp(3)) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3.2);
 	if (extremeStadiumComplete("cranius")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(EXTREME_STADIUM_DATA.cranius.effect())
-	if (tmp.elm)
-		if (player.elementary.times.gt(0))
-			tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1));
-	if (tmp.elm)
-		if (player.elementary.times.gt(0))
-			tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.leptonR("tau").max(1));
+	if (tmp.elm && player.elementary.times.gt(0)) {
+		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.quarkR("charm").max(1));
+		tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.ferm.leptonR("tau").max(1));
+	}
 	if (tmp.elm) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos.photonEff(2).max(1));
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;3")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(3)
 	if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;0;4")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.elm.bos["higgs_0;0;4"]())
@@ -199,10 +192,18 @@ function updateTempInfLayer() {
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
 	if (modeActive('easy')) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
 	if (modeActive("hard") && tmp.fn) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.fn.enh.moltBrEff2)
+}
+
+function updateTempInfLayer() {
+	tmp.inf.fp = new ExpantaNum(1);
+	tmp.inf.bc = INF_UNL;
+	tmp.inf.emPow = new ExpantaNum(1);
+	calcKnowledgeGain()
+	
+
 	tmp.inf.req = ExpantaNum.pow(tmp.inf.bc, ExpantaNum.pow(ExpantaNum.pow(1.1, tmp.inf.fp), player.inf.endorsements));
 	if (player.distance.lt(tmp.inf.bc)) tmp.inf.bulk = new ExpantaNum(0);
-	else
-		tmp.inf.bulk = player.distance
+	else tmp.inf.bulk = player.distance
 			.plus(1)
 			.logBase(tmp.inf.bc)
 			.logBase(ExpantaNum.pow(1.1, tmp.inf.fp))

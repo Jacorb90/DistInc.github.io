@@ -1,5 +1,4 @@
-function updateTempEarlyGame() {
-	// Acceleration
+function calcAcceleration(){
 	tmp.acc = new ExpantaNum(0.1);
 	if (modeActive("hard")) tmp.acc = tmp.acc.div(3);
 	if (modeActive("easy")) tmp.acc = tmp.acc.times(2);
@@ -42,8 +41,9 @@ function updateTempEarlyGame() {
 	if (modeActive("extreme") && tmp.acc.gte("1e10000")) tmp.acc = tmp.acc.sqrt().times(ExpantaNum.sqrt("1e10000"))
 	if (extremeStadiumActive("nullum")) tmp.acc = ExpantaNum.pow(10, tmp.acc.log10().times(0.4-0.05*(extremeStadDiffLevel("nullum")-1)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.acc = tmp.acc.pow(tmp.hd.inclineRed)
+}
 
-	// Max Velocity
+function calcMaxVelocity(){
 	tmp.maxVel = new ExpantaNum(1);
 	if (player.rank.gt(1)) tmp.maxVel = tmp.maxVel.plus(1);
 	if (modeActive("hard")) tmp.maxVel = tmp.maxVel.div(2);
@@ -69,12 +69,19 @@ function updateTempEarlyGame() {
 	if (nerfActive("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1);
 	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.maxVel = tmp.maxVel.pow(tmp.hd.inclineRed)
+}
 
-	// Accelerational Energy
+function calcAccelerationEnergy(){
 	tmp.accEn = new ExpantaNum(0);
 	if (tmp.inf) if (tmp.inf.upgs.has("7;7")) tmp.accEn = tmp.accEn.plus(1).times(INF_UPGS.effects["7;7"]()["ae"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("8;2")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["8;2"]()["energy"]);
 	if (tmp.inf) if (tmp.inf.upgs.has("9;1")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["9;1"]());
 	if (tmp.inf) if (tmp.inf.upgs.has("10;2")) tmp.accEn = tmp.accEn.times(INF_UPGS.effects["10;2"]());
 	if (tmp.inf && tmp.rockets) if (tmp.inf.upgs.has("5;8")) tmp.accEn = tmp.accEn.times(tmp.rockets.accEnPow);
+}
+
+function updateTempEarlyGame() {
+	calcAcceleration()
+	calcMaxVelocity()
+	calcAccelerationEnergy()
 }
