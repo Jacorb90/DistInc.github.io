@@ -77,9 +77,10 @@ function updateElementaryLayer() {
 	if (!tmp.elm.doGain) tmp.elm.doGain = function (auto=false) {
 		// Gains
 		if (player.options.elc && !auto) {
-			if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("hard")||modeActive("hikers_dream"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
-			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
-			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, EXTREME, OR HIKER'S DREAM MODE PROGRESS IF YOU CONTINUE!")) return "NO";
+			let modesActive = (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream"))
+			if (!confirm("Are you sure you want to do this? "+((modesActive)?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
+			if (modesActive) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
+			if (modesActive) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, EXTREME, OR HIKER'S DREAM MODE PROGRESS IF YOU CONTINUE!")) return "NO";
 		}
 		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
@@ -1531,14 +1532,14 @@ function getEntropyNext() {
 
 function entropyReset() {
 	if (!player.elementary.entropy.unl) return;
-	let gain = tmp.elm.entropy.gain;
+	let gain = getEntropyGain();
 	if (gain.lt(1)) return;
-	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
-	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
-	
 	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 	player.elementary.foam.maxDepth = new ExpantaNum(1)
 	player.elementary.foam.upgrades = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+
+	player.elementary.entropy.amount = player.elementary.entropy.amount.plus(gain)
+	player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
 }
 
 function forceEntropyReset(trueForce=false) {
@@ -1609,7 +1610,7 @@ function getSkyGain() {
 function skyrmionReset(force=false) {
 	if (!force) {
 		if (!canSkyReset()) return;
-		player.elementary.sky.amount = player.elementary.sky.amount.plus(tmp.elm.sky.gain);
+		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain());
 	};
 	
 	player.inf.pantheon.purge.power = new ExpantaNum(0);

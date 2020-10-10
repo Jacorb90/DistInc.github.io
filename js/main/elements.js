@@ -1,14 +1,15 @@
 function updateOptionsHTML(){
 	if (player.tab == "options") {
-		for (let i = 0; i < Object.keys(MODES).length; i++) {
-			tmp.el[Object.keys(MODES)[i] + "Mode"].setClasses({
+		let modes = Object.keys(MODES)
+		for (let i = 0; i < modes.length; i++) {
+			tmp.el[modes[i] + "Mode"].setClasses({
 				btn: true,
 				tb: true,
-				opt: !modesSelected.includes(Object.keys(MODES)[i]),
+				opt: !modesSelected.includes(modes[i]),
 				ob: true,
-				optSelected: modesSelected.includes(Object.keys(MODES)[i])
+				optSelected: modesSelected.includes(modes[i])
 			});
-			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+			tmp.el[modes[i] + "Mode"].setTooltip(MODES[modes[i]].desc)
 		}
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
@@ -112,6 +113,7 @@ function updateAchievementsHTML(){
 		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
 		let all = tmp.ga == tmp.ta && !modeActive("aau");
 		let rowsActive = Math.floor(tmp.ta/8)
+		let allAchs = getAllAchievements()
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
 			let rc = rowComplete(r)
 			tmp.el["achR"+r].setDisplay(!(player.options.hideAch&&rc))
@@ -125,7 +127,7 @@ function updateAchievementsHTML(){
 					dgn: player.achievements.includes(id) && ACH_DATA.descs[id] !== undefined && !all,
 					blocked: ACH_DATA.descs[id] === undefined
 				});
-				tmp.el["ach" + id].changeStyle("visibility", (getAllAchievements().includes(id)) ? "visible" : "hidden");
+				if (!allAchs.includes(id)) tmp.el["ach" + id].changeStyle("visibility", "hidden");
 				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
 			}
 		}
@@ -152,16 +154,17 @@ function updateRobotsHTML(){
 				) +
 				"/sec)")
 	);
-	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) {
-		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt);
-		tmp.el[Object.keys(ROBOT_REQS)[i]].setClasses({
+	let reqs = Object.keys(ROBOT_REQS)
+	for (let i = 0; i < reqs.length; i++) {
+		tmp.el[reqs[i]].setTxt(tmp.auto[reqs[i]].btnTxt);
+		tmp.el[reqs[i]].setClasses({
 			btn: true,
 			locked:
 				player.automation.scraps.lt(Object.values(ROBOT_REQS)[i]) &&
-				!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i]),
+				!Object.keys(player.automation.robots).includes(reqs[i]),
 			rckt: !(
 				player.automation.scraps.lt(Object.values(ROBOT_REQS)[i]) &&
-				!Object.keys(player.automation.robots).includes(Object.keys(ROBOT_REQS)[i])
+				!Object.keys(player.automation.robots).includes(reqs[i])
 			)
 		});
 	}
@@ -211,11 +214,12 @@ function updateAutomationHTML(){
 		updateRobotsHTML()
 
 		// Automators
-		for (let i = 0; i < Object.keys(AUTOMATORS).length; i++) {
-			tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
-			player.automators[Object.keys(AUTOMATORS)[i]] =
-				tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
-			let name = Object.keys(AUTOMATORS)[i]
+		let autos = Object.keys(AUTOMATORS)
+		for (let i = 0; i < autos.length; i++) {
+			tmp.el["automatorDiv-" + autos[i]].setDisplay(Object.values(AUTOMATORS)[i]());
+			player.automators[autos[i]] =
+				tmp.el["automator-" + autos[i]].isChecked() && Object.values(AUTOMATORS)[i]();
+			let name = autos[i]
 		}
 	}
 }
@@ -230,6 +234,7 @@ function updateTimeReversalHTML(){
 					showNum(adjustGen(getTimeCubeGain(), "tc").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
 					"/sec)")
 		);
+		let isExtreme = modeActive("extreme")
 		tmp.el.frf.setTxt(showNum(tmp.tr.eff));
 		for (let i = 1; i <= TR_UPG_AMT; i++) {
 			let upg = TR_UPGS[i];
@@ -238,7 +243,7 @@ function updateTimeReversalHTML(){
 			if (!tr11Pow().eq(1) && i == 11)
 				desc += "<span class='grossminitxt'>(^" + showNum(tr11Pow()) + ")</span>";
 			tmp.el["tr" + i].setHTML(desc + "<br>Cost: " + showNum(upg.cost()) + " Time Cubes.");
-			if (upg.current !== undefined && (i > 15 ? modeActive("extreme") : true))
+			if (upg.current !== undefined && (i > 15 ? isExtreme : true))
 				tmp.el["tr" + i].setTooltip("Currently: " + upg.disp(upg.current()));
 			tmp.el["tr" + i].setClasses({
 				btn: true,
@@ -248,10 +253,10 @@ function updateTimeReversalHTML(){
 			});
 		}
 		tmp.el.trRow3.setDisplay(player.dc.unl || tmp.inf.upgs.has("1;4"));
-		tmp.el.trRow4.setDisplay(modeActive("extreme"));
-		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
-		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
-		tmp.el.trRow7.setDisplay(modeActive("extreme") && player.inf.endorsements.gt(0))
+		tmp.el.trRow4.setDisplay(isExtreme);
+		tmp.el.trRow5.setDisplay(isExtreme && player.collapse.unl);
+		tmp.el.trRow6.setDisplay(isExtreme && player.dc.unl);
+		tmp.el.trRow7.setDisplay(isExtreme && player.inf.endorsements.gt(0))
 	}
 }
 
@@ -542,9 +547,10 @@ function updateNormalStadiumHTML(){
 }
 
 function updateExtremeStadiumHTML(){
-	tmp.el.extremeStadDesc.setTxt(modeActive("extreme")?" in the same row":"")
-	tmp.el.extremeStadium.setDisplay(modeActive("extreme"))
-	if (modeActive("extreme")) {
+	let isExtreme = modeActive("extreme")
+	tmp.el.extremeStadDesc.setTxt(isExtreme?" in the same row":"")
+	tmp.el.extremeStadium.setDisplay(isExtreme)
+	if (isExtreme) {
 		for (let i=0;i<Object.keys(EXTREME_STADIUM_DATA).length;i++) {
 			let name = Object.keys(EXTREME_STADIUM_DATA)[i]
 			tmp.el[name+"Div"].setTooltip(extremeStadiumTooltip(name));
@@ -573,7 +579,7 @@ function updateExtremeStadiumHTML(){
 			);
 		}
 	}
-	tmp.el.extremeStadReset.setDisplay(modeActive("extreme"));
+	tmp.el.extremeStadReset.setDisplay(isExtreme);
 }
 
 function updatePurgeHTML(){

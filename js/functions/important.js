@@ -72,9 +72,10 @@ function modeLoad(resetted) {
 			.forEach(x =>
 				(function () {
 					let data = MODE_VARS[x];
-					for (let i = 0; i < Object.keys(data).length; i++) {
-						if (player[Object.keys(data)[i]] === undefined || resetted.includes(Object.keys(data)[i]))
-							player[Object.keys(data)[i]] = deepCopy(Object.values(data)[i]);
+					let datakeys = Object.keys(data)
+					for (let i = 0; i < datakeys.length; i++) {
+						if (player[datakeys[i]] === undefined || resetted.includes(datakeys[i]))
+							player[datakeys[i]] = deepCopy(Object.values(data)[i]);
 					}
 					player = MODE_EX[x](player);
 				})()

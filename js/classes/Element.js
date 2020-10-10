@@ -15,8 +15,15 @@ class Element {
 		new Element(id).setTxt(txt);
 	}
 
+	getHTML() {
+		return this.el.innerHTML
+	}
+	static getHTML(id) {
+		new Element(id).getHTML();
+	}
+
 	setHTML(html) {
-		this.el.innerHTML = html;
+		if (this.getHTML()!==html) this.el.innerHTML = html;
 	}
 	static setHTML(id, html) {
 		new Element(id).setHTML(html);
@@ -57,10 +64,22 @@ class Element {
 		new Element(id).clearClasses();
 	}
 
+	getClasses() {
+		return this.el.classList;
+	}
+	static getClasses(id) {
+		new Element(id).getClasses();
+	}
+
 	setClasses(data) {
-		this.clearClasses();
 		let list = Object.keys(data).filter(x => data[x]);
-		for (let i = 0; i < list.length; i++) this.addClass(list[i]);
+		let classes = this.getClasses()
+		for (let i = 0; i < classes.length; i++) {
+			if (!list.includes(classes[i])) this.removeClass(classes[i]);
+		}
+		for (let i = 0; i < list.length; i++) {
+			this.addClass(list[i]);
+		}
 	}
 	static setClasses(id, data) {
 		new Element(id).setClasses(data);
