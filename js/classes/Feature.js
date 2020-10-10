@@ -62,7 +62,7 @@ class Feature {
 					" to unlock " + this.disp + " (" + showNum(new ExpantaNum(this.progress() || 0).times(100)) + "%)";
 				return desc;
 			} else return "";
-		} else
+		} else {
 			return this.reached
 				? ""
 				: "Reach " +
@@ -74,5 +74,6 @@ class Feature {
 						" (" +
 						showNum(new ExpantaNum(this.progress() || 0).times(100)) +
 						"%)";
+		}
 	}
 }

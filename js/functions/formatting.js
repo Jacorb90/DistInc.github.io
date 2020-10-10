@@ -1,21 +1,21 @@
 function disp(val, places, locs, base) {
 	// Taken from OmegaNum.js (but altered slightly)
 	if (val.sign==-1) return "-"+disp(val.abs(), places, locs, base);
-    if (isNaN(val.array[0])) return "NaN";
-    if (!isFinite(val.array[0])) return "Infinity";
-    var s="";
-    if (val.array.length>=2){
-      for (var i=val.array.length-1;i>=2;--i){
-        var q=i>=5?"{"+decimalPlaces(i, places, base)+"}":"^".repeat(i);
-        if (val.array[i]>1) s+="10"+decimalPlaces(q, places, base)+"^"+decimalPlaces(val.array[i], places, base)+" ";
-        else if (val.array[i]==1) s+="10"+decimalPlaces(q, places, base);
-      }
-    }
-    if (!val.array[1]) s+=decimalPlaces(val.toNumber(), places, base);
-    else if (val.array[1]<3) s+="e".repeat(val.array[1]-1)+decimalPlaces(Math.pow(10,val.array[0]-Math.floor(val.array[0])), places, base)+"e"+decimalPlaces(Math.floor(val.array[0]), places, base);
-    else if (val.array[1]<8) s+="e".repeat(val.array[1])+decimalPlaces(val.array[0], places, base);
-    else s+="10^^"+decimalPlaces(val.array[1], places, base)+" "+decimalPlaces(val.array[0], places, base);
-    return s;
+	if (isNaN(val.array[0])) return "NaN";
+	if (!isFinite(val.array[0])) return "Infinity";
+	var s="";
+	if (val.array.length>=2){
+		for (var i=val.array.length-1;i>=2;--i){
+			var q=i>=5?"{"+decimalPlaces(i, places, base)+"}":"^".repeat(i);
+			if (val.array[i]>1) s+="10"+decimalPlaces(q, places, base)+"^"+decimalPlaces(val.array[i], places, base)+" ";
+			else if (val.array[i]==1) s+="10"+decimalPlaces(q, places, base);
+		}
+	}
+	if (!val.array[1]) s+=decimalPlaces(val.toNumber(), places, base);
+	else if (val.array[1]<3) s+="e".repeat(val.array[1]-1)+decimalPlaces(Math.pow(10,val.array[0]-Math.floor(val.array[0])), places, base)+"e"+decimalPlaces(Math.floor(val.array[0]), places, base);
+	else if (val.array[1]<8) s+="e".repeat(val.array[1])+decimalPlaces(val.array[0], places, base);
+	else s+="10^^"+decimalPlaces(val.array[1], places, base)+" "+decimalPlaces(val.array[0], places, base);
+	return s;
 }
 
 function showNum(val) {
