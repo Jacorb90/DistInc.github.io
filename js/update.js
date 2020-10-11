@@ -123,7 +123,7 @@ function setupHTML() {
 		autos +=
 			"<div id='automatorDiv-" +
 			Object.keys(AUTOMATORS)[i] +
-			"'>" +
+			"' class='automator' style='border-color: "+AUTOMATOR_BORDER[Object.keys(AUTOMATORS)[i]]+";'>" +
 			"<label for='automator-" + Object.keys(AUTOMATORS)[i] + "'>" +
 			(dp.includes("auto") || dp.includes("Auto") ? dp : "Auto-" + dp) +
 			"</label>" +
@@ -139,7 +139,7 @@ function setupHTML() {
 				autos += "<br><input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
 			}
 		}
-		autos += "</div><br>";
+		autos += "</div>";
 	}
 	au.setHTML(autos);
 	for (let i = 0; i < Object.keys(player.automators).length; i++) {
@@ -361,7 +361,8 @@ document.onkeydown = function(e) {
 			else tmp.ranks.layer.reset()
 			break;
 		case 83: 
-			if (TH_TABS.strings()) entangleStrings();
+			if (shiftDown && ELM_TABS.sky()) skyrmionReset();
+			else if (TH_TABS.strings()) entangleStrings();
 			break;
 		case 84: 
 			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start()

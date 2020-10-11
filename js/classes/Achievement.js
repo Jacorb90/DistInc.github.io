@@ -67,4 +67,9 @@ class Achievement {
 			notifier.success("Achievement gotten: " + ACH_DATA.names[this.name]);
 		}
 	}
+	
+	static hasRow(x) { 
+		for (let i=1;i<=ACH_DATA.cols;i++) if (!player.achievements.includes(x*10+i)) return false;
+		return true;
+	}
 }

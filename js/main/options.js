@@ -120,12 +120,12 @@ function setDropdown(dropdown, els, load=false) {
 			html += el.info + "<br>";
 			for (let x = 1; x <= el.buttons; x++)
 				html +=
-					"<button class='btn tb opt' onclick='" +
+					"<button class='btn tb opt"+"' onclick='" +
 					el["onclick" + x] +
-					"'>" +
+					"' "+">" +
 					el["txt" + x] +
 					"</button> ";
-		} else html += "<button class='btn tb opt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
+		} else html += "<button class='btn tb opt tt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
 		if (load) html += "<br><br>";
 	}
 	dropdown.setHTML(html + "<br><button class='btn tb opt' style='visibility: hidden;'></button>");

@@ -20,7 +20,7 @@ function updateCoalGain(){
 
 function updateFuranceUpgradeActualCost(n){
 	let data = tmp.fn.upgs[n]
-	let nAmt = player.furnace.upgrades[n - 1].max(data.bulk)
+	let nAmt = new ExpantaNum(player.furnace.upgrades[n - 1]).max(data.bulk)
 
 	let start3 = getScalingStart("hyper", "fn");
 	let power3 = getScalingPower("hyper", "fn");
@@ -34,7 +34,7 @@ function updateFuranceUpgradeActualCost(n){
 
 	let initBaseCost = scalingActive("fn", nAmt, "hyper") ? 
 				ExpantaNum.pow(base3, player.furnace.upgrades[n - 1].sub(start3)).times(start3) : 
-				player.furnace.upgrades[n - 1]
+				new ExpantaNum(player.furnace.upgrades[n - 1])
 
 	data.cost = ExpantaNum.pow(
 		data.base.div(10),

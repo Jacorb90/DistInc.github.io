@@ -147,6 +147,7 @@ function getStringEff(n) {
 	let ret = player.elementary.theory.strings.amounts[n-1].plus(1).pow(3/n)
 	if (ret.gte(1e6)) ret = ret.pow(1/3).times(ExpantaNum.pow(1e6, 2/3))
 	if (n==1 && ret.gte(1e9)) ret = ret.pow(0.1).times(Math.pow(1e9, 0.9))
+	if (n==1 && player.elementary.entropy.upgrades.includes(18)) ret = ret.pow(5);
 	let finalExp = new ExpantaNum(1)
 	let ettu = player.elementary.theory.tree.upgrades
 	if (hasDE(5) && n==2) finalExp = finalExp.plus(TREE_UPGS[14].effect(ettu[14]||0))
@@ -227,18 +228,51 @@ function getTBCost() {
 	return cost
 }
 
-function getTBGain() {
-	let ret = player.elementary.theory.preons.boosters.plus(1)
-	return ret
+function getTBTarg() {
+	let base = new ExpantaNum(2)
+	if (hasDE(5)) base = base.pow(0.1)
+	let targ = player.elementary.theory.preons.amount.times(TREE_UPGS[10].effect(player.elementary.theory.tree.upgrades[10]||0)).div(20).max(1).logBase(base)
+	if (targ.gte(4)) targ = targ.times(4).sqrt()
+	return targ.plus(1).floor();
 }
 
-function theoryBoost() {
+function getTBGain(bulk=1) {
+	if (player.elementary.entropy.upgrades.includes(17)) {
+		if (bulk==1) return player.elementary.theory.preons.boosters.plus(1).pow(5)
+		else {
+			let s = player.elementary.theory.preons.boosters.plus(1)
+			let t = ExpantaNum.add(bulk, s)
+			return ExpantaNum.div(s.pow(6).times(-2).plus(s.pow(5).times(6)).sub(s.pow(4).times(5)).plus(s.pow(2)).plus(t.pow(2).times(t.plus(1).pow(2)).times(t.pow(2).times(2).plus(t.times(2)).sub(1))), 12).round();
+		}
+	} else {
+		if (bulk==1) return player.elementary.theory.preons.boosters.plus(1)
+		else {
+			let a = player.elementary.theory.preons.boosters.plus(1)
+			let n = ExpantaNum.add(bulk, a)
+			let d = 1
+			return n.div(2).times(a.times(2).plus(n.sub(1).times(d))).round();
+		}
+	}
+}
+
+function theoryBoost(max=false) {
 	if (!player.elementary.theory.unl) return
 	if (!player.elementary.theory.preons.unl) return
 	if (player.elementary.theory.preons.amount.lt(getTBCost())) return
+	let targ;
+	if (max) {
+		targ = getTBTarg();
+		if (targ.sub(player.elementary.theory.preons.boosters).lt(1)) return;
+	}
 	player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.sub(getTBCost())
-	player.elementary.theory.points = player.elementary.theory.points.plus(getTBGain())
-	player.elementary.theory.preons.boosters = player.elementary.theory.preons.boosters.plus(1)
+	if (max) {
+		let bulk = targ.sub(player.elementary.theory.preons.boosters).max(1);
+		player.elementary.theory.points = player.elementary.theory.points.plus(getTBGain(bulk));
+		player.elementary.theory.preons.boosters = player.elementary.theory.preons.boosters.plus(bulk);
+	} else {
+		player.elementary.theory.points = player.elementary.theory.points.plus(getTBGain())
+		player.elementary.theory.preons.boosters = player.elementary.theory.preons.boosters.plus(1)
+	}
 }
 
 // Accelerons
@@ -357,6 +391,7 @@ function getInflatonGain() {
 
 function getInflatonEff1() {
 	let eff = player.elementary.theory.inflatons.amount.plus(1).log10().sqrt().plus(1)
+	if (player.elementary.entropy.upgrades.includes(20)) eff = eff.times(player.elementary.theory.inflatons.amount.plus(1).pow(0.01))
 	return eff
 }
 

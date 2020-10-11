@@ -147,6 +147,10 @@ function updateTempPerkAccelerator() {
 		tmp.elm.pa.stateStarts.weakened = tmp.elm.pa.stateStarts.weakened.times(tmp.elm.qf.boost22)
 		tmp.elm.pa.stateStarts.broken = tmp.elm.pa.stateStarts.broken.times(tmp.elm.qf.boost22)
 	}
+	if (player.elementary.entropy.upgrades.includes(19)) {
+		tmp.elm.pa.stateStarts.weakened = new ExpantaNum(1/0)
+		tmp.elm.pa.stateStarts.broken = new ExpantaNum(1/0)
+	}
 	tmp.elm.pa.state = ""
 	tmp.elm.pa.speedBoost = tmp.inf.asc.perkTimeO.div(10)
 	if (tmp.elm.pa.speedBoost.gte(tmp.elm.pa.stateStarts.weakened)) tmp.elm.pa.state = "weakened"
@@ -156,6 +160,7 @@ function updateTempPerkAccelerator() {
 	tmp.elm.pa.boost = tmp.inf.asc.perkTimeO.div(10).pow(0.07)
 	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
 	if (tmp.elm.pa.boost.gte(6.75)) tmp.elm.pa.boost = tmp.elm.pa.boost.logBase(6.75).plus(5.75)
+	if (tmp.ach[174].has) tmp.elm.pa.boost = tmp.elm.pa.boost.pow(1.05)
 }
 
 function updateTempElementary() {

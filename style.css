@@ -7,6 +7,7 @@
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
 	--news-right-start: -10%;
+	--foamcol: #d3e8cc;
 }
 
 * {
@@ -20,8 +21,7 @@
 	outline: none;
 }
 
-*:not(span),
-*:not(div) {
+*:not(span) *:not(div) *:not(label) {
 	color: var(--plaintxt);
 }
 
@@ -449,21 +449,33 @@ table {
 }
 
 .dropdown {
-	position: relative;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	vertical-align: center;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	pointer-events: none;
 	display: inline-block;
 }
 
 .dropdown-content {
 	display: none;
 	position: absolute;
+	top: 0px;
+	left: 0px;
 	background-color: #f1f1f1;
 	min-height: 50px;
-	max-height: 150px;
+	max-height: 400px;
 	min-width: 200px;
 	max-width: 200px;
 	background-color: grey;
+	pointer-events: auto;
 	z-index: 1;
 	overflow-y: auto;
+	border: 1px solid black;
 }
 
 .dropdown-content button {
@@ -473,17 +485,24 @@ table {
 .dropdown-content2 {
 	display: none;
 	position: absolute;
+	align-items: center;
+	top: 425px;
 	background-color: #f1f1f1;
-	min-height: 400px;
+	min-height: 100px;
 	max-height: 400px;
 	width: 100%;
 	background-color: grey;
+	pointer-events: auto;
 	z-index: 1;
 	overflow-y: auto;
 }
 
 .dropdown-content2 button {
 	display: block;
+}
+
+.tt {
+	width: 80%;
 }
 
 .btn.dark {
@@ -765,7 +784,7 @@ table {
 }
 
 #automator {
-	background-color: #a8a8a8;
+	background-color: #cccccc;
 }
 
 .btn.perk {
@@ -1508,13 +1527,9 @@ table {
 }
 
 .ob {
-	min-height: 35px;
+	min-height: 75px;
 	min-width: 100px;
-}
-
-.ob_t {
-	min-height: 50px;
-	min-width: 100px;
+	margin: 5px;
 }
 
 .btn.hc {
@@ -1607,7 +1622,7 @@ table {
 }
 
 .foamtxt {
-	color: #d3e8cc;
+	color: var(--foamcol);
 	font-size: 20px;
 }
 
@@ -1710,6 +1725,37 @@ table {
 
 .hexBtn.locked:after {
 	border-top: 8.660px solid #c62d1f;
+}
+
+.flexContainer {
+	display: flex !important;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.flexRow {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.automator {
+	width: 180px;
+	height: 90px;
+	border: 2px solid black;
+	border-radius: 2px;
+	background-color: #a8a8a8;
+	color: black;
+	margin: 0 auto;
+	padding: 25px 25px 25px 25px;
+	margin-top: 12.5px;
+	margin-bottom: 12.5px;
 }
 
 @keyframes grosstxt {

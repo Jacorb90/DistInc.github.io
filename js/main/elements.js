@@ -1221,10 +1221,11 @@ function updateMiscHTML(){
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
 	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
+	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364")
 
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)
-	tmp.el.footer.setDisplay(player.tab == "options" && player.optionsTab !== "saving");
+	tmp.el.footer.setDisplay(player.tab == "options");
 	tmp.el.newsticker.setDisplay(player.options.newst);
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
@@ -1244,7 +1245,8 @@ function updateMiscHTML(){
 		(INF_TABS.derivatives()?"Shift + D -> Derivative Shift/Boost\n":"")+
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
 		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
-		(TH_TABS.strings()?"S -> Entangled String reset":"")
+		(TH_TABS.strings()?"S -> Entangled String reset\n":"")+
+		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset":"")
 	);
 }
 
@@ -1355,6 +1357,7 @@ function updateSkyHTML() {
 				tmp.el["pionUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
 			}
 			tmp.el.pionData.setHTML(pionSel==0?"":("Pion Upgrade &"+GREEK_LETTERS[pionSel]+"; ("+showNum(player.elementary.sky.pions.field[pionSel]||0)+")<br>"+SKY_FIELDS[pionSel].pionDesc+"<br>Currently: "+SKY_FIELDS[pionSel].desc(tmp.elm.sky.pionEff[pionSel])+"<br>Cost: "+showNum(getFieldUpgCost("pions", pionSel))+" Pions"))
+			tmp.el.maxPion.setDisplay(player.elementary.entropy.upgrades.includes(20))
 		} else if (skyTab == "spinors") {
 			tmp.el.nextSpinorUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
 			tmp.el.spinorAmt.setTxt(showNum(player.elementary.sky.spinors.amount))
@@ -1367,6 +1370,7 @@ function updateSkyHTML() {
 				tmp.el["spinorUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
 			}
 			tmp.el.spinorData.setHTML(spinorSel==0?"":("Spinor Upgrade &"+GREEK_LETTERS[spinorSel]+"; ("+showNum(player.elementary.sky.spinors.field[spinorSel]||0)+")<br>"+SKY_FIELDS[spinorSel].spinorDesc+"<br>Currently: "+SKY_FIELDS[spinorSel].desc(tmp.elm.sky.spinorEff[spinorSel])+"<br>Cost: "+showNum(getFieldUpgCost("spinors", spinorSel))+" Spinors"))
+			tmp.el.maxSpinor.setDisplay(player.elementary.entropy.upgrades.includes(20))
 		}
 	}
 }

@@ -209,6 +209,10 @@ function theoryTreeAutoTick(){
 	}
 }
 
+function theoryBoosterAutoTick() {
+	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17)) theoryBoost(true)
+}
+
 function entropyAutoTick(){
 	if (player.automators["entropy"] && player.elementary.entropy.unl) {
 		player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
@@ -219,6 +223,7 @@ function entropyAutoTick(){
 function entropyUpgAutoTick(){
 	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
 		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x));
+		if (toBuy.length==0) return;
 		let nextUpg = toBuy.reduce((a,c) => Math.min(a,c));
 		buyEntropyUpg(nextUpg)
 	}
@@ -240,6 +245,7 @@ function autoTick(diff) {
 	photonsAutoTick()
 	gluonAutoTick()
 	theoryTreeAutoTick()
+	theoryBoosterAutoTick()
 	entropyAutoTick()
 	entropyUpgAutoTick()
 }

@@ -689,6 +689,10 @@ const ENTROPY_UPG_COSTS = {
 	14: new ExpantaNum(2350),
 	15: new ExpantaNum(2425),
 	16: new ExpantaNum(2475),
+	17: new ExpantaNum(11111),
+	18: new ExpantaNum(12e3),
+	19: new ExpantaNum(17500),
+	20: new ExpantaNum(18250),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -699,6 +703,7 @@ const ENTROPY_UPG_EFFS = {
 	8: function() { return player.elementary.theory.accelerons.amount.plus(1).times(player.elementary.theory.inflatons.amount.plus(1)).log10().plus(1).log10().plus(1).sqrt() },
 	9: function() { return player.elementary.sky.amount.plus(1).logBase(2).times(3).plus(1) },
 	14: function() { return player.elementary.entropy.best.plus(1).log10().sqrt().div(6).plus(1) },
+	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 }
 
 const SKY_REQ = [
@@ -711,11 +716,11 @@ const SKY_TABS = {
 	pions() { return true },
 	spinors() { return true },
 }
-const KEEP_ENTUPGS_SKY = [1, 10, 11, 12, 13, 16]
-const SKY_FIELD_UPGS_REQS = [1, 5, 20, 100]
+const KEEP_ENTUPGS_SKY = [1, 10, 11, 12, 13, 16, 17, 20]
+const SKY_FIELD_UPGS_REQS = [1, 5, 20, 100, 750]
 const SKY_FIELDS = {
-	upgs: 7,
-	placements: [[2,3],[6,1,7],[4,5]],
+	upgs: 9,
+	placements: [[8],[2,3],[6,1,7],[4,5],[9]],
 	1: {
 		req: 1,
 		pionDesc: "All Rank/Tier scalings start later based on your Pions.",
@@ -768,7 +773,7 @@ const SKY_FIELDS = {
 	},
 	6: {
 		req: 100,
-		pionDesc: "Rockets boost Pion & Spinor gain.",
+		pionDesc: "Ranks boost Pion & Spinor gain.",
 		spinorDesc: "Elementary Particles boost Pion & Spinor gain.",
 		baseCost: new ExpantaNum(1e6),
 		costMult: new ExpantaNum(1e3),
@@ -785,6 +790,26 @@ const SKY_FIELDS = {
 		pionEff(bought) { return player.inf.derivatives.unlocks.div(10).times(bought).plus(1).sqrt() },
 		spinorEff(bought) { return tmp.elm.entropy.omega.div(10).times(bought).plus(1).sqrt() },
 		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+	8: {
+		req: 750,
+		pionDesc: "All Spinor Upgrades are cheaper.",
+		spinorDesc: "All Pion Upgrades are cheaper.",
+		baseCost: new ExpantaNum(1e20),
+		costMult: new ExpantaNum(1e5),
+		pionEff(bought) { return ExpantaNum.pow(100, bought) },
+		spinorEff(bought) { return ExpantaNum.pow(100, bought) },
+		desc(eff) { return showNum(eff)+"x cheaper" },
+	},
+	9: {
+		req: 750,
+		pionDesc: 'The "Time Doesnt Exist" effect is raised to an exponent.',
+		spinorDesc: "The Entropy effect is raised to an exponent.",
+		baseCost: new ExpantaNum(1e24),
+		costMult: new ExpantaNum(1e6),
+		pionEff(bought) { return ExpantaNum.add(bought, 1).log10().times(10).plus(1) },
+		spinorEff(bought) { return ExpantaNum.add(bought, 1).log10().times(2).plus(1) },
+		desc(eff) { return "^"+showNum(eff) },
 	},
 }
 const GREEK_LETTERS = [null, "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi", "rho", "sigmaf", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"];

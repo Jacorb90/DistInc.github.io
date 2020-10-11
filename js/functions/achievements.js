@@ -180,8 +180,8 @@ function checkR17Ach(){
 	if (player.elementary.sky.amount.gt(0)) tmp.ach[171].grant();
 	if (player.elementary.times.gte(1e12)) tmp.ach[172].grant();
 	if (player.elementary.foam.amounts[0].gte(1e140) && player.elementary.entropy.best.eq(0)) tmp.ach[173].grant();
-	// A174 DNE
-	// A175 DNE
+	if (player.distance.gte("4.4e500000026")) tmp.ach[174].grant();
+	if (player.distance.gte("4.4e222222248") && player.elementary.entropy.best.eq(0) && player.elementary.foam.maxDepth.lte(1) && player.elementary.bosons.gauge.photons.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0) && Object.values(player.elementary.bosons.gauge.gluons).every(obj => obj.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0))) tmp.ach[175].grant();
 	// A176 DNE
 	// A177 DNE
 	// A178 DNE
@@ -189,23 +189,7 @@ function checkR17Ach(){
 
 function updateAchievements() {
 	tmp.nopathogenupgs = getTotalPathogenUpgrades().eq(0)
-	checkR1Ach()
-	checkR2Ach()
-	checkR3Ach()
-	checkR4Ach()
-	checkR5Ach()
-	checkR6Ach()
-	checkR7Ach()
-	checkR8Ach()
-	checkR9Ach()
-	checkR10Ach()
-	checkR11Ach()
-	checkR12Ach()
-	checkR13Ach()
-	checkR14Ach()
-	checkR15Ach()
-	checkR16Ach()
-	checkR17Ach()
+	for (let r=1;r<=ACH_DATA.rows;r++) if (!Achievement.hasRow(r)) window["checkR"+r+"Ach"]();
 }
 
 function rowComplete(r) {

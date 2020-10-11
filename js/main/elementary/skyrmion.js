@@ -59,7 +59,7 @@ function getSkyGain() {
 function skyrmionReset(force=false) {
 	if (!force) {
 		if (!canSkyReset()) return;
-		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain());
+		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().max(0));
 	};
 	
 	player.inf.pantheon.purge.power = new ExpantaNum(0);
@@ -78,6 +78,7 @@ function skyrmionReset(force=false) {
 	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 	player.elementary.theory.strings.entangled = new ExpantaNum(0);
 	player.elementary.theory.preons.amount = new ExpantaNum(0);
+	if (player.elementary.entropy.upgrades.includes(17)) player.elementary.theory.preons.boosters = new ExpantaNum(0)
 	player.elementary.theory.accelerons.amount = new ExpantaNum(0);
 	player.elementary.theory.inflatons.amount = new ExpantaNum(0);
 	player.elementary.hc.hadrons = new ExpantaNum(0);
@@ -158,6 +159,7 @@ function setupSkyField(type) {
 function getFieldUpgCostIncExp() {
 	let exp = 1
 	if (player.elementary.entropy.upgrades.includes(16)) exp /= 4;
+	if (player.elementary.entropy.upgrades.includes(20)) exp = 0;
 	return exp;
 }
 
@@ -166,7 +168,19 @@ function getFieldUpgCost(type, id) {
 	let otherType = ["pions","spinors"].filter(x => x!=type)[0]
 	let bought = ExpantaNum.pow(ExpantaNum.add(player.elementary.sky[type].field[id]||0, ExpantaNum.mul(player.elementary.sky[otherType].field[id]||0, getFieldUpgCostIncExp())), 2)
 	let cost = ExpantaNum.pow(data.costMult, bought).times(data.baseCost);
+	if (type=="pions") if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) cost = cost.div(tmp.elm.sky.spinorEff[8])
+	if (type=="spinors") if (player.elementary.sky.unl && tmp.elm.sky.pionEff) cost = cost.div(tmp.elm.sky.pionEff[8])
 	return cost;
+}
+
+function getFieldUpgTarg(type, id) {
+	if (!player.elementary.entropy.upgrades.includes(20)) return new ExpantaNum(0)
+	let data = SKY_FIELDS[id];
+	let targ = player.elementary.sky[type].amount;
+	if (type=="pions") if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) targ = targ.times(tmp.elm.sky.spinorEff[8])
+	if (type=="spinors") if (player.elementary.sky.unl && tmp.elm.sky.pionEff) targ = targ.times(tmp.elm.sky.pionEff[8])
+	targ = targ.div(data.baseCost).max(1).logBase(data.costMult).sqrt();
+	return targ.plus(1).floor();
 }
 
 function buySkyUpg(type, id) {
@@ -191,4 +205,17 @@ function respecField(type) {
 	if (!confirm("Are you sure you want to reset this field? This will also force a Skyrmion reset!")) return;
 	player.elementary.sky[type].field = {}
 	skyrmionReset(true)
+}
+
+function maxField(type) {
+	if (!player.elementary.entropy.upgrades.includes(20)) return;
+	for (let i=1;i<=SKY_FIELDS.upgs;i++) {
+		if (player.elementary.sky.amount.lt(SKY_FIELDS[i].req)) continue;
+		let cost = getFieldUpgCost(type, i)
+		if (player.elementary.sky[type].amount.lt(cost)) continue;
+		let targ = getFieldUpgTarg(type, i)
+		let bulk = targ.sub(player.elementary.sky[type].field[i]||0)
+		if (bulk.lt(1)) return;
+		player.elementary.sky[type].field[i] = ExpantaNum.add(player.elementary.sky[type].field[i], bulk).max(0)
+	}
 }
