@@ -281,7 +281,7 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
 		let fcb = tmp.inf.layer.fcBulk
-		if (player.inf.endorsements.lt(10)) fcb = fcb.max(1);
+		if (player.inf.endorsements.lt(10)) fcb = fcb.max(player.inf.endorsements.plus(1));
 		let mag = new ExpantaNum(1);
 		let m = player.inf.endorsements.plus(mag).min(fcb).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);
