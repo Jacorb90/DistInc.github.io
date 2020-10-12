@@ -187,7 +187,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
+	if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
+		info += "Skyrmions: "+showNum(new ExpantaNum(sav.elementary.sky.amount))+", Pions: "+showNum(new ExpantaNum(sav.elementary.sky.pions.amount))+", Spinors: "+showNum(new ExpantaNum(sav.elementary.sky.spinors.amount))+", "
+	} else if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
 		info += "Quantum Foam: "+showNum(new ExpantaNum(sav.elementary.foam.amounts[0]))+", "
 		if (sav.elementary.entropy?sav.elementary.entropy.unl:false) {
 			info += "Entropy: "+showNum(new ExpantaNum(sav.elementary.entropy.amount))+", "

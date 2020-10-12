@@ -19,17 +19,17 @@ function updateTempPhotons(gaugeSpeed) {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
 		3: ExpantaNum.pow(10, player.elementary.bosons.gauge.photons.upgrades[2]).times(1e4),
-		4: ExpantaNum.pow(2, player.elementary.bosons.gauge.photons.upgrades[3].pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]))).times(6e4),
+		4: ExpantaNum.pow(2, new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[3]||0).pow(1.1).times(ExpantaNum.pow(1.01, player.elementary.bosons.gauge.photons.upgrades[3]||0))).times(6e4),
 	};
 	for (let i=1;i<=4;i++) {
-		if (scalingActive("photons", player.elementary.bosons.gauge.photons.upgrades[i-1], "scaled")) {
+		if (scalingActive("photons", player.elementary.bosons.gauge.photons.upgrades[i-1]||0, "scaled")) {
 			let power = getScalingPower("scaled", "photons")
 			let exp = ExpantaNum.pow(2, power)
 			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, getScalingStart("scaled", "photons"))
 		}
 	}
 	if (!tmp.elm.bos.photonEff) tmp.elm.bos.photonEff = function (x) {
-		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1];
+		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1]||new ExpantaNum(0);
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
 		if (x == 1) return ExpantaNum.pow(3, bought);
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
@@ -82,8 +82,8 @@ function updateTempPhotons(gaugeSpeed) {
 		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
 		).sub(tmp.elm.bos.photonCost[x]);
-		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).max(target)
-		else player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]).plus(1);
+		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).max(target)
+		else player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).plus(1);
 	};
 }
 

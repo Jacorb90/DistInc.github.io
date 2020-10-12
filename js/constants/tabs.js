@@ -42,3 +42,9 @@ const TABBTN_SHOWN = {
 		return (tmp.elm ? tmp.elm.can : false) || player.elementary.times.gt(0);
 	}
 };
+
+const STAT_TABBTN_SHOWN = {
+	mainStats() { return true },
+	scalings() { return statScalingsShown },
+	rankTiers() { return player.rank.gt(1)||player.tier.gt(0) },
+}

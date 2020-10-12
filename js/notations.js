@@ -6,34 +6,34 @@ notations.scientific = function (val, places, locs) {
 
 notations.engineering = function(val, places=(player.options.sf - 1), locs) {
 	if (val.lt(0.001)) return notations.scientific(val, places, locs)
-	else if (val.lt(1e3)) return decimalPlaces(val, places)
+	else if (val.lt(1e3)) return decimalPlaces(val, places, val.eq(val.round()))
 	else if (val.lt("1e10000")) {
 		let back = val.logBase(1e3).floor().times(3)
 		let front = val.div(ExpantaNum.pow(10, back))
-		return decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+		return decimalPlaces(front, places, val.eq(val.round()))+"e"+decimalPlaces(back, places, true)
 	} else if (val.lt("ee1000")) {
 		let back = val.log10().logBase(1e3).floor().times(3)
 		let front = val.log10().div(ExpantaNum.pow(10, back))
-		return "e"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+		return "e"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places, true)
 	} else if (val.lt("eee1000")) {
 		let back = val.log10().log10().logBase(1e3).floor().times(3)
 		let front = val.log10().log10().div(ExpantaNum.pow(10, back))
-		return "ee"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places)
+		return "ee"+decimalPlaces(front, places)+"e"+decimalPlaces(back, places, false)
 	} else return disp(val, places, locs, 10)
 }
 
 notations.standard = function (val, places, locs) {
 	if (val.lt(0.001)) return notations.scientific(val, places, locs);
-	else if (val.lt(1e3)) return decimalPlaces(val, places);
+	else if (val.lt(1e3)) return decimalPlaces(val, places, val.eq(val.round()));
 	else if (val.lt(1e33)) {
 		return (
-			decimalPlaces(val.div(ExpantaNum.pow(10, val.log10().div(3).floor().times(3))), places) +
+			decimalPlaces(val.div(ExpantaNum.pow(10, val.log10().div(3).floor().times(3))), places, val.eq(val.round())) +
 			" " +
 			STANDARD_DATA.STARTS[val.log10().sub(3).div(3).floor().toNumber()]
 		);
 	} else if (val.lt(1e303)) {
 		return (
-			decimalPlaces(val.div(ExpantaNum.pow(10, val.log10().div(3).floor().times(3))), places) +
+			decimalPlaces(val.div(ExpantaNum.pow(10, val.log10().div(3).floor().times(3))), places, val.eq(val.round())) +
 			" " +
 			STANDARD_DATA.ONES[val.log10().sub(3).div(3).mod(10).floor().toNumber()] +
 			STANDARD_DATA.TENS[val.log10().sub(3).div(30).floor().toNumber()]

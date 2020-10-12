@@ -41,6 +41,25 @@ function setupHTML() {
 		table += "</tr>";
 	}
 	achTable.setHTML(table);
+	
+	// Rank/Tier Stats
+	let rankTable = new Element("rankStats")
+	table = "<div class='flexTopRow'><div class='flexContainer'>"
+	for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
+		let ranks = Object.keys(RANK_DESCS)[i]
+		table += "<div id='rankReward"+ranks+"' class='rtReward'>"
+		table += "Rank "+showNum(parseInt(ranks)+1)+": "+RANK_DESCS[ranks]
+		table += "</div>"
+	}
+	table += "</div><div class='flexContainer'>"
+	for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
+		let tiers = Object.keys(TIER_DESCS)[i]
+		table += "<div id='tierReward"+tiers+"' class='rtReward'>"
+		table += "Tier "+showNum(parseInt(tiers)+1)+": "+TIER_DESCS[tiers]
+		table += "</div>"
+	}
+	table += "</div></div>"
+	rankTable.setHTML(table)
 
 	// Time Reversal Upgrade Table
 	let trTable = new Element("trTable");

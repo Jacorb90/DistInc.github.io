@@ -64,7 +64,7 @@ function ENString(obj) {
 	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount).toString();
 	for (let i = 0; i < 4; i++)
 		ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(
-			ret.elementary.bosons.gauge.photons.upgrades[i]
+			ret.elementary.bosons.gauge.photons.upgrades[i]||0
 		).toString();
 	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w).toString();
 	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z).toString();
@@ -233,7 +233,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount);
 	for (let i = 0; i < 4; i++)
 		ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(
-			ret.elementary.bosons.gauge.photons.upgrades[i]
+			ret.elementary.bosons.gauge.photons.upgrades[i]||0
 		);
 	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w);
 	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z);

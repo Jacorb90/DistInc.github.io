@@ -1703,15 +1703,15 @@ table {
 
 .hexBtn:before {
 	bottom: 100%;
+	left: 0;
 	border-bottom: 8.660px solid #a875d1;
-	transform: translate(-10px);
 }
 
 .hexBtn:after {
 	top: 100%;
+	left: 0;
 	width: 0;
 	border-top: 8.660px solid #a875d1;
-	transform: translate(-20px);
 }
 
 .hexBtn.locked {
@@ -1756,6 +1756,22 @@ table {
 	padding: 25px 25px 25px 25px;
 	margin-top: 12.5px;
 	margin-bottom: 12.5px;
+}
+
+.rtReward {
+	min-width: 300px;
+	max-width: 300px;
+	min-height: 50px;
+	border: 1px solid var(--plaintxt);
+}
+
+.flexTopRow {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	max-width: 100%;
+	margin: 0 auto;
 }
 
 @keyframes grosstxt {

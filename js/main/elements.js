@@ -777,12 +777,17 @@ function updateOverallExtremeModeHTML(){
 
 function updateStatisticsHTML(){
 	if (player.tab == "statistics") {
-		tmp.el.best.setTxt(formatDistance(player.bestDistance))
-		tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
-		tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
-		tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
-		tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
-		let v = false
+		updateStatTabs();
+		if (statTab == "mainStats") {
+			tmp.el.best.setTxt(formatDistance(player.bestDistance))
+			tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
+			tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
+			tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
+			tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
+		} 
+		
+		// Always called because it determines whether the tab button is shown
+		statScalingsShown = false;
 		for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 			let name = Object.keys(SCALING_STARTS)[i]
 			let tt = ""
@@ -798,10 +803,22 @@ function updateStatisticsHTML(){
 			let blank = ""
 			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
 			tmp.el[name+"Stat"].changeStyle("visibility", tt==blank?"hidden":"visible")
-			if (tt!=blank) v = true
+			if (tt!=blank) statScalingsShown = true
 			tmp.el[name+"Stat"].setAttr("widetooltip", tt)
 		}
-		tmp.el.scaleStatDiv.changeStyle("visibility", v?"visible":"hidden")
+		
+		if (statTab == "rankTiers") {
+			tmp.el.rankStats.setDisplay(player.rank.gt(1))
+			tmp.el.tierStats.setDisplay(player.tier.gt(0))
+			for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
+				let ranks = Object.keys(RANK_DESCS)[i]
+				tmp.el["rankReward"+ranks].setDisplay(player.rank.gt(ranks))
+			}
+			for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
+				let tiers = Object.keys(TIER_DESCS)[i]
+				tmp.el["tierReward"+tiers].setDisplay(player.tier.gt(tiers))
+			}
+		}
 	}
 }
 
