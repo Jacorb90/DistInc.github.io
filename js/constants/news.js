@@ -84,6 +84,8 @@ const NEWS_DATA = {
 	m82: ["This game is brought to you by Jacorb, the incremental game dev who has no idea what he's doing"],
 	m83: ["In an alternate universe, all the (softcapped) are replaced with (obscured), the scalings have no names, and Distance Incremental has weeklong timewalls."],
 	m84: ["I wonder if you can escape the multiverse..."],
+	m85: ['"Darn it, I have to restart my lore because we are not even at the thing after multiverse!" -CRG'],
+	m86: ['"Canada does not exist..." -Him'],
 
 	// Distance-based Conditions
 	d1: [
@@ -455,6 +457,10 @@ const NEWS_DATA = {
 	s29: [
 		"This message started at the exact moment you reached the end of the multiverse!",
 		function() { return !player.ended&&player.distance.gte(DISTANCES.mlt) },
+	],
+	s30: [
+		"Wow you completed TV20, a completely meaningless quest that got you no reward. How do you feel now?",
+		function() { return player.elementary.theory.depth.gt(20) },
 	],
 };
 
