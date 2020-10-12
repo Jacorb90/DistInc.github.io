@@ -48,14 +48,16 @@ function setupHTML() {
 	for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
 		let ranks = Object.keys(RANK_DESCS)[i]
 		table += "<div id='rankReward"+ranks+"' class='rtReward'>"
-		table += "Rank "+showNum(parseInt(ranks)+1)+": "+RANK_DESCS[ranks]
+		table += "Rank "+showNum(parseInt(ranks)+1)+": "+(RANK_DESCS[ranks][0].toUpperCase() + RANK_DESCS[ranks].slice(1))
+		if (window["rank"+ranks+"Eff"]) table += "<br>Currently: <b><span id='rankEff"+ranks+"'></span></b>x"
 		table += "</div>"
 	}
 	table += "</div><div class='flexContainer'>"
 	for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
 		let tiers = Object.keys(TIER_DESCS)[i]
 		table += "<div id='tierReward"+tiers+"' class='rtReward'>"
-		table += "Tier "+showNum(parseInt(tiers)+1)+": "+TIER_DESCS[tiers]
+		table += "Tier "+showNum(parseInt(tiers)+1)+": "+(TIER_DESCS[tiers][0].toUpperCase() + TIER_DESCS[tiers].slice(1))
+		if (window["tier"+tiers+"Eff"]) table += "<br>Currently: <b><span id='tierEff"+tiers+"'></span></b>x"
 		table += "</div>"
 	}
 	table += "</div></div>"

@@ -74,6 +74,7 @@
 								Elementary
 							</button>
 						</td>
+						<td><button id="v1.9Endtabbtn" class="btn tb main" onclick="showTab('v1.9End')">Hey you shouldn't be seeing this</button></td>
 					</tr>
 				</table><br>
 			</div>
@@ -1964,6 +1965,7 @@
 					<div id="pionData" class="bandBig lb"></div><br>
 					<div id="nextPionUpgs"></div><br>
 					<button onclick="respecField('pions')" class="btn sky">Reset Pion Field</button>&nbsp;&nbsp;<button id="maxPion" onclick="maxField('pions')" class="btn sky">Max Pion Field</button><br><br>
+					<button onclick="importField('pions')" class="btn sky">Import Pion Field</button>&nbsp;&nbsp;<button onclick="exportField('pions')" class="btn sky">Export Pion Field</button><br><br>
 					<div id="pionField"></div>
 				</div>
 				<div id="spinors" class="skyTab" style="display: none;">
@@ -1971,11 +1973,20 @@
 					<div id="spinorData" class="bandBig lb"></div><br>
 					<div id="nextSpinorUpgs"></div><br>
 					<button onclick="respecField('spinors')" class="btn sky">Reset Spinor Field</button>&nbsp;&nbsp;<button id="maxSpinor" onclick="maxField('spinors')" class="btn sky">Max Spinor Field</button><br><br>
+					<button onclick="importField('spinors')" class="btn sky">Import Spinor Field</button>&nbsp;&nbsp;<button onclick="exportField('spinors')" class="btn sky">Export Spinor Field</button><br><br>
 					<div id="spinorField"></div>
 				</div>
 				<br><br><br><br><br>
 			</div>
 		</div>
+	</div>
+	<div id="v1.9End" class="tab" style="display: none;">
+		<br>Dear Player,<br><br><br>Welp you've done it, you've reached the end of the multiverse!<br>
+		Sadly, more content won't be available for the time being...<br>
+		For now, just try another mode or something, I dunno.<br>
+		Thanks for playing my game!<br>
+		From Jacorb<br><br><br><br><br>
+		P.S: If you're wondering why I put this message here, it's because it's prep for future content and because v2.0 may not be out for a while...
 	</div>
 	
 	<!-- Links -->
@@ -2029,6 +2040,7 @@
 	<script type="text/javascript" src="js/game.js"></script>
 
 	<!-- File Data -->
+	<script type="text/javascript" src="js/main/future_content/setup.js"></script>
 	<script type="text/javascript" src="js/main/elementary/bosons.js"></script>
 	<script type="text/javascript" src="js/main/elementary/elm.js"></script>
 	<script type="text/javascript" src="js/main/elementary/fermions.js"></script>

@@ -161,6 +161,7 @@ function updateTempPerkAccelerator() {
 	if (tmp.inf.upgs.has("10;8")) tmp.elm.pa.boost = tmp.elm.pa.boost.max(tmp.inf.asc.perkTimeO.div(10).pow(0.2))
 	if (tmp.elm.pa.boost.gte(6.75)) tmp.elm.pa.boost = tmp.elm.pa.boost.logBase(6.75).plus(5.75)
 	if (tmp.ach[174].has) tmp.elm.pa.boost = tmp.elm.pa.boost.pow(1.05)
+	if (player.elementary.sky.unl && tmp.elm.sky)  tmp.elm.pa.boost = tmp.elm.pa.boost.pow(tmp.elm.sky.pionEff[13])
 }
 
 function updateTempElementary() {

@@ -151,6 +151,9 @@ const ACH_DATA = {
 		173: "Extensionless Fome",
 		174: "The Multiverse is Doomed",
 		175: "Removing the Pillars",
+		176: "Entering Reality",
+		177: "Softcaps mean NOTHING",
+		178: "Multiverse Conquered",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -302,6 +305,9 @@ const ACH_DATA = {
 		173: "Reach showNum(1e140) Quantum Foam without any Entropy.",
 		174: "Reach formatDistance(4.4e500000026).",
 		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.", 
+		176: "Complete The Theoriverse at Depth 19.",
+		177: "Have Pathogen Upgrade Power of at least showNum(1625)%.",
+		178: "Reach formatDistance(4.4e1000000026).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

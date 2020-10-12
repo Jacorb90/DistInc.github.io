@@ -184,6 +184,7 @@ function updateTempGauge() {
 	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
 	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
 	if (player.elementary.entropy.upgrades.includes(15)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(5)
+	if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(tmp.elm.sky.spinorEff[11])
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
 	updateTempPhotons(gaugeSpeed);

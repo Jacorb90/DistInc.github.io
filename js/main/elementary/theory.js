@@ -404,6 +404,7 @@ function getInflatonEff2() {
 	if (amt.gte(1e6)) eff = eff.plus(1)
 	if (player.elementary.entropy.upgrades.includes(13)) eff = eff.plus(amt.div(1e6).max(1).log10())
 	eff = eff.plus(amt.plus(1).log10().plus(1).log10())
+	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[13])
 	return eff.floor()
 }
 

@@ -182,9 +182,9 @@ function checkR17Ach(){
 	if (player.elementary.foam.amounts[0].gte(1e140) && player.elementary.entropy.best.eq(0)) tmp.ach[173].grant();
 	if (player.distance.gte("4.4e500000026")) tmp.ach[174].grant();
 	if (player.distance.gte("4.4e222222248") && player.elementary.entropy.best.eq(0) && player.elementary.foam.maxDepth.lte(1) && player.elementary.bosons.gauge.photons.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0) && Object.values(player.elementary.bosons.gauge.gluons).every(obj => obj.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0))) tmp.ach[175].grant();
-	// A176 DNE
-	// A177 DNE
-	// A178 DNE
+	if (player.elementary.theory.depth.gte(20)) tmp.ach[176].grant();
+	if (tmp.pathogens) if (tmp.pathogens.upgPow.gte(16.25)) tmp.ach[177].grant();
+	if (player.distance.gte(DISTANCES.mlt)) tmp.ach[178].grant();
 }
 
 function updateAchievements() {

@@ -118,6 +118,7 @@ function updateTempPathogens() {
 				if (ret.gte(2e3) && !(tmp.elm?tmp.elm.bos.hasHiggs("0;1;4"):false)) ret = ret.sqrt().times(Math.sqrt(2e3));
 				if (ret.gte(1e4)) ret = ret.log10().times(1e4 / 4);
 				if (tmp.elm) if (tmp.elm.bos.hasHiggs("0;1;4")) ret = ret.times(4)
+				if (player.elementary.sky.unl && tmp.elm) ret = ret.times(tmp.elm.sky.pionEff[11])
 				return ret;
 				break;
 			} case 2: {

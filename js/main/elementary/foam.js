@@ -247,6 +247,7 @@ function getEntropyGain() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0);
 	let foam = player.elementary.foam.amounts[0]
 	let gain = foam.div(1e50).pow(0.05)
+	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.pow(tmp.elm.sky.spinorEff[10].plus(1))
 	if (gain.gte(5)) gain = gain.times(25).cbrt()
 	if (gain.gte(100)) gain = gain.times(1e6).pow(0.25)
 	if (gain.gte(1200)) gain = gain.logBase(1.001).div(5.91135)
@@ -259,6 +260,7 @@ function getEntropyNext() {
 	if (gain.gte(1200)) gain = ExpantaNum.pow(1.001, gain.times(5.91135))
 	if (gain.gte(100)) gain = gain.pow(4).div(1e6)
 	if (gain.gte(5)) gain = gain.pow(3).div(25)
+	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.root(tmp.elm.sky.spinorEff[10].plus(1))
 	return gain.pow(20).times(1e50);
 }
 

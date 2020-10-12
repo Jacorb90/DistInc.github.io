@@ -280,8 +280,10 @@ function updateTempInfLayer() {
 		player.inf.unl = true;
 	};
 	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
+		let fcb = tmp.inf.layer.fcBulk
+		if (player.inf.endorsements.lt(10)) fcb = fcb.max(1);
 		let mag = new ExpantaNum(1);
-		let m = player.inf.endorsements.plus(mag).min(tmp.inf.layer.fcBulk).floor();
+		let m = player.inf.endorsements.plus(mag).min(fcb).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);
 	};
 	if (!tmp.inf.onReset) tmp.inf.onReset = function (prev) {

@@ -83,6 +83,7 @@ const NEWS_DATA = {
 	m81: ["Maybe this is a meta joke. Maybe this is a bored game dev running out of news ticker ideas. Who knows!"],
 	m82: ["This game is brought to you by Jacorb, the incremental game dev who has no idea what he's doing"],
 	m83: ["In an alternate universe, all the (softcapped) are replaced with (obscured), the scalings have no names, and Distance Incremental has weeklong timewalls."],
+	m84: ["I wonder if you can escape the multiverse..."],
 
 	// Distance-based Conditions
 	d1: [
@@ -138,6 +139,10 @@ const NEWS_DATA = {
 		function() {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e108000000"));
 		}
+	],
+	d10: [
+		"The multiverse isn't enough for you, is it?",
+		function() { return player.distance.gte(DISTANCES.mlt) },
 	],
 
 	// Mode-based Conditions
@@ -446,6 +451,10 @@ const NEWS_DATA = {
 	s28: [
 		"Believe it or not, the news ticker is this game's only source of RNG.",
 		function() { return player.distance.gte(1e86)&&player.distance.lte("1e10000") },
+	],
+	s29: [
+		"This message started at the exact moment you reached the end of the multiverse!",
+		function() { return !player.ended&&player.distance.gte(DISTANCES.mlt) },
 	],
 };
 

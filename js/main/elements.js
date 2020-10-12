@@ -813,10 +813,12 @@ function updateStatisticsHTML(){
 			for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
 				let ranks = Object.keys(RANK_DESCS)[i]
 				tmp.el["rankReward"+ranks].setDisplay(player.rank.gt(ranks))
+				if (tmp.el["rankEff"+ranks]) tmp.el["rankEff"+ranks].setTxt(showNum(window["rank"+ranks+"Eff"]()));
 			}
 			for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
 				let tiers = Object.keys(TIER_DESCS)[i]
 				tmp.el["tierReward"+tiers].setDisplay(player.tier.gt(tiers))
+				if (tmp.el["tierEff"+tiers]) tmp.el["tierEff"+tiers].setTxt(showNum(window["tier"+tiers+"Eff"]()));
 			}
 		}
 	}
@@ -1018,11 +1020,20 @@ function updateTheoryTreeHTML(){
 			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
 			let cap = getTreeUpgCap(i)
 			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
 			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
 		}
 		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
+	}
+}
+
+function updateTheoryTreeHTMLPerSec() {
+	if (thTab=="tree") {
+		for (let i=1;i<=TREE_AMT;i++) {
+			let bought = tmp.elm.theory.tree.bought(i)
+			let cap = getTreeUpgCap(i)
+			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+		}
 	}
 }
 
@@ -1412,4 +1423,8 @@ function updateHTML() {
 	
 	// Features
 	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "All Features Unlocked!" : tmp.features[tmp.nf].desc);	
+}
+
+function updateHTMLPerSec() {
+	if (player.tab=="elementary"&&elmTab=="theory") updateTheoryTreeHTMLPerSec()
 }

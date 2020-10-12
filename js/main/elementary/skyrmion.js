@@ -96,6 +96,7 @@ function skyrmionReset(force=false) {
 function getSkyPow() {
 	let pow = new ExpantaNum(1)
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) pow = pow.times(tmp.elm.sky.spinorEff[4])
+	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) pow = pow.times(tmp.elm.sky.spinorEff[12])
 	return pow;
 }
 
@@ -207,15 +208,38 @@ function respecField(type) {
 	skyrmionReset(true)
 }
 
-function maxField(type) {
-	if (!player.elementary.entropy.upgrades.includes(20)) return;
+function maxField(type, lims={}) {
+	let limDefault = ((Object.keys(lims).length==0)?(1/0):0)
+	if (!player.elementary.entropy.upgrades.includes(20) && (Object.keys(lims).length==0)) return;
 	for (let i=1;i<=SKY_FIELDS.upgs;i++) {
 		if (player.elementary.sky.amount.lt(SKY_FIELDS[i].req)) continue;
 		let cost = getFieldUpgCost(type, i)
 		if (player.elementary.sky[type].amount.lt(cost)) continue;
-		let targ = getFieldUpgTarg(type, i)
+		let targ = getFieldUpgTarg(type, i).min(lims[i]||limDefault)
 		let bulk = targ.sub(player.elementary.sky[type].field[i]||0)
-		if (bulk.lt(1)) return;
-		player.elementary.sky[type].field[i] = ExpantaNum.add(player.elementary.sky[type].field[i], bulk).max(0)
+		if (bulk.lt(1)) continue;
+		player.elementary.sky[type].field[i] = ExpantaNum.add(ExpantaNum.max(player.elementary.sky[type].field[i]||0, 0), bulk).max(0)
+		console.log(showNum(player.elementary.sky[type].field[i]))
+	}
+}
+
+function exportField(type) {
+	let data = JSON.stringify(player.elementary.sky.pions.field);
+	notifier.info("Field exported!")
+	copyToClipboard(data)
+}
+
+function importField(type) {
+	let input = prompt("Paste your exported field data here.")
+	try {
+		let data = JSON.parse(input)
+		if (Object.keys(data).length==0) return;
+		for (let i=0;i<Object.keys(data).length;i++) {
+			let key = Object.keys(data)[i]
+			data[key] = new ExpantaNum(data[key]).round();
+		}
+		maxField(type, data)
+	} catch(e) {
+		notifier.error("Invalid field")
 	}
 }

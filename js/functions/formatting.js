@@ -76,10 +76,16 @@ function decimalPlaces(value, places, roundWhole=false, base = 10) {
 
 function formatDistance(x) {
 	x = new ExpantaNum(x);
+	let fc = futureCapped();
 	for (i = Object.keys(DISTANCES).length - 1; i >= 0; i--) {
 		let name = Object.keys(DISTANCES)[i];
-		let val = DISTANCES[name];
+		let val = new ExpantaNum(DISTANCES[name]);
 		if (x.lt(val) && i > 0) continue;
+		if (name=="mlt"&&fc) {
+			if (x.eq(val)) return showNum(x.div(DISTANCES.uni)) + " uni";
+			return "??? uni"
+		}
+		if (DISTANCE_TYPES[name]=="log") return showNum(x.log10().div(val.log10())) + " " + name; 
 		return showNum(x.div(val)) + " " + name;
 	}
 }

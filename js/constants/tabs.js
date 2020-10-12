@@ -40,7 +40,10 @@ const TABBTN_SHOWN = {
 	},
 	elementary: function () {
 		return (tmp.elm ? tmp.elm.can : false) || player.elementary.times.gt(0);
-	}
+	},
+	"v1.9End": function() {
+		return false;
+	},
 };
 
 const STAT_TABBTN_SHOWN = {
