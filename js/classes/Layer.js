@@ -37,7 +37,7 @@ class Layer {
 	reset(force=false, auto=false) {
 		if (!force) {
 			if (tmp[this.tName]) if (tmp[this.tName].updateOnReset !== undefined && !auto) tmp[this.tName].updateOnReset();
-			if (!this.avail || this.gain.lt(1)) return;
+			if (!(this.avail || (!(this.name === "infinity") && player.inf.endorsements.lte(10) && infActive)) || this.gain.lt(1)) return;
 			if (!this.spec) player[this.name] = player[this.name].plus(this.gain);
 			else {
 				let gc = tmp[this.tName].doGain(auto);
@@ -55,7 +55,8 @@ class Layer {
 		modeLoad(LAYER_RESETS_EXTRA[this.name]);
 		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev)
 		if (this.name!="rf"&&modeActive("hikers_dream")) calcInclines();
-		needUpdate = true
+		updateBeforeTick();
+		updateAfterTick();
 	}
 
 	bulk(mag = new ExpantaNum(1)) {

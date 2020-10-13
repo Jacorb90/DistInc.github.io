@@ -86,6 +86,8 @@ const NEWS_DATA = {
 	m84: ["I wonder if you can escape the multiverse..."],
 	m85: ['"Darn it, I have to restart my lore because we are not even at the thing after multiverse!" -CRG'],
 	m86: ['"Canada does not exist..." -Him'],
+	m87: ["Jacorb only created Hiker's Dream because he doesn't exercise."],
+	m88: ["You may have noticed that there's a donate button. If you didn't, well you have noticed now!"],
 
 	// Distance-based Conditions
 	d1: [

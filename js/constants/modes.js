@@ -161,8 +161,8 @@ const MODE_EX = {
 	extreme: function (source) {
 		source.rankCheap = new ExpantaNum(source.rankCheap);
 		source.furnace.coal = new ExpantaNum(source.furnace.coal);
-		let fu = source.furnace.upgrades
-		fu = [
+		let fu = source.furnace.upgrades;
+		source.furnace.upgrades = [
 			new ExpantaNum(fu[0]),
 			new ExpantaNum(fu[1]),
 			new ExpantaNum(fu[2]),

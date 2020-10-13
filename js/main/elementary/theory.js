@@ -121,7 +121,6 @@ function resetTheoryTree(force=false) {
 	if (!force) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
-		if (player.elementary.theory.tree.spent.eq(0)) return
 		if (!confirm("Are you sure you want to reset your tree to get Theory Points back?")) return
 	}
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
