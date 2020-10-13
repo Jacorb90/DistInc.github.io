@@ -107,3 +107,10 @@ function formatTime(x) {
 		return showNum(x.div(val)) + " " + name;
 	}
 }
+
+function formatGain(amt, gain, name, isDist) {
+	let trueGain = name?adjustGen(gain, name):gain
+	let func = isDist?formatDistance:showNum
+	if (trueGain.gte(1e100) && trueGain.gt(amt)) return "(+"+showNum(trueGain.max(1).log10().sub(amt.max(1).log10().max(1)).times(50/VIS_UPDS[player.options.visUpd]))+" OoMs/sec)"
+	else return "(+"+func(trueGain)+"/sec)"
+}

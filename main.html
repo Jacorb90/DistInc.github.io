@@ -871,7 +871,7 @@
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br /><br />
 				<span id="tudeEff"></span>
 				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge
-				<span style="font-size: 25px;">(+<span id="knowledgeGain"></span>/sec)</span>.<br /><br />
+				<span style="font-size: 25px;"><span id="knowledgeGain"></span></span>.<br /><br />
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br /><br />
 				<div id="infUpgData" class="bandBig or"></div>
 				<br /><br />
@@ -1254,16 +1254,16 @@
 					Your Bosons & Ascension Power are generating you <span id="gaugeGain" class="gauge"></span> Gauge
 					Bosons/sec.<br />
 					You have <span id="gaugeAmt" class="gauge"></span> Gauge Bosons.<br />
-					You have <span id="gaugeForce" class="gauge"></span> Gauge Force (+<span id="gaugeForceGain"></span
-					>/sec), which is making the below resources generate at
+					You have <span id="gaugeForce" class="gauge"></span> Gauge Force <span id="gaugeForceGain"></span
+					>, which is making the below resources generate at
 					<span id="gaugeForceEff" class="gauge"></span>x speed.<br /><br />
 					<div style="width: 50%; min-height: 300px; background-color: #f9ff8f; float: left; color: black;">
 						<br />
-						You have <span id="photons" class="gauge"></span> Photons (+<span
+						You have <span id="photons" class="gauge"></span> Photons <span
 							id="photonGain"
 							style="color: black;"
 						></span
-						>/sec)<br /><br />
+						><br /><br />
 						<table>
 							<tr>
 								<td>
@@ -1303,17 +1303,17 @@
 					</div>
 					<div style="width: 50%; min-height: 300px; background-color: #9d3bff; float: right; color: black;">
 						<br />
-						You have <span id="w" class="gauge"></span> W Bosons (+<span
+						You have <span id="w" class="gauge"></span> W Bosons <span
 							id="wg"
 							style="color: black;"
 						></span
-						>/sec), translated to a <span id="w1" class="gauge"></span>x multiplier to Z Boson gain and a
+						>, translated to a <span id="w1" class="gauge"></span>x multiplier to Z Boson gain and a
 						<span id="w2" class="gauge"></span>x multiplier to Ascension Power gain.<br /><br />
-						You have <span id="z" class="gauge"></span> Z Bosons (+<span
+						You have <span id="z" class="gauge"></span> Z Bosons <span
 							id="zg"
 							style="color: black;"
 						></span
-						>/sec), translated to a <span id="z1" class="gauge"></span>x multiplier to W Boson gain and a
+						>, translated to a <span id="z1" class="gauge"></span>x multiplier to W Boson gain and a
 						<span id="z2" class="gauge"></span>x multiplier to Dark Flow.
 					</div>
 					<br />
@@ -1354,64 +1354,64 @@
 						</table>
 						<div id="r" class="gluontab">
 							<br />
-							You have <b><span id="rg" style="color: red;"></span></b> Red Gluons (+<span
+							You have <b><span id="rg" style="color: red;"></span></b> Red Gluons <span
 								id="rgg"
 								style="color: red;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="r_table"></table>
 						</div>
 						<div id="g" class="gluontab" style="display: none;">
 							<br />
-							You have <b><span id="gg" style="color: green;"></span></b> Green Gluons (+<span
+							You have <b><span id="gg" style="color: green;"></span></b> Green Gluons <span
 								id="ggg"
 								style="color: green;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="g_table"></table>
 						</div>
 						<div id="b" class="gluontab" style="display: none;">
 							<br />
-							You have <b><span id="bg" style="color: #6e72ff;"></span></b> Blue Gluons (+<span
+							You have <b><span id="bg" style="color: #6e72ff;"></span></b> Blue Gluons <span
 								id="bgg"
 								style="color: #6e72ff;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="b_table"></table>
 						</div>
 						<div id="ar" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="arg" style="color: red; filter: invert(1);"></span></b> Anti-Red
-							Gluons (+<span id="argg" style="color: red; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="argg" style="color: red; filter: invert(1);"></span>.<br /><br />
 							<table id="ar_table"></table>
 						</div>
 						<div id="ag" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="agg" style="color: green; filter: invert(1);"></span></b> Anti-Green
-							Gluons (+<span id="aggg" style="color: green; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="aggg" style="color: green; filter: invert(1);"></span>.<br /><br />
 							<table id="ag_table"></table>
 						</div>
 						<div id="ab" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="abg" style="color: blue; filter: invert(1);"></span></b> Anti-Blue
-							Gluons (+<span id="abgg" style="color: blue; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="abgg" style="color: blue; filter: invert(1);"></span>.<br /><br />
 							<table id="ab_table"></table>
 						</div>
 					</div>
 					<div style="width: 50%; min-height: 300px; background-color: #595959; float: right; color: white;">
 						<br />
-						You have <span id="grav" class="gauge"></span> Gravitons (+<span id="gravGain"></span>/sec),
+						You have <span id="grav" class="gauge"></span> Gravitons <span id="gravGain"></span>,
 						translated to a <span id="gravMult" class="gauge"></span>x multiplier to Gauge Force gain
 						(boosted by Elementaries).<br><br>
 						<div id="gravBoostDiv">
-							Your Gravitons have gathered you <span id="gravBoosts" class="gauge"></span> Graviton Boosts, which are making you gain <span id="gravBoostMult" class="gauge"></span>x as many Elementaries on reset.
+							Your Gravitons have gathered you <span id="gravBoosts" class="gauge"></span> Graviton Boosts (next at <span id="gravBoostNext" class="gauge"></span>), which are making you gain <span id="gravBoostMult" class="gauge"></span>x as many Elementaries on reset. (Mult per Graviton Boost: <span id="gravBoostEach" class="gauge"></span>)
 						</div>
 					</div>
 				</div>
 				<div id="scalar" class="bostab" style="display: none; min-height: 400px;">
 					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br />
 					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.<br><br>
-					You have <span id="higgs" class="scalar"></span> Higgs Bosons (+<span id="higgsGain"></span>/sec).<br><br>
+					You have <span id="higgs" class="scalar"></span> Higgs Bosons <span id="higgsGain"></span>.<br><br>
 					<div style="overflow-x: auto;"><table>
 						<tr>
 							<td><button id="higgs0;2;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;2;0')"></button></td>
@@ -1538,10 +1538,10 @@
 					<br>
 					<button id="ssUnl" class="btn th" onclick="tmp.elm.theory.ss.unl()">Unlock Supersymmetry<br>Cost: 1 Theory Point</button>
 					<div id="ssDiv">
-						You have <span id="squarks" class="thp"></span> Squarks (+<span id="squarkGain"></span>/sec), translated to a <span id="squarkEff" class="thp"></span>x multiplier to Quark gain.<br><br>
-						You have <span id="sleptons" class="thp"></span> Sleptons (+<span id="sleptonGain"></span>/sec), translated to a <span id="sleptonEff" class="thp"></span>x multiplier to Lepton gain.<br><br>
-						You have <span id="neutralinos" class="thp"></span> Neutralinos (+<span id="neutralinoGain"></span>/sec), translated to a <span id="neutralinoEff" class="thp"></span>x multiplier to Graviton gain.<br><br>
-						You have <span id="charginos" class="thp"></span> Charginos (+<span id="charginoGain"></span>/sec), translated to a <span id="charginoEff" class="thp"></span>x multiplier to Photon gain.<br><br><br><br>
+						You have <span id="squarks" class="thp"></span> Squarks <span id="squarkGain"></span>, translated to a <span id="squarkEff" class="thp"></span>x multiplier to Quark gain.<br><br>
+						You have <span id="sleptons" class="thp"></span> Sleptons <span id="sleptonGain"></span>, translated to a <span id="sleptonEff" class="thp"></span>x multiplier to Lepton gain.<br><br>
+						You have <span id="neutralinos" class="thp"></span> Neutralinos <span id="neutralinoGain"></span>, translated to a <span id="neutralinoEff" class="thp"></span>x multiplier to Graviton gain.<br><br>
+						You have <span id="charginos" class="thp"></span> Charginos <span id="charginoGain"></span>, translated to a <span id="charginoEff" class="thp"></span>x multiplier to Photon gain.<br><br><br><br>
 						Your Supersymmetric Particles have provided you with a Supersymmetric Wave with a length of <span id="wavelength" class="thp"></span>, translated to a <span id="waveEff" class="thp"></span>x multiplier to all pre-Elementary resources.<br><br>
 					</div>
 				</div>
@@ -1623,13 +1623,13 @@
 					<button id="stringsUnl" class="btn th" onclick="unlockStrings()">Unlock Strings<br>Cost: 7 Theory Points</button>
 					<div id="stringsDiv">
 						<span id="nextStr"></span><br><br>
-						You have a Primary String with a length of <span id="str1amt" class="thp"></span> (+<span id="str1gain"></span>/sec), translated to a <span id="str1eff" class="thp"></span>x multiplier to Supersymmetric Particle gain.<br><br>
-						<span id="str2" style="display: none">You have a Secondary String with a length of <span id="str2amt" class="thp"></span> (+<span id="str2gain"></span>/sec), translated to a <span id="str2eff" class="thp"></span>x multiplier to Primary String gain.<br><br></span>
-						<span id="str3" style="display: none">You have a Tertiary String with a length of <span id="str3amt" class="thp"></span> (+<span id="str3gain"></span>/sec), translated to a <span id="str3eff" class="thp"></span>x multiplier to Secondary String gain.<br><br></span>
-						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> (+<span id="str4gain"></span>/sec), translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
-						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> (+<span id="str5gain"></span>/sec), translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
-						<span id="str6" style="display: none">You have a Senary String with a length of <span id="str6amt" class="thp"></span> (+<span id="str6gain"></span>/sec), translated to a <span id="str6eff" class="thp"></span>x multiplier to Quinary String gain.<br><br></span>
-						<span id="str7" style="display: none">You have a Septenary String with a length of <span id="str7amt" class="thp"></span> (+<span id="str7gain"></span>/sec), translated to a <span id="str7eff" class="thp"></span>x multiplier to Senary String gain.<br><br></span>
+						You have a Primary String with a length of <span id="str1amt" class="thp"></span> <span id="str1gain"></span>, translated to a <span id="str1eff" class="thp"></span>x multiplier to Supersymmetric Particle gain.<br><br>
+						<span id="str2" style="display: none">You have a Secondary String with a length of <span id="str2amt" class="thp"></span> <span id="str2gain"></span>, translated to a <span id="str2eff" class="thp"></span>x multiplier to Primary String gain.<br><br></span>
+						<span id="str3" style="display: none">You have a Tertiary String with a length of <span id="str3amt" class="thp"></span> <span id="str3gain"></span>, translated to a <span id="str3eff" class="thp"></span>x multiplier to Secondary String gain.<br><br></span>
+						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> <span id="str4gain"></span>, translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
+						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> <span id="str5gain"></span>, translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
+						<span id="str6" style="display: none">You have a Senary String with a length of <span id="str6amt" class="thp"></span> <span id="str6gain"></span>, translated to a <span id="str6eff" class="thp"></span>x multiplier to Quinary String gain.<br><br></span>
+						<span id="str7" style="display: none">You have a Septenary String with a length of <span id="str7amt" class="thp"></span> <span id="str7gain"></span>, translated to a <span id="str7eff" class="thp"></span>x multiplier to Senary String gain.<br><br></span>
 						<br><br><span id="entangleDiv"><button id="entangle" class="btn th" onclick="entangleStrings()"></button><br><br>You have <span id="entangleAmt" class="thp"></span> of Entangled Strings, translated to a <span id="entangleEff" class="thp"></span>x multiplier to the generation speed of all Strings.<br><br></span>
 					</div>
 				</div>
@@ -1637,7 +1637,7 @@
 					<br>
 					<button id="preonsUnl" class="btn th" onclick="unlockPreons()">Unlock Preons<br>Cost: 10 Theory Points</button>
 					<div id="preonsDiv">
-						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons (+<span id="preonGain"></span>/sec).<br><br><br>
+						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons <span id="preonGain"></span>.<br><br><br>
 						<button id="theoryBoost" class="btn locked" onclick="theoryBoost()"></button><br><br>
 						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters.
 					</div>
@@ -1667,7 +1667,7 @@
 			<div id="hc" class="elmtab" style="display: none;">
 				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
-				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons <span id="hadronGain"></span>, which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
 				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button><br><br>
 				<span id="hcPerc"></span><br><br>
@@ -1775,7 +1775,7 @@
 				<div id="qf1" class="foamTab">
 					<table style="margin: auto; max-width: 80%;">
 						<tr>
-							<td class="foamTextThing">You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam (+<span id="qf1Gain"></span>/sec).</td>
+							<td class="foamTextThing">You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam <span id="qf1Gain"></span>.</td>
 							<td><button id="qf1Boost1" class="btn locked" onclick="qfBoost(1, 1)">Enlarge Quantum Foam by 1m in height<br>Cost: <span id="qf1Cost1" style="color: black !important;"></span> Quantum Foam</button></td>
 							<td><button id="qf1Boost2" class="btn locked" onclick="qfBoost(1, 2)">Enlarge Quantum Foam by 1m in width<br>Cost: <span id="qf1Cost2" style="color: black !important;"></span> Quantum Foam</button></td>
 							<td><button id="qf1Boost3" class="btn locked" onclick="qfBoost(1, 3)">Enlarge Quantum Foam by 1m in depth<br>Cost: <span id="qf1Cost3" style="color: black !important;"></span> Quantum Foam</button></td>
@@ -1797,7 +1797,7 @@
 						<tr height="50"></tr>
 
 						<tr class="qf2row">
-							<td class="foamTextThing">You have <span id="qf2Amt" class="foamtxt"></span> Subplanck Foam (+<span id="qf2Gain"></span>/sec), which is multiplying Quantum Foam gain by <span id="qf2Eff" class="foamtxt"></span>x.</td>
+							<td class="foamTextThing">You have <span id="qf2Amt" class="foamtxt"></span> Subplanck Foam <span id="qf2Gain"></span>, which is multiplying Quantum Foam gain by <span id="qf2Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf2Boost1" class="btn locked" onclick="qfBoost(2, 1)">Enlarge Subplanck Foam by 1m in height<br>Cost: <span id="qf2Cost1" style="color: black !important;"></span> Subplanck Foam</button></td>
 							<td><button id="qf2Boost2" class="btn locked" onclick="qfBoost(2, 2)">Enlarge Subplanck Foam by 1m in width<br>Cost: <span id="qf2Cost2" style="color: black !important;"></span> Subplanck Foam</button></td>
 							<td><button id="qf2Boost3" class="btn locked" onclick="qfBoost(2, 3)">Enlarge Subplanck Foam by 1m in depth<br>Cost: <span id="qf2Cost3" style="color: black !important;"></span> Subplanck Foam</button></td>
@@ -1819,7 +1819,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf3row">
-							<td>You have <span id="qf3Amt" class="foamtxt"></span> Subspatial Foam (+<span id="qf3Gain"></span>/sec), which is multiplying Subplanck Foam & Quantum Foam gain by <span id="qf3Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf3Amt" class="foamtxt"></span> Subspatial Foam <span id="qf3Gain"></span>, which is multiplying Subplanck Foam & Quantum Foam gain by <span id="qf3Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf3Boost1" class="btn locked" onclick="qfBoost(3, 1)">Enlarge Subspatial Foam by 1m in height<br>Cost: <span id="qf3Cost1" style="color: black !important;"></span> Subspatial Foam</button></td>
 							<td><button id="qf3Boost2" class="btn locked" onclick="qfBoost(3, 2)">Enlarge Subspatial Foam by 1m in width<br>Cost: <span id="qf3Cost2" style="color: black !important;"></span> Subspatial Foam</button></td>
 							<td><button id="qf3Boost3" class="btn locked" onclick="qfBoost(3, 3)">Enlarge Subspatial Foam by 1m in depth<br>Cost: <span id="qf3Cost3" style="color: black !important;"></span> Subspatial Foam</button></td>
@@ -1841,7 +1841,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf4row">
-							<td>You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam (+<span id="qf4Gain"></span>/sec), which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam <span id="qf4Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf4Boost1" class="btn locked" onclick="qfBoost(4, 1)">Enlarge Infinitesimal Foam by 1m in height<br>Cost: <span id="qf4Cost1" style="color: black !important;"></span> Infinitesimal Foam</button></td>
 							<td><button id="qf4Boost2" class="btn locked" onclick="qfBoost(4, 2)">Enlarge Infinitesimal Foam by 1m in width<br>Cost: <span id="qf4Cost2" style="color: black !important;"></span> Infinitesimal Foam</button></td>
 							<td><button id="qf4Boost3" class="btn locked" onclick="qfBoost(4, 3)">Enlarge Infinitesimal Foam by 1m in depth<br>Cost: <span id="qf4Cost3" style="color: black !important;"></span> Infinitesimal Foam</button></td>
@@ -1863,7 +1863,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf5row">
-							<td>You have <span id="qf5Amt" class="foamtxt"></span> Protoversal<span id="qf5type"></span> Foam (+<span id="qf5Gain"></span>/sec), which is multiplying the gain of all previous types of Foam by <span id="qf5Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf5Amt" class="foamtxt"></span> Protoversal<span id="qf5type"></span> Foam <span id="qf5Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf5Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf5Boost1" class="btn locked" onclick="qfBoost(5, 1)">Enlarge Protoversal Foam by 1m in height<br>Cost: <span id="qf5Cost1" style="color: black !important;"></span> Protoversal Foam</button></td>
 							<td><button id="qf5Boost2" class="btn locked" onclick="qfBoost(5, 2)">Enlarge Protoversal Foam by 1m in width<br>Cost: <span id="qf5Cost2" style="color: black !important;"></span> Protoversal Foam</button></td>
 							<td><button id="qf5Boost3" class="btn locked" onclick="qfBoost(5, 3)">Enlarge Protoversal Foam by 1m in depth<br>Cost: <span id="qf5Cost3" style="color: black !important;"></span> Protoversal Foam</button></td>
@@ -1957,7 +1957,7 @@
 					<button onclick="respecBothFields()" class="btn sky">Reset Pion & Spinor Fields</button>
 				</div>
 				<div id="pions" class="skyTab" style="display: none;">
-					You have <span id="pionAmt" class="skytxt"></span> Pions (+<span id="pionGain"></span>/sec)<br><br>
+					You have <span id="pionAmt" class="skytxt"></span> Pions <span id="pionGain"></span><br><br>
 					<div id="pionData" class="bandBig lb"></div><br>
 					<div id="nextPionUpgs"></div><br>
 					<button onclick="respecField('pions')" class="btn sky">Reset Pion Field</button>&nbsp;&nbsp;<button id="maxPion" onclick="maxField('pions')" class="btn sky">Max Pion Field</button><br><br>
@@ -1965,7 +1965,7 @@
 					<div id="pionField"></div>
 				</div>
 				<div id="spinors" class="skyTab" style="display: none;">
-					You have <span id="spinorAmt" class="skytxt"></span> Spinors (+<span id="spinorGain"></span>/sec)<br><br>
+					You have <span id="spinorAmt" class="skytxt"></span> Spinors <span id="spinorGain"></span><br><br>
 					<div id="spinorData" class="bandBig lb"></div><br>
 					<div id="nextSpinorUpgs"></div><br>
 					<button onclick="respecField('spinors')" class="btn sky">Reset Spinor Field</button>&nbsp;&nbsp;<button id="maxSpinor" onclick="maxField('spinors')" class="btn sky">Max Spinor Field</button><br><br>

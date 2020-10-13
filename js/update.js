@@ -373,6 +373,7 @@ document.onkeydown = function(e) {
 			break;
 		case 74:
 			if (modeActive("hikers_dream")) refillEnergy()
+			break;
 		case 80:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()
 			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll()

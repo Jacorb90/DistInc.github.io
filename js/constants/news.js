@@ -88,6 +88,7 @@ const NEWS_DATA = {
 	m86: ['"Canada does not exist..." -Him'],
 	m87: ["Jacorb only created Hiker's Dream because he doesn't exercise."],
 	m88: ["You may have noticed that there's a donate button. If you didn't, well you have noticed now!"],
+	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
 
 	// Distance-based Conditions
 	d1: [

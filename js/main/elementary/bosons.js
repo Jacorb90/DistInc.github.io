@@ -79,7 +79,7 @@ function updateTempPhotons(gaugeSpeed) {
 					break;
 			}
 		}
-		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
+		if (!max) player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
 		).sub(tmp.elm.bos.photonCost[x]);
 		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).max(target)
@@ -281,6 +281,11 @@ function getGravBoosts() {
 	if (!hasDE(4)) return new ExpantaNum(0)
 	let g = player.elementary.bosons.gauge.gravitons
 	return g.plus(1).log10().sqrt().floor()
+}
+
+function getNextGravBoost(boosts) {
+	if (!hasDE(4)) return new ExpantaNum(1/0)
+	return ExpantaNum.pow(10, boosts.plus(1).pow(2)).sub(1);
 }
 
 function getGravBoostBase() {
