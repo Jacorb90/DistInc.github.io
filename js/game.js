@@ -32,7 +32,6 @@ var thTab = "tv";
 var enTab = "mainEN";
 var autoRobotTarget = 0
 var betaID = ""; // beta1.9
-var checkForBetas = {"beta1.9": 1.9, "beta1.8": 1.8}
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
