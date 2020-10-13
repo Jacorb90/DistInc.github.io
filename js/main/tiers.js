@@ -176,7 +176,7 @@ function getTierBaseCost() {
 	return bc
 }
 
-function tier3Eff() {
+function tier2Eff() {
 	let tier = player.tier;
 	if (tier.gte(10)) tier = tier.log10().times(10);
 	return ExpantaNum.pow(1.1, tier);
