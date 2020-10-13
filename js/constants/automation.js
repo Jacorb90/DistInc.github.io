@@ -70,17 +70,14 @@ const AUTOMATORS = {
 	enlightenments: function() {
 		return tmp.elm.bos.hasHiggs("0;2;0")
 	},
-	derivative_boosts: function() {
-		return tmp.elm.bos.hasHiggs("0;0;3")
-	},
 	spectral_gems: function() {
 		return tmp.elm.bos.hasHiggs("1;2;0")
 	},
+	derivative_boosts: function() {
+		return tmp.elm.bos.hasHiggs("0;0;3")
+	},
 	elementaries: function() {
 		return tmp.ach[133].has&&player.elementary.times.gt(0)
-	},
-	foam_unlocks: function() {
-		return player.elementary.entropy.upgrades.includes(1)
 	},
 	photon_upgrades: function() {
 		return tmp.ach[166].has
@@ -88,7 +85,43 @@ const AUTOMATORS = {
 	gluon_upgrades: function() {
 		return tmp.ach[166].has
 	},
+	tree_upgrades: function() {
+		return tmp.ach[168].has
+	},
+	theoretical_boosters: function() {
+		return player.elementary.entropy.upgrades.includes(17)
+	},
+	foam_unlocks: function() {
+		return player.elementary.entropy.upgrades.includes(1)
+	},
+	entropy: function() {
+		return player.elementary.entropy.upgrades.includes(10)
+	},
+	entropy_upgrades: function() {
+		return player.elementary.entropy.upgrades.includes(11)
+	},
 };
+
+const AUTOMATOR_BORDER = {
+	furnace: "#c4711d",
+	pathogens: "#b6c495",
+	cores: "rgb(184, 0, 82)",
+	robots: "grey",
+	infinity_upgrades: "#fac882",
+	endorsements: "#fac882",
+	perks: "#ffff5c",
+	enlightenments: "#ecf07f",
+	spectral_gems: "#ffcc5e",
+	derivative_boosts: "#209908",
+	elementaries: "#83f7ee",
+	photon_upgrades: "#a39c5d",
+	gluon_upgrades: "#83f7ee",
+	tree_upgrades: "#fcb377",
+	theoretical_boosters: "#fcb377",
+	foam_unlocks: "white",
+	entropy: "#dbaca9",
+	entropy_upgrades: "#dbaca9",
+}
 
 const AUTOMATOR_X = {
 	elementaries: 2,

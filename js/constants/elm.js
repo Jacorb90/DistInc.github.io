@@ -3,7 +3,7 @@ const ELM_TABS = {
 		return true;
 	},
 	bosons: function () {
-		return true;
+		return player.elementary.times.gte(2);
 	},
 	theory: function () {
 		return player.elementary.theory.unl;
@@ -13,6 +13,9 @@ const ELM_TABS = {
 	},
 	foam: function() {
 		return player.elementary.foam.unl;
+	},
+	sky: function() {
+		return player.elementary.sky.unl;
 	},
 };
 
@@ -668,7 +671,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 8
+const ENTROPY_UPGS = 20
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -678,6 +681,18 @@ const ENTROPY_UPG_COSTS = {
 	6: new ExpantaNum(150),
 	7: new ExpantaNum(215),
 	8: new ExpantaNum(235),
+	9: new ExpantaNum(550),
+	10: new ExpantaNum(700),
+	11: new ExpantaNum(1500),
+	12: new ExpantaNum(1750),
+	13: new ExpantaNum(1800),
+	14: new ExpantaNum(2350),
+	15: new ExpantaNum(2425),
+	16: new ExpantaNum(2475),
+	17: new ExpantaNum(11111),
+	18: new ExpantaNum(12e3),
+	19: new ExpantaNum(17500),
+	20: new ExpantaNum(18250),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -686,4 +701,155 @@ const ENTROPY_UPG_EFFS = {
 	5: function() { return ExpantaNum.pow(1.03, player.elementary.theory.preons.boosters) },
 	7: function() { return player.elementary.hc.hadrons.plus(1).times(10).slog(10).times(25) },
 	8: function() { return player.elementary.theory.accelerons.amount.plus(1).times(player.elementary.theory.inflatons.amount.plus(1)).log10().plus(1).log10().plus(1).sqrt() },
+	9: function() { return player.elementary.sky.amount.plus(1).logBase(2).times(3).plus(1) },
+	14: function() { return player.elementary.entropy.best.plus(1).log10().sqrt().div(6).plus(1) },
+	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 }
+
+const SKY_REQ = [
+	"4.4e108000026",
+	"1e575",
+	"1e550"
+]
+const SKY_TABS = {
+	skyrmions() { return true },
+	pions() { return true },
+	spinors() { return true },
+}
+const KEEP_ENTUPGS_SKY = [1, 10, 11, 12, 13, 16, 17, 20]
+const SKY_FIELD_UPGS_REQS = [1, 5, 20, 100, 750, 2500, 4000]
+const SKY_FIELDS = {
+	upgs: 13,
+	placements: [[8],[10,2,3,11],[6,1,7],[12,4,5,13],[9]],
+	1: {
+		req: 1,
+		pionDesc: "All Rank/Tier scalings start later based on your Pions.",
+		spinorDesc: "Add to all Foam Boosts based on your Spinors.",
+		baseCost: new ExpantaNum(100),
+		costMult: new ExpantaNum(5),
+		pionEff(bought) { return player.elementary.sky.pions.amount.plus(1).log10().div(5).pow(0.8).times(25).times(ExpantaNum.sqrt(bought)) },
+		spinorEff(bought) { return player.elementary.sky.spinors.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.pow(bought, 1/4)) },
+		desc(eff) { return "+"+showNum(eff) },
+	},
+	2: {
+		req: 5,
+		pionDesc: "Pathogen Upgrades are stronger (unaffected by softcap).",
+		spinorDesc: "Graviton Boosts are stronger.",
+		baseCost: new ExpantaNum(1e4),
+		costMult: new ExpantaNum(20),
+		pionEff(bought) { return ExpantaNum.mul(ExpantaNum.sqrt(bought), 0.15).plus(1).pow(0.8) },
+		spinorEff(bought) { return ExpantaNum.mul(ExpantaNum.sqrt(bought), 0.4).plus(1).pow(0.9) },
+		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+	3: {
+		req: 5,
+		pionDesc: "Skyrmions boost Purge Power gain.",
+		spinorDesc: "Skyrmions boost Entropy gain.",
+		baseCost: new ExpantaNum(1e4),
+		costMult: new ExpantaNum(100),
+		pionEff(bought) { return player.elementary.sky.amount.plus(1).log10().plus(1).log10().times(ExpantaNum.sqrt(bought)).sqrt().plus(1) },
+		spinorEff(bought) { return player.elementary.sky.amount.plus(1).log10().times(ExpantaNum.sqrt(bought)).plus(1).sqrt() },
+		desc(eff) { return showNum(eff)+"x" },
+	},
+	4: {
+		req: 20,
+		pionDesc: "The Cadaver effect is stronger.",
+		spinorDesc: "The Skyrmion effect is stronger.",
+		baseCost: new ExpantaNum(1e5),
+		costMult: new ExpantaNum(10),
+		pionEff(bought) { return ExpantaNum.mul(ExpantaNum.sqrt(bought), .2).plus(1) },
+		spinorEff(bought) { return ExpantaNum.mul(ExpantaNum.pow(bought, .4), .25).plus(1) },
+		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+	5: {
+		req: 20,
+		pionDesc: "Skyrmions boost Dark Flow.",
+		spinorDesc: "Skyrmions boost Supersymmetric Particle gain.",
+		baseCost: new ExpantaNum(1e5),
+		costMult: new ExpantaNum(10),
+		pionEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(400) },
+		spinorEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(10) },
+		desc(eff) { return showNum(eff)+"x" },
+	},
+	6: {
+		req: 100,
+		pionDesc: "Ranks boost Pion & Spinor gain.",
+		spinorDesc: "Elementary Particles boost Pion & Spinor gain.",
+		baseCost: new ExpantaNum(1e6),
+		costMult: new ExpantaNum(1e3),
+		pionEff(bought) { return player.rank.max(1).pow(bought) },
+		spinorEff(bought) { return player.elementary.particles.plus(1).log10().times(50).plus(1).pow(bought) },
+		desc(eff) { return showNum(eff)+"x" },
+	},
+	7: {
+		req: 100,
+		pionDesc: "Derivative Boosts are stronger based on their amount.",
+		spinorDesc: "&Omega; Particles are stronger based on their amount.",
+		baseCost: new ExpantaNum(1e6),
+		costMult: new ExpantaNum(15),
+		pionEff(bought) { return player.inf.derivatives.unlocks.div(10).times(bought).plus(1).sqrt() },
+		spinorEff(bought) { return tmp.elm.entropy.omega.div(10).times(bought).plus(1).sqrt() },
+		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+	8: {
+		req: 750,
+		pionDesc: "All Spinor Upgrades are cheaper.",
+		spinorDesc: "All Pion Upgrades are cheaper.",
+		baseCost: new ExpantaNum(1e20),
+		costMult: new ExpantaNum(1e5),
+		pionEff(bought) { return ExpantaNum.pow(100, bought) },
+		spinorEff(bought) { return ExpantaNum.pow(100, bought) },
+		desc(eff) { return showNum(eff)+"x cheaper" },
+	},
+	9: {
+		req: 750,
+		pionDesc: 'The "Time Doesnt Exist" effect is raised to an exponent.',
+		spinorDesc: "The Entropy effect is raised to an exponent.",
+		baseCost: new ExpantaNum(1e24),
+		costMult: new ExpantaNum(1e6),
+		pionEff(bought) { return ExpantaNum.add(bought, 1).log10().times(10).plus(1) },
+		spinorEff(bought) { return ExpantaNum.add(bought, 1).log10().times(2).plus(1) },
+		desc(eff) { return "^"+showNum(eff) },
+	},
+	10: {
+		req: 2500,
+		pionDesc: "Tiers use a weaker cost formula, but only if they're not scaled in any way.",
+		spinorDesc: "Entropy uses a weaker requirement formula.",
+		baseCost: new ExpantaNum(1e38),
+		costMult: new ExpantaNum(1e5),
+		pionEff(bought) { return ExpantaNum.sub(.8, ExpantaNum.div(.8, ExpantaNum.add(ExpantaNum.mul(bought, 2), 1).log10().div(2).plus(1))) },
+		spinorEff(bought) { return ExpantaNum.sub(.75, ExpantaNum.div(.75, ExpantaNum.add(ExpantaNum.mul(bought, 2), 1).log10().plus(1))) },
+		desc(eff) { return showNum(eff.times(100))+"% weaker" },
+	},
+	11: {
+		req: 2500,
+		pionDesc: "Pathogen Upgrade 1's effect is multiplied.",
+		spinorDesc: "Gauge Speed is raised to an exponent.",
+		baseCost: new ExpantaNum(1e38),
+		costMult: new ExpantaNum(1e5),
+		pionEff(bought) { return ExpantaNum.add(ExpantaNum.mul(bought, 2), 1).log10().times(5).plus(1) },
+		spinorEff(bought) { return ExpantaNum.add(ExpantaNum.mul(bought, 2), 1).log10().times(2).plus(1) },
+		desc(eff) { return showNum(eff) },
+	},
+	12: {
+		req: 4000,
+		pionDesc: "The Cadaver effect is raised to an exponent.",
+		spinorDesc: "The Skyrmion effect is multiplied.",
+		baseCost: new ExpantaNum(1e43),
+		costMult: new ExpantaNum(1e12),
+		pionEff(bought) { return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) },
+		spinorEff(bought) { return ExpantaNum.add(bought, 1).pow(1.65) },
+		desc(eff) { return showNum(eff) },
+	},
+	13: {
+		req: 4000,
+		pionDesc: "The Perk Accelerator is stronger based on your Inflatons.",
+		spinorDesc: "The second Inflaton effect is stronger based on your Ascension Power.",
+		baseCost: new ExpantaNum(1e43),
+		costMult: new ExpantaNum(1e12),
+		pionEff(bought) { return player.elementary.theory.inflatons.amount.plus(1).log10().div(1e3).sqrt().times(bought).plus(1).root(5) },
+		spinorEff(bought) { return player.inf.ascension.power.plus(1).log10().div(1e3).sqrt().times(bought).plus(1).sqrt() },
+		desc(eff) { return showNum(eff.sub(1).times(100))+"% stronger" },
+	},
+}
+const GREEK_LETTERS = [null, "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi", "rho", "sigmaf", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"];

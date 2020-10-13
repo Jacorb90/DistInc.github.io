@@ -28,6 +28,7 @@ function getScalingStart(type, name) {
 		} else if (type=="atomic") {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
+		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
 	} else if (name=="tier") {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)
@@ -37,6 +38,7 @@ function getScalingStart(type, name) {
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("5;7")) start = start.plus(INF_UPGS.effects["5;7"]());
 		}
+		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
 	} else if (name=="rf") {
 		if (type=="scaled") {
 			if (player.dc.unl && tmp.dc) start = start.plus(tmp.dc.dfEff)

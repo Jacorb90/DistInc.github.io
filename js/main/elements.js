@@ -77,7 +77,6 @@ function updateMainHTML(){
 		// Hiker's Dream
 		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>":"")
 		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
-		
 	}
 }
 
@@ -778,12 +777,17 @@ function updateOverallExtremeModeHTML(){
 
 function updateStatisticsHTML(){
 	if (player.tab == "statistics") {
-		tmp.el.best.setTxt(formatDistance(player.bestDistance))
-		tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
-		tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
-		tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
-		tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
-		let v = false
+		updateStatTabs();
+		if (statTab == "mainStats") {
+			tmp.el.best.setTxt(formatDistance(player.bestDistance))
+			tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
+			tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
+			tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
+			tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
+		} 
+		
+		// Always called because it determines whether the tab button is shown
+		statScalingsShown = false;
 		for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
 			let name = Object.keys(SCALING_STARTS)[i]
 			let tt = ""
@@ -799,10 +803,24 @@ function updateStatisticsHTML(){
 			let blank = ""
 			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
 			tmp.el[name+"Stat"].changeStyle("visibility", tt==blank?"hidden":"visible")
-			if (tt!=blank) v = true
+			if (tt!=blank) statScalingsShown = true
 			tmp.el[name+"Stat"].setAttr("widetooltip", tt)
 		}
-		tmp.el.scaleStatDiv.changeStyle("visibility", v?"visible":"hidden")
+		
+		if (statTab == "rankTiers") {
+			tmp.el.rankStats.setDisplay(player.rank.gt(1))
+			tmp.el.tierStats.setDisplay(player.tier.gt(0))
+			for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
+				let ranks = Object.keys(RANK_DESCS)[i]
+				tmp.el["rankReward"+ranks].setDisplay(player.rank.gt(ranks))
+				if (tmp.el["rankEff"+ranks]) tmp.el["rankEff"+ranks].setTxt(showNum(window["rank"+ranks+"Eff"]()));
+			}
+			for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
+				let tiers = Object.keys(TIER_DESCS)[i]
+				tmp.el["tierReward"+tiers].setDisplay(player.tier.gt(tiers))
+				if (tmp.el["tierEff"+tiers]) tmp.el["tierEff"+tiers].setTxt(showNum(window["tier"+tiers+"Eff"]()));
+			}
+		}
 	}
 }
 
@@ -1002,11 +1020,20 @@ function updateTheoryTreeHTML(){
 			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
 			let cap = getTreeUpgCap(i)
 			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
 			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
 		}
 		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
+	}
+}
+
+function updateTheoryTreeHTMLPerSec() {
+	if (thTab=="tree") {
+		for (let i=1;i<=TREE_AMT;i++) {
+			let bought = tmp.elm.theory.tree.bought(i)
+			let cap = getTreeUpgCap(i)
+			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+		}
 	}
 }
 
@@ -1074,7 +1101,7 @@ function updateInfatonsHTML(){
 		let eff2 = getInflatonEff2()
 		tmp.el.inflaton2.setTxt(showNum(eff2))
 		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
-		tmp.el.inflaton2sc.setTxt(eff2.gte(5)?"(extremely softcapped)":"")
+		tmp.el.inflaton2sc.setTxt((eff2.gte(5)&&!player.elementary.entropy.upgrades.includes(13))?"(extremely softcapped)":"")
 	}
 }
 
@@ -1206,6 +1233,7 @@ function updateOverallElementaryHTML(){
 		updateTheoryverseMainHTML()
 		updateHadronicChallenges()
 		updateQFHTML()
+		updateSkyHTML()
 	}
 }
 
@@ -1221,10 +1249,11 @@ function updateMiscHTML(){
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
 	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
+	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364")
 
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)
-	tmp.el.footer.setDisplay(player.tab == "options" && player.optionsTab !== "saving");
+	tmp.el.footer.setDisplay(player.tab == "options");
 	tmp.el.newsticker.setDisplay(player.options.newst);
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
@@ -1244,7 +1273,8 @@ function updateMiscHTML(){
 		(INF_TABS.derivatives()?"Shift + D -> Derivative Shift/Boost\n":"")+
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
 		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
-		(TH_TABS.strings()?"S -> Entangled String reset":"")
+		(TH_TABS.strings()?"S -> Entangled String reset\n":"")+
+		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset":"")
 	);
 }
 
@@ -1312,7 +1342,8 @@ function updateQFHTML() {
 			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
 			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
 			for (let i=1;i<=ENTROPY_UPGS;i++) {
-				let cost = ENTROPY_UPG_COSTS[i]
+				let cost = ENTROPY_UPG_COSTS[i]||new ExpantaNum(1/0)
+				tmp.el["entropy"+i].setDisplay(entropyUpgShown(i))
 				tmp.el["entropy"+i].setClasses({
 					btn: true,
 					foamBought: player.elementary.entropy.upgrades.includes(i),
@@ -1322,6 +1353,52 @@ function updateQFHTML() {
 				tmp.el["entropyCost"+i].setTxt(showNum(cost))
 				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]))
 			}
+		}
+	}
+}
+
+function updateSkyHTML() {
+	if (elmTab == "sky") {
+		let nextFieldReq = SKY_FIELD_UPGS_REQS.reduce(function(a,c) {
+			if (player.elementary.sky.amount.lt(a)) return new ExpantaNum(a);
+			return ExpantaNum.max(a,c)
+		})
+		if (skyTab == "skyrmions") {
+			let canReset = canSkyReset()
+			tmp.el.skyrmionReset.setClasses({
+				btn: true,
+				locked: !canReset,
+				sky: canReset,
+			})
+			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0))
+			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount))
+			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff))
+		} else if (skyTab == "pions") {
+			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
+			tmp.el.pionAmt.setTxt(showNum(player.elementary.sky.pions.amount))
+			tmp.el.pionGain.setTxt(showNum(tmp.elm.sky.pionGain))
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["pionUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.pions.amount.lt(getFieldUpgCost("pions", id)),
+				})
+				tmp.el["pionUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
+			}
+			tmp.el.pionData.setHTML(pionSel==0?"":("Pion Upgrade &"+GREEK_LETTERS[pionSel]+"; ("+showNum(player.elementary.sky.pions.field[pionSel]||0)+")<br>"+SKY_FIELDS[pionSel].pionDesc+"<br>Currently: "+SKY_FIELDS[pionSel].desc(tmp.elm.sky.pionEff[pionSel])+"<br>Cost: "+showNum(getFieldUpgCost("pions", pionSel))+" Pions"))
+			tmp.el.maxPion.setDisplay(player.elementary.entropy.upgrades.includes(20))
+		} else if (skyTab == "spinors") {
+			tmp.el.nextSpinorUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
+			tmp.el.spinorAmt.setTxt(showNum(player.elementary.sky.spinors.amount))
+			tmp.el.spinorGain.setTxt(showNum(tmp.elm.sky.spinorGain))
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["spinorUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.spinors.amount.lt(getFieldUpgCost("spinors", id)),
+				})
+				tmp.el["spinorUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden")
+			}
+			tmp.el.spinorData.setHTML(spinorSel==0?"":("Spinor Upgrade &"+GREEK_LETTERS[spinorSel]+"; ("+showNum(player.elementary.sky.spinors.field[spinorSel]||0)+")<br>"+SKY_FIELDS[spinorSel].spinorDesc+"<br>Currently: "+SKY_FIELDS[spinorSel].desc(tmp.elm.sky.spinorEff[spinorSel])+"<br>Cost: "+showNum(getFieldUpgCost("spinors", spinorSel))+" Spinors"))
+			tmp.el.maxSpinor.setDisplay(player.elementary.entropy.upgrades.includes(20))
 		}
 	}
 }
@@ -1346,4 +1423,8 @@ function updateHTML() {
 	
 	// Features
 	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "All Features Unlocked!" : tmp.features[tmp.nf].desc);	
+}
+
+function updateHTMLPerSec() {
+	if (player.tab=="elementary"&&elmTab=="theory") updateTheoryTreeHTMLPerSec()
 }

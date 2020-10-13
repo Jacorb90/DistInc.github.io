@@ -120,12 +120,12 @@ function setDropdown(dropdown, els, load=false) {
 			html += el.info + "<br>";
 			for (let x = 1; x <= el.buttons; x++)
 				html +=
-					"<button class='btn tb opt' onclick='" +
+					"<button class='btn tb opt"+"' onclick='" +
 					el["onclick" + x] +
-					"'>" +
+					"' "+">" +
 					el["txt" + x] +
 					"</button> ";
-		} else html += "<button class='btn tb opt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
+		} else html += "<button class='btn tb opt tt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
 		if (load) html += "<br><br>";
 	}
 	dropdown.setHTML(html + "<br><button class='btn tb opt' style='visibility: hidden;'></button>");
@@ -187,7 +187,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
+	if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
+		info += "Skyrmions: "+showNum(new ExpantaNum(sav.elementary.sky.amount))+", Pions: "+showNum(new ExpantaNum(sav.elementary.sky.pions.amount))+", Spinors: "+showNum(new ExpantaNum(sav.elementary.sky.spinors.amount))+", "
+	} else if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
 		info += "Quantum Foam: "+showNum(new ExpantaNum(sav.elementary.foam.amounts[0]))+", "
 		if (sav.elementary.entropy?sav.elementary.entropy.unl:false) {
 			info += "Entropy: "+showNum(new ExpantaNum(sav.elementary.entropy.amount))+", "

@@ -161,28 +161,30 @@ const MODE_EX = {
 	extreme: function (source) {
 		source.rankCheap = new ExpantaNum(source.rankCheap);
 		source.furnace.coal = new ExpantaNum(source.furnace.coal);
+		let fu = source.furnace.upgrades;
 		source.furnace.upgrades = [
-			new ExpantaNum(source.furnace.upgrades[0]),
-			new ExpantaNum(source.furnace.upgrades[1]),
-			new ExpantaNum(source.furnace.upgrades[2]),
-			new ExpantaNum(source.furnace.upgrades[3]||0),
-			new ExpantaNum(source.furnace.upgrades[4]||0),
+			new ExpantaNum(fu[0]),
+			new ExpantaNum(fu[1]),
+			new ExpantaNum(fu[2]),
+			new ExpantaNum(fu[3]||0),
+			new ExpantaNum(fu[4]||0),
 		];
 		source.furnace.enhancedCoal = new ExpantaNum(source.furnace.enhancedCoal||0);
+		let eu = (source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])
 		source.furnace.enhancedUpgrades = [
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[0]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[1]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[2]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[3]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[4]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[5]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[6]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[7]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[8]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[9]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[10]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[11]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[12]||0),
+			new ExpantaNum(eu[0]),
+			new ExpantaNum(eu[1]),
+			new ExpantaNum(eu[2]),
+			new ExpantaNum(eu[3]||0),
+			new ExpantaNum(eu[4]||0),
+			new ExpantaNum(eu[5]||0),
+			new ExpantaNum(eu[6]||0),
+			new ExpantaNum(eu[7]||0),
+			new ExpantaNum(eu[8]||0),
+			new ExpantaNum(eu[9]||0),
+			new ExpantaNum(eu[10]||0),
+			new ExpantaNum(eu[11]||0),
+			new ExpantaNum(eu[12]||0),
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		if (!source.extremeStad) source.extremeStad = []

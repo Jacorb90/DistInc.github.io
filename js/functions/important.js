@@ -49,6 +49,10 @@ function loadGame() {
 	interval = setInterval(function () {
 		simulateTime();
 	}, 50);
+	intervalPerSec = setInterval(function () {
+		autoPerSec();
+		updateHTMLPerSec();
+	}, 1000);
 }
 
 function onVersionChange() {

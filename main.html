@@ -74,6 +74,7 @@
 								Elementary
 							</button>
 						</td>
+						<td><button id="v1.9Endtabbtn" class="btn tb main" onclick="showTab('v1.9End')">Hey you shouldn't be seeing this</button></td>
 					</tr>
 				</table><br>
 			</div>
@@ -179,96 +180,61 @@
 				<button class="btn tb opt" onclick="confirmModes()">Activate Modes</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
-				<table>
-					<tr>
-						<td>
-							<button id="sf" class="btn tb opt ob" onclick="changeOpt('sf', 1)">
-								Significant Figures: X
-							</button>
-						</td>
-						<td>
-							<button id="not" class="btn tb opt ob" onclick="changeOpt('not', 2)">
-								Notation: X
-							</button>
-						</td>
-						<td>
-							<button id="theme" class="btn tb opt ob" onclick="changeOpt('theme', 2)">
-								Theme: X
-							</button>
-						</td>
-						<td>
-							<button id="name" class="btn tb opt ob" onclick="changeOpt('name', 3)">
-								Rename Save
-							</button>
-						</td>
-						<td>
-							<button id="hot" class="btn tb opt ob" onclick="changeOpt('hot', 0)">
-								Hotkeys: ON
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="saveImp" class="btn tb opt ob_t" onclick="changeOpt('saveImp', 2)">
-								Imports: X
-							</button>
-						</td>
-						<td>
-							<button id="autoSave" class="btn tb opt ob_t" onclick="changeOpt('autoSave', 0)">
-								Auto-Save: ON
-							</button>
-						</td>
-						<td>
-							<button id="newst" class="btn tb opt ob_t" onclick="changeOpt('newst', 0)">
-								News Ticker: ON
-							</button>
-						</td>
-						<td>
-							<button id="featPerc" class="btn tb opt ob_t" onclick="changeOpt('featPerc', 2)">
-								Feature Percentage: X
-							</button>
-						</td>
-						<td>
-							<button id="fonts" class="btn tb opt ob_t" onclick="changeOpt('fonts', 2)">
-								Font: X
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="hideAch" class="btn tb opt ob_t" onclick="changeOpt('hideAch', 0)">
-								Hide Completed Ach Rows: OFF
-							</button>
-						</td>
-						<td>
-							<button id="visUpd" class="btn tb opt ob_t" onclick="changeOpt('visUpd', 2)">
-								Visual Updates: X
-							</button>
-						</td>
-						<td>
-							<button id="dcPulse" class="btn tb opt ob_t" onclick="changeOpt('dcPulse', 0)">
-								Dark Circle Pulsing: ON
-							</button>
-						</td>
-						<td>
-							<button id="elc" class="btn tb opt ob_t" onclick="changeOpt('elc', 0)">
-								Elementary Confirmation: ON
-							</button>
-						</td>
-						<td>
-							<button id="hcc" class="btn tb opt ob_t" onclick="changeOpt('hcc', 0)">
-								Exit Hadronic Chall Confirmation: ON
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button class="btn tb opt ob_t" onclick="checkForBeta()">
-								Search for Beta Save
-							</button>
-						</td>
-					</tr>
-				</table>
+				<div class="flexContainer">
+					<div class="flexRow">
+						<button id="sf" class="btn tb opt ob" onclick="changeOpt('sf', 1)">
+							Significant Figures: X
+						</button>
+						<button id="not" class="btn tb opt ob" onclick="changeOpt('not', 2)">
+							Notation: X
+						</button>
+						<button id="fonts" class="btn tb opt ob" onclick="changeOpt('fonts', 2)">
+							Font: X
+						</button>
+						<button id="theme" class="btn tb opt ob" onclick="changeOpt('theme', 2)">
+							Theme: X
+						</button>
+						<button id="name" class="btn tb opt ob" onclick="changeOpt('name', 3)">
+							Rename Save
+						</button>
+					</div><div class="flexRow">
+						<button id="hot" class="btn tb opt ob" onclick="changeOpt('hot', 0)">
+							Hotkeys: ON
+						</button>
+						<button id="newst" class="btn tb opt ob" onclick="changeOpt('newst', 0)">
+							News Ticker: ON
+						</button>
+						<button id="featPerc" class="btn tb opt ob" onclick="changeOpt('featPerc', 2)">
+							Feature Percentage: X
+						</button>
+						<button id="saveImp" class="btn tb opt ob" onclick="changeOpt('saveImp', 2)">
+							Imports: X
+						</button>
+						<button id="autoSave" class="btn tb opt ob" onclick="changeOpt('autoSave', 0)">
+							Auto-Save: ON
+						</button>
+					</div><div class="flexRow">
+						<button id="hideAch" class="btn tb opt ob" onclick="changeOpt('hideAch', 0)">
+							Hide Completed Ach Rows: OFF
+						</button>
+						<button id="visUpd" class="btn tb opt ob" onclick="changeOpt('visUpd', 2)">
+							Visual Updates: X
+						</button>
+						<button id="dcPulse" class="btn tb opt ob" onclick="changeOpt('dcPulse', 0)">
+							Dark Circle Pulsing: ON
+						</button>
+						<button id="elc" class="btn tb opt ob" onclick="changeOpt('elc', 0)">
+							Elementary Confirmation: ON
+						</button>
+						<button id="hcc" class="btn tb opt ob" onclick="changeOpt('hcc', 0)">
+							Exit Hadronic Chall Confirmation: ON
+						</button>
+					</div><div class="flexRow">
+						<button class="btn tb opt ob" onclick="checkForBeta()">
+							Search for Beta Save
+						</button>
+					</div>
+				</div>
 				<br />
 				<div class="dropdown" style="z-index: 10"><div id="dropDown" class="dropdown-content"></div></div>
 			</div>
@@ -285,22 +251,54 @@
 					href="key.html"
 					target="_blank"
 					>Distances</a
-				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>
+				>&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 0" widetooltip="">Hotkeys</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.patreon.com/Jacorb90?fan_landing=true" target="_blank">Donate</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
-			Best-Ever Distance: <span id="best"></span><br>
-			Best-Ever Velocity: <span id="bestV"></span><br>
-			Best-Ever Acceleration: <span id="bestA"></span><br>
-			<span id="maxEnd"></span><br>
-			<span id="maxEP"></span><br><br>
-			<div id="scaleStatDiv" align="center" style="min-width: 100%;">
-				<b>Scaling Levels</b><br><br>
-				<span id="scaledStat">Scaled</span>&nbsp;
-				<span id="superscaledStat">Superscaled</span>&nbsp;
-				<span id="hyperStat">Hyper</span>&nbsp;
-				<span id="atomicStat">Atomic</span>
+			<div class="band">
+				<table>
+					<tr>
+						<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+					</tr>
+					<tr>
+						<td>
+							<button id="mainStatsbtn" class="btn tb rckt" onclick="showStatTab('mainStats')">
+								Main
+							</button>
+						</td>
+						<td>
+							<button id="scalingsbtn" class="btn tb rckt" onclick="showStatTab('scalings')">
+								Scalings
+							</button>
+						</td>
+						<td>
+							<button id="rankTiersbtn" class="btn tb rckt" onclick="showStatTab('rankTiers')">
+								Rank/Tier Rewards
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="mainStats" class="stattab">
+				Best-Ever Distance: <span id="best"></span><br>
+				Best-Ever Velocity: <span id="bestV"></span><br>
+				Best-Ever Acceleration: <span id="bestA"></span><br>
+				<span id="maxEnd"></span><br>
+				<span id="maxEP"></span><br><br>
+			</div><div id="scalings" class="stattab" style="display: none;">
+				<div align="center" style="min-width: 100%;">
+					<b>Scaling Levels</b><br><br>
+					<span id="scaledStat">Scaled</span>&nbsp;
+					<span id="superscaledStat">Superscaled</span>&nbsp;
+					<span id="hyperStat">Hyper</span>&nbsp;
+					<span id="atomicStat">Atomic</span>
+				</div>
+			</div><div id="rankTiers" class="stattab" style="display: none;">
+				<div class="flexContainer">
+					<div id="rankStats"></div>
+					<div id="tierStats"></div>
+				</div>
 			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
@@ -743,7 +741,7 @@
 				<button id="robotToggle" class="btn rckt" onclick="toggleRobot(player.automation.open)"></button>
 			</div>
 			<br />
-			<div id="automator"></div>
+			<div id="automator" class="flexRow"></div>
 		</div>
 		<div id="tr" class="tab" style="display: none;">
 			<br /><button
@@ -1180,6 +1178,11 @@
 						<td>
 							<button id="foamtabbtn" class="btn tb foam main" onclick="tmp.elm.showTab('foam')">
 								Quantum Foam
+							</button>
+						</td>
+						<td>
+							<button id="skytabbtn" class="btn tb sky main" onclick="tmp.elm.showTab('sky')">
+								Skyrmions
 							</button>
 						</td>
 					</tr>
@@ -1903,11 +1906,87 @@
 							<td><button id="entropy7" class="btn locked" onclick="buyEntropyUpg(7)" style="min-height: 100px;">&Omega; Particles are stronger based on your Hadrons<br>Cost: <span id="entropyCost7" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff7" style="color: black;"></span>% stronger</button></td>
 							<td><button id="entropy8" class="btn locked" onclick="buyEntropyUpg(8)" style="min-height: 100px;">Accelerons & Inflatons boost Entropy gain<br>Cost: <span id="entropyCost8" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff8" style="color: black;"></span>x</button></td>
 						</tr>
+						<tr>
+							<td><button id="entropy9" class="btn locked" onclick="buyEntropyUpg(9)" style="min-height: 125px;">Skyrmions make &Omega; Particles require less Entropy<br>Cost: <span id="entropyCost9" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff9" style="color: black;"></span>x less</button></td>
+							<td><button id="entropy10" class="btn locked" onclick="buyEntropyUpg(10)" style="min-height: 125px;">Unlock Auto-Entropy, and gain 50% more Entropy (kept on Skyrmion reset)<br>Cost: <span id="entropyCost10" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy11" class="btn locked" onclick="buyEntropyUpg(11)" style="min-height: 125px;">Unlock Auto-Entropy Upgrades, and all Foam types are gained 10x faster (kept on Skyrmion reset)<br>Cost: <span id="entropyCost11" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy12" class="btn locked" onclick="buyEntropyUpg(12)" style="min-height: 125px;">Gain 1% of Elementary Particle, Fermion, & Boson gain every second (kept on Skyrmion reset)<br>Cost: <span id="entropyCost12" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy13" class="btn locked" onclick="buyEntropyUpg(13)" style="min-height: 150px;">Buying Theory Tree Upgrades does not spend Theory Points, and the last Inflaton effect does not become extremely softcapped (kept on Skyrmion reset)<br>Cost: <span id="entropyCost13" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy14" class="btn locked" onclick="buyEntropyUpg(14)" style="min-height: 150px;">Entropy boosts Skyrmion gain<br>Cost: <span id="entropyCost14" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff14" style="color: black;"></span>x</button></td>
+							<td><button id="entropy15" class="btn locked" onclick="buyEntropyUpg(15)" style="min-height: 150px;">Gauge Force's effect uses a much better formula<br>Cost: <span id="entropyCost15" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy16" class="btn locked" onclick="buyEntropyUpg(16)" style="min-height: 150px;">Pions & Spinors make each other increase in cost 75% less (kept on Skyrmion reset)<br>Cost: <span id="entropyCost16" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy17" class="btn locked" onclick="buyEntropyUpg(17)" style="min-height: 200px;">Unlock Auto-Theoretical Boosters, and Theoretical Boosters give many more Theory Points, but Theoretical Boosters are reset on Skyrmion reset (kept on Skyrmion reset)<br>Cost: <span id="entropyCost17" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy18" class="btn locked" onclick="buyEntropyUpg(18)" style="min-height: 200px;">The Primary String effect is raised to the power of 5<br>Cost: <span id="entropyCost18" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy19" class="btn locked" onclick="buyEntropyUpg(19)" style="min-height: 200px;">The Perk Accelerator never goes Weakened or Broken, and the Hadron effect interval is smaller based on your Hadrons<br>Cost: <span id="entropyCost19" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff19" style="color: black;"></span>th root</button></td>
+							<td><button id="entropy20" class="btn locked" onclick="buyEntropyUpg(20)" style="min-height: 200px;">The first Inflaton effect uses a better formula, Pions & Spinors do not make each other increase in cost, and you can buy max Pion/Spinor Fields (kept on Skyrmion reset)<br>Cost: <span id="entropyCost20" style="color: black;"></span> Entropy</button></td>
+						</tr>
 					</table>
 					<br><br><br><br><br>
 				</div>
 			</div>
+			<div id="sky" class="elmtab" style="display: none;">
+				<div class="band bl">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button id="skyrmionstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('skyrmions')">
+									Skyrmions
+								</button>
+							</td>
+							<td>
+								<button id="pionstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('pions')">
+									Pions
+								</button>
+							</td>
+							<td>
+								<button id="spinorstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('spinors')">
+									Spinors
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><br>
+				<div id="skyrmions" class="skyTab">
+					Destabilizing the topology of your multiverse will force an Entropy & Elementary reset, and will also reset your Purge Power, Elementary Particles, Fermions, Bosons, Photon & Gluon Upgrades, Supersymmetric Particles, Theory Tree Upgrades, Strings (and Entangled Strings), Preon amount, Acceleron amount, Inflatons, Hadrons, Entropy, & Entropy Upgrades (except the first one).<br><br>
+					<button id="skyrmionReset" class="btn locked" onclick="skyrmionReset()">Destabilize the topology of your multiverse to gain <span id="skyrmionGain"></span> Skyrmions</button><br><br>
+					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br><br>
+					<button onclick="respecBothFields()" class="btn sky">Reset Pion & Spinor Fields</button>
+				</div>
+				<div id="pions" class="skyTab" style="display: none;">
+					You have <span id="pionAmt" class="skytxt"></span> Pions (+<span id="pionGain"></span>/sec)<br><br>
+					<div id="pionData" class="bandBig lb"></div><br>
+					<div id="nextPionUpgs"></div><br>
+					<button onclick="respecField('pions')" class="btn sky">Reset Pion Field</button>&nbsp;&nbsp;<button id="maxPion" onclick="maxField('pions')" class="btn sky">Max Pion Field</button><br><br>
+					<button onclick="importField('pions')" class="btn sky">Import Pion Field</button>&nbsp;&nbsp;<button onclick="exportField('pions')" class="btn sky">Export Pion Field</button><br><br>
+					<div id="pionField"></div>
+				</div>
+				<div id="spinors" class="skyTab" style="display: none;">
+					You have <span id="spinorAmt" class="skytxt"></span> Spinors (+<span id="spinorGain"></span>/sec)<br><br>
+					<div id="spinorData" class="bandBig lb"></div><br>
+					<div id="nextSpinorUpgs"></div><br>
+					<button onclick="respecField('spinors')" class="btn sky">Reset Spinor Field</button>&nbsp;&nbsp;<button id="maxSpinor" onclick="maxField('spinors')" class="btn sky">Max Spinor Field</button><br><br>
+					<button onclick="importField('spinors')" class="btn sky">Import Spinor Field</button>&nbsp;&nbsp;<button onclick="exportField('spinors')" class="btn sky">Export Spinor Field</button><br><br>
+					<div id="spinorField"></div>
+				</div>
+				<br><br><br><br><br>
+			</div>
 		</div>
+	</div>
+	<div id="v1.9End" class="tab" style="display: none;">
+		<br>Dear Player,<br><br><br>Welp you've done it, you've reached the end of the multiverse!<br>
+		Sadly, more content won't be available for the time being...<br>
+		For now, just try another mode or something, I dunno.<br>
+		Thanks for playing my game!<br>
+		From Jacorb<br><br><br><br><br>
+		P.S: If you're wondering why I put this message here, it's because it's prep for future content and because v2.0 may not be out for a while...
 	</div>
 	
 	<!-- Links -->
@@ -1961,6 +2040,14 @@
 	<script type="text/javascript" src="js/game.js"></script>
 
 	<!-- File Data -->
+	<script type="text/javascript" src="js/main/future_content/setup.js"></script>
+	<script type="text/javascript" src="js/main/elementary/bosons.js"></script>
+	<script type="text/javascript" src="js/main/elementary/elm.js"></script>
+	<script type="text/javascript" src="js/main/elementary/fermions.js"></script>
+	<script type="text/javascript" src="js/main/elementary/foam.js"></script>
+	<script type="text/javascript" src="js/main/elementary/hadronic_challenges.js"></script>
+	<script type="text/javascript" src="js/main/elementary/skyrmion.js"></script>
+	<script type="text/javascript" src="js/main/elementary/theory.js"></script>
 	<script type="text/javascript" src="js/main/elements.js"></script>
 	<script type="text/javascript" src="js/main/options.js"></script>
 	<script type="text/javascript" src="js/main/nerfs.js"></script>
@@ -1978,7 +2065,6 @@
 	<script type="text/javascript" src="js/main/pathogens.js"></script>
 	<script type="text/javascript" src="js/main/dc.js"></script>
 	<script type="text/javascript" src="js/main/inf.js"></script>
-	<script type="text/javascript" src="js/main/elm.js"></script>
 	<script type="text/javascript" src="js/main/misc.js"></script>
 	<script type="text/javascript" src="js/main/timeSpeed.js"></script>
 	<script type="text/javascript" src="js/main/hd.js"></script>

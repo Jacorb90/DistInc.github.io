@@ -120,34 +120,7 @@ function updateEnergyLoss(){
 	} 
 }
 
-function updateTempHikersDream() {
-	if (!tmp.hd) tmp.hd = {}
-	
-	tmp.hd.superEn = player.genLvl.pow(2).times(player.geners).floor()
-	tmp.hd.superEnEff = tmp.hd.superEn.plus(1).pow(player.geners).log10().plus(1).log10().plus(1).pow(2).times(player.geners)
-	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1).times((tmp.hd.enerUpgs&&player.energyUpgs.includes(26)) ? tmp.hd.enerUpgs[26].div(100).plus(1) : 1)
-	
-	if (tmp.hd.futureIncl?tmp.hd.futureIncl.length>0:false) {
-		tmp.hd.incline = tmp.hd.futureIncl[0]
-		tmp.hd.futureIncl.shift();
-	} else tmp.hd.incline = baseIncline(player.distance)
-	tmp.hd.inclinePow = new ExpantaNum(1)
-	if (player.energyUpgs.includes(4) && tmp.hd.enerUpgs) tmp.hd.inclinePow = tmp.hd.inclinePow.times(tmp.hd.enerUpgs[4])
-	let incl = tmp.hd.incline
-	if (incl.gte(89.95)) incl = ExpantaNum.sub(90, ExpantaNum.div(90, ExpantaNum.div(90, ExpantaNum.sub(90, incl)).pow(2).div(1800)))
-	tmp.hd.inclineRed = ExpantaNum.sub(90, incl).div(90).root(tmp.hd.inclinePow)
-	updateEnergyLoss()
-	
-	tmp.hd.totalMotive = getBaseMotive()
-	if (player.energyUpgs.includes(3) && tmp.hd.enerUpgs) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.enerUpgs[3])
-	if (player.inf.endorsements.gte(10)) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.superEnEff)
-	tmp.hd.motive = tmp.hd.totalMotive.sub(player.spentMotive).sub(player.spentMotiveGens).max(0);
-	if (player.energyUpgs.includes(24)) tmp.hd.motive = tmp.hd.motive.max(tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : 0)
-	tmp.hd.enEff = player.energy.div(100)
-	if (player.energyUpgs.includes(1) && tmp.hd.enerUpgs) tmp.hd.enEff = tmp.hd.enEff.times(tmp.hd.enerUpgs[1])
-
-	tmp.hd.simEn = player.energy.min(getEnergyLim()).max(tmp.hd.superEn)
-	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
+function calcEnergyUpgrades(){
 	if (!tmp.hd.enerUpgs) tmp.hd.enerUpgs = {}
 	tmp.hd.enerUpgs[1] = getOptimizationOneEffect()
 	if (tmp.hd.enerUpgs[1].gte("1e2500")) tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].logBase("1e2500").pow(825).times("1e2500").min(tmp.hd.enerUpgs[1])
@@ -181,6 +154,39 @@ function updateTempHikersDream() {
 	tmp.hd.enerUpgs[24] = player.bestMotive.sqrt().times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[25] = player.bestMotive.plus(1).log10().plus(1).log10().plus(1).log10().plus(1).times(tmp.hd.superEnEff2)
 	tmp.hd.enerUpgs[26] = player.bestMotive.plus(1).times(10).slog(10).max(1).sub(1).times(12)
+}
+
+function updateTempHikersDream() {
+	if (!tmp.hd) tmp.hd = {}
+	
+	tmp.hd.superEn = player.genLvl.pow(2).times(player.geners).floor()
+	tmp.hd.superEnEff = tmp.hd.superEn.plus(1).pow(player.geners).log10().plus(1).log10().plus(1).pow(2).times(player.geners)
+	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1).times((tmp.hd.enerUpgs&&player.energyUpgs.includes(26)) ? tmp.hd.enerUpgs[26].div(100).plus(1) : 1)
+	
+	if (tmp.hd.futureIncl?tmp.hd.futureIncl.length>0:false) {
+		tmp.hd.incline = tmp.hd.futureIncl[0]
+		tmp.hd.futureIncl.shift();
+	} else tmp.hd.incline = baseIncline(player.distance)
+	tmp.hd.inclinePow = new ExpantaNum(1)
+	if (player.energyUpgs.includes(4) && tmp.hd.enerUpgs) tmp.hd.inclinePow = tmp.hd.inclinePow.times(tmp.hd.enerUpgs[4])
+	let incl = tmp.hd.incline
+	if (incl.gte(89.95)) incl = ExpantaNum.sub(90, ExpantaNum.div(90, ExpantaNum.div(90, ExpantaNum.sub(90, incl)).pow(2).div(1800)))
+	tmp.hd.inclineRed = ExpantaNum.sub(90, incl).div(90).root(tmp.hd.inclinePow)
+	updateEnergyLoss()
+	
+	tmp.hd.totalMotive = getBaseMotive()
+	if (player.energyUpgs.includes(3) && tmp.hd.enerUpgs) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.enerUpgs[3])
+	if (player.inf.endorsements.gte(10)) tmp.hd.totalMotive = tmp.hd.totalMotive.times(tmp.hd.superEnEff)
+	tmp.hd.motive = tmp.hd.totalMotive.sub(player.spentMotive).sub(player.spentMotiveGens).max(0);
+	if (player.energyUpgs.includes(24)) tmp.hd.motive = tmp.hd.motive.max(tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : 0)
+	
+	tmp.hd.enEff = player.energy.div(100)
+	if (player.energyUpgs.includes(1) && tmp.hd.enerUpgs) tmp.hd.enEff = tmp.hd.enEff.times(tmp.hd.enerUpgs[1])
+
+	tmp.hd.simEn = player.energy.min(getEnergyLim()).max(tmp.hd.superEn)
+	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
+
+	calcEnergyUpgrades()
 	
 	tmp.hd.energyGen = ExpantaNum.pow(2, player.genLvl.times(player.energy.plus(1).logBase(1.004).sqrt()).sqrt()).sub(1).times(player.geners)
 }

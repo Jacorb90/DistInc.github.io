@@ -7,6 +7,7 @@
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
 	--news-right-start: -10%;
+	--foamcol: #d3e8cc;
 }
 
 * {
@@ -20,8 +21,7 @@
 	outline: none;
 }
 
-*:not(span),
-*:not(div) {
+*:not(span) *:not(div) *:not(label) {
 	color: var(--plaintxt);
 }
 
@@ -449,21 +449,33 @@ table {
 }
 
 .dropdown {
-	position: relative;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	vertical-align: center;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	pointer-events: none;
 	display: inline-block;
 }
 
 .dropdown-content {
 	display: none;
 	position: absolute;
+	top: 0px;
+	left: 0px;
 	background-color: #f1f1f1;
 	min-height: 50px;
-	max-height: 150px;
+	max-height: 400px;
 	min-width: 200px;
 	max-width: 200px;
 	background-color: grey;
+	pointer-events: auto;
 	z-index: 1;
 	overflow-y: auto;
+	border: 1px solid black;
 }
 
 .dropdown-content button {
@@ -473,17 +485,24 @@ table {
 .dropdown-content2 {
 	display: none;
 	position: absolute;
+	align-items: center;
+	top: 425px;
 	background-color: #f1f1f1;
-	min-height: 400px;
+	min-height: 100px;
 	max-height: 400px;
 	width: 100%;
 	background-color: grey;
+	pointer-events: auto;
 	z-index: 1;
 	overflow-y: auto;
 }
 
 .dropdown-content2 button {
 	display: block;
+}
+
+.tt {
+	width: 80%;
 }
 
 .btn.dark {
@@ -765,7 +784,7 @@ table {
 }
 
 #automator {
-	background-color: #a8a8a8;
+	background-color: #cccccc;
 }
 
 .btn.perk {
@@ -1508,13 +1527,9 @@ table {
 }
 
 .ob {
-	min-height: 35px;
+	min-height: 75px;
 	min-width: 100px;
-}
-
-.ob_t {
-	min-height: 50px;
-	min-width: 100px;
+	margin: 5px;
 }
 
 .btn.hc {
@@ -1607,7 +1622,7 @@ table {
 }
 
 .foamtxt {
-	color: #d3e8cc;
+	color: var(--foamcol);
 	font-size: 20px;
 }
 
@@ -1619,6 +1634,144 @@ table {
 	color: #dbaca9;
 	font-size: 20px;
 	animation: entropy 8s ease infinite;
+}
+
+.btn.sky {
+	box-shadow: 3px 4px 0px 0px #6f5485;
+	background: none;
+	background-color: #a875d1;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: #33174a;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #8e57ba;
+	transition-duration: 0.5s;
+}
+
+.btn.sky:hover {
+	background: none;
+	background-color: #e7cce8;
+	box-shadow: 3px 4px 0px 0px #e7cce8;
+	text-shadow: none;
+	color: black;
+}
+
+.btn.sky:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.skytxt {
+	color: #a875d1;
+	text-shadow: 1px 0px 0px #8e57ba;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.hexContainer {
+	width: 30px;
+	min-width: 30px; 
+	max-width: 30px; 
+}
+
+.hexBtn {
+	position: relative;
+	width: 30px; 
+	min-width: 30px; 
+	max-width: 30px; 
+	height: 17.321px;
+	background-color: #a875d1;
+	margin: 8.660px 0;
+	cursor: pointer;
+}
+
+.hexBtn:before,
+.hexBtn:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+}
+
+.hexBtn:before {
+	bottom: 100%;
+	left: 0;
+	border-bottom: 8.660px solid #a875d1;
+}
+
+.hexBtn:after {
+	top: 100%;
+	left: 0;
+	width: 0;
+	border-top: 8.660px solid #a875d1;
+}
+
+.hexBtn.locked {
+	cursor: not-allowed;
+	background-color: #c62d1f;
+}
+
+.hexBtn.locked:before {
+	border-bottom: 8.660px solid #c62d1f;
+}
+
+.hexBtn.locked:after {
+	border-top: 8.660px solid #c62d1f;
+}
+
+.flexContainer {
+	display: flex !important;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.flexRow {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.automator {
+	width: 180px;
+	height: 90px;
+	border: 2px solid black;
+	border-radius: 2px;
+	background-color: #a8a8a8;
+	color: black;
+	margin: 0 auto;
+	padding: 25px 25px 25px 25px;
+	margin-top: 12.5px;
+	margin-bottom: 12.5px;
+}
+
+.rtReward {
+	min-width: 300px;
+	max-width: 300px;
+	min-height: 50px;
+	border: 1px solid var(--plaintxt);
+}
+
+.flexTopRow {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	max-width: 100%;
+	margin: 0 auto;
 }
 
 @keyframes grosstxt {
