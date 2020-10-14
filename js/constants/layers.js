@@ -30,7 +30,7 @@ const LAYER_RESETS_EXTRA = {
 	rf: [],
 	collapse: ["energy", "canRefill", "rankCheap", "furnace"],
 	inf: ["energy", "canRefill", "rankCheap", "furnace", "activeFC"],
-	elementary: ["energy", "canRefill", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
+	elementary: ["energy", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
 };
 
 const LAYER_REQS = {

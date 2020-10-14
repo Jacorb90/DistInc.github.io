@@ -33,6 +33,7 @@ function addZeroes(orig, num, digits, roundWhole=false) {
 	if (roundWhole && result.includes(".") && result[result.length-1]=="0") {
 		while (result[result.length-1]=="0") result = result.substring(0, result.length-1);
 	}
+	if (result[result.length-1]==".") result = result.substring(0, result.length-1);
 	return result
 }
 

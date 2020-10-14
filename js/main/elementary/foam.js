@@ -82,7 +82,7 @@ function updateTempQuantumFoam() {
 }
 
 function gainFoam(x, gain) {
-	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], gain).max(0)
+	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], adjustGen(gain, "foam")).max(0)
 	if (isNaN(player.elementary.foam.amounts[x].array[0])) player.elementary.foam.amounts[x] = new ExpantaNum(0);
 }
 

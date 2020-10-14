@@ -31,18 +31,28 @@ function setElementaryResetFunction(){
 		if (tmp.elm.bos.hasHiggs("0;0;0")) {
 			player.tr.upgrades = prev.tr.upgrades
 			player.automation.unl = true
+			if (modeActive("extreme")) player.furnChalls = prev.furnChalls
 		}
 		if (tmp.elm.bos.hasHiggs("0;0;1")) {
 			player.inf.endorsements = new ExpantaNum(10)
 			player.inf.unl = true
 		}
-		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
+		if (tmp.elm.bos.hasHiggs("3;0;0")) {
+			player.inf.stadium.completions = prev.inf.stadium.completions
+			if (modeActive("extreme")) player.extremeStad = prev.extremeStad
+		}
 		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
 		if (player.elementary.times.gte(3)) {
 			player.pathogens.unl = true
 			player.dc.unl = true
 		}
 		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
+			
+		// Extreme Mode
+		
+		if (modeActive("extreme")) {
+			player.magma.done = false;
+		}
 		
 		// Bugfixes
 		infTab = "infinity"
@@ -69,6 +79,8 @@ function updateElementaryLayer() {
 		if (tmp.ach[172].has) exp = exp.plus(ExpantaNum.sub(.5, ExpantaNum.div(.5, player.elementary.times.plus(1).logBase(1e3).times(.2).plus(1))))
 		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(exp).times(ExpantaNum.pow(tmp.elm.softcap, ExpantaNum.sub(1, exp)))
 		if (player.elementary.foam.unl && tmp.elm.qf) gain = gain.times(tmp.elm.qf.boost12) // not affected by softcap hehe
+	
+		if (modeActive("extreme")) gain = gain.div(3).plus(gain.gte(1)?1:0)
 		return gain.floor();
 	});
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
@@ -233,8 +245,8 @@ function elTick(diff) {
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(player.elementary.particles.times(diff).div(100))
 	}
 	if (player.elementary.sky.unl) {
-		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(tmp.elm.sky.pionGain.times(diff));
-		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(tmp.elm.sky.spinorGain.times(diff));
+		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(adjustGen(tmp.elm.sky.pionGain.times(diff), "sky"));
+		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(adjustGen(tmp.elm.sky.spinorGain.times(diff), "sky"));
 	}
 }
 

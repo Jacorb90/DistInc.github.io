@@ -114,7 +114,7 @@ function darkCoreAutoTick(){
 
 function robotAutoTick(){
 	if (player.automators["robots"]) {
-		if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
+		if (!modeActive("extreme")) if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
 		let robot = tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]]
 		if (!robot.unl && player.automation.scraps.gte(ROBOT_REQS[robot.name])) robot.btn()
 		if (robot.unl) tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]].maxAll(true)

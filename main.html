@@ -410,6 +410,11 @@
 								Enhanced Furnace
 							</button>
 						</td>
+						<td>
+							<button id="magmatabbtn" class="btn tb magma main" onclick="showFurnaceTab('magma')">
+								Magma Search
+							</button>
+						</td>
 					</tr>
 				</table><br>
 			</div><br>
@@ -510,7 +515,7 @@
 								id="efnu1"
 								class="btn locked"
 								onclick="tmp.fn.enh.upgs[1].buy()"
-								style="min-height: 100px; max-height: 100px; font-size: 10px"
+								style="min-height: 100px; max-height: 100px; font-size: 9px"
 							>
 								Multiply Enhanced Coal gain by <span id="efnu1eff"></span> (before Extreme Mode reduction, boosted by Coal and Endorsements)<br />Cost:
 								<span id="efnu1cost"></span> Enhanced Coal<br /><span id="efnu1name"></span>Level:
@@ -684,6 +689,11 @@
 					</tr>
 				</table><br><br>
 				<span id="moltBr">Your Enhanced Coal has granted you <span id="moltBrAmt" class="char"></span> Molten Bricks, which boost Pathogen gain & Enhanced Coal gain by <span id="moltBrEff" class="char"></span>x, and boost Knowledge gain by <span id="moltBrEff2" class="char"></span>x</span><br><br>
+			</div>
+			<div id="magma" class="furnaceTab" style="display: none;">
+				<br><br><button id="magmaSearch" class="btn locked" onclick="magmaSearch()" style="min-height: 150px; max-height: 150px;"><h2>Search for Magma</h2><br>Req: <span id="magmaReq"></span> Enhanced Coal</button><br><br>
+				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Coal & Enhanced Coal Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
+				Note: You can only search for Magma once per Elementary, and this does not reset on Elementary reset.
 			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
@@ -2070,6 +2080,7 @@
 	<script type="text/javascript" src="js/main/extreme/rankCheap.js"></script>
 	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
 	<script type="text/javascript" src="js/main/extreme/stadium.js"></script>
+	<script type="text/javascript" src="js/main/extreme/magma.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>

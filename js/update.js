@@ -365,7 +365,10 @@ document.onkeydown = function(e) {
 			break;
 		case 69: // Nice.
 			if (shiftDown && TABBTN_SHOWN.elementary()) tmp.elm.layer.reset()
-			else if (TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10)) tmp.inf.layer.reset()
+			else {
+				if (infActive) skipInfAnim();
+				else if (TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10)) tmp.inf.layer.reset();
+			}
 			break;
 		case 70: 
 			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset()

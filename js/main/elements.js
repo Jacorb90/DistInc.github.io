@@ -717,6 +717,20 @@ function updateEnhanceFurnace(){
 	}
 }
 
+function updateMagma() {
+	if (fnTab == "magma") {
+		let req = getMagmaReq();
+		tmp.el.magmaSearch.setClasses({
+			btn: true,
+			locked: player.magma.done||player.furnace.enhancedCoal.lt(req),
+			magma: !(player.magma.done||player.furnace.enhancedCoal.lt(req)),
+		})
+		tmp.el.magmaReq.setTxt(showNum(req))
+		tmp.el.magmaAmt.setTxt(showNum(player.magma.amount))
+		tmp.el.magmaEff.setTxt(showNum(tmp.fn.magma.eff.sub(1).times(100)))
+	}
+}
+
 function updateOverallExtremeModeHTML(){
 	tmp.el.rankCheapDiv.setDisplay(modeActive('extreme'));
 	if (modeActive("extreme")) {
@@ -725,6 +739,7 @@ function updateOverallExtremeModeHTML(){
 		if (player.tab=="furnace") {
 			updateNormalFurnace() 
 			updateEnhanceFurnace()
+			updateMagma()
 		}
 	}
 }
@@ -929,7 +944,7 @@ function updateScalarBosonsHTML(){
 			let data = Object.values(HIGGS_UPGS)[i]
 			tmp.el["higgs"+name].setDisplay(data.unl())
 			tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)})
-			tmp.el["higgs"+name].setHTML(data.desc+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
+			tmp.el["higgs"+name].setHTML((HIGGS_UPGS_EXTR_DESCS[name]?HIGGS_UPGS_EXTR_DESCS[name]:data.desc)+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
 		}
 		tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x")
 		tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")
@@ -1255,7 +1270,7 @@ function updateQFHTML() {
 		}
 		for (let x=1;x<=5;x++) if (foamTab=="qf1") {
 			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
-			tmp.el["qf"+x+"Gain"].setTxt(formatGain(player.elementary.foam.amounts[x-1], tmp.elm.qf.gain[x]))
+			tmp.el["qf"+x+"Gain"].setTxt(formatGain(player.elementary.foam.amounts[x-1], tmp.elm.qf.gain[x], "foam"))
 			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
 			for (let i=1;i<=3;i++) {
 				let cost = getQFBoostCost(x, i)
@@ -1333,7 +1348,7 @@ function updateSkyHTML() {
 		} else if (skyTab == "pions") {
 			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
 			tmp.el.pionAmt.setTxt(showNum(player.elementary.sky.pions.amount))
-			tmp.el.pionGain.setTxt(formatGain(player.elementary.sky.pions.amount, tmp.elm.sky.pionGain))
+			tmp.el.pionGain.setTxt(formatGain(player.elementary.sky.pions.amount, tmp.elm.sky.pionGain, "sky"))
 			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
 				tmp.el["pionUpg"+id].setClasses({
 					hexBtn: true,
@@ -1346,7 +1361,7 @@ function updateSkyHTML() {
 		} else if (skyTab == "spinors") {
 			tmp.el.nextSpinorUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
 			tmp.el.spinorAmt.setTxt(showNum(player.elementary.sky.spinors.amount))
-			tmp.el.spinorGain.setTxt(formatGain(player.elementary.sky.spinors.amount, tmp.elm.sky.spinorGain))
+			tmp.el.spinorGain.setTxt(formatGain(player.elementary.sky.spinors.amount, tmp.elm.sky.spinorGain, "sky"))
 			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
 				tmp.el["spinorUpg"+id].setClasses({
 					hexBtn: true,

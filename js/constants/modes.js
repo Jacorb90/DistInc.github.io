@@ -144,6 +144,10 @@ const MODE_VARS = {
 		activeFC: 0,
 		furnChalls: [],
 		extremeStad: [],
+		magma: {
+			done: false,
+			amount: new ExpantaNum(0),
+		},
 	},
 	hikers_dream: {
 		energy: new ExpantaNum(100),
@@ -188,6 +192,12 @@ const MODE_EX = {
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
 		if (!source.extremeStad) source.extremeStad = []
+		
+		let mag = source.magma||{}
+		source.magma = {
+			done: mag.done||false,
+			amount: new ExpantaNum(mag.amount||0),
+		}
 		return source;
 	},
 	hikers_dream: function(source) {

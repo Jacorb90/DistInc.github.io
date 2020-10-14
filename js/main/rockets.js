@@ -38,7 +38,7 @@ function getRocketGainMult() {
 	if (tmp.ach[44].has) mult = mult.times(1.15);
 	if (tmp.ach[76].has) mult = mult.times(1.02);
 	if (tmp.ach[131].has) mult = mult.times(2);
-	if (modeActive("extreme") && player.rf.gt(0)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[2]));
+	if (modeActive("extreme") && player.rf.gt(0)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[2].times(tmp.fn ? tmp.fn.upgPow : 1)));
 	if (player.rank.gt(100)) mult = mult.times(2);
 	if (player.tr.upgrades.includes(10) && !HCCBA("noTRU")) mult = mult.times(tr10Eff().max(1));
 	if (player.tr.upgrades.includes(28) && !HCCBA("noTRU") && modeActive("extreme")) mult = mult.times(player.furnace.coal.plus(1).pow(0.15));

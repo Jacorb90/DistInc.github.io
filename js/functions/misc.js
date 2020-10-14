@@ -397,15 +397,16 @@ async function showHiddenDiv(data) {
 	document.body.appendChild(resetContainer);
 
 	await sleep(3);
-	document.getElementById("resetContainerBody").style.display = "";
+	if (document.getElementById("resetContainerBody")) document.getElementById("resetContainerBody").style.display = "";
 }
 
-async function closeHiddenDiv() {
+async function closeHiddenDiv(fast=false) {
 	let element = document.getElementById("resetContainer");
 	if (!element) return;
 	document.getElementById("resetContainerBody").style.display = "none";
 	document.getElementById("reset").className = "hiddenDivShrink";
-	await sleep(1.4);
+	if (!fast) await sleep(1.4);
+	if (!element.parentNode) return;
 	element.parentNode.removeChild(element);
 	showContainer = true;
 	updateTemp();

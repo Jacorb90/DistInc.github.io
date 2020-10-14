@@ -1774,6 +1774,46 @@ table {
 	margin: 0 auto;
 }
 
+.btn.magma {
+	box-shadow: 3px 4px 0px 0px black;
+	background: none;
+	background-color: #4d3636;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #784205;
+	transition-duration: 0.5s;
+}
+
+.btn.magma:hover {
+	background: none;
+	background-color: #fa4632;
+}
+
+.btn.magma:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.magmaTxt {
+	background: linear-gradient(to bottom, #fa4632 5%, #4d3636 100%);
+	background-size: 200% auto;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 25px;
+	animation: magmatxt 5s linear infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;
@@ -1952,6 +1992,18 @@ table {
 	100% {
 		transform: scale(100%, 100%);
 	}
+}
+
+@keyframes magmatxt {
+	0% {
+		background-position: 0% 0%;
+	}		
+	50% {
+      background-position: 100% 100%;
+    }
+	100% {
+		background-position: 0% 0%;
+	}	
 }
 
 [tooltip] {

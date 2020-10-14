@@ -155,7 +155,7 @@ function calcDarkCircleCoreEff(){
 }
 
 function updateTempDC() {
-	tmp.dc = {};
+	if (!((modeActive("extreme")||modeActive("hikers_dream"))&&tmp.dc)) tmp.dc = {};
 
 	tmp.dc.lrm = new ExpantaNum(modeActive("extreme") ? 1e-28 : 1);
 

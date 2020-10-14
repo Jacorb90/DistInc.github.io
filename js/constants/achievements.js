@@ -384,7 +384,7 @@ const ACH_DATA = {
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
-		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
+		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% fasterboolean(extreme, and coal & enhanced coal gain is always 100x faster).",
 		132: "The Gauge Force Effect is doubled.",
 		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",

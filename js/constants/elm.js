@@ -49,6 +49,10 @@ const PH_CST_SCLD = {
 
 const GLUON_COLOURS = ["r", "g", "b", "ar", "ag", "ab"];
 
+const HIGGS_UPGS_EXTR_DESCS = {
+	"0;0;0": "Always keep TR Upgrades, the Pathogen Upgrade automator, the Dark Core automator, & Furnace Challenge completions. You also start with Automation unlocked.",
+}
+
 const HIGGS_UPGS = {
 	"0;0;0": {
 		cost: new ExpantaNum(4e4),
