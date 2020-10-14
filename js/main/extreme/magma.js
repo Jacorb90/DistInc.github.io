@@ -18,6 +18,7 @@ function getMagmaReq() {
 
 function magmaSearch() {
 	if (player.magma.done) return;
+	if (player.furnace.enhancedCoal.lt(getMagmaReq())) return;
 	player.magma.amount = player.magma.amount.plus(1);
 	player.magma.done = true;
 }
