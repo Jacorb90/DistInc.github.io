@@ -361,7 +361,6 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) a = a.filter(x => x / 10 <= 13);
 	if (modeActive("na")) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
