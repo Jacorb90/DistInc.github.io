@@ -678,8 +678,9 @@ function updateNormalFurnace(){
 		tmp.el.blueFlameName.setTxt(getScalingName("bf"))
 		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
 		tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
-		for (let i=1;i<=5;i++) {
-			if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
+		for (let i=1;i<=6;i++) {
+			if (i==6) tmp.el["fnc"+i].setDisplay(player.elementary.bosons.scalar.higgs.upgrades.includes("6;0;0"))
+			else if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
 			tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]))
 			tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
 		}
@@ -722,12 +723,23 @@ function updateMagma() {
 		let req = getMagmaReq();
 		tmp.el.magmaSearch.setClasses({
 			btn: true,
-			locked: player.magma.done||player.furnace.enhancedCoal.lt(req),
-			magma: !(player.magma.done||player.furnace.enhancedCoal.lt(req)),
+			locked: player.furnace.enhancedCoal.lt(req),
+			magma: player.furnace.enhancedCoal.gte(req),
 		})
 		tmp.el.magmaReq.setTxt(showNum(req))
 		tmp.el.magmaAmt.setTxt(showNum(player.magma.amount))
 		tmp.el.magmaEff.setTxt(showNum(tmp.fn.magma.eff.sub(1).times(100)))
+		let req2 = getMagmaReformReq();
+		let req2b = getMagmaReformReq2();
+		tmp.el.reformMagma.setClasses({
+			btn: true,
+			locked: player.magma.amount.lt(req2)||player.inf.knowledge.lt(req2b),
+			magma: player.magma.amount.gte(req2)&&player.inf.knowledge.gte(req2b),
+		})
+		tmp.el.magmaReformReq.setTxt(showNum(req2));
+		tmp.el.magmaReformReq2.setTxt(showNum(req2b));
+		tmp.el.rMagmaAmt.setTxt(showNum(player.magma.ref));
+		tmp.el.rMagmaEff.setTxt(showNum(tmp.fn.magma.eff2));
 	}
 }
 

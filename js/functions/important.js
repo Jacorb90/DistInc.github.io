@@ -67,6 +67,7 @@ function simulateTime() {
 }
 
 function modeLoad(resetted) {
+	if (!resetted.includes("extremeStad") && modeActive("extreme")) if (player.activeFC==6) resetted = resetted.filter(x => x!="activeFC")
 	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
 		player.modes
 			.filter(x => Object.keys(MODE_VARS).includes(x))

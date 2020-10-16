@@ -183,6 +183,7 @@ function updateTempFurnace() {
 	if (tmp.fn.bfEff.lt(0.0098)) tmp.fn.bfEff = tmp.fn.bfEff.sqrt().times(Math.sqrt(0.0098));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
 	tmp.fn.upgPow = (player.elementary.times.gt(0) && tmp.fn.magma) ? tmp.fn.magma.eff : new ExpantaNum(1)
+	if (inFC(6)) tmp.fn.upgPow = tmp.fn.upgPow.div(1e5)
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0].times(tmp.fn.upgPow)))
 	if (tmp.fn.enh) if (tmp.fn.enh.unl) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra)).times(tmp.fn.enh.upgPow))
@@ -210,6 +211,10 @@ function updateTempFurnace() {
 	updateFurnaceUpgradeCosts()
 	tmp.fn.bfBase = inFC(4)?3.618:2
 	tmp.fn.bfLB = inFC(4)?160:10
+	if (inFC(6)) {
+		tmp.fn.bfBase = ExpantaNum.pow(tmp.fn.bfBase, 2)
+		tmp.fn.bfLB = ExpantaNum.pow(tmp.fn.bfLB, 3)
+	}
 	tmp.fn.bfReq = ExpantaNum.pow(tmp.fn.bfLB, ExpantaNum.pow(tmp.fn.bfBase, player.furnace.blueFlame).sub(1)).times(1e6);
 	tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(tmp.fn.bfLB).add(1).logBase(tmp.fn.bfBase).add(1);
 	if (scalingActive("bf", player.furnace.blueFlame.max(tmp.fn.bfBulk), "scaled")) {
@@ -230,6 +235,7 @@ function updateTempFurnace() {
 	if (!tmp.fn.enh) tmp.fn.enh = {}
 	tmp.fn.enh.unl = tmp.ach[111].has
 	tmp.fn.enh.upgPow = (player.elementary.times.gt(0) && tmp.fn.magma) ? tmp.fn.magma.eff : new ExpantaNum(1)
+	if (inFC(6)) tmp.fn.enh.upgPow = tmp.fn.enh.upgPow.div(2)
 	tmp.fn.enh.gain = ExpantaNum.pow(1.1, tmp.fn.enh.unl?player.furnace.blueFlame:0).sub(1).times(ExpantaNum.pow(tmp.fn.enh.upg1eff?tmp.fn.enh.upg1eff:1, player.furnace.enhancedUpgrades[0].plus(tmp.fn.enh.upgs?tmp.fn.enh.upgs[1].extra:0).times(tmp.fn.enh.upgPow)))
 	if (tmp.ach[116].has) tmp.fn.enh.gain = tmp.fn.enh.gain.times(ExpantaNum.pow(1.4, player.inf.pantheon.purge.power))
 	if ((tmp.fn.enh.moltBr||new ExpantaNum(0)).gte(1)) tmp.fn.enh.gain = tmp.fn.enh.gain.times(tmp.fn.enh.moltBrEff||1)
@@ -252,8 +258,12 @@ function updateTempFurnace() {
 		12: { base: new ExpantaNum(1e36) },
 		13: { base: new ExpantaNum(1e40) },
 	};
-	tmp.fn.enh.upgs[13].costAdj = new ExpantaNum(0.75)
 	for (let n = 1; n <= 13; n++) {
+		tmp.fn.enh.upgs[n].costAdj = new ExpantaNum(1)
+		if (n==13) tmp.fn.enh.upgs[n].costAdj = new ExpantaNum(0.75);
+		if (FCComp(6)) tmp.fn.enh.upgs[n].costAdj = tmp.fn.enh.upgs[n].costAdj.times(tmp.fn.bfEff.root(100));
+		if (inFC(6)) tmp.fn.enh.upgs[n].costAdj = tmp.fn.enh.upgs[n].costAdj.div(10);
+		
 		tmp.fn.enh.upgs[n].cost = ExpantaNum.pow(
 			tmp.fn.enh.upgs[n].base.div(10).pow(tmp.fn.enh.upgs[n].costAdj||1),
 			player.furnace.enhancedUpgrades[n - 1]
@@ -329,8 +339,10 @@ function updateTempFurnace() {
 	tmp.fn.enh.upg13eff = ExpantaNum.add(60, endMod.div(3).floor().times(10).min(10))
 	tmp.fn.enh.moltBr = player.furnace.enhancedCoal.plus(1).div(1e150).pow(1/150)
 	if (player.furnace.enhancedUpgrades[12].gte(6)) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(player.furnace.enhancedUpgrades[12].times(tmp.fn.enh.upgPow).sub(4).pow(0.6))
-	tmp.fn.enh.moltBrEff = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 27)
-	tmp.fn.enh.moltBrEff2 = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 7)
+	if (player.elementary.times.gt(0) && tmp.fn.magma) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(tmp.fn.magma.eff2)
+	tmp.fn.enh.moltBrEffExp = player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;6")?1.25:1
+	tmp.fn.enh.moltBrEff = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 27).pow(tmp.fn.enh.moltBrEffExp)
+	tmp.fn.enh.moltBrEff2 = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 7).pow(ExpantaNum.pow(tmp.fn.enh.moltBrEffExp, 4))
 	
 	updateTempMagma();
 }
@@ -340,10 +352,14 @@ function startFurnChall(x) {
 	if (player.activeFC==x) {
 		if (FCEnd() && !player.furnChalls.includes(x)) player.furnChalls.push(x)
 		player.activeFC = 0
-		tmp.collapse.layer.reset(true)
+		if (x==6) tmp.elm.layer.reset(true)
+		else tmp.collapse.layer.reset(true)
 	} else {
 		player.activeFC = x
-		tmp.collapse.layer.reset(true)
+		if (x==6) {
+			tmp.elm.layer.reset(true)
+			player.activeFC = x
+		} else tmp.collapse.layer.reset(true)
 	}
 }
 
@@ -355,7 +371,7 @@ function inAnyFC() { return player.activeFC!=0&&modeActive("extreme") }
 
 function inFC(x) { 
 	let active = modeActive("extreme")?(player.activeFC==x):false 
-	if (extremeStadiumActive("cranius")) active = true
+	if (extremeStadiumActive("cranius")&&x<=5) active = true
 	return active
 }
 
@@ -371,6 +387,7 @@ const FC_GOAL = {
 	3: new ExpantaNum(10),
 	4: new ExpantaNum(6),
 	5: new ExpantaNum(12),
+	6: new ExpantaNum(9),
 }
 
 // Furnace Tabs

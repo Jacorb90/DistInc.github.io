@@ -45,7 +45,7 @@ class Layer {
 			}
 		}
 		let prev = transformToEN(player, DEFAULT_START);
-		for (let i = 0; i < LAYER_RESETS[this.name].length; i++)
+		for (let i = 0; i < LAYER_RESETS[this.name].length; i++) 
 			player[LAYER_RESETS[this.name][i]] =
 				DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object &&
 				!(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)

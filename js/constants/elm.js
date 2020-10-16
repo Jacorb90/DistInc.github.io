@@ -169,6 +169,16 @@ const HIGGS_UPGS = {
 		desc: "The softcap to Pathogen Upgrade 1's effect is nerfed, and Pathogen Upgrade 1's formula is better.",
 		unl: function() { return hasDE(3) },
 	},
+	"6;0;0": {
+		cost: new ExpantaNum(5e9),
+		desc: "Unlock a new Furnace Challenge.",
+		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0") },
+	},
+	"0;0;6": {
+		cost: new ExpantaNum(5e9),
+		desc: "Both Molten Brick effects use better formulas.",
+		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0") },
+	},
 }
 
 const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]

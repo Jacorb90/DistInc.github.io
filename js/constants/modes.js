@@ -147,6 +147,7 @@ const MODE_VARS = {
 		magma: {
 			done: false,
 			amount: new ExpantaNum(0),
+			ref: new ExpantaNum(0),
 		},
 	},
 	hikers_dream: {
@@ -197,6 +198,7 @@ const MODE_EX = {
 		source.magma = {
 			done: mag.done||false,
 			amount: new ExpantaNum(mag.amount||0),
+			ref: new ExpantaNum(mag.ref||0),
 		}
 		return source;
 	},

@@ -503,6 +503,7 @@
 						<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 9,999% strength</b><br>Goal: <span id="fnc3goal"></span> Blue Flame<br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker, and Knowledge gain is 3.2x faster.<br><br></td>
 						<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br>Goal: <span id="fnc4goal"></span> Blue Flame<br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.825)<br><br></td>
 						<td id="fnc5" class="furnChall"><br><b>All Coal generation boosts from outside The Furnace is disabled (which includes Time Speed), and Blue Flame is weaker</b><br>Goal: <span id="fnc5goal"></span> Blue Flame<br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 4's effect is increased by 0.0001x for each Furnace Upgrade 1 bought, and unlock Furnace Upgrade 5<br><br></td>
+						<td id="fnc6" class="furnChall"><br><b>Furnace Upgrades are 99.99% weaker, Enhanced Furnace Upgrades are 50% weaker, and Blue Flame & Enhanced Furnace Upgrades cost scale much faster. This challenge forces an Elementary reset instead of a Collapse reset.</b><br>Goal: <span id="fnc6goal"></span> Blue Flame<br><button id="fns6" class="btn fn" onclick="startFurnChall(6)"></button><br><br>Reward: Blue Flame affects Enhanced Furnace Upgrades at a reduced rate<br><br></td>
 					</tr></table>
 				</div>
 			</div>
@@ -691,9 +692,15 @@
 				<span id="moltBr">Your Enhanced Coal has granted you <span id="moltBrAmt" class="char"></span> Molten Bricks, which boost Pathogen gain & Enhanced Coal gain by <span id="moltBrEff" class="char"></span>x, and boost Knowledge gain by <span id="moltBrEff2" class="char"></span>x</span><br><br>
 			</div>
 			<div id="magma" class="furnaceTab" style="display: none;">
-				<br><br><button id="magmaSearch" class="btn locked" onclick="magmaSearch()" style="min-height: 150px; max-height: 150px;"><h2>Search for Magma</h2><br>Req: <span id="magmaReq"></span> Enhanced Coal</button><br><br>
-				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Coal & Enhanced Coal Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
-				Note: You can only search for Magma once per Elementary, and this does not reset on Elementary reset.
+				<br><br><table>
+					<tr>
+						<td><button id="magmaSearch" class="btn locked" onclick="magmaSearch()" style="min-height: 150px; max-height: 150px;"><h2>Search for Magma</h2><br>Req: <span id="magmaReq"></span> Enhanced Coal</button></td>
+						<td><button id="reformMagma" class="btn locked" onclick="reformMagma()" style="min-height: 150px; max-height: 150px;"><h2>Reform your Magma</h2><br>Req: <span id="magmaReformReq"></span> Magma & <span id="magmaReformReq2"></span> Knowledge</button></td>
+					</tr>
+				</table><br><br>
+				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Furnace & Enhanced Furnace Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
+				You have <span id="rMagmaAmt" class="magmaTxt"></span> Reformed Magma, which is multiplying your Molten Bricks by <span id="rMagmaEff" class="magmaTxt"></span>x<br><br>
+				Note: This does not reset on Elementary.
 			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
@@ -1456,9 +1463,13 @@
 						</tr>
 					</table><table>
 						<tr>
+							<td><button id="higgs6;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('6;0;0')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs1;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;0;0')"></button></td>
 							<td class="btn higgsL" style="visibility: hidden;"></td>
 							<td><button id="higgs0;0;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;1')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
+							<td><button id="higgs0;0;6" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;6')"></button></td>
 						</tr>
 					</table><table>
 						<tr>
