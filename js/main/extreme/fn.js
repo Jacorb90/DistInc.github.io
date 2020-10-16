@@ -20,6 +20,14 @@ function updateCoalGain(){
 }
 
 function updateFurnaceUpgradeCosts() {
+	tmp.fn.upgs = {
+		1: { base: new ExpantaNum(20) },
+		2: { base: new ExpantaNum(100) },
+		3: { base: new ExpantaNum(1.5e3) },
+		4: { base: new ExpantaNum(1e100) },
+		5: { base: new ExpantaNum("1e1000") },
+	};
+	
 	for (let n = 1; n <= 5; n++) {
 		tmp.fn.upgs[n].cost = ExpantaNum.pow(
 			tmp.fn.upgs[n].base.div(10),
@@ -170,8 +178,7 @@ function updateFurnaceUpgradeCosts() {
 	}
 }
 
-function updateTempFurnace() {
-	if (!tmp.fn) tmp.fn = {};
+function updateBlueFlameEff() {
 	let adj = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(17) && !HCCBA("noTRU") && modeActive("extreme"))
 		adj = adj.times(player.tr.cubes.plus(1).times(10).slog(10));
@@ -182,8 +189,12 @@ function updateTempFurnace() {
 	tmp.fn.bfEff = ExpantaNum.div(1, player.furnace.blueFlame.plus(tmp.fn.enh?tmp.fn.enh.eff:0).times(adj).div(4).plus(1));
 	if (tmp.fn.bfEff.lt(0.0098)) tmp.fn.bfEff = tmp.fn.bfEff.sqrt().times(Math.sqrt(0.0098));
 	if (inFC(1)) tmp.fn.bfEff = new ExpantaNum(1)
+}
+
+function updateFurnUpgEffs() {
 	tmp.fn.upgPow = (player.elementary.times.gt(0) && tmp.fn.magma) ? tmp.fn.magma.eff : new ExpantaNum(1)
 	if (inFC(6)) tmp.fn.upgPow = tmp.fn.upgPow.div(1e5)
+		
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0].times(tmp.fn.upgPow)))
 	if (tmp.fn.enh) if (tmp.fn.enh.unl) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra)).times(tmp.fn.enh.upgPow))
@@ -192,23 +203,21 @@ function updateTempFurnace() {
 		else tmp.fn4base = new ExpantaNum(0)
 	}
 	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5) || extremeStadiumActive("quantron", 3)) tmp.fn4base = new ExpantaNum(0);
+	
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3].times(tmp.fn.upgPow))))
 	if (extremeStadiumActive("quantron", 4)) tmp.fn1base = tmp.fn1base.sqrt();
-	updateCoalGain()
+}
+
+function updateCoalEff() {
 	tmp.fn.eff = player.furnace.coal.plus(1).log10().pow(0.6).div(5);
 	if (tmp.fn.eff.gte(1)) tmp.fn.eff = tmp.fn.eff.log10().plus(1);
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(1.8);
 	if (extremeStadiumActive("spectra", 2)) tmp.fn.eff = new ExpantaNum(0)
-	tmp.fn.upgs = {
-		1: { base: new ExpantaNum(20) },
-		2: { base: new ExpantaNum(100) },
-		3: { base: new ExpantaNum(1.5e3) },
-		4: { base: new ExpantaNum(1e100) },
-		5: { base: new ExpantaNum("1e1000") },
-	};
-	updateFurnaceUpgradeCosts()
+}
+
+function updateBlueFlameCost() {
 	tmp.fn.bfBase = inFC(4)?3.618:2
 	tmp.fn.bfLB = inFC(4)?160:10
 	if (inFC(6)) {
@@ -224,6 +233,9 @@ function updateTempFurnace() {
 		tmp.fn.bfReq = ExpantaNum.pow(tmp.fn.bfLB, ExpantaNum.pow(tmp.fn.bfBase, player.furnace.blueFlame.pow(exp).div(start.pow(exp.sub(1)))).sub(1)).times(1e6);
 		tmp.fn.bfBulk = player.furnace.coal.div(1e6).max(1).logBase(tmp.fn.bfLB).add(1).logBase(tmp.fn.bfBase).times(start.pow(exp.sub(1))).pow(exp.pow(-1)).add(1);
 	}
+}
+
+function updateBlueFlameReset() {
 	if (!tmp.fn.bfReset) tmp.fn.bfReset = function () {
 		if (player.furnace.coal.lt(tmp.fn.bfReq)) return;
 		player.furnace.coal = new ExpantaNum(0);
@@ -231,18 +243,27 @@ function updateTempFurnace() {
 		player.furnace.blueFlame = player.furnace.blueFlame.plus(1);
 		updateFurnaceUpgradeCosts();
 	};
-	updateFNTabs();
-	if (!tmp.fn.enh) tmp.fn.enh = {}
-	tmp.fn.enh.unl = tmp.ach[111].has
+}
+
+function updateEnhFurnUpgPow() {
 	tmp.fn.enh.upgPow = (player.elementary.times.gt(0) && tmp.fn.magma) ? tmp.fn.magma.eff : new ExpantaNum(1)
 	if (inFC(6)) tmp.fn.enh.upgPow = tmp.fn.enh.upgPow.div(2)
+}
+
+function updateEnhCoalGain() {
 	tmp.fn.enh.gain = ExpantaNum.pow(1.1, tmp.fn.enh.unl?player.furnace.blueFlame:0).sub(1).times(ExpantaNum.pow(tmp.fn.enh.upg1eff?tmp.fn.enh.upg1eff:1, player.furnace.enhancedUpgrades[0].plus(tmp.fn.enh.upgs?tmp.fn.enh.upgs[1].extra:0).times(tmp.fn.enh.upgPow)))
 	if (tmp.ach[116].has) tmp.fn.enh.gain = tmp.fn.enh.gain.times(ExpantaNum.pow(1.4, player.inf.pantheon.purge.power))
 	if ((tmp.fn.enh.moltBr||new ExpantaNum(0)).gte(1)) tmp.fn.enh.gain = tmp.fn.enh.gain.times(tmp.fn.enh.moltBrEff||1)
 	if (tmp.ach[131].has) tmp.fn.enh.gain = tmp.fn.enh.gain.times(100)
+}
+
+function updateEnhCoalEffs() {
 	tmp.fn.enh.eff = tmp.fn.enh.unl?(player.furnace.enhancedCoal.plus(1).log10().plus(1).log10().plus(1).log10().times(5)):new ExpantaNum(0)
 	tmp.fn.enh.eff2exp = ExpantaNum.mul(player.furnace.enhancedUpgrades[12], tmp.fn.enh.upg13eff?tmp.fn.enh.upg13eff:0).times(tmp.fn.enh.upgPow).plus(100)
 	tmp.fn.enh.eff2 = tmp.fn.enh.unl?player.furnace.enhancedCoal.plus(1).pow(tmp.fn.enh.eff2exp):new ExpantaNum(1)
+}
+
+function updateEnhFurnUpgCosts() {
 	if (!tmp.fn.enh.upgs) tmp.fn.enh.upgs = {
 		1: { base: new ExpantaNum(100) },
 		2: { base: new ExpantaNum(250) },
@@ -330,6 +351,9 @@ function updateTempFurnace() {
 			player.furnace.enhancedUpgrades[n - 1] = player.furnace.enhancedUpgrades[n - 1].max(tmp.fn.enh.upgs[n].bulk.floor());
 		};
 	}
+}
+
+function updateEnhFurnUpgEffs() {
 	let endMod = player.inf.endorsements.sub(25).max(0)
 	if (endMod.gte(3)) endMod = endMod.div(3).plus(2)
 	if (endMod.gte(4)) endMod = endMod.sqrt().times(2)
@@ -337,12 +361,37 @@ function updateTempFurnace() {
 	tmp.fn.enh.upg2eff = new ExpantaNum(0.9)
 	tmp.fn.enh.upg3eff = new ExpantaNum(2.5)
 	tmp.fn.enh.upg13eff = ExpantaNum.add(60, endMod.div(3).floor().times(10).min(10))
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("6;1;0")) tmp.fn.enh.upg13eff = tmp.fn.enh.upg13eff.plus(player.furnace.enhancedUpgrades[12].pow(1.32))
+}
+
+function updateMoltenBricks() {
 	tmp.fn.enh.moltBr = player.furnace.enhancedCoal.plus(1).div(1e150).pow(1/150)
 	if (player.furnace.enhancedUpgrades[12].gte(6)) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(player.furnace.enhancedUpgrades[12].times(tmp.fn.enh.upgPow).sub(4).pow(0.6))
 	if (player.elementary.times.gt(0) && tmp.fn.magma) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(tmp.fn.magma.eff2)
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;1;6")) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(2)
 	tmp.fn.enh.moltBrEffExp = player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;6")?1.25:1
 	tmp.fn.enh.moltBrEff = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 27).pow(tmp.fn.enh.moltBrEffExp)
 	tmp.fn.enh.moltBrEff2 = ExpantaNum.pow(tmp.fn.enh.moltBr.gte(1)?tmp.fn.enh.moltBr.plus(1):1, 7).pow(ExpantaNum.pow(tmp.fn.enh.moltBrEffExp, 4))
+}
+
+function updateTempFurnace() {
+	if (!tmp.fn) tmp.fn = {};
+	updateBlueFlameEff();
+	updateFurnUpgEffs();
+	updateCoalGain();
+	updateCoalEff();
+	updateFurnaceUpgradeCosts();
+	updateBlueFlameCost();
+	updateBlueFlameReset();
+	updateFNTabs();
+	if (!tmp.fn.enh) tmp.fn.enh = {}
+	tmp.fn.enh.unl = tmp.ach[111].has
+	updateEnhFurnUpgPow();
+	updateEnhCoalGain();
+	updateEnhCoalEffs();
+	updateEnhFurnUpgCosts();
+	updateEnhFurnUpgEffs();
+	updateMoltenBricks();
 	
 	updateTempMagma();
 }

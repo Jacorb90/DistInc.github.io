@@ -179,6 +179,16 @@ const HIGGS_UPGS = {
 		desc: "Both Molten Brick effects use better formulas.",
 		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0") },
 	},
+	"6;1;0": {
+		cost: new ExpantaNum(1e12),
+		desc: "The final Enhanced Furnace Upgrade is stronger based on its level.",
+		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("6;0;0") },
+	},
+	"0;1;6": {
+		cost: new ExpantaNum(1e12),
+		desc: "Your Molten Bricks are doubled.",
+		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;6") },
+	},
 }
 
 const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]

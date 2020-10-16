@@ -13,6 +13,7 @@ function updateGluonTabs() {
 
 function updateTempPhotons(gaugeSpeed) {
 	tmp.elm.bos.photonGain = gaugeSpeed;
+	if (modeActive("extreme")) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(Math.pow(player.elementary.bosons.scalar.higgs.upgrades.length+1, 1/3))
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
 	tmp.elm.bos.photonCost = {
