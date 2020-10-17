@@ -195,7 +195,8 @@ function photonsAutoTick(){
 function gluonAutoTick(){
 	if (player.automators["gluon_upgrades"]) for (let i = 0; i < GLUON_COLOURS.length; i++) {
 		let col = GLUON_COLOURS[i];
-		for (let x=1;x<=(hasDE(1)?3:2);x++) tmp.elm.bos.buy(col, x, true)
+		for (let x=1;x<=2;x++) tmp.elm.bos.buy(col, x, true)
+		if (hasDE(1)) buyGluon3(col, true)
 	}
 }
 

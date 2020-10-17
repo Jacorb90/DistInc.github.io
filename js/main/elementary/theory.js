@@ -313,12 +313,14 @@ function darkExpand() {
 	player.elementary.theory.accelerons.expanders = player.elementary.theory.accelerons.expanders.plus(1)
 }
 
-function buyGluon3(col) {
+function buyGluon3(col, max=false) {
 	if (!hasDE(1)) return
 	if (player.elementary.bosons.gauge.gluons[col].amount.lt(tmp.elm.bos.gluonCost(col, 3))) return
+	let bulk = new ExpantaNum(1)
+	if (max) bulk = tmp.elm.bos.gluonTarg(col, 3).sub(player.elementary.bosons.gauge.gluons[col].upgrades[2]).max(1)
 	player.elementary.bosons.gauge.gluons[col].amount = player.elementary.bosons.gauge.gluons[col].amount.sub(tmp.elm.bos.gluonCost(col, 3))
-	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(1)
-	player.elementary.theory.points = player.elementary.theory.points.plus(10)
+	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(bulk)
+	player.elementary.theory.points = player.elementary.theory.points.plus(ExpantaNum.mul(10, bulk))
 }
 
 function hasDE(n) { 
