@@ -189,6 +189,11 @@ const HIGGS_UPGS = {
 		desc: "Your Molten Bricks are doubled.",
 		unl: function() { return modeActive("extreme")&&player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;6") },
 	},
+	"1;1;1": {
+		cost: new ExpantaNum(1.5e24),
+		desc: "The Magma Search requirement scales half as fast, and Magma's effect uses a better formula.",
+		unl: function() { return hasDE(3) && modeActive("extreme") },
+	},
 }
 
 const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]

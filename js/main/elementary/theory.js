@@ -24,7 +24,10 @@ function updateTempTheoriverse() {
 		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
 	}
-	if (modeActive("extreme")) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(0.75)
+	if (modeActive("extreme")) {
+		if (player.elementary.theory.depth.lt(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(0.75)
+		if (player.elementary.theory.depth.gte(5)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(1.25)
+	}
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		if (HCTVal("tv").gt(-1)) return

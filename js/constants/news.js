@@ -466,6 +466,18 @@ const NEWS_DATA = {
 		"Wow you completed TV20, a completely meaningless quest that got you no reward. How do you feel now?",
 		function() { return player.elementary.theory.depth.gt(20) },
 	],
+	s31: [
+		"Gonna transfoam myself to Skyrmions!",
+		function() { return player.elementary.sky.unl },
+	],
+	s32: [
+		"Florida Man tried to reach the end of multiverse, but dissolved into 3 quantum fields.",
+		function() { return player.elementary.foam.unl },
+	],
+	s33: [
+		'"Elementary is cool, it has hadronic challenged me to make up theories and has brought to photonic light a new meme: fome, I must go now, my skyrmions need me." - A really punny guy',
+		function() { return player.elementary.sky.unl },
+	],
 };
 
 const NEWS_ADJ = 110;

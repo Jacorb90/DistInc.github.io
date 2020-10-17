@@ -739,7 +739,7 @@ function updateMagma() {
 		tmp.el.magmaReformReq.setTxt(showNum(req2));
 		tmp.el.magmaReformReq2.setTxt(showNum(req2b));
 		tmp.el.rMagmaAmt.setTxt(showNum(player.magma.ref));
-		tmp.el.rMagmaEff.setTxt(showNum(tmp.fn.magma.eff2));
+		tmp.el.rMagmaEff.setHTML("<span class='magmaTxt'>"+showNum(tmp.fn.magma.eff2)+"x</span>"+(player.elementary.theory.tree.unl?(" (boosted by unspent Theory Points"+(player.elementary.theory.depth.gte(6)?(" and Primary String length)"):")")):""));
 	}
 }
 
@@ -1141,7 +1141,7 @@ function updateHadronicChallenges(){
 			let x = ""
 			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
 			tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
-			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].changeStyle("visibility", player.elementary.theory.inflatons.unl?"visible":"hidden")
+			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl)
 			tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])))
 		}
 		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))

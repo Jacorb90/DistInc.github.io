@@ -699,7 +699,7 @@
 					</tr>
 				</table><br><br>
 				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Furnace & Enhanced Furnace Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
-				You have <span id="rMagmaAmt" class="magmaTxt"></span> Reformed Magma, which is multiplying your Molten Bricks by <span id="rMagmaEff" class="magmaTxt"></span>x<br><br>
+				You have <span id="rMagmaAmt" class="magmaTxt"></span> Reformed Magma, which is multiplying your Molten Bricks by <span id="rMagmaEff"></span><br><br>
 				Note: This does not reset on Elementary.
 			</div>
 		</div>
@@ -767,6 +767,7 @@
 			You have <span id="tc"></span>, translated to <span id="frf"></span> free rocket fuel
 			<span id="timeCubeEffSC"></span><br /><br />
 			<table id="trTable"></table>
+			<br>
 		</div>
 		<div id="collapse" class="tab" style="display: none;">
 			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">
@@ -1466,7 +1467,9 @@
 							<td><button id="higgs6;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('6;0;0')"></button></td>
 							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs1;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;0;0')"></button></td>
-							<td class="btn higgsL" style="visibility: hidden;"></td>
+							<td class="btn" style="visibility: hidden;"></td>
+							<td><button id="higgs1;1;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;1;1')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs0;0;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;1')"></button></td>
 							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs0;0;6" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;6')"></button></td>

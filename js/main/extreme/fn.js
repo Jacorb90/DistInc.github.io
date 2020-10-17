@@ -365,8 +365,9 @@ function updateEnhFurnUpgEffs() {
 }
 
 function updateMoltenBricks() {
-	tmp.fn.enh.moltBr = player.furnace.enhancedCoal.plus(1).div(1e150).pow(1/150)
-	if (player.furnace.enhancedUpgrades[12].gte(6)) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(player.furnace.enhancedUpgrades[12].times(tmp.fn.enh.upgPow).sub(4).pow(0.6))
+	tmp.fn.enh.moltBrStart = player.elementary.theory.tree.unl?1e100:1e150
+	tmp.fn.enh.moltBr = player.furnace.enhancedCoal.plus(1).div(tmp.fn.enh.moltBrStart).pow(1/150)
+	if (player.furnace.enhancedUpgrades[12].gte(6)) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(player.furnace.enhancedUpgrades[12].times(tmp.fn.enh.upgPow).sub(4).pow(0.6).max(1))
 	if (player.elementary.times.gt(0) && tmp.fn.magma) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(tmp.fn.magma.eff2)
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;1;6")) tmp.fn.enh.moltBr = tmp.fn.enh.moltBr.times(2)
 	tmp.fn.enh.moltBrEffExp = player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;6")?1.25:1

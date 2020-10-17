@@ -7,19 +7,31 @@ function updateTempMagma() {
 
 function getMagmaEff() {
 	if (!modeActive("extreme")) return new ExpantaNum(1);
-	let eff = player.magma.amount.sqrt().div(75).plus(1)
+	let amt = player.magma.amount;
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;1;1")) amt = amt.pow(1.6);
+	let eff = amt.sqrt().div(75).plus(1)
 	return eff;
 }
 
 function getMagmaReformEff() {
 	if (!modeActive("extreme")) return new ExpantaNum(1);
-	let eff = player.magma.ref.pow(2).div(2).plus(1)
-	return eff;
+	let eff = player.magma.ref.pow(2).div(2)
+	if (player.elementary.theory.tree.unl) {
+		eff = eff.times(player.elementary.theory.points.plus(1).log10().plus(1).log10().plus(1))
+		if (player.elementary.theory.depth.gte(6)) eff = eff.pow(player.elementary.theory.strings.amounts[0].plus(1).log10().plus(1).log10().times(1.2).plus(1))
+	}
+	return eff.plus(1);
+}
+
+function getMagmaReqScaling() {
+	let s = 1
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;1;1")) s /= 2
+	return s;
 }
 
 function getMagmaReq() {
 	if (!modeActive("extreme")) return new ExpantaNum(1/0);
-	let req = ExpantaNum.pow(10, ExpantaNum.pow(1.25, player.magma.amount).times(200))
+	let req = ExpantaNum.pow(10, ExpantaNum.pow(1.25, player.magma.amount.times(getMagmaReqScaling())).times(200))
 	return req;
 }
 
