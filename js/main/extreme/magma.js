@@ -16,6 +16,7 @@ function getMagmaEff() {
 function getMagmaReformEff() {
 	if (!modeActive("extreme")) return new ExpantaNum(1);
 	let eff = player.magma.ref.pow(2).div(2)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[35]||0, 1)) eff = eff.times(ExpantaNum.pow(1.4, player.magma.ref))
 	if (player.elementary.theory.tree.unl) {
 		eff = eff.times(player.elementary.theory.points.plus(1).log10().plus(1).log10().plus(1))
 		if (player.elementary.theory.depth.gte(6)) eff = eff.pow(player.elementary.theory.strings.amounts[0].plus(1).log10().plus(1).log10().times(1.2).plus(1))
@@ -43,13 +44,17 @@ function magmaSearch() {
 
 function getMagmaReformReq() {
 	if (!modeActive("extreme")) return new ExpantaNum(1/0);
-	let req = player.magma.ref.times(2).plus(1)
-	return req;
+	let r = player.magma.ref;
+	if (player.elementary.hc.unl) r = r.pow(TREE_UPGS[34].effect(player.elementary.theory.tree.upgrades[34]||0))
+	let req = r.times(2).plus(1)
+	return req.round();
 }
 
 function getMagmaReformReq2() {
 	if (!modeActive("extreme")) return new ExpantaNum(1/0);
-	let req = ExpantaNum.pow(1e20, player.magma.ref.pow(2)).times(1e60)
+	let r = player.magma.ref;
+	if (player.elementary.hc.unl) r = r.pow(TREE_UPGS[36].effect(player.elementary.theory.tree.upgrades[36]||0))
+	let req = ExpantaNum.pow(1e20, r.pow(2)).times(1e60)
 	return req;
 }
 

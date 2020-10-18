@@ -19,7 +19,8 @@ function extremeStadDiffLevel(name) {
 }
 
 function extremeStadiumActive(name, rank=1) {
-	if (!modeActive("extreme")) return false
+	if (!modeActive("extreme")) return false;
+	if (rank <= HCTVal(name)) return true;
 	let active = player.inf.stadium.current == name;
 	let l = player.extremeStad.length + 1;
 	if (player.extremeStad.includes(name))

@@ -175,7 +175,8 @@ function adjustGen(val, type) {
 	}
 	if (modeActive("extreme") && post_elem && type!="scalar") exp = exp.times(.9)
 	let newVal = val.pow(exp);
-	if (modeActive("hard") && pre_elem) newVal = newVal.div(3.2)
+	if (modeActive("hard") && (type=="inflatons"||type=="foam"||type=="sky")) newVal = newVal.div(5)
+	else if (modeActive("hard") && !modeActive("extreme")) newVal = newVal.div(3.2)
 	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
 	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)
 	return newVal;

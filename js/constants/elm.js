@@ -218,7 +218,7 @@ const TH_TABS = {
 		return player.elementary.theory.preons.unl
 	},
 	inflatons: function() {
-		return player.elementary.hc.unl&&player.elementary.theory.accelerons.unl
+		return (modeActive("extreme")?player.elementary.foam.unl:player.elementary.hc.unl)&&player.elementary.theory.accelerons.unl
 	},
 };
 
@@ -515,6 +515,30 @@ const TREE_UPGS = {
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
+	34: {
+		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
+		cap: new ExpantaNum(4),
+		desc: "The Magma cost of Reforming Magma uses a slower formula.",
+		effect: function(bought) { return ExpantaNum.pow(0.9, ExpantaNum.div(bought, 2)) },
+		effD: function(e) { return "^"+showNum(e) },
+	},
+	35: {
+		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		cost: function(bought) { return new ExpantaNum(150) },
+		cap: new ExpantaNum(1),
+		desc: "Reformed Magma's effect uses a better formula.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	36: {
+		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
+		cap: new ExpantaNum(4),
+		desc: "The Knowledge cost of Reforming Magma uses a slower formula.",
+		effect: function(bought) { return ExpantaNum.pow(0.75, ExpantaNum.div(bought, 2)) },
+		effD: function(e) { return "^"+showNum(e) },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 
@@ -572,6 +596,12 @@ const HC_DATA = {
 	eternity: ["range", [0, 6], "inf"],
 	reality: ["range", [0, 6], "inf"],
 	drigganiz: ["range", [0, 6], "inf"],
+	flamis: ["range", [0, 6], "inf"],
+	cranius: ["range", [0, 6], "inf"],
+	spectra: ["range", [0, 6], "inf"],
+	aqualon: ["range", [0, 6], "inf"],
+	nullum: ["range", [0, 6], "inf"],
+	quantron: ["range", [0, 6], "inf"],
 	noGems: ["checkbox", undefined, "inf"],
 	purge: ["checkbox", undefined, "inf"],
 	noDS: ["checkbox", undefined, "inf"],
@@ -591,6 +621,12 @@ const HC_TITLE = {
 	eternity: "Trapped in Eternity's Challenge (disabled: 0)",
 	reality: "Trapped in Reality's Challenge (disabled: 0)",
 	drigganiz: "Trapped in Drigganiz's Challenge (disabled: 0)",
+	flamis: "Trapped in Flamis's Challenge (disabled: 0)",
+	cranius: "Trapped in Cranius's Challenge (disabled: 0)",
+	spectra: "Trapped in Spectra's Challenge (disabled: 0)",
+	aqualon: "Trapped in Aqualon's Challenge (disabled: 0)",
+	nullum: "Trapped in Nullum's Challenge (disabled: 0)",
+	quantron: "Trapped in Quantron's Challenge (disabled: 0)",
 	noGems: "You cannot gain Spectral Gems",
 	purge: "Trapped in Purge",
 	noDS: "Derivative Shifts do nothing",
@@ -598,6 +634,7 @@ const HC_TITLE = {
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
+const HC_EXTREME_CHALLS = ["flamis","cranius","spectra","aqualon","nullum","quantron"]
 
 const FOAM_REQ = new ExpantaNum("1e42000000")
 const FOAM_TABS = {

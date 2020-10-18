@@ -679,7 +679,7 @@ function updateNormalFurnace(){
 		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
 		tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
 		for (let i=1;i<=6;i++) {
-			if (i==6) tmp.el["fnc"+i].setDisplay(player.elementary.bosons.scalar.higgs.upgrades.includes("6;0;0"))
+			if (i==6) tmp.el["fnc"+i].setDisplay(player.elementary.bosons.scalar.higgs.upgrades.includes("6;0;0")&&player.furnChalls.includes(i-1))
 			else if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
 			tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]))
 			tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
@@ -1084,7 +1084,7 @@ function updateInfatonsHTML(){
 		tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
 		let eff2 = getInflatonEff2()
 		tmp.el.inflaton2.setTxt(showNum(eff2))
-		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
+		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?" (softcapped)":"")
 		tmp.el.inflaton2sc.setTxt((eff2.gte(5)&&!player.elementary.entropy.upgrades.includes(13))?"(extremely softcapped)":"")
 	}
 }
@@ -1143,6 +1143,12 @@ function updateHadronicChallenges(){
 			tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
 			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl)
 			tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])))
+			
+			x = ""
+			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+EXTREME_STADIUM_DATA[HC_EXTREME_CHALLS[i]].descs[j]+".\n\n"
+			tmp.el["hcExtrChall"+HC_EXTREME_CHALLS[i]].setTooltip(x)
+			tmp.el["hcSelectorSpan"+HC_EXTREME_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl&&modeActive("extreme"))
+			tmp.el["hcCurrent"+HC_EXTREME_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_EXTREME_CHALLS[i])))
 		}
 		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")

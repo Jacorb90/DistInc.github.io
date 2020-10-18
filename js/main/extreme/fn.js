@@ -205,7 +205,7 @@ function updateFurnUpgEffs() {
 	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5) || extremeStadiumActive("quantron", 3)) tmp.fn4base = new ExpantaNum(0);
 	
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3].times(tmp.fn.upgPow))))
-	if (extremeStadiumActive("quantron", 4)) tmp.fn1base = tmp.fn1base.sqrt();
+	if (extremeStadiumActive("quantron", 4)) tmp.fn1base = ExpantaNum.sqrt(tmp.fn1base);
 }
 
 function updateCoalEff() {

@@ -32,12 +32,21 @@ function getProjectedHadronicScore() {
 	
 	// Infinity Modifiers
 	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
-	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(36))
+	let challMod = modeActive("extreme")?72:36
+	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(challMod))
+	if (modeActive("extreme")) {
+		score = score.plus(new ExpantaNum(getHCSelector("flamis")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("cranius")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("spectra")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("aqualon")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("nullum")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("quantron")).div(challMod))
+	}
 	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
 	if (getHCSelector("purge")) score = score.times(3).plus(2)
 	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
