@@ -11,11 +11,17 @@ function updateGluonTabs() {
 	tmp.elm.bos.updateGluonTabs();
 }
 
-function updateTempPhotons(gaugeSpeed) {
+function updatePhotonsGain(gaugeSpeed){
 	tmp.elm.bos.photonGain = gaugeSpeed;
 	if (modeActive("extreme")) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(Math.pow(player.elementary.bosons.scalar.higgs.upgrades.length+1, 1/3))
+	if (modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("1;2;0")) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.hd.superEn.plus(1))
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
+}
+
+function updateTempPhotons(gaugeSpeed) {
+	updatePhotonsGain(gaugeSpeed)
+	
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
