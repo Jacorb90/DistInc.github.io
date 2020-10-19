@@ -956,7 +956,13 @@ function updateScalarBosonsHTML(){
 			let data = Object.values(HIGGS_UPGS)[i]
 			tmp.el["higgs"+name].setDisplay(data.unl())
 			tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)})
-			tmp.el["higgs"+name].setHTML((HIGGS_UPGS_EXTR_DESCS[name]?HIGGS_UPGS_EXTR_DESCS[name]:data.desc)+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
+			let extra = HIGGS_UPGS_EXTR_DESCS[name]
+			let text = data.desc
+			if (extra != undefined) {
+				let ac = extra.active()
+				if (ac) text = extra.desc[ac]
+			}
+			tmp.el["higgs"+name].setHTML(text+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
 		}
 		tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x")
 		tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")

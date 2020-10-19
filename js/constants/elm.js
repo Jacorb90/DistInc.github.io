@@ -50,7 +50,49 @@ const PH_CST_SCLD = {
 const GLUON_COLOURS = ["r", "g", "b", "ar", "ag", "ab"];
 
 const HIGGS_UPGS_EXTR_DESCS = {
-	"0;0;0": "Always keep TR Upgrades, the Pathogen Upgrade automator, the Dark Core automator, & Furnace Challenge completions. You also start with Automation unlocked.",
+	"0;0;0": {
+		desc: {
+			extreme: "Always keep TR Upgrades, the Pathogen Upgrade automator, the Dark Core automator, & Furnace Challenge completions. You also start with Automation unlocked.",
+			hikers: "Always keep TR Upgrades, the Pathogen Upgrade automator, the Dark Core automator, and all energy upgrades. You also start with Automation unlocked.",
+		},
+		active: () => modeActive("extreme") ? "extreme" : (modeActive("hikers_dream") ? "hikers" : false),
+	},
+	"1;0;0": {
+		desc: {
+			hikers: "Unlock Auto-Robots, and your best motivation is not reset upon elementary.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
+	"0;0;1": {
+		desc: {
+			hikers: "You start with 10 Endorsements on reset and raise Consistency to the 1.8th power.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
+	"2;0;0": {
+		desc: {
+			hikers: "Unlock Auto-Endorsements and boost Meta Omnipotence based on the square root of Higgs Upgrades.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
+	"1;2;0": {
+		desc: {
+			hikers: "Unlock Auto-Spectral Gem Distribution, you keep Purge Power on reset, and super energy multiplies photons gain.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
+	"1;3;0": {
+		desc: {
+			hikers: "Angels & Demons boost the Gauge Force effect and the second super energy effect.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
+	"0;3;1": {
+		desc: {
+			hikers: "Purge Power boosts Quark & Lepton gain and passive energy gain is squared.",
+		},
+		active: () => modeActive("hikers_dream") ? "hikers" : false,
+	},
 }
 
 const HIGGS_UPGS = {
@@ -193,6 +235,16 @@ const HIGGS_UPGS = {
 		cost: new ExpantaNum(1.5e24),
 		desc: "The Magma Search requirement scales half as fast, and Magma's effect uses a better formula.",
 		unl: function() { return hasDE(3) && modeActive("extreme") },
+	},
+	"2;2;1": {
+		cost: new ExpantaNum(1e11),
+		desc: "Raise Optimization effect to the power of the number of Higgs Boson upgrades and energy multiples Knowledge gain.",
+		unl: function() { return modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("1;2;0") },
+	},
+	"2;2;2": {
+		cost: new ExpantaNum(5e10),
+		desc: "Raise Storage to the tenth power and it also boosts Motivation.",
+		unl: function() { return modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("0;2;1") },
 	},
 }
 

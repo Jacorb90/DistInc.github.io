@@ -192,6 +192,7 @@ function calcKnowledgeGain(){
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
 	if (modeActive('easy')) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
 	if (modeActive("hard") && tmp.fn) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.fn.enh.moltBrEff2)
+	if (modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.energy)
 }
 
 function updateTempInfLayer() {
