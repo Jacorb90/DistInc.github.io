@@ -99,12 +99,14 @@ function updateTempTheoryTree() {
 				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(newCost);
 			}
 			player.elementary.theory.tree.upgrades[x] = bought.max(target)
+			updateTheoryTreeHTMLPerSec();
 		} else {
 			if (!player.elementary.entropy.upgrades.includes(13)) {
 				player.elementary.theory.points = player.elementary.theory.points.sub(cost).max(0)
 				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(cost)
 			}
 			player.elementary.theory.tree.upgrades[x] = bought.plus(1)
+			updateTheoryTreeHTMLPerSec();
 		}
 	}
 	tmp.elm.theory.tree.costReduc = ach152Eff()

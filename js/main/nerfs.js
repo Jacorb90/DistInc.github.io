@@ -173,10 +173,11 @@ function adjustGen(val, type) {
 		if (extremeStadiumActive("spectra")) e = e.pow(2)
 		exp = exp.times(e);
 	}
-	if (modeActive("extreme") && post_elem && type!="scalar") exp = exp.times(.9)
+	if (modeActive("extreme") && post_elem && type!="scalar") exp = exp.times(ExpantaNum.gte(player.elementary.theory.tree.upgrades[37]||0, 1)?.95:.9)
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && (type=="inflatons"||type=="foam"||type=="sky")) newVal = newVal.div(5)
 	else if (modeActive("hard") && !modeActive("extreme")) newVal = newVal.div(3.2)
+	if (type=="foam"&&modeActive("extreme")&&newVal.gte(1e50)) newVal = newVal.times(1e150).pow(.25)
 	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
 	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)
 	return newVal;

@@ -81,14 +81,14 @@ function updateTempQuantumFoam() {
 	updateTempEntropy();
 }
 
-function gainFoam(x, gain) {
-	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], adjustGen(gain, "foam")).max(0)
+function gainFoam(x, gain, adj=false) {
+	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], adj?adjustGen(gain, "foam"):gain).max(0)
 	if (isNaN(player.elementary.foam.amounts[x].array[0])) player.elementary.foam.amounts[x] = new ExpantaNum(0);
 }
 
 function qfTick(diff) {
 	for (let i=0;i<5;i++) {
-		if (player.elementary.foam.maxDepth.gt(i)) gainFoam(i, tmp.elm.qf.gain[i+1].times(diff))
+		if (player.elementary.foam.maxDepth.gt(i)) gainFoam(i, tmp.elm.qf.gain[i+1].times(diff), true)
 		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.entropy.bestDepth.gte(i+3)) qfMax(i+1, b+1)
 	}
 	player.elementary.entropy.bestDepth = player.elementary.entropy.bestDepth.max(player.elementary.foam.maxDepth);
@@ -116,6 +116,7 @@ function getQFBoostCost(x, b) {
 	let start = FOAM_BOOST_COSTS[x][b].start
 	let base = FOAM_BOOST_COSTS[x][b].base
 	let exp = FOAM_BOOST_COSTS[x][b].exp
+	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
 	let amt = player.elementary.foam.upgrades[id]
 	let cost = start.times(base.pow(amt.pow(exp)))
@@ -126,6 +127,7 @@ function getQFBoostTarg(x, b) {
 	let start = FOAM_BOOST_COSTS[x][b].start
 	let base = FOAM_BOOST_COSTS[x][b].base
 	let exp = FOAM_BOOST_COSTS[x][b].exp
+	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
 	let res = player.elementary.foam.amounts[x-1]
 	let targ = res.div(start).max(1).logBase(base).pow(exp.pow(-1))
@@ -160,11 +162,13 @@ function addToAllFoamBoosts() {
 function getQFBoostData() {
 	let data = {}
 	let toAdd = addToAllFoamBoosts()
+	let extreme = modeActive("extreme")
 	for (let b=0;b<5;b++) {
 		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
 			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0).plus(toAdd)
+			if (extreme) if (data[i].gte(45)) data[i] = data[i].times(45).sqrt()
 		}
 	}
 	return data
@@ -230,6 +234,7 @@ function getEntropyEff() {
 	let entropy = player.elementary.entropy.best;
 	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
 	let eff = entropy.plus(1).pow(2.5);
+	if (modeActive("extreme")) eff = eff.sqrt();
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.pow(tmp.elm.sky.spinorEff[9])
 	return eff;
 }

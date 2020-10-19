@@ -539,6 +539,14 @@ const TREE_UPGS = {
 		effect: function(bought) { return ExpantaNum.pow(0.75, ExpantaNum.div(bought, 2)) },
 		effD: function(e) { return "^"+showNum(e) },
 	},
+	37: {
+		unl: function() { return player.elementary.foam.unl&&modeActive("extreme") },
+		cost: function(bought) { return new ExpantaNum(2.3e6) },
+		cap: new ExpantaNum(1),
+		desc: "The Extreme mode reduction to post-Elementary resource generation is nerfed.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"^0.9 -> ^0.95":"^0.9 -> ^0.9" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 

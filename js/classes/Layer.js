@@ -44,6 +44,7 @@ class Layer {
 				if (gc == "NO") return;
 			}
 		}
+		if (LAYER_RESETS_NOTHING[this.name]()) return;
 		let prev = transformToEN(player, DEFAULT_START);
 		for (let i = 0; i < LAYER_RESETS[this.name].length; i++) 
 			player[LAYER_RESETS[this.name][i]] =
