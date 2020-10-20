@@ -1,3 +1,5 @@
+"use strict";
+
 function updateTempMisc() {
 	tmp.bc = (function () {
 		let color = "white";

@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.8,
+	version: 1.9,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -219,6 +219,18 @@ const DEFAULT_START = {
 			amount: new ExpantaNum(0),
 			best: new ExpantaNum(0),
 			upgrades: [],
+		},
+		sky: {
+			unl: false,
+			amount: new ExpantaNum(0),
+			pions: {
+				amount: new ExpantaNum(0),
+				field: {},
+			},
+			spinors: {
+				amount: new ExpantaNum(0),
+				field: {},
+			},
 		},
 	}
 };

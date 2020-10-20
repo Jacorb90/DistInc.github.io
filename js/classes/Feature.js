@@ -6,6 +6,8 @@ class Feature {
 		this.display = data.display;
 		this.r = data.reached || (function() { return false });
 		this.spec = data.spec ? data.spec : Array.isArray(data.res);
+		this.superSpec = data.superSpec || false
+		this.resName = data.resName || "???"
 		this.disp = data.displayName ? data.displayName : data.name;
 		this.progress = data.progress
 			? data.progress
@@ -18,15 +20,23 @@ class Feature {
 
 	amt(x = 1) {
 		if (this.res_amt > 1) {
-			return this.spec[x - 1] ? player[this.res[x - 1][0]][this.res[x - 1][1]] : player[this.res[x - 1]];
-		} else return this.spec ? player[this.res[0]][this.res[1]] : player[this.res];
+			if (this.superSpec?this.superSpec[x - 1]:false) return this.res[x - 1]()
+			else return this.spec[x - 1] ? player[this.res[x - 1][0]][this.res[x - 1][1]] : player[this.res[x - 1]];
+		} else {
+			if (this.superSpec) return this.res()
+			else return this.spec ? player[this.res[0]][this.res[1]] : player[this.res];
+		}
 	}
 
 	dispAmt(x = 1) {
 		if (this.specRes[x-1]) return this.specRes[x-1]
-		if (this.res_amt > 1)
-			return this.spec[x - 1] ? capitalFirst(this.res[x - 1][1]) : capitalFirst(this.res[x - 1]);
-		return this.spec ? capitalFirst(this.res[1]) : capitalFirst(this.res);
+		if (this.res_amt > 1) {
+			if (this.superSpec?this.superSpec[x - 1]:false) return capitalFirst(this.resName[x - 1])
+			else return this.spec[x - 1] ? capitalFirst(this.res[x - 1][1]) : capitalFirst(this.res[x - 1]);
+		} else {
+			if (this.superSpec) return capitalFirst(this.resName)
+			else return this.spec ? capitalFirst(this.res[1]) : capitalFirst(this.res);
+		}
 	}
 
 	get reached() {
@@ -52,7 +62,7 @@ class Feature {
 					" to unlock " + this.disp + " (" + showNum(new ExpantaNum(this.progress() || 0).times(100)) + "%)";
 				return desc;
 			} else return "";
-		} else
+		} else {
 			return this.reached
 				? ""
 				: "Reach " +
@@ -64,5 +74,6 @@ class Feature {
 						" (" +
 						showNum(new ExpantaNum(this.progress() || 0).times(100)) +
 						"%)";
+		}
 	}
 }

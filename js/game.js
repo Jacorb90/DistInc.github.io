@@ -3,6 +3,7 @@
 var player = transformToEN(DEFAULT_START, DEFAULT_START);
 var loaded = false;
 var interval;
+var intervalPerSec;
 var autoTimes = {};
 for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) autoTimes[Object.keys(ROBOT_REQS)[i]] = new ExpantaNum(0);
 var tmp = {};
@@ -20,24 +21,29 @@ var elmTab = "fermions";
 var bosTab = "gauge";
 var hcTab = "mainHC";
 var foamTab = "qf1";
+var skyTab = "skyrmions";
+var statTab = "mainStats";
+var statScalingsShown = false;
+var pionSel = 0;
+var spinorSel = 0;
+var ttaid = 1;
 var gluonTab = "r";
 var thTab = "tv";
 var enTab = "mainEN";
-var autoRobotTarget = 0
-var betaID = ""; // beta1.8
-var checkForBetas = {"beta1.8": 1.8}
-var needUpdate = true
-var updating = false
-var visUpdTicks = 1/0
-var robotActives = {}
-var correctLink = "jacorb90.github.io"
-var outerShiftDown = false
+var autoRobotTarget = 0;
+var betaID = "beta1.91";
+var needUpdate = true;
+var updating = false;
+var visUpdTicks = 1/0;
+var robotActives = {};
+var correctLink = "jacorb90.github.io";
+var outerShiftDown = false;
 
 // Game Loops 
 
 function tickWithoutTS(diff) {
 	saveTimer += diff.toNumber();
-	player.bestEnd = player.bestEnd.max(player.inf.endorsements)
+	player.bestEnd = player.bestEnd.max(player.inf.endorsements);
 
 	if (tmp.ach[95].has && !nerfActive("noRockets"))
 		player.rockets = player.rockets.plus(tmp.rockets.layer.gain.times(diff));
@@ -70,8 +76,8 @@ function tickWithoutTS(diff) {
 	if (player.elementary.times.gt(0)) elTick(diff);
 	if (modeActive("hikers_dream")) {
 		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
-		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
-		player.bestMotive = player.bestMotive.max(tmp.hd.motive)
+		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim());
+		player.bestMotive = player.bestMotive.max(tmp.hd.motive);
 	}
 }
 
@@ -81,10 +87,16 @@ function tickWithTR(diff) {
 		.min(nerfActive("maxVelActive") ? tmp.maxVel : 1 / 0)
 		.max(0);
 	player.distance = player.distance.plus(adjustGen(player.velocity, "dist").times(modeActive("hikers_dream")?tmp.hd.enEff:1).times(diff)).max(0);
-	player.inf.bestDist = player.inf.bestDist.max(player.distance)
-	player.bestDistance = player.bestDistance.max(player.distance)
-	player.bestV = player.bestV.max(player.velocity)
-	player.bestA = player.bestA.max(tmp.acc)
+	let fc = futureCapped();
+	if (fc) {
+		player.velocity = player.velocity.min(DISTANCES.mlt);
+		player.distance = player.distance.min(DISTANCES.mlt);
+		if (player.distance.gte(DISTANCES.mlt)) end1point9();
+	}
+	player.inf.bestDist = player.inf.bestDist.max(player.distance);
+	player.bestDistance = player.bestDistance.max(player.distance);
+	player.bestV = player.bestV.max(player.velocity);
+	player.bestA = player.bestA.max(tmp.acc);
 	autoTick(diff);
 	if (modeActive("extreme")) {
 		if (player.rf.gt(0)) {
@@ -103,16 +115,16 @@ function tickWithTS(diff) {
 }
 
 function gameLoop(diff) {
-	visUpdTicks++
-	if (needUpdate) updating = true
+	visUpdTicks++;
+	if (needUpdate) updating = true;
 	updateBeforeTick();
-	if (showContainer && !needUpdate) {
+	if (showContainer && !needUpdate && !infActive) {
 		tickWithoutTS(diff);
 		tickWithTS(diff.times(nerfActive("noTS") ? 1 : tmp.timeSpeed));
 	}
 	updateAfterTick();
 	if (updating) {
-		updating = false
-		needUpdate = false
+		updating = false;
+		needUpdate = false;
 	}
 }

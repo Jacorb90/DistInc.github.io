@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 16,
+	rows: 17,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -145,6 +145,15 @@ const ACH_DATA = {
 		166: "True Inflation",
 		167: "How is the Multiverse containing your power?",
 		168: "There is only one Fome",
+		
+		171: "TRANSFOOOOORM!",
+		172: "This must have taken years",
+		173: "Extensionless Fome",
+		174: "The Multiverse is Doomed",
+		175: "Removing the Pillars",
+		176: "Entering Reality",
+		177: "Softcaps mean NOTHING",
+		178: "Multiverse Conquered",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -290,6 +299,15 @@ const ACH_DATA = {
 		166: "Reach showNum(1e160) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
+		
+		171: "Get a Skyrmion.",
+		172: "Elementary showNum(1e12) times.",
+		173: "Reach showNum(1e140) Quantum Foam without any Entropy.",
+		174: "Reach formatDistance(4.4e500000026).",
+		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.", 
+		176: "Complete The Theoriverse at Depth 19.",
+		177: "Have Pathogen Upgrade Power of at least showNum(1625)%.",
+		178: "Reach formatDistance(4.4e1000000026).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -366,7 +384,7 @@ const ACH_DATA = {
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
-		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
+		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% fasterboolean(extreme, and coal & enhanced coal gain is always 100x faster) fasterboolean(hikers_dream, and you unlock auto Generators and Generator upgrades).",
 		132: "The Gauge Force Effect is doubled.",
 		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",
@@ -382,5 +400,10 @@ const ACH_DATA = {
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
 		163: "Gain 10% of your Entangled String gain every second.",
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
+		168: "Unlock Auto-Theory Tree Upgrades.",
+		
+		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
+		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
+		174: "The Perk Accelerator is showNum(5)% stronger.",
 	}
 };

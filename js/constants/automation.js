@@ -56,44 +56,81 @@ const AUTOMATORS = {
 		return tmp.inf.upgs.has("4;2")||tmp.elm.bos.hasHiggs("0;0;0");
 	},
 	robots: function() {
-		return tmp.elm.bos.hasHiggs("1;0;0")
+		return tmp.elm.bos.hasHiggs("1;0;0");
 	},
 	infinity_upgrades: function() {
-		return tmp.elm.bos.hasHiggs("0;1;0")
+		return tmp.elm.bos.hasHiggs("0;1;0");
 	},
 	endorsements: function() {
-		return tmp.elm.bos.hasHiggs("2;0;0")
+		return tmp.elm.bos.hasHiggs("2;0;0");
 	},
 	perks: function() {
-		return tmp.elm.bos.hasHiggs("0;0;2")
+		return tmp.elm.bos.hasHiggs("0;0;2");
 	},
 	enlightenments: function() {
-		return tmp.elm.bos.hasHiggs("0;2;0")
-	},
-	derivative_boosts: function() {
-		return tmp.elm.bos.hasHiggs("0;0;3")
+		return tmp.elm.bos.hasHiggs("0;2;0");
 	},
 	spectral_gems: function() {
-		return tmp.elm.bos.hasHiggs("1;2;0")
+		return tmp.elm.bos.hasHiggs("1;2;0");
+	},
+	derivative_boosts: function() {
+		return tmp.elm.bos.hasHiggs("0;0;3");
 	},
 	elementaries: function() {
-		return tmp.ach[133].has&&player.elementary.times.gt(0)
-	},
-	foam_unlocks: function() {
-		return player.elementary.entropy.upgrades.includes(1)
+		return tmp.ach[133].has&&player.elementary.times.gt(0);
 	},
 	photon_upgrades: function() {
-		return tmp.ach[166].has
+		return tmp.ach[166].has;
 	},
 	gluon_upgrades: function() {
-		return tmp.ach[166].has
+		return tmp.ach[166].has;
 	},
+	tree_upgrades: function() {
+		return tmp.ach[168].has;
+	},
+	energy_generators: function() {
+		return tmp.ach[131].has;
+	},
+	theoretical_boosters: function() {
+		return player.elementary.entropy.upgrades.includes(17);
+	},
+	foam_unlocks: function() {
+		return player.elementary.entropy.upgrades.includes(1);
+	},
+	entropy: function() {
+		return player.elementary.entropy.upgrades.includes(10);
+	},
+	entropy_upgrades: function() {
+		return player.elementary.entropy.upgrades.includes(11);
+	},
+};
+
+const AUTOMATOR_BORDER = {
+	furnace: "#c4711d",
+	pathogens: "#b6c495",
+	cores: "rgb(184, 0, 82)",
+	robots: "grey",
+	infinity_upgrades: "#fac882",
+	endorsements: "#fac882",
+	perks: "#ffff5c",
+	enlightenments: "#ecf07f",
+	spectral_gems: "#ffcc5e",
+	derivative_boosts: "#209908",
+	elementaries: "#83f7ee",
+	photon_upgrades: "#a39c5d",
+	gluon_upgrades: "#83f7ee",
+	tree_upgrades: "#fcb377",
+	theoretical_boosters: "#fcb377",
+	foam_unlocks: "white",
+	entropy: "#dbaca9",
+	entropy_upgrades: "#dbaca9",
+	energy_generators: "#8a9115"
 };
 
 const AUTOMATOR_X = {
 	elementaries: 2,
-}
+};
 
 const AUTOMATOR_MODES = {
 	elementaries: ["AMOUNT", "TIME"],
-}
+};

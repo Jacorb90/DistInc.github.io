@@ -37,15 +37,16 @@ class Layer {
 	reset(force=false, auto=false) {
 		if (!force) {
 			if (tmp[this.tName]) if (tmp[this.tName].updateOnReset !== undefined && !auto) tmp[this.tName].updateOnReset();
-			if (!this.avail || this.gain.lt(1)) return;
+			if (!(this.avail || (!(this.name === "infinity") && player.inf.endorsements.lte(10) && infActive)) || this.gain.lt(1)) return;
 			if (!this.spec) player[this.name] = player[this.name].plus(this.gain);
 			else {
 				let gc = tmp[this.tName].doGain(auto);
 				if (gc == "NO") return;
 			}
 		}
+		if (LAYER_RESETS_NOTHING[this.name]()) return;
 		let prev = transformToEN(player, DEFAULT_START);
-		for (let i = 0; i < LAYER_RESETS[this.name].length; i++)
+		for (let i = 0; i < LAYER_RESETS[this.name].length; i++) 
 			player[LAYER_RESETS[this.name][i]] =
 				DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof Object &&
 				!(DEFAULT_START[LAYER_RESETS[this.name][i]] instanceof ExpantaNum)
@@ -55,7 +56,8 @@ class Layer {
 		modeLoad(LAYER_RESETS_EXTRA[this.name]);
 		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev)
 		if (this.name!="rf"&&modeActive("hikers_dream")) calcInclines();
-		needUpdate = true
+		updateBeforeTick();
+		updateAfterTick();
 	}
 
 	bulk(mag = new ExpantaNum(1)) {

@@ -1,5 +1,5 @@
 function extremeStadiumTooltip(name) {
-	if (!modeActive("extreme")) return ""
+	if (!modeActive("extreme")) return "";
 	let descs = EXTREME_STADIUM_DATA[name].descs;
 	let l = Math.min(player.extremeStad.length + 1, Object.keys(EXTREME_STADIUM_DATA).length);
 	if (player.extremeStad.includes(name))
@@ -15,11 +15,12 @@ function extremeStadiumTooltip(name) {
 function extremeStadDiffLevel(name) {
 	let l = player.extremeStad.length + 1;
 	if (player.extremeStad.includes(name)) l = Math.min(player.extremeStad.indexOf(name) + 1, l);
-	return l
+	return l;
 }
 
 function extremeStadiumActive(name, rank=1) {
-	if (!modeActive("extreme")) return false
+	if (!modeActive("extreme")) return false;
+	if (rank <= HCTVal(name)) return true;
 	let active = player.inf.stadium.current == name;
 	let l = player.extremeStad.length + 1;
 	if (player.extremeStad.includes(name))
@@ -29,7 +30,7 @@ function extremeStadiumActive(name, rank=1) {
 }
 
 function extremeStadiumGoal(name) {
-	if (!modeActive("extreme")) return new ExpantaNum(1/0)
+	if (!modeActive("extreme")) return new ExpantaNum(1/0);
 	let goal_data = EXTREME_STADIUM_DATA[name].goals;
 	let l = player.extremeStad.length + 1;
 	if (player.extremeStad.includes(name))
@@ -47,13 +48,13 @@ function startExtremeStadium(name) {
 }
 
 function extremeStadiumComplete(name) {
-	if (extremeStadiumActive("spectra", 3)) return false
+	if (extremeStadiumActive("spectra", 3)) return false;
 	return modeActive("extreme")?player.extremeStad.includes(name):false;
 }
 
 function resetExtremeStad() {
 	if (!modeActive("extreme")) return;
-	if (!confirm("Are you sure you want to do this? You will need to do the second row all again!")) return
-	player.extremeStad = []
-	tmp.inf.reset(true)
+	if (!confirm("Are you sure you want to do this? You will need to do the second row all again!")) return;
+	player.extremeStad = [];
+	tmp.inf.reset(true);
 }

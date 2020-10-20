@@ -10,7 +10,12 @@ const DISTANCES = {
 	kpc: 3.086e19,
 	Mpc: 3.086e22,
 	Gpc: 3.086e25,
-	uni: 4.4e26
+	uni: 4.4e26,
+	mlt: "4.4e1000000026",
+};
+
+const DISTANCE_TYPES = {
+	mlt: "log",
 };
 
 const TIMES = {

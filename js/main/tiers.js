@@ -147,7 +147,7 @@ function updateTempTiers() {
 	tmp.tiers.layer = new Layer("tier", tmp.tiers.canTierUp, "semi-forced");
 	if (!tmp.tier) tmp.tier = {};
 	if (!tmp.tier.onReset) tmp.tier.onReset = function (prev) {
-		if (modeActive('extreme')) if (tmp.ach[22].has) player.rankCheap = new ExpantaNum(1)
+		if (modeActive('extreme')) if (tmp.ach[22].has) player.rankCheap = new ExpantaNum(1);
 		if (hasCollapseMilestone(11)) {
 			player.rank = prev.rank;
 		}
@@ -157,32 +157,33 @@ function updateTempTiers() {
 		}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
-	if (!tmp.tier.updateOnReset) tmp.tier.updateOnReset = function() { updateTempTiers(); }
+	if (!tmp.tier.updateOnReset) tmp.tier.updateOnReset = function() { updateTempTiers(); };
 }
 
 function getTierFP() {
-	let fp = new ExpantaNum(1)
+	let fp = new ExpantaNum(1);
+	if (player.elementary.sky.unl && tmp.elm && !scalingActive("tier", player.tier, "scaled")) fp = fp.sub(tmp.elm.sky.pionEff[10]).pow(-1);
 	if (player.tr.upgrades.includes(20) && !HCCBA("noTRU") && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
-	if (extremeStadiumActive("cranius", 5)) fp = fp.div(player.rankCheap.plus(1))
-	return fp
+	if (extremeStadiumActive("cranius", 5)) fp = fp.div(player.rankCheap.plus(1));
+	return fp;
 }
 
 function getTierBaseCost() {
-	let bc = new ExpantaNum(3)
+	let bc = new ExpantaNum(3);
 	if (modeActive("extreme") && player.tier < 2) bc = bc.plus(1);
 	if (modeActive("easy") && player.tier < 2) bc = bc.sub(1);
 	if (tmp.inf) if (tmp.inf.stadium.active("solaris", 5) || tmp.inf.stadium.active("spaceon", 6)) bc = bc.plus(25);
-	return bc
+	return bc;
 }
 
-function tier3Eff() {
+function tier2Eff() {
 	let tier = player.tier;
 	if (tier.gte(10)) tier = tier.log10().times(10);
 	return ExpantaNum.pow(1.1, tier);
 }
 
 function tier7Eff() {
-	return ExpantaNum.pow(1.1, player.rf)
+	return ExpantaNum.pow(1.1, player.rf);
 }
 
 function tier9Eff() {

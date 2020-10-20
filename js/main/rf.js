@@ -1,11 +1,11 @@
 function getFuelPow() {
 	let pow = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(5) && !HCCBA("noTRU")) pow = pow.times(1.1);
-	return pow
+	return pow;
 }
 
 function getFreeFuel() {
-	return tmp.tr ? tmp.tr.eff : new ExpantaNum(0)
+	return tmp.tr ? tmp.tr.eff : new ExpantaNum(0);
 }
 
 function getFuelEff() {
@@ -22,14 +22,14 @@ function getFuelEff() {
 	if (modeActive('easy')) eff = eff.plus(0.012);
 	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(2).add(1);
 	if (nerfActive("noRF")) eff = new ExpantaNum(1);
-	return eff
+	return eff;
 }
 
 function getFuelEff2() {
 	let eff = player.rf.sqrt().div(2);
 	if (eff.gt(player.rockets.plus(1).times(10))) eff = player.rockets.plus(1).times(10);
 	if (nerfActive("noRF")) eff = new ExpantaNum(0);
-	return eff
+	return eff;
 }
 
 function updateTempRF() {
@@ -204,12 +204,12 @@ function updateTempRF() {
 	}
 
 	tmp.rf.can = player.rockets.gte(tmp.rf.req);
-	if (extremeStadiumActive("aqualon", 2)) tmp.rf.can = false
+	if (extremeStadiumActive("aqualon", 2)) tmp.rf.can = false;
 	tmp.rf.layer = new Layer("rf", tmp.rf.can, "semi-forced");
 	if (!tmp.rf.onReset) tmp.rf.onReset = function (prev) {
 		if (player.tr.upgrades.includes(17) && !HCCBA("noTRU") && modeActive("extreme")) player.rockets = new ExpantaNum(prev.rockets);
 		else if (tmp.ach[58].has) player.rockets = prev.rockets.div(2).max(10);
 		else if (hasCollapseMilestone(3)) player.rockets = new ExpantaNum(10);
 	};
-	if (!tmp.rf.updateOnReset) tmp.rf.updateOnReset = function() { updateTempRF(); }
+	if (!tmp.rf.updateOnReset) tmp.rf.updateOnReset = function() { updateTempRF(); };
 }

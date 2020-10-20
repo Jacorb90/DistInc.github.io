@@ -77,4 +77,4 @@ const PTH_UPG_SCS = {
 	13: new ExpantaNum(10),
 	14: new ExpantaNum(4),
 	15: new ExpantaNum(5)
-}
+};

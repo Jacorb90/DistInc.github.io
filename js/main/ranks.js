@@ -1,7 +1,7 @@
 function updateTempRanks() {
 	if (!tmp.ranks) tmp.ranks = {};
-	let fp = getRankFP()
-	let bc = getRankBaseCost()
+	let fp = getRankFP();
+	let bc = getRankBaseCost();
 	tmp.ranks.req = new ExpantaNum(bc).times(
 		ExpantaNum.pow(2, player.rank.div(fp).max(1).sub(1).pow(2))
 	);
@@ -180,26 +180,26 @@ function updateTempRanks() {
 			}
 		if (!tmp.inf.upgs.has("4;9")) tmp.inf.derv.resetDervs();
 	};
-	if (!tmp.rank.updateOnReset) tmp.rank.updateOnReset = function() { updateTempRanks(); }
+	if (!tmp.rank.updateOnReset) tmp.rank.updateOnReset = function() { updateTempRanks(); };
 }
 
 function getRankFP() {
 	let fp = new ExpantaNum(1);
-	if (player.tier.gt(0)) fp = fp.times(1.25)
-	if (player.tier.gt(2)) fp = fp.times(tier3Eff())
-	if (tmp.ach) if (tmp.ach[43].has) fp = fp.times(1.025)
-	if (player.tr.upgrades.includes(3) && !HCCBA("noTRU")) fp = fp.times(1.1)
-	if (tmp.rankCheap && modeActive("extreme")) fp = fp.times(getRankCheapEff())
-	return fp
+	if (player.tier.gt(0)) fp = fp.times(1.25);
+	if (player.tier.gt(2)) fp = fp.times(tier2Eff());
+	if (tmp.ach) if (tmp.ach[43].has) fp = fp.times(1.025);
+	if (player.tr.upgrades.includes(3) && !HCCBA("noTRU")) fp = fp.times(1.1);
+	if (tmp.rankCheap && modeActive("extreme")) fp = fp.times(getRankCheapEff());
+	return fp;
 }
 
 function getRankBaseCost() {
-	let bc = new ExpantaNum(10)
-	if (modeActive("extreme") && player.rank < 3) bc = bc.times(2)
-	if (modeActive("easy") && player.rank < 3) bc = bc.div(3)
-	if (tmp.inf) if (tmp.inf.stadium.active("spaceon", 5) || tmp.inf.stadium.active("solaris", 6)) bc = bc.times(10)
-	if (tmp.rankCheap && modeActive("extreme")) bc = bc.div(tmp.rankCheap.eff2).max(1e-100)
-	return bc
+	let bc = new ExpantaNum(10);
+	if (modeActive("extreme") && player.rank < 3) bc = bc.times(2);
+	if (modeActive("easy") && player.rank < 3) bc = bc.div(3);
+	if (tmp.inf) if (tmp.inf.stadium.active("spaceon", 5) || tmp.inf.stadium.active("solaris", 6)) bc = bc.times(10);
+	if (tmp.rankCheap && modeActive("extreme")) bc = bc.div(tmp.rankCheap.eff2).max(1e-100);
+	return bc;
 }
 
 function rank2Eff() {
@@ -224,14 +224,14 @@ function rank14Eff() {
 
 function rank40Eff() {
 	let eff = primesLTE(player.automation.scraps).max(1);
-	if (eff.gte(1e9)) eff = eff.log10().times(1e9/9)
+	if (eff.gte(1e9)) eff = eff.log10().times(1e9/9);
 	return eff;
 }
 
 function rank55Eff() {
-	return ExpantaNum.pow(2, player.rank)
+	return ExpantaNum.pow(2, player.rank);
 }
 
 function rank111Eff() {
-	return ExpantaNum.pow(2, player.rank)
+	return ExpantaNum.pow(2, player.rank);
 }

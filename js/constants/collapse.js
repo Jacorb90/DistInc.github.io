@@ -11,7 +11,7 @@ const ESSENCE_MILESTONES = {
 		req: new ExpantaNum(2),
 		desc: "Time goes by faster.",
 		disp: function() {
-			return showNum(modeActive("extreme")?2:5)+"x"
+			return showNum(modeActive("extreme")?2:5)+"x";
 		},
 	},
 	3: { req: new ExpantaNum(3), desc: "Start with 10 Rockets on reset." },

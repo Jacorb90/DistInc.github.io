@@ -77,6 +77,19 @@ const NEWS_DATA = {
 	m75: ["Does fome even exist?"],
 	m76: ["There are at least 2 rick rolls in the news... can you collect them all???"],
 	m77: ["&quot;It's Siivagunner, not Silvagunner&quot; - somebody that once told me that they were gonna give me up"],
+	m78: ["Breaking News: Florida man starts speaking French after another news ticker tells him that he's officially Canadian"],
+	m79: ["I'm gonna add some new news ticker messages, so I need ideas"],
+	m80: ["Jacorbian balancing is liked now, but in 10 years, incremental games will be completable in under 3 minutes."],
+	m81: ["Maybe this is a meta joke. Maybe this is a bored game dev running out of news ticker ideas. Who knows!"],
+	m82: ["This game is brought to you by Jacorb, the incremental game dev who has no idea what he's doing"],
+	m83: ["In an alternate universe, all the (softcapped) are replaced with (obscured), the scalings have no names, and Distance Incremental has weeklong timewalls."],
+	m84: ["I wonder if you can escape the multiverse..."],
+	m85: ['"Darn it, I have to restart my lore because we are not even at the thing after multiverse!" -CRG'],
+	m86: ['"Canada does not exist..." -Him'],
+	m87: ["Jacorb only created Hiker's Dream because he doesn't exercise."],
+	m88: ["You may have noticed that there's a donate button. If you didn't, well you have noticed now!"],
+	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
+	m90: ["In 2073, we will be at v193.6, with over 200 prestige layers, and the game will cost over $20.00"],
 
 	// Distance-based Conditions
 	d1: [
@@ -122,10 +135,20 @@ const NEWS_DATA = {
 		}
 	],
 	d8: [
-		"The new feature in v1.8 will be <span style='color: white;'>Quantum Foam</span>",
+		"Welcome to the Fome Club...",
 		function() {
 			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e42000000"));
 		}
+	],
+	d9: [
+		"Heya. You've been busy, huh? So, i've got a question for ya. Do you think even the worst person can change? That everybody can be a good person, if they just try? Heh heh heh he... All right. Well here's a better question. Do you wanna have a bad time? 'Cause if you take another step forward... You are REALLY not going to like what happens next. Welp. Sorry, old lady. This is why i never make promises.",
+		function() {
+			return player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e108000000"));
+		}
+	],
+	d10: [
+		"The multiverse isn't enough for you, is it?",
+		function() { return player.distance.gte(DISTANCES.mlt); },
 	],
 
 	// Mode-based Conditions
@@ -168,13 +191,13 @@ const NEWS_DATA = {
 	mod7: [
 		"If you're really a hiker, then go for a hike.",
 		function () {
-			return player.modes.includes("hikers_dream")
+			return player.modes.includes("hikers_dream");
 		}
 	],
 	mod8: [
 		"Hiker's Dream was brought to you by ~reda~ (if you're angry about anything in this mode, it's his fault)",
 		function () {
-			return player.modes.includes("hikers_dream")
+			return player.modes.includes("hikers_dream");
 		}
 	],
 
@@ -207,6 +230,18 @@ const NEWS_DATA = {
 		"Your luck skills have broke the universe",
 		function () {
 			return Math.random() < 1e-15;
+		}
+	],
+	c6: [
+		"Your luck skills have broke the multiverse, and everything within it",
+		function() {
+			return Math.random() < 1e-30;
+		}
+	],
+	c7: [
+		"If you went through 1 news ticker every planck time, and waited until the end of the universe's life, you still should not see this",
+		function() {
+			return Math.random() < 1e-80;
 		}
 	],
 
@@ -330,67 +365,67 @@ const NEWS_DATA = {
 	s11: [
 		'"1/5 no botbot" - Guy after unlocking the Auto-Robots Automator',
 		function () {
-			return player.automators["robots"]
+			return player.automators["robots"];
 		}
 	],
 	s12: [
 		'"To elementary, and beyond!" - Buzz e600k uni',
 		function () {
-			return player.distance.gte("1e600027")
+			return player.distance.gte("1e600027");
 		}
 	],
 	s13: [
 		'"I want more PP" - Guy who completes the game and sees no Pantheon Boosts',
 		function () {
-			return player.inf.pantheon.unl
+			return player.inf.pantheon.unl;
 		}
 	],
 	s14: [
 		"What if crackle is an affiliate of Slabdrill?",
 		function () {
-			return player.inf.derivatives.unl
+			return player.inf.derivatives.unl;
 		},
 	],
 	s15: [
 		"Accelerons were your biggest mistake",
 		function () {
-			return player.elementary.theory.accelerons.unl
+			return player.elementary.theory.accelerons.unl;
 		},
 	],
 	s16: [
 		"We were originally planning on giving a pg-3 rating for this game, but after Cadavers were added, we have decided to up it to 18+",
 		function () {
-			return player.collapse.cadavers.gt(0)
+			return player.collapse.cadavers.gt(0);
 		},
 	],
 	s17: [
 		"You have achieved true lightspeed!",
 		function () {
-			return player.bestV.gte(299792458)
+			return player.bestV.gte(299792458);
 		},
 	],
 	s18: [
 		"Physics can no longer hold me down!",
 		function () {
-			return player.bestV.gte(299792458*1.1)
+			return player.bestV.gte(299792458*1.1);
 		},
 	],
 	s19: [
 		'"But where are the replicants?" - NG+++ fan after unlocking preons',
 		function () {
-			return player.elementary.theory.preons.unl
+			return player.elementary.theory.preons.unl;
 		}
 	],
 	s20: [
 		"This is a crime against Reality.",
 		function () {
-			return player.inf.pantheon.purge.active && !player.inf.stadium.current=="reality"
+			return player.inf.pantheon.purge.active && !player.inf.stadium.current=="reality";
 		}
 	],
 	s21: [
 		'"Help" - People who realized that Cadavers are just bodies',
 		function () {
-			return player.collapse.cadavers.gt(0)
+			return player.collapse.cadavers.gt(0);
 		}
 	],
 	s22: [
@@ -401,13 +436,48 @@ const NEWS_DATA = {
 	],
 	s23: [
 		"Fome does exist!",
-		function() { return player.elementary.foam.unl },
+		function() { return player.elementary.foam.unl; },
 	],
 	s24: [
 		"Time to refoam your protofoam.",
-		function() { return player.elementary.foam.maxDepth.gte(5) },
+		function() { return player.elementary.foam.maxDepth.gte(5); },
+	],
+	s25: [
+		"Entropy is the arrow of time, leading you to the future (hopefully it doesn't take you too far into the future)",
+		function() { return player.elementary.entropy.unl; },
+	],
+	s26: [
+		"I guess it's time to sacrifice your Fermions into Skyrmions!",
+		function() { return player.elementary.sky.unl; },
+	],
+	s27: [
+		"This isn't an Aarex game, there is no Elementary News Ticker...",
+		function() { return player.elementary.particles.gt(0); },
+	],
+	s28: [
+		"Believe it or not, the news ticker is this game's only source of RNG.",
+		function() { return player.distance.gte(1e86)&&player.distance.lte("1e10000"); },
+	],
+	s29: [
+		"This message started at the exact moment you reached the end of the multiverse!",
+		function() { return !player.ended&&player.distance.gte(DISTANCES.mlt); },
+	],
+	s30: [
+		"Wow you completed TV20, a completely meaningless quest that got you no reward. How do you feel now?",
+		function() { return player.elementary.theory.depth.gt(20); },
+	],
+	s31: [
+		"Gonna transfoam myself to Skyrmions!",
+		function() { return player.elementary.sky.unl; },
+	],
+	s32: [
+		"Florida Man tried to reach the end of multiverse, but dissolved into 3 quantum fields.",
+		function() { return player.elementary.foam.unl; },
+	],
+	s33: [
+		'"Elementary is cool, it has hadronic challenged me to make up theories and has brought to photonic light a new meme: fome, I must go now, my skyrmions need me." - A really punny guy',
+		function() { return player.elementary.sky.unl; },
 	],
 };
 
 const NEWS_ADJ = 110;
-const NEWS_TIME = 8;

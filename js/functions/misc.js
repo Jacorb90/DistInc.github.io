@@ -64,7 +64,7 @@ function ENString(obj) {
 	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount).toString();
 	for (let i = 0; i < 4; i++)
 		ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(
-			ret.elementary.bosons.gauge.photons.upgrades[i]
+			ret.elementary.bosons.gauge.photons.upgrades[i]||0
 		).toString();
 	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w).toString();
 	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z).toString();
@@ -145,6 +145,11 @@ function ENString(obj) {
 	ret.elementary.entropy.bestDepth = new ExpantaNum(ret.elementary.entropy.bestDepth||1).toString();
 	ret.elementary.entropy.amount = new ExpantaNum(ret.elementary.entropy.amount||0).toString();
 	ret.elementary.entropy.best = new ExpantaNum(ret.elementary.entropy.best||0).toString();
+	ret.elementary.sky.amount = new ExpantaNum(ret.elementary.sky.amount||0).toString();
+	ret.elementary.sky.pions.amount = new ExpantaNum(ret.elementary.sky.pions.amount||0).toString();
+	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0).toString();
+	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0).toString();
+	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0).toString();
 	return ret;
 }
 
@@ -165,6 +170,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.8 || !ret.elementary.foam) ret.elementary.foam = deepCopy(sc.elementary.foam);
 	if (ret.version < 1.8 || !ret.elementary.foam.amounts) ret.elementary.foam.amounts = deepCopy(sc.elementary.foam.amounts);
 	if (ret.version < 1.8 || !ret.elementary.entropy) ret.elementary.entropy = deepCopy(sc.elementary.entropy);
+	if (ret.version < 1.9 || !ret.elementary.sky) ret.elementary.sky = deepCopy(sc.elementary.sky);
 	if (ret.version < sc.version) onVersionChange();
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
@@ -227,7 +233,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.bosons.gauge.photons.amount = new ExpantaNum(ret.elementary.bosons.gauge.photons.amount);
 	for (let i = 0; i < 4; i++)
 		ret.elementary.bosons.gauge.photons.upgrades[i] = new ExpantaNum(
-			ret.elementary.bosons.gauge.photons.upgrades[i]
+			ret.elementary.bosons.gauge.photons.upgrades[i]||0
 		);
 	ret.elementary.bosons.gauge.w = new ExpantaNum(ret.elementary.bosons.gauge.w);
 	ret.elementary.bosons.gauge.z = new ExpantaNum(ret.elementary.bosons.gauge.z);
@@ -308,6 +314,11 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.entropy.bestDepth = new ExpantaNum(ret.elementary.entropy.bestDepth||1);
 	ret.elementary.entropy.amount = new ExpantaNum(ret.elementary.entropy.amount||0);
 	ret.elementary.entropy.best = new ExpantaNum(ret.elementary.entropy.best||0);
+	ret.elementary.sky.amount = new ExpantaNum(ret.elementary.sky.amount||0);
+	ret.elementary.sky.pions.amount = new ExpantaNum(ret.elementary.sky.pions.amount||0);
+	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0);
+	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0);
+	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }
@@ -330,7 +341,7 @@ function copyToClipboard(str) {
 	el.value = str;
 	document.body.appendChild(el);
 	el.select();
-    el.setSelectionRange(0, 99999);
+	el.setSelectionRange(0, 99999);
 	document.execCommand("copy");
 	document.body.removeChild(el);
 }
@@ -350,7 +361,6 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) a = a.filter(x => x / 10 <= 13);
 	if (modeActive("na")) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
@@ -387,15 +397,16 @@ async function showHiddenDiv(data) {
 	document.body.appendChild(resetContainer);
 
 	await sleep(3);
-	document.getElementById("resetContainerBody").style.display = "";
+	if (document.getElementById("resetContainerBody")) document.getElementById("resetContainerBody").style.display = "";
 }
 
-async function closeHiddenDiv() {
+async function closeHiddenDiv(fast=false) {
 	let element = document.getElementById("resetContainer");
 	if (!element) return;
 	document.getElementById("resetContainerBody").style.display = "none";
 	document.getElementById("reset").className = "hiddenDivShrink";
-	await sleep(1.4);
+	if (!fast) await sleep(1.4);
+	if (!element.parentNode) return;
 	element.parentNode.removeChild(element);
 	showContainer = true;
 	updateTemp();

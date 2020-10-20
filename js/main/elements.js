@@ -8,42 +8,36 @@ function updateOptionsHTML(){
 				ob: true,
 				optSelected: modesSelected.includes(Object.keys(MODES)[i])
 			});
-			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc);
 		}
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
 		tmp.el.autoSave.setTxt("Auto-Save: " + (player.options.autoSave ? "ON" : "OFF"));
 		tmp.el.newst.setTxt("News Ticker: " + (player.options.newst ? "ON" : "OFF"));
-		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"))
+		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"));
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
-		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
-		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
+		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"));
+		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"));
 		tmp.el.dcPulse.setTxt("Dark Circle Pulsing: "+(player.options.dcPulse ? "ON" : "OFF"));
-		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc))
-		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts))
-		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"))
-		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd))
-		tmp.el.hcc.setTxt("Exit Hadronic Chall Confirmation: "+(player.options.hcc ? "ON" : "OFF"))
-		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden")
+		tmp.el.featPerc.setTxt("Feature Percentage: "+capitalFirst(player.options.featPerc));
+		tmp.el.fonts.setTxt("Font: "+capitalFirst(player.options.fonts));
+		tmp.el.hideAch.setTxt("Hide Completed Ach Rows: "+(player.options.hideAch ? "ON" : "OFF"));
+		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd));
+		tmp.el.hcc.setTxt("Exit Hadronic Chall Confirmation: "+(player.options.hcc ? "ON" : "OFF"));
+		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden");
 	}
 }
 
 function updatePreRanksHTML(){
 	tmp.el.distance.setTxt(
 		formatDistance(player.distance) +
-			" (+" +
-			formatDistance(
-				adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?tmp.hd.enEff:1)
-			) +
-			"/sec)"
+			" " + formatGain(player.distance, player.velocity.times(nerfActive("noTS") ? 1 : tmp.timeSpeed).times(modeActive("hikers_dream")?tmp.hd.enEff:1), "dist", true)
 	);
 	tmp.el.velocity.setTxt(
 		formatDistance(player.velocity.times(modeActive("hikers_dream")?tmp.hd.enEff:1)) +
-			"/s (+" +
-			formatDistance(adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
-			"/sec)"
+			"/s " + formatGain(player.velocity.times(modeActive("hikers_dream")?tmp.hd.enEff:1), tmp.acc.times(nerfActive("noTS") ? 1 : tmp.timeSpeed), "vel", true)
 	);
 	tmp.el.maxVel.setTxt(formatDistance(tmp.maxVel));
 	tmp.el.acceleration.setTxt(formatDistance(tmp.acc));
@@ -67,17 +61,16 @@ function updateTiersHTML(){
 
 function updateMainHTML(){
 	if (player.tab == "main") {
-		updatePreRanksHTML()
-		updateRanksHTML()		
-		updateTiersHTML()
+		updatePreRanksHTML();
+		updateRanksHTML();		
+		updateTiersHTML();
 		// Misc
 		tmp.el.mvName.setTxt(nerfActive("maxVelActive") ? "Maximum Velocity:" : "Velocital Energy:");
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
 		
 		// Hiker's Dream
-		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>":"")
-		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
-		
+		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>":"");
+		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"));
 	}
 }
 
@@ -88,12 +81,8 @@ function updateRocketsHTML(){
 		tmp.el.rocketGain.setTxt(showNum(tmp.rockets.layer.gain));
 		tmp.el.rocketsAmt.setTxt(
 			showNum(player.rockets) +
-				" rockets" +
-				(tmp.ach[95].has && !nerfActive("noRockets")
-					? " (+" + showNum(tmp.rockets.layer.gain) + "/sec)"
-					: hasCollapseMilestone(9) && !nerfActive("noRockets")
-					? " (+" + showNum(tmp.rockets.layer.gain.div(100)) + "/sec)"
-					: "")
+				" rockets " +
+				(((tmp.ach[95].has||hasCollapseMilestone(9))&&!nerfActive("noRockets")) ? formatGain(player.rockets, tmp.rockets.layer.gain.div(tmp.ach[95].has?1:100)) : "")
 		);
 		tmp.el.rocketsEff.setTxt(showNum(getRocketEffect()));
 
@@ -111,11 +100,11 @@ function updateAchievementsHTML(){
 	if (player.tab == "achievements") {
 		tmp.el.achDesc.setHTML(tmp.ga + "/" + tmp.ta + "<br>");
 		let all = tmp.ga == tmp.ta && !modeActive("aau");
-		let rowsActive = Math.floor(tmp.ta/8)
+		let rowsActive = Math.floor(tmp.ta/8);
 		for (let r = 1; r <= ACH_DATA.rows; r++) {
-			let rc = rowComplete(r)
-			tmp.el["achR"+r].setDisplay(!(player.options.hideAch&&rc))
-			if (rc && player.options.hideAch) rowsActive--
+			let rc = rowComplete(r);
+			tmp.el["achR"+r].setDisplay(!(player.options.hideAch&&rc));
+			if (rc && player.options.hideAch) rowsActive--;
 			for (let c = 1; c <= ACH_DATA.cols; c++) {
 				let id = r * 10 + c;
 				tmp.el["ach" + id].setTxt(id);
@@ -126,31 +115,21 @@ function updateAchievementsHTML(){
 					blocked: ACH_DATA.descs[id] === undefined
 				});
 				tmp.el["ach" + id].changeStyle("visibility", (getAllAchievements().includes(id)) ? "visible" : "hidden");
-				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc)
+				tmp.el["ach" + id].setAttr("widetooltip", tmp.ach[id].desc);
 			}
 		}
-		tmp.el.achFin.setTxt(rowsActive==0?"All Achievements are completed!":"")
+		tmp.el.achFin.setTxt(rowsActive==0?"All Achievements are completed!":"");
 	}
 }
 
 function updateRobotsHTML(){
 	tmp.el.scraps.setTxt(
 		showNum(player.automation.scraps) +
-			" scraps" +
-			(" (+" +
-				showNum(
-					adjustGen(getScrapGain(), "scraps").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
-				) +
-				"/sec)")
+			" scraps " + formatGain(player.automation.scraps, getScrapGain().times(nerfActive("noTS") ? 1 : tmp.timeSpeed), "scraps")
 	);
 	tmp.el.intAmt.setTxt(
 		showNum(player.automation.intelligence) +
-			" intelligence" +
-			(" (+" +
-				showNum(
-					adjustGen(getIntelligenceGain(), "intel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
-				) +
-				"/sec)")
+			" intelligence " + formatGain(player.automation.intelligence, getIntelligenceGain().times(nerfActive("noTS") ? 1 : tmp.timeSpeed), "intel")
 	);
 	for (let i = 0; i < Object.keys(ROBOT_REQS).length; i++) {
 		tmp.el[Object.keys(ROBOT_REQS)[i]].setTxt(tmp.auto[Object.keys(ROBOT_REQS)[i]].btnTxt);
@@ -201,21 +180,21 @@ function updateRobotsHTML(){
 			locked: player.automation.intelligence.lt(tmp.auto[player.automation.open].magCost),
 			rckt: player.automation.intelligence.gte(tmp.auto[player.automation.open].magCost)
 		});
-		tmp.el.robotToggle.setTxt("Currently: "+((!player.automation.robots[player.automation.open][2])?"Active":"Inactive"))
+		tmp.el.robotToggle.setTxt("Currently: "+((!player.automation.robots[player.automation.open][2])?"Active":"Inactive"));
 	}
 	tmp.el.robotMax.setDisplay(tmp.ach[48].has);
 }
 
 function updateAutomationHTML(){
 	if (player.tab == "auto") {
-		updateRobotsHTML()
+		updateRobotsHTML();
 
 		// Automators
 		for (let i = 0; i < Object.keys(AUTOMATORS).length; i++) {
 			tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
 			player.automators[Object.keys(AUTOMATORS)[i]] =
 				tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
-			let name = Object.keys(AUTOMATORS)[i]
+			let name = Object.keys(AUTOMATORS)[i];
 		}
 	}
 }
@@ -225,10 +204,7 @@ function updateTimeReversalHTML(){
 		tmp.el.rt.setTxt(tmp.tr.txt);
 		tmp.el.tc.setTxt(
 			showNum(player.tr.cubes) +
-				" Time Cubes" +
-				(" (+" +
-					showNum(adjustGen(getTimeCubeGain(), "tc").times(nerfActive("noTS") ? 1 : tmp.timeSpeed)) +
-					"/sec)")
+				" Time Cubes " + formatGain(player.tr.cubes, getTimeCubeGain().times(nerfActive("noTS") ? 1 : tmp.timeSpeed), "tc")
 		);
 		tmp.el.frf.setTxt(showNum(tmp.tr.eff));
 		for (let i = 1; i <= TR_UPG_AMT; i++) {
@@ -251,7 +227,7 @@ function updateTimeReversalHTML(){
 		tmp.el.trRow4.setDisplay(modeActive("extreme"));
 		tmp.el.trRow5.setDisplay(modeActive("extreme") && player.collapse.unl);
 		tmp.el.trRow6.setDisplay(modeActive("extreme") && player.dc.unl);
-		tmp.el.trRow7.setDisplay(modeActive("extreme") && player.inf.endorsements.gt(0))
+		tmp.el.trRow7.setDisplay(modeActive("extreme") && player.inf.endorsements.gt(0));
 	}
 }
 
@@ -262,12 +238,8 @@ function updateCollpaseHTML(){
 		tmp.el.cadavers.setHTML(
 			"<span class='dead'>" +
 				showNum(player.collapse.cadavers) +
-				"</span> cadavers<span class='dead'>" +
-				(tmp.ach[96].has && !nerfActive("noCadavers")
-					? " (+" + showNum(tmp.collapse.layer.gain) + "/sec)"
-					: tmp.inf.upgs.has("2;4") && !nerfActive("noCadavers")
-					? " (+" + showNum(tmp.collapse.layer.gain.div(100)) + "/sec)"
-					: "") +
+				"</span> cadavers<span class='dead'> " +
+				(((tmp.ach[96].has||tmp.inf.upgs.has("2;4"))&&!nerfActive("noCadavers"))?(formatGain(player.collapse.cadavers, tmp.collapse.layer.gain.div(tmp.ach[96].has?1:100))):"")+
 				"</span>"
 		);
 		tmp.el.cadaverEff.setTxt(showNum(getCadaverEff()));
@@ -279,12 +251,8 @@ function updateCollpaseHTML(){
 		tmp.el.lifeEssence.setHTML(
 			"<span class='alive'>" +
 				showNum(player.collapse.lifeEssence) +
-				"</span> life essence<span class='alive'>" +
-				(tmp.ach[97].has && !nerfActive("noLifeEssence")
-					? " (+" + showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1)) + "/sec)"
-					: tmp.inf.upgs.has("5;3") && !nerfActive("noLifeEssence")
-					? " (+" + showNum(player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).div(10)) + "/sec)"
-					: "")
+				"</span> life essence <span class='alive'>" +
+				(((tmp.ach[97].has||tmp.inf.upgs.has("5;3"))&&!nerfActive("noLifeEssence"))?formatGain(player.collapse.lifeEssence, player.collapse.cadavers.times(tmp.collapse.sacEff).max(1).div(tmp.ach[97].has?1:100)):"")+"</span>"
 		);
 		for (let i = 1; i <= EM_AMT; i++) {
 			let ms = ESSENCE_MILESTONES[i];
@@ -328,11 +296,11 @@ function upadtePathogenHTML(){
 		tmp.el.pathogensAmt.setHTML(
 			"<span class='grosstxt'>" +
 				showNum(player.pathogens.amount) +
-				"</span> Pathogens<span class='grosstxt'>" +
-				(" (+" + showNum(adjustGen(tmp.pathogens.gain, "pathogens")) + "/sec)") +
+				"</span> Pathogens <span class='grosstxt'>" +
+				formatGain(player.pathogens.amount, tmp.pathogens.gain, "pathogens") +
 				"</span>"
 		);
-		upadtePathogenUpgradesHTML()
+		upadtePathogenUpgradesHTML();
 		tmp.el.pthUpgPow.setHTML(
 			!tmp.pathogens.upgPow.eq(1) ? ("Upgrade Power: " + showNum(tmp.pathogens.upgPow.times(100)) + "%"+(tmp.pathogens.upgPow.gte(10)?" <span class='sc'>(softcapped)</span>":"")+"<br>") : ""
 		);
@@ -361,17 +329,17 @@ function updateDarkCircleRssHTML(){
 	tmp.el.darkMatter.setHTML(
 		"Dark Matter<br>Amount: " +
 			showNum(player.dc.matter) +
-			"<br>Gain: +" +
-			showNum(adjustGen(tmp.dc.dmGain, "dc").times(tmp.dc.flow)) +
-			"/s<br>Effect: You gain " +
+			"<br>Gain: " +
+			formatGain(player.dc.matter, tmp.dc.dmGain.times(tmp.dc.flow), "dc") +
+			"<br>Effect: You gain " +
 			showNum(tmp.dc.dmEff) +
 			"x as many Rockets."
 	);
 	tmp.el.darkEnergy.setHTML(
 		"Dark Energy<br>Amount: " +
 			showNum(player.dc.energy) +
-			"<br>Gain: +" +
-			showNum(adjustGen(tmp.dc.deGain, "dc").times(tmp.dc.flow)) +
+			"<br>Gain: " +
+			formatGain(player.dc.energy, tmp.dc.deGain.times(tmp.dc.flow), "dc") +
 			"/s<br>Effect: You gain " +
 			showNum(tmp.dc.deEff) +
 			"x as many Time Cubes."
@@ -379,8 +347,8 @@ function updateDarkCircleRssHTML(){
 	tmp.el.darkFluid.setHTML(
 		"Dark Fluid<br>Amount: " +
 			showNum(player.dc.fluid) +
-			"<br>Gain: +" +
-			showNum(adjustGen(tmp.dc.dfGain, "dc").times(tmp.dc.flow)) +
+			"<br>Gain: " +
+			formatGain(player.dc.fluid, tmp.dc.dfGain.times(tmp.dc.flow), "dc") +
 			"/s<br>Effect: Scaled Rocket Fuel scaling starts " +
 			showNum(tmp.dc.dfEff) +
 			" Rocket Fuel later."
@@ -389,7 +357,7 @@ function updateDarkCircleRssHTML(){
 
 function updateDarkCircleHTML(){
 	if (player.tab == "dc") {
-		updateDarkCircleRssHTML()
+		updateDarkCircleRssHTML();
 		tmp.el.darkCore.setHTML(
 			getScalingName("darkCore") +
 				"Dark Cores<br>Amount: " +
@@ -401,9 +369,9 @@ function updateDarkCircleHTML(){
 					? "<br>Effect: +" + showNum(tmp.dc.coreEff.times(100)) + "% Pathogen Upgrade Power"
 					: "")
 		);
-		tmp.el.darkMatter.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
-		tmp.el.darkEnergy.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
-		tmp.el.darkFluid.setClasses({darkcircle: true, dcAnim: player.options.dcPulse})
+		tmp.el.darkMatter.setClasses({darkcircle: true, dcAnim: player.options.dcPulse});
+		tmp.el.darkEnergy.setClasses({darkcircle: true, dcAnim: player.options.dcPulse});
+		tmp.el.darkFluid.setClasses({darkcircle: true, dcAnim: player.options.dcPulse});
 		tmp.el.darkCore.setClasses({
 			darkcore: true,
 			locked: player.collapse.cadavers.lt(tmp.dc.coreCost),
@@ -426,13 +394,13 @@ function updateInfinityEndorsementStuffHTML(){
 	);
 	let nextUnl;
 	for (let i=0;i<Object.keys(INF_UPGS.dispReqs).length;i++) {
-		let key = Object.keys(INF_UPGS.dispReqs)[i]
+		let key = Object.keys(INF_UPGS.dispReqs)[i];
 		if (player.inf.endorsements.lt(INF_UPGS.dispReqs[key])) {
-			nextUnl = key
+			nextUnl = key;
 			break;
 		}
 	}
-	tmp.el.nextIUs.setTxt(nextUnl ? ("Next set of Infinity Upgrades at Endorsement "+showNum(INF_UPGS.dispReqs[nextUnl])+".") : "")
+	tmp.el.nextIUs.setTxt(nextUnl ? ("Next set of Infinity Upgrades at Endorsement "+showNum(INF_UPGS.dispReqs[nextUnl])+".") : "");
 	tmp.el.forceInf.setDisplay(player.inf.endorsements.gte(10));
 }
 
@@ -442,7 +410,7 @@ function updateInfinitySubtabHTML(){
 		tmp.el.knowledgeBase.setTxt(showNum(tmp.inf.knowledgeBase));
 		tmp.el.nextEndorsement.setTxt(formatDistance(tmp.inf.req));
 		tmp.el.knowledge.setTxt(showNum(player.inf.knowledge));
-		tmp.el.knowledgeGain.setTxt(showNum(adjustGen(tmp.inf.knowledgeGain, "knowledge")));
+		tmp.el.knowledgeGain.setTxt(formatGain(player.inf.knowledge, tmp.inf.knowledgeGain, "knowledge"));
 		for (let r = 1; r <= INF_UPGS.rows; r++) {
 			for (let c = 1; c <= INF_UPGS.cols; c++) {
 				let state = "";
@@ -463,7 +431,7 @@ function updateInfinitySubtabHTML(){
 		}
 		tmp.el.endorsementName.setTxt(getScalingName("endorsements") + " ");
 		
-		let ach112 = ach112Eff()
+		let ach112 = ach112Eff();
 		tmp.el.tudeEff.setHTML(
 			tmp.ach[112].has ? "The Universe Doesn't Exist multiplier: " + showNum(ach112) + "x"+(ach112.gte(1e160)?" <span class='sc'>(softcapped)</span>":"")+"<br><br>" : ""
 		);
@@ -501,11 +469,9 @@ function updateAscensionHTML(){
 			tmp.el.ascPower.setHTML(
 				"Ascension Power: <span style='font-size: 25px; color: red;'>" +
 					showNum(player.inf.ascension.power) +
-					"</span> (+" +
-					showNum(adjustGen(tmp.inf.asc.powerGain, "ascension")) +
-					"/sec)"
+					"</span> "+formatGain(player.inf.ascension.power, tmp.inf.asc.powerGain, "ascension")
 			);
-			tmp.el.perkAccel.setHTML(tmp.elm.pa.active?("Your "+(tmp.elm.pa.state==""?"":(capitalFirst(tmp.elm.pa.state)+" "))+"Perk Accelerator is making Perks be used up <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.speedBoost)+"</span>x as fast, but in return, your Perks are <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.boost)+"</span>x as strong."):"")
+			tmp.el.perkAccel.setHTML(tmp.elm.pa.active?("Your "+(tmp.elm.pa.state==""?"":(capitalFirst(tmp.elm.pa.state)+" "))+"Perk Accelerator is making Perks be used up <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.speedBoost)+"</span>x as fast, but in return, your Perks are <span style='font-size: 25px; color: red;'>"+showNum(tmp.elm.pa.boost)+"</span>x as strong."):"");
 		}
 }
 
@@ -538,20 +504,20 @@ function updateNormalStadiumHTML(){
 		);
 	}
 	tmp.el.exitStad.setDisplay(player.inf.stadium.current != "");
-	tmp.el.stadiumProg.setTxt(player.inf.stadium.current==""?"":"Progress to Completion: "+showNum(tmp.inf.stadium.progress())+"%")
+	tmp.el.stadiumProg.setTxt(player.inf.stadium.current==""?"":"Progress to Completion: "+showNum(tmp.inf.stadium.progress())+"%");
 }
 
 function updateExtremeStadiumHTML(){
-	tmp.el.extremeStadDesc.setTxt(modeActive("extreme")?" in the same row":"")
-	tmp.el.extremeStadium.setDisplay(modeActive("extreme"))
+	tmp.el.extremeStadDesc.setTxt(modeActive("extreme")?" in the same row":"");
+	tmp.el.extremeStadium.setDisplay(modeActive("extreme"));
 	if (modeActive("extreme")) {
 		for (let i=0;i<Object.keys(EXTREME_STADIUM_DATA).length;i++) {
-			let name = Object.keys(EXTREME_STADIUM_DATA)[i]
+			let name = Object.keys(EXTREME_STADIUM_DATA)[i];
 			tmp.el[name+"Div"].setTooltip(extremeStadiumTooltip(name));
 			tmp.el[name+"Div"].setClasses({
 				stadiumChall: true,
 				comp: player.extremeStad.includes(name),
-			})
+			});
 			let active = player.inf.stadium.current == name;
 			let trapped = !active && extremeStadiumActive(name);
 			let comp = player.extremeStad.includes(name);
@@ -615,17 +581,13 @@ function updateAngelsChipsHTML(){
 		locked: player.inf.pantheon.gems.lt(1)
 	});
 	tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips));
-	tmp.el.chipGain.setTxt(
-		"(+" + showNum(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips")) + "/sec)"
-	);
+	tmp.el.chipGain.setTxt(formatGain(player.inf.pantheon.heavenlyChips, tmp.inf.pantheon.chipGain, "heavenlyChips"));
 	tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
-	tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)))
+	tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)));
 	tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls));
-	tmp.el.soulGain.setTxt(
-		"(+" + showNum(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls")) + "/sec)"
-	);
+	tmp.el.soulGain.setTxt(formatGain(player.inf.pantheon.demonicSouls, tmp.inf.pantheon.soulGain, "demonicSouls"));
 	tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)));
-	tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
+	tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)));
 }
 
 function updateDerivativeHTML(){
@@ -633,9 +595,7 @@ function updateDerivativeHTML(){
 		let name = DERV[i];
 		tmp.el["dervDiv" + name].setDisplay(tmp.inf.derv.unlocked(name));
 		tmp.el["derv" + name].setTxt(formatDistance(tmp.inf.derv.amt(name)));
-		tmp.el["dervgain" + name].setTxt(
-			"(+" + formatDistance(adjustGen(tmp.inf.derv.gain(name), "derv")) + "/sec)"
-		);
+		tmp.el["dervgain" + name].setTxt(formatGain(tmp.inf.derv.amt(name), tmp.inf.derv.gain(name), "derv", true));
 	}
 	let dervName = player.inf.derivatives.unlocks.gte(tmp.inf.derv.maxShifts) ? "Boosts" : "Shifts";
 	tmp.el.dervUnlock.setHTML(
@@ -657,25 +617,25 @@ function updateDerivativeHTML(){
 
 function updateAllInfinityHTML(){
 	if (player.tab == "inf") {
-		updateInfinityEndorsementStuffHTML()
-		updateInfinitySubtabHTML()
-		updateAscensionHTML()
+		updateInfinityEndorsementStuffHTML();
+		updateInfinitySubtabHTML();
+		updateAscensionHTML();
 
 		// The Stadium
 		if (infTab == "stadium") {
-			updateNormalStadiumHTML()
-			updateExtremeStadiumHTML()
+			updateNormalStadiumHTML();
+			updateExtremeStadiumHTML();
 		}
 
 		// The Pantheon
 		if (infTab == "pantheon") {
-			updateAngelsChipsHTML()
-			updatePurgeHTML()
+			updateAngelsChipsHTML();
+			updatePurgeHTML();
 		}
 
 		// Derivatives
 		if (infTab == "derivatives") {
-			updateDerivativeHTML()
+			updateDerivativeHTML();
 		}
 	}
 }
@@ -693,10 +653,7 @@ function updateNormalFurnace(){
 	if (fnTab=="nfn") {
 		tmp.el.coal.setTxt(
 			showNum(player.furnace.coal) +
-				" Coal" +
-				(" (+" +
-					showNum(adjustGen(tmp.fn.gain, "fn").times((nerfActive("noTS")||inFC(5)) ? 1 : tmp.timeSpeed)) +
-					"/sec)")
+				" Coal " + formatGain(player.furnace.coal, tmp.fn.gain, "fn")
 		);
 		tmp.el.coalEff.setTxt(showNum(tmp.fn.eff));
 		for (let i = 1; i <= 5; i++) {
@@ -709,8 +666,8 @@ function updateNormalFurnace(){
 			tmp.el["fnu" + i + "name"].setTxt(getScalingName("fn", i));
 			tmp.el["fnu" + i + "lvl"].setTxt(showNum(player.furnace.upgrades[i - 1]));
 		}
-		tmp.el.fnu4.setDisplay(player.tr.upgrades.includes(31))
-		tmp.el.fnu5.setDisplay(FCComp(5))
+		tmp.el.fnu4.setDisplay(player.tr.upgrades.includes(31));
+		tmp.el.fnu5.setDisplay(FCComp(5));
 		tmp.el.bf.setClasses({
 			btn: true,
 			locked: player.furnace.coal.lt(tmp.fn.bfReq),
@@ -718,31 +675,28 @@ function updateNormalFurnace(){
 		});
 		tmp.el.bfReq.setTxt(showNum(tmp.fn.bfReq));
 		tmp.el.bfAmt.setTxt(showNum(player.furnace.blueFlame)+(tmp.fn.enh.eff.gt(0)?(" + "+showNum(tmp.fn.enh.eff)):""));
-		tmp.el.blueFlameName.setTxt(getScalingName("bf"))
+		tmp.el.blueFlameName.setTxt(getScalingName("bf"));
 		tmp.el.bfEff.setTxt(showNum(ExpantaNum.sub(1, tmp.fn.bfEff).times(100)));
-		tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10))
-		for (let i=1;i<=5;i++) {
-			if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1))
-			tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]))
-			tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"))
+		tmp.el.furnChalls.setDisplay(player.inf.endorsements.gte(10));
+		for (let i=1;i<=6;i++) {
+			if (i==6) tmp.el["fnc"+i].setDisplay(player.elementary.bosons.scalar.higgs.upgrades.includes("6;0;0")&&player.furnChalls.includes(i-1));
+			else if (i>1) tmp.el["fnc"+i].setDisplay(player.furnChalls.includes(i-1));
+			tmp.el["fnc"+i+"goal"].setTxt(showNum(FC_GOAL[i]));
+			tmp.el["fns"+i].setTxt((player.activeFC==i)?(FCEnd()?"Complete":"Exit"):(player.furnChalls.includes(i)?"Finished":"Start"));
 		}
-		tmp.el.fnu1eff.setTxt(showNum(tmp.fn1base))
-		tmp.el.fnu4eff.setTxt(showNum(tmp.fn4base))
-		tmp.el.fu4dc.setTxt((player.tr.upgrades.includes(35)&&!HCCBA("noTRU"))?"is weaker":"does nothing")
+		tmp.el.fnu1eff.setTxt(showNum(tmp.fn1base));
+		tmp.el.fnu4eff.setTxt(showNum(tmp.fn4base));
+		tmp.el.fu4dc.setTxt((player.tr.upgrades.includes(35)&&!HCCBA("noTRU"))?"is weaker":"does nothing");
 	}
 }
 
 function updateEnhanceFurnace(){
 	if (fnTab=="efn") {
 		tmp.el.eCoal.setTxt(
-			showNum(player.furnace.enhancedCoal) +
-				" Enhanced Coal" +
-				(" (+" +
-					showNum(adjustGen(tmp.fn.enh.gain, "fn")) +
-					"/sec)")
+			showNum(player.furnace.enhancedCoal) + " Enhanced Coal " + formatGain(player.furnace.enhancedCoal, tmp.fn.enh.gain, "fn")
 		);
 		tmp.el.eCoalEff.setTxt(showNum(tmp.fn.enh.eff));
-		tmp.el.eCoalEff2.setTxt(showNum(tmp.fn.enh.eff2))
+		tmp.el.eCoalEff2.setTxt(showNum(tmp.fn.enh.eff2));
 		for (let i = 1; i <= 13; i++) {
 			tmp.el["efnu" + i].setClasses({
 				btn: true,
@@ -753,56 +707,101 @@ function updateEnhanceFurnace(){
 			tmp.el["efnu" + i + "name"].setTxt(getScalingName("efn", i));
 			tmp.el["efnu" + i + "lvl"].setTxt(showNum(player.furnace.enhancedUpgrades[i - 1])+(tmp.fn.enh.upgs[i].extra.gt(0)?(" + "+showNum(tmp.fn.enh.upgs[i].extra)):""));
 		}
-		tmp.el.efnu1eff.setTxt(showNum(tmp.fn.enh.upg1eff))
-		tmp.el.efnu2eff.setTxt(showNum(tmp.fn.enh.upg2eff.times(100)))
-		tmp.el.efnu3eff.setTxt(showNum(tmp.fn.enh.upg3eff))
-		tmp.el.efnu13eff.setTxt(showNum(tmp.fn.enh.upg13eff))
-		tmp.el.moltBr.setDisplay(tmp.fn.enh.moltBr.gte(1))
-		tmp.el.moltBrAmt.setTxt(showNum(tmp.fn.enh.moltBr))
-		tmp.el.moltBrEff.setTxt(showNum(tmp.fn.enh.moltBrEff))
-		tmp.el.moltBrEff2.setTxt(showNum(tmp.fn.enh.moltBrEff2))
+		tmp.el.efnu1eff.setTxt(showNum(tmp.fn.enh.upg1eff));
+		tmp.el.efnu2eff.setTxt(showNum(tmp.fn.enh.upg2eff.times(100)));
+		tmp.el.efnu3eff.setTxt(showNum(tmp.fn.enh.upg3eff));
+		tmp.el.efnu13eff.setTxt(showNum(tmp.fn.enh.upg13eff));
+		tmp.el.moltBr.setDisplay(tmp.fn.enh.moltBr.gte(1));
+		tmp.el.moltBrAmt.setTxt(showNum(tmp.fn.enh.moltBr));
+		tmp.el.moltBrEff.setTxt(showNum(tmp.fn.enh.moltBrEff));
+		tmp.el.moltBrEff2.setTxt(showNum(tmp.fn.enh.moltBrEff2));
+	}
+}
+
+function updateMagma() {
+	if (fnTab == "magma") {
+		let req = getMagmaReq();
+		tmp.el.magmaSearch.setClasses({
+			btn: true,
+			locked: player.furnace.enhancedCoal.lt(req),
+			magma: player.furnace.enhancedCoal.gte(req),
+		});
+		tmp.el.magmaReq.setTxt(showNum(req));
+		tmp.el.magmaAmt.setTxt(showNum(player.magma.amount));
+		tmp.el.magmaEff.setTxt(showNum(tmp.fn.magma.eff.sub(1).times(100)));
+		let req2 = getMagmaReformReq();
+		let req2b = getMagmaReformReq2();
+		tmp.el.reformMagma.setClasses({
+			btn: true,
+			locked: player.magma.amount.lt(req2)||player.inf.knowledge.lt(req2b),
+			magma: player.magma.amount.gte(req2)&&player.inf.knowledge.gte(req2b),
+		});
+		tmp.el.magmaReformReq.setTxt(showNum(req2));
+		tmp.el.magmaReformReq2.setTxt(showNum(req2b));
+		tmp.el.rMagmaAmt.setTxt(showNum(player.magma.ref));
+		tmp.el.rMagmaEff.setHTML("<span class='magmaTxt'>"+showNum(tmp.fn.magma.eff2)+"x</span>"+(player.elementary.theory.tree.unl?(" (boosted by unspent Theory Points"+(player.elementary.theory.depth.gte(6)?(" and Primary String length)"):")")):""));
 	}
 }
 
 function updateOverallExtremeModeHTML(){
 	tmp.el.rankCheapDiv.setDisplay(modeActive('extreme'));
 	if (modeActive("extreme")) {
-		updateRankCheapenersHTML()
+		updateRankCheapenersHTML();
 		// The Furnace
 		if (player.tab=="furnace") {
-			updateNormalFurnace() 
-			updateEnhanceFurnace()
+			updateNormalFurnace(); 
+			updateEnhanceFurnace();
+			updateMagma();
 		}
 	}
 }
 
 function updateStatisticsHTML(){
 	if (player.tab == "statistics") {
-		tmp.el.best.setTxt(formatDistance(player.bestDistance))
-		tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s")
-		tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>")
-		tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)))
-		tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)))
-		let v = false
+		updateStatTabs();
+		if (statTab == "mainStats") {
+			tmp.el.best.setTxt(formatDistance(player.bestDistance));
+			tmp.el.bestV.setTxt(formatDistance(player.bestV)+"/s");
+			tmp.el.bestA.setHTML(formatDistance(player.bestA)+"/s<sup>2</sup>");
+			tmp.el.maxEnd.setTxt(player.bestEnd.eq(0)?"":("Best-Ever Endorsements: "+showNum(player.bestEnd)));
+			tmp.el.maxEP.setTxt(player.bestEP.eq(0)?"":("Best-Ever Elementary Point gain in one reset: "+showNum(player.bestEP)));
+		} 
+		
+		// Always called because it determines whether the tab button is shown
+		statScalingsShown = false;
 		for (let i=0;i<Object.keys(SCALING_STARTS).length;i++) {
-			let name = Object.keys(SCALING_STARTS)[i]
-			let tt = ""
-			if (name=="hyper") tt = "Note: Hyper scaling cannot go below 50% strength :)\n"
+			let name = Object.keys(SCALING_STARTS)[i];
+			let tt = "";
+			if (name=="hyper") tt = "Note: Hyper scaling cannot go below 50% strength :)\n";
 			for (let r=0;r<Object.keys(SCALING_RES).length;r++) { // NESTED LOOP, REMOVE TO REDUCE LAG
-				let func = Object.values(SCALING_RES)[r]
-				let key = Object.keys(SCALING_RES)[r]
-				let amt = func(1)
-				if (MULTI_SCALINGS.includes(key)) for (let i=1;i<=SCALING_AMTS[key];i++) amt = ExpantaNum.max(amt, func(i))
-				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
-				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
+				let func = Object.values(SCALING_RES)[r];
+				let key = Object.keys(SCALING_RES)[r];
+				let amt = func(1);
+				if (MULTI_SCALINGS.includes(key)) for (let i=1;i<=SCALING_AMTS[key];i++) amt = ExpantaNum.max(amt, func(i));
+				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue;
+				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n";
 			}
-			let blank = ""
-			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
-			tmp.el[name+"Stat"].changeStyle("visibility", tt==blank?"hidden":"visible")
-			if (tt!=blank) v = true
-			tmp.el[name+"Stat"].setAttr("widetooltip", tt)
+			let blank = "";
+			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n";
+			tmp.el[name+"Stat"].changeStyle("visibility", tt==blank?"hidden":"visible");
+			if (tt!=blank) statScalingsShown = true;
+			tmp.el[name+"Stat"].setAttr("widetooltip", tt);
 		}
-		tmp.el.scaleStatDiv.changeStyle("visibility", v?"visible":"hidden")
+		
+		if (statTab == "rankTiers") {
+			tmp.el.rankStats.setDisplay(player.rank.gt(1));
+			tmp.el.tierStats.setDisplay(player.tier.gt(0));
+			for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
+				let ranks = Object.keys(RANK_DESCS)[i];
+				tmp.el["rankReward"+ranks].setDisplay(player.rank.gt(ranks));
+				if (tmp.el["rankEff"+ranks]) tmp.el["rankEff"+ranks].setTxt(showNum(window["rank"+ranks+"Eff"]()));
+			}
+			for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
+				let tiers = Object.keys(TIER_DESCS)[i];
+				tmp.el["tierReward"+tiers].setDisplay(player.tier.gt(tiers));
+				if (tmp.el["tierEff"+tiers]) tmp.el["tierEff"+tiers].setTxt(showNum(window["tier"+tiers+"Eff"]()));
+			}
+		}
 	}
 }
 
@@ -882,13 +881,13 @@ function updateGaugeBosonsAmountHTML(){
 	tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount));
 	tmp.el.gaugeGain.setTxt(showNum(adjustGen(tmp.elm.bos.gaugeGain, "gauge")));
 	tmp.el.gaugeForce.setTxt(showNum(player.elementary.bosons.gauge.force));
-	tmp.el.gaugeForceGain.setTxt(showNum(tmp.elm.bos.forceGain));
+	tmp.el.gaugeForceGain.setTxt(formatGain(player.elementary.bosons.gauge.force, tmp.elm.bos.forceGain));
 	tmp.el.gaugeForceEff.setTxt(showNum(tmp.elm.bos.forceEff));
 }
 
 function updatePhotonsHTML(){
 	tmp.el.photons.setTxt(showNum(player.elementary.bosons.gauge.photons.amount));
-	tmp.el.photonGain.setTxt(showNum(adjustGen(tmp.elm.bos.photonGain, "gauge")));
+	tmp.el.photonGain.setTxt(formatGain(player.elementary.bosons.gauge.photons.amount, tmp.elm.bos.photonGain, "gauge"));
 	for (let i = 1; i <= PHOTON_UPGS; i++) {
 		tmp.el["photon" + i].setClasses({
 			btn: true,
@@ -903,11 +902,11 @@ function updatePhotonsHTML(){
 
 function upadteWZBosonsHTML(){
 	tmp.el.w.setTxt(showNum(player.elementary.bosons.gauge.w));
-	tmp.el.wg.setTxt(showNum(adjustGen(tmp.elm.bos.wg, "gauge")));
+	tmp.el.wg.setTxt(formatGain(player.elementary.bosons.gauge.w, tmp.elm.bos.wg, "gauge"));
 	tmp.el.w1.setTxt(showNum(tmp.elm.bos.w1));
 	tmp.el.w2.setTxt(showNum(tmp.elm.bos.w2));
 	tmp.el.z.setTxt(showNum(player.elementary.bosons.gauge.z));
-	tmp.el.zg.setTxt(showNum(adjustGen(tmp.elm.bos.zg, "gauge")));
+	tmp.el.zg.setTxt(formatGain(player.elementary.bosons.gauge.z, tmp.elm.bos.zg, "gauge"));
 	tmp.el.z1.setTxt(showNum(tmp.elm.bos.z1));
 	tmp.el.z2.setTxt(showNum(tmp.elm.bos.z2));
 }
@@ -917,8 +916,8 @@ function updateGluonsHTML(){
 		let col = GLUON_COLOURS[i];
 		let amt = player.elementary.bosons.gauge.gluons[col].amount;
 		tmp.el[col + "g"].setTxt(showNum(amt));
-		tmp.el[col + "gg"].setTxt(showNum(adjustGen(tmp.elm.bos[col + "g"], "gauge")));
-		tmp.el["glu"+col+"3"].setDisplay(hasDE(1))
+		tmp.el[col + "gg"].setTxt(formatGain(amt, tmp.elm.bos[col+"g"], "gauge"));
+		tmp.el["glu"+col+"3"].setDisplay(hasDE(1));
 		for (let x = 1; x <= 3; x++) {
 			tmp.el[col + "Upg" + x].setClasses({
 				btn: true,
@@ -936,10 +935,13 @@ function updateGluonsHTML(){
 
 function updateGravitonsHTML(){
 	tmp.el.grav.setTxt(showNum(player.elementary.bosons.gauge.gravitons));
-	tmp.el.gravGain.setTxt(showNum(adjustGen(tmp.elm.bos.gravGain, "gauge")));
+	tmp.el.gravGain.setTxt(formatGain(player.elementary.bosons.gauge.gravitons, tmp.elm.bos.gravGain, "gauge"));
 	tmp.el.gravMult.setTxt(showNum(tmp.elm.bos.gravEff));
-	tmp.el.gravBoostDiv.setDisplay(hasDE(4))
-	tmp.el.gravBoosts.setTxt(showNum(getGravBoosts()));
+	tmp.el.gravBoostDiv.setDisplay(hasDE(4));
+	let boosts = getGravBoosts();
+	tmp.el.gravBoosts.setTxt(showNum(boosts));
+	tmp.el.gravBoostNext.setTxt(showNum(getNextGravBoost(boosts)));
+	tmp.el.gravBoostEach.setTxt(showNum(getGravBoostBase()));
 	tmp.el.gravBoostMult.setTxt(showNum(getGravBoostMult()));
 }
 
@@ -947,23 +949,29 @@ function updateScalarBosonsHTML(){
 	if (bosTab == "scalar") {
 		tmp.el.scalarAmt.setTxt(showNum(player.elementary.bosons.scalar.amount));
 		tmp.el.scalarGain.setTxt(showNum(adjustGen(tmp.elm.bos.scalarGain, "scalar")));
-		tmp.el.higgs.setTxt(showNum(player.elementary.bosons.scalar.higgs.amount))
-		tmp.el.higgsGain.setTxt(showNum(adjustGen(tmp.elm.bos.higgsGain, "scalar")))
+		tmp.el.higgs.setTxt(showNum(player.elementary.bosons.scalar.higgs.amount));
+		tmp.el.higgsGain.setTxt(formatGain(player.elementary.bosons.scalar.higgs.amount, tmp.elm.bos.higgsGain, "scalar"));
 		for (let i=0;i<Object.keys(HIGGS_UPGS).length;i++) {
-			let name = Object.keys(HIGGS_UPGS)[i]
-			let data = Object.values(HIGGS_UPGS)[i]
-			tmp.el["higgs"+name].setDisplay(data.unl())
-			tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)})
-			tmp.el["higgs"+name].setHTML(data.desc+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.")
+			let name = Object.keys(HIGGS_UPGS)[i];
+			let data = Object.values(HIGGS_UPGS)[i];
+			tmp.el["higgs"+name].setDisplay(data.unl());
+			tmp.el["higgs"+name].setClasses({btn: true, higgsL: player.elementary.bosons.scalar.higgs.amount.lt(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgs: player.elementary.bosons.scalar.higgs.amount.gte(data.cost)&&!player.elementary.bosons.scalar.higgs.upgrades.includes(name), higgsB: player.elementary.bosons.scalar.higgs.upgrades.includes(name)});
+			let extra = HIGGS_UPGS_EXTR_DESCS[name];
+			let text = data.desc;
+			if (extra != undefined) {
+				let ac = extra.active();
+				if (ac) text = extra.desc[ac];
+			}
+			tmp.el["higgs"+name].setHTML(text+"<br>Cost: "+showNum(data.cost)+" Higgs Bosons.");
 		}
-		tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x")
-		tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x")
-		tmp.el["higgs3;0;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_3;0;0"](true))+"x")
-		tmp.el["higgs0;2;1"].setTooltip("Currently: +"+showNum(tmp.elm.bos["higgs_0;2;1"](true))+"%")
-		tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x")
-		tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x")
-		tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x")
-		tmp.el["higgs0;0;5"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;5"](true))+" later")
+		tmp.el["higgs1;1;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;1;0"](true))+"x");
+		tmp.el["higgs0;1;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;1;1"](true))+"x");
+		tmp.el["higgs3;0;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_3;0;0"](true))+"x");
+		tmp.el["higgs0;2;1"].setTooltip("Currently: +"+showNum(tmp.elm.bos["higgs_0;2;1"](true))+"%");
+		tmp.el["higgs0;0;4"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;4"](true))+"x");
+		tmp.el["higgs1;3;0"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_1;3;0"](true))+"x");
+		tmp.el["higgs0;3;1"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;3;1"](true))+"x");
+		tmp.el["higgs0;0;5"].setTooltip("Currently: "+showNum(tmp.elm.bos["higgs_0;0;5"](true))+" later");
 	}
 }
 
@@ -980,232 +988,248 @@ function updateElementaryMainDisplaysHTML(){
 
 function updateSuperSymetryHTML(){
 	if (thTab=="ss") {
-		tmp.el.ssUnl.setDisplay(!player.elementary.theory.supersymmetry.unl)
-		tmp.el.ssDiv.setDisplay(player.elementary.theory.supersymmetry.unl)
+		tmp.el.ssUnl.setDisplay(!player.elementary.theory.supersymmetry.unl);
+		tmp.el.ssDiv.setDisplay(player.elementary.theory.supersymmetry.unl);
 		for (let i=0;i<4;i++) {
-			let type = ["squark","slepton","neutralino","chargino"][i]
-			tmp.el[type+"s"].setTxt(showNum(player.elementary.theory.supersymmetry[type+"s"]))
-			tmp.el[type+"Gain"].setTxt(showNum(adjustGen(tmp.elm.theory.ss[type+"Gain"], "ss")))
-			tmp.el[type+"Eff"].setTxt(showNum(tmp.elm.theory.ss[type+"Eff"]))
+			let type = ["squark","slepton","neutralino","chargino"][i];
+			tmp.el[type+"s"].setTxt(showNum(player.elementary.theory.supersymmetry[type+"s"]));
+			tmp.el[type+"Gain"].setTxt(formatGain(player.elementary.theory.supersymmetry[type+"s"], tmp.elm.theory.ss[type+"Gain"], "ss"));
+			tmp.el[type+"Eff"].setTxt(showNum(tmp.elm.theory.ss[type+"Eff"]));
 		}
-		tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength))
-		tmp.el.waveEff.setTxt(showNum(tmp.elm.theory.ss.waveEff))
+		tmp.el.wavelength.setTxt(formatDistance(tmp.elm.theory.ss.wavelength));
+		tmp.el.waveEff.setTxt(showNum(tmp.elm.theory.ss.waveEff));
 	}
 }
 
 function updateTheoryTreeHTML(){
 	if (thTab=="tree") {
-		tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
-		tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
+		tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl);
+		tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl);
 		for (let i=1;i<=TREE_AMT;i++) {
-			let bought = tmp.elm.theory.tree.bought(i)
-			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
-			let cap = getTreeUpgCap(i)
-			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
-			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
+			let bought = tmp.elm.theory.tree.bought(i);
+			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden");
+			let cap = getTreeUpgCap(i);
+			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap));
+			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))});
 		}
-		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
-		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
+		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.");
+		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"");
+	}
+}
+
+function updateTheoryTreeHTMLPerSec() {
+	if (thTab=="tree") {
+		for (let i=1;i<=TREE_AMT;i++) {
+			let bought = tmp.elm.theory.tree.bought(i);
+			let cap = getTreeUpgCap(i);
+			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))));
+		}
 	}
 }
 
 function updateStringsHTML(){
 	if (thTab=="strings") {
-		tmp.el.stringsUnl.setDisplay(!player.elementary.theory.strings.unl)
-		tmp.el.stringsDiv.setDisplay(player.elementary.theory.strings.unl)
+		tmp.el.stringsUnl.setDisplay(!player.elementary.theory.strings.unl);
+		tmp.el.stringsDiv.setDisplay(player.elementary.theory.strings.unl);
 		for (let i=1;i<=TOTAL_STR;i++) {
-			if (i>1) tmp.el["str"+i].setDisplay(player.elementary.theory.strings.amounts[i-2].gte(STR_REQS[i])&&(UNL_STR()>=i))
-			tmp.el["str"+i+"amt"].setTxt(formatDistance(player.elementary.theory.strings.amounts[i-1]))
-			tmp.el["str"+i+"eff"].setTxt(showNum(getStringEff(i)))
-			tmp.el["str"+i+"gain"].setTxt(formatDistance(adjustGen(getStringGain(i), "str")))
+			if (i>1) tmp.el["str"+i].setDisplay(player.elementary.theory.strings.amounts[i-2].gte(STR_REQS[i])&&(UNL_STR()>=i));
+			tmp.el["str"+i+"amt"].setTxt(formatDistance(player.elementary.theory.strings.amounts[i-1]));
+			tmp.el["str"+i+"eff"].setTxt(showNum(getStringEff(i)));
+			tmp.el["str"+i+"gain"].setTxt(formatGain(player.elementary.theory.strings.amounts[i-1], getStringGain(i), "str", true));
 		}
-		let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
-		tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])))
-		tmp.el.entangleDiv.setDisplay(lastStr>=3||lastStr==0||player.elementary.theory.strings.entangled.gt(0))
-		tmp.el.entangle.setClasses({btn: true, locked: lastStr<3&&lastStr!=0, th: lastStr>=3||lastStr==0})
-		tmp.el.entangle.setTxt("Entangle your Strings (which resets them) to gain "+formatDistance(getEntangleGain())+" of Entangled Strings.")
-		tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled))
-		tmp.el.entangleEff.setTxt(showNum(getEntangleEff()))
+		let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1;
+		tmp.el.nextStr.setTxt((lastStr<=1||lastStr>UNL_STR())?"":("Next String unlocks when your "+STR_NAMES[lastStr-1]+" String reaches a length of "+formatDistance(STR_REQS[lastStr])));
+		tmp.el.entangleDiv.setDisplay(lastStr>=3||lastStr==0||player.elementary.theory.strings.entangled.gt(0));
+		tmp.el.entangle.setClasses({btn: true, locked: lastStr<3&&lastStr!=0, th: lastStr>=3||lastStr==0});
+		tmp.el.entangle.setTxt("Entangle your Strings (which resets them) to gain "+formatDistance(getEntangleGain())+" of Entangled Strings.");
+		tmp.el.entangleAmt.setTxt(formatDistance(player.elementary.theory.strings.entangled));
+		tmp.el.entangleEff.setTxt(showNum(getEntangleEff()));
 	}
 }
 
 function updatePreonsHTML(){
 	if (thTab=="preons") {
-		tmp.el.preonsUnl.setDisplay(!player.elementary.theory.preons.unl)
-		tmp.el.preonsDiv.setDisplay(player.elementary.theory.preons.unl)
-		tmp.el.preonAmt.setTxt(showNum(player.elementary.theory.preons.amount))
-		tmp.el.preonGain.setTxt(showNum(adjustGen(getPreonGain(), "preons")))
-		tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())})
-		tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
-		tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
+		tmp.el.preonsUnl.setDisplay(!player.elementary.theory.preons.unl);
+		tmp.el.preonsDiv.setDisplay(player.elementary.theory.preons.unl);
+		tmp.el.preonAmt.setTxt(showNum(player.elementary.theory.preons.amount));
+		tmp.el.preonGain.setTxt(formatGain(player.elementary.theory.preons.amount, getPreonGain(), "preons"));
+		tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())});
+		tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons");
+		tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters));
 	}
 }
 
 function updateAcceleronsHTML(){
 	if (thTab=="accelerons") {
-		tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl)
-		tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl)
-		tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount))
-		let gain = getAccelGain()
-		tmp.el.accelGain.setTxt(showNum(adjustGen(gain, "accelerons")))
-		tmp.el.accelerSC.setHTML(gain.gte(1e6)?"<span class='sc'>(softcapped)</span>":"")
-		let accEff = getAccelEff()
-		tmp.el.accelEff.setHTML("<span class='thp'>"+showNum(accEff)+"</span>x later"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
-		let next = player.elementary.theory.accelerons.expanders.toNumber()+1
-		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS))})
-		tmp.el.darkExp.setHTML((next-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"))
-		tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
-		let past = ""
-		if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
-		tmp.el.darkExpPast.setHTML(past)
+		tmp.el.acceleronsUnl.setDisplay(!player.elementary.theory.accelerons.unl);
+		tmp.el.acceleronsDiv.setDisplay(player.elementary.theory.accelerons.unl);
+		tmp.el.accel.setTxt(showNum(player.elementary.theory.accelerons.amount));
+		let gain = getAccelGain();
+		tmp.el.accelGain.setTxt(showNum(adjustGen(gain, "accelerons")));
+		tmp.el.accelerSC.setHTML(gain.gte(1e6)?"<span class='sc'>(softcapped)</span>":"");
+		let accEff = getAccelEff();
+		tmp.el.accelEff.setHTML("<span class='thp'>"+showNum(accEff)+"</span>x later"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""));
+		let next = player.elementary.theory.accelerons.expanders.toNumber()+1;
+		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=MAX_DARK_EXPANDERS))});
+		tmp.el.darkExp.setHTML((next-1>=MAX_DARK_EXPANDERS)?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"));
+		tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders));
+		let past = "";
+		if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>");
+		tmp.el.darkExpPast.setHTML(past);
 	}
 }
 
 function updateInfatonsHTML(){
 	if (thTab=="inflatons") {
-		tmp.el.inflatonsUnl.setDisplay(!player.elementary.theory.inflatons.unl)
-		tmp.el.inflatonsDiv.setDisplay(player.elementary.theory.inflatons.unl)
-		tmp.el.inflatonAmt.setTxt(showNum(player.elementary.theory.inflatons.amount))
-		let state = tmp.elm.hc.infState
-		tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"))
-		tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")))
-		tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()))
-		let eff2 = getInflatonEff2()
-		tmp.el.inflaton2.setTxt(showNum(eff2))
-		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?"(softcapped)":"")
-		tmp.el.inflaton2sc.setTxt(eff2.gte(5)?"(extremely softcapped)":"")
+		tmp.el.inflatonsUnl.setDisplay(!player.elementary.theory.inflatons.unl);
+		tmp.el.inflatonsDiv.setDisplay(player.elementary.theory.inflatons.unl);
+		tmp.el.inflatonAmt.setTxt(showNum(player.elementary.theory.inflatons.amount));
+		let state = tmp.elm.hc.infState;
+		tmp.el.inflatonPerc.setTxt(state>=0?(showNum(state*100)+"% Inflated"):(showNum(state*(-100))+"% Deflated"));
+		tmp.el.inflatonGain.setTxt(showNum(adjustGen(tmp.elm.hc.infGain, "inflatons")));
+		tmp.el.inflaton1.setTxt(showNum(getInflatonEff1()));
+		let eff2 = getInflatonEff2();
+		tmp.el.inflaton2.setTxt(showNum(eff2));
+		tmp.el.inflatonSC.setTxt(tmp.elm.hc.infGain.gte(5e4)?" (softcapped)":"");
+		tmp.el.inflaton2sc.setTxt((eff2.gte(5)&&!player.elementary.entropy.upgrades.includes(13))?"(extremely softcapped)":"");
 	}
 }
 
 function updateFermionsMainHTML(){
 	if (elmTab == "fermions") {
-		updateFermionsHTML()
-		updateQuarksHTML()
-		updateLeptonsHTML()
+		updateFermionsHTML();
+		updateQuarksHTML();
+		updateLeptonsHTML();
 	}
 }
 
 function updateBosonsMainHTML(){
 	if (elmTab == "bosons") {
-		updateBosonsAmountsHTML()
+		updateBosonsAmountsHTML();
 		if (bosTab == "gauge") {
-			updateGaugeBosonsAmountHTML()
-			updatePhotonsHTML()
-			upadteWZBosonsHTML()
-			updateGluonsHTML()
-			updateGravitonsHTML()
+			updateGaugeBosonsAmountHTML();
+			updatePhotonsHTML();
+			upadteWZBosonsHTML();
+			updateGluonsHTML();
+			updateGravitonsHTML();
 		}
-		updateScalarBosonsHTML()
+		updateScalarBosonsHTML();
 	}
 }
 
 function updateTheoryverseMainHTML(){
 	if (elmTab=="theory") {
-		tmp.el.thp.setTxt(showNum(player.elementary.theory.points))
+		tmp.el.thp.setTxt(showNum(player.elementary.theory.points));
 		if (thTab=="tv") {
-			tmp.el.theoriverse.setTxt(HCTVal("tv").gt(-1)?"Trapped in the Theoriverse!":player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
-			tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
+			tmp.el.theoriverse.setTxt(HCTVal("tv").gt(-1)?"Trapped in the Theoriverse!":player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)));
+			tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")");
 		}
-		updateSuperSymetryHTML()
-		updateTheoryTreeHTML()
-		updateStringsHTML()
-		updatePreonsHTML()
-		updateAcceleronsHTML()
-		updateInfatonsHTML()
+		updateSuperSymetryHTML();
+		updateTheoryTreeHTML();
+		updateStringsHTML();
+		updatePreonsHTML();
+		updateAcceleronsHTML();
+		updateInfatonsHTML();
 	}
 }
 
 function updateHadronicChallenges(){
 	if (elmTab=="hc") {
-		tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore))
-		tmp.el.startHC.setTxt((!(!player.elementary.hc.active))?(canCompleteHC()?"Complete Hadronic Challenge!":"Exit Hadronic Challenge early for no reward"):"Start Hadronic Challenge")
-		tmp.el.bestHadScore.setTxt(showNum(player.elementary.hc.best))
-		tmp.el.hadrons.setTxt(showNum(player.elementary.hc.hadrons))
-		tmp.el.hadronGain.setTxt(showNum(adjustGen(tmp.elm.hc.hadronGain, "hc")))
-		tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
-		tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
-		tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
+		tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore));
+		tmp.el.startHC.setTxt((player.elementary.hc.active)?(canCompleteHC()?"Complete Hadronic Challenge!":"Exit Hadronic Challenge early for no reward"):"Start Hadronic Challenge");
+		tmp.el.bestHadScore.setTxt(showNum(player.elementary.hc.best));
+		tmp.el.hadrons.setTxt(showNum(player.elementary.hc.hadrons));
+		tmp.el.hadronGain.setTxt(formatGain(player.elementary.hc.hadrons, tmp.elm.hc.hadronGain, "hc"));
+		tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed));
+		tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next));
+		tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk));
 		for (let i=0;i<6;i++) {
-			let x = ""
-			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
-			tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
-			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].changeStyle("visibility", player.elementary.theory.inflatons.unl?"visible":"hidden")
-			tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])))
+			let x = "";
+			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n";
+			tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x);
+			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl);
+			tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])));
+			
+			x = "";
+			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+EXTREME_STADIUM_DATA[HC_EXTREME_CHALLS[i]].descs[j]+".\n\n";
+			tmp.el["hcExtrChall"+HC_EXTREME_CHALLS[i]].setTooltip(x);
+			tmp.el["hcSelectorSpan"+HC_EXTREME_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl&&modeActive("extreme"));
+			tmp.el["hcCurrent"+HC_EXTREME_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_EXTREME_CHALLS[i])));
 		}
-		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
-		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
+		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")));
+		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"");
 	}
 }
 
 function updateMainEnergyTabHTML(){
-	updateENTabs()
+	updateENTabs();
 	if (enTab=="mainEN") {
-		tmp.el.energyAmt.setTxt(showNum(player.energy))
-		tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff))
-		tmp.el.energyRefillOnce.setDisplay(!modeActive("hard"))
+		tmp.el.energyAmt.setTxt(showNum(player.energy));
+		tmp.el.energyEff.setTxt(showNum(tmp.hd.enEff));
+		tmp.el.energyRefillOnce.setDisplay(!modeActive("hard"));
 		tmp.el.energyRefill.setClasses({
 			btn: true,
 			en: player.canRefill,
 			locked: !player.canRefill,
-		})
-		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
-		tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"")
+		});
+		tmp.el.motive.setTxt(showNum(tmp.hd.motive));
+		tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"");
 		for (let i=1;i<=26;i++) {
-			let cost = getEnergyUpgCost(i)
+			let cost = getEnergyUpgCost(i);
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,
 				bought: player.energyUpgs.includes(i),
 				locked: !player.energyUpgs.includes(i)&&tmp.hd.motive.lt(cost),
 				en: !player.energyUpgs.includes(i)&&tmp.hd.motive.gte(cost),
 				enBox: true,
-			})
-			tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i))
-			tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost))
-			tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]))
+			});
+			tmp.el["energyUpg"+i].setDisplay(isEnergyUpgShown(i));
+			tmp.el["energyUpg"+i+"Cost"].setTxt(showNum(cost));
+			tmp.el["energyUpg"+i+"Current"].setTxt(showNum(tmp.hd.enerUpgs[i]));
 		}
 	}
 }
 
 function updateGeneratorsHTML(){
 	if (enTab=="generator") {
-		let plural = player.geners.gt(1)
-		tmp.el.geners.setHTML(plural?("<span class='energy'>"+showNum(player.geners)+"</span> Generators are"):"Generator is")
-		tmp.el.genLvl.setTxt(showNum(player.genLvl))
-		tmp.el.energyGen.setTxt(showNum(tmp.hd.energyGen))
-		tmp.el.energyLim.setTxt(showNum(getEnergyLim()))
-		let cost = getGenCost()
+		let plural = player.geners.gt(1);
+		tmp.el.geners.setHTML(plural?("<span class='energy'>"+showNum(player.geners)+"</span> Generators are"):"Generator is");
+		tmp.el.genLvl.setTxt(showNum(player.genLvl));
+		tmp.el.energyGen.setTxt(showNum(tmp.hd.energyGen));
+		tmp.el.energyLim.setTxt(showNum(getEnergyLim()));
+		let cost = getGenCost();
 		tmp.el.buyGen.setClasses({
 			btn: true,
 			locked: tmp.hd.motive.lt(cost),
 			en: tmp.hd.motive.gte(cost),
 			enBox: true,
-		})
-		tmp.el.genCost.setTxt(showNum(cost))
-		tmp.el.superEn.setTxt(showNum(tmp.hd.superEn))
-		tmp.el.superEnEff.setTxt(showNum(tmp.hd.superEnEff))
-		tmp.el.superEnEff2Div.setDisplay(player.geners.gt(1))
-		tmp.el.superEnEff2.setTxt(showNum(tmp.hd.superEnEff2.sub(1).times(100)))
-		tmp.el.newGen.setDisplay(player.inf.endorsements.gte(21))
-		let cost2 = getNewGenCost()
+		});
+		tmp.el.genCost.setTxt(showNum(cost));
+		tmp.el.superEn.setTxt(showNum(tmp.hd.superEn));
+		tmp.el.superEnEff.setTxt(showNum(tmp.hd.superEnEff));
+		tmp.el.superEnEff2Div.setDisplay(player.geners.gt(1));
+		tmp.el.superEnEff2.setTxt(showNum(tmp.hd.superEnEff2.sub(1).times(100)));
+		tmp.el.newGen.setDisplay(player.inf.endorsements.gte(21));
+		let cost2 = getNewGenCost();
 		tmp.el.newGen.setClasses({
 			btn: true,
 			locked: tmp.hd.motive.lt(cost2),
 			en: tmp.hd.motive.gte(cost2),
 			enBox: true,
-		})
-		tmp.el.newGenCost.setTxt(showNum(cost2))
+		});
+		tmp.el.newGenCost.setTxt(showNum(cost2));
 	}
 }
 
 function updateOverallElementaryHTML(){
 	if (player.tab == "elementary") {
-		updateElementaryMainDisplaysHTML()
-		updateFermionsMainHTML()
-		updateBosonsMainHTML()
-		updateTheoryverseMainHTML()
-		updateHadronicChallenges()
-		updateQFHTML()
+		updateElementaryMainDisplaysHTML();
+		updateFermionsMainHTML();
+		updateBosonsMainHTML();
+		updateTheoryverseMainHTML();
+		updateHadronicChallenges();
+		updateQFHTML();
+		updateSkyHTML();
 	}
 }
 
@@ -1220,11 +1244,12 @@ function updateMiscHTML(){
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
 	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
-	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
+	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"');
+	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364");
 
 	tmp.el.mainContainer.setDisplay(showContainer);
-	tmp.el.loading.setDisplay(false)
-	tmp.el.footer.setDisplay(player.tab == "options" && player.optionsTab !== "saving");
+	tmp.el.loading.setDisplay(false);
+	tmp.el.footer.setDisplay(player.tab == "options");
 	tmp.el.newsticker.setDisplay(player.options.newst);
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
@@ -1244,14 +1269,15 @@ function updateMiscHTML(){
 		(INF_TABS.derivatives()?"Shift + D -> Derivative Shift/Boost\n":"")+
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
 		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
-		(TH_TABS.strings()?"S -> Entangled String reset":"")
+		(TH_TABS.strings()?"S -> Entangled String reset\n":"")+
+		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset":"")
 	);
 }
 
 function updateOverallEnergyHTML(){
 	if (player.tab == "energy") {
-		updateMainEnergyTabHTML()
-		updateGeneratorsHTML()
+		updateMainEnergyTabHTML();
+		updateGeneratorsHTML();
 	}
 }
 
@@ -1259,91 +1285,142 @@ function updateQFHTML() {
 	if (elmTab=="foam") {
 		if (foamTab=="foamBoosts") {
 			for (let b=1;b<=25;b++) {
-				tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0))
-				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).gt(0))||(b<13&&tmp.elm.qf.boost13.plus(tmp.elm.qf.boost25).gt(0))||(b<25&&tmp.elm.qf.boost25.gt(0)))?(" + "+showNum(tmp.elm.qf.boost25.plus(b>=13?0:tmp.elm.qf.boost13).plus(b>=5?0:tmp.elm.qf.boost5))):""))
-				tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]))
+				tmp.el["qfb"+b].setDisplay(tmp.elm.qf.boostData[b].gt(0));
+				tmp.el["qfb"+b+"amt"].setTxt(showNum(tmp.elm.qf.boostData[b])+(((b<5&&tmp.elm.qf.boost5.plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25).gt(0))||(b<13&&tmp.elm.qf.boost13.plus(tmp.elm.qf.boost25).gt(0))||(b<25&&tmp.elm.qf.boost25.gt(0)))?(" + "+showNum(tmp.elm.qf.boost25.plus(b>=13?0:tmp.elm.qf.boost13).plus(b>=5?0:tmp.elm.qf.boost5))):""));
+				tmp.el["qfb"+b+"eff"].setTxt(showNum(tmp.elm.qf["boost"+b]));
 			}
-			tmp.el.ach162span.setDisplay(tmp.ach[162].has)
-			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()))
+			tmp.el.ach162span.setDisplay(tmp.ach[162].has);
+			tmp.el.ach162eff.setTxt(showNum(getAch162Eff()));
 		}
 		for (let x=1;x<=5;x++) if (foamTab=="qf1") {
-			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]))
-			tmp.el["qf"+x+"Gain"].setTxt(showNum(tmp.elm.qf.gain[x]))
-			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]))
+			tmp.el["qf"+x+"Amt"].setTxt(showNum(player.elementary.foam.amounts[x-1]));
+			tmp.el["qf"+x+"Gain"].setTxt(formatGain(player.elementary.foam.amounts[x-1], tmp.elm.qf.gain[x], "foam"));
+			if (x>1) tmp.el["qf"+x+"Eff"].setTxt(showNum(tmp.elm.qf.eff[x]));
 			for (let i=1;i<=3;i++) {
-				let cost = getQFBoostCost(x, i)
+				let cost = getQFBoostCost(x, i);
 				tmp.el["qf"+x+"Boost"+i].setClasses({
 					btn: true,
 					locked: player.elementary.foam.amounts[x-1].lt(cost),
 					foam: player.elementary.foam.amounts[x-1].gte(cost),
-				})
-				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
-				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
-				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2))
-				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
+				});
+				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost));
+				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]));
+				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2));
+				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"));
 			}
-			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x))
-			let refoamCost = getRefoamCost()
+			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x));
+			let refoamCost = getRefoamCost();
 			tmp.el["qf"+x+"NextUnl"].setClasses({
 				btn: true,
 				locked: player.elementary.foam.amounts[x-1].lt((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
 				foam: player.elementary.foam.amounts[x-1].gte((x==5)?refoamCost:QF_NEXTLAYER_COST[x]),
-			})
-			tmp.el["qf"+x+"Cost4"].setTxt(showNum((x==5)?refoamCost:QF_NEXTLAYER_COST[x]))
+			});
+			tmp.el["qf"+x+"Cost4"].setTxt(showNum((x==5)?refoamCost:QF_NEXTLAYER_COST[x]));
 
-			if (x===1) continue
-			const foamRows = document.querySelectorAll(`.qf${x}row`)
-			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none" } catch (_) {}
+			if (x===1) continue;
+			const foamRows = document.querySelectorAll(`.qf${x}row`);
+			for (const i in foamRows) try { foamRows[i].style.display = player.elementary.foam.maxDepth.gte(x) ? "table-row" : "none"; } catch (_) {} // Uhh...what?
 		}
-		if (foamTab=="qf1") tmp.el.qf5type.setHTML(player.elementary.foam.maxDepth.gt(5)?("<sup>"+showNum(player.elementary.foam.maxDepth.sub(4))+"</sup>"):"")
+		if (foamTab=="qf1") tmp.el.qf5type.setHTML(player.elementary.foam.maxDepth.gt(5)?("<sup>"+showNum(player.elementary.foam.maxDepth.sub(4))+"</sup>"):"");
 		if (foamTab=="entropy") {
-			let entGain = tmp.elm.entropy.gain
+			let entGain = tmp.elm.entropy.gain;
 			tmp.el.entropyReset.setClasses({
 				btn: true,
 				foam: entGain.gte(1),
 				locked: entGain.lt(1),
-			})
-			tmp.el.entropyGain.setTxt(showNum(entGain))
-			tmp.el.entropyNext.setTxt(entGain.lt(1e3)?("Next at "+showNum(getEntropyNext())+" Quantum Foam"):"")
-			tmp.el.entropyAmt.setTxt(showNum(player.elementary.entropy.amount))
-			tmp.el.entropyBest.setTxt(showNum(player.elementary.entropy.best))
-			tmp.el.entropyEff.setTxt(showNum(tmp.elm.entropy.eff))
-			tmp.el.omegaParticles.setTxt(showNum(tmp.elm.entropy.omega))
-			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
-			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
+			});
+			tmp.el.entropyGain.setTxt(showNum(entGain));
+			tmp.el.entropyNext.setTxt(entGain.lt(1e3)?("Next at "+showNum(getEntropyNext())+" Quantum Foam"):"");
+			tmp.el.entropyAmt.setTxt(showNum(player.elementary.entropy.amount));
+			tmp.el.entropyBest.setTxt(showNum(player.elementary.entropy.best));
+			tmp.el.entropyEff.setTxt(showNum(tmp.elm.entropy.eff));
+			tmp.el.omegaParticles.setTxt(showNum(tmp.elm.entropy.omega));
+			tmp.el.nextOmega.setTxt(showNum(getNextOmega()));
+			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff));
 			for (let i=1;i<=ENTROPY_UPGS;i++) {
-				let cost = ENTROPY_UPG_COSTS[i]
+				let cost = ENTROPY_UPG_COSTS[i]||new ExpantaNum(1/0);
+				tmp.el["entropy"+i].setDisplay(entropyUpgShown(i));
 				tmp.el["entropy"+i].setClasses({
 					btn: true,
 					foamBought: player.elementary.entropy.upgrades.includes(i),
 					foam: player.elementary.entropy.amount.gte(cost)&&!player.elementary.entropy.upgrades.includes(i),
 					locked: player.elementary.entropy.amount.lt(cost)&&!player.elementary.entropy.upgrades.includes(i),
-				})
-				tmp.el["entropyCost"+i].setTxt(showNum(cost))
-				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]))
+				});
+				tmp.el["entropyCost"+i].setTxt(showNum(cost));
+				if (tmp.elm.entropy.upgEff[i]) tmp.el["entropyEff"+i].setTxt(showNum(tmp.elm.entropy.upgEff[i]));
 			}
 		}
 	}
 }
 
+function updateSkyHTML() {
+	if (elmTab == "sky") {
+		let nextFieldReq = SKY_FIELD_UPGS_REQS.reduce(function(a,c) {
+			if (player.elementary.sky.amount.lt(a)) return new ExpantaNum(a);
+			return ExpantaNum.max(a,c);
+		});
+		if (skyTab == "skyrmions") {
+			let canReset = canSkyReset();
+			tmp.el.skyrmionReset.setClasses({
+				btn: true,
+				locked: !canReset,
+				sky: canReset,
+			});
+			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0));
+			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount));
+			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff));
+		} else if (skyTab == "pions") {
+			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"));
+			tmp.el.pionAmt.setTxt(showNum(player.elementary.sky.pions.amount));
+			tmp.el.pionGain.setTxt(formatGain(player.elementary.sky.pions.amount, tmp.elm.sky.pionGain, "sky"));
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["pionUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.pions.amount.lt(getFieldUpgCost("pions", id)),
+				});
+				tmp.el["pionUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden");
+			}
+			tmp.el.pionData.setHTML(pionSel==0?"":("Pion Upgrade &"+GREEK_LETTERS[pionSel]+"; ("+showNum(player.elementary.sky.pions.field[pionSel]||0)+")<br>"+SKY_FIELDS[pionSel].pionDesc+"<br>Currently: "+SKY_FIELDS[pionSel].desc(tmp.elm.sky.pionEff[pionSel])+"<br>Cost: "+showNum(getFieldUpgCost("pions", pionSel))+" Pions"));
+			tmp.el.maxPion.setDisplay(player.elementary.entropy.upgrades.includes(20));
+		} else if (skyTab == "spinors") {
+			tmp.el.nextSpinorUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"));
+			tmp.el.spinorAmt.setTxt(showNum(player.elementary.sky.spinors.amount));
+			tmp.el.spinorGain.setTxt(formatGain(player.elementary.sky.spinors.amount, tmp.elm.sky.spinorGain, "sky"));
+			for (let id=1;id<=SKY_FIELDS.upgs;id++) {
+				tmp.el["spinorUpg"+id].setClasses({
+					hexBtn: true,
+					locked: player.elementary.sky.spinors.amount.lt(getFieldUpgCost("spinors", id)),
+				});
+				tmp.el["spinorUpg"+id].changeStyle("visibility", player.elementary.sky.amount.gte(SKY_FIELDS[id].req)?"visible":"hidden");
+			}
+			tmp.el.spinorData.setHTML(spinorSel==0?"":("Spinor Upgrade &"+GREEK_LETTERS[spinorSel]+"; ("+showNum(player.elementary.sky.spinors.field[spinorSel]||0)+")<br>"+SKY_FIELDS[spinorSel].spinorDesc+"<br>Currently: "+SKY_FIELDS[spinorSel].desc(tmp.elm.sky.spinorEff[spinorSel])+"<br>Cost: "+showNum(getFieldUpgCost("spinors", spinorSel))+" Spinors"));
+			tmp.el.maxSpinor.setDisplay(player.elementary.entropy.upgrades.includes(20));
+		}
+	}
+}
+
 function updateHTML() {
-	updateOptionsHTML()
-	updateMainHTML()
-	updateRocketsHTML()
-	updateAchievementsHTML()
-	updateAutomationHTML()
-	updateTimeReversalHTML()
-	updateCollpaseHTML()
-	upadtePathogenHTML()
-	updateSoftcapsHTML()
-	updateDarkCircleHTML()
-	updateAllInfinityHTML()
-	updateOverallExtremeModeHTML()
-	updateStatisticsHTML()
-	updateOverallElementaryHTML()
-	updateOverallEnergyHTML()
-	updateMiscHTML()
+	updateOptionsHTML();
+	updateMainHTML();
+	updateRocketsHTML();
+	updateAchievementsHTML();
+	updateAutomationHTML();
+	updateTimeReversalHTML();
+	updateCollpaseHTML();
+	upadtePathogenHTML();
+	updateSoftcapsHTML();
+	updateDarkCircleHTML();
+	updateAllInfinityHTML();
+	updateOverallExtremeModeHTML();
+	updateStatisticsHTML();
+	updateOverallElementaryHTML();
+	updateOverallEnergyHTML();
+	updateMiscHTML();
 	
 	// Features
 	tmp.el.nextFeature.setTxt(tmp.nf === "none" ? "All Features Unlocked!" : tmp.features[tmp.nf].desc);	
+}
+
+function updateHTMLPerSec() {
+	if (player.tab=="elementary"&&elmTab=="theory") updateTheoryTreeHTMLPerSec();
 }

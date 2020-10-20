@@ -74,6 +74,7 @@
 								Elementary
 							</button>
 						</td>
+						<td><button id="v1.9Endtabbtn" class="btn tb main" onclick="showTab('v1.9End')">Hey you shouldn't be seeing this</button></td>
 					</tr>
 				</table><br>
 			</div>
@@ -179,96 +180,57 @@
 				<button class="btn tb opt" onclick="confirmModes()">Activate Modes</button>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
-				<table>
-					<tr>
-						<td>
-							<button id="sf" class="btn tb opt ob" onclick="changeOpt('sf', 1)">
-								Significant Figures: X
-							</button>
-						</td>
-						<td>
-							<button id="not" class="btn tb opt ob" onclick="changeOpt('not', 2)">
-								Notation: X
-							</button>
-						</td>
-						<td>
-							<button id="theme" class="btn tb opt ob" onclick="changeOpt('theme', 2)">
-								Theme: X
-							</button>
-						</td>
-						<td>
-							<button id="name" class="btn tb opt ob" onclick="changeOpt('name', 3)">
-								Rename Save
-							</button>
-						</td>
-						<td>
-							<button id="hot" class="btn tb opt ob" onclick="changeOpt('hot', 0)">
-								Hotkeys: ON
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="saveImp" class="btn tb opt ob_t" onclick="changeOpt('saveImp', 2)">
-								Imports: X
-							</button>
-						</td>
-						<td>
-							<button id="autoSave" class="btn tb opt ob_t" onclick="changeOpt('autoSave', 0)">
-								Auto-Save: ON
-							</button>
-						</td>
-						<td>
-							<button id="newst" class="btn tb opt ob_t" onclick="changeOpt('newst', 0)">
-								News Ticker: ON
-							</button>
-						</td>
-						<td>
-							<button id="featPerc" class="btn tb opt ob_t" onclick="changeOpt('featPerc', 2)">
-								Feature Percentage: X
-							</button>
-						</td>
-						<td>
-							<button id="fonts" class="btn tb opt ob_t" onclick="changeOpt('fonts', 2)">
-								Font: X
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="hideAch" class="btn tb opt ob_t" onclick="changeOpt('hideAch', 0)">
-								Hide Completed Ach Rows: OFF
-							</button>
-						</td>
-						<td>
-							<button id="visUpd" class="btn tb opt ob_t" onclick="changeOpt('visUpd', 2)">
-								Visual Updates: X
-							</button>
-						</td>
-						<td>
-							<button id="dcPulse" class="btn tb opt ob_t" onclick="changeOpt('dcPulse', 0)">
-								Dark Circle Pulsing: ON
-							</button>
-						</td>
-						<td>
-							<button id="elc" class="btn tb opt ob_t" onclick="changeOpt('elc', 0)">
-								Elementary Confirmation: ON
-							</button>
-						</td>
-						<td>
-							<button id="hcc" class="btn tb opt ob_t" onclick="changeOpt('hcc', 0)">
-								Exit Hadronic Chall Confirmation: ON
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button class="btn tb opt ob_t" onclick="checkForBeta()">
-								Search for Beta Save
-							</button>
-						</td>
-					</tr>
-				</table>
+				<div class="flexContainer">
+					<div class="flexRow">
+						<button id="sf" class="btn tb opt ob" onclick="changeOpt('sf', 1)">
+							Significant Figures: X
+						</button>
+						<button id="not" class="btn tb opt ob" onclick="changeOpt('not', 2)">
+							Notation: X
+						</button>
+						<button id="fonts" class="btn tb opt ob" onclick="changeOpt('fonts', 2)">
+							Font: X
+						</button>
+						<button id="theme" class="btn tb opt ob" onclick="changeOpt('theme', 2)">
+							Theme: X
+						</button>
+						<button id="name" class="btn tb opt ob" onclick="changeOpt('name', 3)">
+							Rename Save
+						</button>
+					</div><div class="flexRow">
+						<button id="hot" class="btn tb opt ob" onclick="changeOpt('hot', 0)">
+							Hotkeys: ON
+						</button>
+						<button id="newst" class="btn tb opt ob" onclick="changeOpt('newst', 0)">
+							News Ticker: ON
+						</button>
+						<button id="featPerc" class="btn tb opt ob" onclick="changeOpt('featPerc', 2)">
+							Feature Percentage: X
+						</button>
+						<button id="saveImp" class="btn tb opt ob" onclick="changeOpt('saveImp', 2)">
+							Imports: X
+						</button>
+						<button id="autoSave" class="btn tb opt ob" onclick="changeOpt('autoSave', 0)">
+							Auto-Save: ON
+						</button>
+					</div><div class="flexRow">
+						<button id="hideAch" class="btn tb opt ob" onclick="changeOpt('hideAch', 0)">
+							Hide Completed Ach Rows: OFF
+						</button>
+						<button id="visUpd" class="btn tb opt ob" onclick="changeOpt('visUpd', 2)">
+							Visual Updates: X
+						</button>
+						<button id="dcPulse" class="btn tb opt ob" onclick="changeOpt('dcPulse', 0)">
+							Dark Circle Pulsing: ON
+						</button>
+						<button id="elc" class="btn tb opt ob" onclick="changeOpt('elc', 0)">
+							Elementary Confirmation: ON
+						</button>
+						<button id="hcc" class="btn tb opt ob" onclick="changeOpt('hcc', 0)">
+							Exit Hadronic Chall Confirmation: ON
+						</button>
+					</div>
+				</div>
 				<br />
 				<div class="dropdown" style="z-index: 10"><div id="dropDown" class="dropdown-content"></div></div>
 			</div>
@@ -285,22 +247,54 @@
 					href="key.html"
 					target="_blank"
 					>Distances</a
-				>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 1" widetooltip="">Hotkeys</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>
+				>&nbsp;&nbsp;&nbsp;&nbsp;<span id="hotkeys" style="z-index: 0" widetooltip="">Hotkeys</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/wwQfgPa" target="_blank">Discord</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.patreon.com/Jacorb90?fan_landing=true" target="_blank">Donate</a>
 			</div>
 		</div>
 		<div id="statistics" class="tab" style="display: none;">
-			Best-Ever Distance: <span id="best"></span><br>
-			Best-Ever Velocity: <span id="bestV"></span><br>
-			Best-Ever Acceleration: <span id="bestA"></span><br>
-			<span id="maxEnd"></span><br>
-			<span id="maxEP"></span><br><br>
-			<div id="scaleStatDiv" align="center" style="min-width: 100%;">
-				<b>Scaling Levels</b><br><br>
-				<span id="scaledStat">Scaled</span>&nbsp;
-				<span id="superscaledStat">Superscaled</span>&nbsp;
-				<span id="hyperStat">Hyper</span>&nbsp;
-				<span id="atomicStat">Atomic</span>
+			<div class="band">
+				<table>
+					<tr>
+						<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+					</tr>
+					<tr>
+						<td>
+							<button id="mainStatsbtn" class="btn tb rckt" onclick="showStatTab('mainStats')">
+								Main
+							</button>
+						</td>
+						<td>
+							<button id="scalingsbtn" class="btn tb rckt" onclick="showStatTab('scalings')">
+								Scalings
+							</button>
+						</td>
+						<td>
+							<button id="rankTiersbtn" class="btn tb rckt" onclick="showStatTab('rankTiers')">
+								Rank/Tier Rewards
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="mainStats" class="stattab">
+				Best-Ever Distance: <span id="best"></span><br>
+				Best-Ever Velocity: <span id="bestV"></span><br>
+				Best-Ever Acceleration: <span id="bestA"></span><br>
+				<span id="maxEnd"></span><br>
+				<span id="maxEP"></span><br><br>
+			</div><div id="scalings" class="stattab" style="display: none;">
+				<div align="center" style="min-width: 100%;">
+					<b>Scaling Levels</b><br><br>
+					<span id="scaledStat">Scaled</span>&nbsp;
+					<span id="superscaledStat">Superscaled</span>&nbsp;
+					<span id="hyperStat">Hyper</span>&nbsp;
+					<span id="atomicStat">Atomic</span>
+				</div>
+			</div><div id="rankTiers" class="stattab" style="display: none;">
+				<div class="flexContainer">
+					<div id="rankStats"></div>
+					<div id="tierStats"></div>
+				</div>
 			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
@@ -416,6 +410,11 @@
 								Enhanced Furnace
 							</button>
 						</td>
+						<td>
+							<button id="magmatabbtn" class="btn tb magma main" onclick="showFurnaceTab('magma')">
+								Magma Search
+							</button>
+						</td>
 					</tr>
 				</table><br>
 			</div><br>
@@ -504,6 +503,7 @@
 						<td id="fnc3" class="furnChall"><br><b>Time Reversal Upgrade 16 does not affect Coal gain, and Hyper Furnace Upgrade scaling is stuck at 9,999% strength</b><br>Goal: <span id="fnc3goal"></span> Blue Flame<br><button id="fns3" class="btn fn" onclick="startFurnChall(3)"></button><br><br>Reward: Scaled Rank Cheapener scaling is 90% weaker, and Knowledge gain is 3.2x faster.<br><br></td>
 						<td id="fnc4" class="furnChall"><br><b>Furnace Upgrade 1 does nothing, and the Blue Flame cost formula is faster</b><br>Goal: <span id="fnc4goal"></span> Blue Flame<br><button id="fns4" class="btn fn" onclick="startFurnChall(4)"></button><br><br>Reward: The Extreme Mode reduction to pre-Infinity generation is less lethal (^0.75 -> ^0.825)<br><br></td>
 						<td id="fnc5" class="furnChall"><br><b>All Coal generation boosts from outside The Furnace is disabled (which includes Time Speed), and Blue Flame is weaker</b><br>Goal: <span id="fnc5goal"></span> Blue Flame<br><button id="fns5" class="btn fn" onclick="startFurnChall(5)"></button><br><br>Reward: Furnace Upgrade 4's effect is increased by 0.0001x for each Furnace Upgrade 1 bought, and unlock Furnace Upgrade 5<br><br></td>
+						<td id="fnc6" class="furnChall"><br><b>Furnace Upgrades are 99.99% weaker, Enhanced Furnace Upgrades are 50% weaker, and Blue Flame & Enhanced Furnace Upgrades cost scale much faster. This challenge forces an Elementary reset instead of a Collapse reset.</b><br>Goal: <span id="fnc6goal"></span> Blue Flame<br><button id="fns6" class="btn fn" onclick="startFurnChall(6)"></button><br><br>Reward: Blue Flame affects Enhanced Furnace Upgrades at a reduced rate<br><br></td>
 					</tr></table>
 				</div>
 			</div>
@@ -516,7 +516,7 @@
 								id="efnu1"
 								class="btn locked"
 								onclick="tmp.fn.enh.upgs[1].buy()"
-								style="min-height: 100px; max-height: 100px; font-size: 10px"
+								style="min-height: 100px; max-height: 100px; font-size: 9px"
 							>
 								Multiply Enhanced Coal gain by <span id="efnu1eff"></span> (before Extreme Mode reduction, boosted by Coal and Endorsements)<br />Cost:
 								<span id="efnu1cost"></span> Enhanced Coal<br /><span id="efnu1name"></span>Level:
@@ -691,6 +691,17 @@
 				</table><br><br>
 				<span id="moltBr">Your Enhanced Coal has granted you <span id="moltBrAmt" class="char"></span> Molten Bricks, which boost Pathogen gain & Enhanced Coal gain by <span id="moltBrEff" class="char"></span>x, and boost Knowledge gain by <span id="moltBrEff2" class="char"></span>x</span><br><br>
 			</div>
+			<div id="magma" class="furnaceTab" style="display: none;">
+				<br><br><table>
+					<tr>
+						<td><button id="magmaSearch" class="btn locked" onclick="magmaSearch()" style="min-height: 150px; max-height: 150px;"><h2>Search for Magma</h2><br>Req: <span id="magmaReq"></span> Enhanced Coal</button></td>
+						<td><button id="reformMagma" class="btn locked" onclick="reformMagma()" style="min-height: 150px; max-height: 150px;"><h2>Reform your Magma</h2><br>Req: <span id="magmaReformReq"></span> Magma & <span id="magmaReformReq2"></span> Knowledge</button></td>
+					</tr>
+				</table><br><br>
+				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Furnace & Enhanced Furnace Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
+				You have <span id="rMagmaAmt" class="magmaTxt"></span> Reformed Magma, which is multiplying your Molten Bricks by <span id="rMagmaEff"></span><br><br>
+				Note: This does not reset on Elementary.
+			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
 			<table>
@@ -743,7 +754,7 @@
 				<button id="robotToggle" class="btn rckt" onclick="toggleRobot(player.automation.open)"></button>
 			</div>
 			<br />
-			<div id="automator"></div>
+			<div id="automator" class="flexRow"></div>
 		</div>
 		<div id="tr" class="tab" style="display: none;">
 			<br /><button
@@ -756,6 +767,7 @@
 			You have <span id="tc"></span>, translated to <span id="frf"></span> free rocket fuel
 			<span id="timeCubeEffSC"></span><br /><br />
 			<table id="trTable"></table>
+			<br>
 		</div>
 		<div id="collapse" class="tab" style="display: none;">
 			<button id="collapseReset" class="btn locked" onclick="tmp.collapse.layer.reset()">
@@ -877,7 +889,7 @@
 				Reach <span id="nextEndorsement" style="font-size: 25px;"></span> to be endorsed again.<br /><br />
 				<span id="tudeEff"></span>
 				You have <span id="knowledge" style="font-size: 25px;"></span> knowledge
-				<span style="font-size: 25px;">(+<span id="knowledgeGain"></span>/sec)</span>.<br /><br />
+				<span style="font-size: 25px;"><span id="knowledgeGain"></span></span>.<br /><br />
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br /><br />
 				<div id="infUpgData" class="bandBig or"></div>
 				<br /><br />
@@ -1182,6 +1194,11 @@
 								Quantum Foam
 							</button>
 						</td>
+						<td>
+							<button id="skytabbtn" class="btn tb sky main" onclick="tmp.elm.showTab('sky')">
+								Skyrmions
+							</button>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -1255,16 +1272,16 @@
 					Your Bosons & Ascension Power are generating you <span id="gaugeGain" class="gauge"></span> Gauge
 					Bosons/sec.<br />
 					You have <span id="gaugeAmt" class="gauge"></span> Gauge Bosons.<br />
-					You have <span id="gaugeForce" class="gauge"></span> Gauge Force (+<span id="gaugeForceGain"></span
-					>/sec), which is making the below resources generate at
+					You have <span id="gaugeForce" class="gauge"></span> Gauge Force <span id="gaugeForceGain"></span
+					>, which is making the below resources generate at
 					<span id="gaugeForceEff" class="gauge"></span>x speed.<br /><br />
 					<div style="width: 50%; min-height: 300px; background-color: #f9ff8f; float: left; color: black;">
 						<br />
-						You have <span id="photons" class="gauge"></span> Photons (+<span
+						You have <span id="photons" class="gauge"></span> Photons <span
 							id="photonGain"
 							style="color: black;"
 						></span
-						>/sec)<br /><br />
+						><br /><br />
 						<table>
 							<tr>
 								<td>
@@ -1304,17 +1321,17 @@
 					</div>
 					<div style="width: 50%; min-height: 300px; background-color: #9d3bff; float: right; color: black;">
 						<br />
-						You have <span id="w" class="gauge"></span> W Bosons (+<span
+						You have <span id="w" class="gauge"></span> W Bosons <span
 							id="wg"
 							style="color: black;"
 						></span
-						>/sec), translated to a <span id="w1" class="gauge"></span>x multiplier to Z Boson gain and a
+						>, translated to a <span id="w1" class="gauge"></span>x multiplier to Z Boson gain and a
 						<span id="w2" class="gauge"></span>x multiplier to Ascension Power gain.<br /><br />
-						You have <span id="z" class="gauge"></span> Z Bosons (+<span
+						You have <span id="z" class="gauge"></span> Z Bosons <span
 							id="zg"
 							style="color: black;"
 						></span
-						>/sec), translated to a <span id="z1" class="gauge"></span>x multiplier to W Boson gain and a
+						>, translated to a <span id="z1" class="gauge"></span>x multiplier to W Boson gain and a
 						<span id="z2" class="gauge"></span>x multiplier to Dark Flow.
 					</div>
 					<br />
@@ -1355,67 +1372,71 @@
 						</table>
 						<div id="r" class="gluontab">
 							<br />
-							You have <b><span id="rg" style="color: red;"></span></b> Red Gluons (+<span
+							You have <b><span id="rg" style="color: red;"></span></b> Red Gluons <span
 								id="rgg"
 								style="color: red;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="r_table"></table>
 						</div>
 						<div id="g" class="gluontab" style="display: none;">
 							<br />
-							You have <b><span id="gg" style="color: green;"></span></b> Green Gluons (+<span
+							You have <b><span id="gg" style="color: green;"></span></b> Green Gluons <span
 								id="ggg"
 								style="color: green;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="g_table"></table>
 						</div>
 						<div id="b" class="gluontab" style="display: none;">
 							<br />
-							You have <b><span id="bg" style="color: #6e72ff;"></span></b> Blue Gluons (+<span
+							You have <b><span id="bg" style="color: #6e72ff;"></span></b> Blue Gluons <span
 								id="bgg"
 								style="color: #6e72ff;"
 							></span
-							>/sec).<br /><br />
+							>.<br /><br />
 							<table id="b_table"></table>
 						</div>
 						<div id="ar" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="arg" style="color: red; filter: invert(1);"></span></b> Anti-Red
-							Gluons (+<span id="argg" style="color: red; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="argg" style="color: red; filter: invert(1);"></span>.<br /><br />
 							<table id="ar_table"></table>
 						</div>
 						<div id="ag" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="agg" style="color: green; filter: invert(1);"></span></b> Anti-Green
-							Gluons (+<span id="aggg" style="color: green; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="aggg" style="color: green; filter: invert(1);"></span>.<br /><br />
 							<table id="ag_table"></table>
 						</div>
 						<div id="ab" class="gluontab" style="display: none;">
 							<br />
 							You have <b><span id="abg" style="color: blue; filter: invert(1);"></span></b> Anti-Blue
-							Gluons (+<span id="abgg" style="color: blue; filter: invert(1);"></span>/sec).<br /><br />
+							Gluons <span id="abgg" style="color: blue; filter: invert(1);"></span>.<br /><br />
 							<table id="ab_table"></table>
 						</div>
 					</div>
 					<div style="width: 50%; min-height: 300px; background-color: #595959; float: right; color: white;">
 						<br />
-						You have <span id="grav" class="gauge"></span> Gravitons (+<span id="gravGain"></span>/sec),
+						You have <span id="grav" class="gauge"></span> Gravitons <span id="gravGain"></span>,
 						translated to a <span id="gravMult" class="gauge"></span>x multiplier to Gauge Force gain
 						(boosted by Elementaries).<br><br>
 						<div id="gravBoostDiv">
-							Your Gravitons have gathered you <span id="gravBoosts" class="gauge"></span> Graviton Boosts, which are making you gain <span id="gravBoostMult" class="gauge"></span>x as many Elementaries on reset.
+							Your Gravitons have gathered you <span id="gravBoosts" class="gauge"></span> Graviton Boosts (next at <span id="gravBoostNext" class="gauge"></span>), which are making you gain <span id="gravBoostMult" class="gauge"></span>x as many Elementaries on reset. (Mult per Graviton Boost: <span id="gravBoostEach" class="gauge"></span>)
 						</div>
 					</div>
 				</div>
 				<div id="scalar" class="bostab" style="display: none; min-height: 400px;">
 					Your Bosons are generating you <span id="scalarGain" class="scalar"></span> Scalar Bosons/sec.<br />
 					You have <span id="scalarAmt" class="scalar"></span> Scalar Bosons.<br><br>
-					You have <span id="higgs" class="scalar"></span> Higgs Bosons (+<span id="higgsGain"></span>/sec).<br><br>
+					You have <span id="higgs" class="scalar"></span> Higgs Bosons <span id="higgsGain"></span>.<br><br>
 					<div style="overflow-x: auto;"><table>
 						<tr>
+							<td><button id="higgs2;2;2" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('2;2;2')"></button></td>
+							<td><button class="btn" style="visibility: hidden"></button></td>
 							<td><button id="higgs0;2;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;2;0')"></button></td>
+							<td><button class="btn" style="visibility: hidden"></button></td>
+							<td><button id="higgs2;2;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('2;2;1')"></button></td>
 						</tr>
 					</table><table>
 						<tr>
@@ -1447,17 +1468,27 @@
 						</tr>
 					</table><table>
 						<tr>
+							<td><button id="higgs6;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('6;0;0')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs1;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;0;0')"></button></td>
-							<td class="btn higgsL" style="visibility: hidden;"></td>
+							<td class="btn" style="visibility: hidden;"></td>
+							<td><button id="higgs1;1;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;1;1')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs0;0;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;1')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
+							<td><button id="higgs0;0;6" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;6')"></button></td>
 						</tr>
 					</table><table>
 						<tr>
+							<td><button id="higgs6;1;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('6;1;0')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs2;0;0" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('2;0;0')"></button></td>
-							<td class="btn higgsL" style="visibility: hidden;"></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs1;0;1" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('1;0;1')"></button></td>
-							<td class="btn higgsL" style="visibility: hidden;"></td>
+							<td class="btn" style="visibility: hidden;"></td>
 							<td><button id="higgs0;0;2" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;0;2')"></button></td>
+							<td class="btn" style="visibility: hidden;"></td>
+							<td><button id="higgs0;1;6" class="btn higgsL" onclick="tmp.elm.bos.buyHiggs('0;1;6')"></button></td>
 						</tr>
 					</table><table>
 						<tr>
@@ -1539,10 +1570,10 @@
 					<br>
 					<button id="ssUnl" class="btn th" onclick="tmp.elm.theory.ss.unl()">Unlock Supersymmetry<br>Cost: 1 Theory Point</button>
 					<div id="ssDiv">
-						You have <span id="squarks" class="thp"></span> Squarks (+<span id="squarkGain"></span>/sec), translated to a <span id="squarkEff" class="thp"></span>x multiplier to Quark gain.<br><br>
-						You have <span id="sleptons" class="thp"></span> Sleptons (+<span id="sleptonGain"></span>/sec), translated to a <span id="sleptonEff" class="thp"></span>x multiplier to Lepton gain.<br><br>
-						You have <span id="neutralinos" class="thp"></span> Neutralinos (+<span id="neutralinoGain"></span>/sec), translated to a <span id="neutralinoEff" class="thp"></span>x multiplier to Graviton gain.<br><br>
-						You have <span id="charginos" class="thp"></span> Charginos (+<span id="charginoGain"></span>/sec), translated to a <span id="charginoEff" class="thp"></span>x multiplier to Photon gain.<br><br><br><br>
+						You have <span id="squarks" class="thp"></span> Squarks <span id="squarkGain"></span>, translated to a <span id="squarkEff" class="thp"></span>x multiplier to Quark gain.<br><br>
+						You have <span id="sleptons" class="thp"></span> Sleptons <span id="sleptonGain"></span>, translated to a <span id="sleptonEff" class="thp"></span>x multiplier to Lepton gain.<br><br>
+						You have <span id="neutralinos" class="thp"></span> Neutralinos <span id="neutralinoGain"></span>, translated to a <span id="neutralinoEff" class="thp"></span>x multiplier to Graviton gain.<br><br>
+						You have <span id="charginos" class="thp"></span> Charginos <span id="charginoGain"></span>, translated to a <span id="charginoEff" class="thp"></span>x multiplier to Photon gain.<br><br><br><br>
 						Your Supersymmetric Particles have provided you with a Supersymmetric Wave with a length of <span id="wavelength" class="thp"></span>, translated to a <span id="waveEff" class="thp"></span>x multiplier to all pre-Elementary resources.<br><br>
 					</div>
 				</div>
@@ -1616,6 +1647,14 @@
 							<td><button id="tree18" class="tree locked" onclick="tmp.elm.theory.tree.buy(18)"></button></td>
 							<td><button id="tree19" class="tree locked" onclick="tmp.elm.theory.tree.buy(19)"></button></td>
 						</tr></table>
+						<table><tr>
+							<td><button id="tree34" class="tree locked" onclick="tmp.elm.theory.tree.buy(34)"></button></td>
+							<td><button id="tree35" class="tree locked" onclick="tmp.elm.theory.tree.buy(35)"></button></td>
+							<td><button id="tree36" class="tree locked" onclick="tmp.elm.theory.tree.buy(36)"></button></td>
+						</tr></table>
+						<table><tr>
+							<td><button id="tree37" class="tree locked" onclick="tmp.elm.theory.tree.buy(37)"></button></td>
+						</tr></table>
 						<br><br><br><br><br>
 					</div>
 				</div>
@@ -1624,13 +1663,13 @@
 					<button id="stringsUnl" class="btn th" onclick="unlockStrings()">Unlock Strings<br>Cost: 7 Theory Points</button>
 					<div id="stringsDiv">
 						<span id="nextStr"></span><br><br>
-						You have a Primary String with a length of <span id="str1amt" class="thp"></span> (+<span id="str1gain"></span>/sec), translated to a <span id="str1eff" class="thp"></span>x multiplier to Supersymmetric Particle gain.<br><br>
-						<span id="str2" style="display: none">You have a Secondary String with a length of <span id="str2amt" class="thp"></span> (+<span id="str2gain"></span>/sec), translated to a <span id="str2eff" class="thp"></span>x multiplier to Primary String gain.<br><br></span>
-						<span id="str3" style="display: none">You have a Tertiary String with a length of <span id="str3amt" class="thp"></span> (+<span id="str3gain"></span>/sec), translated to a <span id="str3eff" class="thp"></span>x multiplier to Secondary String gain.<br><br></span>
-						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> (+<span id="str4gain"></span>/sec), translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
-						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> (+<span id="str5gain"></span>/sec), translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
-						<span id="str6" style="display: none">You have a Senary String with a length of <span id="str6amt" class="thp"></span> (+<span id="str6gain"></span>/sec), translated to a <span id="str6eff" class="thp"></span>x multiplier to Quinary String gain.<br><br></span>
-						<span id="str7" style="display: none">You have a Septenary String with a length of <span id="str7amt" class="thp"></span> (+<span id="str7gain"></span>/sec), translated to a <span id="str7eff" class="thp"></span>x multiplier to Senary String gain.<br><br></span>
+						You have a Primary String with a length of <span id="str1amt" class="thp"></span> <span id="str1gain"></span>, translated to a <span id="str1eff" class="thp"></span>x multiplier to Supersymmetric Particle gain.<br><br>
+						<span id="str2" style="display: none">You have a Secondary String with a length of <span id="str2amt" class="thp"></span> <span id="str2gain"></span>, translated to a <span id="str2eff" class="thp"></span>x multiplier to Primary String gain.<br><br></span>
+						<span id="str3" style="display: none">You have a Tertiary String with a length of <span id="str3amt" class="thp"></span> <span id="str3gain"></span>, translated to a <span id="str3eff" class="thp"></span>x multiplier to Secondary String gain.<br><br></span>
+						<span id="str4" style="display: none">You have a Quaternary String with a length of <span id="str4amt" class="thp"></span> <span id="str4gain"></span>, translated to a <span id="str4eff" class="thp"></span>x multiplier to Tertiary String gain.<br><br></span>
+						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> <span id="str5gain"></span>, translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
+						<span id="str6" style="display: none">You have a Senary String with a length of <span id="str6amt" class="thp"></span> <span id="str6gain"></span>, translated to a <span id="str6eff" class="thp"></span>x multiplier to Quinary String gain.<br><br></span>
+						<span id="str7" style="display: none">You have a Septenary String with a length of <span id="str7amt" class="thp"></span> <span id="str7gain"></span>, translated to a <span id="str7eff" class="thp"></span>x multiplier to Senary String gain.<br><br></span>
 						<br><br><span id="entangleDiv"><button id="entangle" class="btn th" onclick="entangleStrings()"></button><br><br>You have <span id="entangleAmt" class="thp"></span> of Entangled Strings, translated to a <span id="entangleEff" class="thp"></span>x multiplier to the generation speed of all Strings.<br><br></span>
 					</div>
 				</div>
@@ -1638,7 +1677,7 @@
 					<br>
 					<button id="preonsUnl" class="btn th" onclick="unlockPreons()">Unlock Preons<br>Cost: 10 Theory Points</button>
 					<div id="preonsDiv">
-						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons (+<span id="preonGain"></span>/sec).<br><br><br>
+						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons <span id="preonGain"></span>.<br><br><br>
 						<button id="theoryBoost" class="btn locked" onclick="theoryBoost()"></button><br><br>
 						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters.
 					</div>
@@ -1658,7 +1697,7 @@
 					<br>
 					<button id="inflatonsUnl" class="btn th" onclick="unlockInflatons()">Unlock Inflatons<br>Cost: 1,600 Theory Points</button>
 					<div id="inflatonsDiv">
-						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second <span id="inflatonSC" class="sc"></span>.<br>
+						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second<span id="inflatonSC" class="sc"></span>.<br>
 						You have <span id="inflatonAmt" class="thp"></span> Inflatons (<span id="inflatonPerc"></span>)<br><br>
 						Your Inflatons are making all Theory Tree Upgrades <span id="inflaton1" class="thp"></span>x cheaper.<br>
 						Your Inflatons are making each Hadron effect interval give <span id="inflaton2" class="thp"></span> more TP. <span id="inflaton2sc" class="sc"></span><br><br><br>
@@ -1668,7 +1707,7 @@
 			<div id="hc" class="elmtab" style="display: none;">
 				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
-				You have <span id="hadrons" class="had"></span> Hadrons (+<span id="hadronGain"></span>/sec), which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons <span id="hadronGain"></span>, which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
 				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button><br><br>
 				<span id="hcPerc"></span><br><br>
@@ -1776,7 +1815,7 @@
 				<div id="qf1" class="foamTab">
 					<table style="margin: auto; max-width: 80%;">
 						<tr>
-							<td class="foamTextThing">You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam (+<span id="qf1Gain"></span>/sec).</td>
+							<td class="foamTextThing">You have <span id="qf1Amt" class="foamtxt"></span> Quantum Foam <span id="qf1Gain"></span>.</td>
 							<td><button id="qf1Boost1" class="btn locked" onclick="qfBoost(1, 1)">Enlarge Quantum Foam by 1m in height<br>Cost: <span id="qf1Cost1" style="color: black !important;"></span> Quantum Foam</button></td>
 							<td><button id="qf1Boost2" class="btn locked" onclick="qfBoost(1, 2)">Enlarge Quantum Foam by 1m in width<br>Cost: <span id="qf1Cost2" style="color: black !important;"></span> Quantum Foam</button></td>
 							<td><button id="qf1Boost3" class="btn locked" onclick="qfBoost(1, 3)">Enlarge Quantum Foam by 1m in depth<br>Cost: <span id="qf1Cost3" style="color: black !important;"></span> Quantum Foam</button></td>
@@ -1798,7 +1837,7 @@
 						<tr height="50"></tr>
 
 						<tr class="qf2row">
-							<td class="foamTextThing">You have <span id="qf2Amt" class="foamtxt"></span> Subplanck Foam (+<span id="qf2Gain"></span>/sec), which is multiplying Quantum Foam gain by <span id="qf2Eff" class="foamtxt"></span>x.</td>
+							<td class="foamTextThing">You have <span id="qf2Amt" class="foamtxt"></span> Subplanck Foam <span id="qf2Gain"></span>, which is multiplying Quantum Foam gain by <span id="qf2Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf2Boost1" class="btn locked" onclick="qfBoost(2, 1)">Enlarge Subplanck Foam by 1m in height<br>Cost: <span id="qf2Cost1" style="color: black !important;"></span> Subplanck Foam</button></td>
 							<td><button id="qf2Boost2" class="btn locked" onclick="qfBoost(2, 2)">Enlarge Subplanck Foam by 1m in width<br>Cost: <span id="qf2Cost2" style="color: black !important;"></span> Subplanck Foam</button></td>
 							<td><button id="qf2Boost3" class="btn locked" onclick="qfBoost(2, 3)">Enlarge Subplanck Foam by 1m in depth<br>Cost: <span id="qf2Cost3" style="color: black !important;"></span> Subplanck Foam</button></td>
@@ -1820,7 +1859,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf3row">
-							<td>You have <span id="qf3Amt" class="foamtxt"></span> Subspatial Foam (+<span id="qf3Gain"></span>/sec), which is multiplying Subplanck Foam & Quantum Foam gain by <span id="qf3Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf3Amt" class="foamtxt"></span> Subspatial Foam <span id="qf3Gain"></span>, which is multiplying Subplanck Foam & Quantum Foam gain by <span id="qf3Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf3Boost1" class="btn locked" onclick="qfBoost(3, 1)">Enlarge Subspatial Foam by 1m in height<br>Cost: <span id="qf3Cost1" style="color: black !important;"></span> Subspatial Foam</button></td>
 							<td><button id="qf3Boost2" class="btn locked" onclick="qfBoost(3, 2)">Enlarge Subspatial Foam by 1m in width<br>Cost: <span id="qf3Cost2" style="color: black !important;"></span> Subspatial Foam</button></td>
 							<td><button id="qf3Boost3" class="btn locked" onclick="qfBoost(3, 3)">Enlarge Subspatial Foam by 1m in depth<br>Cost: <span id="qf3Cost3" style="color: black !important;"></span> Subspatial Foam</button></td>
@@ -1842,7 +1881,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf4row">
-							<td>You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam (+<span id="qf4Gain"></span>/sec), which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam <span id="qf4Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf4Boost1" class="btn locked" onclick="qfBoost(4, 1)">Enlarge Infinitesimal Foam by 1m in height<br>Cost: <span id="qf4Cost1" style="color: black !important;"></span> Infinitesimal Foam</button></td>
 							<td><button id="qf4Boost2" class="btn locked" onclick="qfBoost(4, 2)">Enlarge Infinitesimal Foam by 1m in width<br>Cost: <span id="qf4Cost2" style="color: black !important;"></span> Infinitesimal Foam</button></td>
 							<td><button id="qf4Boost3" class="btn locked" onclick="qfBoost(4, 3)">Enlarge Infinitesimal Foam by 1m in depth<br>Cost: <span id="qf4Cost3" style="color: black !important;"></span> Infinitesimal Foam</button></td>
@@ -1864,7 +1903,7 @@
 						<tr height="50"></tr>
 						
 						<tr class="qf5row">
-							<td>You have <span id="qf5Amt" class="foamtxt"></span> Protoversal<span id="qf5type"></span> Foam (+<span id="qf5Gain"></span>/sec), which is multiplying the gain of all previous types of Foam by <span id="qf5Eff" class="foamtxt"></span>x.</td>
+							<td>You have <span id="qf5Amt" class="foamtxt"></span> Protoversal<span id="qf5type"></span> Foam <span id="qf5Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf5Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf5Boost1" class="btn locked" onclick="qfBoost(5, 1)">Enlarge Protoversal Foam by 1m in height<br>Cost: <span id="qf5Cost1" style="color: black !important;"></span> Protoversal Foam</button></td>
 							<td><button id="qf5Boost2" class="btn locked" onclick="qfBoost(5, 2)">Enlarge Protoversal Foam by 1m in width<br>Cost: <span id="qf5Cost2" style="color: black !important;"></span> Protoversal Foam</button></td>
 							<td><button id="qf5Boost3" class="btn locked" onclick="qfBoost(5, 3)">Enlarge Protoversal Foam by 1m in depth<br>Cost: <span id="qf5Cost3" style="color: black !important;"></span> Protoversal Foam</button></td>
@@ -1903,11 +1942,87 @@
 							<td><button id="entropy7" class="btn locked" onclick="buyEntropyUpg(7)" style="min-height: 100px;">&Omega; Particles are stronger based on your Hadrons<br>Cost: <span id="entropyCost7" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff7" style="color: black;"></span>% stronger</button></td>
 							<td><button id="entropy8" class="btn locked" onclick="buyEntropyUpg(8)" style="min-height: 100px;">Accelerons & Inflatons boost Entropy gain<br>Cost: <span id="entropyCost8" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff8" style="color: black;"></span>x</button></td>
 						</tr>
+						<tr>
+							<td><button id="entropy9" class="btn locked" onclick="buyEntropyUpg(9)" style="min-height: 125px;">Skyrmions make &Omega; Particles require less Entropy<br>Cost: <span id="entropyCost9" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff9" style="color: black;"></span>x less</button></td>
+							<td><button id="entropy10" class="btn locked" onclick="buyEntropyUpg(10)" style="min-height: 125px;">Unlock Auto-Entropy, and gain 50% more Entropy (kept on Skyrmion reset)<br>Cost: <span id="entropyCost10" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy11" class="btn locked" onclick="buyEntropyUpg(11)" style="min-height: 125px;">Unlock Auto-Entropy Upgrades, and all Foam types are gained 10x faster (kept on Skyrmion reset)<br>Cost: <span id="entropyCost11" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy12" class="btn locked" onclick="buyEntropyUpg(12)" style="min-height: 125px;">Gain 1% of Elementary Particle, Fermion, & Boson gain every second (kept on Skyrmion reset)<br>Cost: <span id="entropyCost12" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy13" class="btn locked" onclick="buyEntropyUpg(13)" style="min-height: 150px;">Buying Theory Tree Upgrades does not spend Theory Points, and the last Inflaton effect does not become extremely softcapped (kept on Skyrmion reset)<br>Cost: <span id="entropyCost13" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy14" class="btn locked" onclick="buyEntropyUpg(14)" style="min-height: 150px;">Entropy boosts Skyrmion gain<br>Cost: <span id="entropyCost14" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff14" style="color: black;"></span>x</button></td>
+							<td><button id="entropy15" class="btn locked" onclick="buyEntropyUpg(15)" style="min-height: 150px;">Gauge Force's effect uses a much better formula<br>Cost: <span id="entropyCost15" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy16" class="btn locked" onclick="buyEntropyUpg(16)" style="min-height: 150px;">Pions & Spinors make each other increase in cost 75% less (kept on Skyrmion reset)<br>Cost: <span id="entropyCost16" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy17" class="btn locked" onclick="buyEntropyUpg(17)" style="min-height: 200px;">Unlock Auto-Theoretical Boosters, and Theoretical Boosters give many more Theory Points, but Theoretical Boosters are reset on Skyrmion reset (kept on Skyrmion reset)<br>Cost: <span id="entropyCost17" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy18" class="btn locked" onclick="buyEntropyUpg(18)" style="min-height: 200px;">The Primary String effect is raised to the power of 5<br>Cost: <span id="entropyCost18" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy19" class="btn locked" onclick="buyEntropyUpg(19)" style="min-height: 200px;">The Perk Accelerator never goes Weakened or Broken, and the Hadron effect interval is smaller based on your Hadrons<br>Cost: <span id="entropyCost19" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff19" style="color: black;"></span>th root</button></td>
+							<td><button id="entropy20" class="btn locked" onclick="buyEntropyUpg(20)" style="min-height: 200px;">The first Inflaton effect uses a better formula, Pions & Spinors do not make each other increase in cost, and you can buy max Pion/Spinor Fields (kept on Skyrmion reset)<br>Cost: <span id="entropyCost20" style="color: black;"></span> Entropy</button></td>
+						</tr>
 					</table>
 					<br><br><br><br><br>
 				</div>
 			</div>
+			<div id="sky" class="elmtab" style="display: none;">
+				<div class="band bl">
+					<table>
+						<tr>
+							<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+						</tr>
+						<tr>
+							<td>
+								<button id="skyrmionstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('skyrmions')">
+									Skyrmions
+								</button>
+							</td>
+							<td>
+								<button id="pionstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('pions')">
+									Pions
+								</button>
+							</td>
+							<td>
+								<button id="spinorstabbtn" class="btn tb sky" onclick="tmp.elm.sky.showTab('spinors')">
+									Spinors
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><br>
+				<div id="skyrmions" class="skyTab">
+					Destabilizing the topology of your multiverse will force an Entropy & Elementary reset, and will also reset your Purge Power, Elementary Particles, Fermions, Bosons, Photon & Gluon Upgrades, Supersymmetric Particles, Theory Tree Upgrades, Strings (and Entangled Strings), Preon amount, Acceleron amount, Inflatons, Hadrons, Entropy, & Entropy Upgrades (except the first one).<br><br>
+					<button id="skyrmionReset" class="btn locked" onclick="skyrmionReset()">Destabilize the topology of your multiverse to gain <span id="skyrmionGain"></span> Skyrmions</button><br><br>
+					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br><br>
+					<button onclick="respecBothFields()" class="btn sky">Reset Pion & Spinor Fields</button>
+				</div>
+				<div id="pions" class="skyTab" style="display: none;">
+					You have <span id="pionAmt" class="skytxt"></span> Pions <span id="pionGain"></span><br><br>
+					<div id="pionData" class="bandBig lb"></div><br>
+					<div id="nextPionUpgs"></div><br>
+					<button onclick="respecField('pions')" class="btn sky">Reset Pion Field</button>&nbsp;&nbsp;<button id="maxPion" onclick="maxField('pions')" class="btn sky">Max Pion Field</button><br><br>
+					<button onclick="importField('pions')" class="btn sky">Import Pion Field</button>&nbsp;&nbsp;<button onclick="exportField('pions')" class="btn sky">Export Pion Field</button><br><br>
+					<div id="pionField"></div>
+				</div>
+				<div id="spinors" class="skyTab" style="display: none;">
+					You have <span id="spinorAmt" class="skytxt"></span> Spinors <span id="spinorGain"></span><br><br>
+					<div id="spinorData" class="bandBig lb"></div><br>
+					<div id="nextSpinorUpgs"></div><br>
+					<button onclick="respecField('spinors')" class="btn sky">Reset Spinor Field</button>&nbsp;&nbsp;<button id="maxSpinor" onclick="maxField('spinors')" class="btn sky">Max Spinor Field</button><br><br>
+					<button onclick="importField('spinors')" class="btn sky">Import Spinor Field</button>&nbsp;&nbsp;<button onclick="exportField('spinors')" class="btn sky">Export Spinor Field</button><br><br>
+					<div id="spinorField"></div>
+				</div>
+				<br><br><br><br><br>
+			</div>
 		</div>
+	</div>
+	<div id="v1.9End" class="tab" style="display: none;">
+		<br>Dear Player,<br><br><br>Welp you've done it, you've reached the end of the multiverse!<br>
+		Sadly, more content won't be available for the time being...<br>
+		For now, just try another mode or something, I dunno.<br>
+		Thanks for playing my game!<br>
+		From Jacorb<br><br><br><br><br>
+		P.S: If you're wondering why I put this message here, it's because it's prep for future content and because v2.0 may not be out for a while...
 	</div>
 	
 	<!-- Links -->
@@ -1961,6 +2076,14 @@
 	<script type="text/javascript" src="js/game.js"></script>
 
 	<!-- File Data -->
+	<script type="text/javascript" src="js/main/future_content/setup.js"></script>
+	<script type="text/javascript" src="js/main/elementary/bosons.js"></script>
+	<script type="text/javascript" src="js/main/elementary/elm.js"></script>
+	<script type="text/javascript" src="js/main/elementary/fermions.js"></script>
+	<script type="text/javascript" src="js/main/elementary/foam.js"></script>
+	<script type="text/javascript" src="js/main/elementary/hadronic_challenges.js"></script>
+	<script type="text/javascript" src="js/main/elementary/skyrmion.js"></script>
+	<script type="text/javascript" src="js/main/elementary/theory.js"></script>
 	<script type="text/javascript" src="js/main/elements.js"></script>
 	<script type="text/javascript" src="js/main/options.js"></script>
 	<script type="text/javascript" src="js/main/nerfs.js"></script>
@@ -1978,7 +2101,6 @@
 	<script type="text/javascript" src="js/main/pathogens.js"></script>
 	<script type="text/javascript" src="js/main/dc.js"></script>
 	<script type="text/javascript" src="js/main/inf.js"></script>
-	<script type="text/javascript" src="js/main/elm.js"></script>
 	<script type="text/javascript" src="js/main/misc.js"></script>
 	<script type="text/javascript" src="js/main/timeSpeed.js"></script>
 	<script type="text/javascript" src="js/main/hd.js"></script>
@@ -1988,6 +2110,7 @@
 	<script type="text/javascript" src="js/main/extreme/rankCheap.js"></script>
 	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
 	<script type="text/javascript" src="js/main/extreme/stadium.js"></script>
+	<script type="text/javascript" src="js/main/extreme/magma.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>

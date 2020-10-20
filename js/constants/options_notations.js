@@ -21,7 +21,7 @@ const VIS_UPDS = {
 	"every 2 ticks": 2,
 	"every 5 ticks": 5,
 	"every 20 ticks": 20,
-}
+};
 
 // Notations
 

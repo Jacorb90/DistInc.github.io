@@ -226,8 +226,7 @@ const INF_UPGS = {
 		"7;4": "inf2;3 & inf3;2 are stronger based on your Pathogens.",
 		"7;5": "The fifth Pathogen Upgrade boosts itself.",
 		"7;6": "Dark Flow is increased by 20% for every Dark Core.",
-		"7;7":
-			"Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
+		"7;7": "Unlock Accelerational Energy, which is created based on your Ranks & Tiers, and boosts your Velocital Energy, which in turn boosts your Time Speed.",
 		"7;8": "Spectral Gems, Angels, & Demons boost Dark Flow.",
 		"7;9": "Hyper Rank scaling is 2% weaker.",
 		"7;10": "The W Boson boost to Z Boson gain uses a better formula.",
@@ -386,7 +385,7 @@ const INF_UPGS = {
 			if (nerfActive("noInf1;1") || extremeStadiumActive("spectra", 5)) return new ExpantaNum(1);
 			let total = player.rank.plus(player.tier.pow(2));
 			let exp = new ExpantaNum(3);
-			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54))
+			if (player.modes.includes("extreme")) exp = exp.times(Math.pow(player.inf.upgrades.length+1, 0.54));
 			if (tmp.inf) if (tmp.inf.stadium.completed("spaceon")) exp = exp.times(STADIUM_REWARDS.effects.spaceon());
 			let ret = total.plus(1).pow(exp);
 			return ret;
@@ -405,14 +404,14 @@ const INF_UPGS = {
 		},
 		"1;9": function () {
 			let ret = player.tier.sqrt().div(2).plus(1);
-			if (modeActive("extreme") && player.inf.upgrades.includes("9;9")) ret = ret.pow(1.35)
+			if (modeActive("extreme") && player.inf.upgrades.includes("9;9")) ret = ret.pow(1.35);
 			return ret;
 		},
 		"1;10": function() {
-			let ret = player.inf.knowledge.plus(1).times(10).slog(10).div(10)
-			if (ret.gte(0.9)) ret = ret.div(10).plus(0.89)
-			if (ret.gte(0.975)) ret = new ExpantaNum(0.975)
-			return ret
+			let ret = player.inf.knowledge.plus(1).times(10).slog(10).div(10);
+			if (ret.gte(0.9)) ret = ret.div(10).plus(0.89);
+			if (ret.gte(0.975)) ret = new ExpantaNum(0.975);
+			return ret;
 		},
 		"2;1": function () {
 			let ret = player.inf.knowledge.plus(1).slog(10).sqrt();
@@ -421,7 +420,7 @@ const INF_UPGS = {
 		},
 		"2;2": function () {
 			let ret = tmp.timeSpeed ? tmp.timeSpeed.log10().plus(1) : new ExpantaNum(1);
-			if (modeActive('extreme')) ret = ret.div(2).max(1)
+			if (modeActive('extreme')) ret = ret.div(2).max(1);
 			return ret;
 		},
 		"2;3": function () {
@@ -468,27 +467,27 @@ const INF_UPGS = {
 			return ret;
 		},
 		"3;10": function() {
-			if (!tmp.auto) return new ExpantaNum(1)
-			let f1 = tmp.auto.rankbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
-			let f2 = tmp.auto.tierbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt()
-			let f3 = tmp.auto.fuelbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).sqrt()
-			return f1.times(f2).times(f3).cbrt()
+			if (!tmp.auto) return new ExpantaNum(1);
+			let f1 = tmp.auto.rankbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt();
+			let f2 = tmp.auto.tierbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).cbrt();
+			let f3 = tmp.auto.fuelbot.interval.pow(-1).plus(1).min(Number.MAX_VALUE).sqrt();
+			return f1.times(f2).times(f3).cbrt();
 		},
 		"4;7": function () {
 			let speed = tmp.timeSpeed;
-			let exp = 0.3
-			if (player.modes.includes("extreme")) exp = 0.125
+			let exp = 0.3;
+			if (player.modes.includes("extreme")) exp = 0.125;
 			let ret = speed.pow(exp);
 			if (ret.gte("1e1000")) ret = ret.min(ret.log10().pow(1000 / 3));
 			return ret;
 		},
 		"4;10": function() {
-			let times = new ExpantaNum(player.elementary.times)
-			if (times.gte(50)) times = times.sqrt().times(Math.sqrt(50))
-			let exp = new ExpantaNum(5)
-			if (player.elementary.theory.tree.unl) exp = exp.plus(TREE_UPGS[3].effect(player.elementary.theory.tree.upgrades[3]||0))
-			let ret = times.plus(1).times(2).log10().plus(1).pow(exp)
-			return ret
+			let times = new ExpantaNum(player.elementary.times);
+			if (times.gte(50)) times = times.sqrt().times(Math.sqrt(50));
+			let exp = new ExpantaNum(5);
+			if (player.elementary.theory.tree.unl) exp = exp.plus(TREE_UPGS[3].effect(player.elementary.theory.tree.upgrades[3]||0));
+			let ret = times.plus(1).times(2).log10().plus(1).pow(exp);
+			return ret;
 		},
 		"5;4": function () {
 			let ret = player.collapse.cadavers.plus(1).log10().plus(1).sqrt();
@@ -497,7 +496,7 @@ const INF_UPGS = {
 		"5;5": function () {
 			let base = player.inf.knowledge.plus(1).log10().plus(1).log10().plus(1);
 			let exp = player.inf.endorsements.sqrt();
-			if (modeActive("extreme")) exp = exp.times(1.5)
+			if (modeActive("extreme")) exp = exp.times(1.5);
 			let ret = base.pow(exp);
 			return ret;
 		},
@@ -505,8 +504,8 @@ const INF_UPGS = {
 			let base = player.inf.knowledge.div(1e9).plus(1).slog(10).plus(1);
 			let exp = player.inf.knowledge.plus(1).log10().plus(1).logBase(13).plus(1);
 			let ret = base.pow(exp);
-			if (ret.lt(9)) ret = ret.sqrt()
-			else ret = ret.div(3)
+			if (ret.lt(9)) ret = ret.sqrt();
+			else ret = ret.div(3);
 			return ret;
 		},
 		"5;7": function () {
@@ -516,9 +515,9 @@ const INF_UPGS = {
 			return ret;
 		},
 		"5;10": function() {
-			let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).pow(2)
-			let ret2 = player.pathogens.amount.plus(1).log10().plus(1)
-			return {pth: ret, hb: ret2}
+			let ret = player.elementary.bosons.scalar.higgs.amount.plus(1).pow(2);
+			let ret2 = player.pathogens.amount.plus(1).log10().plus(1);
+			return {pth: ret, hb: ret2};
 		},
 		"6;5": function () {
 			let ret = player.inf.knowledge.plus(1).log10().plus(1).logBase(14).pow(3).plus(1);
@@ -526,14 +525,14 @@ const INF_UPGS = {
 		},
 		"6;6": function () {
 			let ret = tmp.maxVel.plus(1).pow(0.075);
-			if (modeActive("extreme")) ret = ret.pow(0.1)
-			if (modeActive("hikers_dream")) ret = ret.pow(2)
+			if (modeActive("extreme")) ret = ret.pow(0.1);
+			if (modeActive("hikers_dream")) ret = ret.pow(2);
 			if (ret.gte("1e1000")) ret = ret.log10().pow(1000 / 3);
 			return ret;
 		},
 		"7;1": function () {
-			let base = new ExpantaNum(0.2)
-			if (modeActive("extreme")) base = new ExpantaNum(0.08)
+			let base = new ExpantaNum(0.2);
+			if (modeActive("extreme")) base = new ExpantaNum(0.08);
 			let ret = ExpantaNum.mul(base, player.inf.stadium.completions.length+(player.extremeStad?player.extremeStad.length:0)).add(1);
 			return ret;
 		},
@@ -579,8 +578,8 @@ const INF_UPGS = {
 		"7;8": function () {
 			let amt = new ExpantaNum(0);
 			if (tmp.inf) amt = tmp.inf.pantheon.totalGems;
-			let base = 1e25
-			if (modeActive("extreme")) base = 1e35
+			let base = 1e25;
+			if (modeActive("extreme")) base = 1e35;
 			let ret = ExpantaNum.pow(base, amt.sqrt());
 			return ret;
 		},
@@ -603,8 +602,8 @@ const INF_UPGS = {
 			return ret;
 		},
 		"8;8": function () {
-			let power = player.inf.pantheon.purge.power
-			if (modeActive("extreme")) power = power.pow(2)
+			let power = player.inf.pantheon.purge.power;
+			if (modeActive("extreme")) power = power.pow(2);
 			let ret = power.plus(1).times(10).slog(10);
 			if (ret.gte(1.1)) ret = ret.sqrt().times(Math.sqrt(1.1));
 			if (ret.gte(1.5)) ret = ret.sqrt().times(Math.sqrt(1.5));
@@ -654,53 +653,53 @@ const INF_UPGS = {
 			return ret;
 		},
 		"9;10": function() {
-			let amt = player.elementary.bosons.scalar.amount
-			let ret = amt.plus(1).log10().pow(2/9).plus(1)
-			if (ret.gte(4)) ret = ret.logBase(2).times(2)
-			return ret
+			let amt = player.elementary.bosons.scalar.amount;
+			let ret = amt.plus(1).log10().pow(2/9).plus(1);
+			if (ret.gte(4)) ret = ret.logBase(2).times(2);
+			return ret;
 		},
 		"10;1": function(type) {
 			if (type=="pth") {
-				let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10)
-				if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
+				let ret = player.inf.ascension.power.plus(1).times(10).slog(10).pow(0.15).div(10);
+				if (ret.gte(0.9)) ret = new ExpantaNum(0.9);
 				return ret;
 			} else if (type=="snp") {
-				return player.distance.plus(1).log10().plus(1).pow(10)
+				return player.distance.plus(1).log10().plus(1).pow(10);
 			}
 		},
 		"10;2": function() {
-			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1)
-			let exp = tmp.maxVel.plus(1).times(10).slog(10)
-			return base.pow(exp).pow(12)
+			let base = tmp.maxVel.plus(1).log10().plus(1).log10().plus(1);
+			let exp = tmp.maxVel.plus(1).times(10).slog(10);
+			return base.pow(exp).pow(12);
 		},
 		"10;4": function() {
-			if (!tmp.auto) return new ExpantaNum(1)
-			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt()
-			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt()
-			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75)
-			let ret = f1.times(f2).times(f3).cbrt()
-			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;0")) ret = ret.pow(1.8)
-			return ret
+			if (!tmp.auto) return new ExpantaNum(1);
+			let f1 = tmp.auto.rankbot.magnitude.plus(1).log10().plus(1).sqrt();
+			let f2 = tmp.auto.tierbot.magnitude.plus(1).log10().plus(1).sqrt();
+			let f3 = tmp.auto.fuelbot.magnitude.plus(1).log10().plus(1).pow(0.75);
+			let ret = f1.times(f2).times(f3).cbrt();
+			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;0")) ret = ret.pow(1.8);
+			return ret;
 		},
 		"10;5": function() {
-			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7)
-			return ret
+			let ret = player.elementary.fermions.quarks.amount.plus(1).pow(2.7);
+			return ret;
 		},
 		"10;6": function() {
-			let ret = player.elementary.fermions.leptons.amount.plus(1).pow(0.05)
-			return ret
+			let ret = player.elementary.fermions.leptons.amount.plus(1).pow(0.05);
+			return ret;
 		},
 		"10;10": function() {
-			let base1 = new ExpantaNum(1.9)
-			let ranks = player.rank.max(1).sub(1)
-			let base2 = new ExpantaNum(8.5)
-			let tiers = player.tier.max(1).sub(1)
+			let base1 = new ExpantaNum(1.9);
+			let ranks = player.rank.max(1).sub(1);
+			let base2 = new ExpantaNum(8.5);
+			let tiers = player.tier.max(1).sub(1);
 			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;5")) {
-				base1 = base1.plus(ranks.plus(1).log10().div(10))
-				base2 = base2.plus(tiers.plus(1).log10().div(4))
+				base1 = base1.plus(ranks.plus(1).log10().div(10));
+				base2 = base2.plus(tiers.plus(1).log10().div(4));
 			}
-			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers))
-			return ret
+			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers));
+			return ret;
 		},
 	}
 };
@@ -790,7 +789,7 @@ const STADIUM_REWARDS = {
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
 			ret = ret.times(mult);
-			if (player.modes.includes("extreme")) ret = ret.plus(1).log10().plus(1).log10().div(10).plus(1)
+			if (player.modes.includes("extreme")) ret = ret.plus(1).log10().plus(1).log10().div(10).plus(1);
 			return ret;
 		},
 		solaris: function () {
@@ -921,12 +920,12 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e2050").times(DISTANCES.uni),
 		],
 		effect: function() { 
-			let x = (player.extremeStad||[]).length
-			if (x>=2) x = x*2-2
+			let x = (player.extremeStad||[]).length;
+			if (x>=2) x = x*2-2;
 			let ret = ExpantaNum.pow(4.8, x);
 			return ret;
 		},
-		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x" },
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.cranius.effect())+"x"; },
 	},
 	spectra: {
 		descs: [
@@ -946,8 +945,8 @@ const EXTREME_STADIUM_DATA = {
 			new ExpantaNum("1e4500").times(DISTANCES.uni),
 			new ExpantaNum("1e4650").times(DISTANCES.uni),
 		],
-		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1) },
-		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker" },
+		effect: function() { return player.rankCheap.times(tmp.rankCheap.manPow).times(tmp.rankCheap.pow).pow(0.4).plus(1); },
+		disp: function() { return showNum(EXTREME_STADIUM_DATA.spectra.effect())+"x weaker"; },
 	},
 	aqualon: {
 		descs: [
@@ -1007,13 +1006,13 @@ const EXTREME_STADIUM_DATA = {
 		],
 		effect: function() { 
 			let ret = player.furnace.coal.plus(1).log10().plus(1).log10().div(6.09);
-			if (ret.gte(0.75)) ret = ret.div(3).plus(0.75*2/3)
+			if (ret.gte(0.75)) ret = ret.div(3).plus(0.75*2/3);
 			if (ret.gte(1)) ret = ret.log10().plus(1).min(ret);
 			return ret;
 		},
-		disp: function() { return "+"+showNum(EXTREME_STADIUM_DATA.quantron.effect().times(100))+"%" },
+		disp: function() { return "+"+showNum(EXTREME_STADIUM_DATA.quantron.effect().times(100))+"%"; },
 	},
-}
+};
 
 // Derivatives
 
@@ -1048,4 +1047,23 @@ const EXTREME_INF_UPG_COST_MODS = {
 	"9;8": new ExpantaNum(1e4),
 	"1;9": new ExpantaNum(3e3),
 	"2;9": new ExpantaNum(3e3),
-}
+	"1;10": new ExpantaNum(1e-15),
+	"2;10": new ExpantaNum(2e-14),
+	"3;10": new ExpantaNum(3e-13),
+	"4;10": new ExpantaNum(4e-12),
+	"5;10": new ExpantaNum(5e-11),
+	"6;10": new ExpantaNum(6e-10),
+	"7;10": new ExpantaNum(7e-9),
+	"8;10": new ExpantaNum(8e-8),
+	"9;10": new ExpantaNum(9e-7),
+	"10;1": new ExpantaNum(1e-15),
+	"10;2": new ExpantaNum(2e-14),
+	"10;3": new ExpantaNum(3e-13),
+	"10;4": new ExpantaNum(4e-12),
+	"10;5": new ExpantaNum(5e-11),
+	"10;6": new ExpantaNum(6e-10),
+	"10;7": new ExpantaNum(7e-9),
+	"10;8": new ExpantaNum(8e-8),
+	"10;9": new ExpantaNum(9e-7),
+	"10;10": new ExpantaNum(1e-5),
+};

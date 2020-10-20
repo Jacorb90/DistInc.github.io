@@ -21,6 +21,7 @@ const SCALING_STARTS = {
 		tier: new ExpantaNum(12),
 		rf: new ExpantaNum(75),
 		fn: new ExpantaNum(15),
+		efn: new ExpantaNum(60),
 		pathogenUpg: new ExpantaNum(40),
 		darkCore: new ExpantaNum(20),
 		endorsements: new ExpantaNum(50),
@@ -37,7 +38,12 @@ const SCALING_STARTS = {
 		pathogenUpg: new ExpantaNum(65),
 		darkCore: new ExpantaNum(40)
 	},
-	atomic: { rank: new ExpantaNum(800), tier: new ExpantaNum(40), rf: new ExpantaNum(300) }
+	atomic: { 
+		rank: new ExpantaNum(800), 
+		tier: new ExpantaNum(40), 
+		rf: new ExpantaNum(300),
+		fn: new ExpantaNum(35000),
+	}
 };
 const SCALING_RES = {
 	rank: function (n = 0) {
@@ -83,14 +89,14 @@ const SCALING_RES = {
 		return player.elementary.bosons.gauge.photons.upgrades[n - 1];
 	},
 };
-const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments", "photons"]
+const MULTI_SCALINGS = ["fn", "pathogenUpg", "enlightenments", "photons"];
 const SCALING_AMTS = {
 	fn: 5,
 	efn: 13,
 	pathogenUpg: 15,
 	enlightenments: 4,
 	photons: 4,
-}
+};
 const REAL_SCALING_NAMES = {
 	rank: "ranks",
 	rankCheap: "rank cheapeners",
@@ -106,4 +112,4 @@ const REAL_SCALING_NAMES = {
 	spectralGems: "spectral gems",
 	dervBoost: "derivative boosts",
 	photons: "photon upgrades",
-}
+};

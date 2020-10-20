@@ -2,82 +2,82 @@ function loadTempFeatures() {
 	tmp.features = {
 		rockets: new Feature({
 			name: "rockets",
-			req: function() { return ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm) },
+			req: function() { return ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.rockets.gt(0) || player.rf.gt(0) },
+			reached: function() { return player.rockets.gt(0) || player.rf.gt(0); },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.distance
 						.max(1)
 						.log10()
 						.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm).log10());
-				} else return player.distance.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm))
+				} else return player.distance.div(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm));
 			}
 		}),
 		automation: new Feature({
 			name: "automation",
-			req: function() { return ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10) },
+			req: function() { return ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.automation.unl },
+			reached: function() { return player.automation.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.distance
 						.max(1)
 						.log10()
 						.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10).log10());
-				} else return player.distance.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10))
+				} else return player.distance.div(ExpantaNum.mul(AUTO_UNL, tmp.auto ? tmp.auto.lrm : 10));
 			}
 		}),
 		"time reversal": new Feature({
 			name: "time reversal",
-			req: function() { return new ExpantaNum(DISTANCES.ly) },
+			req: function() { return new ExpantaNum(DISTANCES.ly); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.tr.unl },
+			reached: function() { return player.tr.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.distance.max(1).log10().div(new ExpantaNum(DISTANCES.ly).log10());
-				} else return ExpantaNum.div(DISTANCES.ly, player.distance).pow(-1)
+				} else return ExpantaNum.div(DISTANCES.ly, player.distance).pow(-1);
 			}
 		}),
 		collapse: new Feature({
 			name: "collapse",
-			req: function() { return new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1) },
+			req: function() { return new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.collapse.unl },
+			reached: function() { return player.collapse.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.distance
 						.max(1)
 						.log10()
 						.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1).log10());
-				} else return player.distance.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1))
+				} else return player.distance.div(new ExpantaNum(COLLAPSE_UNL).times(tmp.collapse ? tmp.collapse.lrm : 1));
 			}
 		}),
 		pathogens: new Feature({
 			name: "pathogens",
-			req: function() { return new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1) },
+			req: function() { return new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1); },
 			res: ["collapse", "cadavers"],
 			display: showNum,
-			reached: function() { return player.pathogens.unl },
+			reached: function() { return player.pathogens.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.collapse.cadavers
 						.max(1)
 						.log10()
 						.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1).log10().max(1));
-				} else return player.collapse.cadavers.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1))
+				} else return player.collapse.cadavers.div(new ExpantaNum(PATHOGENS_UNL).times(tmp.pathogens ? tmp.pathogens.lrm : 1));
 			}
 		}),
 		dc: new Feature({
 			name: "dc",
-			req: function() { return new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1) },
+			req: function() { return new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.dc.unl },
+			reached: function() { return player.dc.unl; },
 			displayName: "dark circles",
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
@@ -85,36 +85,36 @@ function loadTempFeatures() {
 						.max(1)
 						.log10()
 						.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1).log10());
-				} else return player.distance.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1))
+				} else return player.distance.div(new ExpantaNum(DC_UNL).mul(tmp.dc ? tmp.dc.lrm : 1));
 			}
 		}),
 		infinity: new Feature({
 			name: "infinity",
-			req: function() { return new ExpantaNum(INF_UNL) },
+			req: function() { return new ExpantaNum(INF_UNL); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.inf.unl },
+			reached: function() { return player.inf.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(new ExpantaNum(INF_UNL).log10());
-				else return player.distance.div(INF_UNL)
+				else return player.distance.div(INF_UNL);
 			}
 		}),
 		ascension: new Feature({
 			name: "ascension",
-			req: function() { return new ExpantaNum(10) },
+			req: function() { return new ExpantaNum(10); },
 			res: ["inf", "endorsements"],
 			display: showNum,
-			reached: function() { return player.inf.endorsements.gte(10) },
+			reached: function() { return player.inf.endorsements.gte(10); },
 			progress: function () {
 				return player.inf.endorsements.div(10);
 			}
 		}),
 		stadium: new Feature({
 			name: "stadium",
-			req: function() { return new ExpantaNum(15) },
+			req: function() { return new ExpantaNum(15); },
 			res: ["inf", "endorsements"],
 			display: showNum,
-			reached: function() { return player.inf.endorsements.gte(15) },
+			reached: function() { return player.inf.endorsements.gte(15); },
 			displayName: "the stadium",
 			progress: function () {
 				return player.inf.endorsements.div(15);
@@ -122,10 +122,10 @@ function loadTempFeatures() {
 		}),
 		pantheon: new Feature({
 			name: "pantheon",
-			req: function() { return new ExpantaNum(21) },
+			req: function() { return new ExpantaNum(21); },
 			res: ["inf", "endorsements"],
 			display: showNum,
-			reached: function() { return player.inf.endorsements.gte(21) },
+			reached: function() { return player.inf.endorsements.gte(21); },
 			displayName: "the pantheon",
 			progress: function () {
 				return player.inf.endorsements.div(21);
@@ -133,13 +133,13 @@ function loadTempFeatures() {
 		}),
 		derivatives: new Feature({
 			name: "derivatives",
-			req: function() { return ExpantaNum.mul(DISTANCES.uni, "1e90000") },
+			req: function() { return ExpantaNum.mul(DISTANCES.uni, "1e90000"); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.inf.derivatives.unl },
+			reached: function() { return player.inf.derivatives.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, "1e90000").log10());
-				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, "1e90000"))
+				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, "1e90000"));
 			}
 		}),
 		elementary: new Feature({
@@ -152,7 +152,7 @@ function loadTempFeatures() {
 			],
 			res: ["rockets", ["collapse", "cadavers"], ["inf", "endorsements"]],
 			display: [showNum, showNum, showNum],
-			reached: function() { return false },
+			reached: function() { return false; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") {
 					return player.rockets
@@ -182,9 +182,9 @@ function loadTempFeatures() {
 			specRes: [false, "EP in one run"],
 			res: ["distance", "bestEP"],
 			display: [formatDistance, showNum],
-			reached: function() { return player.elementary.theory.unl },
+			reached: function() { return player.elementary.theory.unl; },
 			progress: function () {
-				return ((player.options.featPerc=="logarithm")?player.distance.plus(1).logBase(THEORY_REQ[0]):player.distance.div(THEORY_REQ[0])).min(1).times(((player.options.featPerc=="logarithm")?player.bestEP.plus(1).logBase(THEORY_REQ[1]):player.bestEP.div(THEORY_REQ[1])).min(1))
+				return ((player.options.featPerc=="logarithm")?player.distance.plus(1).logBase(THEORY_REQ[0]):player.distance.div(THEORY_REQ[0])).min(1).times(((player.options.featPerc=="logarithm")?player.bestEP.plus(1).logBase(THEORY_REQ[1]):player.bestEP.div(THEORY_REQ[1])).min(1));
 			},
 			spec: [false, false],
 		}),
@@ -197,23 +197,55 @@ function loadTempFeatures() {
 			],
 			res: ["distance", ["inf", "endorsements"]],
 			display: [formatDistance, showNum],
-			reached: function() { return player.elementary.hc.unl },
+			reached: function() { return player.elementary.hc.unl; },
 			progress: function () {
-				if (player.options.featPerc=="logarithm") return player.distance.plus(1).logBase(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1))
-				else return player.distance.div(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1))
+				if (player.options.featPerc=="logarithm") return player.distance.plus(1).logBase(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1));
+				else return player.distance.div(HC_REQ[0]).min(1).times(player.inf.endorsements.div(HC_REQ[1]).min(1));
 			},
 			spec: [false, true],
 		}),
 		"quantum foam": new Feature({
 			name: "quantum foam",
-			req: function() { return new ExpantaNum(FOAM_REQ) },
+			req: function() { return new ExpantaNum(FOAM_REQ); },
 			res: "distance",
 			display: formatDistance,
-			reached: function() { return player.elementary.foam.unl },
+			reached: function() { return player.elementary.foam.unl; },
 			progress: function () {
 				if (player.options.featPerc=="logarithm") return player.distance.max(1).log10().div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ).log10());
-				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ))
+				else return player.distance.div(ExpantaNum.mul(DISTANCES.uni, FOAM_REQ));
 			}
+		}),
+		skyrmions: new Feature({
+			name: "skyrmions",
+			res_amt: 3,
+			req: [
+				new ExpantaNum(SKY_REQ[0]),
+				new ExpantaNum(SKY_REQ[1]),
+				new ExpantaNum(SKY_REQ[2])
+			],
+			res: ["distance", function() { return player.elementary.fermions.quarks.amount; }, function() { return player.elementary.fermions.leptons.amount; }],
+			resName: ["distance", "quarks", "leptons"],
+			display: [formatDistance, showNum, showNum],
+			reached: function() { return false; },
+			progress: function () {
+				if (player.options.featPerc=="logarithm") {
+					return player.distance
+						.max(1)
+						.log10()
+						.div(new ExpantaNum(SKY_REQ[0]).log10())
+						.min(1)
+						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[1]).log10()).min(1))
+						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[2]).log10()).min(1));
+				} else {
+					return player.distance
+						.div(SKY_REQ[0])
+						.min(1)
+						.times(player.elementary.fermions.quarks.amount.div(SKY_REQ[1]).min(1))
+						.times(player.elementary.fermions.leptons.amount.div(SKY_REQ[2]).min(1));
+				}
+			},
+			spec: [false, true, true],
+			superSpec: [false, true, true],
 		}),
 	};
 }

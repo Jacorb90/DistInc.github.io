@@ -1,3 +1,4 @@
+
 function updateTemp() {
 	updateTempEarlyGame();
 	updateTempRanks();
@@ -23,7 +24,7 @@ function updateTemp() {
 	}
 	
 	if (modeActive("hikers_dream")) {
-		updateTempHikersDream()
+		updateTempHikersDream();
 	}
 }
 
@@ -41,6 +42,27 @@ function setupHTML() {
 		table += "</tr>";
 	}
 	achTable.setHTML(table);
+	
+	// Rank/Tier Stats
+	let rankTable = new Element("rankStats");
+	table = "<div class='flexTopRow'><div class='flexContainer'>";
+	for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
+		let ranks = Object.keys(RANK_DESCS)[i];
+		table += "<div id='rankReward"+ranks+"' class='rtReward'>";
+		table += "Rank "+showNum(parseInt(ranks)+1)+": "+(RANK_DESCS[ranks][0].toUpperCase() + RANK_DESCS[ranks].slice(1));
+		if (window["rank"+ranks+"Eff"]) table += "<br>Currently: <b><span id='rankEff"+ranks+"'></span></b>x";
+		table += "</div>";
+	}
+	table += "</div><div class='flexContainer'>";
+	for (let i=0;i<Object.keys(TIER_DESCS).length;i++) {
+		let tiers = Object.keys(TIER_DESCS)[i];
+		table += "<div id='tierReward"+tiers+"' class='rtReward'>";
+		table += "Tier "+showNum(parseInt(tiers)+1)+": "+(TIER_DESCS[tiers][0].toUpperCase() + TIER_DESCS[tiers].slice(1));
+		if (window["tier"+tiers+"Eff"]) table += "<br>Currently: <b><span id='tierEff"+tiers+"'></span></b>x";
+		table += "</div>";
+	}
+	table += "</div></div>";
+	rankTable.setHTML(table);
 
 	// Time Reversal Upgrade Table
 	let trTable = new Element("trTable");
@@ -123,39 +145,39 @@ function setupHTML() {
 		autos +=
 			"<div id='automatorDiv-" +
 			Object.keys(AUTOMATORS)[i] +
-			"'>" +
+			"' class='automator' style='border-color: "+AUTOMATOR_BORDER[Object.keys(AUTOMATORS)[i]]+";'>" +
 			"<label for='automator-" + Object.keys(AUTOMATORS)[i] + "'>" +
 			(dp.includes("auto") || dp.includes("Auto") ? dp : "Auto-" + dp) +
 			"</label>" +
 			": <input id='automator-" +
 			Object.keys(AUTOMATORS)[i] +
 			"' type='checkbox'></input><br>";
-		let name = Object.keys(AUTOMATORS)[i]
+		let name = Object.keys(AUTOMATORS)[i];
 		if (AUTOMATOR_X[name]!==undefined) {
 			if (AUTOMATOR_X[name]>=1) {
-				autos += "<button class='btn tb rckt' onclick='toggleAutoMode(&quot;"+name+"&quot;)'>Mode: <span id='autoMode"+name+"' style='color: black;'>"+AUTOMATOR_MODES[name][0]+"</span></button><br>"
+				autos += "<button class='btn tb rckt' onclick='toggleAutoMode(&quot;"+name+"&quot;)'>Mode: <span id='autoMode"+name+"' style='color: black;'>"+AUTOMATOR_MODES[name][0]+"</span></button><br>";
 			}
 			if (AUTOMATOR_X[name]>=2) {
-				autos += "<br><input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>"
+				autos += "<br><input type='number' id='autoTxt"+name+"' onchange='updateAutoTxt(&quot;"+name+"&quot;)' style='color: black;'></input><br>";
 			}
 		}
-		autos += "</div><br>";
+		autos += "</div>";
 	}
 	au.setHTML(autos);
 	for (let i = 0; i < Object.keys(player.automators).length; i++) {
 		let el = new Element("automator-" + Object.keys(player.automators)[i]);
 		el.el.checked = Object.values(player.automators)[i];
-		let name = Object.keys(player.automators)[i]
+		let name = Object.keys(player.automators)[i];
 		if (AUTOMATOR_X[name]) {
 			if (AUTOMATOR_X[name]>=1) {
-				let btn = new Element("autoMode"+name)
-				if (!player.autoModes[name]) player.autoModes[name] = AUTOMATOR_MODES[name][0]
-				btn.setTxt(player.autoModes[name])
+				let btn = new Element("autoMode"+name);
+				if (!player.autoModes[name]) player.autoModes[name] = AUTOMATOR_MODES[name][0];
+				btn.setTxt(player.autoModes[name]);
 			}
 			if (AUTOMATOR_X[name]>=2) {
-				let field = new Element("autoTxt"+name)
-				if (!player.autoTxt[name]) player.autoTxt[name] = new ExpantaNum(0)
-				field.setAttr("value", player.autoTxt[name].toString())
+				let field = new Element("autoTxt"+name);
+				if (!player.autoTxt[name]) player.autoTxt[name] = new ExpantaNum(0);
+				field.setAttr("value", player.autoTxt[name].toString());
 			}
 		}
 	}
@@ -228,45 +250,51 @@ function setupHTML() {
 	}
 	
 	// Hadronic Challenge
-	let len = Object.keys(HC_DATA).length
+	let len = Object.keys(HC_DATA).length;
 	for (let i=0;i<len;i++) {
-		let name = Object.keys(HC_DATA)[i]
-		let data = HC_DATA[name]
-		let tab = data[2]
+		let name = Object.keys(HC_DATA)[i];
+		let data = HC_DATA[name];
+		let tab = data[2];
 		let el;
-		el = new Element(tab+"HC")
+		el = new Element(tab+"HC");
 		
-		let html = "<br><span id='hcSelectorSpan"+name+"'>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+data[1][0]+"' max='"+data[1][1]+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")+"<br>"
-		if (data[0]=="range") html += "<span id='hcCurrent"+name+"'></span><br>"
-		html += "</span>"
-		el.addHTML(html)
+		let html = "<br><span id='hcSelectorSpan"+name+"'>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+data[1][0]+"' max='"+data[1][1]+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"");
+		if (HC_EXTREME_CHALLS.includes(name)) html += "<span id='hcExtrChall"+name+"'><b>(hover for info)</b></span>";
+		html += "<br>";
+		if (data[0]=="range") html += "<span id='hcCurrent"+name+"'></span><br>";
+		html += "</span>";
+		el.addHTML(html);
 	}
-	updateHCSelectorInputs()
+	updateHCSelectorInputs();
+	
+	// Pion/Spinor Fields
+	setupSkyField("pion");
+	setupSkyField("spinor");
 	
 	// Version
-	let v = new Element("version")
-	v.setTxt(player.version)
+	let v = new Element("version");
+	v.setTxt(player.version);
 	
 	// Main Link
-	let span = new Element("linkToGame")
-	span.setHTML((betaID==""&&!window.location.href.includes(correctLink))?"Please migrate to <a href='http://"+correctLink+"/DistInc.github.io/main.html'>"+correctLink+"</a><br>":"")
+	let span = new Element("linkToGame");
+	span.setHTML((betaID==""&&!window.location.href.includes(correctLink))?"Please migrate to <a href='http://"+correctLink+"/DistInc.github.io/main.html'>"+correctLink+"</a><br>":"");
 	
 	// Element Setup
-	tmp.el = {}
-	let all = document.getElementsByTagName("*")
+	tmp.el = {};
+	let all = document.getElementsByTagName("*");
 	for (let i=0;i<all.length;i++) {
-		let x = all[i]
-		tmp.el[x.id] = new Element(x)
+		let x = all[i];
+		tmp.el[x.id] = new Element(x);
 	}
 }
 
 function updateBeforeTick() {
 	updateTemp();
-	let ticks = VIS_UPDS[player.options.visUpd]
+	let ticks = VIS_UPDS[player.options.visUpd];
 	if (visUpdTicks>=ticks) {
 		updateHTML();
 		checkNaN();
-		visUpdTicks = 0
+		visUpdTicks = 0;
 	}
 }
 
@@ -302,71 +330,77 @@ function updateUnlocks() {
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
-	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
-	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true;
+	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true;
 	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+	if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
 }
 
 document.onkeyup = function(e) {
 	outerShiftDown = !(!e.shiftKey);
-}
+};
 
 document.onkeydown = function(e) {
 	outerShiftDown = !(!e.shiftKey);
-	if (!player.options.hot || player.modes.includes("absurd")) return
-	let shiftDown = e.shiftKey
-	let key = e.which
+	if (!player.options.hot || player.modes.includes("absurd")) return;
+	let shiftDown = e.shiftKey;
+	let key = e.which;
 	switch(key) {
 		case 49: 
-			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(1)
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(1);
 			break;
 		case 50: 
-			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(2)
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(2);
 			break;
 		case 51: 
-			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(3)
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(3);
 			break;
 		case 52: 
-			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(4)
+			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(4);
 			break;
 		case 67: 
-			if (TABBTN_SHOWN.collapse() && !shiftDown) tmp.collapse.layer.reset()
+			if (TABBTN_SHOWN.collapse() && !shiftDown) tmp.collapse.layer.reset();
 			else if (modeActive("extreme") && shiftDown) tmp.rankCheap.layer.reset();
 			break;
 		case 68:
-			if (shiftDown && INF_TABS.derivatives()) tmp.inf.derv.doUnl()
-			else if (TABBTN_SHOWN.dc()) tmp.dc.buyCore()
+			if (shiftDown && INF_TABS.derivatives()) tmp.inf.derv.doUnl();
+			else if (TABBTN_SHOWN.dc()) tmp.dc.buyCore();
 			break;
 		case 69: // Nice.
-			if (shiftDown && TABBTN_SHOWN.elementary()) tmp.elm.layer.reset()
-			else if (TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10)) tmp.inf.layer.reset()
+			if (shiftDown && TABBTN_SHOWN.elementary()) tmp.elm.layer.reset();
+			else {
+				if (infActive) skipInfAnim();
+				else if (TABBTN_SHOWN.inf() && player.inf.endorsements.gte(10)) tmp.inf.layer.reset();
+			}
 			break;
 		case 70: 
-			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset()
-			else if (TABBTN_SHOWN.rockets()) tmp.rf.layer.reset()
+			if (shiftDown && TABBTN_SHOWN.furnace() && tmp.fn) tmp.fn.bfReset();
+			else if (TABBTN_SHOWN.rockets()) tmp.rf.layer.reset();
 			break;
 		case 74:
-			if (modeActive("hikers_dream")) refillEnergy()
+			if (modeActive("hikers_dream")) refillEnergy();
+			break;
 		case 80:
-			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()
-			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll()
+			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge();
+			else if (TABBTN_SHOWN.pathogens()) tmp.pathogens.maxAll();
 			break;
 		case 82:
-			if (shiftDown && TABBTN_SHOWN.rockets()) tmp.rockets.layer.reset()
-			else tmp.ranks.layer.reset()
+			if (shiftDown && TABBTN_SHOWN.rockets()) tmp.rockets.layer.reset();
+			else tmp.ranks.layer.reset();
 			break;
 		case 83: 
-			if (TH_TABS.strings()) entangleStrings();
+			if (shiftDown && ELM_TABS.sky()) skyrmionReset();
+			else if (TH_TABS.strings()) entangleStrings();
 			break;
 		case 84: 
-			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start()
-			else tmp.tiers.layer.reset()
+			if (shiftDown && ELM_TABS.theory()) tmp.elm.theory.start();
+			else tmp.tiers.layer.reset();
 			break;
 		case 85: 
-			if (TABBTN_SHOWN.tr()) reverseTime()
+			if (TABBTN_SHOWN.tr()) reverseTime();
 			break;
 	}
-}
+};
 
 function getNews() {
 	let possible = Object.values(NEWS_DATA).filter(data =>
@@ -386,13 +420,13 @@ function getNews() {
 }
 
 document.getElementById("news").addEventListener("animationend", function(){
-	if (!player.options.newst) return
+	if (!player.options.newst) return;
 	document.getElementById("news").innerHTML = "";
 	document.getElementById("news").classList.remove("slidenews");
 	document.documentElement.style.setProperty("--news-right-start", 0 - NEWS_ADJ + "%");
 	setTimeout(function(){
 		document.getElementById("news").innerHTML = getNews();
 		document.getElementById("news").classList.add("slidenews");
-	}, 1000)		
-})
+	}, 1000);		
+});
 document.getElementById("news").innerHTML = getNews();

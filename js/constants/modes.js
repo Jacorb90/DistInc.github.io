@@ -144,6 +144,11 @@ const MODE_VARS = {
 		activeFC: 0,
 		furnChalls: [],
 		extremeStad: [],
+		magma: {
+			done: false,
+			amount: new ExpantaNum(0),
+			ref: new ExpantaNum(0),
+		},
 	},
 	hikers_dream: {
 		energy: new ExpantaNum(100),
@@ -161,41 +166,50 @@ const MODE_EX = {
 	extreme: function (source) {
 		source.rankCheap = new ExpantaNum(source.rankCheap);
 		source.furnace.coal = new ExpantaNum(source.furnace.coal);
+		let fu = source.furnace.upgrades;
 		source.furnace.upgrades = [
-			new ExpantaNum(source.furnace.upgrades[0]),
-			new ExpantaNum(source.furnace.upgrades[1]),
-			new ExpantaNum(source.furnace.upgrades[2]),
-			new ExpantaNum(source.furnace.upgrades[3]||0),
-			new ExpantaNum(source.furnace.upgrades[4]||0),
+			new ExpantaNum(fu[0]),
+			new ExpantaNum(fu[1]),
+			new ExpantaNum(fu[2]),
+			new ExpantaNum(fu[3]||0),
+			new ExpantaNum(fu[4]||0),
 		];
 		source.furnace.enhancedCoal = new ExpantaNum(source.furnace.enhancedCoal||0);
+		let eu = (source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0]);
 		source.furnace.enhancedUpgrades = [
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[0]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[1]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[2]),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[3]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[4]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[5]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[6]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[7]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[8]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[9]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[10]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[11]||0),
-			new ExpantaNum((source.furnace.enhancedUpgrades||[0,0,0,0,0,0,0,0,0,0,0,0,0])[12]||0),
+			new ExpantaNum(eu[0]),
+			new ExpantaNum(eu[1]),
+			new ExpantaNum(eu[2]),
+			new ExpantaNum(eu[3]||0),
+			new ExpantaNum(eu[4]||0),
+			new ExpantaNum(eu[5]||0),
+			new ExpantaNum(eu[6]||0),
+			new ExpantaNum(eu[7]||0),
+			new ExpantaNum(eu[8]||0),
+			new ExpantaNum(eu[9]||0),
+			new ExpantaNum(eu[10]||0),
+			new ExpantaNum(eu[11]||0),
+			new ExpantaNum(eu[12]||0),
 		];
 		source.furnace.blueFlame = new ExpantaNum(source.furnace.blueFlame);
-		if (!source.extremeStad) source.extremeStad = []
+		if (!source.extremeStad) source.extremeStad = [];
+		
+		let mag = source.magma||{};
+		source.magma = {
+			done: mag.done||false,
+			amount: new ExpantaNum(mag.amount||0),
+			ref: new ExpantaNum(mag.ref||0),
+		};
 		return source;
 	},
 	hikers_dream: function(source) {
-		source.energy = new ExpantaNum(source.energy)
+		source.energy = new ExpantaNum(source.energy);
 		if (source.canRefill===undefined) source.canRefill = true;
-		source.spentMotive = new ExpantaNum(source.spentMotive||0)
-		source.geners = new ExpantaNum(source.geners||1)
-		source.genLvl = new ExpantaNum(source.genLvl||0)
-		source.spentMotiveGens = new ExpantaNum(source.spentMotiveGens||0)
-		source.bestMotive = new ExpantaNum(source.bestMotive||0)
+		source.spentMotive = new ExpantaNum(source.spentMotive||0);
+		source.geners = new ExpantaNum(source.geners||1);
+		source.genLvl = new ExpantaNum(source.genLvl||0);
+		source.spentMotiveGens = new ExpantaNum(source.spentMotiveGens||0);
+		source.bestMotive = new ExpantaNum(source.bestMotive||0);
 		return source;
 	},
 };
