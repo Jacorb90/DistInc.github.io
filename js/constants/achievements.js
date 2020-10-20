@@ -389,8 +389,11 @@ const ACH_DATA = {
 		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",
 		
+		141: "boolean(hikers_dream,Keep generators and buy them automatically.)",
 		142: "Endorsements that are bought automatically do not reset anything.",
+		143: "boolean(hikers_dream,Gain ten million times the passive energy.)",
 		144: "All Strings are gained showNum(25)% faster.",
+		145: "boolean(hikers_dream,inf10;10 is stronged based on your ranks.)",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",

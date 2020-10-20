@@ -24,9 +24,14 @@ function updateTempTheoriverse() {
 		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
 	}
-	if (modeActive("extreme")) {
+	if (modeActive("extreme")) { 
 		if (player.elementary.theory.depth.lt(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(0.75)
 		if (player.elementary.theory.depth.gte(5)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(1.25)
+	}
+	if (modeActive("hikers_dream")) {
+		tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
+		if (player.elementary.theory.depth.gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(9 / 8)
+		if (player.elementary.theory.depth.gte(7)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
 	}
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return

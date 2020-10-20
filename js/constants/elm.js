@@ -246,6 +246,11 @@ const HIGGS_UPGS = {
 		desc: "Raise Storage to the tenth power and it also boosts Motivation.",
 		unl: function() { return modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("0;2;1") },
 	},
+	"3;2;2": {
+		cost: new ExpantaNum(5e22),
+		desc: "Square each Omnipotence and Storage",
+		unl: function() { return modeActive("hikers_dream") && hasDE(3) },
+	},
 }
 
 const THEORY_REQ = [new ExpantaNum("1e4000000").times(DISTANCES.uni), new ExpantaNum(1000)]
