@@ -230,6 +230,14 @@ function entropyUpgAutoTick(){
 	}
 }
 
+function energyAutoTick(){
+	if (!modeActive("hikers_dream")) return
+	if (tmp.ach) if (tmp.ach[141].has) {
+		buyGen()
+		newGen()
+	}
+}
+
 function autoTick(diff) {
 	normalAutoTick(diff)
 	furnaceAutoTick()
@@ -249,6 +257,7 @@ function autoTick(diff) {
 	theoryBoosterAutoTick()
 	entropyAutoTick()
 	entropyUpgAutoTick()
+	 energyAutoTick()
 }
 
 function autoPerSec() {

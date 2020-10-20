@@ -697,6 +697,14 @@ const INF_UPGS = {
 			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;5")) {
 				base1 = base1.plus(ranks.plus(1).log10().div(10))
 				base2 = base2.plus(tiers.plus(1).log10().div(4))
+				if (modeActive("hikers_dream")) {
+					base2 = base2.log10().plus(1)
+					tiers = tiers.times(tiers)
+				}
+			}
+			if (modeActive("hikers_dream") && tmp.ach) if (tmp.ach[145].has) {
+				base1 = base1.log10().plus(1)
+				ranks = ranks.times(ranks.div(200).plus(1))
 			}
 			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers))
 			return ret

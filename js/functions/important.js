@@ -68,7 +68,8 @@ function simulateTime() {
 
 function modeLoad(resetted) {
 	if (!resetted.includes("extremeStad") && modeActive("extreme")) if (player.activeFC==6) resetted = resetted.filter(x => x!="activeFC")
-	if (resetted.includes("bestMotive") && player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0")) resetted = resetted.filter(x => x != "bestMotive")
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0")) resetted = resetted.filter(x => x != "bestMotive")
+	if (tmp.ach) if (tmp.ach[141].has) resetted = resetted.filter(x => x != "geners" && x != "genLvl")
 	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
 		player.modes
 			.filter(x => Object.keys(MODE_VARS).includes(x))

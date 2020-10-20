@@ -69,7 +69,13 @@ function updateMainHTML(){
 		tmp.el.accEn.setHTML(tmp.accEn.gt(0) ? " (Accelerational Energy: " + formatDistance(tmp.accEn) + "/s<sup>2</sup>)" : "");
 		
 		// Hiker's Dream
-		tmp.el.incline.setHTML(modeActive("hikers_dream")?"Current Incline: "+showNum(tmp.hd.incline)+"&deg;, raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>":"")
+		let t = ""
+		if (modeActive("hikers_dream")){
+			let start = tmp.hd.incline.gt(89.999) ? "The secant of your incline is: " + showNum(tmp.hd.incline.sub(90).times(-1).pow(-1)) : "Current Incline: "+showNum(tmp.hd.incline)+"&deg;"
+			//this is the x+o(x^3) formula so its correct if we are large enough (even 89 deg should do)
+			t = start + ", raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>"
+		}
+		tmp.el.incline.setHTML(t)
 		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
 	}
 }
