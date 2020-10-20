@@ -178,6 +178,7 @@ function adjustGen(val, type) {
 	if (modeActive("hard") && (type=="inflatons"||type=="foam"||type=="sky")) newVal = newVal.div(5)
 	else if (modeActive("hard") && !modeActive("extreme")) newVal = newVal.div(3.2)
 	if (type=="foam"&&modeActive("extreme")&&newVal.gte(1e50)) newVal = newVal.times(1e150).pow(.25)
+	if (preinf && modeActive("extreme") && newVal.gte("1e100000000")) newVal = newVal.times("1e400000000").pow(.2);
 	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
 	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)
 	return newVal;

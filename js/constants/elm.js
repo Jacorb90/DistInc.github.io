@@ -570,6 +570,7 @@ const TREE_UPGS = {
 	34: {
 		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
 		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
+		target: function(points) { return points.sub(50).div(100).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(4),
 		desc: "The Magma cost of Reforming Magma uses a slower formula.",
 		effect: function(bought) { return ExpantaNum.pow(0.9, ExpantaNum.div(bought, 2)) },
@@ -586,6 +587,7 @@ const TREE_UPGS = {
 	36: {
 		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
 		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
+		target: function(points) { return points.sub(50).div(100).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(4),
 		desc: "The Knowledge cost of Reforming Magma uses a slower formula.",
 		effect: function(bought) { return ExpantaNum.pow(0.75, ExpantaNum.div(bought, 2)) },
@@ -598,6 +600,22 @@ const TREE_UPGS = {
 		desc: "The Extreme mode reduction to post-Elementary resource generation is nerfed.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"^0.9 -> ^0.95":"^0.9 -> ^0.9" },
+	},
+	38: {
+		unl: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
+		cost: function(bought) { return new ExpantaNum(6e10) },
+		cap: new ExpantaNum(1),
+		desc: "Base Entropy gain is squared, and the first 5 Foam Boosts are unaffected by the Extreme mode nerf, but only after 45 boosts.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
+	},
+	39: {
+		unl: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
+		cost: function(bought) { return new ExpantaNum(6e10) },
+		cap: new ExpantaNum(1),
+		desc: "Entropy gain is increased by 50%.",
+		effect: function(bought) { return new ExpantaNum(1).times(bought) },
+		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
@@ -797,24 +815,30 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 20
+const ENTROPY_UPGS = 22
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
 	3: new ExpantaNum(25),
 	4: new ExpantaNum(100),
+	21: new ExpantaNum(104),
+	
 	5: new ExpantaNum(135),
 	6: new ExpantaNum(150),
 	7: new ExpantaNum(215),
 	8: new ExpantaNum(235),
+	22: new ExpantaNum(525),
+	
 	9: new ExpantaNum(550),
 	10: new ExpantaNum(700),
 	11: new ExpantaNum(1500),
 	12: new ExpantaNum(1750),
+	
 	13: new ExpantaNum(1800),
 	14: new ExpantaNum(2350),
 	15: new ExpantaNum(2425),
 	16: new ExpantaNum(2475),
+	
 	17: new ExpantaNum(11111),
 	18: new ExpantaNum(12e3),
 	19: new ExpantaNum(17500),
@@ -825,11 +849,12 @@ const ENTROPY_UPG_EFFS = {
 	3: function() { return ExpantaNum.pow(1.0015, player.rf) },
 	4: function() { return (tmp.elm?tmp.elm.entropy.omega:false)?(tmp.elm.entropy.omega.times(2)):new ExpantaNum(0) },
 	5: function() { return ExpantaNum.pow(1.03, player.elementary.theory.preons.boosters) },
-	7: function() { return player.elementary.hc.hadrons.plus(1).times(10).slog(10).times(25) },
+	7: function() { return player.elementary.hc.hadrons.plus(1).times(10).slog(10).times(modeActive("extreme")?75:25) },
 	8: function() { return player.elementary.theory.accelerons.amount.plus(1).times(player.elementary.theory.inflatons.amount.plus(1)).log10().plus(1).log10().plus(1).sqrt() },
 	9: function() { return player.elementary.sky.amount.plus(1).logBase(2).times(3).plus(1) },
 	14: function() { return player.elementary.entropy.best.plus(1).log10().sqrt().div(6).plus(1) },
 	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
+	21: function() { return modeActive("extreme")?player.magma.amount.cbrt().times(75):new ExpantaNum(0) },
 }
 
 const SKY_REQ = [
