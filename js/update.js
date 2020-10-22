@@ -270,6 +270,9 @@ function setupHTML() {
 	setupSkyField("pion")
 	setupSkyField("spinor")
 	
+	// Plasma Boosts
+	setupPlasmaBoosts()
+	
 	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)

@@ -225,7 +225,7 @@ function entropyUpgAutoTick(){
 	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
 		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x)&&entropyUpgShown(x));
 		if (toBuy.length==0) return;
-		let nextUpg = toBuy.reduce((a,c) => Math.min(a,c));
+		let nextUpg = toBuy.reduce((a,c) => ENTROPY_UPG_AUTO_ORDER[Math.min(ENTROPY_UPG_AUTO_ORDER.indexOf(a),ENTROPY_UPG_AUTO_ORDER.indexOf(c))]);
 		buyEntropyUpg(nextUpg)
 	}
 }

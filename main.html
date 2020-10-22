@@ -415,6 +415,11 @@
 								Magma Search
 							</button>
 						</td>
+						<td>
+							<button id="plasmatabbtn" class="btn tb plasma main" onclick="showFurnaceTab('plasma')">
+								Plasma
+							</button>
+						</td>
 					</tr>
 				</table><br>
 			</div><br>
@@ -701,6 +706,14 @@
 				You have <span id="magmaAmt" class="magmaTxt"></span> Magma, which is making Furnace & Enhanced Furnace Upgrades <span id="magmaEff" class="magmaTxt"></span>% stronger<br><br>
 				You have <span id="rMagmaAmt" class="magmaTxt"></span> Reformed Magma, which is multiplying your Molten Bricks by <span id="rMagmaEff"></span><br><br>
 				Note: This does not reset on Elementary.
+			</div>
+			<div id="plasma" class="furnaceTab" style="display: none;">
+				<br><br>
+				You are generating 1 Plasma every second, and your Skyrmions are raising your Plasma to the power of <span id="plasmaExp" class="plasmaTxt"></span>.<br><br>
+				You have <span id="plasmaAmt" class="plasmaTxt"></span> Plasma.<br><br><br>
+				Your Plasma & Blue Flame have generated <span id="whiteFlameAmt" class="whiteFlame"></span> White Flame <span id="whiteFlameGen"></span><br><br>
+				<button id="plasmaBoostBtn" class="btn locked" onclick="buyPlasmaBoost()"></button><br><br>
+				<div id="plasmaBoosts" class="flexContainer"></div><br><br>
 			</div>
 		</div>
 		<div id="auto" class="tab" style="display: none;">
@@ -1955,6 +1968,7 @@
 							<td><button id="entropy10" class="btn locked" onclick="buyEntropyUpg(10)" style="min-height: 125px;">Unlock Auto-Entropy, and gain 50% more Entropy (kept on Skyrmion reset)<br>Cost: <span id="entropyCost10" style="color: black;"></span> Entropy</button></td>
 							<td><button id="entropy11" class="btn locked" onclick="buyEntropyUpg(11)" style="min-height: 125px;">Unlock Auto-Entropy Upgrades, and all Foam types are gained 10x faster (kept on Skyrmion reset)<br>Cost: <span id="entropyCost11" style="color: black;"></span> Entropy</button></td>
 							<td><button id="entropy12" class="btn locked" onclick="buyEntropyUpg(12)" style="min-height: 125px;">Gain 1% of Elementary Particle, Fermion, & Boson gain every second (kept on Skyrmion reset)<br>Cost: <span id="entropyCost12" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy23" class="btn locked" onclick="buyEntropyUpg(23)" style="min-height: 125px;">The Extreme mode nerf to pre-Infinity production is less lethal (^0.825 -> ^0.875)<br>Cost: <span id="entropyCost23" style="color: black;"></span> Entropy</button></td>
 						</tr>
 						<tr>
 							<td><button id="entropy13" class="btn locked" onclick="buyEntropyUpg(13)" style="min-height: 150px;">Buying Theory Tree Upgrades does not spend Theory Points, and the last Inflaton effect does not become extremely softcapped (kept on Skyrmion reset)<br>Cost: <span id="entropyCost13" style="color: black;"></span> Entropy</button></td>
@@ -2119,6 +2133,7 @@
 	<script type="text/javascript" src="js/main/extreme/fn.js"></script>
 	<script type="text/javascript" src="js/main/extreme/stadium.js"></script>
 	<script type="text/javascript" src="js/main/extreme/magma.js"></script>
+	<script type="text/javascript" src="js/main/extreme/plasma.js"></script>
 
 	<!-- Update -->
 	<script type="text/javascript" src="js/update.js"></script>

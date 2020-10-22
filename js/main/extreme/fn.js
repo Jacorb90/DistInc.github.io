@@ -395,6 +395,7 @@ function updateTempFurnace() {
 	updateMoltenBricks();
 	
 	updateTempMagma();
+	updateTempPlasma();
 }
 
 function startFurnChall(x) {
@@ -445,7 +446,8 @@ const FC_GOAL = {
 const FN_TABBTN_SHOWN = {
 	nfn: function() { return true },
 	efn: function() { return tmp.ach[111].has },
-	magma: function() { return player.elementary.times.gt(0) },
+	magma: function() { return tmp.ach[131].has },
+	plasma: function() { return tmp.ach[171].has },
 }
 
 function isFNTabShown(name) {

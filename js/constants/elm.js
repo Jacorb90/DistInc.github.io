@@ -608,7 +608,7 @@ const TREE_UPGS = {
 	},
 	38: {
 		unl: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
-		cost: function(bought) { return new ExpantaNum(6e10) },
+		cost: function(bought) { return new ExpantaNum(4e10) },
 		cap: new ExpantaNum(1),
 		desc: "Base Entropy gain is squared, and the first 5 Foam Boosts are unaffected by the Extreme mode nerf, but only after 45 boosts.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
@@ -616,7 +616,7 @@ const TREE_UPGS = {
 	},
 	39: {
 		unl: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
-		cost: function(bought) { return new ExpantaNum(6e10) },
+		cost: function(bought) { return new ExpantaNum(4e10) },
 		cap: new ExpantaNum(1),
 		desc: "Entropy gain is increased by 50%.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
@@ -820,7 +820,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 22
+const ENTROPY_UPGS = 23
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -838,6 +838,7 @@ const ENTROPY_UPG_COSTS = {
 	10: new ExpantaNum(700),
 	11: new ExpantaNum(1500),
 	12: new ExpantaNum(1750),
+	23: new ExpantaNum(6000),
 	
 	13: new ExpantaNum(1800),
 	14: new ExpantaNum(2350),
@@ -861,6 +862,11 @@ const ENTROPY_UPG_EFFS = {
 	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 	21: function() { return modeActive("extreme")?player.magma.amount.cbrt().times(75):new ExpantaNum(0) },
 }
+const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
+								5,6,7,8,22,
+								9,10,11,12,23,
+								13,14,15,16,
+								17,18,19,20];
 
 const SKY_REQ = [
 	"4.4e108000026",

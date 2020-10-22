@@ -162,7 +162,7 @@ function adjustGen(val, type) {
 		type == "heavenlyChips" ||
 		type == "demonicSouls" ||
 		type == "derv" || preinf;
-	let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss" || type=="str" || type=="preons" || type=="accelerons" || type=="inflatons" || type=="hc" || type=="foam" || type=="sky";
+	let post_elem = type == "quarks" || type == "leptons" || type == "gauge" || type == "scalar" || type=="ss" || type=="str" || type=="preons" || type=="accelerons" || type=="inflatons" || type=="hc" || type=="foam" || type=="sky" || type=="plasma";
 	let exp = new ExpantaNum(1);
 	if (player.elementary.theory.supersymmetry.unl && pre_elem && tmp.elm) val = new ExpantaNum(val).times(new ExpantaNum(tmp.elm.theory.ss.waveEff||1).max(1))
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);
@@ -170,6 +170,7 @@ function adjustGen(val, type) {
 	if ((player.elementary.theory.active||HCTVal("tv").gt(-1)) && pre_elem) exp = exp.times(tmp.elm.theory.nerf)
 	if (modeActive("extreme") && preinf) {
 		let e = new ExpantaNum(FCComp(4)?0.825:0.75);
+		if (player.elementary.entropy.upgrades.includes(23)) e = new ExpantaNum(0.875);
 		if (extremeStadiumActive("spectra")) e = e.pow(2)
 		exp = exp.times(e);
 	}
@@ -177,7 +178,10 @@ function adjustGen(val, type) {
 	let newVal = val.pow(exp);
 	if (modeActive("hard") && (type=="inflatons"||type=="foam"||type=="sky")) newVal = newVal.div(5)
 	else if (modeActive("hard") && !modeActive("extreme")) newVal = newVal.div(3.2)
-	if (type=="foam"&&modeActive("extreme")&&newVal.gte(1e50)) newVal = newVal.times(1e150).pow(.25)
+	if (type=="foam"&&modeActive("extreme")) {
+		let start = getExtremeFoamSCStart();
+		if (newVal.gte(start)) newVal = newVal.times(start.pow(3)).pow(.25)
+	}
 	if (preinf && modeActive("extreme") && newVal.gte("1e100000000")) newVal = newVal.times("1e400000000").pow(.2);
 	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
 	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)

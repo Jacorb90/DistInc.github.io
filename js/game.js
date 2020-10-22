@@ -79,6 +79,10 @@ function tickWithoutTS(diff) {
 		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
 		player.bestMotive = player.bestMotive.max(tmp.hd.motive)
 	}
+	if (modeActive("extreme")&&player.elementary.sky.unl) {
+		if (tmp.fn.pl.exp.gte(1)) player.plasma.amount = player.plasma.amount.root(tmp.fn.pl.exp).plus(diff).pow(tmp.fn.pl.exp);
+		player.plasma.whiteFlame = player.plasma.whiteFlame.plus(adjustGen(tmp.fn.pl.wfGain, "plasma").times(diff));
+	}
 }
 
 function tickWithTR(diff) {
