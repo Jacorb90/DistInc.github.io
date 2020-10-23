@@ -29,6 +29,8 @@ function getScalingStart(type, name) {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
 		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
+	} else if (name=="rankCheap") {
+		if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) start = start.plus(tmp.fn.pl.boosts[4])
 	} else if (name=="tier") {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)

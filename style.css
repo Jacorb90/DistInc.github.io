@@ -1864,15 +1864,19 @@ table {
 
 .plB {
 	width: 180px;
-	height: 90px;
+	height: 150px;
+	line-height: 150px;
 	border: 2px solid var(--plaintxt);
 	border-radius: 2px;
 	color: var(--plaintxt);
 	font-size: 15px;
-	padding: 25px 25px 25px 25px;
+	padding-left: 25px;
 	margin-left: 12.5px;
+	padding-right: 25px;
 	margin-right: 12.5px;
+	padding-top: 10px;
 	margin-top: 12.5px;
+	padding-bottom: 10px;
 	margin-bottom: 12.5px;
 }
 
@@ -1884,6 +1888,12 @@ table {
 .plB.gleaming {
 	background: linear-gradient(45deg, #404040, #8c8c8c, #9c9c9c, #a1a1a1);
 	animation: plasma 6s ease infinite;
+}
+
+.plBCont {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
 }
 
 @keyframes grosstxt {

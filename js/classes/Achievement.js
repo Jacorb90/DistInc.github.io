@@ -21,8 +21,11 @@ class Achievement {
 				txt += "boolean" + l[i+2]
 			}
 		}
-    
-		if (txt.indexOf("showNum") != -1) {
+		
+		if (txt.indexOf("showNup") != -1) {
+			let txt2 = txt.split("showNup")[1];
+			return txt.split("showNup")[0] + showNum(txt2.slice(1, txt2.indexOf("]"))) + txt2.split("]")[1];
+		} else if (txt.indexOf("showNum") != -1) {
 			let txt2 = txt.split("showNum")[1];
 			return txt.split("showNum")[0] + showNum(txt2.slice(1, txt2.indexOf(")"))) + txt2.split(")")[1];
 		} else if (txt.indexOf("formatDistance") != -1) {

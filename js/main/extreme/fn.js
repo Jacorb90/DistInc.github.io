@@ -197,7 +197,10 @@ function updateFurnUpgEffs() {
 		
 	tmp.fn4base = new ExpantaNum(0.15)
 	if (FCComp(5)) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(0.0001, player.furnace.upgrades[0].times(tmp.fn.upgPow)))
-	if (tmp.fn.enh) if (tmp.fn.enh.unl) tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra)).times(tmp.fn.enh.upgPow))
+	if (tmp.fn.enh) if (tmp.fn.enh.unl) {
+		tmp.fn4base = tmp.fn4base.plus(ExpantaNum.mul(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra)).times(tmp.fn.enh.upgPow))
+		if (player.elementary.entropy.upgrades.includes(25)) tmp.fn4base = tmp.fn4base.times(ExpantaNum.pow(tmp.fn.enh.upg3eff?tmp.fn.enh.upg3eff:0, player.furnace.enhancedUpgrades[2].plus(tmp.fn.enh.upgs[3].extra).times(.2)))
+	}
 	if (HCCBA("noTRU")||inAnyFC()) {
 		if (player.tr.upgrades.includes(35)&&!HCCBA("noTRU")) tmp.fn4base = tmp.fn4base.plus(1).sqrt().sub(1)
 		else tmp.fn4base = new ExpantaNum(0)
@@ -205,6 +208,7 @@ function updateFurnUpgEffs() {
 	if (extremeStadiumActive("flamis", 4) || extremeStadiumActive("nullum", 5) || extremeStadiumActive("quantron", 3)) tmp.fn4base = new ExpantaNum(0);
 	
 	tmp.fn1base = inFC(4)?1:(new ExpantaNum(FCComp(2)?28:3).plus(ExpantaNum.mul(tmp.fn4base, player.furnace.upgrades[3].times(tmp.fn.upgPow))))
+	if (player.elementary.entropy.upgrades.includes(25)) tmp.fn1base = tmp.fn1base.times(ExpantaNum.pow(tmp.fn4base, ExpantaNum.mul(player.furnace.upgrades[3], .2)))
 	if (extremeStadiumActive("quantron", 4)) tmp.fn1base = ExpantaNum.sqrt(tmp.fn1base);
 }
 
@@ -360,8 +364,13 @@ function updateEnhFurnUpgEffs() {
 	tmp.fn.enh.upg1eff = ExpantaNum.pow(ExpantaNum.add(3, ExpantaNum.mul(0.1, endMod)), player.furnace.coal.plus(1).log10().plus(1).log10().plus(1).log10().plus(1)).times(ExpantaNum.pow(1.2, endMod))
 	tmp.fn.enh.upg2eff = new ExpantaNum(0.9)
 	tmp.fn.enh.upg3eff = new ExpantaNum(2.5)
+	if (tmp.fn.pl) if (tmp.fn.pl.unl) {
+		tmp.fn.enh.upg1eff = tmp.fn.enh.upg1eff.times(tmp.fn.pl.boosts[7])
+		tmp.fn.enh.upg3eff = tmp.fn.enh.upg3eff.times(tmp.fn.pl.boosts[7])
+	}
 	tmp.fn.enh.upg13eff = ExpantaNum.add(60, endMod.div(3).floor().times(10).min(10))
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("6;1;0")) tmp.fn.enh.upg13eff = tmp.fn.enh.upg13eff.plus(player.furnace.enhancedUpgrades[12].pow(1.32))
+	if (tmp.fn.pl) if (tmp.fn.pl.unl) tmp.fn.enh.upg13eff = tmp.fn.enh.upg13eff.times(tmp.fn.pl.boosts[8])
 }
 
 function updateMoltenBricks() {

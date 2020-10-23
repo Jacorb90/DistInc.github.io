@@ -296,7 +296,7 @@ const ACH_DATA = {
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
 		164: "Unlock Entropy.",
 		165: "Get a Hadronic Score of at least showNum(8).",
-		166: "Reach showNum(boolean(extreme,1e150,1e160)) Inflatons.",
+		166: "Reach boolean(extreme,showNup[1e150],showNup[1e160]) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 		

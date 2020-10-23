@@ -45,6 +45,7 @@ function magmaSearch() {
 function getMagmaReformReq() {
 	if (!modeActive("extreme")) return new ExpantaNum(1/0);
 	let r = player.magma.ref;
+	if (r.gte(28)) r = ExpantaNum.pow(1.1, r.sub(27)).times(28)
 	if (player.elementary.hc.unl) r = r.pow(TREE_UPGS[34].effect(player.elementary.theory.tree.upgrades[34]||0))
 	let req = r.times(2).plus(1)
 	return req.round();
@@ -53,6 +54,7 @@ function getMagmaReformReq() {
 function getMagmaReformReq2() {
 	if (!modeActive("extreme")) return new ExpantaNum(1/0);
 	let r = player.magma.ref;
+	if (r.gte(26)) r = ExpantaNum.pow(1.5, r.sub(25)).times(26)
 	if (player.elementary.hc.unl) r = r.pow(TREE_UPGS[36].effect(player.elementary.theory.tree.upgrades[36]||0))
 	let req = ExpantaNum.pow(1e20, r.pow(2)).times(1e60)
 	return req;

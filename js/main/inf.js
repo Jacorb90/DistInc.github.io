@@ -897,6 +897,7 @@ function updateTempDerivatives() {
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE);
 	if (modeActive('easy')) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]());
+	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(tmp.fn.pl.boosts[6])
 	tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.inf.derv.boostPow);
 	if (HCCBA("noDB")) tmp.inf.derv.boostMult = new ExpantaNum(1)
 	if (!tmp.inf.derv.mult) tmp.inf.derv.mult = function (name) {

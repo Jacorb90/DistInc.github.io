@@ -820,7 +820,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 23
+const ENTROPY_UPGS = 25
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -844,11 +844,13 @@ const ENTROPY_UPG_COSTS = {
 	14: new ExpantaNum(2350),
 	15: new ExpantaNum(2425),
 	16: new ExpantaNum(2475),
+	24: new ExpantaNum(9000),
 	
 	17: new ExpantaNum(11111),
 	18: new ExpantaNum(12e3),
 	19: new ExpantaNum(17500),
 	20: new ExpantaNum(18250),
+	25: new ExpantaNum(30000),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -861,12 +863,14 @@ const ENTROPY_UPG_EFFS = {
 	14: function() { return player.elementary.entropy.best.plus(1).log10().sqrt().div(6).plus(1) },
 	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 	21: function() { return modeActive("extreme")?player.magma.amount.cbrt().times(75):new ExpantaNum(0) },
+	24: function() { return player.elementary.entropy.best.plus(1).root(14) },
 }
 const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
 								5,6,7,8,22,
-								9,10,11,12,23,
+								9,10,11,12,
 								13,14,15,16,
-								17,18,19,20];
+								23,24,
+								17,18,19,20,25];
 
 const SKY_REQ = [
 	"4.4e108000026",
