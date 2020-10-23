@@ -25,6 +25,7 @@ const ENERGY_UPG_COSTS = {
 	24: new ExpantaNum(4e16),
 	25: new ExpantaNum(1e25),
 	26: new ExpantaNum(2.975e33),
+	27: new ExpantaNum(1e120)
 }
 
 function getEnergyUpgCost(n){
@@ -126,6 +127,7 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[1] = getOptimizationOneEffect()
 	if (tmp.hd.enerUpgs[1].gte("1e2500")) tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].logBase("1e2500").pow(825).times("1e2500").min(tmp.hd.enerUpgs[1])
 	let exp1 = 1 + (player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1") ? player.elementary.bosons.scalar.higgs.upgrades.length : 0)
+	if (player.energyUpgs.includes(27) && tmp.hd.enerUpgs[27] != undefined) exp1 *= tmp.hd.enerUpgs[27].toNumber()
 	tmp.hd.enerUpgs[1] = tmp.hd.enerUpgs[1].pow(exp1)
 	
 	tmp.hd.enerUpgs[2] = tmp.hd.motive.max(player.energyUpgs.includes(6)?1:0).plus(1).log10().times(2).plus(1).pow((player.energyUpgs.includes(6)&&tmp.hd.enerUpgs[6]) ? tmp.hd.enerUpgs[6].div(100).plus(1) : 1).pow(tmp.hd.superEnEff2)
@@ -187,6 +189,8 @@ function calcEnergyUpgrades(){
 	let mult26 = Math.sqrt(1 + player.elementary.bosons.scalar.higgs.upgrades.length)
 	let eff26 = 12 * (player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1") ? mult26 : 1)
 	tmp.hd.enerUpgs[26] = player.bestMotive.plus(1).times(10).slog(10).max(1).sub(1).times(eff26).times(.01).plus(1).pow(exp322).minus(1).times(100)
+
+	tmp.hd.enerUpgs[27] = player.elementary.hc.best.plus(1)
 }
 
 function updateMotive(){
@@ -264,7 +268,7 @@ function buyEnergyUpg(x) {
 }
 
 function isEnergyUpgShown(x) {
-	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;0")) return x <= 26 
+	if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;0") && x <= 26) return true
 	//change to the max upgrades if you ever add upgrades
 	if (x<=3) return true;
 	else if (x<=8) return player.rf.gte(1) || player.automation.unl || player.collapse.unl||player.inf.unl
@@ -273,6 +277,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=23) return player.inf.endorsements.gte(10)
 	else if (x<=25) return player.inf.endorsements.gte(15)
 	else if (x<=26) return player.inf.endorsements.gte(28)
+	else if (x<=27) return player.achievements.includes(154)
 	
 	return false;
 }

@@ -420,6 +420,14 @@ function getInflatonEff2() {
 	return eff.floor()
 }
 
+/*
+function getInfatonEff2NextAt(){
+	let cur = getInflatonEff2()
+	if (cur.lt(4)) return new ExpantaNum(1e3).times(ExpantaNum.pow(10, cur))
+	//idk lol this function sucks maybe just use an alg
+}
+*/
+
 function getTreeUpgCap(x) {
 	let cap = new ExpantaNum(TREE_UPGS[x].cap)
 	if (player.elementary.foam.unl && tmp.elm.qf && QFB17_TARGETS.includes(parseInt(x+""))) cap = cap.plus(tmp.elm.qf.boost17)
