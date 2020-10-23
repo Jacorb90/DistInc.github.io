@@ -1814,6 +1814,78 @@ table {
 	animation: magmatxt 5s linear infinite;
 }
 
+.btn.plasma {
+	box-shadow: 3px 4px 0px 0px black;
+	background: linear-gradient(-45deg, #49364d, #78437a, #913690, #ba188c);
+	background-color: #49364d;
+	background-size: 400% 400%;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #7a046b;
+	transition-duration: 0.5s;
+	animation: plasma 6s ease infinite;
+}
+
+.btn.plasma:hover {
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	background-color: #9b72a3;
+}
+
+.btn.plasma:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.plasmaTxt {
+	font-size: 30px;
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	background-size: 400% 400%;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: plasma 6s ease infinite;
+}
+
+.whiteFlame {
+	font-size: 30px;
+	color: var(--plaintxt);
+	font-weight: bold;
+}
+
+.plB {
+	width: 180px;
+	height: 90px;
+	border: 2px solid var(--plaintxt);
+	border-radius: 2px;
+	color: var(--plaintxt);
+	font-size: 15px;
+	padding: 25px 25px 25px 25px;
+	margin-left: 12.5px;
+	margin-right: 12.5px;
+	margin-top: 12.5px;
+	margin-bottom: 12.5px;
+}
+
+.plB.plasmic {
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	animation: plasma 6s ease infinite;
+}
+
+.plB.gleaming {
+	background: linear-gradient(45deg, #404040, #8c8c8c, #9c9c9c, #a1a1a1);
+	animation: plasma 6s ease infinite;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;
@@ -2004,6 +2076,18 @@ table {
 	100% {
 		background-position: 0% 0%;
 	}	
+}
+
+@keyframes plasma {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 [tooltip] {

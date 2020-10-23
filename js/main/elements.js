@@ -336,7 +336,7 @@ function updateDarkCircleRssHTML(){
 		"Dark Matter<br>Amount: " +
 			showNum(player.dc.matter) +
 			"<br>Gain: " +
-			formatGain(player.dc.matter, tmp.dc.dmGain.times(tmp.dc.flow), "dc") +
+			formatGain(player.dc.matter, tmp.dc.dmGain, "dc", false, tmp.dc.flow) +
 			"<br>Effect: You gain " +
 			showNum(tmp.dc.dmEff) +
 			"x as many Rockets."
@@ -345,7 +345,7 @@ function updateDarkCircleRssHTML(){
 		"Dark Energy<br>Amount: " +
 			showNum(player.dc.energy) +
 			"<br>Gain: " +
-			formatGain(player.dc.energy, tmp.dc.deGain.times(tmp.dc.flow), "dc") +
+			formatGain(player.dc.energy, tmp.dc.deGain, "dc", false, tmp.dc.flow) +
 			"/s<br>Effect: You gain " +
 			showNum(tmp.dc.deEff) +
 			"x as many Time Cubes."
@@ -354,7 +354,7 @@ function updateDarkCircleRssHTML(){
 		"Dark Fluid<br>Amount: " +
 			showNum(player.dc.fluid) +
 			"<br>Gain: " +
-			formatGain(player.dc.fluid, tmp.dc.dfGain.times(tmp.dc.flow), "dc") +
+			formatGain(player.dc.fluid, tmp.dc.dfGain, "dc", false, tmp.dc.flow) +
 			"/s<br>Effect: Scaled Rocket Fuel scaling starts " +
 			showNum(tmp.dc.dfEff) +
 			" Rocket Fuel later."
@@ -749,6 +749,34 @@ function updateMagma() {
 	}
 }
 
+function updatePlasma() {
+	if (fnTab == "plasma") {
+		tmp.el.plasmaExp.setTxt(showNum(tmp.fn.pl.exp))
+		tmp.el.plasmaAmt.setTxt(showNum(player.plasma.amount))
+		tmp.el.whiteFlameGen.setTxt(formatGain(player.plasma.whiteFlame, tmp.fn.pl.wfGain, "plasma"))
+		tmp.el.whiteFlameAmt.setTxt(showNum(player.plasma.whiteFlame))
+		
+		let boostReq = getPlasmaBoostReq();
+		tmp.el.plasmaBoostBtn.setDisplay(canBuyPlasmaBoost())
+		if (canBuyPlasmaBoost()) {
+			tmp.el.plasmaBoostBtn.setHTML("Unlock a new "+getPlasmaBoostType(player.plasma.boosts.plus(1), true)+" Boost<br><br>Cost: "+showNum(boostReq)+" White Flame.")
+			tmp.el.plasmaBoostBtn.setClasses({
+				btn: true,
+				plasma: player.plasma.whiteFlame.gte(boostReq),
+				locked: !player.plasma.whiteFlame.gte(boostReq),
+			})
+		}
+		let data = PLASMA_BOOSTS;
+		for (let i=1;i<=data.upgs;i++) {
+			tmp.el["plB"+i].setDisplay(player.plasma.boosts.gte(i));
+			if (player.plasma.boosts.gte(i)) {
+				let cd = data[i];
+				tmp.el["plB"+i+"Curr"].setTxt(cd.effD(tmp.fn.pl.boosts[i]));
+			}
+		}
+	}
+}
+
 function updateOverallExtremeModeHTML(){
 	tmp.el.rankCheapDiv.setDisplay(modeActive('extreme'));
 	if (modeActive("extreme")) {
@@ -758,6 +786,7 @@ function updateOverallExtremeModeHTML(){
 			updateNormalFurnace() 
 			updateEnhanceFurnace()
 			updateMagma()
+			updatePlasma()
 		}
 	}
 }
@@ -887,7 +916,7 @@ function updateGaugeBosonsAmountHTML(){
 	tmp.el.gaugeAmt.setTxt(showNum(player.elementary.bosons.gauge.amount));
 	tmp.el.gaugeGain.setTxt(showNum(adjustGen(tmp.elm.bos.gaugeGain, "gauge")));
 	tmp.el.gaugeForce.setTxt(showNum(player.elementary.bosons.gauge.force));
-	tmp.el.gaugeForceGain.setTxt(formatGain(player.elementary.bosons.gauge.force, tmp.elm.bos.forceGain));
+	tmp.el.gaugeForceGain.setTxt(formatGain(player.elementary.bosons.gauge.force, tmp.elm.bos.forceGain, "gauge"));
 	tmp.el.gaugeForceEff.setTxt(showNum(tmp.elm.bos.forceEff));
 }
 
@@ -1163,7 +1192,7 @@ function updateHadronicChallenges(){
 			tmp.el["hcCurrent"+HC_EXTREME_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_EXTREME_CHALLS[i])))
 		}
 		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
-		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100))+"% complete"):"")
+		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100).max(0))+"% complete"):"")
 	}
 }
 

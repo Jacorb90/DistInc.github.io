@@ -115,7 +115,7 @@ const ACH_DATA = {
 		133: "It's Elementary, my dear Watson.",
 		134: "Why use the features I give you?",
 		135: "Never Seen Again",
-		136: "Fastest in the Metaverse",
+		136: "Fastest in the Multiverse",
 		137: "Back to the Past",
 		138: "The Fleet Flees",
 		
@@ -296,7 +296,7 @@ const ACH_DATA = {
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
 		164: "Unlock Entropy.",
 		165: "Get a Hadronic Score of at least showNum(8).",
-		166: "Reach showNum(1e160) Inflatons.",
+		166: "Reach showNum(boolean(extreme,1e150,1e160)) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 		

@@ -149,6 +149,11 @@ const MODE_VARS = {
 			amount: new ExpantaNum(0),
 			ref: new ExpantaNum(0),
 		},
+		plasma: {
+			amount: new ExpantaNum(0),
+			whiteFlame: new ExpantaNum(0),
+			boosts: new ExpantaNum(0),
+		},
 	},
 	hikers_dream: {
 		energy: new ExpantaNum(100),
@@ -200,6 +205,14 @@ const MODE_EX = {
 			amount: new ExpantaNum(mag.amount||0),
 			ref: new ExpantaNum(mag.ref||0),
 		}
+		
+		let pl = source.plasma||{}
+		source.plasma = {
+			amount: new ExpantaNum(pl.amount||0),
+			whiteFlame: new ExpantaNum(pl.whiteFlame||0),
+			boosts: new ExpantaNum(pl.boosts||0),
+		}
+		
 		return source;
 	},
 	hikers_dream: function(source) {

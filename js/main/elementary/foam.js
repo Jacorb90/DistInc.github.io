@@ -233,6 +233,12 @@ function refoam() {
 	}
 }
 
+function getExtremeFoamSCStart() {
+	let start = new ExpantaNum(1e50);
+	if (tmp.fn?tmp.fn.pl.unl:false) start = start.times(tmp.fn.pl.boosts[1]);
+	return start;
+}
+
 // Entropy
 function getEntropyEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1);
@@ -260,6 +266,7 @@ function getEntropyGain() {
 	let gain = foam.div(1e50).pow(0.05)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.pow(tmp.elm.sky.spinorEff[10].plus(1))
 	if (gain.gte(5)) gain = gain.times(25).cbrt()
+	if (modeActive("extreme") && gain.gte(25)) gain = gain.times(125).cbrt();
 	if (gain.gte(100)) gain = gain.times(1e6).pow(0.25)
 	if (gain.gte(1200)) gain = gain.logBase(1.001).div(5.91135)
 	if (modeActive("extreme") && ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1)) gain = gain.pow(2);
@@ -272,6 +279,7 @@ function getEntropyNext() {
 	if (modeActive("extreme") && ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1)) gain = gain.sqrt();
 	if (gain.gte(1200)) gain = ExpantaNum.pow(1.001, gain.times(5.91135))
 	if (gain.gte(100)) gain = gain.pow(4).div(1e6)
+	if (modeActive("extreme") && gain.gte(25)) gain = gain.pow(3).div(125);
 	if (gain.gte(5)) gain = gain.pow(3).div(25)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.root(tmp.elm.sky.spinorEff[10].plus(1))
 	return gain.pow(20).times(1e50);
@@ -335,6 +343,6 @@ function buyEntropyUpg(x) {
 function entropyUpgShown(x) {
 	if (x<=8) return true;
 	else if (x<=20) return player.elementary.sky.amount.gt(0);
-	else if (x<=22) return modeActive("extreme");
+	else if (x<=23) return modeActive("extreme");
 	else return false;
 }
