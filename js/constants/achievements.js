@@ -397,7 +397,7 @@ const ACH_DATA = {
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
-		154: "Purge Power gain is doubled.",
+		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
 		
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
