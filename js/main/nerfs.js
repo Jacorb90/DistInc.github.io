@@ -171,7 +171,7 @@ function adjustGen(val, type) {
 		if (pre_elem) {
 			if (!tmp.elm) exp = new ExpantaNum(0);
 			else exp = exp.times(tmp.elm.theory.nerf)
-		} else if (tmp.elm.theory.nerf.lt(2e-3) && modeActive("extreme")) exp = exp.times(tmp.elm.theory.nerf.div(2e-3))
+		}
 	}
 	if (modeActive("extreme") && preinf) {
 		let e = new ExpantaNum(FCComp(4)?0.825:0.75);

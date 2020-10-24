@@ -302,7 +302,7 @@ const ACH_DATA = {
 		
 		171: "Get a Skyrmion.",
 		172: "Elementary showNum(1e12) times.",
-		173: "Reach showNum(1e140) Quantum Foam without any Entropy.",
+		173: "Reach boolean(extreme,showNup[1e78],showNup[1e140]) Quantum Foam without any Entropy.",
 		174: "Reach formatDistance(4.4e500000026).",
 		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.", 
 		176: "Complete The Theoriverse at Depth 19.",
