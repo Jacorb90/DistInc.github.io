@@ -52,5 +52,5 @@ function updateTempTimeSpeed() {
 		else tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))
 	}
 	if (modeActive("extreme")) if (tmp.fn) tmp.timeSpeed = tmp.timeSpeed.times(tmp.fn.enh.eff2)
-	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(20))||HCTVal("tv").gte(20)) && tmp.elm && modeActive("extreme")) tmp.timeSpeed = tmp.timeSpeed.pow(tmp.elm.theory.nerf)
+	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(player.modes==[]?25:20))||HCTVal("tv").gte(player.modes==[]?25:20)) && tmp.elm) tmp.timeSpeed = tmp.timeSpeed.pow(tmp.elm.theory.nerf)
 }

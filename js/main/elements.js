@@ -71,9 +71,8 @@ function updateMainHTML(){
 		// Hiker's Dream
 		let t = ""
 		if (modeActive("hikers_dream")){
-			let start = tmp.hd.incline.gt(89.999) ? "The secant of your incline is: " + showNum(tmp.hd.incline.sub(90).times(-1).pow(-1)) : "Current Incline: "+showNum(tmp.hd.incline)+"&deg;"
-			//this is the x+o(x^3) formula so its correct if we are large enough (even 89 deg should do)
-			t = start + ", raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>"
+			let start = tmp.hd.incline.gt(89.999) ? "The secant of your incline is: " + showNum(tmp.hd.secant) : "Current Incline: "+showNum(tmp.hd.incline)+"&deg;"
+			t = start + ((tmp.hd.inclineRed.gt(0)&&tmp.hd.inclineRed.lt(0.001))?(", bringing Acceleration & Maximum Velocity to the "+showNum(tmp.hd.inclineRed.pow(-1))+"th root"):(", raising Acceleration & Maximum Velocity ^"+showNum(tmp.hd.inclineRed)))+", and making Energy loss "+showNum(tmp.hd.inclineRed.pow(getEnergyLossExp()))+"x faster.<br>"
 		}
 		tmp.el.incline.setHTML(t)
 		tmp.el.quickReset.setDisplay(modeActive("hikers_dream"))
@@ -1209,7 +1208,7 @@ function updateMainEnergyTabHTML(){
 		})
 		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
 		tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"")
-		for (let i=1;i<=27;i++) {
+		for (let i=1;i<=28;i++) {
 			let cost = getEnergyUpgCost(i)
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,

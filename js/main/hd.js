@@ -25,7 +25,8 @@ const ENERGY_UPG_COSTS = {
 	24: new ExpantaNum(4e16),
 	25: new ExpantaNum(1e25),
 	26: new ExpantaNum(2.975e33),
-	27: new ExpantaNum(1e120)
+	27: new ExpantaNum(1e120),
+	28: new ExpantaNum(1.5e124),
 }
 
 function getEnergyUpgCost(n){
@@ -49,7 +50,7 @@ function getBaseMotiveScalingStart(){
 }
 
 function getBaseMotive(){
-	let z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1))
+	let z = player.rank.plus(1).times(player.tier.plus(1).pow(2)).times(tmp.hd.incline.plus((player.energyUpgs.includes(13)&&tmp.hd.enerUpgs) ? tmp.hd.enerUpgs[13] : 0).div(90).plus(1)).times((player.energyUpgs.includes(28)&&tmp.hd.enerUpgs)?tmp.hd.enerUpgs[28]:1)
 	let y = getBaseMotiveScalingStart()
 	if (tmp.ach) if (z.gt(y) && modeActive("extreme") && !tmp.ach[87].has) return z.div(y).pow(.5).times(y)
 	return z
@@ -113,7 +114,7 @@ function getConfidenceOneEffect(){
 }
 
 function updateEnergyLoss(){
-	tmp.hd.energyLoss = tmp.hd.inclineRed.pow(getEnergyLossExp())
+	tmp.hd.energyLoss = tmp.hd.inclineRed.eq(0)?new ExpantaNum(1/0):tmp.hd.inclineRed.pow(getEnergyLossExp())
 	if (player.energyUpgs.includes(2) && tmp.hd.enerUpgs) tmp.hd.energyLoss = tmp.hd.energyLoss.div(tmp.hd.enerUpgs[2])
 	if (modeActive("extreme")){
 		if (tmp.ach) if (tmp.ach[61].has) tmp.hd.energyLoss = tmp.hd.energyLoss.div(Math.max(player.tr.upgrades.length, 1))
@@ -191,6 +192,8 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[26] = player.bestMotive.plus(1).times(10).slog(10).max(1).sub(1).times(eff26).times(.01).plus(1).pow(exp322).minus(1).times(100)
 
 	tmp.hd.enerUpgs[27] = player.elementary.hc.best.plus(1)
+	
+	tmp.hd.enerUpgs[28] = player.elementary.hc.hadrons.plus(1)
 }
 
 function updateMotive(){
@@ -211,6 +214,10 @@ function updateTempHikersDream() {
 	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1).times((tmp.hd.enerUpgs&&player.energyUpgs.includes(26)) ? tmp.hd.enerUpgs[26].div(100).plus(1) : 1)
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;3;0") && tmp.elm != undefined) tmp.hd.superEnEff2 = tmp.hd.superEnEff2.times(tmp.elm.bos["higgs_1;3;0"]())
 	
+	if (tmp.hd.futureSec?tmp.hd.futureSec.length>0:false) {
+		tmp.hd.secant = tmp.hd.futureSec[0]
+		tmp.hd.futureSec.shift();
+	} else tmp.hd.secant = baseSecant(player.distance)
 	if (tmp.hd.futureIncl?tmp.hd.futureIncl.length>0:false) {
 		tmp.hd.incline = tmp.hd.futureIncl[0]
 		tmp.hd.futureIncl.shift();
@@ -219,7 +226,12 @@ function updateTempHikersDream() {
 	if (player.energyUpgs.includes(4) && tmp.hd.enerUpgs) tmp.hd.inclinePow = tmp.hd.inclinePow.times(tmp.hd.enerUpgs[4])
 	let incl = tmp.hd.incline
 	if (incl.gte(89.95)) incl = ExpantaNum.sub(90, ExpantaNum.div(90, ExpantaNum.div(90, ExpantaNum.sub(90, incl)).pow(2).div(1800)))
-	tmp.hd.inclineRed = ExpantaNum.sub(90, incl).div(90).root(tmp.hd.inclinePow)
+	if (incl.gte(89.999)) {
+		let sec = tmp.hd.secant;
+		if (sec.gte(1e6)) sec = ExpantaNum.pow(1.002, sec.sub(1e6)).times(sec);
+		if (sec.gte(20)) sec = sec.pow(2).div(20)
+		tmp.hd.inclineRed = sec.times(90).root(tmp.hd.inclinePow.times(-1))
+	} else tmp.hd.inclineRed = ExpantaNum.sub(90, incl).div(90).root(tmp.hd.inclinePow)
 	updateEnergyLoss()
 	
 	updateMotive()
@@ -277,7 +289,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=23) return player.inf.endorsements.gte(10)
 	else if (x<=25) return player.inf.endorsements.gte(15)
 	else if (x<=26) return player.inf.endorsements.gte(28)
-	else if (x<=27) return player.achievements.includes(154)
+	else if (x<=28) return player.achievements.includes(154)
 	
 	return false;
 }
@@ -289,6 +301,13 @@ function baseIncline(d) {
 	return incl.max(0)
 }
 
+function baseSecant(d) {
+	if (d.gte(4.4e26)) d = d.pow(2).div(4.4e26)
+	if (d.gte("4.4e2026")) d = d.pow(5).div(ExpantaNum.pow("4.4e2026", 4))
+	let incl = d.gte(1e3) ? d.div(1e3).log10().div(10).plus(1).div(90) : new ExpantaNum(0)
+	return incl.max(0)
+}
+
 function calcInclines() {
 	if (!tmp.hd) tmp.hd = {}
 	let d = player.distance
@@ -296,19 +315,25 @@ function calcInclines() {
 	let v = new ExpantaNum(baseV)
 	let maxError = 1.001
 	let incl = baseIncline(d)
+	let sec = baseSecant(d)
 	let newIncl = new ExpantaNum(90)
+	let newSecant = new ExpantaNum(1/0)
 	let reduc;
 	let a = tmp.acc||new ExpantaNum(1/0)
 	let iter = 0
 	tmp.hd.futureIncl = []
-	while (newIncl.div(incl).gt(maxError)&&iter<25) {
+	tmp.hd.futureSec = []
+	while (newIncl.div(incl).gt(maxError)&&newSecant.div(sec).gt(maxError)&&iter<25) {
 		incl = baseIncline(d)
+		sec = baseSecant(d)
 		reduc = ExpantaNum.sub(90, incl).div(90)
 		v = v.plus(a.pow(reduc).div(50))
 		d = player.distance.plus(adjustGen(v, "dist").times(tmp.hd.enEff?tmp.hd.enEff:player.energy).times(nerfActive("noTS") ? 1 : tmp.timeSpeed).div(50))
 		newIncl = baseIncline(d)
+		newSecant = baseSecant(d)
 		iter++
 		tmp.hd.futureIncl.push(newIncl)
+		tmp.hd.futureSec.push(newSecant)
 	}
 }
 
