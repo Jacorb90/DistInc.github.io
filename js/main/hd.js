@@ -27,6 +27,8 @@ const ENERGY_UPG_COSTS = {
 	26: new ExpantaNum(2.975e33),
 	27: new ExpantaNum(1e120),
 	28: new ExpantaNum(1.5e124),
+	29: new ExpantaNum(5e215),
+	30: new ExpantaNum(1e226),
 }
 
 function getEnergyUpgCost(n){
@@ -173,14 +175,16 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[19] = player.pathogens.amount.plus(1).log10().plus(1).log10().pow(0.2).times((player.energyUpgs.includes(20)&&tmp.hd.enerUpgs[20]) ? tmp.hd.enerUpgs[20].div(100).plus(1) : 1).times(100).times(tmp.hd.superEnEff2)
 	
 	let exp322 = player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1") ? 2 : 1
+	let omniPow = 1
+	if (player.energyUpgs.includes(30)&&tmp.hd.enerUpgs[30]) omniPow = tmp.hd.enerUpgs[30].div(100).plus(1)
 	
-	tmp.hd.enerUpgs[20] = tmp.hd.motive.max(player.inf.endorsements.gte(10)?tmp.hd.totalMotive:0).plus(2).log10().times(tmp.hd.simEn.div(4.5).plus(10)).times((player.energyUpgs.includes(21)&&tmp.hd.enerUpgs[21]) ? tmp.hd.enerUpgs[21].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(.01).plus(1).pow(exp322).minus(1).times(100)
+	tmp.hd.enerUpgs[20] = tmp.hd.motive.max(player.inf.endorsements.gte(10)?tmp.hd.totalMotive:0).plus(2).log10().times(tmp.hd.simEn.div(4.5).plus(10)).times((player.energyUpgs.includes(21)&&tmp.hd.enerUpgs[21]) ? tmp.hd.enerUpgs[21].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(omniPow).times(.01).plus(1).pow(exp322).minus(1).times(100)
 	
-	tmp.hd.enerUpgs[21] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(100).times((player.energyUpgs.includes(22)&&tmp.hd.enerUpgs[22]) ? tmp.hd.enerUpgs[22].div(100).plus(1) : 1).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(.01).plus(1).pow(exp322).minus(1).times(100)
+	tmp.hd.enerUpgs[21] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(100).times((player.energyUpgs.includes(22)&&tmp.hd.enerUpgs[22]) ? tmp.hd.enerUpgs[22].div(100).plus(1) : 1).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(omniPow).times(.01).plus(1).pow(exp322).minus(1).times(100)
 	
-	tmp.hd.enerUpgs[22] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sub(1).times(135).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(.01).plus(1).pow(exp322).minus(1).times(100)
+	tmp.hd.enerUpgs[22] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sub(1).times(135).times((player.energyUpgs.includes(23)&&tmp.hd.enerUpgs[23]) ? tmp.hd.enerUpgs[23].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(omniPow).times(.01).plus(1).pow(exp322).minus(1).times(100)
 	
-	tmp.hd.enerUpgs[23] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(105).times(tmp.hd.superEnEff2).times(.01).plus(1).pow(exp322).minus(1).times(100)
+	tmp.hd.enerUpgs[23] = tmp.hd.superEn.plus(1).log10().plus(1).log10().plus(1).sqrt().sub(1).times(105).times(tmp.hd.superEnEff2).times(omniPow).times(.01).plus(1).pow(exp322).minus(1).times(100)
 	
 	tmp.hd.enerUpgs[24] = player.bestMotive.sqrt().times(tmp.hd.superEnEff2).pow(player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;1") ? 1.8 : 1)
 	
@@ -194,6 +198,10 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[27] = player.elementary.hc.best.plus(1)
 	
 	tmp.hd.enerUpgs[28] = player.elementary.hc.hadrons.plus(1)
+	
+	tmp.hd.enerUpgs[29] = player.energy.plus(1).log10().div(40).plus(1);
+	
+	tmp.hd.enerUpgs[30] = player.elementary.entropy.best.plus(1).log10().times(555);
 }
 
 function updateMotive(){
@@ -211,6 +219,10 @@ function updateTempHikersDream() {
 	
 	tmp.hd.superEn = player.genLvl.pow(2).times(player.geners).floor()
 	tmp.hd.superEnEff = tmp.hd.superEn.plus(1).pow(player.geners).log10().plus(1).log10().plus(1).pow(2).times(player.geners)
+	if (player.energyUpgs.includes(29)&&tmp.hd.enerUpgs) {
+		tmp.hd.superEn = tmp.hd.superEn.pow(tmp.hd.enerUpgs[29]).floor();
+		tmp.hd.superEnEff = tmp.hd.superEnEff.pow(tmp.hd.enerUpgs[29]);
+	}
 	tmp.hd.superEnEff2 = tmp.hd.superEn.times(player.geners.sub(1)).plus(1).times(10).slog(10).max(1).log10().times(1.6).plus(player.inf.endorsements.gt(25)?0.011:0).plus(1).times((tmp.hd.enerUpgs&&player.energyUpgs.includes(26)) ? tmp.hd.enerUpgs[26].div(100).plus(1) : 1)
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;3;0") && tmp.elm != undefined) tmp.hd.superEnEff2 = tmp.hd.superEnEff2.times(tmp.elm.bos["higgs_1;3;0"]())
 	
@@ -238,6 +250,7 @@ function updateTempHikersDream() {
 		
 	tmp.hd.enEff = player.energy.div(100)
 	if (player.energyUpgs.includes(1) && tmp.hd.enerUpgs) tmp.hd.enEff = tmp.hd.enEff.times(tmp.hd.enerUpgs[1])
+	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(20))||HCTVal("tv").gte(20)) && tmp.elm) tmp.hd.enEff = tmp.hd.enEff.pow(tmp.elm.theory.nerf)
 
 	tmp.hd.simEn = player.energy.min(getEnergyLim()).max(tmp.hd.superEn)
 	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
@@ -290,6 +303,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=25) return player.inf.endorsements.gte(15)
 	else if (x<=26) return player.inf.endorsements.gte(28)
 	else if (x<=28) return player.achievements.includes(154)
+	else if (x<=30) return player.achievements.includes(171)
 	
 	return false;
 }

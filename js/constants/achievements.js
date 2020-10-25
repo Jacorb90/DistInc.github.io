@@ -397,7 +397,7 @@ const ACH_DATA = {
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
-		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th energy upgrade).",
+		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th & 28th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
 		
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
@@ -405,7 +405,7 @@ const ACH_DATA = {
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 		168: "Unlock Auto-Theory Tree Upgrades.",
 		
-		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
+		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
 	}
