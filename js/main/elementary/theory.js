@@ -33,6 +33,7 @@ function updateTempTheoriverse() {
 		if (player.elementary.theory.depth.gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(9 / 8)
 		if (player.elementary.theory.depth.gte(7)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
 	}
+	if (modeActive("easy")) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(5/6);
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		if (HCTVal("tv").gt(-1)) return

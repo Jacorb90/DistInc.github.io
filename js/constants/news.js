@@ -1,3 +1,10 @@
+var eheheTimes = 0;
+var ehehe = function() { 
+	eheheTimes++;
+	if (eheheTimes>=1000000) return 'EHEHE '+eheheTimes+': OKAY STOP. I GIVE UP. YOURE CRAZY AND WHY WOULD YOU DO THIS?!?!?!??!?!!?!'
+	else if (eheheTimes>=1000) return 'EHEHE '+eheheTimes+': SERIOUSLY STOP IT YOURE INSANE!'
+	else return 'EHEHE '+eheheTimes+': Copy paste the following into the console and press enter: console.log(ehehe())' 
+}
 const NEWS_DATA = {
 	// No Conditions
 	m1: ["Welcome to the truest of travels."],
@@ -90,6 +97,8 @@ const NEWS_DATA = {
 	m88: ["You may have noticed that there's a donate button. If you didn't, well you have noticed now!"],
 	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
 	m90: ["In 2073, we will be at v193.6, with over 200 prestige layers, and the game will cost over $20.00"],
+	m91: ["Well yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually -INFINITE LOOP-"],
+	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
 
 	// Distance-based Conditions
 	d1: [

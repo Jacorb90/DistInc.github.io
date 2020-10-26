@@ -148,6 +148,7 @@ function getPionGain() {
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
+	if (modeActive("easy")) gain = gain.times(4)
 	return gain;
 }
 
@@ -156,6 +157,7 @@ function getSpinorGain() {
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
+	if (modeActive("easy")) gain = gain.times(4)
 	return gain;
 }
 

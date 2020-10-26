@@ -113,6 +113,7 @@ function getQuantumFoamGain(x) {
 		}
 	}
 	if (player.elementary.entropy.upgrades.includes(11)) gain = gain.times(10)
+	if (modeActive("easy")) gain = gain.times(Math.pow(5/x, 2)*2.5)
 	return gain
 }
 
@@ -247,6 +248,7 @@ function getEntropyEff() {
 	let eff = entropy.plus(1).pow(2.5);
 	if (player.elementary.entropy.upgrades.includes(21) && tmp.elm.entropy.upgEff) eff = eff.pow(tmp.elm.entropy.upgEff[21].div(100).plus(1))
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.pow(tmp.elm.sky.spinorEff[9])
+	if (modeActive("easy")) eff = eff.pow(1.25)
 	return eff;
 }
 
@@ -328,6 +330,7 @@ function getOmegaEff() {
 	let eff = tmp.elm.entropy.omega.div(10)
 	if (player.elementary.entropy.upgrades.includes(7)) eff = eff.times(tmp.elm.entropy.upgEff[7].div(100).plus(1))
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[7])
+	if (modeActive("easy")) eff = eff.times(1.25)
 	return eff
 }
 

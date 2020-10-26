@@ -61,6 +61,7 @@ function getProjectedHadronicScore() {
 	// Goal Modifier
 	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
 	
+	if (modeActive("easy")) score = score.pow(1.025)
 	return score
 }
 
