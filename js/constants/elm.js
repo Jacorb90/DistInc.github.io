@@ -624,6 +624,23 @@ const TREE_UPGS = {
 	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
+const G_TREE_SECTS = {
+	1: function() { return true },
+	2: function() { return true },
+	3: function() { return true },
+	4: function() { return player.elementary.theory.strings.unl },
+	5: function() { return player.elementary.theory.preons.unl },
+	6: function() { return player.elementary.theory.preons.unl },
+	7: function() { return player.elementary.theory.accelerons.unl },
+	8: function() { return player.elementary.theory.accelerons.unl },
+	9: function() { return hasDE(5) },
+	10: function() { return hasDE(5) },
+	11: function() { return hasDE(5) },
+	12: function() { return player.elementary.hc.unl },
+	13: function() { return player.elementary.hc.unl },
+	14: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+	15: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
+}
 
 const UNL_STR = function() { 
 	if (hasDE(2)) return 7

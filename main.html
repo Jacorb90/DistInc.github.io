@@ -12,7 +12,7 @@
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
 			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
-			<div id="newsticker"><div id="news" class="slidenews"></div></div><br>
+			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
 				<table>
 					<tr>
@@ -119,6 +119,7 @@
 				<tr>
 					<td><button class="btn tb rckt main" onclick="showOptionsTab('saving')">Saving</button></td>
 					<td><button class="btn tb rckt main" onclick="showOptionsTab('modes')">Modes</button></td>
+					<td><button id="ingamebtn" class="btn tb rckt main" onclick="showOptionsTab('ingame')">In-game</button></td>
 					<td><button class="btn tb rckt main" onclick="showOptionsTab('other')">Other</button></td>
 				</tr>
 			</table>
@@ -179,6 +180,24 @@
 				<br /><br />
 				<button class="btn tb opt" onclick="confirmModes()">Activate Modes</button>
 			</div>
+			<div id="ingame" class="optionstab" style="display: none;">
+				<div class="flexContainer">
+					<div class="flexRow">
+						<button id="dcPulse" class="btn tb opt ob" onclick="changeOpt('dcPulse', 0)">
+							Dark Circle Pulsing: ON
+						</button>
+						<button id="elc" class="btn tb opt ob" onclick="changeOpt('elc', 0)">
+							Elementary Confirmation: ON
+						</button>
+						<button id="tht" class="btn tb opt ob" onclick="changeOpt('tht', 0)">
+							Theory Tree Display: GROUPS
+						</button>
+						<button id="hcc" class="btn tb opt ob" onclick="changeOpt('hcc', 0)">
+							Exit Hadronic Chall Confirmation: ON
+						</button>
+					</div>
+				</div>
+			</div>
 			<div id="other" class="optionstab" style="display: none;">
 				<div class="flexContainer">
 					<div class="flexRow">
@@ -219,15 +238,6 @@
 						</button>
 						<button id="visUpd" class="btn tb opt ob" onclick="changeOpt('visUpd', 2)">
 							Visual Updates: X
-						</button>
-						<button id="dcPulse" class="btn tb opt ob" onclick="changeOpt('dcPulse', 0)">
-							Dark Circle Pulsing: ON
-						</button>
-						<button id="elc" class="btn tb opt ob" onclick="changeOpt('elc', 0)">
-							Elementary Confirmation: ON
-						</button>
-						<button id="hcc" class="btn tb opt ob" onclick="changeOpt('hcc', 0)">
-							Exit Hadronic Chall Confirmation: ON
 						</button>
 					</div>
 				</div>
@@ -1601,79 +1611,239 @@
 						<span id="ach152Eff"></span>
 						<button id="treeRespec" class="btn th" onclick="resetTheoryTree()"></button><br><br>
 						<button class="btn th" onclick="exportTree()">Export</button>&nbsp;<button class="btn th" onclick="importTree()">Import</button><br><br>
-						<table><tr>
-							<td><button id="tree1" class="tree locked" onclick="tmp.elm.theory.tree.buy(1)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree2" class="tree locked" onclick="tmp.elm.theory.tree.buy(2)"></button></td>
-							<td><button id="tree3" class="tree locked" onclick="tmp.elm.theory.tree.buy(3)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree4" class="tree locked" onclick="tmp.elm.theory.tree.buy(4)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree6" class="tree locked" onclick="tmp.elm.theory.tree.buy(6)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree7" class="tree locked" onclick="tmp.elm.theory.tree.buy(7)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree8" class="tree locked" onclick="tmp.elm.theory.tree.buy(8)"></button></td>
-							<td><button id="tree9" class="tree locked" onclick="tmp.elm.theory.tree.buy(9)"></button></td>
-							<td><button id="tree24" class="tree locked" onclick="tmp.elm.theory.tree.buy(24)"></button></td>
-							<td><button id="tree10" class="tree locked" onclick="tmp.elm.theory.tree.buy(10)"></button></td>
-							<td><button id="tree11" class="tree locked" onclick="tmp.elm.theory.tree.buy(11)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
-							<td><button id="tree28" class="tree locked" onclick="tmp.elm.theory.tree.buy(28)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree29" class="tree locked" onclick="tmp.elm.theory.tree.buy(29)"></button></td>
-							<td><button id="tree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree25" class="tree locked" onclick="tmp.elm.theory.tree.buy(25)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree32" class="tree locked" onclick="tmp.elm.theory.tree.buy(32)"></button></td>
-							<td><button id="tree33" class="tree locked" onclick="tmp.elm.theory.tree.buy(33)"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button class="tree locked" style="visibility: hidden;"></button></td>
-							<td><button id="tree26" class="tree locked" onclick="tmp.elm.theory.tree.buy(26)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree14" class="tree locked" onclick="tmp.elm.theory.tree.buy(14)"></button></td>
-							<td><button id="tree15" class="tree locked" onclick="tmp.elm.theory.tree.buy(15)"></button></td>
-							<td><button id="tree16" class="tree locked" onclick="tmp.elm.theory.tree.buy(16)"></button></td>
-							<td><button id="tree22" class="tree locked" onclick="tmp.elm.theory.tree.buy(22)"></button></td>
-							<td><button id="tree27" class="tree locked" onclick="tmp.elm.theory.tree.buy(27)"></button></td>
-							<td><button id="tree23" class="tree locked" onclick="tmp.elm.theory.tree.buy(23)"></button></td>
-							<td><button id="tree17" class="tree locked" onclick="tmp.elm.theory.tree.buy(17)"></button></td>
-							<td><button id="tree18" class="tree locked" onclick="tmp.elm.theory.tree.buy(18)"></button></td>
-							<td><button id="tree19" class="tree locked" onclick="tmp.elm.theory.tree.buy(19)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree34" class="tree locked" onclick="tmp.elm.theory.tree.buy(34)"></button></td>
-							<td><button id="tree35" class="tree locked" onclick="tmp.elm.theory.tree.buy(35)"></button></td>
-							<td><button id="tree36" class="tree locked" onclick="tmp.elm.theory.tree.buy(36)"></button></td>
-						</tr></table>
-						<table><tr>
-							<td><button id="tree38" class="tree locked" onclick="tmp.elm.theory.tree.buy(38)"></button></td>
-							<td><button id="tree37" class="tree locked" onclick="tmp.elm.theory.tree.buy(37)"></button></td>
-							<td><button id="tree39" class="tree locked" onclick="tmp.elm.theory.tree.buy(39)"></button></td>
-						</tr></table>
+						<div id="mainTree">
+							<table><tr>
+								<td><button id="tree1" class="tree locked" onclick="tmp.elm.theory.tree.buy(1)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree2" class="tree locked" onclick="tmp.elm.theory.tree.buy(2)"></button></td>
+								<td><button id="tree3" class="tree locked" onclick="tmp.elm.theory.tree.buy(3)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree4" class="tree locked" onclick="tmp.elm.theory.tree.buy(4)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree6" class="tree locked" onclick="tmp.elm.theory.tree.buy(6)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree7" class="tree locked" onclick="tmp.elm.theory.tree.buy(7)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree8" class="tree locked" onclick="tmp.elm.theory.tree.buy(8)"></button></td>
+								<td><button id="tree9" class="tree locked" onclick="tmp.elm.theory.tree.buy(9)"></button></td>
+								<td><button id="tree24" class="tree locked" onclick="tmp.elm.theory.tree.buy(24)"></button></td>
+								<td><button id="tree10" class="tree locked" onclick="tmp.elm.theory.tree.buy(10)"></button></td>
+								<td><button id="tree11" class="tree locked" onclick="tmp.elm.theory.tree.buy(11)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
+								<td><button id="tree28" class="tree locked" onclick="tmp.elm.theory.tree.buy(28)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree29" class="tree locked" onclick="tmp.elm.theory.tree.buy(29)"></button></td>
+								<td><button id="tree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree25" class="tree locked" onclick="tmp.elm.theory.tree.buy(25)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree32" class="tree locked" onclick="tmp.elm.theory.tree.buy(32)"></button></td>
+								<td><button id="tree33" class="tree locked" onclick="tmp.elm.theory.tree.buy(33)"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree26" class="tree locked" onclick="tmp.elm.theory.tree.buy(26)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree14" class="tree locked" onclick="tmp.elm.theory.tree.buy(14)"></button></td>
+								<td><button id="tree15" class="tree locked" onclick="tmp.elm.theory.tree.buy(15)"></button></td>
+								<td><button id="tree16" class="tree locked" onclick="tmp.elm.theory.tree.buy(16)"></button></td>
+								<td><button id="tree22" class="tree locked" onclick="tmp.elm.theory.tree.buy(22)"></button></td>
+								<td><button id="tree27" class="tree locked" onclick="tmp.elm.theory.tree.buy(27)"></button></td>
+								<td><button id="tree23" class="tree locked" onclick="tmp.elm.theory.tree.buy(23)"></button></td>
+								<td><button id="tree17" class="tree locked" onclick="tmp.elm.theory.tree.buy(17)"></button></td>
+								<td><button id="tree18" class="tree locked" onclick="tmp.elm.theory.tree.buy(18)"></button></td>
+								<td><button id="tree19" class="tree locked" onclick="tmp.elm.theory.tree.buy(19)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree34" class="tree locked" onclick="tmp.elm.theory.tree.buy(34)"></button></td>
+								<td><button id="tree35" class="tree locked" onclick="tmp.elm.theory.tree.buy(35)"></button></td>
+								<td><button id="tree36" class="tree locked" onclick="tmp.elm.theory.tree.buy(36)"></button></td>
+							</tr></table>
+							<table><tr>
+								<td><button id="tree38" class="tree locked" onclick="tmp.elm.theory.tree.buy(38)"></button></td>
+								<td><button id="tree37" class="tree locked" onclick="tmp.elm.theory.tree.buy(37)"></button></td>
+								<td><button id="tree39" class="tree locked" onclick="tmp.elm.theory.tree.buy(39)"></button></td>
+							</tr></table>
+						</div><div id="groupTree">
+							<div class="flexContainer">
+								<div class="flexRowThird">
+									<div id="gTreeSect11">
+										<h3>Cadavers</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree27" class="tree locked" onclick="tmp.elm.theory.tree.buy(27)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect8">
+										<h3>Pathogen Upgrades</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree13" class="tree locked" onclick="tmp.elm.theory.tree.buy(13)"></button></td>
+												<td><button id="gTree25" class="tree locked" onclick="tmp.elm.theory.tree.buy(25)"></button></td>
+											</tr>
+										</table>
+									</div>
+								</div><div class="flexRowThird">
+									<div id="gTreeSect2">
+										<h3>Knowledge & Higgs</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree2" class="tree locked" onclick="tmp.elm.theory.tree.buy(2)"></button></td>
+												<td><button id="gTree3" class="tree locked" onclick="tmp.elm.theory.tree.buy(3)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect3">
+										<h3>Theoriverse & Endorsements</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree4" class="tree locked" onclick="tmp.elm.theory.tree.buy(4)"></button></td>
+												<td><button id="gTree7" class="tree locked" onclick="tmp.elm.theory.tree.buy(7)"></button></td>
+												<td><button id="gTree11" class="tree locked" onclick="tmp.elm.theory.tree.buy(11)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect12">
+										<h3>Pantheon</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree28" class="tree locked" onclick="tmp.elm.theory.tree.buy(28)"></button></td>
+												<td><button id="gTree29" class="tree locked" onclick="tmp.elm.theory.tree.buy(29)"></button></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="flexRowThird">
+									<div id="gTreeSect10">
+										<h3>EP Gain & Elementaries</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
+												<td><button id="gTree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect1">
+										<h3>Supersymmetry</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree1" class="tree locked" onclick="tmp.elm.theory.tree.buy(1)"></button></td>
+												<td><button id="gTree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
+												<td><button id="gTree22" class="tree locked" onclick="tmp.elm.theory.tree.buy(22)"></button></td>
+											</tr>
+											<tr>
+												<td><button id="gTree23" class="tree locked" onclick="tmp.elm.theory.tree.buy(23)"></button></td>
+												<td><button id="gTree24" class="tree locked" onclick="tmp.elm.theory.tree.buy(24)"></button></td>
+												<td><button id="gTree26" class="tree locked" onclick="tmp.elm.theory.tree.buy(26)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect9">
+										<h3>Strings</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree14" class="tree locked" onclick="tmp.elm.theory.tree.buy(14)"></button></td>
+												<td><button id="gTree15" class="tree locked" onclick="tmp.elm.theory.tree.buy(15)"></button></td>
+												<td><button id="gTree16" class="tree locked" onclick="tmp.elm.theory.tree.buy(16)"></button></td>
+											</tr>
+											<tr>
+												<td><button id="gTree17" class="tree locked" onclick="tmp.elm.theory.tree.buy(17)"></button></td>
+												<td><button id="gTree18" class="tree locked" onclick="tmp.elm.theory.tree.buy(18)"></button></td>
+												<td><button id="gTree19" class="tree locked" onclick="tmp.elm.theory.tree.buy(19)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect4">
+										<h3>Entangled Strings</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree6" class="tree locked" onclick="tmp.elm.theory.tree.buy(6)"></button></td>
+												<td><button id="gTree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
+											</tr>
+										</table>
+									</div>
+								</div><div class="flexRowThird">
+									<div id="gTreeSect6">
+										<h3>Preons</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree9" class="tree locked" onclick="tmp.elm.theory.tree.buy(9)"></button></td>
+												<td><button id="gTree10" class="tree locked" onclick="tmp.elm.theory.tree.buy(10)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect7">
+										<h3>Accelerons</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree12" class="tree locked" onclick="tmp.elm.theory.tree.buy(12)"></button></td>
+											</tr>
+										</table>
+									</div>
+								</div><div class="flexRowThird">
+									<div id="gTreeSect13">
+										<h3>Hadrons</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
+												<td><button id="gTree33" class="tree locked" onclick="tmp.elm.theory.tree.buy(33)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect14">
+										<h3>Magma</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree34" class="tree locked" onclick="tmp.elm.theory.tree.buy(34)"></button></td>
+												<td><button id="gTree35" class="tree locked" onclick="tmp.elm.theory.tree.buy(35)"></button></td>
+												<td><button id="gTree36" class="tree locked" onclick="tmp.elm.theory.tree.buy(36)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect15">
+										<h3>Quantum Foam</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree38" class="tree locked" onclick="tmp.elm.theory.tree.buy(38)"></button></td>
+												<td><button id="gTree39" class="tree locked" onclick="tmp.elm.theory.tree.buy(39)"></button></td>
+											</tr>
+										</table>
+									</div>
+									<div id="gTreeSect5">
+										<h3>Misc.</h3><br>
+										<table>
+											<tr>
+												<td><button id="gTree8" class="tree locked" onclick="tmp.elm.theory.tree.buy(8)"></button></td>
+												<td><button id="gTree32" class="tree locked" onclick="tmp.elm.theory.tree.buy(32)"></button></td>
+												<td><button id="gTree37" class="tree locked" onclick="tmp.elm.theory.tree.buy(37)"></button></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
 						<br><br><br><br><br>
 					</div>
 				</div>

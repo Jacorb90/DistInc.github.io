@@ -6,7 +6,6 @@
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
-	--news-right-start: -10%;
 	--foamcol: #d3e8cc;
 }
 
@@ -1146,25 +1145,10 @@ table {
 	overflow: hidden;
 	display: inline-block;
 	white-space: nowrap;
-	right: 100%;
 	color: black !important;
 	min-height: 18px;
 	max-height: 18px;
 	position: relative;
-}
-
-.slidenews {
-	display: inline-block;
-	animation: 20s linear slidenews;
-}
-
-@keyframes slidenews {
-	from {
-		right: var(--news-right-start);
-	}
-	to {
-		right: 110%;
-	}
 }
 
 .btn.elm {
@@ -1743,6 +1727,22 @@ table {
 	align-items: center;
 	max-width: 100%;
 	margin: 0 auto;
+}
+
+.flexRowThird {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin-bottom: 30px;
+}
+
+.flexRowThird div {
+	margin-left: 50px;
+	margin-right: 50px;
+	border: 1px solid white;
+	padding: 15px 15px 15px 15px;
 }
 
 .automator {

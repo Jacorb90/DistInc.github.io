@@ -10,6 +10,7 @@ function updateOptionsHTML(){
 			});
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
 		}
+		tmp.el.ingamebtn.setDisplay(player.dc.unl||player.elementary.unl)
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
@@ -27,6 +28,8 @@ function updateOptionsHTML(){
 		tmp.el.visUpd.setTxt("Visual Updates: "+capitalFirst(player.options.visUpd))
 		tmp.el.hcc.setTxt("Exit Hadronic Chall Confirmation: "+(player.options.hcc ? "ON" : "OFF"))
 		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden")
+		tmp.el.tht.setTxt("Theory Tree Display: "+(player.options.tht?"GROUPS":"TREE"))
+		tmp.el.tht.changeStyle("visibility", (player.elementary.theory.tree.unl)?"visible":"hidden")
 	}
 }
 
@@ -1039,12 +1042,21 @@ function updateTheoryTreeHTML(){
 	if (thTab=="tree") {
 		tmp.el.treeUnl.setDisplay(!player.elementary.theory.tree.unl)
 		tmp.el.treeDiv.setDisplay(player.elementary.theory.tree.unl)
+		tmp.el.mainTree.setDisplay(!player.options.tht)
+		tmp.el.groupTree.setDisplay(player.options.tht)
 		for (let i=1;i<=TREE_AMT;i++) {
 			let bought = tmp.elm.theory.tree.bought(i)
-			tmp.el["tree"+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
+			let pref = player.options.tht?"gTree":"tree"
+			tmp.el[pref+i].changeStyle("visibility", (TREE_UPGS[i].unl?TREE_UPGS[i].unl():true)?"visible":"hidden")
 			let cap = getTreeUpgCap(i)
-			tmp.el["tree"+i].setTxt(showNum(bought)+"/"+showNum(cap))
-			tmp.el["tree"+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
+			tmp.el[pref+i].setTxt(showNum(bought)+"/"+showNum(cap))
+			tmp.el[pref+i].setClasses({tree: true, capped: bought.gte(cap), unl: (!(bought.gte(cap))&&player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())), locked: (!(bought.gte(cap))&&!player.elementary.theory.points.gte(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round()))})
+		}
+		if (player.options.tht) {
+			for (let i=1;i<=Object.keys(G_TREE_SECTS).length;i++) {
+				let unl = G_TREE_SECTS[i]()
+				tmp.el["gTreeSect"+i].setDisplay(unl)
+			}
 		}
 		tmp.el.treeRespec.setTxt("Reset your Theory Tree (and Elementary reset) for "+showNum(player.elementary.theory.tree.spent)+" Theory Points back.")
 		tmp.el.ach152Eff.setHTML(tmp.ach[152].has?('"Useless Theories" effect: Upgrades are '+showNum(ach152Eff())+'x cheaper.<br><br>'):"")
@@ -1284,7 +1296,7 @@ function updateMiscHTML(){
 	tmp.el.mainContainer.setDisplay(showContainer);
 	tmp.el.loading.setDisplay(false)
 	tmp.el.footer.setDisplay(player.tab == "options");
-	tmp.el.newsticker.setDisplay(player.options.newst);
+	tmp.el.newsticker.changeStyle('visibility', player.options.newst?'visible':'hidden');
 	tmp.el.hotkeys.setAttr("widetooltip", 
 		"R -> Rank Reset\n"+
 		(modeActive("extreme")?"Shift + C -> Rank Cheapener Reset\n":"")+

@@ -41,6 +41,7 @@ function loadGame() {
 	localStorage.setItem("dist-inc-saves" + betaID, btoa(JSON.stringify(all)));
 	player.savePos = c;
 	modeLoad([]);
+	loadOptions();
 	setupHTML();
 	if (modeActive("hikers_dream")) {
 		updateTempHikersDream();

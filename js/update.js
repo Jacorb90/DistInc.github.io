@@ -1,3 +1,5 @@
+var newsTimeouts = []
+
 function updateTemp() {
 	updateTempEarlyGame();
 	updateTempRanks();
@@ -411,6 +413,7 @@ function getNews() {
 			else return data[1]();
 		})()
 	);
+	
 	let txt = "";
 	if (possible.length == 0) txt = "Sorry, we are out of news for the day... try again later?";
 	else if (possible.length == 1) txt = possible[0][0];
@@ -421,14 +424,30 @@ function getNews() {
 	return txt;
 }
 
-document.getElementById("news").addEventListener("animationend", function(){
-	if (!player.options.newst) return
-	document.getElementById("news").innerHTML = "";
-	document.getElementById("news").classList.remove("slidenews");
-	document.documentElement.style.setProperty("--news-right-start", 0 - NEWS_ADJ + "%");
-	setTimeout(function(){
-		document.getElementById("news").innerHTML = getNews();
-		document.getElementById("news").classList.add("slidenews");
-	}, 1000)		
-})
-document.getElementById("news").innerHTML = getNews();
+function doNews() {
+	for (let i=0;i<newsTimeouts.length;i++) {
+		clearTimeout(newsTimeouts[i])
+		delete newsTimeouts[i]
+	}
+	let s = document.getElementById("news");
+	s.innerHTML = getNews();
+	
+	// Part of the AD NG+++ news ticker code was used for this, full credit to Aarex for that :)
+	let parentWidth = s.parentElement.clientWidth;
+	s.style.transition = '';
+	s.style.transform = 'translateX('+parentWidth+'px)';
+	newsTimeouts.push(setTimeout( function() {
+		let dist = s.parentElement.clientWidth + s.clientWidth + 20;
+		let rate = 100;
+		let transformDuration = dist / rate;
+		s.style.transition = 'transform '+transformDuration+'s linear';
+		let textWidth = s.clientWidth;
+		s.style.transform = 'translateX(-'+(textWidth+5)+'px)';
+		newsTimeouts.push(setTimeout(function() {
+			s.innerHTML = "";
+			doNews();
+		}, Math.ceil(transformDuration * 1000)));
+	}, 100));	
+}
+
+doNews();

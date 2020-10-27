@@ -1,3 +1,13 @@
+function saveOptions() {
+	localStorage.setItem("dist-inc-options" + betaID, btoa(JSON.stringify(player.options)));
+}
+
+function loadOptions() {
+	let optData = localStorage.getItem("dist-inc-options" + betaID)
+	if (!optData) return;
+	player.options = JSON.parse(atob(optData));
+}
+
 function getAllSaves() {
 	let local = localStorage.getItem("dist-inc-saves" + betaID)
 	let all = JSON.parse(atob(local ? local : btoa(JSON.stringify([]))));
@@ -134,7 +144,7 @@ function changeOpt(name, type) {
 					name +
 					"&quot;] = " +
 					x +
-					"; this.parentElement.style.display=&quot;none&quot;"
+					"; this.parentElement.style.display=&quot;none&quot;; saveOptions();"
 			};
 	} else if (type == 2) {
 		let types = OPT_NAMES[name];
@@ -146,7 +156,7 @@ function changeOpt(name, type) {
 					name +
 					"&quot;] = &quot;" +
 					types[x] +
-					"&quot;; this.parentElement.style.display=&quot;none&quot;"
+					"&quot;; this.parentElement.style.display=&quot;none&quot;; saveOptions();"
 			};
 	} else if (type == 3) {
 		let old = deepCopy(player.options[name])
@@ -155,6 +165,7 @@ function changeOpt(name, type) {
 		let d2 = new Element("dropDown2")
 		d2.changeStyle("display", "none");
 		save();
+		saveOptions();
 		return;
 	}
 	if (type>0) {

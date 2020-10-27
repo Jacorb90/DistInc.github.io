@@ -20,6 +20,7 @@ const DEFAULT_START = {
 		fonts: "courier",
 		hideAch: false,
 		visUpd: "every tick",
+		tht: true,
 		hcc: true,
 	},
 	modes: [],

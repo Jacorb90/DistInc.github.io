@@ -488,5 +488,3 @@ const NEWS_DATA = {
 		function() { return player.elementary.sky.unl },
 	],
 };
-
-const NEWS_ADJ = 110;
