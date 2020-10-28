@@ -36,8 +36,8 @@ const COMBOS = {
 const MODES = {
 	hard: {
 		desc:
-			"The game is harder & slower, with slight compensation to help you slowly grind to the end (ends at Elementary).",
-		balancing: "balanced up to Elementary",
+			"The game is harder & slower, with slight compensation to help you slowly grind to the end.",
+		balancing: "balanced up to endgame",
 		balanceCheck: false,
 		combos: {
 			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
@@ -89,8 +89,8 @@ const MODES = {
 		}
 	},
 	easy: {
-		desc: "This mode is easier & faster to help you reach the end faster (ends at Elementary).",
-		balancing: "balanced up to Elementary",
+		desc: "This mode is easier & faster to help you reach the end faster.",
+		balancing: "balanced up to endgame",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
@@ -103,8 +103,8 @@ const MODES = {
 	},
 	extreme: {
 		desc:
-			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this (ends at Elementary).",
-		balancing: "balanced up to Elementary",
+			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
+		balancing: "balanced up to endgame",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.extreme)),
@@ -117,8 +117,8 @@ const MODES = {
 		ext: ["hard"]
 	},
 	hikers_dream: {
-		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill (ends at Elementary).",
-		balancing: "balanced up to Elementary",
+		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill.",
+		balancing: "balanced up to endgame",
 		balanceCheck: false,
 		combos: {
 			hard: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),

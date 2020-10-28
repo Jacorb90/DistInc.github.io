@@ -816,7 +816,7 @@ function updateStatisticsHTML(){
 				let amt = func(1)
 				if (MULTI_SCALINGS.includes(key)) for (let i=1;i<=SCALING_AMTS[key];i++) amt = ExpantaNum.max(amt, func(i))
 				if (amt.eq(0)||((key=="rankCheap"||key=="fn")&&!modeActive("extreme"))) continue
-				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPower(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
+				if (amt.gte(getScalingStart(name, key))) tt += capitalFirst(REAL_SCALING_NAMES[key])+" ("+showNum(getScalingPowerDisplay(name, key).times(100))+"%): Starts at "+showNum(getScalingStart(name, key))+"\n"
 			}
 			let blank = ""
 			if (name=="hyper") blank = "Note: Hyper scaling cannot go below 50% strength :)\n"
@@ -1068,7 +1068,8 @@ function updateTheoryTreeHTMLPerSec() {
 		for (let i=1;i<=TREE_AMT;i++) {
 			let bought = tmp.elm.theory.tree.bought(i)
 			let cap = getTreeUpgCap(i)
-			tmp.el["tree"+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+			let pref = player.options.tht?"gTree":"tree"
+			tmp.el[pref+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
 		}
 	}
 }

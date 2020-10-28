@@ -421,6 +421,7 @@ function getNews() {
 		let n = Math.floor(Math.random() * possible.length);
 		txt = possible[n][0];
 	}
+	
 	return txt;
 }
 
