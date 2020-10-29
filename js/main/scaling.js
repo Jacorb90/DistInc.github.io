@@ -29,6 +29,8 @@ function getScalingStart(type, name) {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
 		if (player.elementary.sky.unl && tmp.elm) start = start.plus(tmp.elm.sky.pionEff[1])
+	} else if (name=="rankCheap") {
+		if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) start = start.plus(tmp.fn.pl.boosts[4])
 	} else if (name=="tier") {
 		if (type=="scaled") {
 			if (player.tr.upgrades.includes(12) && !HCCBA("noTRU")) start = start.plus(2)
@@ -143,12 +145,19 @@ function getScalingPower(type, name) {
 	} else if (name=="darkCore") {
 		if (type=="scaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("8;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
+		} else if (type=="hyper") {
+			if (!(modeActive("extreme")||modeActive("hikers_dream"))) power = power.div(25.5)
 		}
 	} else if (name=="endorsements") {
 		if (type=="scaled") {
 			if (tmp.pathogens) power = power.times(ExpantaNum.sub(1, tmp.pathogens[15].eff()))
 		}
 	}
-	if (type=="hyper") power = power.max(0.5)
+	if (type=="hyper"&&name!="darkCore") power = power.max(0.5)
 	return power
+}
+
+function getScalingPowerDisplay(type,name) {
+	if (!(modeActive("extreme")||modeActive("hikers_dream"))&&name=="darkCore"&&type=="hyper") return getScalingPower(type,name).times(25.5);
+	return getScalingPower(type,name)
 }

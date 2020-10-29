@@ -115,7 +115,7 @@ const ACH_DATA = {
 		133: "It's Elementary, my dear Watson.",
 		134: "Why use the features I give you?",
 		135: "Never Seen Again",
-		136: "Fastest in the Metaverse",
+		136: "Fastest in the Multiverse",
 		137: "Back to the Past",
 		138: "The Fleet Flees",
 		
@@ -296,13 +296,13 @@ const ACH_DATA = {
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
 		164: "Unlock Entropy.",
 		165: "Get a Hadronic Score of at least showNum(8).",
-		166: "Reach showNum(1e160) Inflatons.",
+		166: "Reach boolean(extreme,showNup[1e150],showNup[1e160]) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
 		
 		171: "Get a Skyrmion.",
 		172: "Elementary showNum(1e12) times.",
-		173: "Reach showNum(1e140) Quantum Foam without any Entropy.",
+		173: "Reach boolean(extreme,showNup[1e78],showNup[1e140]) Quantum Foam without any Entropy.",
 		174: "Reach formatDistance(4.4e500000026).",
 		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.", 
 		176: "Complete The Theoriverse at Depth 19.",
@@ -384,17 +384,20 @@ const ACH_DATA = {
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
-		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% faster.",
+		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% fasterboolean(extreme, and coal & enhanced coal gain is always 100x faster).",
 		132: "The Gauge Force Effect is doubled.",
 		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",
 		
+		141: "boolean(hikers_dream,Keep generators and buy them automatically.)",
 		142: "Endorsements that are bought automatically do not reset anything.",
+		143: "boolean(hikers_dream,Gain ten million times the passive energy.)",
 		144: "All Strings are gained showNum(25)% faster.",
+		145: "boolean(hikers_dream,inf10;10 is stronged based on your ranks.)",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
-		154: "Purge Power gain is doubled.",
+		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th & 28th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
 		
 		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
@@ -402,7 +405,7 @@ const ACH_DATA = {
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 		168: "Unlock Auto-Theory Tree Upgrades.",
 		
-		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.",
+		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
 	}

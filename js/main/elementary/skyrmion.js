@@ -17,18 +17,19 @@ function updateSkyrmionTabs() {
 function updateSkyrmionMain() {
 	tmp.elm.sky.gain = getSkyGain();
 	tmp.elm.sky.eff = getSkyEff();
+	tmp.elm.sky.upgPow = getSkyUpgPow();
 }
 
 function updatePions() {
 	tmp.elm.sky.pionGain = getPionGain();
 	if (!tmp.elm.sky.pionEff) tmp.elm.sky.pionEff = {}
-	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.pionEff[i] = SKY_FIELDS[i].pionEff(player.elementary.sky.pions.field[i]||0)
+	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.pionEff[i] = SKY_FIELDS[i].pionEff(ExpantaNum.mul(player.elementary.sky.pions.field[i]||0, tmp.elm.sky.upgPow))
 }
 
 function updateSpinors() {
 	tmp.elm.sky.spinorGain = getSpinorGain();
 	if (!tmp.elm.sky.spinorEff) tmp.elm.sky.spinorEff = {}
-	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.spinorEff[i] = SKY_FIELDS[i].spinorEff(player.elementary.sky.spinors.field[i]||0)
+	for (let i=1;i<=SKY_FIELDS.upgs;i++) tmp.elm.sky.spinorEff[i] = SKY_FIELDS[i].spinorEff(ExpantaNum.mul(player.elementary.sky.spinors.field[i]||0, tmp.elm.sky.upgPow))
 }
 
 function updateTempSkyrmions() {
@@ -53,6 +54,7 @@ function getSkyGain() {
 	if (!canSkyReset()) return false;
 	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2])).pow(2);
 	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
+	if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[8])
 	return gain.floor();
 }
 
@@ -86,6 +88,11 @@ function skyrmionReset(force=false) {
 	player.elementary.entropy.best = new ExpantaNum(0);
 	player.elementary.entropy.upgrades = player.elementary.entropy.upgrades.filter(x => KEEP_ENTUPGS_SKY.includes(x))
 	
+	if (modeActive("extreme")) {
+		player.plasma.amount = new ExpantaNum(0);
+		player.plasma.whiteFlame = new ExpantaNum(0);
+	}
+	
 	forceEntropyReset(true);
 	tmp.elm.layer.reset(true);
 	
@@ -104,6 +111,14 @@ function getSkyEff() {
 	if (!player.elementary.sky.unl) return new ExpantaNum(0);
 	let eff = player.elementary.sky.amount.plus(1).logBase(2).sqrt().times(2.5).times(getSkyPow()).plus(1)
 	return eff;
+}
+
+function getSkyUpgPow() {
+	if (!player.elementary.sky.unl) return new ExpantaNum(0);
+	let pow = new ExpantaNum(1)
+	if (modeActive("extreme")) pow = pow.div(2);
+	if (tmp.fn) if (tmp.fn.pl.unl) pow = pow.times(tmp.fn.pl.boosts[3])
+	return pow;
 }
 
 function getQuarkStacks(x) {
@@ -132,6 +147,8 @@ function getPionGain() {
 	let gain = player.elementary.sky.amount.pow(2).times(5)
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
+	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
+	if (modeActive("easy")) gain = gain.times(4)
 	return gain;
 }
 
@@ -139,6 +156,8 @@ function getSpinorGain() {
 	let gain = player.elementary.sky.amount.pow(2).times(5)
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
+	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
+	if (modeActive("easy")) gain = gain.times(4)
 	return gain;
 }
 
@@ -219,7 +238,6 @@ function maxField(type, lims={}) {
 		let bulk = targ.sub(player.elementary.sky[type].field[i]||0)
 		if (bulk.lt(1)) continue;
 		player.elementary.sky[type].field[i] = ExpantaNum.add(ExpantaNum.max(player.elementary.sky[type].field[i]||0, 0), bulk).max(0)
-		console.log(showNum(player.elementary.sky[type].field[i]))
 	}
 }
 

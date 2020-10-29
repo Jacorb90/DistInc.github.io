@@ -192,6 +192,7 @@ function calcKnowledgeGain(){
 	if (player.elementary.theory.tree.unl && player.elementary.theory.active) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(TREE_UPGS[7].effect(ExpantaNum.add(player.elementary.theory.tree.upgrades[7]||0, TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0))).plus(1).pow(10))
 	if (modeActive('easy')) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(5)
 	if (modeActive("hard") && tmp.fn) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(tmp.fn.enh.moltBrEff2)
+	if (modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1")) tmp.inf.knowledgeGain = tmp.inf.knowledgeGain.times(player.energy)
 }
 
 function updateTempInfLayer() {
@@ -335,6 +336,11 @@ function updateTempInfLayer() {
 		player.inf.endorsements = player.inf.endorsements.max(tmp.inf.bulk.floor().max(player.inf.endorsements.plus(1)))
 		if (!keep) tmp.inf.layer.reset(true)
 	};
+}
+
+function skipInfAnim() {
+	tmp.inf.layer.reset(false, false);
+	if (!showContainer) closeHiddenDiv(true)
 }
 
 function updateTempAscension() {
@@ -891,6 +897,7 @@ function updateTempDerivatives() {
 	tmp.inf.derv.boostMult = new ExpantaNum(Number.MAX_VALUE);
 	if (modeActive('easy')) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(1.25)
 	if (tmp.inf.upgs.has("9;7")) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(INF_UPGS.effects["9;7"]());
+	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.times(tmp.fn.pl.boosts[6])
 	tmp.inf.derv.boostMult = tmp.inf.derv.boostMult.pow(tmp.inf.derv.boostPow);
 	if (HCCBA("noDB")) tmp.inf.derv.boostMult = new ExpantaNum(1)
 	if (!tmp.inf.derv.mult) tmp.inf.derv.mult = function (name) {

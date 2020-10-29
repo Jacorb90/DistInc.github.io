@@ -11,10 +11,17 @@ function updateGluonTabs() {
 	tmp.elm.bos.updateGluonTabs();
 }
 
-function updateTempPhotons(gaugeSpeed) {
+function updatePhotonsGain(gaugeSpeed){
 	tmp.elm.bos.photonGain = gaugeSpeed;
+	if (modeActive("extreme")) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(Math.pow(player.elementary.bosons.scalar.higgs.upgrades.length+1, 1/3))
+	if (modeActive("hikers_dream") && player.elementary.bosons.scalar.higgs.upgrades.includes("1;2;0")) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.hd.superEn.plus(1))
 	if (tmp.lu3) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.lu3.max(1))
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
+}
+
+function updateTempPhotons(gaugeSpeed) {
+	updatePhotonsGain(gaugeSpeed)
+	
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
@@ -79,7 +86,7 @@ function updateTempPhotons(gaugeSpeed) {
 					break;
 			}
 		}
-		player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
+		if (!max) player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
 		).sub(tmp.elm.bos.photonCost[x]);
 		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).max(target)
@@ -185,6 +192,7 @@ function updateTempGauge() {
 	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
 	if (player.elementary.entropy.upgrades.includes(15)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(5)
 	if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(tmp.elm.sky.spinorEff[11])
+	if (modeActive("easy")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2);
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
 	updateTempPhotons(gaugeSpeed);
@@ -247,6 +255,7 @@ function updateTempScalar() {
 	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
 	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
 	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
+	if (modeActive("easy")) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(10)
 	if (!tmp.elm.bos.buyHiggs) tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
@@ -281,6 +290,11 @@ function getGravBoosts() {
 	if (!hasDE(4)) return new ExpantaNum(0)
 	let g = player.elementary.bosons.gauge.gravitons
 	return g.plus(1).log10().sqrt().floor()
+}
+
+function getNextGravBoost(boosts) {
+	if (!hasDE(4)) return new ExpantaNum(1/0)
+	return ExpantaNum.pow(10, boosts.plus(1).pow(2)).sub(1);
 }
 
 function getGravBoostBase() {

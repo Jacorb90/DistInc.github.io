@@ -31,24 +31,31 @@ function setElementaryResetFunction(){
 		if (tmp.elm.bos.hasHiggs("0;0;0")) {
 			player.tr.upgrades = prev.tr.upgrades
 			player.automation.unl = true
+			if (modeActive("extreme")) player.furnChalls = prev.furnChalls
 		}
 		if (tmp.elm.bos.hasHiggs("0;0;1")) {
 			player.inf.endorsements = new ExpantaNum(10)
 			player.inf.unl = true
 		}
-		if (tmp.elm.bos.hasHiggs("3;0;0")) player.inf.stadium.completions = prev.inf.stadium.completions
+		if (tmp.elm.bos.hasHiggs("3;0;0")) {
+			player.inf.stadium.completions = prev.inf.stadium.completions
+			if (modeActive("extreme")) player.extremeStad = prev.extremeStad
+		}
 		if (tmp.elm.bos.hasHiggs("1;2;0")) player.inf.pantheon.purge.power = prev.inf.pantheon.purge.power
 		if (player.elementary.times.gte(3)) {
 			player.pathogens.unl = true
 			player.dc.unl = true
 		}
 		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
+			
+		// Extreme Mode
+		
+		if (modeActive("extreme")) {
+			player.magma.done = false;
+		}
 		
 		// Bugfixes
 		infTab = "infinity"
-		
-		// Modes
-		if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) player.modes = player.modes.filter(x => x != "easy" && x != "hard" && x != "extreme" && x != "hikers_dream")
 	};
 }
 
@@ -72,15 +79,15 @@ function updateElementaryLayer() {
 		if (tmp.ach[172].has) exp = exp.plus(ExpantaNum.sub(.5, ExpantaNum.div(.5, player.elementary.times.plus(1).logBase(1e3).times(.2).plus(1))))
 		if (gain.gte(tmp.elm.softcap)) gain = gain.pow(exp).times(ExpantaNum.pow(tmp.elm.softcap, ExpantaNum.sub(1, exp)))
 		if (player.elementary.foam.unl && tmp.elm.qf) gain = gain.times(tmp.elm.qf.boost12) // not affected by softcap hehe
+	
+		if (modeActive("extreme")) gain = gain.div(3).plus(gain.gte(1)?1:0)
 		return gain.floor();
 	});
 	tmp.elm.layer = new Layer("elementary", tmp.elm.can, "multi-res", true, "elm");
 	if (!tmp.elm.doGain) tmp.elm.doGain = function (auto=false) {
 		// Gains
 		if (player.options.elc && !auto) {
-			if (!confirm("Are you sure you want to do this? "+((modeActive("easy")||modeActive("hard")||modeActive("hikers_dream"))?"You will convert out of this mode because it has ended!":"It will take some time for you to get back here!"))) return "NO";
-			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS WILL SET YOU IN NORMAL MODE AND YOU WILL LOSE YOUR SAVE IN THESE MODES, ARE YOU ABSOLUTELY SURE YOU WANT TO DO THIS????")) return "NO";
-			if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) if (!confirm("THIS IS YOUR LAST CHANCE!! YOU WILL LOSE ALL YOUR EASY, HARD, EXTREME, OR HIKER'S DREAM MODE PROGRESS IF YOU CONTINUE!")) return "NO";
+			if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
 		}
 		if (player.elementary.theory.active) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(tmp.thGain?tmp.thGain:new ExpantaNum(0))
@@ -238,8 +245,8 @@ function elTick(diff) {
 		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(player.elementary.particles.times(diff).div(100))
 	}
 	if (player.elementary.sky.unl) {
-		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(tmp.elm.sky.pionGain.times(diff));
-		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(tmp.elm.sky.spinorGain.times(diff));
+		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(adjustGen(tmp.elm.sky.pionGain.times(diff), "sky"));
+		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(adjustGen(tmp.elm.sky.spinorGain.times(diff), "sky"));
 	}
 }
 

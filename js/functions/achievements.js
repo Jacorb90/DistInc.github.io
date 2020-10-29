@@ -171,7 +171,7 @@ function checkR16Ach(){
 	if (player.elementary.theory.strings.entangled.gte(4.4e126)) tmp.ach[163].grant();
 	if (player.elementary.entropy.unl) tmp.ach[164].grant();
 	if (player.elementary.hc.best.gte(8)) tmp.ach[165].grant();
-	if (player.elementary.theory.inflatons.amount.gte(1e160)) tmp.ach[166].grant();
+	if (player.elementary.theory.inflatons.amount.gte(modeActive("extreme")?1e150:1e160)) tmp.ach[166].grant();
 	if (player.distance.gte(ExpantaNum.mul("1e108000000", 4.4e26))) tmp.ach[167].grant();
 	if (player.elementary.foam.amounts[0].gte(1e25) && player.elementary.foam.maxDepth.lte(1)) tmp.ach[168].grant();
 }
@@ -179,7 +179,7 @@ function checkR16Ach(){
 function checkR17Ach(){
 	if (player.elementary.sky.amount.gt(0)) tmp.ach[171].grant();
 	if (player.elementary.times.gte(1e12)) tmp.ach[172].grant();
-	if (player.elementary.foam.amounts[0].gte(1e140) && player.elementary.entropy.best.eq(0)) tmp.ach[173].grant();
+	if (player.elementary.foam.amounts[0].gte(modeActive("extreme")?1e78:1e140) && player.elementary.entropy.best.eq(0)) tmp.ach[173].grant();
 	if (player.distance.gte("4.4e500000026")) tmp.ach[174].grant();
 	if (player.distance.gte("4.4e222222248") && player.elementary.entropy.best.eq(0) && player.elementary.foam.maxDepth.lte(1) && player.elementary.bosons.gauge.photons.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0) && Object.values(player.elementary.bosons.gauge.gluons).every(obj => obj.upgrades.reduce((a,c) => ExpantaNum.add(a, c)).eq(0))) tmp.ach[175].grant();
 	if (player.elementary.theory.depth.gte(20)) tmp.ach[176].grant();

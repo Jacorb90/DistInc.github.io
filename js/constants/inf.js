@@ -697,6 +697,14 @@ const INF_UPGS = {
 			if (tmp.elm) if (tmp.elm.bos.hasHiggs("5;0;5")) {
 				base1 = base1.plus(ranks.plus(1).log10().div(10))
 				base2 = base2.plus(tiers.plus(1).log10().div(4))
+				if (modeActive("hikers_dream")) {
+					base2 = base2.log10().plus(1)
+					tiers = tiers.times(tiers)
+				}
+			}
+			if (modeActive("hikers_dream") && tmp.ach) if (tmp.ach[145].has) {
+				base1 = base1.log10().plus(1)
+				ranks = ranks.times(ranks.div(200).plus(1))
 			}
 			let ret = ExpantaNum.pow(base1, ranks).times(ExpantaNum.pow(base2, tiers))
 			return ret
@@ -1047,4 +1055,23 @@ const EXTREME_INF_UPG_COST_MODS = {
 	"9;8": new ExpantaNum(1e4),
 	"1;9": new ExpantaNum(3e3),
 	"2;9": new ExpantaNum(3e3),
+	"1;10": new ExpantaNum(1e-15),
+	"2;10": new ExpantaNum(2e-14),
+	"3;10": new ExpantaNum(3e-13),
+	"4;10": new ExpantaNum(4e-12),
+	"5;10": new ExpantaNum(5e-11),
+	"6;10": new ExpantaNum(6e-10),
+	"7;10": new ExpantaNum(7e-9),
+	"8;10": new ExpantaNum(8e-8),
+	"9;10": new ExpantaNum(9e-7),
+	"10;1": new ExpantaNum(1e-15),
+	"10;2": new ExpantaNum(2e-14),
+	"10;3": new ExpantaNum(3e-13),
+	"10;4": new ExpantaNum(4e-12),
+	"10;5": new ExpantaNum(5e-11),
+	"10;6": new ExpantaNum(6e-10),
+	"10;7": new ExpantaNum(7e-9),
+	"10;8": new ExpantaNum(8e-8),
+	"10;9": new ExpantaNum(9e-7),
+	"10;10": new ExpantaNum(1e-5),
 }

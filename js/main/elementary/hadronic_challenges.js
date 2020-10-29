@@ -6,9 +6,12 @@ function updateTempHC() {
 	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
 	tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(TREE_UPGS[31].effect(player.elementary.theory.tree.upgrades[31]||0))
 	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(tmp.elm.qf.boost7)
+	if (modeActive("hikers_dream") && player.energyUpgs.includes(27)) tmp.elm.hc.hadronGain = tmp.elm.hc.hadronGain.times(tmp.hd.enerUpgs[27])
+	
 	tmp.elm.hc.hadInterval = ExpantaNum.add(1, ExpantaNum.div(9, player.elementary.hc.best.plus(1).log(Math.E).plus(1)).div(200))
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[33]||0, 1)) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.sub(1).div(2).plus(1)
-	if (player.elementary.entropy.upgrades.includes(19) && tmp.elm.entropy)  tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.root(tmp.elm.entropy.upgEff[19])
+	if (player.elementary.entropy.upgrades.includes(19) && tmp.elm.entropy) tmp.elm.hc.hadInterval = tmp.elm.hc.hadInterval.root(tmp.elm.entropy.upgEff[19])
+
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
 	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
 	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).times(4.4e26).log10()).min(1)
@@ -32,12 +35,21 @@ function getProjectedHadronicScore() {
 	
 	// Infinity Modifiers
 	if (getHCSelector("noIU")) score = score.times(1.1).plus(0.1)
-	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(36))
-	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(36))
+	let challMod = modeActive("extreme")?72:36
+	score = score.plus(new ExpantaNum(getHCSelector("spaceon")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("solaris")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("infinity")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("eternity")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("reality")).div(challMod))
+	score = score.plus(new ExpantaNum(getHCSelector("drigganiz")).div(challMod))
+	if (modeActive("extreme")) {
+		score = score.plus(new ExpantaNum(getHCSelector("flamis")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("cranius")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("spectra")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("aqualon")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("nullum")).div(challMod))
+		score = score.plus(new ExpantaNum(getHCSelector("quantron")).div(challMod))
+	}
 	if (getHCSelector("noGems")) score = score.times(1.01).plus(0.01)
 	if (getHCSelector("purge")) score = score.times(3).plus(2)
 	if (getHCSelector("noDS")) score = score.times(1.03).plus(0.03)
@@ -49,6 +61,7 @@ function getProjectedHadronicScore() {
 	// Goal Modifier
 	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
 	
+	if (modeActive("easy")) score = score.pow(1.025)
 	return score
 }
 

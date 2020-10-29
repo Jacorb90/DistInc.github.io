@@ -120,7 +120,7 @@ function getCadaverGainMult() {
 		mult = mult.div(2);
 		tmp.clghm = true;
 	}
-	if (modeActive("extreme") && FCComp(5)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[4]))
+	if (modeActive("extreme") && FCComp(5)) mult = mult.times(ExpantaNum.pow(2, player.furnace.upgrades[4].times(tmp.fn ? tmp.fn.upgPow : 1)))
 	if (tmp.ach[68].has && modeActive("extreme")) mult = mult.times(5);
 	if (tmp.collapse) if (modeActive("easy")) mult = mult.times(3);
 	if (tmp.elm) if (player.elementary.times.gt(0)) mult = mult.times(tmp.elm.ferm.quarkR("down").max(1));

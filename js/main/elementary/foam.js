@@ -41,6 +41,10 @@ function updateQuantumFoamBoosts() {
 	tmp.elm.qf.boost4 = ExpantaNum.pow(10, tmp.elm.qf.boostData[4].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 	tmp.elm.qf.boost3 = ExpantaNum.pow(100, tmp.elm.qf.boostData[3].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 	tmp.elm.qf.boost2 = ExpantaNum.pow(1e3, tmp.elm.qf.boostData[2].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
+	if (player.elementary.entropy.upgrades.includes(22)) {
+		tmp.elm.qf.boost2 = tmp.elm.qf.boost2.pow(1.085);
+		tmp.elm.qf.boost4 = tmp.elm.qf.boost4.pow(1.085);
+	}
 	tmp.elm.qf.boost1 = ExpantaNum.pow(3, tmp.elm.qf.boostData[1].plus(tmp.elm.qf.boost5).plus(tmp.elm.qf.boost13).plus(tmp.elm.qf.boost25))
 }
 
@@ -81,14 +85,14 @@ function updateTempQuantumFoam() {
 	updateTempEntropy();
 }
 
-function gainFoam(x, gain) {
-	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], gain).max(0)
+function gainFoam(x, gain, diff=1, adj=false) {
+	player.elementary.foam.amounts[x] = ExpantaNum.add(player.elementary.foam.amounts[x], ExpantaNum.mul(adj?adjustGen(gain, "foam"):gain, diff)).max(0)
 	if (isNaN(player.elementary.foam.amounts[x].array[0])) player.elementary.foam.amounts[x] = new ExpantaNum(0);
 }
 
 function qfTick(diff) {
 	for (let i=0;i<5;i++) {
-		if (player.elementary.foam.maxDepth.gt(i)) gainFoam(i, tmp.elm.qf.gain[i+1].times(diff))
+		if (player.elementary.foam.maxDepth.gt(i)) gainFoam(i, tmp.elm.qf.gain[i+1], diff, true)
 		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.entropy.bestDepth.gte(i+3)) qfMax(i+1, b+1)
 	}
 	player.elementary.entropy.bestDepth = player.elementary.entropy.bestDepth.max(player.elementary.foam.maxDepth);
@@ -109,6 +113,7 @@ function getQuantumFoamGain(x) {
 		}
 	}
 	if (player.elementary.entropy.upgrades.includes(11)) gain = gain.times(10)
+	if (modeActive("easy")) gain = gain.times(Math.pow(5/x, 2)*2.5)
 	return gain
 }
 
@@ -116,6 +121,7 @@ function getQFBoostCost(x, b) {
 	let start = FOAM_BOOST_COSTS[x][b].start
 	let base = FOAM_BOOST_COSTS[x][b].base
 	let exp = FOAM_BOOST_COSTS[x][b].exp
+	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
 	let amt = player.elementary.foam.upgrades[id]
 	let cost = start.times(base.pow(amt.pow(exp)))
@@ -126,6 +132,7 @@ function getQFBoostTarg(x, b) {
 	let start = FOAM_BOOST_COSTS[x][b].start
 	let base = FOAM_BOOST_COSTS[x][b].base
 	let exp = FOAM_BOOST_COSTS[x][b].exp
+	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
 	let res = player.elementary.foam.amounts[x-1]
 	let targ = res.div(start).max(1).logBase(base).pow(exp.pow(-1))
@@ -160,11 +167,13 @@ function addToAllFoamBoosts() {
 function getQFBoostData() {
 	let data = {}
 	let toAdd = addToAllFoamBoosts()
+	let extreme = modeActive("extreme")
 	for (let b=0;b<5;b++) {
 		let amt = player.elementary.foam.upgrades[b*3].plus(player.elementary.foam.upgrades[b*3+1]).plus(player.elementary.foam.upgrades[b*3+2])
 		if (!player.elementary.foam.unl) amt = new ExpantaNum(0)
 		for (let i=(b*5+1);i<=(b*5+5);i++) {
 			data[i] = amt.sub((i-1)-b*5).div(5).ceil().max(0).plus(toAdd)
+			if (extreme) if (data[i].gte(45) && !(b==0?ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1):false)) data[i] = data[i].times(45).sqrt()
 		}
 	}
 	return data
@@ -198,8 +207,9 @@ function getAch162Eff() {
 	if (!tmp.ach) return new ExpantaNum(1)
 	if (!tmp.ach[162].has) return new ExpantaNum(1)
 	if (player.elementary.entropy.upgrades.includes(6)) {
-		let ret = player.elementary.theory.points.plus(1).pow(0.75);
-		if (ret.gte(2500)) ret = ret.log10().times(2500/Math.log10(2500))
+		let mod = modeActive("extreme")?1.5:1
+		let ret = player.elementary.theory.points.plus(1).pow(0.75 * mod);
+		if (ret.gte(2500*mod)) ret = ret.log10().times(2500*mod/Math.log10(2500*mod))
 		return ret;
 	}
 	return player.elementary.theory.points.plus(1).log10().plus(1).cbrt()
@@ -224,18 +234,27 @@ function refoam() {
 	}
 }
 
+function getExtremeFoamSCStart() {
+	let start = new ExpantaNum(1e50);
+	if (tmp.fn?tmp.fn.pl.unl:false) start = start.times(tmp.fn.pl.boosts[1]);
+	return start;
+}
+
 // Entropy
 function getEntropyEff() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1);
 	let entropy = player.elementary.entropy.best;
 	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
 	let eff = entropy.plus(1).pow(2.5);
+	if (player.elementary.entropy.upgrades.includes(21) && tmp.elm.entropy.upgEff) eff = eff.pow(tmp.elm.entropy.upgEff[21].div(100).plus(1))
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.pow(tmp.elm.sky.spinorEff[9])
+	if (modeActive("easy")) eff = eff.pow(1.25)
 	return eff;
 }
 
 function getEntropyGainMult() {
 	let mult = new ExpantaNum(1)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[39]||0, 1) && modeActive("extreme")) mult = mult.times(1.5);
 	if (player.elementary.entropy.upgrades.includes(3)) mult = mult.times(tmp.elm.entropy.upgEff[3])
 	if (player.elementary.entropy.upgrades.includes(8)) mult = mult.times(tmp.elm.entropy.upgEff[8])
 	if (player.elementary.entropy.upgrades.includes(10)) mult = mult.times(1.5)
@@ -249,16 +268,20 @@ function getEntropyGain() {
 	let gain = foam.div(1e50).pow(0.05)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.pow(tmp.elm.sky.spinorEff[10].plus(1))
 	if (gain.gte(5)) gain = gain.times(25).cbrt()
+	if (modeActive("extreme") && gain.gte(25)) gain = gain.times(625).cbrt();
 	if (gain.gte(100)) gain = gain.times(1e6).pow(0.25)
 	if (gain.gte(1200)) gain = gain.logBase(1.001).div(5.91135)
+	if (modeActive("extreme") && ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1)) gain = gain.pow(2);
 	return gain.times(tmp.elm.entropy.gainMult).floor().sub(player.elementary.entropy.amount).max(0)
 }
 
 function getEntropyNext() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
 	let gain = tmp.elm.entropy.gain.plus(player.elementary.entropy.amount).div(tmp.elm.entropy.gainMult).plus(1);
+	if (modeActive("extreme") && ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1)) gain = gain.sqrt();
 	if (gain.gte(1200)) gain = ExpantaNum.pow(1.001, gain.times(5.91135))
 	if (gain.gte(100)) gain = gain.pow(4).div(1e6)
+	if (modeActive("extreme") && gain.gte(25)) gain = gain.pow(3).div(625);
 	if (gain.gte(5)) gain = gain.pow(3).div(25)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.root(tmp.elm.sky.spinorEff[10].plus(1))
 	return gain.pow(20).times(1e50);
@@ -307,6 +330,7 @@ function getOmegaEff() {
 	let eff = tmp.elm.entropy.omega.div(10)
 	if (player.elementary.entropy.upgrades.includes(7)) eff = eff.times(tmp.elm.entropy.upgEff[7].div(100).plus(1))
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[7])
+	if (modeActive("easy")) eff = eff.times(1.25)
 	return eff
 }
 
@@ -322,5 +346,7 @@ function buyEntropyUpg(x) {
 function entropyUpgShown(x) {
 	if (x<=8) return true;
 	else if (x<=20) return player.elementary.sky.amount.gt(0);
+	else if (x<=22) return modeActive("extreme");
+	else if (x<=25) return modeActive("extreme")&&player.elementary.sky.amount.gt(0);
 	else return false;
 }

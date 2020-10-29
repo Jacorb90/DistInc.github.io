@@ -51,11 +51,10 @@ notations.standard = function (val, places, locs) {
 		let size = Math.min(locs, highest);
 		let mag = decimalPlaces(val.div(ExpantaNum.pow(10, val.log10().div(3).floor().times(3))), places);
 		if (mag === undefined) mag = "1";
-		let txt = mag;
+		let txt = mag+" ";
 		for (let x = highest; x > Math.max(highest - size, 0); x--) {
 			let m = ExpantaNum.pow(1000, x);
 			txt +=
-				" " +
 				STANDARD_DATA.MILESTONE_PREF[val.log10().sub(3).div(m.times(3)).mod(10).floor().toNumber()] +
 				STANDARD_DATA.TENS[val.log10().sub(3).div(m.times(30)).mod(10).floor().toNumber()] +
 				STANDARD_DATA.HUNDREDS[val.log10().sub(3).div(m.times(300)).mod(10).floor().toNumber()];

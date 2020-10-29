@@ -114,7 +114,7 @@ function darkCoreAutoTick(){
 
 function robotAutoTick(){
 	if (player.automators["robots"]) {
-		if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
+		if (!modeActive("extreme")) if (Object.keys(ROBOT_REQS)[autoRobotTarget]=="rankCheapbot") autoRobotTarget++
 		let robot = tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]]
 		if (!robot.unl && player.automation.scraps.gte(ROBOT_REQS[robot.name])) robot.btn()
 		if (robot.unl) tmp.auto[Object.keys(ROBOT_REQS)[autoRobotTarget]].maxAll(true)
@@ -195,7 +195,8 @@ function photonsAutoTick(){
 function gluonAutoTick(){
 	if (player.automators["gluon_upgrades"]) for (let i = 0; i < GLUON_COLOURS.length; i++) {
 		let col = GLUON_COLOURS[i];
-		for (let x=1;x<=(hasDE(1)?3:2);x++) tmp.elm.bos.buy(col, x, true)
+		for (let x=1;x<=2;x++) tmp.elm.bos.buy(col, x, true)
+		if (hasDE(1)) buyGluon3(col, true)
 	}
 }
 
@@ -222,10 +223,18 @@ function entropyAutoTick(){
 
 function entropyUpgAutoTick(){
 	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
-		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x));
+		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x)&&entropyUpgShown(x));
 		if (toBuy.length==0) return;
-		let nextUpg = toBuy.reduce((a,c) => Math.min(a,c));
+		let nextUpg = toBuy.reduce((a,c) => ENTROPY_UPG_AUTO_ORDER[Math.min(ENTROPY_UPG_AUTO_ORDER.indexOf(a),ENTROPY_UPG_AUTO_ORDER.indexOf(c))]);
 		buyEntropyUpg(nextUpg)
+	}
+}
+
+function energyAutoTick(){
+	if (!modeActive("hikers_dream")) return
+	if (tmp.ach) if (tmp.ach[141].has) {
+		buyGen()
+		newGen()
 	}
 }
 
@@ -248,6 +257,7 @@ function autoTick(diff) {
 	theoryBoosterAutoTick()
 	entropyAutoTick()
 	entropyUpgAutoTick()
+	 energyAutoTick()
 }
 
 function autoPerSec() {

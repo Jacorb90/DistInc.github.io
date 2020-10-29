@@ -33,6 +33,7 @@ function addZeroes(orig, num, digits, roundWhole=false) {
 	if (roundWhole && result.includes(".") && result[result.length-1]=="0") {
 		while (result[result.length-1]=="0") result = result.substring(0, result.length-1);
 	}
+	if (result[result.length-1]==".") result = result.substring(0, result.length-1);
 	return result
 }
 
@@ -106,4 +107,11 @@ function formatTime(x) {
 		if (x.lt(val) && i > 0) continue;
 		return showNum(x.div(val)) + " " + name;
 	}
+}
+
+function formatGain(amt, gain, name, isDist, gainNotIncluded) {
+	let trueGain = ExpantaNum.mul(name?adjustGen(gain, name):gain, gainNotIncluded||1)
+	let func = isDist?formatDistance:showNum
+	if (trueGain.gte(1e100) && trueGain.gt(amt)) return "(+"+showNum(trueGain.max(1).log10().sub(amt.max(1).log10().max(1)).times(50/VIS_UPDS[player.options.visUpd]))+" OoMs/sec)"
+	else return "(+"+func(trueGain)+"/sec)"
 }

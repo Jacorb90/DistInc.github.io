@@ -132,7 +132,7 @@ function updateTempRankCheap() {
 	tmp.rankCheap.free = new ExpantaNum(0);
 	if (tmp.ach[21].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.tier);
 	if (tmp.ach[34].has) tmp.rankCheap.free = tmp.rankCheap.free.plus(1);
-	if (player.rf.gt(0)) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.furnace.upgrades[1]);
+	if (player.rf.gt(0)) tmp.rankCheap.free = tmp.rankCheap.free.plus(player.furnace.upgrades[1].times(tmp.fn ? tmp.fn.upgPow : 1));
 	if (extremeStadiumActive("cranius", 2)) tmp.rankCheap.free = tmp.rankCheap.free.div(10).floor();
 	updateTempRankCheapCost()
 	tmp.rankCheap.can = player.distance.gte(tmp.rankCheap.req);
@@ -142,7 +142,7 @@ function updateTempRankCheap() {
 	if (player.tr.upgrades.includes(22) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.rankCheap.pow = tmp.rankCheap.pow.times(player.collapse.cadavers.plus(1).times(10).slog(10).sqrt());
 	tmp.rankCheap.manPow = new ExpantaNum(1);
-	if (tmp.fn) if (tmp.fn.enh.unl) tmp.rankCheap.manPow = tmp.rankCheap.manPow.plus(ExpantaNum.mul(tmp.fn.enh.upg2eff, player.furnace.enhancedUpgrades[1].plus(tmp.fn.enh.upgs[2].extra)))
+	if (tmp.fn) if (tmp.fn.enh.unl) tmp.rankCheap.manPow = tmp.rankCheap.manPow.plus(ExpantaNum.mul(tmp.fn.enh.upg2eff, player.furnace.enhancedUpgrades[1].plus(tmp.fn.enh.upgs[2].extra).times(tmp.fn.enh.upgPow)))
 	tmp.rankCheap.eff = getRankCheapEff();
 	tmp.rankCheap.eff2 = getRankCheapEff2();
 	if (!tmp.rankCheap.onReset) tmp.rankCheap.onReset = function(prev) {

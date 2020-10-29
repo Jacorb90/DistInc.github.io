@@ -6,7 +6,6 @@
 	--rbt: #c9c9c9;
 	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
-	--news-right-start: -10%;
 	--foamcol: #d3e8cc;
 }
 
@@ -578,6 +577,7 @@ table {
 	);
 	background-position: 0% 0%;
 	background-size: 100% 100%;
+	border: none;
 	border-radius: 100px;
 	width: 100px;
 	height: 100px;
@@ -1140,31 +1140,19 @@ table {
 	background-color: white;
 	border: 2px solid black;
 	border-radius: 10px;
+	margin: auto;
+	overflow: hidden;
+	text-align: left;
 }
 
 #news {
 	overflow: hidden;
 	display: inline-block;
 	white-space: nowrap;
-	right: 100%;
 	color: black !important;
 	min-height: 18px;
 	max-height: 18px;
 	position: relative;
-}
-
-.slidenews {
-	display: inline-block;
-	animation: 20s linear slidenews;
-}
-
-@keyframes slidenews {
-	from {
-		right: var(--news-right-start);
-	}
-	to {
-		right: 110%;
-	}
 }
 
 .btn.elm {
@@ -1745,6 +1733,22 @@ table {
 	margin: 0 auto;
 }
 
+.flexRowThird {
+	display: flex !important;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin-bottom: 30px;
+}
+
+.flexRowThird div {
+	margin-left: 50px;
+	margin-right: 50px;
+	border: 1px solid white;
+	padding: 15px 15px 15px 15px;
+}
+
 .automator {
 	width: 180px;
 	height: 90px;
@@ -1772,6 +1776,128 @@ table {
 	align-items: flex-start;
 	max-width: 100%;
 	margin: 0 auto;
+}
+
+.btn.magma {
+	box-shadow: 3px 4px 0px 0px black;
+	background: none;
+	background-color: #4d3636;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #784205;
+	transition-duration: 0.5s;
+}
+
+.btn.magma:hover {
+	background: none;
+	background-color: #fa4632;
+}
+
+.btn.magma:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.magmaTxt {
+	background: linear-gradient(to bottom, #fa4632 5%, #4d3636 100%);
+	background-size: 200% auto;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 25px;
+	animation: magmatxt 5s linear infinite;
+}
+
+.btn.plasma {
+	box-shadow: 3px 4px 0px 0px black;
+	background: linear-gradient(-45deg, #49364d, #78437a, #913690, #ba188c);
+	background-color: #49364d;
+	background-size: 400% 400%;
+	border-radius: 18px;
+	border: 1px solid black;
+	display: inline-block;
+	cursor: pointer;
+	color: black;
+	font-size: 12px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #7a046b;
+	transition-duration: 0.5s;
+	animation: plasma 6s ease infinite;
+}
+
+.btn.plasma:hover {
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	background-color: #9b72a3;
+}
+
+.btn.plasma:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.plasmaTxt {
+	font-size: 30px;
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	background-size: 400% 400%;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: plasma 6s ease infinite;
+}
+
+.whiteFlame {
+	font-size: 30px;
+	color: var(--plaintxt);
+	font-weight: bold;
+}
+
+.plB {
+	width: 180px;
+	height: 150px;
+	line-height: 150px;
+	border: 2px solid var(--plaintxt);
+	border-radius: 2px;
+	color: var(--plaintxt);
+	font-size: 15px;
+	padding-left: 25px;
+	margin-left: 12.5px;
+	padding-right: 25px;
+	margin-right: 12.5px;
+	padding-top: 10px;
+	margin-top: 12.5px;
+	padding-bottom: 10px;
+	margin-bottom: 12.5px;
+}
+
+.plB.plasmic {
+	background: linear-gradient(-45deg, #9b72a3, #c46dc7, #d44ed2, #ff03b7);
+	animation: plasma 6s ease infinite;
+}
+
+.plB.gleaming {
+	background: linear-gradient(45deg, #404040, #8c8c8c, #9c9c9c, #a1a1a1);
+	animation: plasma 6s ease infinite;
+}
+
+.plBCont {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
 }
 
 @keyframes grosstxt {
@@ -1951,6 +2077,30 @@ table {
 	}
 	100% {
 		transform: scale(100%, 100%);
+	}
+}
+
+@keyframes magmatxt {
+	0% {
+		background-position: 0% 0%;
+	}		
+	50% {
+      background-position: 100% 100%;
+    }
+	100% {
+		background-position: 0% 0%;
+	}	
+}
+
+@keyframes plasma {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
 	}
 }
 

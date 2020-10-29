@@ -1,3 +1,10 @@
+var eheheTimes = 0;
+var ehehe = function() { 
+	eheheTimes++;
+	if (eheheTimes>=1000000) return 'EHEHE '+eheheTimes+': OKAY STOP. I GIVE UP. YOURE CRAZY AND WHY WOULD YOU DO THIS?!?!?!??!?!!?!'
+	else if (eheheTimes>=1000) return 'EHEHE '+eheheTimes+': SERIOUSLY STOP IT YOURE INSANE!'
+	else return 'EHEHE '+eheheTimes+': Copy paste the following into the console and press enter: console.log(ehehe())' 
+}
 const NEWS_DATA = {
 	// No Conditions
 	m1: ["Welcome to the truest of travels."],
@@ -88,6 +95,11 @@ const NEWS_DATA = {
 	m86: ['"Canada does not exist..." -Him'],
 	m87: ["Jacorb only created Hiker's Dream because he doesn't exercise."],
 	m88: ["You may have noticed that there's a donate button. If you didn't, well you have noticed now!"],
+	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
+	m90: ["In 2073, we will be at v193.6, with over 200 prestige layers, and the game will cost over $20.00"],
+	m91: ["Well yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually -INFINITE LOOP-"],
+	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
+	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
 
 	// Distance-based Conditions
 	d1: [
@@ -464,6 +476,16 @@ const NEWS_DATA = {
 		"Wow you completed TV20, a completely meaningless quest that got you no reward. How do you feel now?",
 		function() { return player.elementary.theory.depth.gt(20) },
 	],
+	s31: [
+		"Gonna transfoam myself to Skyrmions!",
+		function() { return player.elementary.sky.unl },
+	],
+	s32: [
+		"Florida Man tried to reach the end of multiverse, but dissolved into 3 quantum fields.",
+		function() { return player.elementary.foam.unl },
+	],
+	s33: [
+		'"Elementary is cool, it has hadronic challenged me to make up theories and has brought to photonic light a new meme: fome, I must go now, my skyrmions need me." - A really punny guy',
+		function() { return player.elementary.sky.unl },
+	],
 };
-
-const NEWS_ADJ = 110;

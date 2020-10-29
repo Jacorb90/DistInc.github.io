@@ -30,7 +30,7 @@ const LAYER_RESETS_EXTRA = {
 	rf: [],
 	collapse: ["energy", "canRefill", "rankCheap", "furnace"],
 	inf: ["energy", "canRefill", "rankCheap", "furnace", "activeFC"],
-	elementary: ["energy", "canRefill", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
+	elementary: ["energy", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
 };
 
 const LAYER_REQS = {
@@ -66,3 +66,14 @@ const LAYER_SC = {
 	inf: new ExpantaNum(1 / 0),
 	elementary: new ExpantaNum(1 / 0)
 };
+
+const LAYER_RESETS_NOTHING = {
+	rank() { return tmp.collapse ? hasCollapseMilestone(12) : false },
+	rankCheap() { return tmp.ach[112].has },
+	tier() { return player.tr.upgrades.includes(14) && !HCCBA("noTRU") },
+	rockets() { return false },
+	rf() { return modeActive("extreme") ? (player.tr.upgrades.includes(17) && !HCCBA("noTRU")) : player.inf.unl },
+	collapse() { return false },
+	inf() { return false },
+	elementary() { return false},
+}

@@ -31,7 +31,7 @@ var gluonTab = "r";
 var thTab = "tv";
 var enTab = "mainEN";
 var autoRobotTarget = 0
-var betaID = ""; // beta1.9
+var betaID = ""; //beta1.91
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
@@ -78,6 +78,10 @@ function tickWithoutTS(diff) {
 		player.energy = player.energy.sub(tmp.hd.energyLoss.times(diff)).max(0);
 		if (player.inf.endorsements.gte(10)) player.energy = player.energy.plus(tmp.hd.energyGen.times(diff)).min(getEnergyLim())
 		player.bestMotive = player.bestMotive.max(tmp.hd.motive)
+	}
+	if (modeActive("extreme")&&player.elementary.sky.unl) {
+		if (tmp.fn.pl.exp.gte(1)) player.plasma.amount = player.plasma.amount.root(tmp.fn.pl.exp).plus(diff).pow(tmp.fn.pl.exp);
+		player.plasma.whiteFlame = player.plasma.whiteFlame.plus(adjustGen(tmp.fn.pl.wfGain, "plasma").times(diff));
 	}
 }
 

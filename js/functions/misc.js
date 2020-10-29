@@ -361,7 +361,6 @@ function getCurrentTime() {
 function getAllAchievements() {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (modeActive("easy")||modeActive("hard")||modeActive("hikers_dream")) a = a.filter(x => x / 10 <= 13);
 	if (modeActive("na")) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
@@ -398,15 +397,16 @@ async function showHiddenDiv(data) {
 	document.body.appendChild(resetContainer);
 
 	await sleep(3);
-	document.getElementById("resetContainerBody").style.display = "";
+	if (document.getElementById("resetContainerBody")) document.getElementById("resetContainerBody").style.display = "";
 }
 
-async function closeHiddenDiv() {
+async function closeHiddenDiv(fast=false) {
 	let element = document.getElementById("resetContainer");
 	if (!element) return;
 	document.getElementById("resetContainerBody").style.display = "none";
 	document.getElementById("reset").className = "hiddenDivShrink";
-	await sleep(1.4);
+	if (!fast) await sleep(1.4);
+	if (!element.parentNode) return;
 	element.parentNode.removeChild(element);
 	showContainer = true;
 	updateTemp();

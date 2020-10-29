@@ -24,6 +24,16 @@ function updateTempTheoriverse() {
 		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
 	}
+	if (modeActive("extreme")) { 
+		if (player.elementary.theory.depth.lt(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(0.75)
+		if (player.elementary.theory.depth.gte(5)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(1.25)
+	}
+	if (modeActive("hikers_dream")) {
+		tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
+		if (player.elementary.theory.depth.gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(9 / 8)
+		if (player.elementary.theory.depth.gte(7)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
+	}
+	if (modeActive("easy")) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(5/6);
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
 		if (HCTVal("tv").gt(-1)) return
@@ -95,12 +105,14 @@ function updateTempTheoryTree() {
 				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(newCost);
 			}
 			player.elementary.theory.tree.upgrades[x] = bought.max(target)
+			updateTheoryTreeHTMLPerSec();
 		} else {
 			if (!player.elementary.entropy.upgrades.includes(13)) {
 				player.elementary.theory.points = player.elementary.theory.points.sub(cost).max(0)
 				player.elementary.theory.tree.spent = player.elementary.theory.tree.spent.plus(cost)
 			}
 			player.elementary.theory.tree.upgrades[x] = bought.plus(1)
+			updateTheoryTreeHTMLPerSec();
 		}
 	}
 	tmp.elm.theory.tree.costReduc = ach152Eff()
@@ -309,12 +321,14 @@ function darkExpand() {
 	player.elementary.theory.accelerons.expanders = player.elementary.theory.accelerons.expanders.plus(1)
 }
 
-function buyGluon3(col) {
+function buyGluon3(col, max=false) {
 	if (!hasDE(1)) return
 	if (player.elementary.bosons.gauge.gluons[col].amount.lt(tmp.elm.bos.gluonCost(col, 3))) return
+	let bulk = new ExpantaNum(1)
+	if (max) bulk = tmp.elm.bos.gluonTarg(col, 3).sub(player.elementary.bosons.gauge.gluons[col].upgrades[2]).max(1)
 	player.elementary.bosons.gauge.gluons[col].amount = player.elementary.bosons.gauge.gluons[col].amount.sub(tmp.elm.bos.gluonCost(col, 3))
-	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(1)
-	player.elementary.theory.points = player.elementary.theory.points.plus(10)
+	player.elementary.bosons.gauge.gluons[col].upgrades[2] = (player.elementary.bosons.gauge.gluons[col].upgrades[2]||new ExpantaNum(0)).plus(bulk)
+	player.elementary.theory.points = player.elementary.theory.points.plus(ExpantaNum.mul(10, bulk))
 }
 
 function hasDE(n) { 
@@ -406,6 +420,14 @@ function getInflatonEff2() {
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[13])
 	return eff.floor()
 }
+
+/*
+function getInfatonEff2NextAt(){
+	let cur = getInflatonEff2()
+	if (cur.lt(4)) return new ExpantaNum(1e3).times(ExpantaNum.pow(10, cur))
+	//idk lol this function sucks maybe just use an alg
+}
+*/
 
 function getTreeUpgCap(x) {
 	let cap = new ExpantaNum(TREE_UPGS[x].cap)
