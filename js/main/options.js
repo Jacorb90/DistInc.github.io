@@ -5,7 +5,9 @@ function saveOptions() {
 function loadOptions() {
 	let optData = localStorage.getItem("dist-inc-options" + betaID)
 	if (!optData) return;
+	let name = player.options.name;
 	player.options = JSON.parse(atob(optData));
+	player.options.name = name;
 }
 
 function getAllSaves() {

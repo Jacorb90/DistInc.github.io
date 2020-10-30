@@ -19,9 +19,7 @@ function updatePhotonsGain(gaugeSpeed){
 	if (player.elementary.theory.supersymmetry.unl) tmp.elm.bos.photonGain = tmp.elm.bos.photonGain.times(tmp.chEff||1)
 }
 
-function updateTempPhotons(gaugeSpeed) {
-	updatePhotonsGain(gaugeSpeed)
-	
+function updatePhotonCosts() {
 	tmp.elm.bos.photonCost = {
 		1: ExpantaNum.pow(5, player.elementary.bosons.gauge.photons.upgrades[0].pow(2)).times(25),
 		2: ExpantaNum.pow(4, player.elementary.bosons.gauge.photons.upgrades[1].pow(2)).times(40),
@@ -35,6 +33,9 @@ function updateTempPhotons(gaugeSpeed) {
 			tmp.elm.bos.photonCost[i] = PH_CST_SCLD[i](exp, getScalingStart("scaled", "photons"))
 		}
 	}
+}
+
+function loadPhotonEffects() {
 	if (!tmp.elm.bos.photonEff) tmp.elm.bos.photonEff = function (x) {
 		let bought = player.elementary.bosons.gauge.photons.upgrades[x - 1]||new ExpantaNum(0);
 		if (player.elementary.times.lt(1)) bought = new ExpantaNum(0);
@@ -42,7 +43,15 @@ function updateTempPhotons(gaugeSpeed) {
 		if (x == 2) return ExpantaNum.pow(1.5, bought);
 		if (x == 3||x == 4) return ExpantaNum.pow(2, bought);
 	};
+}
+
+function updateTempPhotons(gaugeSpeed) {
+	updatePhotonsGain(gaugeSpeed)
+	
+	updatePhotonCosts()
+	loadPhotonEffects()
 	if (!tmp.elm.bos.buyLU) tmp.elm.bos.buyLU = function (x, max=false) {
+		updatePhotonCosts();
 		if (new ExpantaNum(player.elementary.bosons.gauge.photons.amount).lt(tmp.elm.bos.photonCost[x])) return;
 		let target;
 		if (max) {

@@ -32,6 +32,7 @@ function setElementaryResetFunction(){
 			player.tr.upgrades = prev.tr.upgrades
 			player.automation.unl = true
 			if (modeActive("extreme")) player.furnChalls = prev.furnChalls
+			if (modeActive("hikers_dream")) player.energyUpgs = prev.energyUpgs
 		}
 		if (tmp.elm.bos.hasHiggs("0;0;1")) {
 			player.inf.endorsements = new ExpantaNum(10)

@@ -15,7 +15,7 @@ function updateTempDarkCoreCost(){
 
 	let starting 
 	if (scalingActive("darkCore", nAmt, "hyper")) {
-		if (!(scalingActive("darkCore", player.dc.cores, "hyper"))) starting = player.dc.cores;
+		if (!(scalingActive("darkCore", player.dc.cores, "hyper")) && (!modeActive("extreme")&&!modeActive("hikers_dream"))) starting = player.dc.cores;
 		else starting = ExpantaNum.pow(base3, player.dc.cores.sub(start3)).times(start3)
 	} else {
 		starting = player.dc.cores
@@ -48,7 +48,7 @@ function updateTempDarkCoreCost(){
 		.pow(exp2.pow(-1))
 	
 	if (scalingActive("darkCore", nAmt, "hyper")) {
-		if (!(scalingActive("darkCore", player.dc.cores, "hyper"))) tmp.dc.bulk = starting2.add(1);
+		if (!(scalingActive("darkCore", player.dc.cores, "hyper")) && (!modeActive("extreme")&&!modeActive("hikers_dream"))) tmp.dc.bulk = starting2.add(1);
 		else tmp.dc.bulk = starting2.div(start3).max(1).logBase(base3).add(start3).add(1);
 	} else tmp.dc.bulk = starting2.add(1);
 }
