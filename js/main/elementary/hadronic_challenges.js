@@ -21,6 +21,11 @@ function updateTempHC() {
 	updateHCTabs()
 }
 
+function clearHCData() {
+	if (!confirm("Are you sure you want to reset your Hadronic Challenge inputs?")) return;
+	updateHCSelectorInputs(true);
+}
+
 // Hadronic Challenge
 function getProjectedHadronicScore() {
 	let score = new ExpantaNum(0)
@@ -115,15 +120,15 @@ function canCompleteHC() {
 	return (!(!player.elementary.hc.active)) && player.distance.gte(ExpantaNum.mul(getHCSelector("goal"), DISTANCES.uni))
 }
 
-function updateHCSelectorInputs() {
+function updateHCSelectorInputs(reset=false) {
 	let len = Object.keys(HC_DATA).length
 	for (let i=0;i<len;i++) {
 		let name = Object.keys(HC_DATA)[i]
 		let data = HC_DATA[name]
 		let el = new Element("hcSelector"+name)
 		el.el.disabled = !(!player.elementary.hc.active)
-		if (data[0]=="checkbox") el.el.checked = getHCSelector(name)
-		if (data[0]=="text"||data[0]=="number"||data[0]=="range") el.el.value = new ExpantaNum(getHCSelector(name)).toString()
+		if (data[0]=="checkbox") el.el.checked = reset?false:getHCSelector(name)
+		if (data[0]=="text"||data[0]=="number"||data[0]=="range") el.el.value = reset?(name=="tv"?"-1":"0"):new ExpantaNum(getHCSelector(name)).toString()
 		updateHCSelector(name)
 	}
 }
