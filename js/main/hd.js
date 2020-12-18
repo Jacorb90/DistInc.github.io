@@ -400,6 +400,7 @@ function getEnergyLim() {
 function getGenCost() {
 	let g = player.genLvl.div(player.geners.pow(0.2))
 	if (g.gte(5)) g = ExpantaNum.pow(1.2, g.sub(5)).times(g)
+	if (modeActive("extreme+hikers_dream") && g.gte(11)) g = g.sub(11).div(2).plus(11);
 	let cost = ExpantaNum.pow(8, ExpantaNum.pow(2, g.pow(0.75)).sub(1)).times(2.5e9)
 	return cost
 }
@@ -424,8 +425,10 @@ function respecGens() {
 
 function getNewGenCost() {
 	let g = player.geners.sub(1)
-	if (g.gte(5)) g = ExpantaNum.pow(1.2, g.sub(5)).times(g)
-	let cost = ExpantaNum.pow(2, g.plus(1).pow(3)).times(5e29)
+	let scaleStart = modeActive("extreme+hikers_dream")?6:5
+	let scalePower = modeActive("extreme+hikers_dream")?0.5:1
+	if (g.gte(scaleStart)) g = ExpantaNum.pow((1+scalePower/5), g.sub(scaleStart)).times(g)
+	let cost = ExpantaNum.pow(2, g.plus(1).pow(modeActive("extreme+hikers_dream")?2.75:3)).times(5e29)
 	return cost
 }
 

@@ -397,6 +397,7 @@ const ACH_DATA = {
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
 		
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
+		153: "boolean(extreme+hikers_dream,The Theory Tree Upgrade that makes Scaled Endorsements start later also makes Superscaled Endorsements start later at a reduced rate [x/10])",
 		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th & 28th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
 		

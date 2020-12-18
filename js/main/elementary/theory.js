@@ -31,7 +31,7 @@ function updateTempTheoriverse() {
 	if (modeActive("hikers_dream")) {
 		tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
 		if (player.elementary.theory.depth.gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(9 / 8)
-		if (player.elementary.theory.depth.gte(7)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(4 / 3)
+		if (player.elementary.theory.depth.gte(7)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow((modeActive("extreme+hikers_dream")?2.675:4) / 3)
 	}
 	if (modeActive("easy")) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(5/6);
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
@@ -379,7 +379,9 @@ function importTree() {
 // Inflatons
 function unlockInflatons() {
 	if (!player.elementary.theory.unl) return
-	if (!(player.elementary.hc.unl&&player.elementary.theory.accelerons.unl)) return
+	if (modeActive("extreme+hikers_dream")) {
+		if (!(player.elementary.foam.unl&&player.elementary.theory.accelerons.unl)) return;
+	} else if (!(player.elementary.hc.unl&&player.elementary.theory.accelerons.unl)) return;
 	if (player.elementary.theory.inflatons.unl) return
 	if (player.elementary.theory.points.lt(1600)) return
 	if (!confirm("Are you sure you want to unlock Inflatons? You won't be able to get your Theory Points back!")) return
