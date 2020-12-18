@@ -573,7 +573,7 @@ const TREE_UPGS = {
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
 	34: {
-		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		unl: function() { return (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl)&&modeActive("extreme") },
 		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
 		target: function(points) { return points.sub(50).div(100).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(4),
@@ -582,7 +582,7 @@ const TREE_UPGS = {
 		effD: function(e) { return "^"+showNum(e) },
 	},
 	35: {
-		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		unl: function() { return (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl)&&modeActive("extreme") },
 		cost: function(bought) { return new ExpantaNum(150) },
 		cap: new ExpantaNum(1),
 		desc: "Reformed Magma's effect uses a better formula.",
@@ -590,7 +590,7 @@ const TREE_UPGS = {
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
 	36: {
-		unl: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+		unl: function() { return (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl)&&modeActive("extreme") },
 		cost: function(bought) { return ExpantaNum.mul(100, ExpantaNum.pow(bought, 2)).plus(50) },
 		target: function(points) { return points.sub(50).div(100).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(4),
@@ -638,7 +638,7 @@ const G_TREE_SECTS = {
 	11: function() { return hasDE(5) },
 	12: function() { return player.elementary.hc.unl },
 	13: function() { return player.elementary.hc.unl },
-	14: function() { return player.elementary.hc.unl&&modeActive("extreme") },
+	14: function() { return (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl)&&modeActive("extreme") },
 	15: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
 }
 
