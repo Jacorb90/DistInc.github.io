@@ -334,7 +334,7 @@ function getPathogenUpgSoftcapStart(x) {
 	let sc = new ExpantaNum(PTH_UPG_SCS[x])
 	if (tmp.inf) if (tmp.inf.upgs.has("3;6")) sc = sc.plus(1);
 	if (modeActive("hard")) {
-		sc = modeActive("easy") ? sc : new ExpantaNum(1);
+		sc = modeActive("easy") ? sc : new ExpantaNum(modeActive("extreme")?1:2);
 		if (tmp.ach[65].has) sc = sc.plus(5);
 	}
 	if (modeActive("easy")) sc = sc.times(1.1).round();
