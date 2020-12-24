@@ -85,20 +85,20 @@ function updateTempPhotons(gaugeSpeed) {
 					}
 					break;
 				case 4: 
-					target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).plus(1).floor()
+					target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).plus(1).floor().max(0)
 					if (scalingActive("photons", target, "scaled")) {
 						let power = getScalingPower("scaled", "photons")
 						let exp = ExpantaNum.pow(2, power)
 						let s = getScalingStart("scaled", "photons")
-						target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor()
+						target = ExpantaNum.mul(110.549, ExpantaNum.lambertw(ExpantaNum.mul(0.00904576, ExpantaNum.mul(1.4427, amt.times(0.000533333333333).max(1).logBase(Math.E).sub(5)).pow(1.1)))).times(s.pow(exp.sub(1))).pow(exp.pow(-1)).plus(1).floor().max(0)
 					}
 					break;
 			}
 		}
 		if (!max) player.elementary.bosons.gauge.photons.amount = new ExpantaNum(
 			player.elementary.bosons.gauge.photons.amount
-		).sub(tmp.elm.bos.photonCost[x]);
-		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).max(target)
+		).sub(tmp.elm.bos.photonCost[x]).max(0);
+		if (max) player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).max(target);
 		else player.elementary.bosons.gauge.photons.upgrades[x - 1] = new ExpantaNum(player.elementary.bosons.gauge.photons.upgrades[x - 1]||0).plus(1);
 	};
 }
