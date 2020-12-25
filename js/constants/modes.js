@@ -1,133 +1,239 @@
-const COMBOS = {
-	hard_aau: {
-		balancing: "same as hard mode, but faster",
-		balanceCheck: false
+const MODEBALANCES = {
+	hard: { // 1
+		balancing: "balanced up to Elementary unlock",
+		balanceCheck: true,
 	},
-	hard_na: {
-		balancing: "almost balanced (late game is quite slow)",
-		balanceCheck: false
-	},
-	aau_na: {
-		balancing: "slightly faster than normal",
-		balanceCheck: false
-	},
-	absurd: {
-		balancing: "completely impossible",
-		balanceCheck: true
-	},
-	easy: {
-		balancing: "balanced up to Elementary",
-		balanceCheck: false
-	},
-	easy_hard: {
-		balancing: "balanced up to Elementary",
-		balanceCheck: false
-	},
-	extreme: {
-		balancing: "balanced up to Elementary",
-		balanceCheck: false
-	},
-	hikers_dream: {
-		balancing: "balanced up to Elementary",
+	aau: { // 2
+		balancing: "balanced up to endgame",
 		balanceCheck: false,
 	},
+	// 3 - AAU Hard (unknown)
+	// 4 - NA (unknown)
+	// 5 - NA Hard (unknown)
+	// 6 - AAU/NA (unknown)
+	// 7 - AAU/NA Hard (unknown)
+	absurd: { // 8
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	absurd_hard: { // 9
+		balancing: "balanced up to Elementary unlock",
+		balanceCheck: true,
+	},
+	absurd_aau: { // 10
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 11 - Absurd AAU Hard (unknown)
+	// 12 - Absurd NA (unknown)
+	// 13 - Absurd NA Hard (unknown)
+	// 14 - Absurd AAU/NA (unknown)
+	// 15 - Absurd AAU/NA Hard (unknown)
+	easy: { // 16
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	easy_hard: { // 17
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	aau_easy: { // 18
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	aau_easy_hard: { // 19
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 20 - NA Easy (unknown)
+	// 21 - NA Easy-Hard (unknown)
+	// 22 - AAU/NA Easy (unknown)
+	// 23 - AAU/NA Easy-Hard (unknown)
+	absurd_easy: { // 24
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	absurd_easy_hard: { // 25
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	absurd_aau_easy: { // 26
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	absurd_aau_easy_hard: { // 27
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 28 - Absurd NA Easy (unknown)
+	// 29 - Absurd NA Easy-Hard (unknown)
+	// 30 - Absurd AAU/NA Easy (unknown)
+	// 31 - Absurd AAU/NA Easy-Hard (unknown)
+	extreme: { // 32
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	aau_extreme: { // 33
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 34 - NA Extreme (unknown)
+	// 35 - AAU/NA Extreme (unknown)
+	absurd_extreme: { // 36
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	absurd_aau_extreme: { // 37
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 38 - Absurd NA Extreme (unknown)
+	// 39 - Absurd AAU/NA Extreme (unknown)
+	easy_extreme: { // 40
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	aau_easy_extreme: { // 41
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 42 - NA Easy Extreme (unknown)
+	// 43 - AAU/NA Easy Extreme (unknown)
+	absurd_easy_extreme: { // 44
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	absurd_aau_easy_extreme: { // 45
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 46 - Absurd NA Easy Extreme (unknown)
+	// 47 - Absurd AAU/NA Easy Extreme (unknown)
+	hikers_dream: { // 48
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 49 - Hard Dream (unknown)
+	aau_hikers_dream: { // 50
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 51 - AAU Hard Dream (unknown)
+	// 52 - NA Hiker's Dream (unknown)
+	// 53 - NA Hard Dream (unknown)
+	// 54 - AAU/NA Hiker's Dream (unknown)
+	// 55 - AAU/NA Hard Dream (unknown)
+	absurd_hikers_dream: { // 56
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 57 - Absurd Hard Dream (unknown)
+	absurd_aau_hikers_dream: { // 58
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 59 - Absurd AAU Hard Dream (unknown)
+	// 60 - Absurd NA Hiker's Dream (unknown)
+	// 61 - Absurd NA Hard Dream (unknown)
+	// 62 - Absurd AAU/NA Hiker's Dream (unknown)
+	// 63 - Absurd AAU/NA Hard Dream (unknown)
+	easy_hikers_dream: { // 64
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 65 - Easy Hard Dream (unknown)
+	aau_easy_hikers_dream: { // 66
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 67 - AAU Easy Hard Dream (unknown)
+	// 68 - NA Easy Dream (unknown)
+	// 69 - NA Easy-Hard Dream (unknown)
+	// 70 - AAU/NA Easy Dream (unknown)
+	// 71 - AAU/NA Easy-Hard Dream (unknown)
+	absurd_easy_hikers_dream: { // 72
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 73 - Absurd Easy-Hard Dream (unknown)
+	absurd_aau_easy_hikers_dream: { // 74
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	// 75 - Absurd AAU Easy-Hard Dream (unknown)
+	// 76 - Absurd NA Easy Dream (unknown)
+	// 77 - Absurd NA Easy-Hard Dream (unknown)
+	// 78 - Absurd AAU/NA Easy Dream (unknown)
+	// 79 - Absurd AAU/NA Easy-Hard Dream (unknown)
+	extreme_hikers_dream: { // 80
+		balancing: "balanced up to Theory unlock",
+		balanceCheck: true
+	},
+	aau_extreme_hikers_dream: { // 81
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 82 - NA Extreme Dream (unknown)
+	// 83 - AAU/NA Extreme Dream (unknown)
+	absurd_extreme_hikers_dream: { // 84
+		balancing: "balanced up to Theory unlock",
+		balanceCheck: true
+	},
+	absurd_aau_extreme_hikers_dream: { // 85
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 86 - Absurd NA Extreme Dream (unknown)
+	// 87 - Absurd AAU/NA Extreme Dream (unknown)
+	easy_extreme_hikers_dream: { // 88
+		balancing: "balanced up to Theory unlock",
+		balanceCheck: true
+	},
+	aau_easy_extreme_hikers_dream: { // 89
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 90 - NA Easy Extreme Dream (unknown)
+	// 91 - AAU/NA Easy Extreme Dream (unknown)
+	absurd_easy_extreme_hikers_dream: { // 92
+		balancing: "balanced up to Theory unlock",
+		balanceCheck: true
+	},
+	absurd_aau_easy_extreme_hikers_dream: { // 93
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	// 94 - Absurd NA Easy Extreme Dream (unknown)
+	// 95 - Absurd AAU/NA Easy Extreme Dream (unknown)
+	"": { // 96
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	}
 };
 
 const MODES = {
 	hard: {
-		desc:
-			"The game is harder & slower, with slight compensation to help you slowly grind to the end.",
-		balancing: "balanced up to endgame",
-		balanceCheck: false,
-		combos: {
-			aau: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
-			na: JSON.parse(JSON.stringify(COMBOS.hard_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-		},
+		desc: "The game is harder & slower, with slight compensation to help you slowly grind to the end.",
 		dis: ["extreme"]
 	},
 	aau: {
 		desc: "Start with all achievements unlocked.",
-		balancing: "same as normal, but faster.",
-		balanceCheck: false,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.hard_aau)),
-			na: JSON.parse(JSON.stringify(COMBOS.aau_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-		}
 	},
 	na: {
 		desc: "All unnecessary achievements are gone.",
-		balancing: "almost balanced (late game is slow)",
-		balanceCheck: false,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.hard_na)),
-			aau: JSON.parse(JSON.stringify(COMBOS.aau_na)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.easy)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.extreme)),
-		}
 	},
 	absurd: {
 		desc: "Ehehe... You'll see...",
-		balancing: "completely impossible",
-		balanceCheck: true,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			aau: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			na: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.absurd)),
-		}
 	},
 	easy: {
 		desc: "This mode is easier & faster to help you reach the end faster.",
-		balancing: "balanced up to endgame",
-		balanceCheck: false,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.easy_hard)),
-			aau: JSON.parse(JSON.stringify(COMBOS.easy)),
-			na: JSON.parse(JSON.stringify(COMBOS.easy)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-		}
 	},
 	extreme: {
-		desc:
-			"This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
-		balancing: "balanced up to endgame",
-		balanceCheck: false,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			aau: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			na: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.extreme)),
-			hikers_dream: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-		},
+		desc: "This mode is an extension of Hard Mode that makes it even more difficult, however adds The Furnace (a new feature) to compensate for this.",
 		ext: ["hard"]
 	},
 	hikers_dream: {
 		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill.",
-		balancing: "balanced up to endgame",
-		balanceCheck: false,
-		combos: {
-			hard: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-			aau: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-			na: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-			absurd: JSON.parse(JSON.stringify(COMBOS.absurd)),
-			easy: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-			extreme: JSON.parse(JSON.stringify(COMBOS.hikers_dream)),
-		},
 	},
 };
 

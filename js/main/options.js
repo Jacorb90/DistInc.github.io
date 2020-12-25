@@ -331,30 +331,24 @@ function selectMode(name) {
 function confirmModes() {
 	if (modesSelected.length == 0) startModes([]);
 	else if (modesSelected.length == 1) {
-		let modeData = MODES[modesSelected[0]];
-		if (modeData.balanceCheck)
-			if (!confirm("This mode is " + modeData.balancing + ". Are you sure you want to enter this run?"))
-				return;
-		startModes(modesSelected);
-	} else if (modesSelected.length == 2) {
-		let base = MODES[modesSelected[0]];
-		for (let i = 1; i < modesSelected.length; i++) {
-			let mode = base.combos[modesSelected[i]];
-			if (mode.balanceCheck)
-				if (
-					!confirm(
-						"This mode combination is " +
-							mode.balancing +
-							". Are you sure you want to enter this mode combination?"
-					)
-				)
+		let modeData = MODEBALANCES[modesSelected[0]];
+		if (modeData) {
+			if (modeData.balanceCheck)
+				if (!confirm("This mode is " + modeData.balancing + ". Are you sure you want to enter this run?"))
 					return;
-			startModes(modesSelected);
-		}
-	} else {
-		if (
+		} else if (!confirm("You have selected an unbalanced mode. Are you sure you want to enter this run?")) return;
+		startModes(modesSelected);
+	} else if (modesSelected.length == 2) startModes(modesSelected);
+	else {
+		let modeData = MODEBALANCES[calcModeAndBalanceName(modesSelected).balanceName]
+		if (modeData) {
+			if (modeData.balanceCheck) {
+				if (!confirm("This mode combination is " + modeData.balancing + ". Are you sure you want to enter this run?"))
+					return;
+			}
+		} else if (
 			!confirm(
-				"You have selected more than two modes. This may cause an unbalanced or even broken game mode. Are you sure you want to do this?"
+				"You have selected an unbalanced mode combination. Are you sure you want to enter this run?"
 			)
 		)
 			return;

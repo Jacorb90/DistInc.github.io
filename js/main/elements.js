@@ -1,3 +1,51 @@
+function calcModeAndBalanceName(modes) {
+	modeName = ""
+	balanceName = ""
+	// Naming order: Absurd AAU/NA Easy (or Easy-) Hard/Extreme Dream
+	if(modes.includes("absurd")) {
+		modeName += "Absurd ";
+		balanceName += "absurd_";
+	}
+	if (modes.includes("aau")) {
+		if(modes.includes("na")) modeName += "AAU/";
+		else modeName += "AAU ";
+		balanceName += "aau_";
+	}
+	if (modes.includes("na")) {
+		modeName += "NA ";
+		balanceName += "na_";
+	}
+	if (modes.includes("easy")) {
+		if (modes.includes("hard")) modeName += "Easy-";
+		else modeName += "Easy ";
+		balanceName += "easy_";
+	}	
+	if (modes.includes("hard")) {
+		if (modes.includes("extreme")) {
+			modeName += "Extreme ";
+			balanceName += "extreme_";
+		} else {
+			modeName += "Hard ";
+			balanceName += "hard_";
+		}
+		}	
+	if (modes.includes("hikers_dream")) {
+		if(!modes.includes("easy") && !modes.includes("hard")) modeName += "Hikers ";
+		modeName += "Dream";
+		balanceName += "hikers_dream_";
+	}
+	if(balanceName != "") balanceName = balanceName.substring(0,balanceName.length -1);
+	if(modeName == "") modeName = "Normal";
+	return {modeName: modeName, balanceName: balanceName}
+}
+
+function updateModesHTML() {
+	let data = calcModeAndBalanceName(modesSelected);
+
+	tmp.el.selectedMode.setTxt("Selected Mode: "+(data.modeName));
+	tmp.el.selectedModeBalancing.setTxt("Balancing: "+ (MODEBALANCES[data.balanceName]?MODEBALANCES[data.balanceName].balancing:"Unknown! Proceed at your own risk."));
+}
+
 function updateOptionsHTML(){
 	if (player.tab == "options") {
 		for (let i = 0; i < Object.keys(MODES).length; i++) {
@@ -30,6 +78,8 @@ function updateOptionsHTML(){
 		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden")
 		tmp.el.tht.setTxt("Theory Tree Display: "+(player.options.tht?"GROUPS":"TREE"))
 		tmp.el.tht.changeStyle("visibility", (player.elementary.theory.tree.unl)?"visible":"hidden")
+		
+		updateModesHTML()
 	}
 }
 
