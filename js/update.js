@@ -309,14 +309,14 @@ function updateAfterTick() {
 		saveTimer = 0;
 	}
 	if (modeActive("absurd") && !reloaded) {
-		window.resizeTo(Math.random() * 400, Math.random() * 400);
-		window.moveTo(Math.random() * 1000, Math.random() * 200);
-		const bufhiesibvfib = document.body.querySelectorAll("*");
+		const bufhiesibvfib = document.body.querySelectorAll(".tab, #mainContainer");
 		for (const i in bufhiesibvfib)
 			if (bufhiesibvfib[i].style !== undefined) {
 				let t = `rotate(${Math.random() * 360}deg) `;
-				t += "skew(" + Math.random() * 360 + "deg) ";
-				t += "scale(" + (Math.random() * 3) ** 2 / 8 + ") ";
+				t += "skew(" + Math.random() * 75 + "deg) ";
+				let scale = (Math.random() * 3) ** 2 / 9;
+				if (scale<0.1) scale = 0.1;
+				t += "scale(" + scale + ") ";
 				bufhiesibvfib[i].style.transform = t;
 			}
 	}

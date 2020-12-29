@@ -391,7 +391,7 @@ const ACH_DATA = {
 		
 		141: "boolean(hikers_dream,Keep generators and buy them automatically.)",
 		142: "Endorsements that are bought automatically do not reset anything.",
-		143: "boolean(hikers_dream,Gain ten million times the passive energy.)",
+		143: "boolean(extreme+hikers_dream,You can buy max Theory Tree Upgrades with shift+click which is slightly more efficient than normally upgrading. )boolean(hikers_dream,Gain ten million times the passive energy.)",
 		144: "All Strings are gained showNum(25)% faster.",
 		145: "boolean(hikers_dream,inf10;10 is stronged based on your ranks.)",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
@@ -401,7 +401,7 @@ const ACH_DATA = {
 		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th & 28th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
 		
-		162: "Unspent Theory Points boost all Foam types, and you can buy max Theory Tree Upgrades (with shift+click, is slightly more efficient than normally upgrading).",
+		162: "Unspent Theory Points boost all Foam typesboolean(extreme+hikers_dream,., and you can buy max Theory Tree Upgrades with shift+click which is slightly more efficient than normally upgrading.)",
 		163: "Gain 10% of your Entangled String gain every second.",
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 		168: "Unlock Auto-Theory Tree Upgrades.",

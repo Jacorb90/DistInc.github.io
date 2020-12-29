@@ -94,7 +94,7 @@ function updateTempTheoryTree() {
 		if (bought.gte(cap)) return
 		let cost = TREE_UPGS[x].cost(bought).div(tmp.elm.theory.tree.costReduc).round()
 		if (player.elementary.theory.points.lt(cost)) return
-		if (tmp.ach[162].has && (outerShiftDown||max) && TREE_UPGS[x].target!==undefined) {
+		if (tmp.ach[modeActive("extreme+hikers_dream")?143:162].has && (outerShiftDown||max) && TREE_UPGS[x].target!==undefined) {
 			let pts = player.elementary.theory.points
 			if (pts.eq(0)&&cost.eq(0)) pts = new ExpantaNum(.99)
 			let target = TREE_UPGS[x].target(pts.times(tmp.elm.theory.tree.costReduc)).max(0).min(cap);
@@ -361,7 +361,7 @@ function importTree() {
 				let cap = getTreeUpgCap(key)
 				let costs = Array.from({length: Math.min(upgs[key].toNumber(), cap.toNumber())}, (v,i) => TREE_UPGS[key].cost(new ExpantaNum(i)).div(tmp.elm.theory.tree.costReduc).round())
 				let totalCost = costs.reduce((x,y) => ExpantaNum.add(x, y))
-				if (tmp.ach[162].has) totalCost = TREE_UPGS[key].cost(upgs[key]).div(tmp.elm.theory.tree.costReduc).min(totalCost).round()
+				if (tmp.ach[modeActive("extreme+hikers_dream")?143:162].has) totalCost = TREE_UPGS[key].cost(upgs[key]).div(tmp.elm.theory.tree.costReduc).min(totalCost).round()
 				if (player.elementary.theory.points.gte(totalCost)) {
 					if (!player.elementary.entropy.upgrades.includes(13)) {
 						player.elementary.theory.points = player.elementary.theory.points.sub(totalCost).max(0)
