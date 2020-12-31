@@ -366,6 +366,7 @@ const ACH_DATA = {
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",
 		93: "boolean(extreme+hikers_dream,Square Confidence softcap start.)",
+		94: "boolean(hard,Generate Ascension Power even if perks are inactive.)",
 		95: "Gain showNum(100)% of Rocket gain every second.",
 		96: "Gain showNum(100)% of Cadaver gain every second.",
 		97: "Transfer showNum(100)% of Cadavers to Life Essence every secondboolean(extreme+hikers_dream, and Optimization increases Confidence softcap start).",

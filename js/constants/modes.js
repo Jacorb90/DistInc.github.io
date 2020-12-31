@@ -166,8 +166,8 @@ const MODEBALANCES = {
 	// 78 - Absurd AAU/NA Easy Dream (unknown)
 	// 79 - Absurd AAU/NA Easy-Hard Dream (unknown)
 	extreme_hikers_dream: { // 80
-		balancing: "balanced up to Theory unlock",
-		balanceCheck: true
+		balancing: "balanced up to endgame",
+		balanceCheck: false
 	},
 	aau_extreme_hikers_dream: { // 81
 		balancing: "balanced up to endgame",
@@ -176,8 +176,8 @@ const MODEBALANCES = {
 	// 82 - NA Extreme Dream (unknown)
 	// 83 - AAU/NA Extreme Dream (unknown)
 	absurd_extreme_hikers_dream: { // 84
-		balancing: "balanced up to Theory unlock",
-		balanceCheck: true
+		balancing: "balanced up to endgame",
+		balanceCheck: false
 	},
 	absurd_aau_extreme_hikers_dream: { // 85
 		balancing: "balanced up to endgame",

@@ -964,7 +964,7 @@ function infTick(diff) {
 		for (let i = 1; i <= 4; i++)
 			if (tmp.inf.asc.perkActive(i))
 				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
-		if (tmp.inf.asc.anyPerkActive())
+		if (tmp.inf.asc.anyPerkActive() || (modeActive("hard") && tmp.ach[94].has))
 			player.inf.ascension.power = player.inf.ascension.power.plus(
 				adjustGen(tmp.inf.asc.powerGain, "ascension").times(diff)
 			);
