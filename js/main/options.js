@@ -358,6 +358,12 @@ function confirmModes() {
 
 function modeActive(name) {
 	if (name[0] == "!") return !modeActive(name.slice(1))
+	let m = name.split("-")
+	for (let i = 0; i < m.length; i++) {
+		if (i==0) {
+			if (!player.modes.includes(m[i])) return false;
+		} else if (player.modes.includes(m[i])) return false;
+	}
 	let l = name.split("+")
 	for (let i = 0; i < l.length; i++) {
 		if (!player.modes.includes(l[i])) return false
