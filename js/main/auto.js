@@ -13,8 +13,8 @@ function updateTempAuto() {
 	tmp.auto.intMod = new ExpantaNum(1);
 	tmp.auto.magMod = new ExpantaNum(1);
 	if (modeActive("hard")) {
-		tmp.auto.intMod = tmp.auto.intMod.times(2 / 3);
-		tmp.auto.magMod = tmp.auto.magMod.times(2 / 3);
+		tmp.auto.intMod = tmp.auto.intMod.times(5 / 6);
+		tmp.auto.magMod = tmp.auto.magMod.times(5 / 6);
 	}
 	if (modeActive("easy")) {
 		tmp.auto.intMod = tmp.auto.intMod.times(2);

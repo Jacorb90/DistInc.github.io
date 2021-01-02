@@ -348,7 +348,7 @@ const ACH_DATA = {
 		65: "Cadaver gain is increased by showNum(40)%boolean(extreme+hikers_dream, increase the Confidence softcap by one third per Pathogen upgrade)boolean(hard, and Pathogen Upgrades softcap five later)",
 		66: "boolean(extreme+hikers_dream,Buff Thrusters III and Coal boosts Optimization.)",
 		67: "Time goes by showNum(11.11)% fasterboolean(extreme+hikers_dream, increase the Optimization softcap by 5 times and increase the Confidence softcap by 1).",
-		68: "Pathogen gain is showNum(2.5)x fasterboolean(extreme+hikers_dream, Confidence boosts Pathogen gain)boolean(extreme, and Cadaver gain is quintupled).",
+		68: "Pathogen gain is showNum(2.5)x fasterboolean(hard+hikers_dream, Confidence boosts Pathogen gain)boolean(extreme, and Cadaver gain is quintupled).",
 
 		72: "You gain Time Cubes without Reversing Time, however only at half the rateboolean(extreme, and Time Cube gain is faster based on your Coal & Dark Cores).",
 		74: "The 'Time Doesnt Exist' reward is showNum(75)% stronger.",
@@ -361,7 +361,7 @@ const ACH_DATA = {
 		84: "Dark Flow affects Pathogen gain, slows down after showNum(50)x.",
 		85: "boolean(hard+hikers_dream,You can rejuvinate whenever)boolean(extreme+hikers_dream, and square Endurance)boolean(hard+hikers_dream,.)",
 		86: "boolean(extreme+hikers_dream,Pathogens multiply time cube gain and square Confidence softcap start.)",
-		87: "boolean(extreme+hikers_dream,Remove the base motivation softcap and time cubes boost pathogens.)",
+		87: "boolean(extreme+hikers_dream,Remove the base motivation softcap)boolean(hard+hikers_dream, and time cubes boost pathogens.)",
 		88: "Buying Pathogen Upgrades does not spend your Pathogensboolean(extreme, and you unlock Furnace Challenges).",
 
 		92: "When buying Dark Cores, your Cadavers do not decrease.",
@@ -381,7 +381,7 @@ const ACH_DATA = {
 		116: "You gain twice as many Heavenly Chips & Demonic Soulsboolean(extreme, and Time Speed is enabled in Purge runs and Enhanced Coal gain is 40% faster for each Purge Power you have).",
 		117: "boolean(extreme+hikers_dream,Remove the Confidence softcap.)",
 
-		123: "The Universe Doesn't Exist achievement uses a slightly better formulaboolean(extreme+hikers_dream, and Confidence is ten times stronger).",
+		123: "The Universe Doesn't Exist achievement uses a slightly better formulaboolean(hard+hikers_dream, and Confidence is ten times stronger).",
 		124: "All Perks last twice as long.",
 		125: "Pathogen Upgrades are showNum(5)% stronger.",
 
