@@ -34,7 +34,7 @@ function setElementaryResetFunction(){
 			if (modeActive("extreme")) player.furnChalls = prev.furnChalls
 			if (modeActive("hikers_dream")) {
 				player.energyUpgs = prev.energyUpgs
-				player.spentMotive = prev.spentMotive
+				player.spentMotive = new ExpantaNum(prev.spentMotive)
 			}
 		}
 		if (tmp.elm.bos.hasHiggs("0;0;1")) {

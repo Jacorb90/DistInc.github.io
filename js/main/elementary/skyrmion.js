@@ -169,7 +169,7 @@ function setupSkyField(type) {
 		html += "<table><tr>"
 		for (let j=0;j<data.placements[i].length;j++) {
 			let id = data.placements[i][j]
-			html += "<td class='hexContainer'><div id='"+type+"Upg"+id+"' class='hexBtn' onmouseover='"+type+"Sel = "+id+";' onclick='buySkyUpg(&quot;"+type+"&quot;, "+id+")'>&"+GREEK_LETTERS[id]+";</div></td>"
+			html += "<td class='hexContainer'><button id='"+type+"Upg"+id+"' class='hexBtn' onmouseover='"+type+"Sel = "+id+";' onclick='buySkyUpg(&quot;"+type+"&quot;, "+id+")'>&"+GREEK_LETTERS[id]+";</button></td>"
 		}
 		html += "</tr></table>"
 	}
@@ -227,9 +227,9 @@ function respecField(type) {
 	skyrmionReset(true)
 }
 
-function maxField(type, lims={}) {
+function maxField(type, lims={}, ignoreUpgReq=false) {
 	let limDefault = ((Object.keys(lims).length==0)?(1/0):0)
-	if (!player.elementary.entropy.upgrades.includes(20) && (Object.keys(lims).length==0)) return;
+	if (!(player.elementary.entropy.upgrades.includes(20)||ignoreUpgReq) && (Object.keys(lims).length==0)) return;
 	for (let i=1;i<=SKY_FIELDS.upgs;i++) {
 		if (player.elementary.sky.amount.lt(SKY_FIELDS[i].req)) continue;
 		let cost = getFieldUpgCost(type, i)
@@ -242,7 +242,7 @@ function maxField(type, lims={}) {
 }
 
 function exportField(type) {
-	let data = JSON.stringify(player.elementary.sky.pions.field);
+	let data = JSON.stringify(player.elementary.sky[type].field);
 	notifier.info("Field exported!")
 	copyToClipboard(data)
 }
@@ -256,7 +256,7 @@ function importField(type) {
 			let key = Object.keys(data)[i]
 			data[key] = new ExpantaNum(data[key]).round();
 		}
-		maxField(type, data)
+		maxField(type, data, true)
 	} catch(e) {
 		notifier.error("Invalid field")
 	}

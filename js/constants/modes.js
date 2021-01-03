@@ -1,13 +1,16 @@
 const MODEBALANCES = {
 	hard: { // 1
-		balancing: "balanced up to Elementary unlock",
-		balanceCheck: true,
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
 	},
 	aau: { // 2
 		balancing: "balanced up to endgame",
 		balanceCheck: false,
 	},
-	// 3 - AAU Hard (unknown)
+	aau_hard: { // 3
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
 	// 4 - NA (unknown)
 	// 5 - NA Hard (unknown)
 	// 6 - AAU/NA (unknown)
@@ -17,14 +20,17 @@ const MODEBALANCES = {
 		balanceCheck: false,
 	},
 	absurd_hard: { // 9
-		balancing: "balanced up to Elementary unlock",
-		balanceCheck: true,
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
 	},
 	absurd_aau: { // 10
 		balancing: "balanced up to endgame",
 		balanceCheck: false,
 	},
-	// 11 - Absurd AAU Hard (unknown)
+	absurd_aau_hard: { // 11
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
 	// 12 - Absurd NA (unknown)
 	// 13 - Absurd NA Hard (unknown)
 	// 14 - Absurd AAU/NA (unknown)
@@ -141,7 +147,7 @@ const MODEBALANCES = {
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	// 65 - Easy Hard Dream (unknown)
+	// 65 - Easy-Hard Dream (unknown)
 	aau_easy_hikers_dream: { // 66
 		balancing: "balanced up to endgame",
 		balanceCheck: false
@@ -186,8 +192,8 @@ const MODEBALANCES = {
 	// 86 - Absurd NA Extreme Dream (unknown)
 	// 87 - Absurd AAU/NA Extreme Dream (unknown)
 	easy_extreme_hikers_dream: { // 88
-		balancing: "balanced up to Theory unlock",
-		balanceCheck: true
+		balancing: "balanced up to endgame",
+		balanceCheck: false
 	},
 	aau_easy_extreme_hikers_dream: { // 89
 		balancing: "balanced up to endgame",
@@ -196,8 +202,8 @@ const MODEBALANCES = {
 	// 90 - NA Easy Extreme Dream (unknown)
 	// 91 - AAU/NA Easy Extreme Dream (unknown)
 	absurd_easy_extreme_hikers_dream: { // 92
-		balancing: "balanced up to Theory unlock",
-		balanceCheck: true
+		balancing: "balanced up to endgame",
+		balanceCheck: false
 	},
 	absurd_aau_easy_extreme_hikers_dream: { // 93
 		balancing: "balanced up to endgame",
