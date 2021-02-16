@@ -113,6 +113,7 @@ function getQuantumFoamGain(x) {
 		}
 	}
 	if (player.elementary.entropy.upgrades.includes(11)) gain = gain.times(10)
+	if (player.mlt.times.gt(0) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[1].eff2);
 	if (modeActive("easy")) gain = gain.times(Math.pow(5/x, 2)*2.5)
 	return gain
 }

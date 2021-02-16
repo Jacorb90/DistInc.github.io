@@ -1,216 +1,366 @@
 const MODEBALANCES = {
 	hard: { // 1
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	aau: { // 2
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	aau_hard: { // 3
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 4 - NA (unknown)
+	na: { // 4
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	// 5 - NA Hard (unknown)
-	// 6 - AAU/NA (unknown)
-	// 7 - AAU/NA Hard (unknown)
+	aau_na: { // 6
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_hard: { // 7
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd: { // 8
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_hard: { // 9
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_aau: { // 10
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_aau_hard: { // 11
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 12 - Absurd NA (unknown)
+	absurd_na: { // 12
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	// 13 - Absurd NA Hard (unknown)
-	// 14 - Absurd AAU/NA (unknown)
-	// 15 - Absurd AAU/NA Hard (unknown)
+	absurd_aau_na: { // 14
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_hard: { // 15
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	easy: { // 16
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	easy_hard: { // 17
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_easy: { // 18
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_easy_hard: { // 19
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 20 - NA Easy (unknown)
-	// 21 - NA Easy-Hard (unknown)
-	// 22 - AAU/NA Easy (unknown)
-	// 23 - AAU/NA Easy-Hard (unknown)
+	na_easy: { // 20
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	na_easy_hard: { // 21
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_easy: { // 22
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_easy_hard: { // 23
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_easy: { // 24
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_easy_hard: { // 25
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_aau_easy: { // 26
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
 	absurd_aau_easy_hard: { // 27
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 28 - Absurd NA Easy (unknown)
-	// 29 - Absurd NA Easy-Hard (unknown)
-	// 30 - Absurd AAU/NA Easy (unknown)
-	// 31 - Absurd AAU/NA Easy-Hard (unknown)
+	absurd_na_easy: { // 28
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_na_easy_hard: { // 29
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_easy: { // 30
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_easy_hard: { // 31
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	extreme: { // 32
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_extreme: { // 33
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 34 - NA Extreme (unknown)
-	// 35 - AAU/NA Extreme (unknown)
+	na_extreme: { // 34
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_extreme: { // 35
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_extreme: { // 36
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	absurd_aau_extreme: { // 37
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 38 - Absurd NA Extreme (unknown)
-	// 39 - Absurd AAU/NA Extreme (unknown)
+	absurd_na_extreme: { // 38
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_extreme: { // 39
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	easy_extreme: { // 40
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_easy_extreme: { // 41
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 42 - NA Easy Extreme (unknown)
-	// 43 - AAU/NA Easy Extreme (unknown)
+	na_easy_extreme: { // 42
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_easy_extreme: { // 43
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_easy_extreme: { // 44
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	absurd_aau_easy_extreme: { // 45
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 46 - Absurd NA Easy Extreme (unknown)
-	// 47 - Absurd AAU/NA Easy Extreme (unknown)
+	absurd_na_easy_extreme: { // 46
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_easy_extreme: { // 47
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	hikers_dream: { // 48
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 49 - Hard Dream (unknown)
+	hard_hikers_dream: { // 49
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	aau_hikers_dream: { // 50
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 51 - AAU Hard Dream (unknown)
-	// 52 - NA Hiker's Dream (unknown)
+	aau_hard_hikers_dream: { // 51
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	na_hikers_dream: { // 52
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	// 53 - NA Hard Dream (unknown)
-	// 54 - AAU/NA Hiker's Dream (unknown)
-	// 55 - AAU/NA Hard Dream (unknown)
+	aau_na_hikers_dream: { // 54
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	aau_na_hard_hikers_dream: { // 55
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_hikers_dream: { // 56
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 57 - Absurd Hard Dream (unknown)
+	absurd_hard_hikers_dream: { // 57
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_aau_hikers_dream: { // 58
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 59 - Absurd AAU Hard Dream (unknown)
-	// 60 - Absurd NA Hiker's Dream (unknown)
+	absurd_aau_hard_hikers_dream: { // 59
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_na_hikers_dream: { // 60
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	// 61 - Absurd NA Hard Dream (unknown)
-	// 62 - Absurd AAU/NA Hiker's Dream (unknown)
-	// 63 - Absurd AAU/NA Hard Dream (unknown)
+	absurd_aau_na_hikers_dream: { // 62
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
+	absurd_aau_na_hard_hikers_dream: { // 63
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	easy_hikers_dream: { // 64
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 65 - Easy-Hard Dream (unknown)
+	easy_hard_hikers_dream: { // 65
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	aau_easy_hikers_dream: { // 66
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 67 - AAU Easy Hard Dream (unknown)
-	// 68 - NA Easy Dream (unknown)
-	// 69 - NA Easy-Hard Dream (unknown)
-	// 70 - AAU/NA Easy Dream (unknown)
-	// 71 - AAU/NA Easy-Hard Dream (unknown)
+	aau_easy_hard_hikers_dream: { // 67
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	aau_easy_hikers_dream: { // 68
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	aau_easy_hard_hikers_dream: { // 69
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	aau_na_easy_hikers_dream: { // 70
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	aau_na_easy_hard_hikers_dream: { // 71
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	absurd_easy_hikers_dream: { // 72
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 73 - Absurd Easy-Hard Dream (unknown)
+	absurd_easy_hard_hikers_dream: { // 73
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false,
+	},
 	absurd_aau_easy_hikers_dream: { // 74
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false,
 	},
-	// 75 - Absurd AAU Easy-Hard Dream (unknown)
-	// 76 - Absurd NA Easy Dream (unknown)
-	// 77 - Absurd NA Easy-Hard Dream (unknown)
-	// 78 - Absurd AAU/NA Easy Dream (unknown)
-	// 79 - Absurd AAU/NA Easy-Hard Dream (unknown)
+	absurd_aau_easy_hard_hikers_dream: { // 75
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	absurd_aau_easy_hikers_dream: { // 76
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	absurd_aau_easy_hard_hikers_dream: { // 77
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	absurd_aau_na_easy_hikers_dream: { // 78
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	absurd_aau_na_easy_hard_hikers_dream: { // 79
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	extreme_hikers_dream: { // 80
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_extreme_hikers_dream: { // 81
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	// 82 - NA Extreme Dream (unknown)
-	// 83 - AAU/NA Extreme Dream (unknown)
+	aau_na_extreme_hikers_dream: { // 83
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	absurd_extreme_hikers_dream: { // 84
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	absurd_aau_extreme_hikers_dream: { // 85
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	// 86 - Absurd NA Extreme Dream (unknown)
-	// 87 - Absurd AAU/NA Extreme Dream (unknown)
+	absurd_aau_na_extreme_hikers_dream: { // 87
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	easy_extreme_hikers_dream: { // 88
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	aau_easy_extreme_hikers_dream: { // 89
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 90 - NA Easy Extreme Dream (unknown)
-	// 91 - AAU/NA Easy Extreme Dream (unknown)
+	na_easy_extreme_hikers_dream: { // 90
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	aau_na_easy_extreme_hikers_dream: { // 91
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	absurd_easy_extreme_hikers_dream: { // 92
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
 	absurd_aau_easy_extreme_hikers_dream: { // 93
-		balancing: "balanced up to endgame",
+		balancing: "balanced up to first multiverse",
 		balanceCheck: false
 	},
-	// 94 - Absurd NA Easy Extreme Dream (unknown)
-	// 95 - Absurd AAU/NA Easy Extreme Dream (unknown)
+	absurd_na_easy_extreme_hikers_dream: { // 94
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
+	absurd_aau_na_easy_extreme_hikers_dream: { // 95
+		balancing: "balanced up to first multiverse",
+		balanceCheck: false
+	},
 	"": { // 96
 		balancing: "balanced up to endgame",
 		balanceCheck: false,

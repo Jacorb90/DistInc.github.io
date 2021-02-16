@@ -15,6 +15,7 @@ function updateTemp() {
 	updateTempDC(); 
 	updateTempInf();
 	updateTempElementary();
+	updateTempMultiverse();
 	updateTempSC(); 
 	updateTempMisc();
 	updateTempTimeSpeed();
@@ -275,6 +276,9 @@ function setupHTML() {
 	// Plasma Boosts
 	setupPlasmaBoosts()
 	
+	// Multiverse Milestones
+	setupMltMilestoneTable()
+	
 	// Version
 	let v = new Element("version")
 	v.setTxt(player.version)
@@ -331,7 +335,7 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true;
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true;
 	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true;
-	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset();
+	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10) && !tmp.ach[178].has) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
 	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
@@ -347,6 +351,7 @@ document.onkeyup = function(e) {
 document.onkeydown = function(e) {
 	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
+	if (player.tab=="mlt") return;
 	let shiftDown = e.shiftKey
 	let key = e.which
 	switch(key) {

@@ -47,6 +47,7 @@ function updateTempTimeSpeed() {
 	if (player.tr.upgrades.includes(30) && !HCCBA("noTRU") && modeActive("extreme"))
 		tmp.timeSpeed = tmp.timeSpeed.pow(player.pathogens.amount.plus(1).log10().plus(1).times(10).slog(10).pow(1.2));
 	if (tmp.rockets) tmp.timeSpeed = tmp.timeSpeed.times(tmp.rockets.tsPow)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.timeSpeed = tmp.timeSpeed.times(tmp.mlt.quilts[1].eff);
 	if (modeActive("extreme") && tmp.timeSpeed.gte(Number.MAX_VALUE)) {
 		if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.timeSpeed = tmp.timeSpeed.pow(0.725).times(Math.pow(Number.MAX_VALUE, 0.275))
 		else tmp.timeSpeed = tmp.timeSpeed.sqrt().times(Math.sqrt(Number.MAX_VALUE))

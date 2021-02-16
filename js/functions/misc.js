@@ -150,6 +150,11 @@ function ENString(obj) {
 	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0).toString();
 	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0).toString();
 	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0).toString();
+	ret.mlt.times = new ExpantaNum(ret.mlt.times).toString();
+	ret.mlt.energy = new ExpantaNum(ret.mlt.energy).toString();
+	ret.mlt.bestEnergy = new ExpantaNum(ret.mlt.bestEnergy).toString();
+	ret.mlt.totalEnergy = new ExpantaNum(ret.mlt.totalEnergy).toString();
+	for (let i=0;i<Object.keys(ret.mlt.quiltUpgs).length;i++) ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]] = new ExpantaNum(ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]]).toString();
 	return ret;
 }
 
@@ -171,6 +176,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.8 || !ret.elementary.foam.amounts) ret.elementary.foam.amounts = deepCopy(sc.elementary.foam.amounts);
 	if (ret.version < 1.8 || !ret.elementary.entropy) ret.elementary.entropy = deepCopy(sc.elementary.entropy);
 	if (ret.version < 1.9 || !ret.elementary.sky) ret.elementary.sky = deepCopy(sc.elementary.sky);
+	if (ret.version < 2.0 || !ret.mlt) ret.mlt = deepCopy(sc.mlt);
 	if (ret.version < sc.version) onVersionChange();
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
@@ -319,6 +325,11 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0);
 	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0);
 	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0);
+	ret.mlt.times = new ExpantaNum(ret.mlt.times);
+	ret.mlt.energy = new ExpantaNum(ret.mlt.energy);
+	ret.mlt.bestEnergy = new ExpantaNum(ret.mlt.bestEnergy);
+	ret.mlt.totalEnergy = new ExpantaNum(ret.mlt.totalEnergy);
+	for (let i=0;i<Object.keys(ret.mlt.quiltUpgs).length;i++) ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]] = new ExpantaNum(ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]]);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }

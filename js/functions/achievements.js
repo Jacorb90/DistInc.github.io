@@ -127,7 +127,7 @@ function checkR12Ach(){
 	if (player.inf.ascension.power.gte(2.5e5)) tmp.ach[123].grant();
 	if (player.inf.pantheon.purge.power.gte(modeActive("extreme")?9:30)) tmp.ach[124].grant();
 	if (player.distance.gte(1e4) && tmp.inf.stadium.active("reality", 6) && player.inf.pantheon.purge.active) tmp.ach[125].grant();
-	if (tmp.auto.rankbot.magnitude.gte(1e200)) tmp.ach[126].grant();
+	if (tmp.auto.rankbot.magnitude.gte(modeActive("hard")?1e75:1e200)) tmp.ach[126].grant();
 	if (player.tr.cubes.gte("1e100000") && tmp.nopathogenupgs && player.dc.cores.eq(0)) tmp.ach[127].grant();
 	if (tmp.acc.gte("5.55e5555") && player.inf.pantheon.purge.active) tmp.ach[128].grant();
 }
@@ -185,6 +185,10 @@ function checkR17Ach(){
 	if (player.elementary.theory.depth.gte(20)) tmp.ach[176].grant();
 	if (tmp.pathogens) if (tmp.pathogens.upgPow.gte(16.25)) tmp.ach[177].grant();
 	if (player.distance.gte(DISTANCES.mlt)) tmp.ach[178].grant();
+}
+
+function checkR18Ach() {
+	// Nothing yet
 }
 
 function updateAchievements() {

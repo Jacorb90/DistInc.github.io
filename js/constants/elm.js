@@ -95,6 +95,8 @@ const HIGGS_UPGS_EXTR_DESCS = {
 	},
 }
 
+const DE_HIGGS_UPGS = ["5;0;0", "0;0;5", "5;0;5", "4;1;0", "0;1;4", "1;1;1", "3;2;2"]
+
 const HIGGS_UPGS = {
 	"0;0;0": {
 		cost: new ExpantaNum(4e4),
@@ -381,6 +383,7 @@ const TREE_UPGS = {
 		target: function(points) { return points.div(20).sub(1).times(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The above upgrade gets extra levels added to its effect based on your Preons.",
+		altDesc: "The previous upgrade gets extra levels added to its effect based on your Preons.",
 		effect: function(bought) { return player.elementary.theory.preons.amount.plus(1).times(10).slog(10).times(bought) },
 		effD: function(e) { return showNum(e)+" extra levels" },
 	},
@@ -509,6 +512,7 @@ const TREE_UPGS = {
 		cost: function(bought) { return new ExpantaNum(250) },
 		cap: new ExpantaNum(1),
 		desc: "The topmost Theory Tree Upgrade's effect uses a better formula.",
+		altDesc: "The first Supersymmetry Theory Tree Upgrade's effect uses a better formula.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},

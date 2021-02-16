@@ -36,13 +36,10 @@ const TABBTN_SHOWN = {
 		return player.dc.unl;
 	},
 	inf: function () {
-		return player.inf.unl;
+		return player.inf.unl || (player.mlt.times.gt(0)&&tmp.inf.can);
 	},
 	elementary: function () {
 		return (tmp.elm ? tmp.elm.can : false) || player.elementary.times.gt(0);
-	},
-	"v1.9End": function() {
-		return false;
 	},
 };
 

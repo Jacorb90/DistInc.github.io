@@ -195,9 +195,12 @@ function updateTempGauge() {
 	tmp.elm.bos.forceGain = player.elementary.bosons.gauge.amount.pow(0.75);
 	if (tmp.gravEff) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.gravEff);
 	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.bos.forceGain = tmp.elm.bos.forceGain.times(tmp.elm.qf.boost18);
-	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(0.2);
-	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(0.08))
+	tmp.elm.bos.forceEffExpMult = new ExpantaNum(1)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.bos.forceEffExpMult = tmp.elm.bos.forceEffExpMult.times(tmp.mlt.quilts[3].eff);
+	tmp.elm.bos.forceEff = player.elementary.bosons.gauge.force.div(10).plus(1).logBase(2).pow(tmp.elm.bos.forceEffExpMult.times(.2));
+	if (player.inf.upgrades.includes("8;10")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(player.elementary.bosons.gauge.force.plus(1).pow(tmp.elm.bos.forceEffExpMult.times(0.08)))
 	if (tmp.ach[132].has) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.mlt.quilts[3].eff2);
 	tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(tmp.higgs130?tmp.higgs130.max(1):1)
 	if (player.elementary.entropy.upgrades.includes(15)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(5)
 	if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(tmp.elm.sky.spinorEff[11])
@@ -262,6 +265,7 @@ function updateTempScalar() {
 	tmp.elm.bos.scalarGain = player.elementary.bosons.amount.sqrt().times(0.6);
 	tmp.elm.bos.higgsGain = player.elementary.bosons.scalar.amount.div(10).pow(0.95).times(ExpantaNum.pow(2, Math.sqrt(player.elementary.bosons.scalar.higgs.upgrades.length)))
 	tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.higgs011?new ExpantaNum(tmp.higgs011).max(1):1).times(tmp.higgs300?new ExpantaNum(tmp.higgs300).max(1):1)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(tmp.mlt.quilts[3].eff2);
 	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
 	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	if (modeActive("easy")) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(10)

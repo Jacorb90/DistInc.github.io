@@ -19,7 +19,22 @@ const LAYER_RESETS = {
 		"pathogens",
 		"dc",
 		"inf"
-	]
+	],
+	multiverse: [
+		"distance",
+		"velocity",
+		"rank",
+		"tier",
+		"rockets",
+		"rf",
+		"tr",
+		"automation",
+		"collapse",
+		"pathogens",
+		"dc",
+		"inf",
+		"elementary"
+	],
 };
 
 const LAYER_RESETS_EXTRA = {
@@ -30,7 +45,8 @@ const LAYER_RESETS_EXTRA = {
 	rf: [],
 	collapse: ["energy", "canRefill", "rankCheap", "furnace"],
 	inf: ["energy", "canRefill", "rankCheap", "furnace", "activeFC"],
-	elementary: ["energy", "spentMotive", "energyUpgs", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"]
+	elementary: ["energy", "spentMotive", "energyUpgs", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad"],
+	multiverse: ["energy", "spentMotive", "energyUpgs", "canRefill", "geners", "genLvl", "spentMotiveGens", "bestMotive", "rankCheap", "furnace", "activeFC", "furnChalls", "extremeStad", "magma", "plasma"],
 };
 
 const LAYER_REQS = {
@@ -44,7 +60,8 @@ const LAYER_REQS = {
 		["rockets", new ExpantaNum("1e300000")],
 		["cadavers", new ExpantaNum("1e30000")],
 		["endorsements", 36]
-	]
+	],
+	multiverse: ["distance", DISTANCES.mlt],
 };
 
 const LAYER_FP = {
@@ -54,7 +71,8 @@ const LAYER_FP = {
 	rf: 1,
 	collapse: 0.1,
 	inf: 1,
-	elementary: 1
+	elementary: 1,
+	multiverse: 1,
 };
 
 const LAYER_SC = {
@@ -64,7 +82,8 @@ const LAYER_SC = {
 	rf: new ExpantaNum(1 / 0),
 	collapse: new ExpantaNum(100),
 	inf: new ExpantaNum(1 / 0),
-	elementary: new ExpantaNum(1 / 0)
+	elementary: new ExpantaNum(1 / 0),
+	multiverse: new ExpantaNum(1 / 0),
 };
 
 const LAYER_RESETS_NOTHING = {
@@ -75,5 +94,6 @@ const LAYER_RESETS_NOTHING = {
 	rf() { return modeActive("extreme") ? (player.tr.upgrades.includes(17) && !HCCBA("noTRU")) : player.inf.unl },
 	collapse() { return false },
 	inf() { return false },
-	elementary() { return false},
+	elementary() { return false },
+	multiverse() { return false },
 }

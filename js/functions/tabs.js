@@ -21,7 +21,6 @@ function updateTabs() {
 	}
 	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
 	new Element("energytabbtn").setDisplay(player.modes.includes("hikers_dream"))
-	new Element("v1.9Endtabbtn").setDisplay(false)
 }
 
 function showTab(name) {

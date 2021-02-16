@@ -40,7 +40,9 @@ function updateTempTheoriverse() {
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active
 	}
-	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth)
+	tmp.elm.theory.gainMult = new ExpantaNum(1)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.theory.gainMult = tmp.elm.theory.gainMult.times(tmp.mlt.quilts[2].eff2);
+	tmp.elm.theory.gain = ExpantaNum.pow(2, player.elementary.theory.depth).times(tmp.elm.theory.gainMult).round();
 }
 
 function updateTempSupersymmetry() {
@@ -54,7 +56,7 @@ function updateTempSupersymmetry() {
 	}
 	for (let i=0;i<4;i++) {
 		let type = ["squark", "slepton", "neutralino", "chargino"][i]
-		tmp.elm.theory.ss[type+"Gain"] = new ExpantaNum((4-i)/4)
+		tmp.elm.theory.ss[type+"Gain"] = ExpantaNum.mul((4-i)/4, tmp.elm.theory.speed)
 		if (player.elementary.theory.tree.unl) {
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[1].effect(player.elementary.theory.tree.upgrades[1]||0))
 			tmp.elm.theory.ss[type+"Gain"] = tmp.elm.theory.ss[type+"Gain"].times(TREE_UPGS[5].effect(player.elementary.theory.tree.upgrades[5]||0))
@@ -123,6 +125,8 @@ function updateTempTheoryTree() {
 function updateTempTheories() {
 	if (!tmp.elm.theory) tmp.elm.theory = {}
 	
+	tmp.elm.theory.speed = new ExpantaNum(1)
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.theory.speed = tmp.elm.theory.speed.times(tmp.mlt.quilts[1].eff2);
 	updateTheoryTabs()
 	updateTempTheoriverse();
 	updateTempSupersymmetry();
@@ -148,7 +152,7 @@ function unlockStrings() {
 	if (!player.elementary.theory.tree.unl) return
 	if (player.elementary.theory.strings.unl) return
 	if (player.elementary.theory.points.lt(7)) return
-	if (!confirm("Are you sure you want to unlock Strings? You will not be able to get your Theory Points back!")) return
+	if (player.mlt.times.eq(0)) if (!confirm("Are you sure you want to unlock Strings? You will not be able to get your Theory Points back!")) return
 	player.elementary.theory.points = player.elementary.theory.points.sub(7).max(0)
 	player.elementary.theory.strings.unl = true
 }
@@ -179,6 +183,7 @@ function getStringGain(n) {
 	if (tmp.ach[144].has) gain = gain.times(1.25)
 	if (tmp.ach[157].has) gain = gain.times(2)
 	if (player.elementary.foam.unl && tmp.elm.qf) gain = gain.times(tmp.elm.qf.boost15)
+	if (tmp.elm) gain = gain.times(tmp.elm.theory.speed)
 	return gain
 }
 
@@ -217,7 +222,7 @@ function unlockPreons() {
 	if (!player.elementary.theory.strings.unl) return
 	if (player.elementary.theory.preons.unl) return
 	if (player.elementary.theory.points.lt(10)) return
-	if (!confirm("Are you sure you want to unlock Preons? You will not be able to get your Theory Points back!")) return
+	if (player.mlt.times.eq(0)) if (!confirm("Are you sure you want to unlock Preons? You will not be able to get your Theory Points back!")) return
 	player.elementary.theory.points = player.elementary.theory.points.sub(10).max(0)
 	player.elementary.theory.preons.unl = true
 }
@@ -226,6 +231,7 @@ function getPreonGain() {
 	if (!player.elementary.theory.preons.unl) return new ExpantaNum(0)
 	let gain = player.elementary.theory.strings.amounts[0].plus(1).log10().div(10)
 	gain = gain.times(TREE_UPGS[9].effect(player.elementary.theory.tree.upgrades[9]||0))
+	if (tmp.elm) gain = gain.times(tmp.elm.theory.speed)
 	return gain
 }
 
@@ -293,7 +299,7 @@ function unlockAccelerons() {
 	if (!player.elementary.theory.preons.unl) return
 	if (player.elementary.theory.accelerons.unl) return
 	if (player.elementary.theory.points.lt(84)) return
-	if (!confirm("Are you sure you want to unlock Accelerons? You won't be able to get your Theory Points back!")) return
+	if (player.mlt.times.eq(0)) if (!confirm("Are you sure you want to unlock Accelerons? You won't be able to get your Theory Points back!")) return
 	player.elementary.theory.points = player.elementary.theory.points.sub(84).max(0)
 	player.elementary.theory.accelerons.unl = true
 }
@@ -303,6 +309,7 @@ function getAccelGain() {
 	let gain = tmp.acc.plus(1).log10().div(1e6).sqrt()
 	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
 	if (gain.gte(1e6)) gain = gain.cbrt().times(Math.pow(1e6, 2/3))
+	if (tmp.elm) gain = gain.times(tmp.elm.theory.speed)
 	return gain
 }
 
@@ -384,7 +391,7 @@ function unlockInflatons() {
 	} else if (!(player.elementary.hc.unl&&player.elementary.theory.accelerons.unl)) return;
 	if (player.elementary.theory.inflatons.unl) return
 	if (player.elementary.theory.points.lt(1600)) return
-	if (!confirm("Are you sure you want to unlock Inflatons? You won't be able to get your Theory Points back!")) return
+	if (player.mlt.times.eq(0)) if (!confirm("Are you sure you want to unlock Inflatons? You won't be able to get your Theory Points back!")) return
 	player.elementary.theory.points = player.elementary.theory.points.sub(1600).max(0)
 	player.elementary.theory.inflatons.unl = true
 }

@@ -58,7 +58,7 @@ function updateOptionsHTML(){
 			});
 			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
 		}
-		tmp.el.ingamebtn.setDisplay(player.dc.unl||player.elementary.unl)
+		tmp.el.ingamebtn.setDisplay(player.dc.unl||player.elementary.unl||player.mlt.times.gt(0))
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
 		tmp.el.not.setTxt("Notation: " + capitalFirst(player.options.not));
 		tmp.el.theme.setTxt("Theme: " + capitalFirst(player.options.theme));
@@ -66,6 +66,8 @@ function updateOptionsHTML(){
 		tmp.el.newst.setTxt("News Ticker: " + (player.options.newst ? "ON" : "OFF"));
 		tmp.el.elc.changeStyle("visibility", (player.elementary.times.gt(0)?"visible":"hidden"))
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
+		tmp.el.mltnc.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"))
+		tmp.el.mltnc.setTxt("Multiverse Confirmation: "+ (player.options.mltnc ? "OFF" : "ON"));
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
 		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
 		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
@@ -1119,7 +1121,7 @@ function updateTheoryTreeHTMLPerSec() {
 			let bought = tmp.elm.theory.tree.bought(i)
 			let cap = getTreeUpgCap(i)
 			let pref = player.options.tht?"gTree":"tree"
-			tmp.el[pref+i].setTooltip(TREE_UPGS[i].desc+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
+			tmp.el[pref+i].setTooltip(((TREE_UPGS[i].altDesc&&player.options.tht)?TREE_UPGS[i].altDesc:TREE_UPGS[i].desc)+"\n"+(bought.gte(cap)?"":("Cost: "+showNum(TREE_UPGS[i].cost(bought).div(tmp.elm.theory.tree.costReduc).round())+" Theory Points"))+"\nCurrently: "+TREE_UPGS[i].effD(TREE_UPGS[i].effect(ExpantaNum.add(bought, i==7?TREE_UPGS[11].effect(player.elementary.theory.tree.upgrades[11]||0):0))))
 		}
 	}
 }
@@ -1344,7 +1346,7 @@ function updateMiscHTML(){
 	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
 	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364")
 
-	tmp.el.mainContainer.setDisplay(showContainer);
+	tmp.el.mainContainer.setDisplay(showContainer&&player.tab!="mlt");
 	tmp.el.loading.setDisplay(false)
 	tmp.el.footer.setDisplay(player.tab == "options");
 	tmp.el.newsticker.changeStyle('visibility', player.options.newst?'visible':'hidden');
@@ -1496,6 +1498,51 @@ function updateSkyHTML() {
 	}
 }
 
+function updateOverallMultiverseHTML() {
+	tmp.el.multiversestabbtn.setDisplay(player.mlt.times.gt(0))
+	tmp.el.mltContainer.setDisplay(player.tab=="mlt")
+	tmp.el.mltContainer.setClasses({first: player.mlt.times.lte(1)&&player.distance.eq(0)})
+	tmp.el.mltReset.setDisplay(tmp.mlt.can);
+	tmp.el.mltReset.setClasses({ btn: true, locked: !tmp.mlt.can, mlt: tmp.mlt.can });
+	if (tmp.mlt.can) {
+		tmp.el.mltReset.setHTML(
+			(player.mlt.times.eq(0)?("You have travelled across the entire multiverse, you must move on."):("Obliterate the multiverse to create <span class='mlttxt'>" +
+			showNum(tmp.mlt.layer.gain) +
+			"</span> Multiversal Energy."))
+		);
+	}
+	if (player.tab == "mlt") {
+		tmp.el.mltEnergy.setTxt(showNum(player.mlt.energy));
+		tmp.el.totalME.setTxt(showNum(player.mlt.totalEnergy));
+		tmp.el.mltTimes.setTxt(showNum(player.mlt.times));
+		
+		if (mltTab == "mltMap") {
+			for (let m=1;m<=MULTIVERSES;m++) {
+				tmp.el["mltmap"+m].setDisplay(player.mlt.highestCompleted>=m-1)
+			}
+			tmp.el.mltData.changeStyle("visibility", mltSelected!="NONE"?"visible":"hidden");
+			if (mltSelected!="NONE") {
+				tmp.el.mltDataTxt.setHTML(getMltDisplay(mltSelected));
+				tmp.el.mltStart.setDisplay(mltUnlocked(mltSelected));
+				tmp.el.mltStart.setTxt((player.mlt.active==mltSelected)?"Resume this Multiverse":"Enter the Multiverse")
+			}
+		} else if (mltTab == "mltMilestones") {
+			for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
+				let has = hasMltMilestone(r);
+				for (let i=1;i<=2;i++) tmp.el["mltMil"+r+String(i)].changeStyle("background", has?"rgba(79, 240, 109, 0.4)":"none")
+			}
+		} else if (mltTab == "quilts") {
+			for (let i=1;i<=3;i++) {
+				tmp.el["quilt"+i+"Strength"].setTxt(showNum(tmp.mlt.quilts[i].strength.times(100)))
+				tmp.el["quilt"+i+"Eff"].setTxt(showNum(i==1?tmp.mlt.quilts[i].eff:tmp.mlt.quilts[i].eff.sub(1).times(100)))
+				tmp.el["quilt"+i+"Eff2"].setTxt(showNum(tmp.mlt.quilts[i].eff2))
+				tmp.el["quiltUpg"+i].setClasses({btn: true, locked: player.mlt.energy.lt(tmp.mlt.quilts[i].upgCost), mlt: player.mlt.energy.gte(tmp.mlt.quilts[i].upgCost)})
+				tmp.el["quiltUpg"+i].setHTML("Energize this Quilt by 10%<br>Currently: +"+showNum(tmp.mlt.quilts[i].upgEff.times(100))+"%<br>Cost: "+showNum(tmp.mlt.quilts[i].upgCost)+" ME")
+			}
+		}
+	}
+}
+
 function updateHTML() {
 	updateOptionsHTML()
 	updateMainHTML()
@@ -1512,6 +1559,7 @@ function updateHTML() {
 	updateStatisticsHTML()
 	updateOverallElementaryHTML()
 	updateOverallEnergyHTML()
+	updateOverallMultiverseHTML()
 	updateMiscHTML()
 	
 	// Features

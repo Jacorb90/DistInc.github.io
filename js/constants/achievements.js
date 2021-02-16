@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 17,
+	rows: 18,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -260,7 +260,7 @@ const ACH_DATA = {
 		123: "Reach showNum(2.5e5) Ascension Power.",
 		124: "Reach boolean(extreme,nine,thirty) Purge Power.",
 		125: "Reach formatDistance(1e4) while in a Purge run & in Reality's Stadium challenge at Difficulty Level 6.",
-		126: "Have a magnitude of showNum(1e200) for Rankbot.",
+		126: "Have a magnitude of boolean(hard,showNup[1e75],showNup[1e200]) for Rankbot.",
 		127: "Reach showNum(1e100000) Time Cubes without any Pathogen Upgrades or Dark Cores.",
 		128: "Reach formatDistance(5.55e5555)/s^2 of Acceleration while in a Purge run.",
 
@@ -410,5 +410,6 @@ const ACH_DATA = {
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
+		178: "The Infinity popup is permanently disabled.",
 	}
 };

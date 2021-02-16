@@ -36,9 +36,16 @@ html, body {
 	color: #757575 !important;
 }
 
+html {
+	min-height: 100%;
+	height: 100%;
+}
+
 body {
 	background-color: var(--bg);
 	transition-duration: 1s;
+	min-height: 100%;
+	height: 100%;
 }
 
 .btn {
@@ -162,6 +169,15 @@ body {
 	text-align: center;
 }
 
+.sideBand {
+	position: absolute;
+	left: 0;
+	width: 300px;
+	min-height: 500px;
+	padding: 20px;
+	text-align: center;
+}
+
 .lb {
 	background-color: var(--tb);
 }
@@ -184,6 +200,10 @@ body {
 
 .pnk {
 	background-color: #a30b78;
+}
+
+.pnkSeeThru {
+	background-color: rgba(163, 11, 120, 0.5);
 }
 
 .ylw {
@@ -1901,6 +1921,187 @@ table {
 	line-height: normal;
 }
 
+.btn.mlt {
+	box-shadow: 3px 4px 0px 0px #382f8a;
+	background: linear-gradient(45deg, #837eed, #976ef0, #ab5aed, #cb4eed);
+	background-size: 200% 200%;
+	background-color: #837eed;
+	border-radius: 18px;
+	border: 1px solid #9c97c7;
+	display: inline-block;
+	cursor: pointer;
+	color: #57546b;
+	font-size: 12px;
+	font-weight: bold;
+	height: 100px;
+	max-width: 200px;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: 0px -0.5px 0px #000000;
+	margin-top: 10px;
+	transition-duration: 1s;
+	animation: mltShow 1s, mltBg 10s infinite;
+}
+
+.btn.mlt:hover {
+	filter: brightness(120%);
+	transform: scale(1.1);
+}
+
+.btn.mlt:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
+.btn.mlt.tb {
+	font-size: 10px !important;
+	max-width: 100px !important;
+	max-height: 50px !important;
+	padding: 4px 12px !important;
+	margin-left: 5px;
+	margin-right: 5px;
+	animation: mltBg 10s infinite;
+}
+
+.btn.mlt.tb:hover {
+	background: linear-gradient(45deg, #837eed, #976ef0, #ab5aed, #cb4eed);
+	filter: brightness(120%);
+	transform: scale(1.1);
+}
+
+.btn.mlt.tb.s {
+	font-size: 10px !important;
+	max-width: 100px !important;
+	max-height: 25px !important;
+	padding: 4px 12px !important;
+	margin-left: 5px;
+	margin-right: 5px;
+	animation: mltBg 10s infinite;
+}
+
+#mltContainer {
+	position: fixed;
+	width: 100vw;
+	min-height: 100vh;
+	height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+	background: linear-gradient(45deg, #837eed, #976ef0, #ab5aed, #cb4eed);
+	background-size: 100% 100%;
+	background-color: #837eed;
+	filter: opacity(75%);
+	text-align: center;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+#mltContainer:not(.first) {
+	animation: mltTabShow 1s ease, mltBg 10s infinite;
+}
+
+#mltContainer.first {
+	animation: mltTabShow 5s ease, mltBg 10s infinite;
+}
+
+.mlttxt {
+	font-size: 16px;
+	text-shadow: 0px -0.5px 0px black;
+	filter: brightness(75%);
+	animation: mlttxt 16s ease infinite;
+}
+
+.mltMinorTitle {
+	font-size: 25px;
+	font-weight: bold;
+	text-shadow: 0px -0.5px 0px black;
+	filter: brightness(75%);
+	animation: mlttxt 16s ease infinite;
+}
+
+.mltTitle {
+	font-size: 40px;
+	font-weight: bold;
+	text-shadow: 0px -0.5px 0px black;
+	filter: brightness(75%);
+	animation: mlttxt 16s ease infinite;
+}
+
+#mltMapContainer {
+	position: relative;
+	top: 25px;
+	left: 25vw;
+	width: 50vw;
+}
+
+#innerMltOrbit {
+	position: absolute;
+	top: 75px;
+	left: 15vw;
+	width: 20vw;
+	height: 20vw;
+	border-radius: 100%;
+	border: 2px #4A437F dashed;
+	animation: spin-right 40s linear infinite;
+}
+
+.mltPrime {
+	position: absolute;
+	line-height: 32px;
+	font-size: 20px;
+	font-weight: bold;
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+	background-color: #9F98E6;
+	transition-duration: 0.6s;
+	border: none;
+	z-index: 2;
+}
+
+.mltPrime:hover {
+	filter: brightness(120%);
+	transform: scale(1.1);
+	cursor: pointer;
+}
+
+.innerMltOrbit {
+	position: absolute;
+	line-height: 15px;
+	height: 50px;
+	width: 50px;
+	border-radius: 100%;
+	background-color: #9F98E6;
+	border: none;
+	transition-duration: 0.6s;
+}
+
+.innerMltOrbit:hover {
+	filter: brightness(120%);
+	transform: scale(1.1);
+	cursor: pointer;
+}
+
+.uprightOrbitTxt {
+	font-weight: bold;
+	animation: undoOrbit 40s linear infinite;
+}
+
+#mltMilestoneTable {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+}
+
+.mltTD {
+	width: 50%;
+	border: 2px solid black;
+	padding: 5px;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;
@@ -2102,6 +2303,74 @@ table {
 	}
 	100% {
 		background-position: 0% 50%;
+	}
+}
+
+@keyframes mltShow {
+	from { 
+		opacity: 0; 
+		height: 0px;
+		font-size: 0px;
+		margin-top: 0px;
+		
+	}
+    to { 
+		opacity: 1; 
+		height: 100px;
+		font-size: 12px;
+		margin-top: 10px;
+	}
+}
+
+@keyframes mltTabShow {
+	from { 
+		opacity: 0; 		
+	}
+    to { 
+		opacity: 1; 
+	}
+}
+
+@keyframes mltBg {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes mlttxt {
+	0% {
+		color: #3c40c9;
+	}
+	50% {
+		color: #6f4de3;
+		transform: translate(-5px, 5px);
+	}
+	100% {
+		color: #3c40c9;
+	}
+}
+
+@keyframes spin-right {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes undoOrbit {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(-360deg);
 	}
 }
 

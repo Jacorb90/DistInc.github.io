@@ -77,7 +77,7 @@ function decimalPlaces(value, places, roundWhole=false, base = 10) {
 
 function formatDistance(x) {
 	x = new ExpantaNum(x);
-	let fc = futureCapped();
+	let fc = multiverseCapped();
 	for (i = Object.keys(DISTANCES).length - 1; i >= 0; i--) {
 		let name = Object.keys(DISTANCES)[i];
 		let val = new ExpantaNum(DISTANCES[name]);

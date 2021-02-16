@@ -9,8 +9,83 @@
 		<img src="images/game_icon.ico" style="width: 200px; height: 200px;"></img>
 		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa" target="_blank">Help</a></span></span>
 	</div>
+	<div id="mltContainer" style="display: none">
+		<br><span class="mltTitle">Multiverse Map</span><br><br>
+		You have <span id="mltEnergy" class="mlttxt"></span> Multiversal Energy (<span id="totalME" class="mlttxt"></span> total)<br>
+		<span style="font-size: 12px">You have moved on from a Multiverse <span id="mltTimes" class="mlttxt"></span> times.</span><br><br>
+		<div class="band pnk">
+			<table>
+				<tr>
+					<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+				</tr>
+				<tr>
+					<td>
+						<button id="mltMaptabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('mltMap')">
+							Multiverse Map
+						</button>
+					</td>
+					<td>
+						<button id="mltMilestonestabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('mltMilestones')">
+							Milestones
+						</button>
+					</td>
+					<td>
+						<button id="quiltstabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('quilts')">
+							Quilts
+						</button>
+					</td>
+				</tr>
+			</table><br>
+		</div>
+		<div id="mltMap" class="mlttab">
+			<div id="mltData" class="sideBand pnkSeeThru" style="height: 60px;">
+				<div id="mltDataTxt"></div><br><br>
+				<button id="mltStart" class="btn mlt" onclick="startMultiverse(mltSelected)">Enter the Multiverse</button>
+			</div><br>
+			<div id="mltMapContainer">
+				<button id="mltmapPrime" class="mltPrime" style="top: 12vw; left: 21.5vw;" onclick="setupMlt(0)">PRIME</button>
+				<div id="innerMltOrbit">
+					<button id="mltmap1" class="innerMltOrbit" style="top: 8vw; left: -2vw;" onclick="setupMlt(1)"><div class="uprightOrbitTxt">1</div></button>
+					<button id="mltmap2" class="innerMltOrbit" style="top: -1.2vw; left: 6vw;" onclick="setupMlt(2)"><div class="uprightOrbitTxt">2</div></button>
+					<button id="mltmap3" class="innerMltOrbit" style="top: 4vw; left: 17vw;" onclick="setupMlt(3)"><div class="uprightOrbitTxt">3</div></button>
+					<button id="mltmap4" class="innerMltOrbit" style="top: 15vw; left: 16vw;" onclick="setupMlt(4)"><div class="uprightOrbitTxt">4</div></button>
+					<button id="mltmap5" class="innerMltOrbit" style="top: 17.5vw; left: 5vw;" onclick="setupMlt(5)"><div class="uprightOrbitTxt">5</div></button>
+				</div>
+			</div>
+		</div>
+		<div id="mltMilestones" class="mlttab">
+			<br><br><div id="mltMilestoneTable"></div>
+		</div>
+		<div id="quilts" class="mlttab">
+			<br><br>
+			<div class="flexRow">
+				<div class="flexContainer" style="background-color: rgba(183, 0, 255, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt I</div>
+					<div>Quilt Strength: <span id="quilt1Strength" class="mlttxt"></span>% (based on Distance)</div><br>
+					<div>Multiplies Time Speed by <span id="quilt1Eff" class="mlttxt"></span></div><br>
+					<div>Also multiplies the speed of all Theory subfeatures & all Foam types by <span id="quilt1Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg1" class="btn locked" onclick="buyQuiltUpg(1)"></button>
+				</div>
+				<div class="flexContainer" style="background-color: rgba(255, 183, 0, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt II</div>
+					<div>Quilt Strength: <span id="quilt2Strength" class="mlttxt"></span>% (based on Knowledge)</div><br>
+					<div>Makes Endorsements <span id="quilt2Eff" class="mlttxt"></span>% more efficient</div><br>
+					<div>Also multiplies Theory Point gain from Theoriverse completions by <span id="quilt2Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg2" class="btn locked" onclick="buyQuiltUpg(2)"></button>
+				</div>
+				<div class="flexContainer" style="background-color: rgba(0, 247, 255, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt III</div>
+					<div>Quilt Strength: <span id="quilt3Strength" class="mlttxt"></span>% (based on Elementary Particles)</div><br>
+					<div>Increases Quark & Lepton exponents and Gauge Speed's efficiency by <span id="quilt3Eff" class="mlttxt"></span>%</div><br>
+					<div>Also multiplies Gauge Speed, Higgs Boson gain, & Hadron gain by <span id="quilt3Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg3" class="btn locked" onclick="buyQuiltUpg(3)"></button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
+			<button id="mltReset" class="btn locked" onclick="mltReset()"></button>
 			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
 			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
@@ -74,7 +149,11 @@
 								Elementary
 							</button>
 						</td>
-						<td><button id="v1.9Endtabbtn" class="btn tb main" onclick="showTab('v1.9End')">Hey you shouldn't be seeing this</button></td>
+						<td>
+							<button id="multiversestabbtn" class="btn tb s mlt main" onclick="player.tab = 'mlt'; mltSelected = player.mlt.active;">
+								Multiverses
+							</button>
+						</td>
 					</tr>
 				</table><br>
 			</div>
@@ -200,6 +279,11 @@
 							Exit Hadronic Chall Confirmation: ON
 						</button>
 					</div>
+					<div class="flexRow">
+						<button id="mltnc" class="btn tb opt ob" onclick="changeOpt('mltnc', 0)">
+							Multiverse Confirmation: ON
+						</button>
+					</div>
 				</div>
 			</div>
 			<div id="other" class="optionstab" style="display: none;">
@@ -312,7 +396,7 @@
 			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
-			<div id="achDesc" class="band gn"></div>
+			<div id="achDesc" class="band gn" style="z-index: 10"></div>
 			<table id="achTable"></table>
 			<div id="achFin"></div>
 		</div>
@@ -2214,14 +2298,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="v1.9End" class="tab" style="display: none;">
-		<br>Dear Player,<br><br><br>Welp you've done it, you've reached the end of the multiverse!<br>
-		Sadly, more content won't be available for the time being...<br>
-		For now, just try another mode or something, I dunno.<br>
-		Thanks for playing my game!<br>
-		From Jacorb<br><br><br><br><br>
-		P.S: If you're wondering why I put this message here, it's because it's prep for future content and because v2.0 may not be out for a while...
-	</div>
 	
 	<!-- Links -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
@@ -2249,6 +2325,7 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/elm.js"></script>
+	<script type="text/javascript" src="js/constants/mlt.js"></script>
 	<script type="text/javascript" src="js/constants/news.js"></script>
 
 	<!-- Primary Classes -->
@@ -2274,7 +2351,8 @@
 	<script type="text/javascript" src="js/game.js"></script>
 
 	<!-- File Data -->
-	<script type="text/javascript" src="js/main/future_content/setup.js"></script>
+	<script type="text/javascript" src="js/main/multiverse/quilts.js"></script>
+	<script type="text/javascript" src="js/main/multiverse/mlt.js"></script>
 	<script type="text/javascript" src="js/main/elementary/bosons.js"></script>
 	<script type="text/javascript" src="js/main/elementary/elm.js"></script>
 	<script type="text/javascript" src="js/main/elementary/fermions.js"></script>

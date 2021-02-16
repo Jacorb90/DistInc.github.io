@@ -199,6 +199,7 @@ function updateTempInfLayer() {
 	tmp.inf.fp = new ExpantaNum(1);
 	tmp.inf.bc = INF_UNL;
 	tmp.inf.emPow = new ExpantaNum(1);
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.inf.emPow = tmp.inf.emPow.times(tmp.mlt.quilts[2].eff)
 	calcKnowledgeGain()
 	
 
@@ -282,7 +283,7 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
 		let fcb = tmp.inf.layer.fcBulk
-		if (player.inf.endorsements.lt(10)) fcb = fcb.max(player.inf.endorsements.plus(1));
+		if (player.inf.endorsements.lt(10) && !tmp.ach[178].has) fcb = fcb.max(player.inf.endorsements.plus(1));
 		let mag = new ExpantaNum(1);
 		let m = player.inf.endorsements.plus(mag).min(fcb).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);

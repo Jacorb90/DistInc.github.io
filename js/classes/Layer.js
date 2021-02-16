@@ -1,15 +1,16 @@
 class Layer {
-	constructor(name, avail, type, spec, tName) {
+	constructor(name, avail, type, spec, tName, useCustomGain) {
 		this.name = name;
 		this.tName = tName || name;
 		this.avail = avail;
 		this.type = type;
 		this.spec = !!spec;
+		this.customGain = useCustomGain||type=="multi-res";
 		this.addS = this.name == "rank" || this.name == "tier";
 	}
 
 	get gain() {
-		if (this.type == "multi-res") return tmp[this.tName].gain();
+		if (this.customGain) return tmp[this.tName].gain();
 		if (this.type == "forced" || this.type == "semi-forced") return new ExpantaNum(1);
 		let req = LAYER_REQS[this.name];
 		let nr = req[1];

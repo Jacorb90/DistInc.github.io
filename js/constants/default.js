@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.9,
+	version: 2.0,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -13,6 +13,7 @@ const DEFAULT_START = {
 		autoSave: true,
 		newst: true,
 		elc: true,
+		mltnc: false,
 		saveImp: "new save",
 		hot: true,
 		featPerc: "logarithm",
@@ -233,5 +234,14 @@ const DEFAULT_START = {
 				field: {},
 			},
 		},
-	}
+	},
+	mlt: {
+		times: new ExpantaNum(0),
+		energy: new ExpantaNum(0),
+		bestEnergy: new ExpantaNum(0),
+		totalEnergy: new ExpantaNum(0),
+		highestCompleted: 0,
+		active: 0,
+		quiltUpgs: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+	},
 };

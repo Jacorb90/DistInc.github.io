@@ -129,6 +129,7 @@ function getQuarkStacks(x) {
 			.ceil()
 			.max(0);
 	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
+	if (player.mlt.times.gt(0) && tmp.mlt) stacks = stacks.times(tmp.mlt.quilts[3].eff);
 	return stacks;
 }
 
@@ -140,6 +141,7 @@ function getLeptonStacks(x) {
 			.ceil()
 			.max(0);
 	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
+	if (player.mlt.times.gt(0) && tmp.mlt) stacks = stacks.times(tmp.mlt.quilts[3].eff);
 	return stacks;
 }
 

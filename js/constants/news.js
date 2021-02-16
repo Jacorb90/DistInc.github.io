@@ -100,6 +100,7 @@ const NEWS_DATA = {
 	m91: ["Well yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually -INFINITE LOOP-"],
 	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
 	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
+	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
 
 	// Distance-based Conditions
 	d1: [
@@ -487,5 +488,13 @@ const NEWS_DATA = {
 	s33: [
 		'"Elementary is cool, it has hadronic challenged me to make up theories and has brought to photonic light a new meme: fome, I must go now, my skyrmions need me." - A really punny guy',
 		function() { return player.elementary.sky.unl },
+	],
+	s34: [
+		"No wait please, don't obliterate the multiverse, I need it to survive!",
+		function() { return player.distance.gte(DISTANCES.mlt)&&player.mlt.times.eq(0) },
+	],
+	s35: [
+		"If the world is your oyster, then the multiverse is your ocean. That's right, you own the ocean now.",
+		function() { return player.mlt.times.gt(0) },
 	],
 };
