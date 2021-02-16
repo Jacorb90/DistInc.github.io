@@ -93,7 +93,7 @@ function gainFoam(x, gain, diff=1, adj=false) {
 function qfTick(diff) {
 	for (let i=0;i<5;i++) {
 		if (player.elementary.foam.maxDepth.gt(i)) gainFoam(i, tmp.elm.qf.gain[i+1], diff, true)
-		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&player.elementary.entropy.bestDepth.gte(i+3)) qfMax(i+1, b+1)
+		for (let b=0;b<3;b++) if (player.elementary.foam.autoUnl[i*3+b]&&(player.elementary.entropy.bestDepth.gte(i+3)||hasMltMilestone(4))) qfMax(i+1, b+1)
 	}
 	player.elementary.entropy.bestDepth = player.elementary.entropy.bestDepth.max(player.elementary.foam.maxDepth);
 }
@@ -186,11 +186,13 @@ function qfUnl(x) {
 	let cost = QF_NEXTLAYER_COST[x]
 	if (player.elementary.foam.amounts[x-1].lt(cost)) return
 	player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1).min(5)
-	let resetted = 0
-	while (resetted<x) {
-		player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
-		for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
-		resetted++
+	if (!hasMltMilestone(4)) {
+		let resetted = 0
+		while (resetted<x) {
+			player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
+			for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
+			resetted++
+		}
 	}
 }
 
@@ -226,12 +228,17 @@ function refoam() {
 	if (player.elementary.foam.maxDepth.lt(5)) return;
 	let cost = getRefoamCost();
 	if (player.elementary.foam.amounts[4].lt(cost)) return;
-	player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1);
-	let resetted = 0
-	while (resetted<=5) {
-		player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
-		for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
-		resetted++
+	if (hasMltMilestone(4)) {
+		let target = player.elementary.foam.amounts[4].div(QF_NEXTLAYER_COST[5]).max(1).log10().plus(1).log10().root(0.45).plus(6).floor()
+		player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.max(target);
+	} else {
+		player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1);
+		let resetted = 0
+		while (resetted<=5) {
+			player.elementary.foam.amounts[resetted] = new ExpantaNum(0)
+			for (let i=0;i<3;i++) player.elementary.foam.upgrades[i+(resetted*3)] = new ExpantaNum(0)
+			resetted++
+		}
 	}
 }
 

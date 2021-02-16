@@ -14,6 +14,7 @@
 		You have <span id="mltEnergy" class="mlttxt"></span> Multiversal Energy (<span id="totalME" class="mlttxt"></span> total)<br>
 		<span style="font-size: 12px">You have moved on from a Multiverse <span id="mltTimes" class="mlttxt"></span> times.</span><br><br>
 		<div class="band pnk">
+			<button id="mltReset2" class="btn locked" onclick="mltReset()"></button>
 			<table>
 				<tr>
 					<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
@@ -54,7 +55,7 @@
 			</div>
 		</div>
 		<div id="mltMilestones" class="mlttab">
-			<br><br><div id="mltMilestoneTable"></div>
+			<br><br><div id="mltMilestoneTable"></div><br><br><br>
 		</div>
 		<div id="quilts" class="mlttab">
 			<br><br>
@@ -70,7 +71,7 @@
 					<div class="mltMinorTitle">Multiversal Quilt II</div>
 					<div>Quilt Strength: <span id="quilt2Strength" class="mlttxt"></span>% (based on Knowledge)</div><br>
 					<div>Makes Endorsements <span id="quilt2Eff" class="mlttxt"></span>% more efficient</div><br>
-					<div>Also multiplies Theory Point gain from Theoriverse completions by <span id="quilt2Eff2" class="mlttxt"></span></div><br><br>
+					<div>Also multiplies Theory Point gain from Theoriverse completions<span id="quilt2Eff2Desc"></span> by <span id="quilt2Eff2" class="mlttxt"></span></div><br><br>
 					<button id="quiltUpg2" class="btn locked" onclick="buyQuiltUpg(2)"></button>
 				</div>
 				<div class="flexContainer" style="background-color: rgba(0, 247, 255, 0.4); width: 33%; min-height: 400px;">
@@ -283,6 +284,9 @@
 						<button id="mltnc" class="btn tb opt ob" onclick="changeOpt('mltnc', 0)">
 							Multiverse Confirmation: ON
 						</button>
+						<button id="hideMltBtn" class="btn tb opt ob" onclick="changeOpt('hideMltBtn', 0)">
+							Multiverse Reset Button: TOP OF SCREEN
+						</button>
 					</div>
 				</div>
 			</div>
@@ -396,7 +400,7 @@
 			</div>
 		</div>
 		<div id="achievements" class="tab" style="display: none;">
-			<div id="achDesc" class="band gn" style="z-index: 10"></div>
+			<div id="achDesc" class="band gn"></div>
 			<table id="achTable"></table>
 			<div id="achFin"></div>
 		</div>

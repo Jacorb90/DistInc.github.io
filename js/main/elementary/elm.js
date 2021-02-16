@@ -251,7 +251,9 @@ function elTick(diff) {
 	if (player.elementary.sky.unl) {
 		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(adjustGen(tmp.elm.sky.pionGain.times(diff), "sky"));
 		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(adjustGen(tmp.elm.sky.spinorGain.times(diff), "sky"));
+		if (hasMltMilestone(10)) player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().times(diff))
 	}
+	if (hasMltMilestone(7)) player.elementary.times = player.elementary.times.plus(getElementariesGained().times(diff))
 }
 
 function elmReset(force=false, auto=false) {

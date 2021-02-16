@@ -68,6 +68,8 @@ function updateOptionsHTML(){
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 		tmp.el.mltnc.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"))
 		tmp.el.mltnc.setTxt("Multiverse Confirmation: "+ (player.options.mltnc ? "OFF" : "ON"));
+		tmp.el.hideMltBtn.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"));
+		tmp.el.hideMltBtn.setTxt("Multiverse Reset Button: "+(player.options.hideMltBtn ? "MULTIVERSE TAB" : "TOP OF SCREEN"))
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));
 		tmp.el.hot.setTxt("Hotkeys: "+(player.options.hot?"ON":"OFF"))
 		tmp.el.dcPulse.changeStyle("visibility", ((player.dc.unl||player.inf.endorsements.gt(0)||player.elementary.times.gt(0))?"visible":"hidden"))
@@ -1220,8 +1222,8 @@ function updateTheoryverseMainHTML(){
 	if (elmTab=="theory") {
 		tmp.el.thp.setTxt(showNum(player.elementary.theory.points))
 		if (thTab=="tv") {
-			tmp.el.theoriverse.setTxt(HCTVal("tv").gt(-1)?"Trapped in the Theoriverse!":player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth)))
-			tmp.el.theoriverse.setTooltip("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")")
+			tmp.el.theoriverse.setHTML(HCTVal("tv").gt(-1)?"Trapped in the Theoriverse!":hasMltMilestone(4)?("Theoriverse Depth: "+showNum(player.elementary.theory.depth)+("<br>Total TP: "+showNum(tmp.elm.theory.gainMult.times(ExpantaNum.sub(1, ExpantaNum.pow(2, player.elementary.theory.depth))).times(-1)))):(player.elementary.theory.active?("Exit The Theoriverse early for no reward."):("Enter The Theoriverse at Depth "+showNum(player.elementary.theory.depth))))
+			tmp.el.theoriverse.setTooltip(hasMltMilestone(4)?("Nerf: x^"+showNum(tmp.elm.theory.nerf)):("Entering The Theoriverse does an Elementary reset, and puts you in The Theoriverse, which will make all pre-Elementary resource generation (x^"+showNum(tmp.elm.theory.nerf)+")"))
 		}
 		updateSuperSymetryHTML()
 		updateTheoryTreeHTML()
@@ -1404,7 +1406,7 @@ function updateQFHTML() {
 				})
 				tmp.el["qf"+x+"Cost"+i].setTxt(showNum(cost))
 				tmp.el["qf"+x+"Bought"+i].setTxt(formatDistance(player.elementary.foam.upgrades[(x-1)*3+(i-1)]))
-				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2))
+				tmp.el["qf"+x+"Auto"+i].setDisplay(player.elementary.entropy.bestDepth.gte(x+2)||hasMltMilestone(4))
 				tmp.el["qf"+x+"Auto"+i].setTxt("Auto: "+(player.elementary.foam.autoUnl[(x-1)*3+(i-1)]?"ON":"OFF"))
 			}
 			tmp.el["qf"+x+"NextUnl"].setDisplay(x==5||player.elementary.foam.maxDepth.eq(x))
@@ -1502,9 +1504,9 @@ function updateOverallMultiverseHTML() {
 	tmp.el.multiversestabbtn.setDisplay(player.mlt.times.gt(0))
 	tmp.el.mltContainer.setDisplay(player.tab=="mlt")
 	tmp.el.mltContainer.setClasses({first: player.mlt.times.lte(1)&&player.distance.eq(0)})
-	tmp.el.mltReset.setDisplay(tmp.mlt.can);
+	tmp.el.mltReset.setDisplay(tmp.mlt.can&&!player.options.hideMltBtn);
 	tmp.el.mltReset.setClasses({ btn: true, locked: !tmp.mlt.can, mlt: tmp.mlt.can });
-	if (tmp.mlt.can) {
+	if (tmp.mlt.can&&!player.options.hideMltBtn) {
 		tmp.el.mltReset.setHTML(
 			(player.mlt.times.eq(0)?("You have travelled across the entire multiverse, you must move on."):("Obliterate the multiverse to create <span class='mlttxt'>" +
 			showNum(tmp.mlt.layer.gain) +
@@ -1515,6 +1517,15 @@ function updateOverallMultiverseHTML() {
 		tmp.el.mltEnergy.setTxt(showNum(player.mlt.energy));
 		tmp.el.totalME.setTxt(showNum(player.mlt.totalEnergy));
 		tmp.el.mltTimes.setTxt(showNum(player.mlt.times));
+		tmp.el.mltReset2.setDisplay(tmp.mlt.can&&player.options.hideMltBtn);
+		tmp.el.mltReset2.setClasses({ btn: true, locked: !tmp.mlt.can, mlt: tmp.mlt.can });
+		if (tmp.mlt.can&&player.options.hideMltBtn) {
+			tmp.el.mltReset2.setHTML(
+				(player.mlt.times.eq(0)?("You have travelled across the entire multiverse, you must move on."):("Obliterate the multiverse to create <span class='mlttxt'>" +
+				showNum(tmp.mlt.layer.gain) +
+				"</span> Multiversal Energy."))
+			);
+		}
 		
 		if (mltTab == "mltMap") {
 			for (let m=1;m<=MULTIVERSES;m++) {
@@ -1539,6 +1550,7 @@ function updateOverallMultiverseHTML() {
 				tmp.el["quiltUpg"+i].setClasses({btn: true, locked: player.mlt.energy.lt(tmp.mlt.quilts[i].upgCost), mlt: player.mlt.energy.gte(tmp.mlt.quilts[i].upgCost)})
 				tmp.el["quiltUpg"+i].setHTML("Energize this Quilt by 10%<br>Currently: +"+showNum(tmp.mlt.quilts[i].upgEff.times(100))+"%<br>Cost: "+showNum(tmp.mlt.quilts[i].upgCost)+" ME")
 			}
+			tmp.el.quilt2Eff2Desc.setTxt(hasMltMilestone(6)?", Pion gain, & Spinor gain":"")
 		}
 	}
 }

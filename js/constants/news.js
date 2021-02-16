@@ -101,6 +101,7 @@ const NEWS_DATA = {
 	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
 	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
 	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
+	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],
 
 	// Distance-based Conditions
 	d1: [

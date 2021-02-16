@@ -200,6 +200,30 @@ function gluonAutoTick(){
 	}
 }
 
+function theoriverseAutoPerSec() {
+	if (player.automators["theoriverse"] && player.elementary.theory.unl && hasMltMilestone(4)) {
+		if (HCTVal("tv").gt(-1)) return;
+		let a = player.distance.div("1e1000000")
+		if (modeActive("easy")) a = a.root(5/6);
+		if (modeActive("hikers_dream")) {
+			a = a.root(4/3);
+			a = a.root(9/8);
+			a = a.root((modeActive("extreme+hikers_dream")?2.675:4) / 3)
+		}
+		if (modeActive("extreme")) a = a.root(1.25);
+		let target = a.logBase(1/0.8).root(4/3).plus(tmp.elm.theory.subbed)
+		if (target.gte(20)) target = target.log(20).plus(19)
+		target = target.floor();
+		let toAdd = target.sub(player.elementary.theory.depth.max(0))
+		let oldPoints = tmp.elm.theory.gainMult.times(ExpantaNum.sub(1, ExpantaNum.pow(2, player.elementary.theory.depth))).times(-1);
+		let newPoints = tmp.elm.theory.gainMult.times(ExpantaNum.sub(1, ExpantaNum.pow(2, target.max(player.elementary.theory.depth)))).times(-1);
+		if (toAdd.gt(0)) {
+			player.elementary.theory.points = player.elementary.theory.points.plus(newPoints.sub(oldPoints).max(0).round())
+			player.elementary.theory.depth = player.elementary.theory.depth.max(target);
+		}
+	}
+}
+
 function theoryTreeAutoTick(){
 	if (player.automators["tree_upgrades"]) {
 		if (player.elementary.theory.tree.unl) {
@@ -238,6 +262,11 @@ function energyAutoTick(){
 	}
 }
 
+function pionSpinorAutoTick() {
+	if (player.automators["pion_field"] && hasMltMilestone(8)) maxField("pions")
+	if (player.automators["spinor_field"] && hasMltMilestone(9)) maxField("spinors")
+}
+
 function autoTick(diff) {
 	normalAutoTick(diff)
 	furnaceAutoTick()
@@ -257,10 +286,12 @@ function autoTick(diff) {
 	theoryBoosterAutoTick()
 	entropyAutoTick()
 	entropyUpgAutoTick()
-	 energyAutoTick()
+	energyAutoTick()
+	pionSpinorAutoTick()
 }
 
 function autoPerSec() {
+	theoriverseAutoPerSec()
 	if (player.automators["foam_unlocks"]) {
 		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
 		else refoam();

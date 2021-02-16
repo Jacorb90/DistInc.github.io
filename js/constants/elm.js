@@ -3,7 +3,7 @@ const ELM_TABS = {
 		return true;
 	},
 	bosons: function () {
-		return player.elementary.times.gte(2);
+		return player.elementary.times.gte(2)||hasMltMilestone(3);
 	},
 	theory: function () {
 		return player.elementary.theory.unl;

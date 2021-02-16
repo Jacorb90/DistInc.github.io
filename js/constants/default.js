@@ -14,6 +14,7 @@ const DEFAULT_START = {
 		newst: true,
 		elc: true,
 		mltnc: false,
+		hideMltBtn: false,
 		saveImp: "new save",
 		hot: true,
 		featPerc: "logarithm",

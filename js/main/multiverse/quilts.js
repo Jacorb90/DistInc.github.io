@@ -14,10 +14,14 @@ function updateQuilts() {
 
 function getQuiltStrength(x) {
 	if (player.mlt.times.eq(0)) return new ExpantaNum(0);
-	if (x==1) return player.distance.max(1).logBase(DISTANCES.mlt).plus(1).div(2);
-	else if (x==2) return player.inf.knowledge.max(1).logBase("1e8500").plus(1).div(2);
-	else if (x==3) return player.elementary.particles.max(1).logBase(1e150).plus(1).div(2);
-	else return new ExpantaNum(0);
+	let base = new ExpantaNum(0);
+	if (x==1) base = player.distance.max(1).logBase(DISTANCES.mlt);
+	else if (x==2) base = player.inf.knowledge.max(1).logBase("1e8500");
+	else if (x==3) base = player.elementary.particles.max(1).logBase(1e150);
+	
+	if (base.gte(4)) base = base.root(1.5).times(1.6);
+	
+	return base.plus(1).div(2);
 }
 
 function getQuiltEff(x) {

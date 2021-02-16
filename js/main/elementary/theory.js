@@ -36,6 +36,7 @@ function updateTempTheoriverse() {
 	if (modeActive("easy")) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(5/6);
 	if (!tmp.elm.theory.start) tmp.elm.theory.start = function() {
 		if (!player.elementary.theory.unl) return
+		if (hasMltMilestone(4)) return
 		if (HCTVal("tv").gt(-1)) return
 		tmp.elm.layer.reset(true)
 		player.elementary.theory.active = !player.elementary.theory.active

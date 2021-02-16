@@ -182,7 +182,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
+	if (sav.mlt?(sav.mlt.times?ExpantaNum.gt(sav.mlt.times, 0):false):false) {
+		info += "Total ME: "+showNum(new ExpantaNum(sav.mlt.totalEnergy))+", Unique Multiverses Completed: "+(sav.mlt.highestCompleted+1)+", Total Quilt Upgrades: "+showNum(new ExpantaNum(sav.mlt.quiltUpgs.reduce((a,c) => ExpantaNum.add(a,c))))+", "
+	} else if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
 		info += "Skyrmions: "+showNum(new ExpantaNum(sav.elementary.sky.amount))+", Pions: "+showNum(new ExpantaNum(sav.elementary.sky.pions.amount))+", Spinors: "+showNum(new ExpantaNum(sav.elementary.sky.spinors.amount))+", "
 	} else if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
 		info += "Quantum Foam: "+showNum(new ExpantaNum(sav.elementary.foam.amounts[0]))+", "
@@ -256,7 +258,7 @@ function getInfo(sav) {
 			info += "Rank Cheapener " + showNum(new ExpantaNum(sav.rankCheap || 0)) + ", ";
 		info += "Rank " + showNum(new ExpantaNum(sav.rank)) + ", ";
 	}
-	info += "Distance: " + formatDistance(new ExpantaNum(sav.distance));
+	info += "Distance: " + formatDistance(new ExpantaNum(sav.distance), sav.mlt?(sav.mlt.times?ExpantaNum.lt(sav.mlt.times, 1):true):true);
 	return info;
 }
 

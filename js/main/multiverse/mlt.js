@@ -14,13 +14,33 @@ function setMultiverseResetFunction() {
 		
 		// Keep stuff on Multiverse reset
 		if (hasMltMilestone(1)) {
-			player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades.filter(x => !DE_HIGGS_UPGS.includes(x))
+			if (!hasMltMilestone(3)) player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades.filter(x => !DE_HIGGS_UPGS.includes(x))
 			player.tr.upgrades = prev.tr.upgrades;
-			if (prev.mlt.active != 1) player.inf.stadium.completions = prev.inf.stadium.completions;
+			player.inf.stadium.completions = prev.inf.stadium.completions;
 		}
-		if (hasMltMilestone(2)) player.elementary.entropy.upgrades = prev.elementary.entropy.upgrades.filter(x => KEEP_ENTUPGS_SKY.includes(x))
+		if (hasMltMilestone(2)) {
+			player.elementary.times = new ExpantaNum(1);
+			player.elementary.entropy.upgrades = prev.elementary.entropy.upgrades.filter(x => KEEP_ENTUPGS_SKY.includes(x));
+		}
+		if (hasMltMilestone(3)) {
+			player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades
+			player.elementary.theory.unl = prev.elementary.theory.unl;
+			player.elementary.theory.supersymmetry.unl = prev.elementary.theory.supersymmetry.unl;
+			player.elementary.theory.tree.unl = prev.elementary.theory.tree.unl;
+			player.elementary.theory.strings.unl = prev.elementary.theory.strings.unl;
+			player.elementary.theory.preons.unl = prev.elementary.theory.preons.unl;
+			player.elementary.theory.accelerons.unl = prev.elementary.theory.accelerons.unl;
+			player.elementary.theory.accelerons.expanders = prev.elementary.theory.accelerons.expanders;
+			player.elementary.theory.inflatons.unl = prev.elementary.theory.inflatons.unl;
+		}
+		if (hasMltMilestone(5)) {
+			player.elementary.hc.best = prev.elementary.hc.best;
+			player.elementary.hc.selectors = prev.elementary.hc.selectors;
+		} else updateHCSelectorInputs(true);
+		
 		player.elementary.fermions.quarks.type = prev.elementary.fermions.quarks.type;
 		player.elementary.fermions.leptons.type = prev.elementary.fermions.leptons.type;
+		player.elementary.foam.autoUnl = prev.elementary.foam.autoUnl
 		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
 			
 		// Bugfixes
@@ -34,7 +54,9 @@ function updateMultiverseLayer() {
 	tmp.mlt.can = player.distance.gte(DISTANCES.mlt)
 	if (!tmp.mlt.gain) tmp.mlt.gain = function() { 
 		if (player.distance.lt(DISTANCES.mlt)) return new ExpantaNum(0);
-		let gain = ExpantaNum.pow(2, player.distance.logBase(DISTANCES.mlt).sub(1)).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active))
+		let exp = player.distance.logBase(DISTANCES.mlt).sub(1);
+		if (exp.gte(1)) exp = exp.sqrt();
+		let gain = ExpantaNum.pow(2, exp).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active))
 		return gain.floor();
 	}
 	tmp.mlt.layer = new Layer("multiverse", tmp.mlt.can, "normal", true, "mlt", true)

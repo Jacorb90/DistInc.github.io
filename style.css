@@ -1422,7 +1422,6 @@ table {
 }
 
 #achDesc {
-	position: sticky; 
 	top: 0px; 
 	max-height: 12px !important;
 }
@@ -1667,6 +1666,11 @@ table {
 	box-shadow: 3px 4px 0px 0px #e7cce8;
 	text-shadow: none;
 	color: black;
+}
+
+.btn.sky:hover > span {
+	color: #000000;
+	transition-duration: 0.5s;
 }
 
 .btn.sky:active {
@@ -1978,6 +1982,7 @@ table {
 	padding: 4px 12px !important;
 	margin-left: 5px;
 	margin-right: 5px;
+	margin-top: 0px !important;
 	animation: mltBg 10s infinite;
 }
 

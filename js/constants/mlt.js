@@ -46,7 +46,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 2;
+const MLT_MILESTONE_NUM = 10;
 
 const MLT_MILESTONES = [
 	{
@@ -54,28 +54,31 @@ const MLT_MILESTONES = [
 		desc: "Keep Higgs Upgrades on reset (except the ones that are unlocked through a Dark Expander)",
 	}, {
 		req: new ExpantaNum(2),
-		desc: "Keep Entropy Upgrades on reset (but only the ones that are kept on Skyrmion resets)",
-	}, /*{
+		desc: "Keep Entropy Upgrades on reset (but only the ones that are kept on Skyrmion resets), and start with 1 Elementary",
+	}, {
 		req: new ExpantaNum(3),
-		desc: "Keep Theory Unlocks, Dark Expanders, and all Higgs Upgrades on reset",
+		desc: "Start with Bosons unlocked, and keep Theory Unlocks, Dark Expanders, and all Higgs Upgrades on reset",
 	}, {
 		req: new ExpantaNum(4),
-		desc: "Unlock Auto-Theoriverse, but you cannot enter the Theoriverse manually",
+		desc: "Unlock Auto-Theoriverse, but you cannot enter the Theoriverse manually. Foam autobuyers are always unlocked, Reforming Foam resets nothing, and can be done in bulk.",
 	}, {
 		req: new ExpantaNum(5),
 		desc: "Keep your best Hadronic Score on reset",
 	}, {
+		req: new ExpantaNum(6),
+		desc: "Multiversal Quilt II's second effect also affects Pion & Spinor gain.",
+	}, {
 		req: new ExpantaNum(7),
-		desc: "Gain 100% of Elementaries gained on reset",
+		desc: "Gain 100% of Elementaries gained on reset every second",
 	}, {
 		req: new ExpantaNum(8),
-		desc: "Unlock Auto-Pion Upgrades",
+		desc: "Unlock Auto-Pion Field",
 	}, {
 		req: new ExpantaNum(9),
-		desc: "Unlock Auto-Spinor Upgrades",
+		desc: "Unlock Auto-Spinor Field",
 	}, {
 		req: new ExpantaNum(10),
-		desc: "Unlock Auto-Skyrmions",
+		desc: "Gain 100% of Skyrmions gained on reset every second",
 	}
-	*/
+	
 ]
