@@ -51,7 +51,7 @@ function canSkyReset() {
 }
 
 function getSkyGain() {
-	if (!canSkyReset()) return false;
+	if (!canSkyReset()) return new ExpantaNum(0);
 	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2])).pow(2);
 	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
 	if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[8])
@@ -243,6 +243,12 @@ function maxField(type, lims={}, ignoreUpgReq=false) {
 		if (bulk.lt(1)) continue;
 		player.elementary.sky[type].field[i] = ExpantaNum.add(ExpantaNum.max(player.elementary.sky[type].field[i]||0, 0), bulk).max(0)
 	}
+}
+
+function maxBothFields() {
+	if (!tmp.ach[178].has) return;
+	maxField("pion")
+	maxField("spinor")
 }
 
 function exportField(type) {

@@ -6,8 +6,8 @@ function isTabShown(name) {
 
 function getTabBtnsShown() {
 	let btns = [];
-	for (j = 0; j < Object.keys(TABBTN_SHOWN).length; j++)
-		if (Object.values(TABBTN_SHOWN)[i]()) btns.push(Object.keys(TABBTN_SHOWN)[i]);
+	for (j = 0; j < Object.keys(TABBTN_SHOWN).length; j++) 
+		if (Object.values(TABBTN_SHOWN)[j]()) btns.push(Object.keys(TABBTN_SHOWN)[j]);
 	return btns;
 }
 
@@ -18,9 +18,10 @@ function updateTabs() {
 		el.setDisplay(isTabShown(tabs[i].id));
 		var elT = new Element(tabs[i].id + "tabbtn");
 		elT.changeStyle("visibility", getTabBtnsShown().includes(tabs[i].id)?"visible":"hidden");
+		elT.setDisplay(!player.options.tabsHidden.includes(tabs[i].id))
 	}
-	new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
-	new Element("energytabbtn").setDisplay(player.modes.includes("hikers_dream"))
+	if (!player.options.tabsHidden.includes("furnace")) new Element("furnacetabbtn").setDisplay(player.modes.includes("extreme"))
+	if (!player.options.tabsHidden.includes("energy")) new Element("energytabbtn").setDisplay(player.modes.includes("hikers_dream"))
 }
 
 function showTab(name) {

@@ -18,6 +18,7 @@ const DEFAULT_START = {
 		saveImp: "new save",
 		hot: true,
 		featPerc: "logarithm",
+		tabsHidden: [],
 		dcPulse: true,
 		fonts: "courier",
 		hideAch: false,
@@ -244,5 +245,6 @@ const DEFAULT_START = {
 		highestCompleted: 0,
 		active: 0,
 		quiltUpgs: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+		mlt1selected: [],
 	},
 };

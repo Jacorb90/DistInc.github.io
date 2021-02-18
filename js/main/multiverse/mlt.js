@@ -25,13 +25,13 @@ function setMultiverseResetFunction() {
 		if (hasMltMilestone(3)) {
 			player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades
 			player.elementary.theory.unl = prev.elementary.theory.unl;
-			player.elementary.theory.supersymmetry.unl = prev.elementary.theory.supersymmetry.unl;
-			player.elementary.theory.tree.unl = prev.elementary.theory.tree.unl;
-			player.elementary.theory.strings.unl = prev.elementary.theory.strings.unl;
-			player.elementary.theory.preons.unl = prev.elementary.theory.preons.unl;
-			player.elementary.theory.accelerons.unl = prev.elementary.theory.accelerons.unl;
-			player.elementary.theory.accelerons.expanders = prev.elementary.theory.accelerons.expanders;
-			player.elementary.theory.inflatons.unl = prev.elementary.theory.inflatons.unl;
+			player.elementary.theory.supersymmetry.unl = true;
+			player.elementary.theory.tree.unl = true;
+			player.elementary.theory.strings.unl = true;
+			player.elementary.theory.preons.unl = true;
+			player.elementary.theory.accelerons.unl = true;
+			player.elementary.theory.accelerons.expanders = new ExpantaNum(5);
+			player.elementary.theory.inflatons.unl = true;
 		}
 		if (hasMltMilestone(5)) {
 			player.elementary.hc.best = prev.elementary.hc.best;
@@ -95,6 +95,10 @@ function multiversePaused() {
 	return player.mlt.active == "NONE" 
 }
 
+function mltActive(n) {
+	return player.mlt.active == n
+}
+
 function mltReset(force=false, auto=false) {
 	let c = player.distance.gte(DISTANCES.mlt);
 	let L = new Layer("multiverse", c, "multi-res", true, "mlt", true);
@@ -106,7 +110,11 @@ function setupMlt(m) {
 	mltSelected = m;
 }
 
-function mltUnlocked(m) { return player.mlt.bestEnergy.gte(MLT_DATA[m].req) }
+function mltUnlocked(m) { return player.mlt.energy.gte(MLT_DATA[m].req)||player.mlt.highestCompleted>=m }
+
+function mltCompleted(m) { return player.mlt.highestCompleted>=m }
+
+function mltRewardActive(m) { return mltActive(m) || mltCompleted(m) }
 
 function getMltDisplay(m) {
 	if (m=="NONE") return "";
@@ -114,18 +122,34 @@ function getMltDisplay(m) {
 	let display = "<span class='mltMinorTitle'>Multiverse "+(m==0?"Prime":m)+"</span><br><br>"
 	if (mltUnlocked(m)) {
 		display += (m==0?"":"Effect: ")+data.desc+"<br>"
-		if (data.reward) display += "<br>Reward: "+reward+"<br>"
+		if (data.reward) display += "<br>Reward: "+data.reward+"<br>"
 	} else display += "Req: "+showNum(data.req)+" Multiversal Energy";
+	if (data.notBalanced) display += "<br><br><b>NOT BALANCED</b>"
 	return display;
 }
 
 function startMultiverse(m) {
 	if (!mltUnlocked(m)) return;
-	if (player.mlt.active==mltSelected) {
+	if (player.mlt.active==m) {
 		player.tab = "main"
 		return;
 	}
 	if (!player.options.mltnc) if (!confirm("Are you sure you want to enter this Multiverse?")) return;
+	if (player.mlt.active!=m) mltReset(true);
+	if (m==1) {
+		if (!mltCompleted(1)) player.inf.stadium.completions = []
+		player.elementary.theory.unl = false;
+		player.elementary.theory.supersymmetry.unl = false;
+		player.elementary.theory.tree.unl = false;
+		player.elementary.theory.strings.unl = false;
+		player.elementary.theory.preons.unl = false;
+		player.elementary.theory.accelerons.unl = false;
+		player.elementary.theory.inflatons.unl = false;
+		player.elementary.hc.unl = false;
+		player.elementary.foam.unl = false;
+		player.elementary.entropy.unl = false;
+		player.elementary.sky.unl = false;
+	}
 	player.mlt.active = m;
 	player.tab = "main"
 	mltTab = "mltMap"

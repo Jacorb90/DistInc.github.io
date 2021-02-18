@@ -793,6 +793,7 @@ const STADIUM_REWARDS = {
 	drigganiz: "Pathogen Upgrades are 0.75% stronger for every achievement you have.",
 	effects: {
 		spaceon: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.spaceon();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
@@ -801,6 +802,7 @@ const STADIUM_REWARDS = {
 			return ret;
 		},
 		solaris: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.solaris();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25);
 			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret);
@@ -808,6 +810,7 @@ const STADIUM_REWARDS = {
 			return ret;
 		},
 		eternity: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.eternity();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1));
 			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7);
@@ -819,6 +822,7 @@ const STADIUM_REWARDS = {
 			return ret.max(1);
 		},
 		drigganiz: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.drigganiz();
 			let ret = ExpantaNum.mul(0.0075, player.achievements.length);
 			return ret;
 		}

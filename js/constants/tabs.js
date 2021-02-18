@@ -43,6 +43,25 @@ const TABBTN_SHOWN = {
 	},
 };
 
+const FULL_TAB_NAMES = {
+	main: "Main",
+	options: "Options",
+	statistics: "Statistics",
+	achievements: "Achievements",
+	energy: "Energy",
+	rockets: "Rockets",
+	furnace: "Furnace",
+	auto: "Automation",
+	tr: "Time Reversal",
+	collapse: "Universal Collapse",
+	pathogens: "Pathogens",
+	dc: "Dark Circle",
+	inf: "Infinity",
+	elementary: "Elementary",
+}
+
+const HIDE_WHITELIST = ["main","options"]
+
 const STAT_TABBTN_SHOWN = {
 	mainStats() { return true },
 	scalings() { return statScalingsShown },

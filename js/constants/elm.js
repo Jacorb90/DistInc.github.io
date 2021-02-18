@@ -6,18 +6,27 @@ const ELM_TABS = {
 		return player.elementary.times.gte(2)||hasMltMilestone(3);
 	},
 	theory: function () {
-		return player.elementary.theory.unl;
+		return player.elementary.theory.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	hc: function () {
-		return player.elementary.hc.unl;
+		return player.elementary.hc.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	foam: function() {
-		return player.elementary.foam.unl;
+		return player.elementary.foam.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	sky: function() {
-		return player.elementary.sky.unl;
+		return player.elementary.sky.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 };
+
+const FULL_ELM_NAMES = {
+	fermions: "Fermions",
+	bosons: "Bosons",
+	theory: "Theory",
+	hc: "Hadronic Challenge",
+	foam: "Quantum Foam",
+	sky: "Skyrmions",
+}
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
 const QUARK_DESCS = {
@@ -954,8 +963,16 @@ const SKY_FIELDS = {
 		spinorDesc: "Skyrmions boost Supersymmetric Particle gain.",
 		baseCost: new ExpantaNum(1e5),
 		costMult: new ExpantaNum(10),
-		pionEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(400) },
-		spinorEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(10) },
+		pionEff(bought) {
+			let base = player.elementary.sky.amount.plus(1).pow(bought);
+			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
+			return base.pow(400) 
+		},
+		spinorEff(bought) { 
+			let base = player.elementary.sky.amount.plus(1).pow(bought)
+			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
+			return base.pow(10) 
+		},
 		desc(eff) { return showNum(eff)+"x" },
 	},
 	6: {
@@ -1025,7 +1042,10 @@ const SKY_FIELDS = {
 		baseCost: new ExpantaNum(1e43),
 		costMult: new ExpantaNum(1e12),
 		pionEff(bought) { return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) },
-		spinorEff(bought) { return ExpantaNum.add(bought, 1).pow(1.65) },
+		spinorEff(bought) { 
+			if (bought.gte(2)) bought = bought.logBase(2).plus(1).root(5)
+			return ExpantaNum.add(bought, 1).pow(1.65) 
+		},
 		desc(eff) { return showNum(eff) },
 	},
 	13: {

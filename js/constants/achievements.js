@@ -154,6 +154,8 @@ const ACH_DATA = {
 		176: "Entering Reality",
 		177: "Softcaps mean NOTHING",
 		178: "Multiverse Conquered",
+		
+		181: "Two In One Deal",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -308,6 +310,8 @@ const ACH_DATA = {
 		176: "Complete The Theoriverse at Depth 19.",
 		177: "Have Pathogen Upgrade Power of at least showNum(1625)%.",
 		178: "Reach formatDistance(4.4e1000000026).",
+		
+		181: "Reach formatDistance(1.936e2000000053).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -410,6 +414,6 @@ const ACH_DATA = {
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
-		178: "The Infinity popup is permanently disabled.",
+		178: 'The Infinity popup is permanently disabled, and unlock the "Max Pion & Spinor Fields" button.',
 	}
 };

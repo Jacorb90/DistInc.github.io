@@ -555,14 +555,15 @@ function updateNormalStadiumHTML(){
 			locked: player.inf.stadium.current != "" && !(trapped || active),
 			inf: !(trapped || active || player.inf.stadium.current != "")
 		});
-		let showCurrent = STADIUM_REWARDS.effects[name] !== undefined;
+		let data = mltRewardActive(1)?MLT_1_STADIUM_REWARDS:STADIUM_REWARDS
+		let showCurrent = data.effects[name] !== undefined;
 		tmp.el[name + "Btm"].setHTML(
 			"Goal: " +
 				formatDistance(tmp.inf.stadium.goal(name)) +
 				"<br>Reward: " +
-				STADIUM_REWARDS[name] +
+				data[name] +
 				"<br>" +
-				(showCurrent ? "Currently: " + STADIUM_REWARDS.disp[name]() : "")
+				(showCurrent ? "Currently: " + data.disp[name]() : "")
 		);
 	}
 	tmp.el.exitStad.setDisplay(player.inf.stadium.current != "");
@@ -1470,6 +1471,7 @@ function updateSkyHTML() {
 			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0))
 			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount))
 			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff))
+			tmp.el.maxBothFields.setDisplay(tmp.ach[178].has)
 		} else if (skyTab == "pions") {
 			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))
 			tmp.el.pionAmt.setTxt(showNum(player.elementary.sky.pions.amount))
@@ -1504,9 +1506,9 @@ function updateOverallMultiverseHTML() {
 	tmp.el.multiversestabbtn.setDisplay(player.mlt.times.gt(0))
 	tmp.el.mltContainer.setDisplay(player.tab=="mlt")
 	tmp.el.mltContainer.setClasses({first: player.mlt.times.lte(1)&&player.distance.eq(0)})
-	tmp.el.mltReset.setDisplay(tmp.mlt.can&&!player.options.hideMltBtn);
+	tmp.el.mltReset.setDisplay(tmp.mlt.can&&(!player.options.hideMltBtn||player.mlt.times.eq(0)));
 	tmp.el.mltReset.setClasses({ btn: true, locked: !tmp.mlt.can, mlt: tmp.mlt.can });
-	if (tmp.mlt.can&&!player.options.hideMltBtn) {
+	if (tmp.mlt.can&&(!player.options.hideMltBtn||player.mlt.times.eq(0))) {
 		tmp.el.mltReset.setHTML(
 			(player.mlt.times.eq(0)?("You have travelled across the entire multiverse, you must move on."):("Obliterate the multiverse to create <span class='mlttxt'>" +
 			showNum(tmp.mlt.layer.gain) +

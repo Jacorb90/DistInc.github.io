@@ -20,7 +20,7 @@ function getFuelEff() {
 		.pow(0.05);
 	if (modeActive("hard")) eff = eff.sub(0.02);
 	if (modeActive('easy')) eff = eff.plus(0.012);
-	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(2).add(1);
+	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(mltRewardActive(1)?10:2).add(1);
 	if (nerfActive("noRF")) eff = new ExpantaNum(1);
 	return eff
 }

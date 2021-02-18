@@ -104,23 +104,24 @@ function startModes(modes) {
 	reload();
 }
 
-function setDropdown(dropdown, els, load=false) {
+function setDropdown(dropdown, els, load=false, type=0) {
 	let html = "";
 	for (let i = 0; i < Object.keys(els).length; i++) {
 		let el = els[Object.keys(els)[i]];
+		if (el.display!==undefined) if (!el.display) continue;
 		html += "<br>";
 		if (load) {
 			html += "<b>" + el.name + "</b><br>";
 			html += el.info + "<br>";
 			for (let x = 1; x <= el.buttons; x++)
 				html +=
-					"<button class='btn tb opt"+"' onclick='" +
+					"<button "+((el.display!==undefined)?(" style='display: "+(el.display?"":"none")+"'"):"")+"class='"+(el.classOnLoad?el.classOnLoad:"btn tb opt")+"' onclick='" +
 					el["onclick" + x] +
 					"' "+">" +
 					el["txt" + x] +
 					"</button> ";
-		} else html += "<button class='btn tb opt tt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
-		if (load) html += "<br><br>";
+		} else html += "<button "+((el.display!==undefined)?(" style='display: "+(el.display?"":"none")+"'"):"")+"class='"+(el.classOnLoad?(el.classOnLoad+" tt"):"btn tb opt tt")+"' onclick='" + el.onclick + "'>" + el.txt + "</button>";
+		if (load || el.bottomLineBreak) html += "<br><br>";
 	}
 	dropdown.setHTML(html + "<br><button class='btn tb opt' style='visibility: hidden;'></button>");
 }
@@ -169,10 +170,41 @@ function changeOpt(name, type) {
 		save();
 		saveOptions();
 		return;
+	} else if (type == 4) {
+		let data = TABBTN_SHOWN;
+		let types = Object.keys(data);
+		els.exit = {
+			txt: "EXIT",
+			classOnLoad: "btn tb opt redTint",
+			bottomLineBreak: true,
+			onclick: "this.parentElement.style.display=&quot;none&quot;;",
+		}
+		for (x = 0; x < types.length; x++) {
+			if (HIDE_WHITELIST.includes(types[x])) continue;
+			els[types[x]] = {
+				txt: FULL_TAB_NAMES[types[x]],
+				display: data[types[x]](),
+				classOnLoad: "btn tb opt"+(player.options[name].includes(types[x])?" optActive":""),
+				onclick: 
+					"toggleTabDisplay(&quot;"+types[x]+"&quot;, this); saveOptions();"
+			};
+		}
 	}
 	if (type>0) {
 		setDropdown(dropdown, els);
 		ddState = name;
+	}
+}
+
+function toggleTabDisplay(x, el) {
+	let extensions = el.className.split(" ").filter(x => x != "btn" && x != "tb" && x != "opt" && x != "optActive").join(" ")
+	if (extensions.length>0) extensions = " "+extensions
+	if (!player.options.tabsHidden.includes(x)) {
+		player.options.tabsHidden.push(x)
+		el.className = "btn tb opt optActive"+extensions
+	} else {
+		player.options.tabsHidden.splice(player.options.tabsHidden.indexOf(x), 1);
+		el.className = "btn tb opt"+extensions
 	}
 }
 

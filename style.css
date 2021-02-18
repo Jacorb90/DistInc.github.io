@@ -202,6 +202,10 @@ body {
 	background-color: #a30b78;
 }
 
+.redTint {
+	filter: sepia(90%) hue-rotate(-45deg) brightness(120%);
+}
+
 .pnkSeeThru {
 	background-color: rgba(163, 11, 120, 0.5);
 }
@@ -232,6 +236,10 @@ body {
 .r {
 	background-color: #730e0e !important;
 	color: white !important;
+}
+
+.optActive {
+	filter: brightness(50%);
 }
 
 table {

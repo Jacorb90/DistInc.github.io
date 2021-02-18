@@ -5,7 +5,7 @@ function updateTempTR() {
 	cubes = player.tr.cubes;
 	if (cubes.gte(tmp.tr.esc)) cubes = cubes.cbrt().times(Math.pow(tmp.tr.esc, 2 / 3));
 	tmp.tr.eff = cubes.plus(1).log10().plus(1).logBase(2);
-	if (tmp.inf) if (tmp.inf.stadium.completed("reality")) tmp.tr.eff = tmp.tr.eff.times(3);
+	if (tmp.inf) if (tmp.inf.stadium.completed("reality")) tmp.tr.eff = tmp.tr.eff.times(mltRewardActive(1)?8:3);
 }
 
 function getTimeCubeGain() {

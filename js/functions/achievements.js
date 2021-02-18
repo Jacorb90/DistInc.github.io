@@ -188,7 +188,7 @@ function checkR17Ach(){
 }
 
 function checkR18Ach() {
-	// Nothing yet
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 2))) tmp.ach[181].grant();
 }
 
 function updateAchievements() {

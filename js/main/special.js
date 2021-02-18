@@ -272,6 +272,7 @@ function updateTempSpecial() {
 	for (let i = 0; i < Object.keys(tmp.features).length; i++) {
 		let feature = Object.values(tmp.features)[i];
 		if (!(feature.name=="theory"&&player.elementary.theory.unl)) if (!feature.reached) {
+			if (mltActive(1) && (feature.name=="theory"||feature.name=="hadronic challenge"||feature.name=="quantum foam"||feature.name=="skyrmions")) continue;
 			tmp.nf = feature.name;
 			break;
 		}

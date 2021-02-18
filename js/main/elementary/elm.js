@@ -140,6 +140,22 @@ function updateElementaryTabs() {
 	};
 	if (!tmp.elm.showTab) tmp.elm.showTab = function (name) {
 		if (elmTab == name) return;
+		if (mltActive(1) && player.mlt.mlt1selected.length<2) {
+			if (name=="theory"||name=="hc"||name=="foam"||name=="sky") {
+				player.mlt.mlt1selected.push(name)
+				player.elementary[name].unl = true;
+				if (name=="theory" && hasMltMilestone(3)) {
+					player.elementary.theory.supersymmetry.unl = true;
+					player.elementary.theory.tree.unl = true;
+					player.elementary.theory.strings.unl = true;
+					player.elementary.theory.preons.unl = true;
+					player.elementary.theory.accelerons.unl = true;
+					player.elementary.theory.inflatons.unl = true;
+				} 
+				if (name=="foam") player.elementary.entropy.unl = true;
+				notifier.info("Unlocked "+FULL_ELM_NAMES[name]+"!")
+			}
+		}
 		elmTab = name;
 		tmp.elm.updateTabs();
 	};
@@ -269,4 +285,3 @@ function getElementariesGained() {
 	if (hasDE(4)) e = e.times(getGravBoostMult())
 	return e.max(1).floor()
 }
-

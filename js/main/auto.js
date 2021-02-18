@@ -235,7 +235,7 @@ function theoryTreeAutoTick(){
 }
 
 function theoryBoosterAutoTick() {
-	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17)) theoryBoost(true)
+	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17) && player.elementary.theory.unl) theoryBoost(true)
 }
 
 function entropyAutoTick(){
@@ -263,8 +263,8 @@ function energyAutoTick(){
 }
 
 function pionSpinorAutoTick() {
-	if (player.automators["pion_field"] && hasMltMilestone(8)) maxField("pions")
-	if (player.automators["spinor_field"] && hasMltMilestone(9)) maxField("spinors")
+	if (player.automators["pion_field"] && hasMltMilestone(8) && player.elementary.sky.unl) maxField("pions")
+	if (player.automators["spinor_field"] && hasMltMilestone(9) && player.elementary.sky.unl) maxField("spinors")
 }
 
 function autoTick(diff) {
@@ -292,7 +292,7 @@ function autoTick(diff) {
 
 function autoPerSec() {
 	theoriverseAutoPerSec()
-	if (player.automators["foam_unlocks"]) {
+	if (player.automators["foam_unlocks"] && player.elementary.foam.unl) {
 		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
 		else refoam();
 	}

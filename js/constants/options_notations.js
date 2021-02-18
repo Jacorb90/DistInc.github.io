@@ -14,6 +14,7 @@ const OPT_NAMES = {
 	fonts: ["verdana", "courier", "arial", "times", "Comic Sans MS"],
 	visUpd: ["every tick", "every 2 ticks", "every 5 ticks", "every 20 ticks"],
 };
+
 const AUTOSAVE_TIME = 12;
 const MAX_SAVES = 25;
 const VIS_UPDS = {

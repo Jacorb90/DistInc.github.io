@@ -276,7 +276,7 @@ function setupHTML() {
 	// Plasma Boosts
 	setupPlasmaBoosts()
 	
-	// Multiverse Milestones
+	// Multiverse Stuff
 	setupMltMilestoneTable()
 	
 	// Version
@@ -337,11 +337,13 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true;
 	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10) && !tmp.ach[178].has) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
-	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
-	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
-	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
-	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
-	if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
+	if (!mltActive(1)) {
+		if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
+		if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
+		if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+		if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+		if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
+	} 
 }
 
 document.onkeyup = function(e) {
