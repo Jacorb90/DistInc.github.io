@@ -47,6 +47,7 @@ function setMultiverseResetFunction() {
 		infTab = "infinity"
 		elmTab = "fermions"
 		player.inf.unl = true;
+		player.mlt.mlt1selected = [];
 	};
 }
 

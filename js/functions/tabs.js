@@ -12,6 +12,7 @@ function getTabBtnsShown() {
 }
 
 function updateTabs() {
+	if (player.options.tabsHidden===undefined) player.options.tabsHidden = [];
 	var tabs = document.getElementsByClassName("tab");
 	for (i = 0; i < tabs.length; i++) {
 		var el = new Element(tabs[i].id);
