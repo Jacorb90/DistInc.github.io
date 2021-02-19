@@ -1538,11 +1538,16 @@ function updateOverallMultiverseHTML() {
 				tmp.el.mltDataTxt.setHTML(getMltDisplay(mltSelected));
 				tmp.el.mltStart.setDisplay(mltUnlocked(mltSelected));
 				tmp.el.mltStart.setTxt((player.mlt.active==mltSelected)?"Resume this Multiverse":"Enter the Multiverse")
+				tmp.el.mltUnl.setDisplay(player.mlt.highestUnlocked<mltSelected && mltSelected>0)
+				if (player.mlt.highestUnlocked<mltSelected && mltSelected>0) {
+					tmp.el.mltUnl.setClasses({btn: true, locked: player.mlt.energy.lt(MLT_DATA[mltSelected].req), mlt: player.mlt.energy.gte(MLT_DATA[mltSelected].req)})
+				}
 			}
 		} else if (mltTab == "mltMilestones") {
 			for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 				let has = hasMltMilestone(r);
 				for (let i=1;i<=2;i++) tmp.el["mltMil"+r+String(i)].changeStyle("background", has?"rgba(79, 240, 109, 0.4)":"none")
+				if (tmp.el["mltMil"+r+"effDesc"]) tmp.el["mltMil"+r+"effDesc"].setHTML(MLT_MILESTONES[r-1].effectDesc())
 			}
 		} else if (mltTab == "quilts") {
 			for (let i=1;i<=3;i++) {

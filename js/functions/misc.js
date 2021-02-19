@@ -183,6 +183,10 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.autoModes === undefined) ret.autoModes = {};
 	if (ret.autoTxt === undefined) ret.autoTxt = {};
 	if (ret.options.tabsHidden === undefined) ret.options.tabsHidden = []; // just in case
+	if (ret.mlt.highestUnlocked === undefined) {
+		ret.mlt.highestUnlocked = 0;
+		if (ret.mlt.highestCompleted>=1 || ret.mlt.active==1) ret.mlt.highestUnlocked = 1;
+	}
 	if (ret.mlt.mlt1selected === undefined) ret.mlt.mlt1selected = [];
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);

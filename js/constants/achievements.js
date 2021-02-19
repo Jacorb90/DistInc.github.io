@@ -156,6 +156,7 @@ const ACH_DATA = {
 		178: "Multiverse Conquered",
 		
 		181: "Two In One Deal",
+		182: "Multiverse of Madness",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -312,6 +313,7 @@ const ACH_DATA = {
 		178: "Reach formatDistance(4.4e1000000026).",
 		
 		181: "Reach formatDistance(1.936e2000000053).",
+		182: "Reach formatDistance(1.7868e3500000093) without any Theoriverse completions.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

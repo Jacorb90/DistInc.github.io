@@ -42,18 +42,25 @@ function updateTempSkyrmions() {
 }
 
 // Skyrmions
+function getSkyReqData(n, direct=false) {
+	let req = SKY_REQ[n]
+	if ((hasMltMilestone(11)||direct=="mlt") && tmp.mlt) req = ExpantaNum.root(req, tmp.mlt.mil11reward)
+	return req;
+}
+
 function canSkyReset() {
 	if (!player.elementary.sky.unl) return false;
-	if (player.distance.lt(SKY_REQ[0])) return false;
-	if (player.elementary.fermions.quarks.amount.lt(SKY_REQ[1])) return false;
-	if (player.elementary.fermions.leptons.amount.lt(SKY_REQ[2])) return false;
+	if (player.distance.lt(getSkyReqData(0))) return false;
+	if (player.elementary.fermions.quarks.amount.lt(getSkyReqData(1))) return false;
+	if (player.elementary.fermions.leptons.amount.lt(getSkyReqData(2))) return false;
 	return true;
 }
 
 function getSkyGain() {
 	if (!canSkyReset()) return new ExpantaNum(0);
-	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2])).pow(2);
+	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(getSkyReqData(1)).times(player.elementary.fermions.leptons.amount.max(1).logBase(getSkyReqData(2))).pow(2);
 	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
+	if (mltRewardActive(1) && tmp.mlt) gain = gain.times(tmp.mlt.mlt1reward)
 	if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[8])
 	return gain.floor();
 }

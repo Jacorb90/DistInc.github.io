@@ -219,9 +219,9 @@ function loadTempFeatures() {
 			name: "skyrmions",
 			res_amt: 3,
 			req: [
-				new ExpantaNum(SKY_REQ[0]),
-				new ExpantaNum(SKY_REQ[1]),
-				new ExpantaNum(SKY_REQ[2])
+				new ExpantaNum(getSkyReqData(0)),
+				new ExpantaNum(getSkyReqData(1)),
+				new ExpantaNum(getSkyReqData(2))
 			],
 			res: ["distance", function() { return player.elementary.fermions.quarks.amount }, function() { return player.elementary.fermions.leptons.amount }],
 			resName: ["distance", "quarks", "leptons"],
@@ -232,16 +232,16 @@ function loadTempFeatures() {
 					return player.distance
 						.max(1)
 						.log10()
-						.div(new ExpantaNum(SKY_REQ[0]).log10())
+						.div(new ExpantaNum(getSkyReqData(0)).log10())
 						.min(1)
-						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[1]).log10()).min(1))
-						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[2]).log10()).min(1));
+						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(getSkyReqData(1)).log10()).min(1))
+						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(getSkyReqData(2)).log10()).min(1));
 				} else {
 					return player.distance
-						.div(SKY_REQ[0])
+						.div(getSkyReqData(0))
 						.min(1)
-						.times(player.elementary.fermions.quarks.amount.div(SKY_REQ[1]).min(1))
-						.times(player.elementary.fermions.leptons.amount.div(SKY_REQ[2]).min(1));
+						.times(player.elementary.fermions.quarks.amount.div(getSkyReqData(1)).min(1))
+						.times(player.elementary.fermions.leptons.amount.div(getSkyReqData(2)).min(1));
 				}
 			},
 			spec: [false, true, true],
@@ -291,6 +291,15 @@ function updateTempSpecial() {
 	if (tmp.selAch === undefined || player.tab !== "achievements") tmp.selAch = 0;
 	tmp.ga = player.achievements.length;
 	tmp.ta = getAllAchievements().length;
+	
+	// Misc
+	if (tmp.nf=="skyrmions") {
+		tmp.features.skyrmions.req = [
+			new ExpantaNum(getSkyReqData(0)),
+			new ExpantaNum(getSkyReqData(1)),
+			new ExpantaNum(getSkyReqData(2))
+		]
+	}
 }
 
 function updateLayerMults() {

@@ -440,7 +440,9 @@ function getInfatonEff2NextAt(){
 */
 
 function getTreeUpgCap(x) {
+	x = parseInt(x+"")
 	let cap = new ExpantaNum(TREE_UPGS[x].cap)
-	if (player.elementary.foam.unl && tmp.elm.qf && QFB17_TARGETS.includes(parseInt(x+""))) cap = cap.plus(tmp.elm.qf.boost17)
+	if (player.elementary.foam.unl && tmp.elm.qf && QFB17_TARGETS.includes(x)) cap = cap.plus(tmp.elm.qf.boost17)
+	if (hasMltMilestone(13) && x>=14 && x<=19) cap = cap.plus(5);
 	return cap;
 }

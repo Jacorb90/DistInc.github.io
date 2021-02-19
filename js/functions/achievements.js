@@ -189,6 +189,7 @@ function checkR17Ach(){
 
 function checkR18Ach() {
 	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 2))) tmp.ach[181].grant();
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 3.5)) && player.elementary.theory.depth.eq(0)) tmp.ach[182].grant();
 }
 
 function updateAchievements() {

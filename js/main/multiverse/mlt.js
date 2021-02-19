@@ -1,9 +1,16 @@
 function updateTempMultiverse() {
 	if (!tmp.mlt) tmp.mlt = {};
 	
+	updateMiscMltStuff();
 	updateMultiverseLayer();
 	updateMultiverseTabs();
 	updateQuilts();
+}
+
+function updateMiscMltStuff() {
+	tmp.mlt.mil11reward = MLT_MILESTONES[10].effect(); // Milestone 11
+	tmp.mlt.mil12reward = MLT_MILESTONES[11].effect(); // Milestone 12
+	tmp.mlt.mlt1reward = MLT_DATA[1].effect(); // Multiverse 1
 }
 
 function setMultiverseResetFunction() {
@@ -111,9 +118,9 @@ function setupMlt(m) {
 	mltSelected = m;
 }
 
-function mltUnlocked(m) { return player.mlt.energy.gte(MLT_DATA[m].req)||player.mlt.highestCompleted>=m }
+function mltUnlocked(m) { return player.mlt.highestUnlocked>=m||player.mlt.highestCompleted>=m }
 
-function mltCompleted(m) { return player.mlt.highestCompleted>=m }
+function mltCompleted(m) { return player.mlt.highestUnlocked>=m&&player.mlt.highestCompleted>=m }
 
 function mltRewardActive(m) { return mltActive(m) || mltCompleted(m) }
 
@@ -124,9 +131,17 @@ function getMltDisplay(m) {
 	if (mltUnlocked(m)) {
 		display += (m==0?"":"Effect: ")+data.desc+"<br>"
 		if (data.reward) display += "<br>Reward: "+data.reward+"<br>"
-	} else display += "Req: "+showNum(data.req)+" Multiversal Energy";
-	if (data.notBalanced) display += "<br><br><b>NOT BALANCED</b>"
+		if (data.effectDesc) display += "Currently: "+data.effectDesc(tmp.mlt["mlt"+m+"reward"]?tmp.mlt["mlt"+m+"reward"]:data.effect())+"<br>"
+		if (data.notBalanced) display += "<br><br><b>NOT BALANCED</b>"
+	} else display += "Cost: "+showNum(data.req)+" Multiversal Energy";
 	return display;
+}
+
+function unlMlt(m) {
+	if (player.mlt.highestUnlocked>=m) return;
+	if (player.mlt.energy.lt(MLT_DATA[m].req)) return;
+	player.mlt.energy = player.mlt.energy.sub(MLT_DATA[m].req)
+	player.mlt.highestUnlocked = Math.max(player.mlt.highestUnlocked, m)
 }
 
 function startMultiverse(m) {
@@ -164,7 +179,9 @@ function setupMltMilestoneTable() {
 	for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 		let id = r-1;
 		data += "<tr><td id='mltMil"+r+"1' class='mltTD'>Req: "+showNum(MLT_MILESTONES[id].req)+" Total Multiversal Energy</td>"
-		data += "<td id='mltMil"+r+"2' class='mltTD'>"+MLT_MILESTONES[id].desc+"</td>"
+		data += "<td id='mltMil"+r+"2' class='mltTD'>"+MLT_MILESTONES[id].desc
+		if (MLT_MILESTONES[id].effectDesc) data += "<br><br><span id='mltMil"+r+"effDesc'></span>"
+		data += "</td>"
 	}
 	data += "</table>"
 	milestones.setHTML(data);

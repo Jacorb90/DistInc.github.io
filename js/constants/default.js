@@ -243,6 +243,7 @@ const DEFAULT_START = {
 		bestEnergy: new ExpantaNum(0),
 		totalEnergy: new ExpantaNum(0),
 		highestCompleted: 0,
+		highestUnlocked: 0,
 		active: 0,
 		quiltUpgs: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 		mlt1selected: [],

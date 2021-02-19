@@ -21,9 +21,11 @@ const MLT_DATA = {
 	},
 	1: {
 		notBalanced: true,
-		desc: "You can only unlock 2 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
-		reward: "Stadium Challenge rewards are much stronger, but their challenge goals are much higher.",
-		req: new ExpantaNum(3),
+		desc: "You can only unlock 3 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
+		reward: "Stadium Challenge rewards are much stronger, but their challenge goals are much higher. Distance boosts Skyrmion gain.",
+		effect: function() { return player.distance.plus(1).log10().plus(1).logBase(3).plus(1) },
+		effectDesc: function(e) { return showNum(e)+"x" },
+		req: new ExpantaNum(5),
 	},
 	2: {
 		desc: "???",
@@ -47,7 +49,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 10;
+const MLT_MILESTONE_NUM = 13;
 
 const MLT_MILESTONES = [
 	{
@@ -80,17 +82,33 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(10),
 		desc: "Gain 100% of Skyrmions gained on reset every second",
-	}
-	
+	}, {
+		req: new ExpantaNum(12),
+		desc: "Unspent Multiversal Energy reduces base Skyrmion requirements.",
+		effect: function() { 
+			let e = player.mlt.energy
+			if (e.gte(100)) e = ExpantaNum.pow(10, e.log10().times(2).sqrt())
+			return e.plus(1).logBase(1.6).plus(1).sqrt().min(1e3);
+		},
+		effectDesc: function() { return "Distance: "+formatDistance(SKY_REQ[0])+" -> "+formatDistance(getSkyReqData(0, "mlt"))+"<br>Quark Req: "+showNum(SKY_REQ[1])+" -> "+showNum(getSkyReqData(1, "mlt"))+"<br>Lepton Req: "+showNum(SKY_REQ[2])+" -> "+showNum(getSkyReqData(2, "mlt")) },
+	}, {
+		req: new ExpantaNum(16),
+		desc: "Total Multiversal Energy reduces the &Omega; Particle requirement increase.",
+		effect: function() { return player.mlt.totalEnergy.plus(1).log10().plus(1).log10().plus(1) },
+		effectDesc: function() { return showNum(2)+" -> "+showNum(ExpantaNum.root(2, tmp.mlt.mil12reward||1)) },
+	}, {
+		req: new ExpantaNum(25),
+		desc: "The Theory Tree Upgrades that boost String effects have their limit increased by 5, and the Graviton effect is raised to the power of 15.",
+	},
 ]
 
 const MLT_1_STADIUM_REWARDS = {
 	spaceon: "inf1;1 is stronger based on your Rockets & Rocket Fuel.",
 	solaris: "Superscaled Rank & Pathogen Upgrade scalings start later based on your Cadavers.",
-	infinity: "The Rocket Fuel effect is 10x as powerful.",
+	infinity: "The Rocket Fuel effect is 10x as powerful, and uses a better formula.",
 	eternity: "Endorsements & Ascension Power make Ranks boost Time Speed.",
-	reality: "Time Cubes are 8x as powerful.",
-	drigganiz: "Pathogen Upgrades are 1.5% stronger for every achievement you have.",
+	reality: "Rockets, Time Cubes, & Dark Cores are 8x as powerful.",
+	drigganiz: "Pathogen Upgrades are stronger based on your achievements gotten.",
 	effects: {
 		spaceon: function () {
 			let mult = tmp.inf.pantheon.chipBoost;
@@ -102,24 +120,24 @@ const MLT_1_STADIUM_REWARDS = {
 		},
 		solaris: function () {
 			let mult = tmp.inf.pantheon.chipBoost;
-			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25);
+			let ret = player.collapse.cadavers.plus(1).log10().plus(1).log10().pow(3.25);
 			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret);
 			ret = ret.times(mult);
 			return ret;
 		},
 		eternity: function () {
 			let mult = tmp.inf.pantheon.chipBoost;
-			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).log10().plus(1).log10().plus(1));
+			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).log10().plus(1).sqrt());
 			let exp = player.inf.endorsements.div(10).plus(1).logBase(1.75).plus(1).pow(9);
 			let totalExp = base.pow(exp);
-			if (totalExp.gte(Number.MAX_VALUE))
-				totalExp = totalExp.log10().times(Number.MAX_VALUE / Math.log10(Number.MAX_VALUE));
-			let ret = player.rank.pow(totalExp.log10());
+			if (totalExp.gte("1e50000"))
+				totalExp = totalExp.log10().times(ExpantaNum.div("1e50000", ExpantaNum.log10("1e50000")));
+			let ret = player.rank.pow(totalExp.logBase(2));
 			ret = ret.pow(mult);
-			return ret.max(1);
+			return ret.times(ExpantaNum.pow(10, 1e6)).max(1);
 		},
 		drigganiz: function () {
-			let ret = ExpantaNum.mul(0.015, player.achievements.length);
+			let ret = ExpantaNum.mul(0.015+0.0001*player.achievements.length, player.achievements.length);
 			return ret;
 		}
 	},
@@ -139,4 +157,5 @@ const MLT_1_STADIUM_REWARDS = {
 	}
 }
 
-const MLT_1_STADIUM_GOAL_EXP = new ExpantaNum(2e5)
+const MLT_1_ETERNITY_GOAL_EXP = new ExpantaNum(8e3)
+const MLT_1_STADIUM_GOAL_EXP = new ExpantaNum(1.5e5)

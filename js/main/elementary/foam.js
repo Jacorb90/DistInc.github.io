@@ -71,6 +71,7 @@ function updateTempEntropy() {
 	tmp.elm.entropy.gainMult = getEntropyGainMult()
 	tmp.elm.entropy.gain = getEntropyGain()
 	tmp.elm.entropy.omegaDiv = getOmegaParticleReqDiv()
+	tmp.elm.entropy.omegaBase = getOmegaParticleReqBase()
 	tmp.elm.entropy.omega = getOmegaParticles()
 	tmp.elm.entropy.omegaEff = getOmegaEff()
 }
@@ -321,16 +322,22 @@ function getOmegaParticleReqDiv() {
 	return div
 }
 
+function getOmegaParticleReqBase() {
+	let base = new ExpantaNum(2);
+	if (hasMltMilestone(12) && tmp.mlt) base = base.root(tmp.mlt.mil12reward)
+	return base;
+}
+
 function getOmegaParticles() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
-	let amt = player.elementary.entropy.best.times(tmp.elm.entropy.omegaDiv).plus(1).logBase(2)
+	let amt = player.elementary.entropy.best.times(tmp.elm.entropy.omegaDiv).plus(1).logBase(tmp.elm.entropy.omegaBase)
 	return amt.floor()
 }
 
 function getNextOmega() {
 	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
 	let omega = tmp.elm.entropy.omega.plus(1)
-	return ExpantaNum.pow(2, omega).sub(1).div(tmp.elm.entropy.omegaDiv)
+	return ExpantaNum.pow(tmp.elm.entropy.omegaBase, omega).sub(1).div(tmp.elm.entropy.omegaDiv)
 }
 
 function getOmegaEff() {

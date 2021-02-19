@@ -576,7 +576,7 @@ function updateTempStadium() {
 		if (player.inf.stadium.completions.includes(name))
 			l = Math.min(player.inf.stadium.completions.indexOf(name) + 1, l);
 		let goal = goal_data[l - 1] ? goal_data[l - 1] : new ExpantaNum(1 / 0);
-		if (mltRewardActive(1)) goal = ExpantaNum.pow(goal, MLT_1_STADIUM_GOAL_EXP)
+		if (mltRewardActive(1)) goal = ExpantaNum.pow(goal, name=="eternity"?MLT_1_ETERNITY_GOAL_EXP:MLT_1_STADIUM_GOAL_EXP)
 		return goal;
 	};
 	tmp.inf.stadium.canComplete =

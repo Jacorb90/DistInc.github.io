@@ -188,6 +188,7 @@ function updateTempGravitons(gaugeSpeed) {
 		.div(10)
 		.plus(1)
 		.pow(2.25);
+	if (hasMltMilestone(13)) tmp.elm.bos.gravEff = tmp.elm.bos.gravEff.pow(15)
 }
 
 function updateTempGauge() {

@@ -83,6 +83,7 @@ function calcDarkFlow(){
 function calcDarkCircleBonus(){
 	tmp.dc.power = new ExpantaNum(1);
 	if (player.tr.upgrades.includes(15) && !HCCBA("noTRU")) tmp.dc.power = tmp.dc.power.times(tr15Eff());
+	if (tmp.inf) if (tmp.inf.stadium.completed("reality") && mltRewardActive(1)) tmp.dc.power = tmp.dc.power.times(8);
 	tmp.dc.dmEff = player.dc.matter.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.1, tmp.dc.power));
 	tmp.dc.deEff = player.dc.energy.times(tmp.dc.flow).plus(1).pow(ExpantaNum.mul(0.125, tmp.dc.power));
 	if (tmp.inf && tmp.inf.upgs.has("6;8")) {
