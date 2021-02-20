@@ -123,6 +123,7 @@ function getSkyEff() {
 function getSkyUpgPow() {
 	if (!player.elementary.sky.unl) return new ExpantaNum(0);
 	let pow = new ExpantaNum(1)
+	if (mltActive(2)) pow = pow.times(0.6);
 	if (modeActive("extreme")) pow = pow.div(2);
 	if (tmp.fn) if (tmp.fn.pl.unl) pow = pow.times(tmp.fn.pl.boosts[3])
 	return pow;

@@ -654,8 +654,9 @@ function updateAngelsChipsHTML(){
 }
 
 function updateDerivativeHTML(){
-	for (let i = 0; i < DERV.length; i++) {
-		let name = DERV[i];
+	let de = getDervNames();
+	for (let i = 0; i < de.length; i++) {
+		let name = de[i];
 		tmp.el["dervDiv" + name].setDisplay(tmp.inf.derv.unlocked(name));
 		tmp.el["derv" + name].setTxt(formatDistance(tmp.inf.derv.amt(name)));
 		tmp.el["dervgain" + name].setTxt(formatGain(tmp.inf.derv.amt(name), tmp.inf.derv.gain(name), "derv", true));
@@ -1531,6 +1532,7 @@ function updateOverallMultiverseHTML() {
 		
 		if (mltTab == "mltMap") {
 			for (let m=1;m<=MULTIVERSES;m++) {
+				tmp.el["mltmap"+m].setClasses({innerMltOrbit: true, mltComp: player.mlt.highestCompleted>=m})
 				tmp.el["mltmap"+m].setDisplay(player.mlt.highestCompleted>=m-1)
 			}
 			tmp.el.mltData.changeStyle("visibility", mltSelected!="NONE"?"visible":"hidden");

@@ -102,6 +102,7 @@ const NEWS_DATA = {
 	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
 	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
 	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],
+	m96: ["Jacorb finds it mind-boggling that DI was first released publicly on May 1st 2020. You'd better remember that, you might see it in a Kahoot!"],
 
 	// Distance-based Conditions
 	d1: [
@@ -497,5 +498,15 @@ const NEWS_DATA = {
 	s35: [
 		"If the world is your oyster, then the multiverse is your ocean. That's right, you own the ocean now.",
 		function() { return player.mlt.times.gt(0) },
+	],
+	s36: [
+		'"But where are the pentogens?" - Incremental Mass fan after unlocking multiverses',
+		function () {
+			return player.mlt.times.gt(0)
+		}
+	],
+	s37: [
+		"lOoK iT'S cRaCKlE!?!?!?!!",
+		function() { player.inf.derivatives.amts.crackle!==undefined },
 	],
 };

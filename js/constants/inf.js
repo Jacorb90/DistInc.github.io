@@ -1030,6 +1030,8 @@ const EXTREME_STADIUM_DATA = {
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];
 const DERV_INCR = ["acceleration", "jerk", "snap"];
+const DERV_MLT_2 = ["distance", "velocity", "acceleration", "jerk", "snap", "crackle", "pop", "lock", "drop", "shot", "put"];
+const DERV_INCR_MLT_2 = ["acceleration", "jerk", "snap", "crackle", "pop", "lock", "drop", "shot", "put"];
 
 // More Extreme Stuff
 

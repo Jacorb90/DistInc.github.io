@@ -187,8 +187,9 @@ function setupHTML() {
 	// Derivatives
 	let dv = new Element("derivs");
 	data = "<br>";
-	for (let i = 0; i < DERV.length; i++) {
-		let name = DERV[i];
+	let de = DERV_MLT_2;
+	for (let i = 0; i < de.length; i++) {
+		let name = de[i];
 		let suffix = i == 0 ? "" : "/s" + (i == 1 ? "" : "<sup>" + i + "</sup>");
 		data +=
 			"<div id='dervDiv" +
@@ -202,7 +203,7 @@ function setupHTML() {
 			" <span id='dervgain" +
 			name +
 			"'></span>" +
-			"</div><br>";
+			"<br><br></div>";
 	}
 	dv.setHTML(data);
 

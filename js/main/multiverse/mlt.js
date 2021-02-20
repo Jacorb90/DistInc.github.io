@@ -10,6 +10,7 @@ function updateTempMultiverse() {
 function updateMiscMltStuff() {
 	tmp.mlt.mil11reward = MLT_MILESTONES[10].effect(); // Milestone 11
 	tmp.mlt.mil12reward = MLT_MILESTONES[11].effect(); // Milestone 12
+	tmp.mlt.mil15reward = MLT_MILESTONES[14].effect(); // Milestone 15
 	tmp.mlt.mlt1reward = MLT_DATA[1].effect(); // Multiverse 1
 }
 
@@ -129,6 +130,7 @@ function getMltDisplay(m) {
 	let data = MLT_DATA[m];
 	let display = "<span class='mltMinorTitle'>Multiverse "+(m==0?"Prime":m)+"</span><br><br>"
 	if (mltUnlocked(m)) {
+		if (player.mlt.highestCompleted>=m) display += "<i>Completed</i><br><br>"
 		display += (m==0?"":"Effect: ")+data.desc+"<br>"
 		if (data.reward) display += "<br>Reward: "+data.reward+"<br>"
 		if (data.effectDesc) display += "Currently: "+data.effectDesc(tmp.mlt["mlt"+m+"reward"]?tmp.mlt["mlt"+m+"reward"]:data.effect())+"<br>"

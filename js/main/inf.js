@@ -787,13 +787,24 @@ function updateTempPurge() {
 	};
 }
 
+function getDervNames() {
+	if (mltRewardActive(2)) return DERV_MLT_2
+	return DERV;
+}
+
+function getDervIncrs() {
+	if (mltRewardActive(2)) return DERV_INCR_MLT_2
+	return DERV_INCR;
+}
+
 function updateTempDerivatives() {
 	if (!tmp.inf.derv) tmp.inf.derv = {};
 	tmp.inf.derv.maxShifts = new ExpantaNum(2);
 	if (!tmp.inf.derv.unlocked) tmp.inf.derv.unlocked = function (name) {
 		if (name == "distance" || name == "velocity" || name == "acceleration") return true;
-		if (name == "jerk" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:1)) return true;
-		if (name == "snap" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:2)) return true;
+		else if (name == "jerk" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:1)) return true;
+		else if (name == "snap" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:2)) return true;
+		else if ((mltRewardActive(2)&&name!="jerk"&&name!="snap") && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:(getDervIncrs().indexOf(name)*3-4))) return true;
 		return false;
 	};
 	if (!tmp.inf.derv.amt) tmp.inf.derv.amt = function (name) {
@@ -810,8 +821,8 @@ function updateTempDerivatives() {
 			return adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		if (name == "velocity")
 			return adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
-		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
-		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
+		let next = getDervIncrs()[getDervIncrs().indexOf(name) + 1];
+		if (!mltRewardActive(2)) if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
 		let gain = adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
@@ -825,7 +836,8 @@ function updateTempDerivatives() {
 						).max(1)
 					)
 				);
-		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
+		if (name == "snap" && tmp.inf.upgs.has("10;1")) return INF_UPGS.effects["10;1"]("snp").times(gain).times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+		return gain.times((nerfActive("noTS")||(name=="snap"&&!mltRewardActive(2))) ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?4e34:2.5e29)
 	tmp.inf.derv.costLB = new ExpantaNum(modeActive("extreme")?2.5:2)
@@ -912,15 +924,16 @@ function updateTempDerivatives() {
 	};
 	if (!tmp.inf.derv.tick) tmp.inf.derv.tick = function (diff) {
 		if (!player.inf.derivatives.unl) return;
-		for (let i = 0; i < DERV_INCR.length; i++) {
-			let name = DERV_INCR[i];
-			let next = DERV_INCR[i + 1];
+		let incr = getDervIncrs();
+		for (let i = 0; i < incr.length; i++) {
+			let name = incr[i];
+			let next = incr[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
 			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
 				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]("snp"), "derv").times(tmp.inf.derv.mult(name))).max(1)
-				return
+				if (!mltRewardActive(2)) return
 			}
-			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))
+			if (i == incr.length - 1 ? true : !tmp.inf.derv.unlocked(next))
 				player.inf.derivatives.amts[name] = new ExpantaNum(1);
 			else
 				player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]
@@ -983,8 +996,9 @@ function infTick(diff) {
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
 	}
 	
-	if (player.elementary.hc.unl) {
+	if (player.elementary.hc.unl || hasMltMilestone(14)) {
 		let autoPurgeMul = TREE_UPGS[28].effect(player.elementary.theory.tree.upgrades[28]||0)
+		if (hasMltMilestone(14)) autoPurgeMul = new ExpantaNum(1);
 		if (autoPurgeMul.gt(0)) {
 			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.max(tmp.inf.pantheon.purgeGain.plus(player.inf.pantheon.purge.power).times(autoPurgeMul).floor());
 		}

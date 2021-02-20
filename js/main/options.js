@@ -135,8 +135,10 @@ function changeOpt(name, type) {
 		);
 	else dropdown.changeStyle("display", "none");
 	let els = {};
-	if (type == 0) player.options[name] = !player.options[name]
-	else if (type == 1) {
+	if (type == 0) {
+		player.options[name] = !player.options[name]
+		saveOptions()
+	} else if (type == 1) {
 		let max = OPT_CHNG_MAX[name];
 		let min = OPT_CHNG_MIN[name];
 		for (x = min; x <= max; x++)

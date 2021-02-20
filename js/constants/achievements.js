@@ -157,6 +157,8 @@ const ACH_DATA = {
 		
 		181: "Two In One Deal",
 		182: "Multiverse of Madness",
+		183: "Fermionic Embassy",
+		184: "The Entropy Sublimit",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -314,6 +316,8 @@ const ACH_DATA = {
 		
 		181: "Reach formatDistance(1.936e2000000053).",
 		182: "Reach formatDistance(1.7868e3500000093) without any Theoriverse completions.",
+		183: "Complete Multiverse 1.",
+		184: "Reach showNum(1e5) Entropy.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -417,5 +421,7 @@ const ACH_DATA = {
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
 		178: 'The Infinity popup is permanently disabled, and unlock the "Max Pion & Spinor Fields" button.',
+		
+		183: "All Entropy Upgrades are always unlocked.",
 	}
 };

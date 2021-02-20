@@ -2069,7 +2069,7 @@ table {
 	height: 100px;
 	width: 100px;
 	border-radius: 100%;
-	background-color: #9F98E6;
+	background-color: #7a968c;
 	transition-duration: 0.6s;
 	border: none;
 	z-index: 2;
@@ -2096,6 +2096,10 @@ table {
 	filter: brightness(120%);
 	transform: scale(1.1);
 	cursor: pointer;
+}
+
+.mltComp {
+	background-color: #7a968c;
 }
 
 .uprightOrbitTxt {

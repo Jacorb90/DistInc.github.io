@@ -105,6 +105,8 @@ function getScalingPower(type, name) {
 		} else if (type=="hyper") {
 			if (tmp.inf) if (tmp.inf.upgs.has("8;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
 			if (tmp.inf) if (tmp.inf.upgs.has("7;9")) power = power.times(0.98)
+		} else if (type=="atomic") {
+			if (hasMltMilestone(15) && tmp.mlt) power = power.times(tmp.mlt.mil15reward)
 		}
 	} else if (name=="rankCheap" && modeActive("extreme")) {
 		if (type=="scaled") {

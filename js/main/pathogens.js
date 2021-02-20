@@ -149,9 +149,11 @@ function updateTempPathogens() {
 				break;
 			case 6:
 				if (sPos) {
-					return ExpantaNum.pow(1.4, bought.sqrt()).times(
+					let eff = ExpantaNum.pow(1.4, bought.sqrt()).times(
 						ExpantaNum.pow(2, bought.pow(ExpantaNum.mul(2.5, fp))).pow(0.2)
 					);
+					if (eff.gte(ExpantaNum.pow(10, 3e9))) eff = ExpantaNum.pow(10, eff.log10().times(Math.pow(3e9, 2)).cbrt())
+					return eff;
 				} else return ExpantaNum.pow(1.4, bought.sqrt())
 				break;
 			case 7: 

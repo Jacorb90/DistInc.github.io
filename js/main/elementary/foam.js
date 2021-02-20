@@ -360,8 +360,8 @@ function buyEntropyUpg(x) {
 
 function entropyUpgShown(x) {
 	if (x<=8) return true;
-	else if (x<=20) return player.elementary.sky.amount.gt(0);
+	else if (x<=20) return tmp.ach[183].has||player.elementary.sky.amount.gt(0);
 	else if (x<=22) return modeActive("extreme");
-	else if (x<=25) return modeActive("extreme")&&player.elementary.sky.amount.gt(0);
+	else if (x<=25) return modeActive("extreme")&&(tmp.ach[183].has||player.elementary.sky.amount.gt(0));
 	else return false;
 }

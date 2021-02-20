@@ -20,7 +20,6 @@ const MLT_DATA = {
 		req: new ExpantaNum(0),
 	},
 	1: {
-		notBalanced: true,
 		desc: "You can only unlock 3 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
 		reward: "Stadium Challenge rewards are much stronger, but their challenge goals are much higher. Distance boosts Skyrmion gain.",
 		effect: function() { return player.distance.plus(1).log10().plus(1).logBase(3).plus(1) },
@@ -28,9 +27,9 @@ const MLT_DATA = {
 		req: new ExpantaNum(5),
 	},
 	2: {
-		desc: "???",
-		reward: "???",
-		req: new ExpantaNum(1/0),
+		desc: "Maximum Velocity is forced to be active, Pion & Spinor Fields are 40% weaker, and Time Speed & Maximum Velocity are brought to the 1.3th root.",
+		reward: "Every fourth Derivative Boost gives you an extra Derivative Shift (maxes at 7 shifts).",
+		req: new ExpantaNum(20),
 	},
 	3: {
 		desc: "???",
@@ -49,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 13;
+const MLT_MILESTONE_NUM = 15;
 
 const MLT_MILESTONES = [
 	{
@@ -95,10 +94,18 @@ const MLT_MILESTONES = [
 		req: new ExpantaNum(16),
 		desc: "Total Multiversal Energy reduces the &Omega; Particle requirement increase.",
 		effect: function() { return player.mlt.totalEnergy.plus(1).log10().plus(1).log10().plus(1) },
-		effectDesc: function() { return showNum(2)+" -> "+showNum(ExpantaNum.root(2, tmp.mlt.mil12reward||1)) },
+		effectDesc: function() { return "Currently: "+showNum(2)+" -> "+showNum(ExpantaNum.root(2, tmp.mlt.mil12reward||1)) },
 	}, {
 		req: new ExpantaNum(25),
 		desc: "The Theory Tree Upgrades that boost String effects have their limit increased by 5, and the Graviton effect is raised to the power of 15.",
+	}, {
+		req: new ExpantaNum(40),
+		desc: "All Quark/Lepton effects are always active, and always gain Purge Power automatically.",
+	}, {
+		req: new ExpantaNum(100),
+		desc: "Atomic Rank scaling is weaker based on your Tiers.",
+		effect: function() { return ExpantaNum.div(1, player.tier.plus(1).logBase(6).plus(1)) },
+		effectDesc: function() { return "Currently: -"+showNum(ExpantaNum.sub(1, tmp.mlt.mil15reward).times(100)||0)+"%" },
 	},
 ]
 
