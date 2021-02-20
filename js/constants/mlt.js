@@ -28,7 +28,7 @@ const MLT_DATA = {
 	},
 	2: {
 		desc: "Maximum Velocity is forced to be active, Pion & Spinor Fields are 40% weaker, and Time Speed & Maximum Velocity are brought to the 1.3th root.",
-		reward: "Every fourth Derivative Boost gives you an extra Derivative Shift (maxes at 7 shifts).",
+		reward: "Every third Derivative Boost gives you an extra Derivative Shift (maxes at 7 shifts).",
 		req: new ExpantaNum(20),
 	},
 	3: {
