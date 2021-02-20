@@ -20,7 +20,7 @@ const MLT_DATA = {
 		req: new ExpantaNum(0),
 	},
 	1: {
-		desc: "You can only unlock 3 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
+		desc: "You can only unlock 2 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
 		reward: "Stadium Challenge rewards are much stronger, but their challenge goals are much higher. Distance boosts Skyrmion gain.",
 		effect: function() { return player.distance.plus(1).log10().plus(1).logBase(3).plus(1) },
 		effectDesc: function(e) { return showNum(e)+"x" },
