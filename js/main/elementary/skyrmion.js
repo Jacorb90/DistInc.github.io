@@ -130,8 +130,9 @@ function getSkyUpgPow() {
 }
 
 function getQuarkStacks(x) {
+	if (mltActive(3)) return new ExpantaNum(0);
 	let stacks = new ExpantaNum(x)
-			.sub(player.elementary.fermions.quarks.type)
+			.sub(hasMltMilestone(14)?0:player.elementary.fermions.quarks.type)
 			.div(QUARK_NAMES.length)
 			.plus(1)
 			.ceil()
@@ -142,8 +143,9 @@ function getQuarkStacks(x) {
 }
 
 function getLeptonStacks(x) {
+	if (mltActive(3)) return new ExpantaNum(0);
 	let stacks = new ExpantaNum(x)
-			.sub(player.elementary.fermions.leptons.type)
+			.sub(hasMltMilestone(14)?0:player.elementary.fermions.leptons.type)
 			.div(LEPTON_NAMES.length)
 			.plus(1)
 			.ceil()

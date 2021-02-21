@@ -32,9 +32,9 @@ const MLT_DATA = {
 		req: new ExpantaNum(20),
 	},
 	3: {
-		desc: "???",
-		reward: "???",
-		req: new ExpantaNum(1/0),
+		desc: "You can only unlock 1 of the following: Ascension, Stadium, Pantheon, and Derivatives <b>(unlock them by opening their tabs)</b>. Quark & Lepton exponents are set to 0, and Entropy is disabled.",
+		reward: "There are 5 new Dark Expanders",
+		req: new ExpantaNum(100),
 	},
 	4: {
 		desc: "???",
@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 15;
+const MLT_MILESTONE_NUM = 17;
 
 const MLT_MILESTONES = [
 	{
@@ -106,6 +106,14 @@ const MLT_MILESTONES = [
 		desc: "Atomic Rank scaling is weaker based on your Tiers.",
 		effect: function() { return ExpantaNum.div(1, player.tier.plus(1).logBase(6).plus(1)) },
 		effectDesc: function() { return "Currently: -"+showNum(ExpantaNum.sub(1, tmp.mlt.mil15reward).times(100)||0)+"%" },
+	}, {
+		req: new ExpantaNum(180),
+		desc: "inf10;1 always affects the last Derivative, and its effect uses a better formula.",
+	}, {
+		req: new ExpantaNum(300),
+		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance.",
+		effect: function() { return player.distance.max(1).logBase(DISTANCES.mlt).plus(1).logBase(2).times(0.01) },
+		effectDesc: function() { return "Currently: +"+showNum(tmp.mlt.mil17reward.times(100)||0)+"%" },
 	},
 ]
 

@@ -664,7 +664,8 @@ const INF_UPGS = {
 				if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
 				return ret;
 			} else if (type=="snp") {
-				return player.distance.plus(1).log10().plus(1).pow(10)
+				if (hasMltMilestone(16)) return ExpantaNum.pow(10, player.distance.log10().root(1.15)).max(player.distance.plus(1).log10().plus(1).pow(10))
+				else return player.distance.plus(1).log10().plus(1).pow(10)
 			}
 		},
 		"10;2": function() {
@@ -716,16 +717,16 @@ const INF_TABS = {
 		return true;
 	},
 	ascension: function () {
-		return player.inf.endorsements.gte(10);
+		return player.inf.endorsements.gte(10) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("ascension"));
 	},
 	stadium: function () {
-		return player.inf.endorsements.gte(15);
+		return player.inf.endorsements.gte(15) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("stadium"));
 	},
 	pantheon: function () {
-		return player.inf.endorsements.gte(21);
+		return player.inf.endorsements.gte(21) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("pantheon"));
 	},
 	derivatives: function () {
-		return player.inf.derivatives.unl;
+		return player.inf.derivatives.unl && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("derivatives"));
 	}
 };
 

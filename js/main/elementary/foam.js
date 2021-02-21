@@ -108,13 +108,14 @@ function getQuantumFoamGain(x) {
 			gain = gain.times(tmp.elm.qf.boost21||1)
 			gain = gain.times(tmp.elm.qf.boost23||1)
 		}
-		if (tmp.elm.entropy && player.elementary.entropy.unl) {
+		if (tmp.elm.entropy && player.elementary.entropy.unl && !mltActive(3)) {
 			gain = gain.times(tmp.elm.entropy.eff||1)
 			if (player.elementary.entropy.upgrades.includes(2)) gain = gain.times(tmp.elm.entropy.upgEff[2]||1)
 		}
 	}
 	if (player.elementary.entropy.upgrades.includes(11)) gain = gain.times(10)
 	if (player.mlt.times.gt(0) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[1].eff2);
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[42]||0, 1) && hasDE(6)) gain = gain.times(TREE_UPGS[42].effect(player.elementary.theory.tree.upgrades[42]||0))
 	if (modeActive("easy")) gain = gain.times(Math.pow(5/x, 2)*2.5)
 	return gain
 }
@@ -161,7 +162,7 @@ function qfMax(x, b) {
 
 function addToAllFoamBoosts() {
 	let toAdd = new ExpantaNum(0)
-	if (player.elementary.entropy.unl && tmp.elm.entropy) toAdd = toAdd.plus(tmp.elm.entropy.omegaEff)
+	if (player.elementary.entropy.unl && tmp.elm.entropy && !mltActive(3)) toAdd = toAdd.plus(tmp.elm.entropy.omegaEff)
 	if (player.elementary.sky.unl && tmp.elm.sky) toAdd = toAdd.plus(tmp.elm.sky.spinorEff[1])
 	return toAdd
 }
@@ -251,7 +252,7 @@ function getExtremeFoamSCStart() {
 
 // Entropy
 function getEntropyEff() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(1);
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(1);
 	let entropy = player.elementary.entropy.best;
 	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
 	let eff = entropy.plus(1).pow(2.5);
@@ -272,7 +273,7 @@ function getEntropyGainMult() {
 }
 
 function getEntropyGain() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(0);
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(0);
 	let foam = player.elementary.foam.amounts[0]
 	let gain = foam.div(1e50).pow(0.05)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.pow(tmp.elm.sky.spinorEff[10].plus(1))
@@ -285,7 +286,7 @@ function getEntropyGain() {
 }
 
 function getEntropyNext() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(1/0)
 	let gain = tmp.elm.entropy.gain.plus(player.elementary.entropy.amount).div(tmp.elm.entropy.gainMult).plus(1);
 	if (modeActive("extreme") && ExpantaNum.gte(player.elementary.theory.tree.upgrades[38]||0, 1)) gain = gain.sqrt();
 	if (gain.gte(1200)) gain = ExpantaNum.pow(1.001, gain.times(5.91135))
@@ -297,7 +298,7 @@ function getEntropyNext() {
 }
 
 function entropyReset() {
-	if (!player.elementary.entropy.unl) return;
+	if (!player.elementary.entropy.unl || mltActive(3)) return;
 	let gain = getEntropyGain();
 	if (gain.lt(1)) return;
 	player.elementary.foam.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
@@ -329,19 +330,19 @@ function getOmegaParticleReqBase() {
 }
 
 function getOmegaParticles() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(0)
 	let amt = player.elementary.entropy.best.times(tmp.elm.entropy.omegaDiv).plus(1).logBase(tmp.elm.entropy.omegaBase)
 	return amt.floor()
 }
 
 function getNextOmega() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(1/0)
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(1/0)
 	let omega = tmp.elm.entropy.omega.plus(1)
 	return ExpantaNum.pow(tmp.elm.entropy.omegaBase, omega).sub(1).div(tmp.elm.entropy.omegaDiv)
 }
 
 function getOmegaEff() {
-	if (!player.elementary.entropy.unl) return new ExpantaNum(0)
+	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(0)
 	let eff = tmp.elm.entropy.omega.div(10)
 	if (player.elementary.entropy.upgrades.includes(7)) eff = eff.times(tmp.elm.entropy.upgEff[7].div(100).plus(1))
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.times(tmp.elm.sky.spinorEff[7])
@@ -350,7 +351,7 @@ function getOmegaEff() {
 }
 
 function buyEntropyUpg(x) {
-	if (!player.elementary.entropy.unl) return;
+	if (!player.elementary.entropy.unl || mltActive(3)) return;
 	if (player.elementary.entropy.upgrades.includes(x)) return;
 	let cost = ENTROPY_UPG_COSTS[x]||new ExpantaNum(1/0)
 	if (player.elementary.entropy.amount.lt(cost)) return;

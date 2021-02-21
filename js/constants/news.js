@@ -103,6 +103,7 @@ const NEWS_DATA = {
 	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
 	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],
 	m96: ["Jacorb finds it mind-boggling that DI was first released publicly on May 1st 2020. You'd better remember that, you might see it in a Kahoot!"],
+	m97: ["Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: T- go to #spam please :)"],
 
 	// Distance-based Conditions
 	d1: [
@@ -507,6 +508,10 @@ const NEWS_DATA = {
 	],
 	s37: [
 		"lOoK iT'S cRaCKlE!?!?!?!!",
-		function() { player.inf.derivatives.amts.crackle!==undefined },
+		function() { return player.inf.derivatives.amts.crackle!==undefined },
+	],
+	s38: [
+		'"(Derivative after the latest you have unlocked) when?" - A derivative enthusiast',
+		function() { return player.mlt.highestCompleted>=2 },
 	],
 };

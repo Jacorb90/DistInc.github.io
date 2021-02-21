@@ -239,6 +239,7 @@ function getPreonGain() {
 function getTBCost() {
 	let b = new ExpantaNum(player.elementary.theory.preons.boosters)
 	if (b.gte(4)) b = b.pow(2).div(4)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[40]||0, 1) && hasDE(6)) b = b.times(TREE_UPGS[40].effect(player.elementary.theory.tree.upgrades[40]||0))
 	let base = new ExpantaNum(2)
 	if (hasDE(5)) base = base.pow(0.1)
 	let cost = new ExpantaNum(20).times(ExpantaNum.pow(base, b))
@@ -250,6 +251,7 @@ function getTBTarg() {
 	let base = new ExpantaNum(2)
 	if (hasDE(5)) base = base.pow(0.1)
 	let targ = player.elementary.theory.preons.amount.times(TREE_UPGS[10].effect(player.elementary.theory.tree.upgrades[10]||0)).div(20).max(1).logBase(base)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[40]||0, 1) && hasDE(6)) targ = targ.div(TREE_UPGS[40].effect(player.elementary.theory.tree.upgrades[40]||0))
 	if (targ.gte(4)) targ = targ.times(4).sqrt()
 	return targ.plus(1).floor();
 }
@@ -321,9 +323,14 @@ function getAccelEff() {
 	return eff
 }
 
+function getMaxDEs() {
+	if (mltRewardActive(3)) return MAX_DARK_EXPANDERS_MLT_3
+	return MAX_DARK_EXPANDERS
+}
+
 function darkExpand() {
 	if (!player.elementary.theory.accelerons.unl) return
-	if (player.elementary.theory.accelerons.expanders.gte(MAX_DARK_EXPANDERS)) return
+	if (player.elementary.theory.accelerons.expanders.gte(getMaxDEs())) return
 	if (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])) return
 	player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.sub(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])
 	player.elementary.theory.accelerons.expanders = player.elementary.theory.accelerons.expanders.plus(1)

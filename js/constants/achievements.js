@@ -159,6 +159,7 @@ const ACH_DATA = {
 		182: "Multiverse of Madness",
 		183: "Fermionic Embassy",
 		184: "The Entropy Sublimit",
+		185: "Eternal Torture",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -318,6 +319,7 @@ const ACH_DATA = {
 		182: "Reach formatDistance(1.7868e3500000093) without any Theoriverse completions.",
 		183: "Complete Multiverse 1.",
 		184: "Reach showNum(1e5) Entropy.",
+		185: "Reach formatDistance(3.911111e88888915) while in Multiverse 2 and Eternity's Stadium challenge at Difficulty Level 6.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -423,5 +425,6 @@ const ACH_DATA = {
 		178: 'The Infinity popup is permanently disabled, and unlock the "Max Pion & Spinor Fields" button.',
 		
 		183: "All Entropy Upgrades are always unlocked.",
+		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weaker.",
 	}
 };

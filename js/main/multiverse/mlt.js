@@ -11,6 +11,7 @@ function updateMiscMltStuff() {
 	tmp.mlt.mil11reward = MLT_MILESTONES[10].effect(); // Milestone 11
 	tmp.mlt.mil12reward = MLT_MILESTONES[11].effect(); // Milestone 12
 	tmp.mlt.mil15reward = MLT_MILESTONES[14].effect(); // Milestone 15
+	tmp.mlt.mil17reward = MLT_MILESTONES[16].effect(); // Milestone 17
 	tmp.mlt.mlt1reward = MLT_DATA[1].effect(); // Multiverse 1
 }
 
@@ -38,7 +39,7 @@ function setMultiverseResetFunction() {
 			player.elementary.theory.strings.unl = true;
 			player.elementary.theory.preons.unl = true;
 			player.elementary.theory.accelerons.unl = true;
-			player.elementary.theory.accelerons.expanders = new ExpantaNum(5);
+			player.elementary.theory.accelerons.expanders = prev.elementary.theory.accelerons.expanders.max(5).min(getMaxDEs());
 			player.elementary.theory.inflatons.unl = true;
 		}
 		if (hasMltMilestone(5)) {
@@ -56,6 +57,7 @@ function setMultiverseResetFunction() {
 		elmTab = "fermions"
 		player.inf.unl = true;
 		player.mlt.mlt1selected = [];
+		player.mlt.mlt3selected = [];
 	};
 }
 

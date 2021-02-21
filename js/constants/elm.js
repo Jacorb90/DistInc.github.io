@@ -635,6 +635,39 @@ const TREE_UPGS = {
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
+	40: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return ExpantaNum.pow(1.1, ExpantaNum.pow(bought, 1.025)).times(1e15) },
+		target: function(points) { return points.div(1e15).max(1).logBase(1.1).root(1.025).plus(1).floor() },
+		cap: new ExpantaNum(200),
+		desc: "The Theoretical Booster cost increases 1% slower.",
+		effect: function(bought) { return ExpantaNum.pow(0.99, bought) },
+		effD: function(e) { return showNum(e.pow(-1).sub(1).times(100))+"% slower" },
+	},
+	41: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return new ExpantaNum(1.2e20) },
+		cap: new ExpantaNum(1),
+		desc: "Elementaries boost Gauge Speed.",
+		effect: function(bought) { 
+			let e = player.elementary.times;
+			return e.times(bought).plus(1).pow(1.4) 
+		},
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	42: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return new ExpantaNum(1.1e20) },
+		cap: new ExpantaNum(1),
+		desc: "OoMs of Distance boost Base Knowledge gain & all Foam layers.",
+		effect: function(bought) { 
+			let log = player.distance.plus(1).log10()
+			if (log.gte(1e11)) log = log.log10().times(1e12/12)
+			if (log.gte(1e9)) log = ExpantaNum.pow(1e9, log.logBase(1e9).root(10))
+			return log.times(bought).plus(1).pow(1.6) 
+		},
+		effD: function(e) { return showNum(e)+"x" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 const G_TREE_SECTS = {
@@ -680,12 +713,18 @@ const STR_NAMES = {
 }
 
 const MAX_DARK_EXPANDERS = 5
+const MAX_DARK_EXPANDERS_MLT_3 = 10
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
 	2: new ExpantaNum(250),
 	3: new ExpantaNum(600),
 	4: new ExpantaNum(2e3),
 	5: new ExpantaNum(4e3),
+	6: new ExpantaNum("1.1111111111111111111111e1111"),
+	7: new ExpantaNum(1/0),
+	8: new ExpantaNum(1/0),
+	9: new ExpantaNum(1/0),
+	10: new ExpantaNum(1/0),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
@@ -693,6 +732,11 @@ const DARK_EXPANDER_DESCS = {
 	3: "Unlock new Higgs Upgrades.",
 	4: "Unlock Graviton Boosts.",
 	5: "Unlock new Theory Tree Upgrades, and the Theoretical Boost formula is much slower.",
+	6: "Unlock new Theory Tree Upgrades, and the Graviton Boost requirement increases half as fast when below 60.",
+	7: "???",
+	8: "???",
+	9: "???",
+	10: "???",
 }
 
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]

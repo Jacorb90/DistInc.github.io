@@ -164,6 +164,7 @@ function calcKnowledgeGain(){
 	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements);
 	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]());
 	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(3)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[42]||0, 1) && hasDE(6)) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(TREE_UPGS[42].effect(player.elementary.theory.tree.upgrades[42]||0))
 	tmp.inf.knowledgeExp = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25);
 	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.15);
@@ -317,6 +318,12 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.showTab) tmp.inf.showTab = function (name) {
 		if (infTab == name) return;
+		if (mltActive(3) && player.mlt.mlt3selected.length<1) {
+			if (name=="ascension"||name=="stadium"||name=="pantheon"||name=="derivatives") {
+				player.mlt.mlt3selected.push(name)
+				notifier.info("Unlocked "+capitalFirst(name)+"!")
+			}
+		}
 		infTab = name;
 	};
 	tmp.inf.updateTabs();
@@ -412,7 +419,7 @@ function updateTempAscension() {
 	if (modeActive('easy')) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
 	if (player.elementary.foam.unl && tmp.elm) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.qf.boost14)
 	if (!tmp.inf.asc.activatePerk) tmp.inf.asc.activatePerk = function (n) {
-		if (player.inf.endorsements.lt(10)) return;
+		if (player.inf.endorsements.lt(10) || (mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) return;
 		if (tmp.inf.asc.perkActive(n)) {
 			player.inf.ascension.time[n - 1] = new ExpantaNum(0);
 			return;
@@ -422,7 +429,7 @@ function updateTempAscension() {
 	};
 	if (!tmp.inf.asc.perkEff) tmp.inf.asc.perkEff = function (n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n]);
-		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks")) return base;
+		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks") || (mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) return base;
 		let pow = new ExpantaNum(tmp.inf.asc.perkPower[n]);
 		if (pow.gte(90)) pow = pow.div(10).plus(81)
 		if (pow.gte(150)) pow = pow.sqrt().times(Math.sqrt(150))
@@ -580,7 +587,7 @@ function updateTempStadium() {
 		return goal;
 	};
 	tmp.inf.stadium.canComplete =
-		player.inf.endorsements.gte(15) &&
+		(player.inf.endorsements.gte(15) && !(mltActive(3) && !player.mlt.mlt3selected.includes("stadium"))) &&
 		player.inf.stadium.current != "" &&
 		player.distance.gte(Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current)?extremeStadiumGoal(player.inf.stadium.current):tmp.inf.stadium.goal(player.inf.stadium.current));
 	if (!tmp.inf.stadium.start) tmp.inf.stadium.start = function (name) {
@@ -603,7 +610,7 @@ function updateTempStadium() {
 	};
 	if (!tmp.inf.stadium.completed) tmp.inf.stadium.completed = function (name) {
 		if (extremeStadiumActive("spectra", 3)) return false
-		return player.inf.endorsements.gte(15) && player.inf.stadium.completions.includes(name);
+		return (player.inf.endorsements.gte(15) && !(mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) && player.inf.stadium.completions.includes(name);
 	};
 	if (!tmp.inf.stadium.progress) tmp.inf.stadium.progress = function() {
 		let current = player.inf.stadium.current
@@ -808,14 +815,14 @@ function updateTempDerivatives() {
 		return false;
 	};
 	if (!tmp.inf.derv.amt) tmp.inf.derv.amt = function (name) {
-		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance" || name == "velocity") return player[name];
 		if (name == "acceleration") return tmp.acc;
 		return player.inf.derivatives.amts[name] ? player.inf.derivatives.amts[name] : new ExpantaNum(0);
 	};
 	if (!tmp.inf.derv.gain) tmp.inf.derv.gain = function (name) {
-		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance")
 			return adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
@@ -836,7 +843,7 @@ function updateTempDerivatives() {
 						).max(1)
 					)
 				);
-		if (name == "snap" && tmp.inf.upgs.has("10;1")) return INF_UPGS.effects["10;1"]("snp").times(gain).times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+		if (((!hasMltMilestone(16)?(name == "snap"):(name==getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()]))) && tmp.inf.upgs.has("10;1")) return INF_UPGS.effects["10;1"]("snp").times(gain).times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
 		return gain.times((nerfActive("noTS")||(name=="snap"&&!mltRewardActive(2))) ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?4e34:2.5e29)
@@ -923,19 +930,19 @@ function updateTempDerivatives() {
 		return mult;
 	};
 	if (!tmp.inf.derv.tick) tmp.inf.derv.tick = function (diff) {
-		if (!player.inf.derivatives.unl) return;
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return;
 		let incr = getDervIncrs();
 		for (let i = 0; i < incr.length; i++) {
 			let name = incr[i];
 			let next = incr[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
-			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
+			if ((!hasMltMilestone(16)?(name == "snap"):(name==getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()])) && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts[(!hasMltMilestone(16)?"snap":(getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()]))]||0).gt(0)) {
 				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]("snp"), "derv").times(tmp.inf.derv.mult(name))).max(1)
 				if (!mltRewardActive(2)) return
 			}
-			if (i == incr.length - 1 ? true : !tmp.inf.derv.unlocked(next))
+			if ((i == incr.length - 1 ? true : !tmp.inf.derv.unlocked(next)) && !(hasMltMilestone(16)&&ExpantaNum.gt(player.inf.derivatives.amts[name]||0, 0))) {
 				player.inf.derivatives.amts[name] = new ExpantaNum(1);
-			else
+			} else
 				player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]
 					? player.inf.derivatives.amts[name]
 					: new ExpantaNum(0)
@@ -975,7 +982,7 @@ function infTick(diff) {
 		adjustGen(tmp.inf.knowledgeGain, "knowledge").times(diff)
 	);
 	
-	if (player.inf.endorsements.gte(10)) {
+	if (player.inf.endorsements.gte(10) && !(mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) {
 		for (let i = 1; i <= 4; i++)
 			if (tmp.inf.asc.perkActive(i))
 				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
@@ -985,7 +992,7 @@ function infTick(diff) {
 			);
 	}
 	
-	if (player.inf.endorsements.gte(21)) {
+	if (player.inf.endorsements.gte(21) && !(mltActive(3) && !player.mlt.mlt3selected.includes("pantheon"))) {
 		tmp.inf.pantheon.collect();
 		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(
 			diff.times(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips"))

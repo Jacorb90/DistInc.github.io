@@ -188,6 +188,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 		if (ret.mlt.highestCompleted>=1 || ret.mlt.active==1) ret.mlt.highestUnlocked = 1;
 	}
 	if (ret.mlt.mlt1selected === undefined) ret.mlt.mlt1selected = [];
+	if (ret.mlt.mlt3selected === undefined) ret.mlt.mlt3selected = [];
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);

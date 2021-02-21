@@ -1,15 +1,23 @@
 function updateQuilts() {
 	if (!tmp.mlt.quilts) tmp.mlt.quilts = {}
+	let upgPower = getQuiltUpgPower()
 	for (let i=1;i<=3;i++) {
 		if (!tmp.mlt.quilts[i]) tmp.mlt.quilts[i] = {}
 		tmp.mlt.quilts[i].upgCost = getQuiltUpgCost(i);
-		tmp.mlt.quilts[i].upgEff = player.mlt.quiltUpgs[i-1].div(10)
+		tmp.mlt.quilts[i].upgPow = upgPower;
+		tmp.mlt.quilts[i].upgEff = player.mlt.quiltUpgs[i-1].times(tmp.mlt.quilts[i].upgPow).div(10)
 		tmp.mlt.quilts[i].strength = getQuiltStrength(i).plus(tmp.mlt.quilts[i].upgEff);
 		tmp.mlt.quilts[i].eff = getQuiltEff(i);
 	}
 	tmp.mlt.quilts[1].eff2 = getQuilt1Eff2()
 	tmp.mlt.quilts[2].eff2 = getQuilt2Eff2()
 	tmp.mlt.quilts[3].eff2 = getQuilt3Eff2()
+}
+
+function getQuiltUpgPower() {
+	let power = new ExpantaNum(1);
+	if (hasMltMilestone(17)) power = power.plus(tmp.mlt.mil17reward.times(10))
+	return power;
 }
 
 function getQuiltStrength(x) {

@@ -148,6 +148,8 @@ function getScalingPower(type, name) {
 			if (tmp.inf) if (tmp.inf.upgs.has("8;7")) power = power.times(0.16)
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("10;1")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]("pth")))
+		} else if (type=="hyper") {
+			if (tmp.ach[185].has) power = power.sub(.1);
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {

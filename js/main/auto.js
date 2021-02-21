@@ -239,14 +239,14 @@ function theoryBoosterAutoTick() {
 }
 
 function entropyAutoTick(){
-	if (player.automators["entropy"] && player.elementary.entropy.unl) {
+	if (player.automators["entropy"] && player.elementary.entropy.unl && !mltActive(3)) {
 		player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
 		player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
 	}
 }
 
 function entropyUpgAutoTick(){
-	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
+	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl && !mltActive(3)) {
 		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x)&&entropyUpgShown(x));
 		if (toBuy.length==0) return;
 		let nextUpg = toBuy.reduce((a,c) => ENTROPY_UPG_AUTO_ORDER[Math.min(ENTROPY_UPG_AUTO_ORDER.indexOf(a),ENTROPY_UPG_AUTO_ORDER.indexOf(c))]);

@@ -206,6 +206,7 @@ function updateTempGauge() {
 	if (player.elementary.entropy.upgrades.includes(15)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(5)
 	if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(tmp.elm.sky.spinorEff[11])
 	if (modeActive("easy")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2);
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[41]||0, 1) && hasDE(6)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(TREE_UPGS[41].effect(player.elementary.theory.tree.upgrades[41]||0))
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
 	updateTempPhotons(gaugeSpeed);
@@ -300,15 +301,31 @@ function updateTempBosons() {
 	updateTempScalar();
 }
 
+function adjGravBoosts(b, rev=false) {
+	if (rev) {
+		if (hasDE(6) && b.lt(60)) {
+			b = b.div(2);
+			b = ExpantaNum.pow(10, ExpantaNum.div(3, ExpantaNum.sub(30, b)).sub(1)).plus(26)
+		}
+	} else {
+		if (hasDE(6) && b.lt(60)) {
+			if (b.gte(27)) b = ExpantaNum.sub(30, ExpantaNum.div(3, b.sub(26).log10().plus(1)))
+			b = b.times(2)
+		}
+	}
+	return b;
+}
+
 function getGravBoosts() {
 	if (!hasDE(4)) return new ExpantaNum(0)
 	let g = player.elementary.bosons.gauge.gravitons
-	return g.plus(1).log10().sqrt().floor()
+	let b = g.plus(1).log10().sqrt()
+	return adjGravBoosts(b).floor()
 }
 
 function getNextGravBoost(boosts) {
 	if (!hasDE(4)) return new ExpantaNum(1/0)
-	return ExpantaNum.pow(10, boosts.plus(1).pow(2)).sub(1);
+	return ExpantaNum.pow(10, adjGravBoosts(new ExpantaNum(boosts), true).plus(1).pow(2)).sub(1);
 }
 
 function getGravBoostBase() {
