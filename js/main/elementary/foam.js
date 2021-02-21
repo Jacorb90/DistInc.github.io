@@ -199,7 +199,9 @@ function qfUnl(x) {
 }
 
 function getQuantumFoamEff(x) {
-	let eff = player.elementary.foam.amounts[x-1].plus(1).pow(1/x)
+	let exp = 1/x
+	if (hasMltMilestone(18)) exp += 0.05
+	let eff = player.elementary.foam.amounts[x-1].plus(1).pow(exp)
 	if (x==5) eff = eff.pow(player.elementary.foam.maxDepth.sub(4).sqrt())
 	return eff;
 }

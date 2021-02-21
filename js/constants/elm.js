@@ -689,10 +689,11 @@ const G_TREE_SECTS = {
 }
 
 const UNL_STR = function() { 
-	if (hasDE(2)) return 7
+	if (mltRewardActive(4)) return 10;
+	else if (hasDE(2)) return 7
 	else return 5 
 }
-const TOTAL_STR = 7
+const TOTAL_STR = 10
 const STR_REQS = {
 	1: new ExpantaNum(0),
 	2: new ExpantaNum(0.5),
@@ -701,6 +702,9 @@ const STR_REQS = {
 	5: new ExpantaNum(1e7),
 	6: new ExpantaNum(1e14),
 	7: new ExpantaNum(DISTANCES.pc),
+	8: new ExpantaNum(DISTANCES.uni).times("1e800"),
+	9: new ExpantaNum(DISTANCES.uni).times("1e2650"),
+	10: new ExpantaNum(DISTANCES.uni).times("1e3000"),
 }
 const STR_NAMES = {
 	1: "Primary",
@@ -709,7 +713,10 @@ const STR_NAMES = {
 	4: "Quaternary",
 	5: "Quinary",
 	6: "Senary",
-	7: "Septenary"
+	7: "Septenary",
+	8: "Octonary",
+	9: "Nonary",
+	10: "Dekanary",
 }
 
 const MAX_DARK_EXPANDERS = 5
@@ -721,8 +728,8 @@ const DARK_EXPANDER_COSTS = {
 	4: new ExpantaNum(2e3),
 	5: new ExpantaNum(4e3),
 	6: new ExpantaNum("1.1111111111111111111111e1111"),
-	7: new ExpantaNum(1/0),
-	8: new ExpantaNum(1/0),
+	7: new ExpantaNum("1e39000"),
+	8: new ExpantaNum("1e46500"),
 	9: new ExpantaNum(1/0),
 	10: new ExpantaNum(1/0),
 }
@@ -733,8 +740,8 @@ const DARK_EXPANDER_DESCS = {
 	4: "Unlock Graviton Boosts.",
 	5: "Unlock new Theory Tree Upgrades, and the Theoretical Boost formula is much slower.",
 	6: "Unlock new Theory Tree Upgrades, and the Graviton Boost requirement increases half as fast when below 60.",
-	7: "???",
-	8: "???",
+	7: "Accelerons now reduce the Hadron effect interval.",
+	8: "The Primary String effect is squared.",
 	9: "???",
 	10: "???",
 }

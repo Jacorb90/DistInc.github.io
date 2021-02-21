@@ -37,9 +37,9 @@ const MLT_DATA = {
 		req: new ExpantaNum(100),
 	},
 	4: {
-		desc: "???",
-		reward: "???",
-		req: new ExpantaNum(1/0),
+		desc: "You are always trapped in the Theoriverse at Depth 4.5 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
+		reward: "Unlock 3 new Strings.",
+		req: new ExpantaNum(400),
 	},
 	5: {
 		desc: "???",
@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 17;
+const MLT_MILESTONE_NUM = 19;
 
 const MLT_MILESTONES = [
 	{
@@ -114,6 +114,12 @@ const MLT_MILESTONES = [
 		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance.",
 		effect: function() { return player.distance.max(1).logBase(DISTANCES.mlt).plus(1).logBase(2).times(0.01) },
 		effectDesc: function() { return "Currently: +"+showNum(tmp.mlt.mil17reward.times(100)||0)+"%" },
+	}, {
+		req: new ExpantaNum(1.25e3),
+		desc: "Foam effect exponents are increased by 0.05.",
+	}, {
+		req: new ExpantaNum(1.75e3),
+		desc: "The First String's effect also multiplies Acceleron gain.",
 	},
 ]
 

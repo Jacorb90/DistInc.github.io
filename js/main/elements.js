@@ -1171,7 +1171,7 @@ function updateAcceleronsHTML(){
 		tmp.el.accelGain.setTxt(showNum(adjustGen(gain, "accelerons")))
 		tmp.el.accelerSC.setHTML(gain.gte(1e6)?"<span class='sc'>(softcapped)</span>":"")
 		let accEff = getAccelEff()
-		tmp.el.accelEff.setHTML("<span class='thp'>"+showNum(accEff)+"</span>x later"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
+		tmp.el.accelEff.setHTML((hasDE(7)?" & are reducing the Hadron effect interval by ":" by ")+"<span class='thp'>"+showNum(accEff)+"</span>x"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
 		let next = player.elementary.theory.accelerons.expanders.toNumber()+1
 		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=getMaxDEs()), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=getMaxDEs()))})
 		tmp.el.darkExp.setHTML((next-1>=getMaxDEs())?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"))
@@ -1246,6 +1246,7 @@ function updateHadronicChallenges(){
 		tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
 		tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
 		tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
+		tmp.el.hadInterval.setTxt(tmp.elm.hc.hadInterval.lt(1+0.1**(player.options.sf-1))?("1 + 1/"+showNum(tmp.elm.hc.hadInterval.sub(1).pow(-1))):showNum(tmp.elm.hc.hadInterval))
 		for (let i=0;i<6;i++) {
 			let x = ""
 			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"

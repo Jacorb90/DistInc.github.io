@@ -59,7 +59,7 @@ function updateTempInfUpgs() {
 				showNum(INF_UPGS.effects[id]()["knowledge"]) +
 				"x"
 			);
-		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
+		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, "+(hasMltMilestone(16)?"Final Derivative":"Snap")+": +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
 		else if (id == "2;7" || id == "8;6" || id == "9;6" || id=="1;10")
 			return showNum(INF_UPGS.effects[id]().times(100)) + "% weaker";
 		else if (id == "3;2")
@@ -124,7 +124,7 @@ function updateTempInfUpgs() {
 	if (!tmp.inf.upgs.desc) tmp.inf.upgs.desc = function (sel) {
 		if (sel === undefined) return "";
 		return (
-			INF_UPGS.descs[sel] +
+			((sel=="10;1"&&hasMltMilestone(16))?"Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces your last Derivative at a reduced rate (unaffected by Time Speed)":INF_UPGS.descs[sel]) +
 			"<br>" +
 			(!tmp.inf.upgs.has(sel)
 				? "Cost: " +

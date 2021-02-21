@@ -184,7 +184,7 @@ const DEFAULT_START = {
 			},
 			strings: {
 				unl: false,
-				amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+				amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 				entangled: new ExpantaNum(0),
 			},
 			preons: {

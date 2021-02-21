@@ -166,6 +166,7 @@ function getStringEff(n) {
 	if (n==1 && player.elementary.entropy.upgrades.includes(18)) ret = ret.pow(5);
 	let finalExp = new ExpantaNum(1)
 	let ettu = player.elementary.theory.tree.upgrades
+	if (hasDE(8) && n==1) finalExp = finalExp.plus(1);
 	if (hasDE(5) && n==2) finalExp = finalExp.plus(TREE_UPGS[14].effect(ettu[14]||0))
 	if (hasDE(5) && n==3) finalExp = finalExp.plus(TREE_UPGS[15].effect(ettu[15]||0))
 	if (hasDE(5) && n==4) finalExp = finalExp.plus(TREE_UPGS[16].effect(ettu[16]||0))
@@ -313,6 +314,7 @@ function getAccelGain() {
 	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
 	if (gain.gte(1e6)) gain = gain.cbrt().times(Math.pow(1e6, 2/3))
 	if (tmp.elm) gain = gain.times(tmp.elm.theory.speed)
+	if (hasMltMilestone(19)) gain = gain.times(getStringEff(1));
 	return gain
 }
 

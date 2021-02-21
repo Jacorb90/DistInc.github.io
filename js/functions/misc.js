@@ -127,7 +127,7 @@ function ENString(obj) {
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos).toString();
 	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent).toString();
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]).toString();
-	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]).toString();
+	for (let i=0;i<10;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]||0).toString();
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled).toString();
 	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount).toString();
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
@@ -309,7 +309,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos);
 	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent);
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]);
-	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]);
+	for (let i=0;i<10;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]||0);
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled);
 	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount);
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
