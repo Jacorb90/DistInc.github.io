@@ -5,6 +5,7 @@ function updateQuilts() {
 		if (!tmp.mlt.quilts[i]) tmp.mlt.quilts[i] = {}
 		tmp.mlt.quilts[i].upgCost = getQuiltUpgCost(i);
 		tmp.mlt.quilts[i].upgPow = upgPower;
+		if (i==3) tmp.mlt.quilts[i].scStart = new ExpantaNum(3.75)
 		tmp.mlt.quilts[i].upgEff = player.mlt.quiltUpgs[i-1].times(tmp.mlt.quilts[i].upgPow).div(10)
 		tmp.mlt.quilts[i].strength = getQuiltStrength(i).plus(tmp.mlt.quilts[i].upgEff);
 		tmp.mlt.quilts[i].eff = getQuiltEff(i);
@@ -38,7 +39,11 @@ function getQuiltEff(x) {
 		let exp = ExpantaNum.root(15, power.plus(1).pow(4).sub(4.0625))
 		return ExpantaNum.pow(ExpantaNum.pow(10, 1e7), power.lt(1)?power.pow(exp):power)
 	} else if (x==2) return power.plus(1).pow(1.1)
-	else if (x==3) return power.plus(1).pow(0.9)
+	else if (x==3) {
+		let eff = power.plus(1).pow(0.9)
+		if (eff.gte(tmp.mlt.quilts[3].scStart)) eff = eff.times(tmp.mlt.quilts[3].scStart.pow(2)).cbrt();
+		return eff;
+	}
 }
 
 function getQuilt1Eff2() {

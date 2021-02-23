@@ -84,7 +84,7 @@ function skyrmionReset(force=false) {
 	player.elementary.theory.tree.upgrades = {};
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
 	player.elementary.theory.tree.spent = new ExpantaNum(0);
-	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
+	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 	player.elementary.theory.strings.entangled = new ExpantaNum(0);
 	player.elementary.theory.preons.amount = new ExpantaNum(0);
 	if (player.elementary.entropy.upgrades.includes(17)) player.elementary.theory.preons.boosters = new ExpantaNum(0)
@@ -162,6 +162,7 @@ function getPionGain() {
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
 	if (modeActive("easy")) gain = gain.times(4)
 	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
+	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.pion)
 	return gain;
 }
 
@@ -172,6 +173,7 @@ function getSpinorGain() {
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
 	if (modeActive("easy")) gain = gain.times(4)
 	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
+	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.spinor)
 	return gain;
 }
 

@@ -104,6 +104,9 @@ const NEWS_DATA = {
 	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],
 	m96: ["Jacorb finds it mind-boggling that DI was first released publicly on May 1st 2020. You'd better remember that, you might see it in a Kahoot!"],
 	m97: ["Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: T- go to #spam please :)"],
+	m98: ["Paradoxes 101: This statement is false."],
+	m99: ["Paradoxes 201: The following statement is false. The previous statement is true."],
+	m100: ["Paradoxes 301: The following statement is false. The following statement is false. The first statement is false."],
 
 	// Distance-based Conditions
 	d1: [

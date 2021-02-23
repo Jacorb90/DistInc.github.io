@@ -193,6 +193,7 @@ function checkR18Ach() {
 	if (player.mlt.highestCompleted>=1) tmp.ach[183].grant();
 	if (player.elementary.entropy.amount.gte(1e5)) tmp.ach[184].grant();
 	if (mltActive(2) && tmp.inf.stadium.active("eternity", 6) && player.distance.gte("3.911111e88888915")) tmp.ach[185].grant();
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 100))) tmp.ach[186].grant();
 }
 
 function updateAchievements() {

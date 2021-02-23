@@ -160,6 +160,7 @@ const ACH_DATA = {
 		183: "Fermionic Embassy",
 		184: "The Entropy Sublimit",
 		185: "Eternal Torture",
+		186: "King of the Damned",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -320,6 +321,7 @@ const ACH_DATA = {
 		183: "Complete Multiverse 1.",
 		184: "Reach showNum(1e5) Entropy.",
 		185: "Reach formatDistance(3.911111e88888915) while in Multiverse 2 and Eternity's Stadium challenge at Difficulty Level 6.",
+		186: "Reach formatDistance(2.21e100000002664).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -422,9 +424,10 @@ const ACH_DATA = {
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
-		178: 'The Infinity popup is permanently disabled, and unlock the "Max Pion & Spinor Fields" button.',
+		178: 'The Infinity popup is permanently disabled if you have Auto-Endorsements unlocked, and unlock the "Max Pion & Spinor Fields" button.',
 		
 		183: "All Entropy Upgrades are always unlocked.",
 		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weaker.",
+		186: "Unlock Auto-Multiverse Runs.",
 	}
 };

@@ -284,7 +284,7 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
 		let fcb = tmp.inf.layer.fcBulk
-		if (player.inf.endorsements.lt(10) && !tmp.ach[178].has) fcb = fcb.max(player.inf.endorsements.plus(1));
+		if (player.inf.endorsements.lt(10) && !(tmp.ach[178].has&&tmp.elm.bos.hasHiggs("2;0;0"))) fcb = fcb.max(player.inf.endorsements.plus(1));
 		let mag = new ExpantaNum(1);
 		let m = player.inf.endorsements.plus(mag).min(fcb).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);
@@ -730,6 +730,7 @@ function updateTempPantheon() {
 	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
 	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 	if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
+	if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
 	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
 	if (tmp.inf.pantheon.chipBoost.gte(2.5)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.logBase(2.5).plus(1.5);

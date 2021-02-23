@@ -238,6 +238,13 @@ function theoryBoosterAutoTick() {
 	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17) && player.elementary.theory.unl) theoryBoost(true)
 }
 
+function foamUnlocksAutoTick() {
+	if (player.automators["foam_unlocks"] && player.elementary.foam.unl) {
+		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
+		else refoam();
+	}
+}
+
 function entropyAutoTick(){
 	if (player.automators["entropy"] && player.elementary.entropy.unl && !mltActive(3)) {
 		player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
@@ -267,6 +274,18 @@ function pionSpinorAutoTick() {
 	if (player.automators["spinor_field"] && hasMltMilestone(9) && player.elementary.sky.unl) maxField("spinors")
 }
 
+function multivAutoTick() {
+	if (player.automators["multiverse_runs"]) {
+		let mode = player.autoModes["multiverse_runs"]
+		let val = new ExpantaNum(player.autoTxt["multiverse_runs"]||0)
+		if (mode=="AMOUNT") {
+			if (tmp.mlt.layer.gain.gte(val)) mltReset(false, true)
+		} else if (mode=="TIME") {
+			if (player.elementary.time.gte(val)) mltReset(false, true)
+		}
+	}
+}
+
 function autoTick(diff) {
 	normalAutoTick(diff)
 	furnaceAutoTick()
@@ -284,15 +303,17 @@ function autoTick(diff) {
 	gluonAutoTick()
 	theoryTreeAutoTick()
 	theoryBoosterAutoTick()
+	if (hasMltMilestone(21)) foamUnlocksAutoTick();
 	entropyAutoTick()
 	entropyUpgAutoTick()
 	energyAutoTick()
 	pionSpinorAutoTick()
+	multivAutoTick()
 }
 
 function autoPerSec() {
 	theoriverseAutoPerSec()
-	if (player.automators["foam_unlocks"] && player.elementary.foam.unl) {
+	if (!hasMltMilestone(21) && player.automators["foam_unlocks"] && player.elementary.foam.unl) {
 		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
 		else refoam();
 	}

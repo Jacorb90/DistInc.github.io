@@ -56,7 +56,7 @@ class Layer {
 					: DEFAULT_START[LAYER_RESETS[this.name][i]];
 		player = transformToEN(player, DEFAULT_START);
 		modeLoad(LAYER_RESETS_EXTRA[this.name]);
-		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev)
+		if (tmp[this.tName]) if (tmp[this.tName].onReset !== undefined) tmp[this.tName].onReset(prev, auto)
 		if (this.name!="rf"&&modeActive("hikers_dream")) calcInclines();
 		updateBeforeTick();
 		updateAfterTick();

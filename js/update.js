@@ -336,7 +336,7 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true;
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true;
 	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true;
-	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10) && !tmp.ach[178].has) tmp.inf.forceReset();
+	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10) && !(tmp.ach[178].has&&tmp.elm.bos.hasHiggs("2;0;0"))) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
 	if (!mltActive(1)) {
 		if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;

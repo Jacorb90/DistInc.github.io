@@ -173,6 +173,7 @@ function getStringEff(n) {
 	if (hasDE(5) && n==5) finalExp = finalExp.plus(TREE_UPGS[17].effect(ettu[17]||0))
 	if (hasDE(5) && n==6) finalExp = finalExp.plus(TREE_UPGS[18].effect(ettu[18]||0))
 	if (hasDE(5) && n==7) finalExp = finalExp.plus(TREE_UPGS[19].effect(ettu[19]||0))
+	if (hasDE(9) && n>7) finalExp = finalExp.plus(1);
 	return ret.pow(finalExp)
 }
 
@@ -214,7 +215,7 @@ function entangleStrings() {
 	let lastStr = player.elementary.theory.strings.amounts.findIndex(x => new ExpantaNum(x).eq(0))+1
 	if (lastStr<3&&lastStr!=0) return
 	player.elementary.theory.strings.entangled = player.elementary.theory.strings.entangled.plus(getEntangleGain())
-	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
+	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)]
 }
 
 // Preons

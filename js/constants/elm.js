@@ -730,7 +730,7 @@ const DARK_EXPANDER_COSTS = {
 	6: new ExpantaNum("1.1111111111111111111111e1111"),
 	7: new ExpantaNum("1e39000"),
 	8: new ExpantaNum("1e46500"),
-	9: new ExpantaNum(1/0),
+	9: new ExpantaNum("1e81725"),
 	10: new ExpantaNum(1/0),
 }
 const DARK_EXPANDER_DESCS = {
@@ -742,7 +742,7 @@ const DARK_EXPANDER_DESCS = {
 	6: "Unlock new Theory Tree Upgrades, and the Graviton Boost requirement increases half as fast when below 60.",
 	7: "Accelerons now reduce the Hadron effect interval.",
 	8: "The Primary String effect is squared.",
-	9: "???",
+	9: "The Purge Power effect is divided by 1.01 for every Theoretical Booster, and Octonary, Nonary, & Dekanary String effects are squared.",
 	10: "???",
 }
 

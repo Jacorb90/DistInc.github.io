@@ -28,7 +28,7 @@ const MLT_DATA = {
 	},
 	2: {
 		desc: "Maximum Velocity is forced to be active, Pion & Spinor Fields are 40% weaker, and Time Speed & Maximum Velocity are brought to the 1.3th root.",
-		reward: "Every third Derivative Boost gives you an extra Derivative Shift (maxes at 7 shifts).",
+		reward: "Every third Derivative Boost gives you an extra Derivative Shift (maxes at 6 shifts).",
 		req: new ExpantaNum(20),
 	},
 	3: {
@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 19;
+const MLT_MILESTONE_NUM = 21;
 
 const MLT_MILESTONES = [
 	{
@@ -120,6 +120,19 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(1.75e3),
 		desc: "The First String's effect also multiplies Acceleron gain.",
+	}, {
+		req: new ExpantaNum(5e3),
+		desc: "Entangled Strings & Quantum Foam boost Pion & Spinor gain, respectively.",
+		effect: function() {
+			return {
+				pion: ExpantaNum.pow(10, player.elementary.theory.strings.entangled.plus(1).log10().root(4)),
+				spinor: ExpantaNum.pow(10, player.elementary.foam.amounts[0].plus(1).log10().root(4)),
+			}
+		},
+		effectDesc: function() { return "Pions: "+showNum(tmp.mlt.mil20reward.pion)+"x<br>Spinors: "+showNum(tmp.mlt.mil20reward.spinor)+"x" },
+	}, {
+		req: new ExpantaNum(1e4),
+		desc: "Auto-Foam Unlocks occur every tick instead of every second, and Re-forming Protoversal Foam cost scaling is 20% weaker.",
 	},
 ]
 

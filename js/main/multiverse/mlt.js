@@ -12,14 +12,17 @@ function updateMiscMltStuff() {
 	tmp.mlt.mil12reward = MLT_MILESTONES[11].effect(); // Milestone 12
 	tmp.mlt.mil15reward = MLT_MILESTONES[14].effect(); // Milestone 15
 	tmp.mlt.mil17reward = MLT_MILESTONES[16].effect(); // Milestone 17
+	tmp.mlt.mil20reward = MLT_MILESTONES[19].effect(); // Milestone 20
 	tmp.mlt.mlt1reward = MLT_DATA[1].effect(); // Multiverse 1
 }
 
 function setMultiverseResetFunction() {
-	if (!tmp.mlt.onReset) tmp.mlt.onReset = function (prev) {
+	if (!tmp.mlt.onReset) tmp.mlt.onReset = function (prev, auto) {
 		// Main Stuff
-		player.mlt.active = "NONE";
-		player.tab = "mlt"
+		if (!auto) {
+			player.mlt.active = "NONE";
+			player.tab = "mlt"
+		}
 		
 		// Keep stuff on Multiverse reset
 		if (hasMltMilestone(1)) {
@@ -53,11 +56,13 @@ function setMultiverseResetFunction() {
 		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
 			
 		// Bugfixes
-		infTab = "infinity"
-		elmTab = "fermions"
+		if (!auto) {
+			infTab = "infinity"
+			elmTab = "fermions"
+			player.mlt.mlt1selected = [];
+			player.mlt.mlt3selected = [];
+		}
 		player.inf.unl = true;
-		player.mlt.mlt1selected = [];
-		player.mlt.mlt3selected = [];
 	};
 }
 

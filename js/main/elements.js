@@ -1159,6 +1159,8 @@ function updatePreonsHTML(){
 		tmp.el.theoryBoost.setClasses({btn: true, locked: player.elementary.theory.preons.amount.lt(getTBCost()), th: player.elementary.theory.preons.amount.gte(getTBCost())})
 		tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
 		tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
+		let t = player.elementary.theory.preons.boosters
+		tmp.el.theoryBoostersEff.setTxt(showNum(ExpantaNum.div(t.pow(2).times(t.plus(1).pow(2)).times(t.pow(2).times(2).plus(t.times(2)).sub(1)), 12).round()))
 	}
 }
 
@@ -1246,7 +1248,7 @@ function updateHadronicChallenges(){
 		tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
 		tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
 		tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
-		tmp.el.hadInterval.setTxt(tmp.elm.hc.hadInterval.lt(1+0.1**(player.options.sf-1))?("1 + 1/"+showNum(tmp.elm.hc.hadInterval.sub(1).pow(-1))):showNum(tmp.elm.hc.hadInterval))
+		tmp.el.hadInterval.setTxt(tmp.elm.hc.hadInterval.lt(1+0.1**(player.options.sf-1))?("Hadronic Intervals per OoM: "+showNum(tmp.elm.hc.hadInterval.log10().pow(-1))):("Hadronic Interval: "+showNum(tmp.elm.hc.hadInterval))) 
 		for (let i=0;i<6;i++) {
 			let x = ""
 			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
@@ -1561,6 +1563,7 @@ function updateOverallMultiverseHTML() {
 				tmp.el["quiltUpg"+i].setHTML("Energize this Quilt by "+showNum(tmp.mlt.quilts[i].upgPow.times(10))+"%<br>Currently: +"+showNum(tmp.mlt.quilts[i].upgEff.times(100))+"%<br>Cost: "+showNum(tmp.mlt.quilts[i].upgCost)+" ME")
 			}
 			tmp.el.quilt2Eff2Desc.setTxt(hasMltMilestone(6)?", Pion gain, & Spinor gain":"")
+			tmp.el.quilt3sc.setTxt(tmp.mlt.quilts[3].eff.gte(tmp.mlt.quilts[3].scStart)?" (softcapped)":"")
 		}
 	}
 }

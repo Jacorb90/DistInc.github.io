@@ -109,6 +109,9 @@ const AUTOMATORS = {
 	spinor_field: function() {
 		return hasMltMilestone(9)
 	},
+	multiverse_runs: function() {
+		return tmp.ach[186].has
+	},
 };
 
 const AUTOMATOR_BORDER = {
@@ -133,12 +136,15 @@ const AUTOMATOR_BORDER = {
 	entropy_upgrades: "#dbaca9",
 	pion_field: "#a875d1",
 	spinor_field: "#a875d1",
+	multiverse_runs: "#837eed",
 }
 
 const AUTOMATOR_X = {
 	elementaries: 2,
+	multiverse_runs: 2,
 }
 
 const AUTOMATOR_MODES = {
 	elementaries: ["AMOUNT", "TIME"],
+	multiverse_runs: ["AMOUNT", "TIME"],
 }

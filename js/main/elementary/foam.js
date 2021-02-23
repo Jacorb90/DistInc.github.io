@@ -224,7 +224,7 @@ function getAch162Eff() {
 
 function getRefoamCost() {
 	let bought = player.elementary.foam.maxDepth.sub(5)
-	let cost = QF_NEXTLAYER_COST[5].times(ExpantaNum.pow(10, ExpantaNum.pow(10, bought.pow(0.45)).sub(1)))
+	let cost = QF_NEXTLAYER_COST[5].times(ExpantaNum.pow(10, ExpantaNum.pow(10, bought.pow(hasMltMilestone(21)?0.36:0.45)).sub(1)))
 	return cost
 }
 
@@ -233,7 +233,7 @@ function refoam() {
 	let cost = getRefoamCost();
 	if (player.elementary.foam.amounts[4].lt(cost)) return;
 	if (hasMltMilestone(4)) {
-		let target = player.elementary.foam.amounts[4].div(QF_NEXTLAYER_COST[5]).max(1).log10().plus(1).log10().root(0.45).plus(6).floor()
+		let target = player.elementary.foam.amounts[4].div(QF_NEXTLAYER_COST[5]).max(1).log10().plus(1).log10().root(hasMltMilestone(21)?0.36:0.45).plus(6).floor()
 		player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.max(target);
 	} else {
 		player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1);
