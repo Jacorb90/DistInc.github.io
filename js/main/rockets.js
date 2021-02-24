@@ -78,9 +78,12 @@ function updateTempRockets() {
 	tmp.rockets.canRocket = player.distance.gte(ExpantaNum.mul(LAYER_REQS["rockets"][1], tmp.rockets.lrm));
 	if (nerfActive("noRockets")) tmp.rockets.canRocket = false;
 	tmp.rockets.layer = new Layer("rockets", tmp.rockets.canRocket, "normal");
-	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(getRocketEffect()).plus(player.rockets).max(1);
-	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(getRocketEffect()).plus(player.rockets).max(1);
-	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(getRocketEffect()).plus(1);
+	let mlt5 = mltActive(5);
+	let r = player.rockets;
+	if (mlt5) r = r.min(0);
+	tmp.rockets.accPow = tmp.acc.plus(1).log10().pow(getRocketEffect()).plus(r).max(1);
+	tmp.rockets.mvPow = tmp.maxVel.plus(1).log10().pow(getRocketEffect()).plus(r).max(1);
+	tmp.rockets.accEnPow = tmp.accEn.plus(1).log10().pow(getRocketEffect()).max(1);
 	tmp.rockets.tsPow = tmp.inf?(tmp.inf.upgs.has("10;3")?(tmp.timeSpeed.plus(1).log10().pow(getRocketEffect()).plus(1)):new ExpantaNum(1)):new ExpantaNum(1)
 	if (modeActive("extreme") && tmp.fn) tmp.rockets.clPow = tmp.fn.gain.plus(1).log10().pow(getRocketEffect()).plus(1);
 	if (!tmp.rockets.onReset) tmp.rockets.onReset = function (prev) {

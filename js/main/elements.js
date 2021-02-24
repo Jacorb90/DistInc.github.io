@@ -646,11 +646,20 @@ function updateAngelsChipsHTML(){
 	tmp.el.chips.setTxt(showNum(player.inf.pantheon.heavenlyChips));
 	tmp.el.chipGain.setTxt(formatGain(player.inf.pantheon.heavenlyChips, tmp.inf.pantheon.chipGain, "heavenlyChips"));
 	tmp.el.chipBoost.setTxt(showNum(tmp.inf.pantheon.chipBoost.sub(1).times(100)));
-	tmp.el.soulNerf.setTxt(showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1)))
+	let mltr5 = mltRewardActive(5)
+	tmp.el.soulNerf.setHTML(mltr5?("multiply by <span class='spectral'>"+showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1))+"</span>"):("divide by <span class='spectral'>"+showNum(player.inf.pantheon.demonicSouls.pow(tmp.inf.pantheon.ppe).plus(1))+"</span>"))
 	tmp.el.souls.setTxt(showNum(player.inf.pantheon.demonicSouls));
 	tmp.el.soulGain.setTxt(formatGain(player.inf.pantheon.demonicSouls, tmp.inf.pantheon.soulGain, "demonicSouls"));
 	tmp.el.soulBoost.setTxt(showNum(tmp.inf.pantheon.soulBoost.sub(1).times(100)));
-	tmp.el.chipNerf.setTxt(showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1)))
+	tmp.el.chipNerf.setHTML(mltr5?("multiply by <span class='spectral'>"+showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1))+"</span>"):("divide by <span class='spectral'>"+showNum(player.inf.pantheon.heavenlyChips.pow(tmp.inf.pantheon.ppe).plus(1))+"</span>"))
+	tmp.el.phantomDiv.setDisplay(mltr5);
+	if (mltr5) {
+		tmp.el.phantoms.setTxt(showNum(tmp.inf.pantheon.phantoms));
+		tmp.el.hauntingEnergy.setTxt(showNum(player.inf.pantheon.hauntingEnergy||0));
+		tmp.el.hauntingEnergyGain.setTxt(formatGain(player.inf.pantheon.hauntingEnergy, tmp.inf.pantheon.hauntingEnergyGain, "hauntingEnergy"))
+		tmp.el.hauntingEnergyBoost.setTxt(showNum(tmp.inf.pantheon.hauntingEnergyBoost.sub(1).times(100)));
+		tmp.el.hauntingEnergyBoost2.setTxt(showNum(tmp.inf.pantheon.hauntingEnergyBoost2))
+	}
 }
 
 function updateDerivativeHTML(){

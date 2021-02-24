@@ -42,6 +42,7 @@ function ENString(obj) {
 	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons).toString();
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips).toString();
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls).toString();
+	ret.inf.pantheon.hauntingEnergy = new ExpantaNum(ret.inf.pantheon.hauntingEnergy||0).toString();
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power).toString();
 	if (Object.keys(ret.inf.derivatives.amts).length > 0)
 		for (const key in ret.inf.derivatives.amts)
@@ -224,6 +225,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons);
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips);
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls);
+	ret.inf.pantheon.hauntingEnergy = new ExpantaNum(ret.inf.pantheon.hauntingEnergy||0);
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power);
 	if (Object.keys(ret.inf.derivatives.amts).length > 0)
 		for (const key in ret.inf.derivatives.amts)

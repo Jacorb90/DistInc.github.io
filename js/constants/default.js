@@ -106,6 +106,7 @@ const DEFAULT_START = {
 			demons: new ExpantaNum(0),
 			heavenlyChips: new ExpantaNum(0),
 			demonicSouls: new ExpantaNum(0),
+			hauntingEnergy: new ExpantaNum(0),
 			purge: {
 				unl: false,
 				active: false,

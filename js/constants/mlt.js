@@ -42,9 +42,9 @@ const MLT_DATA = {
 		req: new ExpantaNum(400),
 	},
 	5: {
-		desc: "???",
-		reward: "???",
-		req: new ExpantaNum(1/0),
+		desc: "Time Speed is brought to the 3.6th root.",
+		reward: "The Purge Power effect goes below zero, and unlock Phantoms (a new Pantheon section). Heavenly Chip & Demonic Soul effects are much stronger.",
+		req: new ExpantaNum(2e3),
 	},
 }
 

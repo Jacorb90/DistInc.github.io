@@ -1092,7 +1092,10 @@ const SKY_FIELDS = {
 		spinorDesc: "The Skyrmion effect is multiplied.",
 		baseCost: new ExpantaNum(1e43),
 		costMult: new ExpantaNum(1e12),
-		pionEff(bought) { return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) },
+		pionEff(bought) { 
+			if (bought.gte(3)) bought = bought.logBase(3).plus(2);
+			return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) 
+		},
 		spinorEff(bought) { 
 			if (bought.gte(2)) bought = bought.logBase(2).plus(1).root(5)
 			return ExpantaNum.add(bought, 1).pow(1.65) 

@@ -161,6 +161,7 @@ const ACH_DATA = {
 		184: "The Entropy Sublimit",
 		185: "Eternal Torture",
 		186: "King of the Damned",
+		187: "Conquering the Megaverse",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -322,6 +323,7 @@ const ACH_DATA = {
 		184: "Reach showNum(1e5) Entropy.",
 		185: "Reach formatDistance(3.911111e88888915) while in Multiverse 2 and Eternity's Stadium challenge at Difficulty Level 6.",
 		186: "Reach formatDistance(2.21e100000002664).",
+		187: "Complete Multiverse 5.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
