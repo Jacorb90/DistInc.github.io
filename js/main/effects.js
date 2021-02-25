@@ -37,6 +37,7 @@ function ach112Eff() {
 
 function ach152Eff() {
 	let eff = new ExpantaNum(1)
-	if (tmp.ach) if (tmp.ach[152].has) eff = eff.times(player.elementary.hc.best.plus(1).pow(0.15))
+	if (tmp.ach) if (tmp.ach[152].has) eff = eff.times(player.elementary.hc.best.plus(1).pow(0.15));
+	if (player.elementary.entropy.upgrades.includes(26) && tmp.elm.entropy) eff = eff.pow(tmp.elm.entropy.upgEff[26]);
 	return eff;
 }

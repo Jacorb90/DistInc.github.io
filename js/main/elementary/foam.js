@@ -120,6 +120,12 @@ function getQuantumFoamGain(x) {
 	return gain
 }
 
+function getQFBoostCostDiv() {
+	let div = new ExpantaNum(1);
+	if (hasMltMilestone(22)) div = div.times(tmp.mlt.mil22reward)
+	return div;
+}
+
 function getQFBoostCost(x, b) {
 	let start = FOAM_BOOST_COSTS[x][b].start
 	let base = FOAM_BOOST_COSTS[x][b].base
@@ -127,7 +133,7 @@ function getQFBoostCost(x, b) {
 	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
 	let amt = player.elementary.foam.upgrades[id]
-	let cost = start.times(base.pow(amt.pow(exp)))
+	let cost = start.times(base.pow(amt.pow(exp))).div(getQFBoostCostDiv())
 	return cost;
 }
 
@@ -137,7 +143,7 @@ function getQFBoostTarg(x, b) {
 	let exp = FOAM_BOOST_COSTS[x][b].exp
 	if (modeActive("extreme")) base = ExpantaNum.sqrt(base)
 	let id = (x-1)*3+(b-1)
-	let res = player.elementary.foam.amounts[x-1]
+	let res = player.elementary.foam.amounts[x-1].times(getQFBoostCostDiv())
 	let targ = res.div(start).max(1).logBase(base).pow(exp.pow(-1))
 	return targ.plus(1).floor();
 }
@@ -259,6 +265,7 @@ function getEntropyEff() {
 	if (entropy.gte(3)) entropy = entropy.sqrt().times(Math.sqrt(3))
 	let eff = entropy.plus(1).pow(2.5);
 	if (player.elementary.entropy.upgrades.includes(21) && tmp.elm.entropy.upgEff) eff = eff.pow(tmp.elm.entropy.upgEff[21].div(100).plus(1))
+	if (player.elementary.entropy.upgrades.includes(27) && tmp.elm.entropy.upgEff) eff = eff.pow(tmp.elm.entropy.upgEff[27])
 	if (player.elementary.sky.unl && tmp.elm.sky) eff = eff.pow(tmp.elm.sky.spinorEff[9])
 	if (modeActive("easy")) eff = eff.pow(1.25)
 	return eff;
@@ -271,6 +278,7 @@ function getEntropyGainMult() {
 	if (player.elementary.entropy.upgrades.includes(8)) mult = mult.times(tmp.elm.entropy.upgEff[8])
 	if (player.elementary.entropy.upgrades.includes(10)) mult = mult.times(1.5)
 	if (player.elementary.sky.unl && tmp.elm.sky) mult = mult.times(tmp.elm.sky.spinorEff[3])
+	if (tmp.ach[188].has) mult = mult.times(1.1);
 	return mult;
 }
 
@@ -364,6 +372,7 @@ function buyEntropyUpg(x) {
 function entropyUpgShown(x) {
 	if (x<=8) return true;
 	else if (x<=20) return tmp.ach[183].has||player.elementary.sky.amount.gt(0);
+	else if (x>=26 && x<=33) return hasDE(10);
 	else if (x<=22) return modeActive("extreme");
 	else if (x<=25) return modeActive("extreme")&&(tmp.ach[183].has||player.elementary.sky.amount.gt(0));
 	else return false;

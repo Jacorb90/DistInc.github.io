@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 21;
+const MLT_MILESTONE_NUM = 22;
 
 const MLT_MILESTONES = [
 	{
@@ -133,6 +133,14 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(1e4),
 		desc: "Auto-Foam Unlocks occur every tick instead of every second, and Re-forming Protoversal Foam cost scaling is 20% weaker.",
+	}, {
+		req: new ExpantaNum(2e5),
+		desc: "Foam Size Upgrades cost less based on your total Foam Size Upgrades bought.",
+		effect: function() { 
+			let total = player.elementary.foam.upgrades.reduce((a,c) => ExpantaNum.add(a, c));
+			return ExpantaNum.pow(10, total.plus(1).log10().pow(4));
+		},
+		effectDesc: function() { return "Currently: /"+showNum(tmp.mlt.mil22reward) },
 	},
 ]
 

@@ -1,5 +1,5 @@
 const ACH_DATA = {
-	rows: 18,
+	rows: 19,
 	cols: 8,
 	names: {
 		11: "Quick Sprint",
@@ -162,6 +162,11 @@ const ACH_DATA = {
 		185: "Eternal Torture",
 		186: "King of the Damned",
 		187: "Conquering the Megaverse",
+		188: "Not So Proto Now?",
+		
+		191: "Vantablack Explosion",
+		192: "The Leetest Titan",
+		193: "Conqueror of the Lands",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -324,6 +329,11 @@ const ACH_DATA = {
 		185: "Reach formatDistance(3.911111e88888915) while in Multiverse 2 and Eternity's Stadium challenge at Difficulty Level 6.",
 		186: "Reach formatDistance(2.21e100000002664).",
 		187: "Complete Multiverse 5.",
+		188: "Reach showNum(1e430) Protoversal Foam.",
+		
+		191: "Purchase showNum(10) Dark Expanders.",
+		192: "Get showNum(1337) Ranks in Multiverse 1 without unlocking Theories, Hadronic Challenge, Foam, or Skyrmions.",
+		193: "Complete Multiverse 3 without unlocking Ascension.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -431,5 +441,8 @@ const ACH_DATA = {
 		183: "All Entropy Upgrades are always unlocked.",
 		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weaker.",
 		186: "Unlock Auto-Multiverse Runs.",
+		188: "Gain showNum(10)% more Entropy.",
+		
+		193: "Gain showNum(5)% more Multiversal Energy.",
 	}
 };

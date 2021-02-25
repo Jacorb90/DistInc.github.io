@@ -731,7 +731,7 @@ const DARK_EXPANDER_COSTS = {
 	7: new ExpantaNum("1e39000"),
 	8: new ExpantaNum("1e46500"),
 	9: new ExpantaNum("1e81725"),
-	10: new ExpantaNum(1/0),
+	10: new ExpantaNum("1e108000"),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
@@ -743,7 +743,7 @@ const DARK_EXPANDER_DESCS = {
 	7: "Accelerons now reduce the Hadron effect interval.",
 	8: "The Primary String effect is squared.",
 	9: "The Purge Power effect is divided by 1.01 for every Theoretical Booster, and Octonary, Nonary, & Dekanary String effects are squared.",
-	10: "???",
+	10: "Unlock 2 new rows of Entropy Upgrades.",
 }
 
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
@@ -901,7 +901,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 25
+const ENTROPY_UPGS = 33
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -932,6 +932,16 @@ const ENTROPY_UPG_COSTS = {
 	19: new ExpantaNum(17500),
 	20: new ExpantaNum(18250),
 	25: new ExpantaNum(30000),
+	
+	26: new ExpantaNum(250000),
+	27: new ExpantaNum(282500),
+	28: new ExpantaNum(1/0),
+	29: new ExpantaNum(1/0),
+	
+	30: new ExpantaNum(1/0),
+	31: new ExpantaNum(1/0),
+	32: new ExpantaNum(1/0),
+	33: new ExpantaNum(1/0),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -945,13 +955,17 @@ const ENTROPY_UPG_EFFS = {
 	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 	21: function() { return modeActive("extreme")?player.magma.amount.cbrt().times(75):new ExpantaNum(0) },
 	24: function() { return player.elementary.entropy.best.plus(1).root(14) },
+	26: function() { return ExpantaNum.pow(10, player.elementary.entropy.amount.plus(1).log10().root(4)) },
+	27: function() { return player.elementary.entropy.best.plus(1).log10().plus(1) },
 }
 const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
 								5,6,7,8,22,
 								9,10,11,12,
 								13,14,15,16,
 								23,24,
-								17,18,19,20,25];
+								17,18,19,20,25,
+								26,27,28,29,
+								30,31,32,33];
 
 const SKY_REQ = [
 	"4.4e108000026",

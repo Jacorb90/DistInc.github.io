@@ -13,6 +13,7 @@ function updateMiscMltStuff() {
 	tmp.mlt.mil15reward = MLT_MILESTONES[14].effect(); // Milestone 15
 	tmp.mlt.mil17reward = MLT_MILESTONES[16].effect(); // Milestone 17
 	tmp.mlt.mil20reward = MLT_MILESTONES[19].effect(); // Milestone 20
+	tmp.mlt.mil22reward = MLT_MILESTONES[21].effect(); // Milestone 22
 	tmp.mlt.mlt1reward = MLT_DATA[1].effect(); // Multiverse 1
 }
 
@@ -72,12 +73,13 @@ function updateMultiverseLayer() {
 		if (player.distance.lt(DISTANCES.mlt)) return new ExpantaNum(0);
 		let exp = player.distance.logBase(DISTANCES.mlt).sub(1);
 		if (exp.gte(1)) exp = exp.sqrt();
-		let gain = ExpantaNum.pow(2, exp).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active))
+		let gain = ExpantaNum.pow(2, exp).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active)).times(tmp.ach[193].has?1.05:1)
 		return gain.floor();
 	}
 	tmp.mlt.layer = new Layer("multiverse", tmp.mlt.can, "normal", true, "mlt", true)
 	if (!tmp.mlt.doGain) tmp.mlt.doGain = function(auto=false) {
 		if (!auto && !player.options.mltnc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
+		if (player.mlt.active == 3 && !player.mlt.mlt3selected.includes("ascension")) tmp.ach[193].grant();
 		player.mlt.energy = player.mlt.energy.plus(tmp.mlt.layer.gain);
 		player.mlt.totalEnergy = player.mlt.totalEnergy.plus(tmp.mlt.layer.gain);
 		player.mlt.highestCompleted = Math.max(player.mlt.highestCompleted, player.mlt.active);
