@@ -107,6 +107,7 @@ const NEWS_DATA = {
 	m98: ["Paradoxes 101: This statement is false."],
 	m99: ["Paradoxes 201: The following statement is false. The previous statement is true."],
 	m100: ["Paradoxes 301: The following statement is false. The following statement is false. The first statement is false."],
+	m101: ["Jacorb's mental instability is increasing quite quickly. If he reaches 100% mental instability, the multiverse implodes."],
 
 	// Distance-based Conditions
 	d1: [

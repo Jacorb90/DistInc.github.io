@@ -165,6 +165,7 @@ function getTierFP() {
 	if (player.elementary.sky.unl && tmp.elm && !scalingActive("tier", player.tier, "scaled")) fp = fp.sub(tmp.elm.sky.pionEff[10]).pow(-1)
 	if (player.tr.upgrades.includes(20) && !HCCBA("noTRU") && modeActive("extreme")) fp = fp.times(player.rankCheap.plus(1).log10().plus(1).log10().plus(1));
 	if (extremeStadiumActive("cranius", 5)) fp = fp.div(player.rankCheap.plus(1))
+	if (tmp.ach) if (tmp.ach[194].has) fp = fp.times(1.0069);
 	return fp
 }
 

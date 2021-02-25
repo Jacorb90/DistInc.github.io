@@ -202,6 +202,8 @@ function checkR19Ach() {
 	if (player.elementary.theory.accelerons.expanders.gte(10)) tmp.ach[191].grant();
 	if (player.rank.gte(1337) && mltActive(1) && player.mlt.mlt1selected.length==0) tmp.ach[192].grant();
 	// ach193 is in the Multiverse reset function
+	if (player.tier.gte(69)) tmp.ach[194].grant();
+	// ach195 is in the Multiverse reset function
 }
 
 function updateAchievements() {

@@ -935,8 +935,8 @@ const ENTROPY_UPG_COSTS = {
 	
 	26: new ExpantaNum(250000),
 	27: new ExpantaNum(282500),
-	28: new ExpantaNum(1/0),
-	29: new ExpantaNum(1/0),
+	28: new ExpantaNum(420000),
+	29: new ExpantaNum(482500),
 	
 	30: new ExpantaNum(1/0),
 	31: new ExpantaNum(1/0),
@@ -957,6 +957,8 @@ const ENTROPY_UPG_EFFS = {
 	24: function() { return player.elementary.entropy.best.plus(1).root(14) },
 	26: function() { return ExpantaNum.pow(10, player.elementary.entropy.amount.plus(1).log10().root(4)) },
 	27: function() { return player.elementary.entropy.best.plus(1).log10().plus(1) },
+	28: function() { return player.elementary.hc.claimed.plus(1) },
+	29: function() { return (tmp.elm?tmp.elm.entropy.omega:false)?(tmp.elm.entropy.omega.plus(1)):new ExpantaNum(1) },
 }
 const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
 								5,6,7,8,22,

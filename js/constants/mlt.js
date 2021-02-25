@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 22;
+const MLT_MILESTONE_NUM = 23;
 
 const MLT_MILESTONES = [
 	{
@@ -141,6 +141,9 @@ const MLT_MILESTONES = [
 			return ExpantaNum.pow(10, total.plus(1).log10().pow(4));
 		},
 		effectDesc: function() { return "Currently: /"+showNum(tmp.mlt.mil22reward) },
+	}, {
+		req: new ExpantaNum(1e6),
+		desc: "Hyper Rank scaling starts 250 later if you are in Multiverse Prime.",
 	},
 ]
 

@@ -25,6 +25,8 @@ function getScalingStart(type, name) {
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("6;2")) start = start.plus(5)
 			if (tmp.inf) if (tmp.inf.stadium.completed("solaris")) start = start.plus(STADIUM_REWARDS.effects.solaris())
+		} else if (type=="hyper") {
+			if (hasMltMilestone(23) && player.mlt.active==0) start = start.plus(250);
 		} else if (type=="atomic") {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}

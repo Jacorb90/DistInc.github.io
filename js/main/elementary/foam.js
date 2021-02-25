@@ -279,6 +279,7 @@ function getEntropyGainMult() {
 	if (player.elementary.entropy.upgrades.includes(10)) mult = mult.times(1.5)
 	if (player.elementary.sky.unl && tmp.elm.sky) mult = mult.times(tmp.elm.sky.spinorEff[3])
 	if (tmp.ach[188].has) mult = mult.times(1.1);
+	if (tmp.ach[195].has) mult = mult.times(1.11);
 	return mult;
 }
 

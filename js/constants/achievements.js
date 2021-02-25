@@ -167,6 +167,8 @@ const ACH_DATA = {
 		191: "Vantablack Explosion",
 		192: "The Leetest Titan",
 		193: "Conqueror of the Lands",
+		194: "Nice Beloved Quality",
+		195: "Millionaire Multipreneur",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -334,6 +336,8 @@ const ACH_DATA = {
 		191: "Purchase showNum(10) Dark Expanders.",
 		192: "Get showNum(1337) Ranks in Multiverse 1 without unlocking Theories, Hadronic Challenge, Foam, or Skyrmions.",
 		193: "Complete Multiverse 3 without unlocking Ascension.",
+		194: "Reach Tier showNum(69).",
+		195: "Gain showNum(1e6) Multiverse Energy in one reset.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -444,5 +448,7 @@ const ACH_DATA = {
 		188: "Gain showNum(10)% more Entropy.",
 		
 		193: "Gain showNum(5)% more Multiversal Energy.",
+		194: "Tier scaling is 0.69% weaker.",
+		195: "Gain showNum(11)% more Entropy.",
 	}
 };
