@@ -48,7 +48,7 @@ const MLT_DATA = {
 	},
 }
 
-const MLT_MILESTONE_NUM = 23;
+const MLT_MILESTONE_NUM = 24;
 
 const MLT_MILESTONES = [
 	{
@@ -144,6 +144,11 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(1e6),
 		desc: "Hyper Rank scaling starts 250 later if you are in Multiverse Prime.",
+	}, {
+		req: new ExpantaNum(2.5e7),
+		desc: "Entropy Upgrades cost less based on your Total Multiversal Energy.",
+		effect: function() { return player.mlt.totalEnergy.plus(1).log10().plus(1).root(5) },
+		effectDesc: function() { return "Currently: /"+showNum(tmp.mlt.mil24reward) },
 	},
 ]
 

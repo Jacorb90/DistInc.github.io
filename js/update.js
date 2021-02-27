@@ -46,7 +46,7 @@ function setupHTML() {
 	achTable.setHTML(table);
 	
 	// Rank/Tier Stats
-	let rankTable = new Element("rankStats")
+	let rankTierTable = new Element("rankTierStats")
 	table = "<div class='flexTopRow'><div class='flexContainer'>"
 	for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
 		let ranks = Object.keys(RANK_DESCS)[i]
@@ -64,7 +64,7 @@ function setupHTML() {
 		table += "</div>"
 	}
 	table += "</div></div>"
-	rankTable.setHTML(table)
+	rankTierTable.setHTML(table)
 
 	// Time Reversal Upgrade Table
 	let trTable = new Element("trTable");

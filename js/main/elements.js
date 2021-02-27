@@ -891,8 +891,7 @@ function updateStatisticsHTML(){
 		}
 		
 		if (statTab == "rankTiers") {
-			tmp.el.rankStats.setDisplay(player.rank.gt(1))
-			tmp.el.tierStats.setDisplay(player.tier.gt(0))
+			tmp.el.rankTierStats.setDisplay(player.rank.gt(1)||player.tier.gt(0))
 			for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
 				let ranks = Object.keys(RANK_DESCS)[i]
 				tmp.el["rankReward"+ranks].setDisplay(player.rank.gt(ranks))
@@ -1453,7 +1452,7 @@ function updateQFHTML() {
 			tmp.el.nextOmega.setTxt(showNum(getNextOmega()))
 			tmp.el.omegaEff.setTxt(showNum(tmp.elm.entropy.omegaEff))
 			for (let i=1;i<=ENTROPY_UPGS;i++) {
-				let cost = ENTROPY_UPG_COSTS[i]||new ExpantaNum(1/0)
+				let cost = getEntropyUpgCost(i)
 				tmp.el["entropy"+i].setDisplay(entropyUpgShown(i))
 				tmp.el["entropy"+i].setClasses({
 					btn: true,
@@ -1484,6 +1483,7 @@ function updateSkyHTML() {
 			tmp.el.skyrmionGain.setTxt(showNum(canReset?tmp.elm.sky.gain:0))
 			tmp.el.skyrmionAmt.setTxt(showNum(player.elementary.sky.amount))
 			tmp.el.skyrmionEff.setTxt(showNum(tmp.elm.sky.eff))
+			tmp.el.skyrmionEff2.setTxt(showNum(getSkyToPionSpinorGainMult()));
 			tmp.el.maxBothFields.setDisplay(tmp.ach[178].has)
 		} else if (skyTab == "pions") {
 			tmp.el.nextPionUpgs.setTxt(player.elementary.sky.amount.gte(SKY_FIELD_UPGS_REQS[SKY_FIELD_UPGS_REQS.length-1])?"":("More upgrades at "+showNum(nextFieldReq)+" Skyrmions"))

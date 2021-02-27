@@ -204,6 +204,8 @@ function checkR19Ach() {
 	// ach193 is in the Multiverse reset function
 	if (player.tier.gte(69)) tmp.ach[194].grant();
 	// ach195 is in the Multiverse reset function
+	if (player.distance.gte("4.4e10000026") && mltActive(5) && getProjectedHadronicScore().gte(15) && player.elementary.hc.active) tmp.ach[196].grant();
+	// ach197 is in the Multiverse reset function
 }
 
 function updateAchievements() {

@@ -361,10 +361,17 @@ function getOmegaEff() {
 	return eff
 }
 
+function getEntropyUpgCost(x) {
+	let cost = ENTROPY_UPG_COSTS[x]||new Decimal(1/0);
+	if (hasMltMilestone(24) && tmp.mlt) cost = cost.div(tmp.mlt.mil24reward);
+	if (tmp.ach[197].has) cost = cost.div(1.05);
+	return cost;
+}
+
 function buyEntropyUpg(x) {
 	if (!player.elementary.entropy.unl || mltActive(3)) return;
 	if (player.elementary.entropy.upgrades.includes(x)) return;
-	let cost = ENTROPY_UPG_COSTS[x]||new ExpantaNum(1/0)
+	let cost = getEntropyUpgCost(x)
 	if (player.elementary.entropy.amount.lt(cost)) return;
 	player.elementary.entropy.amount = player.elementary.entropy.amount.sub(cost)
 	player.elementary.entropy.upgrades.push(x)

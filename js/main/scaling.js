@@ -86,6 +86,10 @@ function getScalingStart(type, name) {
 		if (type=="scaled") {
 			if (modeActive("extreme")) start = start.sub(4)
 		}
+	} else if (name=="dervBoost") {
+		if (type=="superscaled") {
+			if (player.elementary.entropy.upgrades.includes(32)) start = start.plus(2);
+		}
 	}
 	if (type!=="atomic") if (Object.values(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1][name]!==undefined) start = start.min(getScalingStart(Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1], name))
 	return start

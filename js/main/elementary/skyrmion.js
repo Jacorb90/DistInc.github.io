@@ -61,6 +61,7 @@ function getSkyGain() {
 	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(getSkyReqData(1)).times(player.elementary.fermions.leptons.amount.max(1).logBase(getSkyReqData(2))).pow(2);
 	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
 	if (player.elementary.entropy.upgrades.includes(29)) gain = gain.times(tmp.elm.entropy.upgEff[29])
+	if (player.elementary.entropy.upgrades.includes(30)) gain = gain.times(tmp.elm.entropy.upgEff[30])
 	if (mltRewardActive(1) && tmp.mlt) gain = gain.times(tmp.mlt.mlt1reward)
 	if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[8])
 	return gain.floor();
@@ -156,8 +157,14 @@ function getLeptonStacks(x) {
 	return stacks;
 }
 
+function getSkyToPionSpinorGainMult() {
+	let m = player.elementary.sky.amount.pow(2).times(5);
+	if (player.elementary.entropy.upgrades.includes(33)) m = m.pow(1.5);
+	return m;
+}
+
 function getPionGain() {
-	let gain = player.elementary.sky.amount.pow(2).times(5)
+	let gain = getSkyToPionSpinorGainMult();
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
@@ -165,11 +172,12 @@ function getPionGain() {
 	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
 	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.pion)
 	if (player.elementary.entropy.upgrades.includes(28)) gain = gain.times(tmp.elm.entropy.upgEff[28])
+	if (player.elementary.entropy.upgrades.includes(31)) gain = gain.times(tmp.elm.entropy.upgEff[31])
 	return gain;
 }
 
 function getSpinorGain() {
-	let gain = player.elementary.sky.amount.pow(2).times(5)
+	let gain = getSkyToPionSpinorGainMult();
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
@@ -177,6 +185,7 @@ function getSpinorGain() {
 	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
 	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.spinor)
 	if (player.elementary.entropy.upgrades.includes(28)) gain = gain.times(tmp.elm.entropy.upgEff[28])
+	if (player.elementary.entropy.upgrades.includes(31)) gain = gain.times(tmp.elm.entropy.upgEff[31])
 	return gain;
 }
 

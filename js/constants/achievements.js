@@ -169,6 +169,8 @@ const ACH_DATA = {
 		193: "Conqueror of the Lands",
 		194: "Nice Beloved Quality",
 		195: "Millionaire Multipreneur",
+		196: "Hadron Manipulation",
+		197: "Billionaire X",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -337,7 +339,9 @@ const ACH_DATA = {
 		192: "Get showNum(1337) Ranks in Multiverse 1 without unlocking Theories, Hadronic Challenge, Foam, or Skyrmions.",
 		193: "Complete Multiverse 3 without unlocking Ascension.",
 		194: "Reach Tier showNum(69).",
-		195: "Gain showNum(1e6) Multiverse Energy in one reset.",
+		195: "Gain showNum(1e6) Multiversal Energy in one reset.",
+		196: "Reach formatDistance(4.4e10000026) in Multiverse 5 while in a Hadronic Challenge with a Projected Score of at least 15.",
+		197: "Gain showNum(1e9) Multiversal Energy in one reset.",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",
@@ -450,5 +454,6 @@ const ACH_DATA = {
 		193: "Gain showNum(5)% more Multiversal Energy.",
 		194: "Tier scaling is 0.69% weaker.",
 		195: "Gain showNum(11)% more Entropy.",
+		197: "Entropy Upgrades are showNum(5)% cheaper.",
 	}
 };

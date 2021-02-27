@@ -398,8 +398,7 @@
 				</div>
 			</div><div id="rankTiers" class="stattab" style="display: none;">
 				<div class="flexContainer">
-					<div id="rankStats"></div>
-					<div id="tierStats"></div>
+					<div id="rankTierStats"></div>
 				</div>
 			</div>
 		</div>
@@ -2271,10 +2270,10 @@
 							<td><button id="entropy29" class="btn locked" onclick="buyEntropyUpg(29)" style="min-height: 200px;">&Omega; Particles multiply Skyrmion gain.<br>Cost: <span id="entropyCost29" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff29" style="color: black;"></span>x</button></td>
 						</tr>
 						<tr>
-							<td><button id="entropy30" class="btn locked" onclick="buyEntropyUpg(30)" style="min-height: 200px;">???<br>Cost: <span id="entropyCost30" style="color: black;"></span> Entropy</button></td>
-							<td><button id="entropy31" class="btn locked" onclick="buyEntropyUpg(31)" style="min-height: 200px;">???<br>Cost: <span id="entropyCost31" style="color: black;"></span> Entropy</button></td>
-							<td><button id="entropy32" class="btn locked" onclick="buyEntropyUpg(32)" style="min-height: 200px;">???<br>Cost: <span id="entropyCost32" style="color: black;"></span> Entropy</button></td>
-							<td><button id="entropy33" class="btn locked" onclick="buyEntropyUpg(33)" style="min-height: 200px;">???<br>Cost: <span id="entropyCost33" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy30" class="btn locked" onclick="buyEntropyUpg(30)" style="min-height: 200px;">Quantum Foam boosts Skyrmion gain.<br>Cost: <span id="entropyCost30" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff30" style="color: black;"></span>x</button></td>
+							<td><button id="entropy31" class="btn locked" onclick="buyEntropyUpg(31)" style="min-height: 200px;">Entropy Upgrades bought boost Pion & Spinor gain.<br>Cost: <span id="entropyCost31" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff31" style="color: black;"></span>x</button></td>
+							<td><button id="entropy32" class="btn locked" onclick="buyEntropyUpg(32)" style="min-height: 200px;">Superscaled Derivative Boost scaling starts 2 later.<br>Cost: <span id="entropyCost32" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy33" class="btn locked" onclick="buyEntropyUpg(33)" style="min-height: 200px;">Base Pion/Spinor gain is raised to the 1.5th power.<br>Cost: <span id="entropyCost33" style="color: black;"></span> Entropy</button></td>
 						</tr>
 					</table>
 					<br><br><br><br><br>
@@ -2309,7 +2308,8 @@
 				<div id="skyrmions" class="skyTab">
 					Destabilizing the topology of your multiverse will force an Entropy & Elementary reset, and will also reset your Purge Power, Elementary Particles, Fermions, Bosons, Photon & Gluon Upgrades, Supersymmetric Particles, Theory Tree Upgrades, Strings (and Entangled Strings), Preon amount, Acceleron amount, Inflatons, Hadrons, Entropy, & Entropy Upgrades (except the first one).<br><br>
 					<button id="skyrmionReset" class="btn locked" onclick="skyrmionReset()">Destabilize the topology of your multiverse to gain <span id="skyrmionGain"></span> Skyrmions</button><br><br>
-					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br><br>
+					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br>
+					Base Pion/Spinor Gain: <span id="skyrmionEff2" class="skytxt"></span>/s.<br><br>
 					<button id="maxBothFields" onclick="maxBothFields()" class="btn sky">Max Pion & Spinor Fields</button>
 					<button onclick="respecBothFields()" class="btn sky">Reset Pion & Spinor Fields</button>
 				</div>
