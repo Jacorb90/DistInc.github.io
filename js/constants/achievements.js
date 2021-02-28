@@ -171,6 +171,7 @@ const ACH_DATA = {
 		195: "Millionaire Multipreneur",
 		196: "Hadron Manipulation",
 		197: "Billionaire X",
+		198: "Overlord of Everything",
 	},
 	descs: {
 		11: "Go at least formatDistance(100).",
@@ -337,11 +338,12 @@ const ACH_DATA = {
 		
 		191: "Purchase showNum(10) Dark Expanders.",
 		192: "Get showNum(1337) Ranks in Multiverse 1 without unlocking Theories, Hadronic Challenge, Foam, or Skyrmions.",
-		193: "Complete Multiverse 3 without unlocking Ascension.",
+		193: "Reach formatDistance(4.4e800000026) in Multiverse 3 without unlocking Ascension.",
 		194: "Reach Tier showNum(69).",
 		195: "Gain showNum(1e6) Multiversal Energy in one reset.",
 		196: "Reach formatDistance(4.4e10000026) in Multiverse 5 while in a Hadronic Challenge with a Projected Score of at least 15.",
 		197: "Gain showNum(1e9) Multiversal Energy in one reset.",
+		198: "Reach formatDistance(2.8e1000000026643).",
 	},
 	rewards: {
 		12: "Acceleration is showNum(10)% higherboolean(extreme, and Rank Cheapeners are +0.5x stronger for each achievement gotten).",

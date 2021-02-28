@@ -80,7 +80,6 @@ function updateMultiverseLayer() {
 	tmp.mlt.layer = new Layer("multiverse", tmp.mlt.can, "normal", true, "mlt", true)
 	if (!tmp.mlt.doGain) tmp.mlt.doGain = function(auto=false) {
 		if (!auto && !player.options.mltnc) if (!confirm("Are you sure you want to do this? It will take some time for you to get back here!")) return "NO";
-		if (player.mlt.active == 3 && !player.mlt.mlt3selected.includes("ascension")) tmp.ach[193].grant();
 		if (tmp.mlt.layer.gain.gte(1e6)) tmp.ach[195].grant();
 		if (tmp.mlt.layer.gain.gte(1e9)) tmp.ach[197].grant();
 		player.mlt.energy = player.mlt.energy.plus(tmp.mlt.layer.gain);

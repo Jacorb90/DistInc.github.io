@@ -201,11 +201,12 @@ function checkR18Ach() {
 function checkR19Ach() {
 	if (player.elementary.theory.accelerons.expanders.gte(10)) tmp.ach[191].grant();
 	if (player.rank.gte(1337) && mltActive(1) && player.mlt.mlt1selected.length==0) tmp.ach[192].grant();
-	// ach193 is in the Multiverse reset function
+	if (mltActive(3) && !player.mlt.mlt3selected.includes("ascension") && player.distance.gte("4.4e800000026")) tmp.ach[193].grant();
 	if (player.tier.gte(69)) tmp.ach[194].grant();
 	// ach195 is in the Multiverse reset function
 	if (player.distance.gte("4.4e10000026") && mltActive(5) && getProjectedHadronicScore().gte(15) && player.elementary.hc.active) tmp.ach[196].grant();
 	// ach197 is in the Multiverse reset function
+	if (player.distance.gte("2.8e1000000026643")) tmp.ach[198].grant();
 }
 
 function updateAchievements() {

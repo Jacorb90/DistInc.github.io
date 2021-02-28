@@ -1,9 +1,19 @@
 var eheheTimes = 0;
+var eheheResetAmt = 0;
+var eheheResetReq = 1000;
 var ehehe = function() { 
-	eheheTimes++;
-	if (eheheTimes>=1000000) return 'EHEHE '+eheheTimes+': OKAY STOP. I GIVE UP. YOURE CRAZY AND WHY WOULD YOU DO THIS?!?!?!??!?!!?!'
-	else if (eheheTimes>=1000) return 'EHEHE '+eheheTimes+': SERIOUSLY STOP IT YOURE INSANE!'
+	eheheTimes+=eheheResetAmt+1;
+	if (eheheTimes>=eheheResetReq) return 'EHEHE '+eheheTimes+': Copy paste the following to prestige: console.log(ehehePrestige())'
 	else return 'EHEHE '+eheheTimes+': Copy paste the following into the console and press enter: console.log(ehehe())' 
+}
+var ehehePrestige = function() {
+	if (eheheTimes<eheheResetReq) return "NOT ENOUGH EHEHE, YOU NEED "+eheheResetReq;
+	else {
+		eheheTimes = 0
+		eheheResetReq = Math.round(eheheResetReq*1.2);
+		eheheResetAmt++;
+		return "EHEHE PRESTIGE POINTS: "+eheheResetAmt+": Multiply EHEHE gain by "+(eheheResetAmt+1)+" (copy paste the following into the console: console.log(ehehe()))"
+	}
 }
 const NEWS_DATA = {
 	// No Conditions
