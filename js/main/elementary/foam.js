@@ -365,6 +365,7 @@ function getEntropyUpgCost(x) {
 	let cost = ENTROPY_UPG_COSTS[x]||new Decimal(1/0);
 	if (hasMltMilestone(24) && tmp.mlt) cost = cost.div(tmp.mlt.mil24reward);
 	if (tmp.ach[197].has) cost = cost.div(1.05);
+	if (modeActive("easy") && x>=26) cost = cost.div(1.1);
 	return cost;
 }
 
