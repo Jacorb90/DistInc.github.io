@@ -108,7 +108,7 @@ const NEWS_DATA = {
 	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
 	m90: ["In 2073, we will be at v193.6, with over 200 prestige layers, and the game will cost over $20.00"],
 	m91: ["Well yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually -INFINITE LOOP-"],
-	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
+	m92: ["Check the console after pressing <a href='#' onclick='console.log(ehehe()); return false;'>here</a>..."],
 	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
 	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
 	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],

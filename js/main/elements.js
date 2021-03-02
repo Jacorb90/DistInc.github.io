@@ -1168,7 +1168,7 @@ function updatePreonsHTML(){
 		tmp.el.theoryBoost.setHTML("Gain 1 Theoretical Booster (+"+showNum(getTBGain())+" Theory Points)<br>Cost: "+showNum(getTBCost())+" Preons")
 		tmp.el.theoryBoosters.setTxt(showNum(player.elementary.theory.preons.boosters))
 		let t = player.elementary.theory.preons.boosters
-		tmp.el.theoryBoostersEff.setTxt(showNum(ExpantaNum.div(t.pow(2).times(t.plus(1).pow(2)).times(t.pow(2).times(2).plus(t.times(2)).sub(1)), 12).round()))
+		tmp.el.theoryBoostersEff.setTxt(showNum(player.elementary.entropy.upgrades.includes(17)?(ExpantaNum.div(t.pow(2).times(t.plus(1).pow(2)).times(t.pow(2).times(2).plus(t.times(2)).sub(1)), 12).round()):(t.div(2).times(t.plus(1)))))
 	}
 }
 
