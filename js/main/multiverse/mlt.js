@@ -31,6 +31,7 @@ function setMultiverseResetFunction() {
 			if (!hasMltMilestone(3)) player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades.filter(x => !DE_HIGGS_UPGS.includes(x))
 			player.tr.upgrades = prev.tr.upgrades;
 			player.inf.stadium.completions = prev.inf.stadium.completions;
+			if (modeActive("extreme")) player.furnChalls = prev.furnChalls;
 		}
 		if (hasMltMilestone(2)) {
 			player.elementary.times = new ExpantaNum(1);
@@ -193,7 +194,7 @@ function setupMltMilestoneTable() {
 	for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 		let id = r-1;
 		data += "<tr><td id='mltMil"+r+"1' class='mltTD'>Req: "+showNum(MLT_MILESTONES[id].req)+" Total Multiversal Energy</td>"
-		data += "<td id='mltMil"+r+"2' class='mltTD'>"+MLT_MILESTONES[id].desc
+		data += "<td id='mltMil"+r+"2' class='mltTD'>"+((modeActive("extreme")&&MLT_MILESTONES[id].extremeDesc)?MLT_MILESTONES[id].extremeDesc:MLT_MILESTONES[id].desc)
 		if (MLT_MILESTONES[id].effectDesc) data += "<br><br><span id='mltMil"+r+"effDesc'></span>"
 		data += "</td>"
 	}

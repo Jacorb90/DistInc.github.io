@@ -54,6 +54,7 @@ const MLT_MILESTONES = [
 	{
 		req: new ExpantaNum(1),
 		desc: "Keep Higgs Upgrades on reset (except the ones that are unlocked through a Dark Expander)",
+		extremeDesc: "Keep Higgs Upgrades on reset (except the ones that are unlocked through a Dark Expander), and unlock Auto-Magma.",
 	}, {
 		req: new ExpantaNum(2),
 		desc: "Keep Entropy Upgrades on reset (but only the ones that are kept on Skyrmion resets), and start with 1 Elementary",
@@ -75,6 +76,7 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(8),
 		desc: "Unlock Auto-Pion Field",
+		extremeDesc: "Unlock Auto-Pion Field & Auto-Plasma Boosts",
 	}, {
 		req: new ExpantaNum(9),
 		desc: "Unlock Auto-Spinor Field",

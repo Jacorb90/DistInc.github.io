@@ -112,6 +112,12 @@ const AUTOMATORS = {
 	multiverse_runs: function() {
 		return tmp.ach[186].has
 	},
+	magma: function() {
+		return hasMltMilestone(1) && modeActive("extreme");
+	},
+	plasma: function() {
+		return hasMltMilestone(8) && modeActive("extreme");
+	},
 };
 
 const AUTOMATOR_BORDER = {
@@ -137,6 +143,8 @@ const AUTOMATOR_BORDER = {
 	pion_field: "#a875d1",
 	spinor_field: "#a875d1",
 	multiverse_runs: "#837eed",
+	magma: "#4d3636",
+	plasma: "#49364d",
 }
 
 const AUTOMATOR_X = {

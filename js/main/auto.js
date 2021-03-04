@@ -104,6 +104,19 @@ function furnaceAutoTick(){
 	}
 }
 
+function magmaAutoTick() {
+	if (player.automators["magma"] && modeActive("extreme")) {
+		magmaSearch(true);
+		reformMagma(true);
+	}
+}
+
+function plasmaAutoTick() {
+	if (player.automators["plasma"] && modeActive("extreme")) {
+		buyPlasmaBoost(true);
+	}
+}
+
 function pathogenAutoTick(){
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();
 }
@@ -309,6 +322,8 @@ function autoTick(diff) {
 	energyAutoTick()
 	pionSpinorAutoTick()
 	multivAutoTick()
+	magmaAutoTick()
+	plasmaAutoTick()
 }
 
 function autoPerSec() {

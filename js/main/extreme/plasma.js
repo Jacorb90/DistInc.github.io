@@ -35,17 +35,26 @@ function getPlasmaBoostReq() {
 	return req;
 }
 
+function getPlasmaBoostBulk() {
+	let amt = player.plasma.whiteFlame;
+	let target = amt.div(250).max(1).logBase(50).root(1.25)
+	return target.plus(1).floor();
+}
+
 function canBuyPlasmaBoost() {
 	return !(!PLASMA_BOOSTS[player.plasma.boosts.toNumber()+1])
 }
 
-function buyPlasmaBoost() {
+function buyPlasmaBoost(max=false) {
 	if (tmp.fn?(!tmp.fn.pl.unl):true) return;
 	if (!canBuyPlasmaBoost()) return;
 	let cost = getPlasmaBoostReq();
 	if (player.plasma.whiteFlame.lt(cost)) return;
-	player.plasma.whiteFlame = player.plasma.whiteFlame.sub(cost);
-	player.plasma.boosts = player.plasma.boosts.plus(1);
+	if (max) player.plasma.boosts = player.plasma.boosts.max(getPlasmaBoostBulk());
+	else {
+		player.plasma.whiteFlame = player.plasma.whiteFlame.sub(cost);
+		player.plasma.boosts = player.plasma.boosts.plus(1);
+	}
 }
 
 const PLASMA_BOOSTS = {
