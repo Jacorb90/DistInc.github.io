@@ -75,6 +75,7 @@ function updateMultiverseLayer() {
 		let exp = player.distance.logBase(DISTANCES.mlt).sub(1);
 		if (exp.gte(1)) exp = exp.sqrt();
 		let gain = ExpantaNum.pow(2, exp).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active)).times(tmp.ach[193].has?1.05:1).times(modeActive("easy")?1.5:1)
+		if (modeActive("hard") && gain.gte(1.5)) gain = gain.div(1.5);
 		return gain.floor();
 	}
 	tmp.mlt.layer = new Layer("multiverse", tmp.mlt.can, "normal", true, "mlt", true)

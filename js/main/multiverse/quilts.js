@@ -16,7 +16,7 @@ function updateQuilts() {
 }
 
 function getQuiltUpgPower() {
-	let power = new ExpantaNum(modeActive("easy")?1.1:1);
+	let power = new ExpantaNum(modeActive("easy")?1.1:1).div(modeActive("hard")?1.1:1);
 	if (hasMltMilestone(17)) power = power.plus(tmp.mlt.mil17reward.times(10))
 	return power;
 }
@@ -29,6 +29,7 @@ function getQuiltStrength(x) {
 	else if (x==3) base = player.elementary.particles.max(1).logBase(1e150);
 	
 	if (modeActive("easy")) base = base.pow(1.01).times(1.2);
+	if (modeActive("hard")) base = base.div(1.2);
 	
 	if (base.gte(4)) base = base.root(1.5).times(1.6);
 	
