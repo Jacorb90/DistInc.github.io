@@ -10,6 +10,7 @@ function updateTempPlasma() {
 function getPlasmaExp() {
 	if (tmp.fn?(!tmp.fn.pl.unl):true) return new ExpantaNum(0);
 	let exp = player.elementary.sky.amount.plus(1).log10().plus(1);
+	if (hasMltMilestone(13)) exp = exp.plus(player.inf.derivatives.unlocks);
 	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[2])
 	if (player.elementary.entropy.upgrades.includes(24)) exp = exp.times(tmp.elm.entropy.upgEff[24])
 	return exp;

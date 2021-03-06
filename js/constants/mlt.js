@@ -20,8 +20,8 @@ const MLT_DATA = {
 		req: new ExpantaNum(0),
 	},
 	1: {
-		desc: "You can only unlock 2 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Stadium Challenge completions are also reset.",
-		reward: "Stadium Challenge rewards are much stronger, but their challenge goals are much higher. Distance boosts Skyrmion gain.",
+		desc: "You can only unlock 2 of the following: Theory, Hadronic Challenge, Quantum Foam, and Skyrmions <b>(unlock them by opening their tabs)</b>. Normal Stadium Challenge completions are also reset.",
+		reward: "Normal Stadium Challenge rewards are much stronger, but their challenge goals are much higher. Distance boosts Skyrmion gain.",
 		effect: function() { return player.distance.plus(1).log10().plus(1).logBase(3).plus(1) },
 		effectDesc: function(e) { return showNum(e)+"x" },
 		req: new ExpantaNum(5),
@@ -83,6 +83,7 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(10),
 		desc: "Gain 100% of Skyrmions gained on reset every second",
+		extremeDesc: "Gain 100% of Skyrmions gained on reset every second, and the Coal effect is squared.",
 	}, {
 		req: new ExpantaNum(12),
 		desc: "Unspent Multiversal Energy reduces base Skyrmion requirements.",
@@ -100,6 +101,7 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(25),
 		desc: "The Theory Tree Upgrades that boost String effects have their limit increased by 5, and the Graviton effect is raised to the power of 15.",
+		extremeDesc: "The Theory Tree Upgrades that boost String effects have their limit increased by 5, the Graviton effect is raised to the power of 15, and increase the base Plasma exponent by your Derivative Boosts.",
 	}, {
 		req: new ExpantaNum(40),
 		desc: "All Quark/Lepton effects are always active, and always gain Purge Power automatically.",

@@ -31,7 +31,10 @@ function setMultiverseResetFunction() {
 			if (!hasMltMilestone(3)) player.elementary.bosons.scalar.higgs.upgrades = prev.elementary.bosons.scalar.higgs.upgrades.filter(x => !DE_HIGGS_UPGS.includes(x))
 			player.tr.upgrades = prev.tr.upgrades;
 			player.inf.stadium.completions = prev.inf.stadium.completions;
-			if (modeActive("extreme")) player.furnChalls = prev.furnChalls;
+			if (modeActive("extreme")) {
+				player.extremeStad = prev.extremeStad;
+				player.furnChalls = prev.furnChalls;
+			}
 		}
 		if (hasMltMilestone(2)) {
 			player.elementary.times = new ExpantaNum(1);
