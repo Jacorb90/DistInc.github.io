@@ -27,6 +27,7 @@ function getMagmaReformEff() {
 function getMagmaReqScaling() {
 	let s = 1
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;1;1")) s /= 2
+	if (tmp.fn.pl) s *= 1-tmp.fn.pl.boosts[10].toNumber();
 	return s;
 }
 

@@ -21,6 +21,7 @@ function getWhiteFlameGain() {
 	let pl = player.plasma.amount.plus(1);
 	if (pl.gte(1e125)) pl = pl.log10().div(125).times(1e100).pow(1.25)
 	let gain = pl.pow(player.furnace.blueFlame.plus(1).sqrt().div(25)).sub(1);
+	if (hasMltMilestone(14)) gain = gain.times(10);
 	return gain;
 }
 
@@ -59,8 +60,8 @@ function buyPlasmaBoost(max=false) {
 }
 
 const PLASMA_BOOSTS = {
-	upgs: 9,
-	rows: 3,
+	upgs: 10,
+	rows: 4,
 	cols: 3,
 	1: {
 		type: "plasmic",
@@ -94,7 +95,11 @@ const PLASMA_BOOSTS = {
 		type: "plasmic",
 		desc: "Boost Pion/Spinor gain.",
 		baseEff: new ExpantaNum(1),
-		eff: function(amt) { return amt.plus(1).root(10) },
+		eff: function(amt) { 
+			let mult = amt.plus(1).root(10);
+			if (mult.gte(1e250)) mult = ExpantaNum.pow(1e250, mult.logBase(1e250).sqrt());
+			return mult;
+		},
 		effD: function(e) { return showNum(e)+"x" },
 	},
 	6: {
@@ -124,6 +129,13 @@ const PLASMA_BOOSTS = {
 		baseEff: new ExpantaNum(1),
 		eff: function(amt) { return amt.plus(1).times(10).slog(10).div(1.75).plus(1) },
 		effD: function(e) { return "+"+showNum(e.sub(1).times(100))+"%" },
+	},
+	10: {
+		type: "gleaming",
+		desc: "The Magma cost increases slower.",
+		baseEff: new ExpantaNum(0),
+		eff: function(amt) { return ExpantaNum.sub(1, ExpantaNum.div(1, amt.plus(1).log10().plus(1).log10().plus(1))) },
+		effD: function(e) { return showNum(e.sub(1).times(100))+"% slower" },
 	},
 }
 

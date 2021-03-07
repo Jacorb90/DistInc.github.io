@@ -105,6 +105,7 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(40),
 		desc: "All Quark/Lepton effects are always active, and always gain Purge Power automatically.",
+		extremeDesc: "All Quark/Lepton effects are always active, always gain Purge Power automatically, and gain 10x more White Flame.",
 	}, {
 		req: new ExpantaNum(100),
 		desc: "Atomic Rank scaling is weaker based on your Tiers.",
