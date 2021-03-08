@@ -449,7 +449,7 @@ const ACH_DATA = {
 		178: 'The Infinity popup is permanently disabled if you have Auto-Endorsements unlocked, and unlock the "Max Pion & Spinor Fields" button.',
 		
 		183: "All Entropy Upgrades are always unlocked.",
-		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weaker.",
+		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weakerboolean(extreme, and gain twenty percent more Multiversal Energy).",
 		186: "Unlock Auto-Multiverse Runs.",
 		188: "Gain showNum(10)% more Entropy.",
 		

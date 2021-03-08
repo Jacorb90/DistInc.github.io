@@ -80,6 +80,7 @@ function updateMultiverseLayer() {
 		if (exp.gte(1)) exp = exp.sqrt();
 		let gain = ExpantaNum.pow(2, exp).times(ExpantaNum.pow(MULIVERSE_ENERGY_BASE, player.mlt.active)).times(tmp.ach[193].has?1.05:1).times(modeActive("easy")?1.5:1)
 		if (modeActive("hard") && gain.gte(1.5)) gain = gain.div(1.5);
+		if (tmp.ach[185].has && modeActive("extreme")) gain = gain.times(1.2);
 		return gain.floor();
 	}
 	tmp.mlt.layer = new Layer("multiverse", tmp.mlt.can, "normal", true, "mlt", true)
@@ -147,7 +148,7 @@ function getMltDisplay(m) {
 	let display = "<span class='mltMinorTitle'>Multiverse "+(m==0?"Prime":m)+"</span><br><br>"
 	if (mltUnlocked(m)) {
 		if (player.mlt.highestCompleted>=m) display += "<i>Completed</i><br><br>"
-		display += (m==0?"":"Effect: ")+data.desc+"<br>"
+		display += (m==0?"":"Effect: ")+((modeActive("extreme") && data.extremeDesc)?data.extremeDesc:data.desc)+"<br>"
 		if (data.reward) display += "<br>Reward: "+data.reward+"<br>"
 		if (data.effectDesc) display += "Currently: "+data.effectDesc(tmp.mlt["mlt"+m+"reward"]?tmp.mlt["mlt"+m+"reward"]:data.effect())+"<br>"
 		if (data.notBalanced) display += "<br><br><b>NOT BALANCED</b>"
@@ -190,6 +191,8 @@ function startMultiverse(m) {
 }
 
 function hasMltMilestone(n) { return player.mlt.totalEnergy.gte(MLT_MILESTONES[n-1].req) };
+
+function mltMilestonesGotten() { return Object.values(MLT_MILESTONES).filter(x => player.mlt.totalEnergy.gte(x.req)).length };
 
 function setupMltMilestoneTable() {
 	let milestones = new Element("mltMilestoneTable");

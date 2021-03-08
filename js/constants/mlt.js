@@ -38,6 +38,7 @@ const MLT_DATA = {
 	},
 	4: {
 		desc: "You are always trapped in the Theoriverse at Depth 4.5 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
+		extremeDesc: "You are always trapped in the Theoriverse at Depth 4.4 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
 		reward: "Unlock 3 new Strings.",
 		req: new ExpantaNum(400),
 	},
@@ -116,15 +117,16 @@ const MLT_MILESTONES = [
 		desc: "inf10;1 always affects the last Derivative, and its effect uses a better formula.",
 	}, {
 		req: new ExpantaNum(300),
-		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance.",
+		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance, and gain 100x more White Flame.",
 		effect: function() { return player.distance.max(1).logBase(DISTANCES.mlt).plus(1).logBase(2).times(0.01) },
 		effectDesc: function() { return "Currently: +"+showNum(tmp.mlt.mil17reward.times(100)||0)+"%" },
 	}, {
 		req: new ExpantaNum(1.25e3),
-		desc: "Foam effect exponents are increased by 0.05.",
+		desc: "Foam effect exponents are increased by 0.05, and gain 20x more White Flame for each Multiverse Milestone from this point onward.",
 	}, {
 		req: new ExpantaNum(1.75e3),
 		desc: "The First String's effect also multiplies Acceleron gain.",
+		extremeDesc: "All String effects & Supersymmetric Particle effects multiply Acceleron gain.",
 	}, {
 		req: new ExpantaNum(5e3),
 		desc: "Entangled Strings & Quantum Foam boost Pion & Spinor gain, respectively.",

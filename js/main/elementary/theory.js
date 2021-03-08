@@ -317,7 +317,16 @@ function getAccelGain() {
 	gain = gain.times(TREE_UPGS[12].effect(player.elementary.theory.tree.upgrades[12]||0))
 	if (gain.gte(1e6)) gain = gain.cbrt().times(Math.pow(1e6, 2/3))
 	if (tmp.elm) gain = gain.times(tmp.elm.theory.speed)
-	if (hasMltMilestone(19)) gain = gain.times(getStringEff(1));
+	if (hasMltMilestone(19)) {
+		if (modeActive("extreme")) {
+			gain = gain.times(Array.from(Array(UNL_STR()).keys()).map(x => getStringEff(x+1)).reduce((a,c) => ExpantaNum.mul(a,c)));
+			for (let i=1;i<=4;i++) {
+				let type = ["squark", "slepton", "neutralino", "chargino"][i-1]
+				gain = gain.times(tmp.elm.theory.ss[type+"Eff"]||1);
+			}
+		}
+		else gain = gain.times(getStringEff(1));
+	}
 	return gain
 }
 
