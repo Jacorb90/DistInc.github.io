@@ -44,6 +44,7 @@ const MLT_DATA = {
 	},
 	5: {
 		desc: "Time Speed is brought to the 3.6th root.",
+		extremeDesc: "Time Speed is brought to the 2.7th root.",
 		reward: "The Purge Power effect goes below zero, and unlock Phantoms (a new Pantheon section). Heavenly Chip & Demonic Soul effects are much stronger.",
 		req: new ExpantaNum(2e3),
 	},

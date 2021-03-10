@@ -733,6 +733,10 @@ const DARK_EXPANDER_COSTS = {
 	9: new ExpantaNum("1e81725"),
 	10: new ExpantaNum("1e108000"),
 }
+const EXTREME_DE_COSTS = {
+	9: new ExpantaNum("1e68500"),
+	//10: new ExpantaNum("1e80250"), Need to make Entropy Upgrades more expensive first :)
+}
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
 	2: "Unlock two more Strings.",

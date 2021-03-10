@@ -345,8 +345,9 @@ function getMaxDEs() {
 function darkExpand() {
 	if (!player.elementary.theory.accelerons.unl) return
 	if (player.elementary.theory.accelerons.expanders.gte(getMaxDEs())) return
-	if (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])) return
-	player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.sub(DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])
+	let cost = (modeActive("extreme")&&EXTREME_DE_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()])?EXTREME_DE_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()]:DARK_EXPANDER_COSTS[player.elementary.theory.accelerons.expanders.plus(1).toNumber()];
+	if (player.elementary.theory.accelerons.amount.lt(cost)) return
+	player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.sub(cost)
 	player.elementary.theory.accelerons.expanders = player.elementary.theory.accelerons.expanders.plus(1)
 }
 

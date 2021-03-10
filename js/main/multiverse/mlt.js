@@ -200,7 +200,7 @@ function setupMltMilestoneTable() {
 	for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 		let id = r-1;
 		data += "<tr><td id='mltMil"+r+"1' class='mltTD'>Req: "+showNum(MLT_MILESTONES[id].req)+" Total Multiversal Energy</td>"
-		data += "<td id='mltMil"+r+"2' class='mltTD'>"+((modeActive("extreme")&&MLT_MILESTONES[id].extremeDesc)?MLT_MILESTONES[id].extremeDesc:MLT_MILESTONES[id].desc)
+		data += "<td id='mltMil"+r+"2' class='mltTD'><span id='mltMil"+r+"desc'></span>"
 		if (MLT_MILESTONES[id].effectDesc) data += "<br><br><span id='mltMil"+r+"effDesc'></span>"
 		data += "</td>"
 	}

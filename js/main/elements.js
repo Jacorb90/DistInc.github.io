@@ -1183,8 +1183,9 @@ function updateAcceleronsHTML(){
 		let accEff = getAccelEff()
 		tmp.el.accelEff.setHTML((hasDE(7)?" & are reducing the Hadron effect interval by ":" by ")+"<span class='thp'>"+showNum(accEff)+"</span>x"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
 		let next = player.elementary.theory.accelerons.expanders.toNumber()+1
-		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=getMaxDEs()), th: (!(player.elementary.theory.accelerons.amount.lt(DARK_EXPANDER_COSTS[next])||next-1>=getMaxDEs()))})
-		tmp.el.darkExp.setHTML((next-1>=getMaxDEs())?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(DARK_EXPANDER_COSTS[next])+" Accelerons"))
+		let cost = (modeActive("extreme")&&EXTREME_DE_COSTS[next])?EXTREME_DE_COSTS[next]:DARK_EXPANDER_COSTS[next];
+		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(cost)||next-1>=getMaxDEs()), th: (!(player.elementary.theory.accelerons.amount.lt(cost)||next-1>=getMaxDEs()))})
+		tmp.el.darkExp.setHTML((next-1>=getMaxDEs())?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(cost)+" Accelerons"))
 		tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
 		let past = ""
 		if (next>1) Array.from(Array(next-1), (_, i) => i + 1).forEach(n => past += "DE"+n+": "+DARK_EXPANDER_DESCS[n]+"<br>")
@@ -1561,6 +1562,7 @@ function updateOverallMultiverseHTML() {
 			for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 				let has = hasMltMilestone(r);
 				for (let i=1;i<=2;i++) tmp.el["mltMil"+r+String(i)].changeStyle("background", has?"rgba(79, 240, 109, 0.4)":"none")
+				tmp.el["mltMil"+r+"desc"].setTxt(((modeActive("extreme")&&MLT_MILESTONES[r-1].extremeDesc)?MLT_MILESTONES[r-1].extremeDesc:MLT_MILESTONES[r-1].desc));
 				if (tmp.el["mltMil"+r+"effDesc"]) tmp.el["mltMil"+r+"effDesc"].setHTML(MLT_MILESTONES[r-1].effectDesc())
 			}
 		} else if (mltTab == "quilts") {

@@ -55,5 +55,5 @@ function updateTempTimeSpeed() {
 	if (modeActive("extreme")) if (tmp.fn) tmp.timeSpeed = tmp.timeSpeed.times(tmp.fn.enh.eff2)
 	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(player.modes==[]?25:20))||HCTVal("tv").gte(player.modes==[]?25:20)) && tmp.elm) tmp.timeSpeed = tmp.timeSpeed.pow(tmp.elm.theory.nerf)
 	if (mltActive(2)) tmp.timeSpeed = tmp.timeSpeed.root(1.3);
-	if (mltActive(5)) tmp.timeSpeed = tmp.timeSpeed.root(3.6);
+	if (mltActive(5)) tmp.timeSpeed = tmp.timeSpeed.root(modeActive("extreme")?Math.PI:3.6);
 }
