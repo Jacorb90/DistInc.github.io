@@ -56,4 +56,8 @@ function updateTempTimeSpeed() {
 	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(player.modes==[]?25:20))||HCTVal("tv").gte(player.modes==[]?25:20)) && tmp.elm) tmp.timeSpeed = tmp.timeSpeed.pow(tmp.elm.theory.nerf)
 	if (mltActive(2)) tmp.timeSpeed = tmp.timeSpeed.root(1.3);
 	if (mltActive(5)) tmp.timeSpeed = tmp.timeSpeed.root(modeActive("extreme")?Math.PI:3.6);
+	if (modeActive("extreme") && tmp.timeSpeed.gte(ExpantaNum.pow(DISTANCES.mlt, 300))) {
+		let mlt300 = ExpantaNum.pow(DISTANCES.mlt, 300);
+		tmp.timeSpeed = ExpantaNum.pow(mlt300, tmp.timeSpeed.logBase(mlt300).root(5))
+	}
 }

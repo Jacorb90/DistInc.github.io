@@ -446,7 +446,7 @@ const ACH_DATA = {
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
-		178: 'The Infinity popup is permanently disabled if you have Auto-Endorsements unlocked, and unlock the "Max Pion & Spinor Fields" button.',
+		178: 'The Infinity popup is permanently disabled if you have Auto-Endorsements unlocked, unlock the "Max Pion & Spinor Fields" buttonboolean(extreme, and the Plasma exponent is doubled when below 250).',
 		
 		183: "All Entropy Upgrades are always unlocked.",
 		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weakerboolean(extreme, and gain twenty percent more Multiversal Energy).",

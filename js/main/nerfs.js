@@ -169,7 +169,7 @@ function adjustGen(val, type) {
 	if (nerfActive("preInf.1") && preinf) exp = exp.div(10);
 	if ((player.inf.pantheon.purge.active||HCCBA("purge")) && type == "vel") exp = exp.div(modeActive('extreme')?0.925:3);
 	if (mltActive(4) && (pre_elem||type=="sky")) {
-		let depth = modeActive("extreme")?4.4:4.5
+		let depth = modeActive("extreme")?4.25:4.5
 		exp = tmp.elm?(exp.times(ExpantaNum.pow(0.8, ExpantaNum.cbrt(depth).times(Math.max(depth-3, 1))))):new ExpantaNum(0)
 	}
 	if ((player.elementary.theory.active||HCTVal("tv").gt(-1))) {
@@ -193,6 +193,10 @@ function adjustGen(val, type) {
 		if (newVal.gte(start)) newVal = newVal.times(start.pow(3)).pow(.25)
 	}
 	if (preinf && modeActive("extreme") && newVal.gte("1e100000000")) newVal = newVal.times("1e400000000").pow(.2);
+	if (modeActive("extreme") && newVal.gte(ExpantaNum.pow(DISTANCES.mlt, 500))) {
+		let mlt500 = ExpantaNum.pow(DISTANCES.mlt, 500);
+		newVal = ExpantaNum.pow(mlt500, newVal.logBase(mlt500).sqrt())
+	}
 	if (modeActive("hard") && (type=="pathogens"||(extremeStadiumComplete("aqualon") && preinf))) newVal = newVal.times(3)
 	if (extremeStadiumActive("aqualon") && preinf) newVal = newVal.div(9e15)
 	return newVal;

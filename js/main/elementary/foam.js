@@ -280,6 +280,7 @@ function getEntropyGainMult() {
 	if (player.elementary.sky.unl && tmp.elm.sky) mult = mult.times(tmp.elm.sky.spinorEff[3])
 	if (tmp.ach[188].has) mult = mult.times(1.1);
 	if (tmp.ach[195].has) mult = mult.times(1.11);
+	if (player.elementary.entropy.upgrades.includes(34) && modeActive("extreme")) mult = mult.times(1.5);
 	return mult;
 }
 
@@ -382,6 +383,7 @@ function entropyUpgShown(x) {
 	if (x<=8) return true;
 	else if (x<=20) return tmp.ach[183].has||player.elementary.sky.amount.gt(0);
 	else if (x>=26 && x<=33) return hasDE(10);
+	else if (x>=34 && x<=35) return hasDE(10) && modeActive("extreme");
 	else if (x<=22) return modeActive("extreme");
 	else if (x<=25) return modeActive("extreme")&&(tmp.ach[183].has||player.elementary.sky.amount.gt(0));
 	else return false;

@@ -38,7 +38,7 @@ const MLT_DATA = {
 	},
 	4: {
 		desc: "You are always trapped in the Theoriverse at Depth 4.5 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
-		extremeDesc: "You are always trapped in the Theoriverse at Depth 4.4 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
+		extremeDesc: "You are always trapped in the Theoriverse at Depth 4.25 (unaffected by any depth reductions), which also affects Pion & Spinor gain.",
 		reward: "Unlock 3 new Strings.",
 		req: new ExpantaNum(400),
 	},

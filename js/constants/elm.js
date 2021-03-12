@@ -735,7 +735,7 @@ const DARK_EXPANDER_COSTS = {
 }
 const EXTREME_DE_COSTS = {
 	9: new ExpantaNum("1e68500"),
-	//10: new ExpantaNum("1e80250"), Need to make Entropy Upgrades more expensive first :)
+	10: new ExpantaNum("1e80500"), 
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
@@ -905,7 +905,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 33
+const ENTROPY_UPGS = 35
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -941,11 +941,13 @@ const ENTROPY_UPG_COSTS = {
 	27: new ExpantaNum(282500),
 	28: new ExpantaNum(420000),
 	29: new ExpantaNum(482500),
+	34: new ExpantaNum(5e8),
 	
 	30: new ExpantaNum(580000),
 	31: new ExpantaNum(1.03e6),
 	32: new ExpantaNum(1.125e6),
 	33: new ExpantaNum(1.133e6),
+	35: new ExpantaNum(1/0),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -973,7 +975,8 @@ const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
 								23,24,
 								17,18,19,20,25,
 								26,27,28,29,
-								30,31,32,33];
+								30,31,32,33,
+								34,35];
 
 const SKY_REQ = [
 	"4.4e108000026",

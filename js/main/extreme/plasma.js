@@ -12,7 +12,13 @@ function getPlasmaExp() {
 	let exp = player.elementary.sky.amount.plus(1).log10().plus(1);
 	if (hasMltMilestone(13)) exp = exp.plus(player.inf.derivatives.unlocks);
 	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[2])
-	if (player.elementary.entropy.upgrades.includes(24)) exp = exp.times(tmp.elm.entropy.upgEff[24])
+	if (player.elementary.entropy.upgrades.includes(24)) exp = exp.times(tmp.elm.entropy.upgEff[24]);
+	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[12]);
+	
+	if (modeActive("extreme") && tmp.ach[178].has && exp.lt(250)) {
+		if (exp.lt(250/3)) exp = exp.times(2);
+		else exp = ExpantaNum.sub(250, ExpantaNum.div(250/3, ExpantaNum.div(250, ExpantaNum.sub(250, exp).times(1.5).max(0.001))))
+	}
 	return exp;
 }
 
@@ -62,7 +68,7 @@ function buyPlasmaBoost(max=false) {
 }
 
 const PLASMA_BOOSTS = {
-	upgs: 11,
+	upgs: 12,
 	rows: 4,
 	cols: 3,
 	1: {
@@ -157,6 +163,13 @@ const PLASMA_BOOSTS = {
 		baseEff: new ExpantaNum(1),
 		eff: function(amt) { return amt.plus(1).log10().times(player.elementary.entropy.best.plus(1)).plus(1).log10().div(10).plus(1) },
 		effD: function(e) { return showNum(e.sub(1).times(100))+"% stronger" },
+	},
+	12: {
+		type: "gleaming",
+		desc: "Multiversal Energy boosts the Plasma exponent.",
+		baseEff: new ExpantaNum(1),
+		eff: function(amt) { return player.mlt.energy.times(amt.plus(1).log10()).plus(1).log10().cbrt().plus(1) },
+		effD: function(e) { return showNum(e)+"x" },
 	},
 }
 
