@@ -947,7 +947,7 @@ const ENTROPY_UPG_COSTS = {
 	31: new ExpantaNum(1.03e6),
 	32: new ExpantaNum(1.125e6),
 	33: new ExpantaNum(1.133e6),
-	35: new ExpantaNum(1/0),
+	35: new ExpantaNum(7.75e8),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },

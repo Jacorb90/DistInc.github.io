@@ -29,6 +29,7 @@ function getCadaverEff() {
 	);
 	if (player.elementary.sky.unl && tmp.elm) eff = eff.pow(tmp.elm.sky.pionEff[4])
 	if (player.elementary.sky.unl && tmp.elm) eff = eff.pow(tmp.elm.sky.pionEff[12])
+	if (player.elementary.entropy.upgrades.includes(35) && modeActive("extreme")) eff = eff.pow(100);
 	return eff;
 }
 

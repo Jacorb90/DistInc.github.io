@@ -453,6 +453,7 @@ const ACH_DATA = {
 		186: "Unlock Auto-Multiverse Runs.",
 		188: "Gain showNum(10)% more Entropy.",
 		
+		191: "boolean(extreme,White Flame is gained 5x faster.)",
 		193: "Gain showNum(5)% more Multiversal Energy.",
 		194: "Tier scaling is 0.69% weaker.",
 		195: "Gain showNum(11)% more Entropy.",

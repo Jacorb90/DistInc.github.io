@@ -15,9 +15,10 @@ function getPlasmaExp() {
 	if (player.elementary.entropy.upgrades.includes(24)) exp = exp.times(tmp.elm.entropy.upgEff[24]);
 	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[12]);
 	
-	if (modeActive("extreme") && tmp.ach[178].has && exp.lt(250)) {
-		if (exp.lt(250/3)) exp = exp.times(2);
-		else exp = ExpantaNum.sub(250, ExpantaNum.div(250/3, ExpantaNum.div(250, ExpantaNum.sub(250, exp).times(1.5).max(0.001))))
+	let ach178amt = player.elementary.entropy.upgrades.includes(35)?2.5e4:250
+	if (modeActive("extreme") && tmp.ach[178].has && exp.lt(ach178amt)) {
+		if (exp.lt(ach178amt/3)) exp = exp.times(2);
+		else exp = ExpantaNum.sub(ach178amt, ExpantaNum.div(ach178amt/3, ExpantaNum.div(ach178amt, ExpantaNum.sub(ach178amt, exp).times(1.5).max(0.001))))
 	}
 	return exp;
 }
@@ -30,6 +31,7 @@ function getWhiteFlameGain() {
 	if (hasMltMilestone(14)) gain = gain.times(10);
 	if (hasMltMilestone(17)) gain = gain.times(100);
 	if (hasMltMilestone(18)) gain = gain.times(ExpantaNum.pow(20, Math.max(mltMilestonesGotten()-17, 0)));
+	if (tmp.ach[191].has) gain = gain.times(5);
 	return gain;
 }
 
