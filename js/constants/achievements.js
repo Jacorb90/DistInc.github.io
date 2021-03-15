@@ -341,7 +341,7 @@ const ACH_DATA = {
 		193: "Reach formatDistance(4.4e800000026) in Multiverse 3 without unlocking Ascension.",
 		194: "Reach Tier showNum(69).",
 		195: "Gain showNum(1e6) Multiversal Energy in one reset.",
-		196: "Reach formatDistance(4.4e10000026) in Multiverse 5 while in a Hadronic Challenge with a Projected Score of at least 15.",
+		196: "Reach formatDistance(4.4e10000026) in Multiverse 5 while in a Hadronic Challenge with a Projected Score of at least boolean(extreme,12,15).",
 		197: "Gain showNum(1e9) Multiversal Energy in one reset.",
 		198: "Reach formatDistance(2.8e1000000026643).",
 	},
