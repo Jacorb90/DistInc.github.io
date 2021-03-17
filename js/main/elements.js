@@ -1562,7 +1562,7 @@ function updateOverallMultiverseHTML() {
 			for (let r=1;r<=MLT_MILESTONE_NUM;r++) {
 				let has = hasMltMilestone(r);
 				for (let i=1;i<=2;i++) tmp.el["mltMil"+r+String(i)].changeStyle("background", has?"rgba(79, 240, 109, 0.4)":"none")
-				tmp.el["mltMil"+r+"desc"].setTxt(((modeActive("extreme")&&MLT_MILESTONES[r-1].extremeDesc)?MLT_MILESTONES[r-1].extremeDesc:MLT_MILESTONES[r-1].desc));
+				tmp.el["mltMil"+r+"desc"].setTxt(((modeActive("hikers_dream")&&MLT_MILESTONES[r-1].hdDesc)?MLT_MILESTONES[r-1].hdDesc:((modeActive("extreme")&&MLT_MILESTONES[r-1].extremeDesc)?MLT_MILESTONES[r-1].extremeDesc:MLT_MILESTONES[r-1].desc)));
 				if (tmp.el["mltMil"+r+"effDesc"]) tmp.el["mltMil"+r+"effDesc"].setHTML(MLT_MILESTONES[r-1].effectDesc())
 			}
 		} else if (mltTab == "quilts") {

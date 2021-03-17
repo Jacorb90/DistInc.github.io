@@ -63,6 +63,7 @@ const MLT_MILESTONES = [
 	}, {
 		req: new ExpantaNum(3),
 		desc: "Start with Bosons unlocked, and keep Theory Unlocks, Dark Expanders, and all Higgs Upgrades on reset",
+		hdDesc: "Start with Bosons unlocked, and keep Theory Unlocks, Dark Expanders, all Higgs Upgrades, and Energy Upgrades on reset",
 	}, {
 		req: new ExpantaNum(4),
 		desc: "Unlock Auto-Theoriverse, but you cannot enter the Theoriverse manually. Foam autobuyers are always unlocked, Reforming Foam resets nothing, and can be done in bulk.",

@@ -118,11 +118,11 @@ const MODEBALANCES = {
 		balanceCheck: false,
 	},
 	extreme: { // 32
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	aau_extreme: { // 33
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	na_extreme: { // 34
@@ -134,11 +134,11 @@ const MODEBALANCES = {
 		balanceCheck: false,
 	},
 	absurd_extreme: { // 36
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	absurd_aau_extreme: { // 37
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	absurd_na_extreme: { // 38
@@ -150,11 +150,11 @@ const MODEBALANCES = {
 		balanceCheck: false,
 	},
 	easy_extreme: { // 40
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	aau_easy_extreme: { // 41
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	na_easy_extreme: { // 42
@@ -166,11 +166,11 @@ const MODEBALANCES = {
 		balanceCheck: false,
 	},
 	absurd_easy_extreme: { // 44
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	absurd_aau_easy_extreme: { // 45
-		balancing: "balanced up to first multiverse",
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	absurd_na_easy_extreme: { // 46
