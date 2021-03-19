@@ -119,12 +119,14 @@ const MLT_MILESTONES = [
 		desc: "inf10;1 always affects the last Derivative, and its effect uses a better formula.",
 	}, {
 		req: new ExpantaNum(300),
-		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance, and gain 100x more White Flame.",
+		desc: "Multiversal Quilt Upgrade effects are increased based on your Distance.",
+		extremeDesc: "Multiversal Quilt Upgrade effects are increased based on your Distance, and gain 100x more White Flame.",
 		effect: function() { return player.distance.max(1).logBase(DISTANCES.mlt).plus(1).logBase(2).times(0.01) },
 		effectDesc: function() { return "Currently: +"+showNum(tmp.mlt.mil17reward.times(100)||0)+"%" },
 	}, {
 		req: new ExpantaNum(1.25e3),
-		desc: "Foam effect exponents are increased by 0.05, and gain 20x more White Flame for each Multiverse Milestone from this point onward.",
+		desc: "Foam effect exponents are increased by 0.05.",
+		extremeDesc: "Foam effect exponents are increased by 0.05, and gain 20x more White Flame for each Multiverse Milestone from this point onward.",
 	}, {
 		req: new ExpantaNum(1.75e3),
 		desc: "The First String's effect also multiplies Acceleron gain.",
