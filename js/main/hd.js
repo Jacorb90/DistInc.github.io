@@ -29,6 +29,7 @@ const ENERGY_UPG_COSTS = {
 	28: new ExpantaNum(1.5e124),
 	29: new ExpantaNum(5e215),
 	30: new ExpantaNum(1e226),
+	31: new ExpantaNum('2e336'),
 }
 
 function getEnergyUpgCost(n){
@@ -177,6 +178,7 @@ function calcEnergyUpgrades(){
 	let exp322 = player.elementary.bosons.scalar.higgs.upgrades.includes("2;2;1") ? 2 : 1
 	let omniPow = 1
 	if (player.energyUpgs.includes(30)&&tmp.hd.enerUpgs[30]) omniPow = tmp.hd.enerUpgs[30].div(100).plus(1)
+	if (player.energyUpgs.includes(31)&&tmp.hd.enerUpgs[31]) omniPow = ExpantaNum.mul(omniPow, tmp.hd.enerUpgs[31].div(100).plus(1));
 	
 	tmp.hd.enerUpgs[20] = tmp.hd.motive.max(player.inf.endorsements.gte(10)?tmp.hd.totalMotive:0).plus(2).log10().times(tmp.hd.simEn.div(4.5).plus(10)).times((player.energyUpgs.includes(21)&&tmp.hd.enerUpgs[21]) ? tmp.hd.enerUpgs[21].div(100).plus(1) : 1).times(tmp.hd.superEnEff2).times(omniPow).times(.01).plus(1).pow(exp322).minus(1).times(100)
 	
@@ -202,6 +204,9 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[29] = player.energy.plus(1).log10().div(40).plus(1);
 	
 	tmp.hd.enerUpgs[30] = player.elementary.entropy.best.plus(1).log10().times(555);
+	if (player.energyUpgs.includes(31)&&tmp.hd.enerUpgs[31]) tmp.hd.enerUpgs[30] = ExpantaNum.mul(tmp.hd.enerUpgs[30], tmp.hd.enerUpgs[31].div(100).plus(1));
+	
+	tmp.hd.enerUpgs[31] = player.mlt.totalEnergy.plus(1).log10().plus(1).log10().times(1.5e3);
 }
 
 function updateMotive(){
@@ -304,6 +309,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=26) return player.inf.endorsements.gte(28)
 	else if (x<=28) return player.achievements.includes(154)
 	else if (x<=30) return player.achievements.includes(171)
+	else if (x<=31) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
 	
 	return false;
 }
