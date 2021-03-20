@@ -24,7 +24,7 @@ function updateTempTheoriverse() {
 		tmp.elm.theory.nerf = (d.minus(tmp.elm.theory.subbed).max(0).eq(0)?new ExpantaNum(0.88):ExpantaNum.pow(0.8, d.minus(tmp.elm.theory.subbed).max(1).cbrt()))
 		if (d.minus(tmp.elm.theory.subbed).gte(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(d.minus(tmp.elm.theory.subbed).max(0).sub(3))
 	}
-	if (modeActive("extreme")) { 
+	if (modeActive("extreme")) {
 		if (player.elementary.theory.depth.lt(4)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(0.75)
 		if (player.elementary.theory.depth.gte(5)) tmp.elm.theory.nerf = tmp.elm.theory.nerf.pow(1.25)
 	}
@@ -120,14 +120,14 @@ function updateTempTheoryTree() {
 	}
 	tmp.elm.theory.tree.costScaling = 1;
 	if (player.elementary.entropy.upgrades.includes(26)) tmp.elm.theory.tree.costScaling = 2;
-	tmp.elm.theory.tree.costReduc = ach152Eff()
+tmp.elm.theory.tree.costReduc = ach152Eff()
 	if (player.elementary.theory.inflatons.unl) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(getInflatonEff1())
 	if (player.elementary.foam.unl && tmp.elm.qf) tmp.elm.theory.tree.costReduc = tmp.elm.theory.tree.costReduc.times(tmp.elm.qf.boost8)
 }
 
 function updateTempTheories() {
 	if (!tmp.elm.theory) tmp.elm.theory = {}
-	
+
 	tmp.elm.theory.speed = new ExpantaNum(1)
 	if (player.mlt.times.gt(0) && tmp.mlt) tmp.elm.theory.speed = tmp.elm.theory.speed.times(tmp.mlt.quilts[1].eff2);
 	updateTheoryTabs()
@@ -361,8 +361,8 @@ function buyGluon3(col, max=false) {
 	player.elementary.theory.points = player.elementary.theory.points.plus(ExpantaNum.mul(10, bulk))
 }
 
-function hasDE(n) { 
-	return player.elementary.theory.accelerons.expanders.gte(n)&&player.elementary.theory.accelerons.unl 
+function hasDE(n) {
+	return player.elementary.theory.accelerons.expanders.gte(n)&&player.elementary.theory.accelerons.unl
 }
 
 // Tree Export/Import functions

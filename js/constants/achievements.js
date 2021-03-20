@@ -118,7 +118,7 @@ const ACH_DATA = {
 		136: "Fastest in the Multiverse",
 		137: "Back to the Past",
 		138: "The Fleet Flees",
-		
+
 		141: "The Impossible Happened",
 		142: "Endless Endeavours",
 		143: "Under the C",
@@ -127,7 +127,7 @@ const ACH_DATA = {
 		146: "True Infinity+",
 		147: "The Biggest Setback",
 		148: "The Impossible Task",
-		
+
 		151: "An infinity smaller than your fingertip",
 		152: "Useless Theories",
 		153: "There is a tree",
@@ -136,7 +136,7 @@ const ACH_DATA = {
 		156: "IMPOSSIBLE",
 		157: "The Principle of the Basics",
 		158: "The Repetition Continues",
-		
+
 		161: "We're kids again",
 		162: "Actually Useless Theories",
 		163: "String Clickers",
@@ -145,7 +145,7 @@ const ACH_DATA = {
 		166: "True Inflation",
 		167: "How is the Multiverse containing your power?",
 		168: "There is only one Fome",
-		
+
 		171: "TRANSFOOOOORM!",
 		172: "This must have taken years",
 		173: "Extensionless Fome",
@@ -154,7 +154,7 @@ const ACH_DATA = {
 		176: "Entering Reality",
 		177: "Softcaps mean NOTHING",
 		178: "Multiverse Conquered",
-		
+
 		181: "Two In One Deal",
 		182: "Multiverse of Madness",
 		183: "Fermionic Embassy",
@@ -163,7 +163,7 @@ const ACH_DATA = {
 		186: "King of the Damned",
 		187: "Conquering the Megaverse",
 		188: "Not So Proto Now?",
-		
+
 		191: "Vantablack Explosion",
 		192: "The Leetest Titan",
 		193: "Conqueror of the Lands",
@@ -290,7 +290,7 @@ const ACH_DATA = {
 		136: "Reach showNum(1e3750000) uni/s of Velocity.",
 		137: "Do an Elementary reset without any Derivative Boosts (but you can have Derivative Shifts).",
 		138: "Reach formatDistance(4.4e7826) while having ten Endorsements or less.",
-		
+
 		141: "Get a Theory Point.",
 		142: "Reach formatDistance(4.4e136) while in a Purge run, while in Reality's Stadium challenge at Difficulty Level 6, and without Pathogen Upgrades & Dark Cores in the current Infinity.",
 		143: "Complete The Theoriverse at Depth 4.",
@@ -299,7 +299,7 @@ const ACH_DATA = {
 		146: "Reach showNum(1.8e308) Knowledge.",
 		147: "Reach Rank showNum(200) with ten Endorsements or less.",
 		148: "Reach Rank showNum(995).",
-		
+
 		151: "Unlock Hadronic Challenge.",
 		152: "Get a Hadronic Score of at least showNum(2.3).",
 		153: "Reach formatDistance(4.4e8250026) without any Theory Tree Upgrades.",
@@ -308,7 +308,7 @@ const ACH_DATA = {
 		156: "Complete The Theoriverse at Depth 8.",
 		157: "Reach formatDistance(4.4e76) of Primary String.",
 		158: "Get a Hadronic Score of at least showNum(3.75).",
-		
+
 		161: "Unlock Quantum Foam.",
 		162: "Reach formatDistance(4.4e251) of Primary String.",
 		163: "Reach formatDistance(4.4e126) of Entangled String.",
@@ -317,16 +317,16 @@ const ACH_DATA = {
 		166: "Reach boolean(extreme,showNup[1e150],showNup[1e160]) Inflatons.",
 		167: "Reach showNum(1e108000000) uni.",
 		168: "Reach showNum(1e25) Quantum Foam without any Subplanck Foam.",
-		
+
 		171: "Get a Skyrmion.",
 		172: "Elementary showNum(1e12) times.",
 		173: "Reach boolean(extreme,showNup[1e78],showNup[1e140]) Quantum Foam without any Entropy.",
 		174: "Reach formatDistance(4.4e500000026).",
-		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.", 
+		175: "Reach formatDistance(4.4e222222248) without any Entropy, Subplanck Foam, or Photon/Gluon Upgrades.",
 		176: "Complete The Theoriverse at Depth 19.",
 		177: "Have Pathogen Upgrade Power of at least showNum(1625)%.",
 		178: "Reach formatDistance(4.4e1000000026).",
-		
+
 		181: "Reach formatDistance(1.936e2000000053).",
 		182: "Reach formatDistance(1.7868e3500000093) without any Theoriverse completions.",
 		183: "Complete Multiverse 1.",
@@ -335,7 +335,7 @@ const ACH_DATA = {
 		186: "Reach formatDistance(2.21e100000002664).",
 		187: "Complete Multiverse 5.",
 		188: "Reach showNum(1e430) Protoversal Foam.",
-		
+
 		191: "Purchase showNum(10) Dark Expanders.",
 		192: "Get showNum(1337) Ranks in Multiverse 1 without unlocking Theories, Hadronic Challenge, Foam, or Skyrmions.",
 		193: "Reach formatDistance(4.4e800000026) in Multiverse 3 without unlocking Ascension.",
@@ -425,38 +425,39 @@ const ACH_DATA = {
 		132: "The Gauge Force Effect is doubled.",
 		133: "Unlock Auto-Elementaries.",
 		135: "The Purge Power effect is halved.",
-		
+
 		141: "boolean(hikers_dream,Keep generators and buy them automatically.)",
 		142: "Endorsements that are bought automatically do not reset anything.",
 		143: "boolean(extreme+hikers_dream,You can buy max Theory Tree Upgrades with shift+click which is slightly more efficient than normally upgrading. )boolean(hikers_dream,Gain ten million times the passive energy.)",
 		144: "All Strings are gained showNum(25)% faster.",
 		145: "boolean(hikers_dream,inf10;10 is stronged based on your ranks.)",
 		147: "You gain Cadavers while in Purge runs, but at a very reduced rate, and Pathogen Upgrades are not stuck at 0% power in Purge runs.",
-		
+
 		152: "All Theory Tree Upgrades are cheaper based on your Best Hadronic Score.",
 		153: "boolean(extreme+hikers_dream,The Theory Tree Upgrade that makes Scaled Endorsements start later also makes Superscaled Endorsements start later at a reduced rate [x/10])",
 		154: "Purge Power gain is doubledboolean(hikers_dream, and unlock a 27th & 28th energy upgrade).",
 		157: "All Strings are gained twice as fast.",
-		
+
 		162: "Unspent Theory Points boost all Foam typesboolean(extreme+hikers_dream,., and you can buy max Theory Tree Upgrades with shift+click which is slightly more efficient than normally upgrading.)",
 		163: "Gain 10% of your Entangled String gain every second.",
 		166: "Unlock Auto-Photon Upgrades & Auto-Gluon Upgrades.",
 		168: "Unlock Auto-Theory Tree Upgrades.",
-		
+
 		171: "Expanding your Foam does not spend it, and Quantum Foam is gained 10x faster, Subplanck Foam is gained 20x faster, Subspatial Foam is gained 30x faster, etc.boolean(hikers_dream, and unlock a 29th & 30th energy upgrade)",
 		172: "The Elementary Particle gain softcap is showNum(20)% weaker for every three OoMs of Elementaries done.",
 		174: "The Perk Accelerator is showNum(5)% stronger.",
 		178: 'The Infinity popup is permanently disabled if you have Auto-Endorsements unlocked, unlock the "Max Pion & Spinor Fields" buttonboolean(extreme, and the Plasma exponent is doubled when below 250).',
-		
+
 		183: "All Entropy Upgrades are always unlocked.",
 		185: "Hyper Pathogen Upgrade scaling is showNum(10)% weakerboolean(extreme, and gain twenty percent more Multiversal Energy).",
 		186: "Unlock Auto-Multiverse Runs.",
 		188: "Gain showNum(10)% more Entropy.",
-		
+
 		191: "boolean(extreme,White Flame is gained 5x faster.)",
 		193: "Gain showNum(5)% more Multiversal Energy.",
 		194: "Tier scaling is 0.69% weaker.",
 		195: "Gain showNum(11)% more Entropy.",
+		196: "boolean(extreme+hikers_dream,Useless Theories is boosted by Multiverse Quilt 3's 2nd effect)",
 		197: "Entropy Upgrades are showNum(5)% cheaper.",
 	}
 };
