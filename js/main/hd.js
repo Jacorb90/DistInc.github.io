@@ -30,6 +30,8 @@ const ENERGY_UPG_COSTS = {
 	29: new ExpantaNum(5e215),
 	30: new ExpantaNum(1e226),
 	31: new ExpantaNum('2e336'),
+	32: new ExpantaNum('2e447'),
+	33: new ExpantaNum('1e451'),
 }
 
 function getEnergyUpgCost(n){
@@ -207,6 +209,10 @@ function calcEnergyUpgrades(){
 	if (player.energyUpgs.includes(31)&&tmp.hd.enerUpgs[31]) tmp.hd.enerUpgs[30] = ExpantaNum.mul(tmp.hd.enerUpgs[30], tmp.hd.enerUpgs[31].div(100).plus(1));
 	
 	tmp.hd.enerUpgs[31] = player.mlt.totalEnergy.plus(1).log10().plus(1).log10().times(1.5e3);
+	
+	tmp.hd.enerUpgs[32] = (1-Math.pow(0.75, player.mlt.highestCompleted*(player.mlt.active>0?1.5:1)))*100;
+	
+	tmp.hd.enerUpgs[33] = ExpantaNum.sub(1, ExpantaNum.div(1, player.energy.plus(1).log10().plus(1).log10().plus(1).log10().times(2).plus(1))).times(100);
 }
 
 function updateMotive(){
@@ -256,6 +262,7 @@ function updateTempHikersDream() {
 	tmp.hd.enEff = player.energy.div(100)
 	if (player.energyUpgs.includes(1) && tmp.hd.enerUpgs) tmp.hd.enEff = tmp.hd.enEff.times(tmp.hd.enerUpgs[1])
 	if (((player.elementary.theory.active&&player.elementary.theory.depth.gte(20))||HCTVal("tv").gte(20)) && tmp.elm) tmp.hd.enEff = tmp.hd.enEff.pow(tmp.elm.theory.nerf)
+	if (player.energyUpgs.includes(33)) tmp.hd.enEff = tmp.hd.enEff.pow(20);
 
 	tmp.hd.simEn = player.energy.min(getEnergyLim()).max(tmp.hd.superEn)
 	if (tmp.hd.simEn.gt(100)) tmp.hd.simEn = tmp.hd.simEn.log10().times(50)
@@ -309,7 +316,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=26) return player.inf.endorsements.gte(28)
 	else if (x<=28) return player.achievements.includes(154)
 	else if (x<=30) return player.achievements.includes(171)
-	else if (x<=31) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
+	else if (x<=33) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
 	
 	return false;
 }
@@ -317,6 +324,7 @@ function isEnergyUpgShown(x) {
 function baseIncline(d) {
 	if (d.gte(4.4e26)) d = d.pow(2).div(4.4e26)
 	if (d.gte("4.4e2026")) d = d.pow(5).div(ExpantaNum.pow("4.4e2026", 4))
+	if (player.energyUpgs.includes(32)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[32]) d = d.pow(1-tmp.hd.enerUpgs[32]/100);
 	let incl = d.gte(1e3) ? ExpantaNum.sub(90, ExpantaNum.div(90, d.div(1e3).log10().div(10).plus(1))) : new ExpantaNum(0)
 	return incl.max(0)
 }
@@ -324,6 +332,7 @@ function baseIncline(d) {
 function baseSecant(d) {
 	if (d.gte(4.4e26)) d = d.pow(2).div(4.4e26)
 	if (d.gte("4.4e2026")) d = d.pow(5).div(ExpantaNum.pow("4.4e2026", 4))
+	if (player.energyUpgs.includes(32)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[32]) d = d.pow(1-tmp.hd.enerUpgs[32]/100);
 	let incl = d.gte(1e3) ? d.div(1e3).log10().div(10).plus(1).div(90) : new ExpantaNum(0)
 	return incl.max(0)
 }
@@ -407,6 +416,7 @@ function getGenCost() {
 	let g = player.genLvl.div(player.geners.pow(0.2))
 	if (g.gte(5)) g = ExpantaNum.pow(1.2, g.sub(5)).times(g)
 	if (modeActive("extreme+hikers_dream") && g.gte(11)) g = g.sub(11).div(2).plus(11);
+	if (player.energyUpgs.includes(33)&&tmp.hd.enerUpgs[33]) g = g.times(ExpantaNum.sub(1, tmp.hd.enerUpgs[33].div(100)));
 	let cost = ExpantaNum.pow(8, ExpantaNum.pow(2, g.pow(0.75)).sub(1)).times(2.5e9)
 	return cost
 }
@@ -434,6 +444,7 @@ function getNewGenCost() {
 	let scaleStart = modeActive("extreme+hikers_dream")?6:5
 	let scalePower = modeActive("extreme+hikers_dream")?0.5:1
 	if (g.gte(scaleStart)) g = ExpantaNum.pow((1+scalePower/5), g.sub(scaleStart)).times(g)
+	if (player.energyUpgs.includes(33)&&tmp.hd.enerUpgs[33]) g = g.times(ExpantaNum.sub(1, tmp.hd.enerUpgs[33].div(100)));
 	let cost = ExpantaNum.pow(2, g.plus(1).pow(modeActive("extreme+hikers_dream")?2.75:3)).times(5e29)
 	return cost
 }
