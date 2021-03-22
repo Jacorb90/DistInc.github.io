@@ -32,6 +32,7 @@ const ENERGY_UPG_COSTS = {
 	31: new ExpantaNum('2e336'),
 	32: new ExpantaNum('2e447'),
 	33: new ExpantaNum('1e451'),
+	34: new ExpantaNum('3e472'),
 }
 
 function getEnergyUpgCost(n){
@@ -213,6 +214,8 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[32] = (1-Math.pow(0.75, player.mlt.highestCompleted*(player.mlt.active>0?1.5:1)))*100;
 	
 	tmp.hd.enerUpgs[33] = ExpantaNum.sub(1, ExpantaNum.div(1, player.energy.plus(1).log10().plus(1).log10().plus(1).log10().times(2).plus(1))).times(100);
+	
+	tmp.hd.enerUpgs[34] = player.rank.plus(1).root(10);
 }
 
 function updateMotive(){
@@ -316,7 +319,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=26) return player.inf.endorsements.gte(28)
 	else if (x<=28) return player.achievements.includes(154)
 	else if (x<=30) return player.achievements.includes(171)
-	else if (x<=33) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
+	else if (x<=34) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
 	
 	return false;
 }
@@ -325,6 +328,7 @@ function baseIncline(d) {
 	if (d.gte(4.4e26)) d = d.pow(2).div(4.4e26)
 	if (d.gte("4.4e2026")) d = d.pow(5).div(ExpantaNum.pow("4.4e2026", 4))
 	if (player.energyUpgs.includes(32)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[32]) d = d.pow(1-tmp.hd.enerUpgs[32]/100);
+	if (player.energyUpgs.includes(34)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[34]) d = d.root(tmp.hd.enerUpgs[34])
 	let incl = d.gte(1e3) ? ExpantaNum.sub(90, ExpantaNum.div(90, d.div(1e3).log10().div(10).plus(1))) : new ExpantaNum(0)
 	return incl.max(0)
 }
@@ -333,6 +337,7 @@ function baseSecant(d) {
 	if (d.gte(4.4e26)) d = d.pow(2).div(4.4e26)
 	if (d.gte("4.4e2026")) d = d.pow(5).div(ExpantaNum.pow("4.4e2026", 4))
 	if (player.energyUpgs.includes(32)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[32]) d = d.pow(1-tmp.hd.enerUpgs[32]/100);
+	if (player.energyUpgs.includes(34)&&tmp.hd.enerUpgs&&tmp.hd.enerUpgs[34]) d = d.root(tmp.hd.enerUpgs[34])
 	let incl = d.gte(1e3) ? d.div(1e3).log10().div(10).plus(1).div(90) : new ExpantaNum(0)
 	return incl.max(0)
 }

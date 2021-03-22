@@ -1183,7 +1183,7 @@ function updateAcceleronsHTML(){
 		let accEff = getAccelEff()
 		tmp.el.accelEff.setHTML((hasDE(7)?" & are reducing the Hadron effect interval by ":" by ")+"<span class='thp'>"+showNum(accEff)+"</span>x"+(accEff.gte(2)?" <span class='sc'>(softcapped)</span>":""))
 		let next = player.elementary.theory.accelerons.expanders.toNumber()+1
-		let cost = (modeActive("extreme")&&EXTREME_DE_COSTS[next])?EXTREME_DE_COSTS[next]:DARK_EXPANDER_COSTS[next];
+		let cost = (modeActive("extreme")&&EXTREME_DE_COSTS[next])?EXTREME_DE_COSTS[next]:((modeActive("hikers_dream")&&HD_DE_COSTS[next])?HD_DE_COSTS[next]:DARK_EXPANDER_COSTS[next]);
 		tmp.el.darkExp.setClasses({btn: true, locked: (player.elementary.theory.accelerons.amount.lt(cost)||next-1>=getMaxDEs()), th: (!(player.elementary.theory.accelerons.amount.lt(cost)||next-1>=getMaxDEs()))})
 		tmp.el.darkExp.setHTML((next-1>=getMaxDEs())?"MAXED":(DARK_EXPANDER_DESCS[next]+"<br>Cost: "+showNum(cost)+" Accelerons"))
 		tmp.el.darkExpAmt.setTxt(showNum(player.elementary.theory.accelerons.expanders))
@@ -1289,7 +1289,7 @@ function updateMainEnergyTabHTML(){
 		})
 		tmp.el.motive.setTxt(showNum(tmp.hd.motive))
 		tmp.el.nextMotive.setHTML(tmp.hd.motive.lte(((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))?("[<span class='energy'>"+showNum(player.spentMotive.plus(player.spentMotiveGens).sub(tmp.hd.totalMotive).plus((player.energyUpgs.includes(24)) ? (tmp.hd.enerUpgs ? tmp.hd.enerUpgs[24] : new ExpantaNum(0)) : new ExpantaNum(0)).max(0))+"</span> left]"):"")
-		for (let i=1;i<=33;i++) {
+		for (let i=1;i<=34;i++) {
 			let cost = getEnergyUpgCost(i)
 			tmp.el["energyUpg"+i].setClasses({
 				btn: true,

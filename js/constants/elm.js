@@ -737,6 +737,9 @@ const EXTREME_DE_COSTS = {
 	9: new ExpantaNum("1e68500"),
 	10: new ExpantaNum("1e80500"), 
 }
+const HD_DE_COSTS = {
+	7: new ExpantaNum("1e38750"),
+}
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
 	2: "Unlock two more Strings.",
