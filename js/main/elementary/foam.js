@@ -281,6 +281,7 @@ function getEntropyGainMult() {
 	if (tmp.ach[188].has) mult = mult.times(1.1);
 	if (tmp.ach[195].has) mult = mult.times(1.11);
 	if (player.elementary.entropy.upgrades.includes(34) && modeActive("extreme")) mult = mult.times(1.5);
+	if (modeActive("hikers_dream")) if (player.energyUpgs.includes(35) && tmp.hd) mult = mult.times(tmp.hd.enerUpgs[35]);
 	return mult;
 }
 

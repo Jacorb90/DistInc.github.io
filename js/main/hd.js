@@ -33,6 +33,7 @@ const ENERGY_UPG_COSTS = {
 	32: new ExpantaNum('2e447'),
 	33: new ExpantaNum('1e451'),
 	34: new ExpantaNum('3e472'),
+	35: new ExpantaNum('4e543'),
 }
 
 function getEnergyUpgCost(n){
@@ -216,6 +217,8 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[33] = ExpantaNum.sub(1, ExpantaNum.div(1, player.energy.plus(1).log10().plus(1).log10().plus(1).log10().times(2).plus(1))).times(100);
 	
 	tmp.hd.enerUpgs[34] = player.rank.plus(1).root(10);
+	
+	tmp.hd.enerUpgs[35] = player.energy.plus(1).log10().plus(1).log10().div(3).plus(1);
 }
 
 function updateMotive(){
@@ -319,7 +322,7 @@ function isEnergyUpgShown(x) {
 	else if (x<=26) return player.inf.endorsements.gte(28)
 	else if (x<=28) return player.achievements.includes(154)
 	else if (x<=30) return player.achievements.includes(171)
-	else if (x<=34) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
+	else if (x<=35) return player.achievements.includes(181) || player.mlt.totalEnergy.gt(0);
 	
 	return false;
 }
