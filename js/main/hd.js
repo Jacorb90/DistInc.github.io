@@ -218,7 +218,7 @@ function calcEnergyUpgrades(){
 	
 	tmp.hd.enerUpgs[34] = player.rank.plus(1).root(10);
 	
-	tmp.hd.enerUpgs[35] = player.energy.plus(1).log10().plus(1).log10().div(3).plus(1);
+	tmp.hd.enerUpgs[35] = player.energy.plus(1).log10().plus(1).log10().div(2.5).plus(1);
 }
 
 function updateMotive(){
