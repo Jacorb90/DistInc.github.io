@@ -454,7 +454,7 @@ const ACH_DATA = {
 		188: "Gain showNum(10)% more Entropy.",
 
 		191: "boolean(extreme,White Flame is gained 5x faster.)",
-		193: "Gain showNum(5)% more Multiversal Energyboolean(hikers_dream, and showNup[10]% more Entropy).",
+		193: "Gain showNum(5)% more Multiversal Energyboolean(hikers_dream-extreme, and 10% more Entropy).",
 		194: "Tier scaling is 0.69% weaker.",
 		195: "Gain showNum(11)% more Entropy.",
 		196: "boolean(extreme+hikers_dream,Useless Theories is boosted by Multiverse Quilt 3's 2nd effect)",

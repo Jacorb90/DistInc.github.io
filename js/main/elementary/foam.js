@@ -283,7 +283,7 @@ function getEntropyGainMult() {
 	if (player.elementary.entropy.upgrades.includes(34) && modeActive("extreme")) mult = mult.times(1.5);
 	if (modeActive("hikers_dream")) {
 		if (player.energyUpgs.includes(35) && tmp.hd) mult = mult.times(tmp.hd.enerUpgs[35]);
-		if (tmp.ach[193].has) mult = mult.times(1.1);
+		if (tmp.ach[193].has && !modeActive("extreme")) mult = mult.times(1.1);
 	}
 	return mult;
 }
