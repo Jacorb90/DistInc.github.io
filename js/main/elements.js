@@ -834,7 +834,7 @@ function updatePlasma() {
 			})
 		}
 		let data = PLASMA_BOOSTS;
-		for (let i=1;i<=data.upgs;i++) {
+		for (let i=1;i<=data.upgs();i++) {
 			tmp.el["plB"+i].setDisplay(player.plasma.boosts.gte(i));
 			if (player.plasma.boosts.gte(i)) {
 				let cd = data[i];

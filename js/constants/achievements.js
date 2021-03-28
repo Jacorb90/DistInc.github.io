@@ -458,6 +458,6 @@ const ACH_DATA = {
 		194: "Tier scaling is 0.69% weaker.",
 		195: "Gain showNum(11)% more Entropy.",
 		196: "boolean(extreme+hikers_dream,Useless Theories is boosted by Multiverse Quilt 3's 2nd effect)",
-		197: "Entropy Upgrades are showNum(5)% cheaper.",
+		197: "Entropy Upgrades are showNum(5)% cheaperboolean(hikers_dream-extreme, and Thrusters V is 12.5% stronger).",
 	}
 };

@@ -230,6 +230,7 @@ function calcEnergyUpgrades(){
 	tmp.hd.enerUpgs[35] = player.energy.plus(1).log10().plus(1).log10().div(2.5).plus(1);
 	
 	tmp.hd.enerUpgs[36] = player.distance.plus(1).log10().plus(1).log10().plus(1).log10().cbrt().times(40)
+	if (tmp.ach && tmp.ach[197].has && !modeActive("extreme")) tmp.hd.enerUpgs[36] = tmp.hd.enerUpgs[36].times(1.125);
 }
 
 function updateMotive(){

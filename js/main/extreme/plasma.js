@@ -4,7 +4,7 @@ function updateTempPlasma() {
 	tmp.fn.pl.exp = getPlasmaExp()
 	tmp.fn.pl.wfGain = getWhiteFlameGain()
 	if (!tmp.fn.pl.boosts) tmp.fn.pl.boosts = {};
-	for (let i=1;i<=PLASMA_BOOSTS.upgs;i++) tmp.fn.pl.boosts[i] = player.plasma.boosts.gte(i)?PLASMA_BOOSTS[i].eff(player.plasma[PLASMA_BOOSTS[i].type=="plasmic"?"amount":"whiteFlame"].pow((i<9&&tmp.fn.pl.boosts[9])?tmp.fn.pl.boosts[9]:1)):PLASMA_BOOSTS[i].baseEff;
+	for (let i=1;i<=PLASMA_BOOSTS.upgs();i++) tmp.fn.pl.boosts[i] = player.plasma.boosts.gte(i)?PLASMA_BOOSTS[i].eff(player.plasma[PLASMA_BOOSTS[i].type=="plasmic"?"amount":"whiteFlame"].pow((i<9&&tmp.fn.pl.boosts[9])?tmp.fn.pl.boosts[9]:1)):PLASMA_BOOSTS[i].baseEff;
 }
 
 function getPlasmaExp() {
@@ -70,7 +70,7 @@ function buyPlasmaBoost(max=false) {
 }
 
 const PLASMA_BOOSTS = {
-	upgs: 12,
+	upgs() { return 12 },
 	rows: 4,
 	cols: 3,
 	1: {
