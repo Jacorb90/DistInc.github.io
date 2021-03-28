@@ -296,10 +296,10 @@ const TREE_UPGS = {
 		target: function(points) { return points.floor() },
 		cap: new ExpantaNum(100),
 		desc: "Supersymmetric Particles are gained faster based on your Higgs Bosons.",
-		effect: function(bought) {
+		effect: function(bought) { 
 			let exp = new ExpantaNum(0.1)
 			if ((player.elementary.theory.tree.upgrades[26]||new ExpantaNum(0)).gte(1)) exp = new ExpantaNum(0.4)
-			let ret = player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(exp)
+			let ret = player.elementary.bosons.scalar.higgs.amount.times(new ExpantaNum(bought).pow(2)).plus(1).pow(exp) 
 			if (ret.gte(50)) ret = ret.sqrt().times(Math.sqrt(50))
 			if (ret.gte(100)) ret = ret.log10().pow(new ExpantaNum(100).logBase(2)).min(ret.cbrt().times(Math.pow(100, 2/3)))
 			return ret
@@ -362,9 +362,9 @@ const TREE_UPGS = {
 		target: function(points) { return points.sub(10).div(2).sqrt().plus(1).floor() },
 		cap: new ExpantaNum(16),
 		desc: "Superscaled Rocket Fuel scaling is weaker.",
-		effect: function(bought) {
+		effect: function(bought) { 
 			if (new ExpantaNum(bought).gte(16)) bought = ExpantaNum.sub(20, ExpantaNum.div(20, ExpantaNum.sub(bought, 11)));
-			return ExpantaNum.mul(0.05, bought)
+			return ExpantaNum.mul(0.05, bought) 
 		},
 		effD: function(e) { return showNum(e.times(100))+"% weaker" },
 	},
@@ -649,9 +649,9 @@ const TREE_UPGS = {
 		cost: function(bought) { return new ExpantaNum(1.2e20) },
 		cap: new ExpantaNum(1),
 		desc: "Elementaries boost Gauge Speed.",
-		effect: function(bought) {
+		effect: function(bought) { 
 			let e = player.elementary.times;
-			return e.times(bought).plus(1).pow(1.4)
+			return e.times(bought).plus(1).pow(1.4) 
 		},
 		effD: function(e) { return showNum(e)+"x" },
 	},
@@ -660,11 +660,11 @@ const TREE_UPGS = {
 		cost: function(bought) { return new ExpantaNum(1.1e20) },
 		cap: new ExpantaNum(1),
 		desc: "OoMs of Distance boost Base Knowledge gain & all Foam layers.",
-		effect: function(bought) {
+		effect: function(bought) { 
 			let log = player.distance.plus(1).log10()
 			if (log.gte(1e11)) log = log.log10().times(1e12/12)
 			if (log.gte(1e9)) log = ExpantaNum.pow(1e9, log.logBase(1e9).root(10))
-			return log.times(bought).plus(1).pow(1.6)
+			return log.times(bought).plus(1).pow(1.6) 
 		},
 		effD: function(e) { return showNum(e)+"x" },
 	},
@@ -688,10 +688,10 @@ const G_TREE_SECTS = {
 	15: function() { return player.elementary.entropy.unl&&modeActive("extreme") },
 }
 
-const UNL_STR = function() {
+const UNL_STR = function() { 
 	if (mltRewardActive(4)) return 10;
 	else if (hasDE(2)) return 7
-	else return 5
+	else return 5 
 }
 const TOTAL_STR = 10
 const STR_REQS = {
@@ -735,7 +735,11 @@ const DARK_EXPANDER_COSTS = {
 }
 const EXTREME_DE_COSTS = {
 	9: new ExpantaNum("1e68500"),
-	10: new ExpantaNum("1e80500"),
+	10: new ExpantaNum("1e80500"), 
+}
+const HD_DE_COSTS = {
+	7: new ExpantaNum("1e38750"),
+	8: new ExpantaNum("1e44350"),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
@@ -752,9 +756,7 @@ const DARK_EXPANDER_DESCS = {
 
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
 const HC_DATA = {
-	goal: ["text", [Number.MAX_VALUE, "1e1e12"], "main"], //Similarly here, we need to find a way o make max value dynamic after reaching Achievement 196
-	rocket: ["checkbox", undefined, "pre"],
-	rf: ["checkbox", undefined, "pre"],
+	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
 	noTRU: ["checkbox", undefined, "pre"],
 	noCad: ["checkbox", undefined, "col"],
 	noPU: ["checkbox", undefined, "col"],
@@ -776,39 +778,10 @@ const HC_DATA = {
 	purge: ["checkbox", undefined, "inf"],
 	noDS: ["checkbox", undefined, "inf"],
 	noDB: ["checkbox", undefined, "inf"],
-	elm: ["checkbox", undefined, "elm"],
-	ferm: ["checkbox", undefined, "elm"],
-	qrks: ["checkbox", undefined, "elm"],
-	lptn: ["checkbox", undefined, "elm"],
-	boson: ["checkbox", undefined, "elm"],
 	tv: ["range", [-1, 10], "elm"],
-	sprsym: ["checkbox", undefined, "elm"],
-	tree: ["checkbox", undefined, "elm"],
-	string: ["range", [0, 10], "elm"],
-	preon: ["checkbox", undefined, "elm"],
-	tb: ["checkbox", undefined, "elm"],
-	de: ["range", [0, 10], "elm"],
-	aclron: ["checkbox", undefined, "elm"],
-	infl: ["checkbox", undefined, "elm"],
-	rfrm: ["range", [-1, 5], "elm"],
-	etrpy: ["checkbox", undefined, "elm"],
-	omga: ["checkbox", undefined, "elm"],
-	pupg: ["checkbox", undefined, "elm"],
-	supg: ["checkbox", undefined, "elm"],
-	skyr: ["checkbox", undefined, "elm"],
-	q1: ["checkbox", undefined, "mlt"], //I can't find the hcTab data for the life of me lmao
-	q2: ["checkbox", undefined, "mlt"],
-	q3: ["checkbox", undefined, "mlt"],
-	mv1: ["checkbox", undefined, "mlt"],
-	mv2: ["checkbox", undefined, "mlt"],
-	mv3: ["checkbox", undefined, "mlt"],
-	mv4: ["checkbox", undefined, "mlt"],
-	mv5: ["checkbox", undefined, "mlt"],
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
-	rocket: "You cannot gain rockets",
-	rf: "You cannot gain rocket fuel",
 	noTRU: "Time Reversal Upgrades do nothing",
 	noCad: "You do not gain Cadavers",
 	noPU: "Pathogen Upgrades do nothing",
@@ -830,34 +803,7 @@ const HC_TITLE = {
 	purge: "Trapped in Purge",
 	noDS: "Derivative Shifts do nothing",
 	noDB: "Derivative Boosts do nothing",
-	elm: "You cannot gain Elementaries or Particles",
-	ferm: "You cannot gain Fermions",
-	qrks: "Quarks are disabled",
-	lptn: "Leptons are disabled",
-	boson: "You cannot gain Bosons",
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
-	sprsym: "Supersymmetry particles and wave are disabled",
-	tree: "Theory Tree upgrades are disabled",
-	string: "The last X strings are disabled (0 = no strings disabled)",
-	preon: "You cannot gain preons",
-	tb: "You cannot gain Theoretical Boosters",
-	de: "the last X Dark Expanders are disabled",
-	aclron: "You cannot gain accelerons",
-	infl: "You cannot gain Inflations",
-	rfrm: "You can only reform up to the (5-x)th foam",
-	etrpy: "You cannot gain entropy",
-	omga: "You cannot gain Omega particles", //If you want to make the symbol show up, go ahead
-	pupg: "Pion Upgrades are Disabled",
-	supg: "Spinor Upgrades are Disabled",
-	skyr: "You cannot gain Skyrmions",
-	q1: "Multiversal Quilt 1 is disabled",
-	q2: "Multiversal Quilt 2 is disabled",
-	q3: "Multiversal Quilt 3 is disabled",
-	mv1: "Trapped in Multiverse 1",
-	mv2: "Trapped in Multiverse 2",
-	mv3: "Trapped in Multiverse 3",
-	mv4: "Trapped in Multiverse 4", //note: TV depth still determined by Hadronic Challenges
-	mv5: "Trapped in Multiverse 5",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
 const HC_EXTREME_CHALLS = ["flamis","cranius","spectra","aqualon","nullum","quantron"]
@@ -970,37 +916,37 @@ const ENTROPY_UPG_COSTS = {
 	3: new ExpantaNum(25),
 	4: new ExpantaNum(100),
 	21: new ExpantaNum(104),
-
+	
 	5: new ExpantaNum(135),
 	6: new ExpantaNum(150),
 	7: new ExpantaNum(215),
 	8: new ExpantaNum(235),
 	22: new ExpantaNum(525),
-
+	
 	9: new ExpantaNum(550),
 	10: new ExpantaNum(700),
 	11: new ExpantaNum(1500),
 	12: new ExpantaNum(1750),
 	23: new ExpantaNum(6000),
-
+	
 	13: new ExpantaNum(1800),
 	14: new ExpantaNum(2350),
 	15: new ExpantaNum(2425),
 	16: new ExpantaNum(2475),
 	24: new ExpantaNum(9000),
-
+	
 	17: new ExpantaNum(11111),
 	18: new ExpantaNum(12e3),
 	19: new ExpantaNum(17500),
 	20: new ExpantaNum(18250),
 	25: new ExpantaNum(30000),
-
+	
 	26: new ExpantaNum(250000),
 	27: new ExpantaNum(282500),
 	28: new ExpantaNum(420000),
 	29: new ExpantaNum(482500),
 	34: new ExpantaNum(5e8),
-
+	
 	30: new ExpantaNum(580000),
 	31: new ExpantaNum(1.03e6),
 	32: new ExpantaNum(1.125e6),
@@ -1100,12 +1046,12 @@ const SKY_FIELDS = {
 		pionEff(bought) {
 			let base = player.elementary.sky.amount.plus(1).pow(bought);
 			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
-			return base.pow(400)
+			return base.pow(400) 
 		},
-		spinorEff(bought) {
+		spinorEff(bought) { 
 			let base = player.elementary.sky.amount.plus(1).pow(bought)
 			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
-			return base.pow(10)
+			return base.pow(10) 
 		},
 		desc(eff) { return showNum(eff)+"x" },
 	},
@@ -1175,13 +1121,13 @@ const SKY_FIELDS = {
 		spinorDesc: "The Skyrmion effect is multiplied.",
 		baseCost: new ExpantaNum(1e43),
 		costMult: new ExpantaNum(1e12),
-		pionEff(bought) {
+		pionEff(bought) { 
 			if (bought.gte(3)) bought = bought.logBase(3).plus(2);
-			return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11)
+			return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) 
 		},
-		spinorEff(bought) {
+		spinorEff(bought) { 
 			if (bought.gte(2)) bought = bought.logBase(2).plus(1).root(5)
-			return ExpantaNum.add(bought, 1).pow(1.65)
+			return ExpantaNum.add(bought, 1).pow(1.65) 
 		},
 		desc(eff) { return showNum(eff) },
 	},

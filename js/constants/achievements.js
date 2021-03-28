@@ -459,6 +459,5 @@ const ACH_DATA = {
 		195: "Gain showNum(11)% more Entropy.",
 		196: "boolean(extreme+hikers_dream,Useless Theories is boosted by Multiverse Quilt 3's 2nd effect)",
 		197: "Entropy Upgrades are showNum(5)% cheaper.",
-		198: "Unlocks new selector features for Hadronic Challenges"
 	}
 };
