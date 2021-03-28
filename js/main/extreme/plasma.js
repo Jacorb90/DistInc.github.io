@@ -14,7 +14,7 @@ function getPlasmaExp() {
 	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[2])
 	if (player.elementary.entropy.upgrades.includes(24)) exp = exp.times(tmp.elm.entropy.upgEff[24]);
 	if (tmp.fn.pl.boosts) exp = exp.times(tmp.fn.pl.boosts[12]);
-	
+
 	let ach178amt = player.elementary.entropy.upgrades.includes(35)?2.5e4:250
 	if (modeActive("extreme") && tmp.ach[178].has && exp.lt(ach178amt)) {
 		if (exp.lt(ach178amt/3)) exp = exp.times(2);
@@ -70,14 +70,14 @@ function buyPlasmaBoost(max=false) {
 }
 
 const PLASMA_BOOSTS = {
-	upgs: 12,
-	rows: 4,
+	upgs: 13, //Note: 13th upgrade should only exist in mode combos including Extreme Dream.
+	rows: 5,
 	cols: 3,
 	1: {
 		type: "plasmic",
 		desc: "The Extreme mode nerf to Foam gain starts later.",
 		baseEff: new ExpantaNum(1),
-		eff: function(amt) { 
+		eff: function(amt) {
 			let eff = amt.plus(1).log10().times(tmp.fn.pl.exp).plus(1).pow(3);
 			if (tmp.fn.pl.boosts[11]) eff = eff.pow(tmp.fn.pl.boosts[11]);
 			return eff;
@@ -88,7 +88,7 @@ const PLASMA_BOOSTS = {
 		type: "gleaming",
 		desc: "Boost the Plasma Exponent.",
 		baseEff: new ExpantaNum(1),
-		eff: function(amt) { 
+		eff: function(amt) {
 			let eff = amt.plus(1).log10().sqrt().div(2).plus(1);
 			if (tmp.fn.pl.boosts[11]) eff = eff.times(tmp.fn.pl.boosts[11]);
 			return eff;
@@ -106,7 +106,7 @@ const PLASMA_BOOSTS = {
 		type: "gleaming",
 		desc: "Make all Rank Cheapener cost scalings start later.",
 		baseEff: new ExpantaNum(0),
-		eff: function(amt) { 
+		eff: function(amt) {
 			let eff = amt.plus(1).log10().plus(1).log10().times(250);
 			if (tmp.fn.pl.boosts[11]) eff = eff.times(tmp.fn.pl.boosts[11]);
 			return eff;
@@ -117,7 +117,7 @@ const PLASMA_BOOSTS = {
 		type: "plasmic",
 		desc: "Boost Pion/Spinor gain.",
 		baseEff: new ExpantaNum(1),
-		eff: function(amt) { 
+		eff: function(amt) {
 			let mult = amt.plus(1).root(10);
 			if (mult.gte(1e250)) mult = ExpantaNum.pow(1e250, mult.logBase(1e250).sqrt());
 			return mult;
@@ -172,6 +172,13 @@ const PLASMA_BOOSTS = {
 		baseEff: new ExpantaNum(1),
 		eff: function(amt) { return player.mlt.energy.times(amt.plus(1).log10()).plus(1).log10().cbrt().plus(1) },
 		effD: function(e) { return showNum(e)+"x" },
+	},
+	13: {
+		type: "plasmic",
+		desc: "The Secant is divided based on your Plasma",
+		baseEff: new ExpantaNum(1),
+		eff: function(amt) { return (amt.plus(1).log10()).plus(1).log10() },
+		effD: function(e) { return "/"+showNum(e) },
 	},
 }
 

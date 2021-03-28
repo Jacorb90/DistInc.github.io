@@ -1254,7 +1254,7 @@
 					You have <span id="angels" class="spectral"></span> Angels.<br /><br />
 					You have <span id="chips" class="spectral"></span> Heavenly Chips
 					<span id="chipGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity, but they also make Demonic Souls in their effect 
+					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity, but they also make Demonic Souls in their effect
 					<span id="chipNerf" style="color: black;"></span>.
 					<br /><br /><br />
 				</div>
@@ -1265,7 +1265,7 @@
 					You have <span id="demons" class="spectral"></span> Demons.<br /><br />
 					You have <span id="souls" class="spectral"></span> Demonic Souls
 					<span id="soulGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength, but they also make Heavenly Chips in their effect 
+					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength, but they also make Heavenly Chips in their effect
 					<span id="soulNerf"></span>.
 					<br /><br /><br />
 				</div>
@@ -2051,6 +2051,11 @@
 									Elementary Selectors
 								</button>
 							</td>
+							<td>
+								<button class="btn tb hc" onclick="showHCTab('mltHC')">
+									Multiverse Selectors
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div><br><br>
@@ -2059,6 +2064,7 @@
 				<div id="colHC" class="hcTab"></div>
 				<div id="infHC" class="hcTab"></div>
 				<div id="elmHC" class="hcTab"></div>
+				<div id="mltHC" class="hcTab"></div>
 				<br><br>
 			</div>
 			<div id="foam" class="elmtab" style="display: none;">
@@ -2089,31 +2095,31 @@
 				<br><br><br>
 				<div id="foamBoosts" class="foamTab" style="display: none;">
 					<span id="ach162span">"Actually Useless Theories": Multiply the generation of all Foam types by <span id="ach162eff"></span>.<br><br></span>
-				
+
 					<span id="qfb1">Quantum Boost [<span id="qfb1amt"></span>]: Multiply Quantum Foam gain by <span id="qfb1eff"></span>.</span><br>
 					<span id="qfb2">Fermion Boost [<span id="qfb2amt"></span>]: Multiply Fermion gain by <span id="qfb2eff"></span>.</span><br>
 					<span id="qfb3">Entangle Boost [<span id="qfb3amt"></span>]: Multiply Entangled String gain by <span id="qfb3eff"></span>.</span><br>
 					<span id="qfb4">Inflaton Boost [<span id="qfb4amt"></span>]: Multiply Inflaton gain by <span id="qfb4eff"></span>.</span><br>
 					<span id="qfb5">Meta-Boost [<span id="qfb5amt"></span>]: Add <span id="qfb5eff"></span> levels to all above boosts (based on your Knowledge).</span><br><br>
-					
+
 					<span id="qfb6">Subplanck Boost [<span id="qfb6amt"></span>]: Multiply Subplanck Foam gain by <span id="qfb6eff"></span> (based on your Quantum Foam).</span><br>
 					<span id="qfb7">Hadron Boost [<span id="qfb7amt"></span>]: Multiply Hadron gain by <span id="qfb7eff"></span>.</span><br>
 					<span id="qfb8">Theory Boost [<span id="qfb8amt"></span>]: Divide Theory Tree costs by <span id="qfb8eff"></span>.</span><br>
 					<span id="qfb9">Supersymmetric Boost [<span id="qfb9amt"></span>]: Multiply Supersymmetric Particle gain by <span id="qfb9eff"></span>.</span><br>
 					<span id="qfb10">Endorsement Boost [<span id="qfb10amt"></span>]: Superscaled Endorsements start <span id="qfb10eff"></span> later.</span><br><br>
-					
+
 					<span id="qfb11">Subspatial Boost [<span id="qfb11amt"></span>]: Multiply Subspatial Foam gain by <span id="qfb11eff"></span> (based on your Subplanck Foam).</span><br>
 					<span id="qfb12">Elementary Boost [<span id="qfb12amt"></span>]: Multiply Elementary Particle gain by <span id="qfb12eff"></span> (not affected by softcap).</span><br>
 					<span id="qfb13">Meta-Boost II [<span id="qfb13amt"></span>]: Add <span id="qfb13eff"></span> levels to all above boosts (based on your Quantum Foam).</span><br>
 					<span id="qfb14">Ascension Boost [<span id="qfb14amt"></span>]: Multiply Ascension Power gain by <span id="qfb14eff"></span>.</span><br>
 					<span id="qfb15">String Boost [<span id="qfb15amt"></span>]: Multiply String gain by <span id="qfb15eff"></span>.</span><br><br>
-					
+
 					<span id="qfb16">Infinitesimal Boost [<span id="qfb16amt"></span>]: Multiply Infinitesimal Foam gain by <span id="qfb16eff"></span> (based on your Subspatial Foam).</span><br>
 					<span id="qfb17">Advanced Theory Boost [<span id="qfb17amt"></span>]: Certain Theory Tree Upgrades cap <span id="qfb17eff"></span> later.</span><br>
 					<span id="qfb18">Gauge Boost [<span id="qfb18amt"></span>]: Multiply Gauge Force gain by <span id="qfb18eff"></span> (based on your Quantum Foam).</span><br>
 					<span id="qfb19">Boson Boost [<span id="qfb19amt"></span>]: Multiply Gluon, W Boson, & Z Boson gain by <span id="qfb19eff"></span> (based on your Quantum Foam).</span><br>
 					<span id="qfb20">Rocket Boost [<span id="qfb20amt"></span>]: Multiply the Rocket effect exponent by <span id="qfb20eff"></span>.</span><br><br>
-					
+
 					<span id="qfb21">Foam Boost [<span id="qfb21amt"></span>]: Multiply the gain of all Foam types by <span id="qfb21eff"></span> (based on your Infinitesimal Foam).</span><br>
 					<span id="qfb22">Perk Accelerator Boost [<span id="qfb22amt"></span>]: The Perk Accelerator gets Weakened & Broken <span id="qfb22eff"></span>x later.</span><br>
 					<span id="qfb23">Foam Boost II [<span id="qfb23amt"></span>]: Multiply the gain of all Foam types by <span id="qfb23eff"></span>.</span><br>
@@ -2166,7 +2172,7 @@
 						</tr>
 
 						<tr height="50"></tr>
-						
+
 						<tr class="qf3row">
 							<td>You have <span id="qf3Amt" class="foamtxt"></span> Subspatial Foam <span id="qf3Gain"></span>, which is multiplying Subplanck Foam & Quantum Foam gain by <span id="qf3Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf3Boost1" class="btn locked" onclick="qfBoost(3, 1)">Enlarge Subspatial Foam by 1m in height<br>Cost: <span id="qf3Cost1" style="color: black !important;"></span> Subspatial Foam</button></td>
@@ -2188,7 +2194,7 @@
 						</tr>
 
 						<tr height="50"></tr>
-						
+
 						<tr class="qf4row">
 							<td>You have <span id="qf4Amt" class="foamtxt"></span> Infinitesimal Foam <span id="qf4Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf4Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf4Boost1" class="btn locked" onclick="qfBoost(4, 1)">Enlarge Infinitesimal Foam by 1m in height<br>Cost: <span id="qf4Cost1" style="color: black !important;"></span> Infinitesimal Foam</button></td>
@@ -2208,9 +2214,9 @@
 							<td>Width: <span id="qf4Bought2"></span></td>
 							<td>Depth: <span id="qf4Bought3"></span></td>
 						</tr>
-						
+
 						<tr height="50"></tr>
-						
+
 						<tr class="qf5row">
 							<td>You have <span id="qf5Amt" class="foamtxt"></span> Protoversal<span id="qf5type"></span> Foam <span id="qf5Gain"></span>, which is multiplying the gain of all previous types of Foam by <span id="qf5Eff" class="foamtxt"></span>x.</td>
 							<td><button id="qf5Boost1" class="btn locked" onclick="qfBoost(5, 1)">Enlarge Protoversal Foam by 1m in height<br>Cost: <span id="qf5Cost1" style="color: black !important;"></span> Protoversal Foam</button></td>
@@ -2346,7 +2352,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Links -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
 
