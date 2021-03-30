@@ -287,13 +287,13 @@ function updateTempBosons() {
 	if (!tmp.elm.bos.transfer1) tmp.elm.bos.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
-		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(1);
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(HCCBA("fermbos")?0:1);
 	};
 	if (!tmp.elm.bos.transfer) tmp.elm.bos.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
-		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(toSub);
+		player.elementary.bosons.amount = player.elementary.bosons.amount.plus(HCCBA("fermbos")?0:toSub);
 	};
 	
 	updateGluonTabs();

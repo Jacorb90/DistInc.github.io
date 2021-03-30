@@ -35,6 +35,8 @@ function getProjectedHadronicScore() {
 	let score = new ExpantaNum(0)
 	
 	// Pre-Collapse Modifiers
+	if (getHCSelector("rockets")) score = score.times(1.025).plus(0.025)
+	if (getHCSelector("rf")) score = score.times(1.005).plus(0.005)
 	if (getHCSelector("noTRU")) score = score.times(1.08).plus(0.08)
 	
 	// Collapse Modifiers
@@ -65,12 +67,17 @@ function getProjectedHadronicScore() {
 	if (getHCSelector("noDB")) score = score.times(1.03).plus(0.03)
 		
 	// Elementary Modifiers
+	if (getHCSelector("elm")) score = score.times(1.125).plus(0.125);
+	if (getHCSelector("fermbos")) score = score.times(1.075).plus(0.075);
 	score = score.times(new ExpantaNum(getHCSelector("tv")).plus(2).pow(0.25)).plus(new ExpantaNum(getHCSelector("tv")).plus(1).div(20))
+	if (getHCSelector("sprsym")) score = score.times(1.125).plus(0.05);
+	if (getHCSelector("tree")) score = score.times(1.04).plus(0.04);
 	
 	// Multiversal Modifiers
 	if (getHCSelector("q1")) score = score.times(1.2).plus(0.6)
 	if (getHCSelector("q2")) score = score.times(1.15).plus(0.575)
 	if (getHCSelector("q3")) score = score.times(1.175).plus(0.5875)
+	for (let i=1;i<=5;i++) if (getHCSelector("mlt"+i)) score = score.times(1.1).plus(0.3);
 	
 	// Goal Modifier
 	let goal = new ExpantaNum(getHCSelector("goal"))
@@ -186,6 +193,15 @@ function startHC() {
 	player.elementary.hc.active = !player.elementary.hc.active
 	if (mltMode) mltReset(true, true, true);
 	else elmReset(true);
+	if (getHCSelector("elm")) {
+		player.elementary.particles = new ExpantaNum(0);
+		player.elementary.times = new ExpantaNum(0);
+	}
+	if (getHCSelector("fermbos")) {
+		player.elementary.fermions.amount = new ExpantaNum(0);
+		player.elementary.bosons.amount = new ExpantaNum(0);
+	}
+	if (getHCSelector("tree") && !mltMode) resetTheoryTree(true, true);
 	updateHCSelectorInputs()
 }
 

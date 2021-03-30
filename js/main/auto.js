@@ -236,6 +236,7 @@ function theoriverseAutoPerSec() {
 		if (toAdd.gt(0)) {
 			player.elementary.theory.points = player.elementary.theory.points.plus(newPoints.sub(oldPoints).max(0).round())
 			player.elementary.theory.depth = player.elementary.theory.depth.max(target);
+			player.elementary.theory.bestDepth = player.elementary.theory.bestDepth.max(target);
 		}
 	}
 }

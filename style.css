@@ -2137,6 +2137,7 @@ table {
 	padding: 7px 25px;
 	text-decoration: none;
 	text-shadow: none;
+	transition-duration: 1s;
 	animation: hadron 10s ease infinite;
 }
 

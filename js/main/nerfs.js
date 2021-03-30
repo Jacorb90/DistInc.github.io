@@ -44,6 +44,8 @@ function nerfActive(name) {
 		active =
 			active ||
 			(tmp.inf ? tmp.inf.stadium.active("spaceon") || tmp.inf.stadium.active("drigganiz", 5) : true);
+			
+		if (HCCBA("rockets")) active = true;
 		return active;
 	}
 	if (name == "scaledRF") {
@@ -54,6 +56,7 @@ function nerfActive(name) {
 	if (name == "noRF") {
 		let active = false;
 		active = active || (tmp.inf ? tmp.inf.stadium.active("infinity", 3) : true);
+		if (HCCBA("rf")) active = true;
 		return active;
 	}
 	if (name == "noTimeCubes") {

@@ -116,13 +116,13 @@ function updateTempFermions() {
 	if (!tmp.elm.ferm.transfer1) tmp.elm.ferm.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(HCCBA("fermbos")?0:1);
 	};
 	if (!tmp.elm.ferm.transfer) tmp.elm.ferm.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(HCCBA("fermbos")?0:toSub);
 	};
 	
 	updateTempQuarks();

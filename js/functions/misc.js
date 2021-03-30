@@ -122,6 +122,7 @@ function ENString(obj) {
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount).toString();
 	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points).toString();
 	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth).toString();
+	ret.elementary.theory.bestDepth = new ExpantaNum(ret.elementary.theory.bestDepth).toString();
 	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks).toString();
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons).toString();
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos).toString();
@@ -305,6 +306,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount);
 	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points);
 	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth);
+	ret.elementary.theory.bestDepth = new ExpantaNum(ret.elementary.theory.bestDepth);
 	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks);
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons);
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos);

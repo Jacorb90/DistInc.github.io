@@ -60,6 +60,7 @@ function setMultiverseResetFunction() {
 		player.elementary.fermions.leptons.type = prev.elementary.fermions.leptons.type;
 		player.elementary.foam.autoUnl = prev.elementary.foam.autoUnl
 		for (let i=0;i<Object.keys(prev.automation.robots).length;i++) robotActives[Object.keys(prev.automation.robots)[i]] = !(!Object.values(prev.automation.robots)[i][2])
+		player.elementary.theory.bestDepth = prev.elementary.theory.bestDepth;
 			
 		// Bugfixes
 		if (!auto) {
@@ -122,7 +123,8 @@ function multiversePaused() {
 }
 
 function mltActive(n) {
-	return player.mlt.active == n
+	if (HCCBA("mlt"+n)) return true;
+	return player.mlt.active == n;
 }
 
 function mltReset(force=false, auto=false, hc=false) {
@@ -131,6 +133,7 @@ function mltReset(force=false, auto=false, hc=false) {
 	let L = new Layer("multiverse", c, "multi-res", true, "mlt", true);
 	L.reset(force, auto)
 	if (hc) {
+		if (HCCBA("mlt1")) setupMlt1(true);
 		player.elementary.hc.active = prevHC;
 		player.elementary.hc.unl = true;
 	}
@@ -168,6 +171,21 @@ function unlMlt(m) {
 	player.mlt.highestUnlocked = Math.max(player.mlt.highestUnlocked, m)
 }
 
+function setupMlt1(keepHC=false) {
+	if (!mltCompleted(1)) player.inf.stadium.completions = []
+	player.elementary.theory.unl = false;
+	player.elementary.theory.supersymmetry.unl = false;
+	player.elementary.theory.tree.unl = false;
+	player.elementary.theory.strings.unl = false;
+	player.elementary.theory.preons.unl = false;
+	player.elementary.theory.accelerons.unl = false;
+	player.elementary.theory.inflatons.unl = false;
+	if (!keepHC) player.elementary.hc.unl = false;
+	player.elementary.foam.unl = false;
+	player.elementary.entropy.unl = false;
+	player.elementary.sky.unl = false;
+}
+
 function startMultiverse(m) {
 	if (!mltUnlocked(m)) return;
 	if (player.mlt.active==m) {
@@ -175,21 +193,8 @@ function startMultiverse(m) {
 		return;
 	}
 	if (!player.options.mltnc) if (!confirm("Are you sure you want to enter this Multiverse?")) return;
-	if (player.mlt.active!=m) mltReset(true);
-	if (m==1) {
-		if (!mltCompleted(1)) player.inf.stadium.completions = []
-		player.elementary.theory.unl = false;
-		player.elementary.theory.supersymmetry.unl = false;
-		player.elementary.theory.tree.unl = false;
-		player.elementary.theory.strings.unl = false;
-		player.elementary.theory.preons.unl = false;
-		player.elementary.theory.accelerons.unl = false;
-		player.elementary.theory.inflatons.unl = false;
-		player.elementary.hc.unl = false;
-		player.elementary.foam.unl = false;
-		player.elementary.entropy.unl = false;
-		player.elementary.sky.unl = false;
-	}
+	if (!player.mlt.active!=m) mltReset(true);
+	if (m==1) setupMlt1()
 	player.mlt.active = m;
 	player.tab = "main"
 	mltTab = "mltMap"

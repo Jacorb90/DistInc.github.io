@@ -171,6 +171,7 @@ const DEFAULT_START = {
 			active: false,
 			points: new ExpantaNum(0),
 			depth: new ExpantaNum(0),
+			bestDepth: new ExpantaNum(0),
 			supersymmetry: {
 				unl: false,
 				squarks: new ExpantaNum(0),

@@ -67,6 +67,7 @@ function updateTempSupersymmetry() {
 		}
 		tmp.elm.theory.ss[type+"Eff"] = player.elementary.theory.supersymmetry[type+"s"].plus(1)
 		if (tmp.elm.theory.ss[type+"Eff"].gte(1e9)) tmp.elm.theory.ss[type+"Eff"] = tmp.elm.theory.ss[type+"Eff"].cbrt().times(1e6)
+		if (HCCBA("sprsym")) tmp.elm.theory.ss[type+"Eff"] = new ExpantaNum(1);
 	}
 	if (hasDE(5)) for (let i=2;i>=0;i--) {
 		let type = ["squark", "slepton", "neutralino", "chargino"][i]
@@ -76,6 +77,7 @@ function updateTempSupersymmetry() {
 	tmp.elm.theory.ss.wavelength = player.elementary.theory.supersymmetry.squarks.times(player.elementary.theory.supersymmetry.sleptons).times(player.elementary.theory.supersymmetry.neutralinos).times(player.elementary.theory.supersymmetry.charginos).pow(1/5)
 	tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.wavelength.plus(1).pow(2.25)
 	if (tmp.elm.theory.ss.waveEff.gte(1e13)) tmp.elm.theory.ss.waveEff = tmp.elm.theory.ss.waveEff.pow(1/4).times(Math.pow(1e13, 3/4))
+	if (HCCBA("sprsym")) tmp.elm.theory.ss.waveEff = new ExpantaNum(1);
 }
 
 function updateTempTheoryTree() {
@@ -92,6 +94,7 @@ function updateTempTheoryTree() {
 	if (!tmp.elm.theory.tree.buy) tmp.elm.theory.tree.buy = function(x, max=false) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
+		if (HCCBA("tree")) return;
 		let bought = tmp.elm.theory.tree.bought(x)
 		let cap = getTreeUpgCap(x)
 		if (bought.gte(cap)) return
@@ -136,7 +139,7 @@ function updateTempTheories() {
 	updateTempTheoryTree();
 }
 
-function resetTheoryTree(force=false) {
+function resetTheoryTree(force=false, noReset=false) {
 	if (!force) {
 		if (!player.elementary.theory.unl) return
 		if (!player.elementary.theory.tree.unl) return
@@ -145,7 +148,7 @@ function resetTheoryTree(force=false) {
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
 	player.elementary.theory.tree.spent = new ExpantaNum(0)
 	player.elementary.theory.tree.upgrades = {}
-	elmReset(true)
+	if (!noReset) elmReset(true)
 }
 
 // Strings
