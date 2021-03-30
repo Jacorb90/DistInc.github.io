@@ -2123,6 +2123,36 @@ table {
 	padding: 5px;
 }
 
+.btn.mlthc {
+	box-shadow: 3px 4px 0px 0px #6a31a3;
+	background: none;
+	background-color: #c97df5;
+	border-radius: 18px;
+	border: 1px solid #1b002b;
+	display: inline-block;
+	cursor: pointer;
+	color: #564b5e;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 7px 25px;
+	text-decoration: none;
+	text-shadow: none;
+	animation: hadron 10s ease infinite;
+}
+
+.btn.mlthc:hover {
+	background: none;
+	background-color: #9d47ff;
+	color: #5c5266;
+}
+
+.btn.mlthc:active {
+	position: relative;
+	top: 3px;
+	left: 2px;
+	box-shadow: none;
+}
+
 @keyframes grosstxt {
 	0% {
 		color: #176648;

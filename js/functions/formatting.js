@@ -114,3 +114,13 @@ function formatGain(amt, gain, name, isDist, gainNotIncluded) {
 	if (trueGain.gte(1e100) && trueGain.gt(amt)) return "(+"+showNum(trueGain.max(1).log10().sub(amt.max(1).log10().max(1)).times(50/VIS_UPDS[player.options.visUpd]))+" OoMs/sec)"
 	else return "(+"+func(trueGain)+"/sec)"
 }
+
+function isFunc(f) {
+	let n = {};
+	return n.toString.call(f) === '[object Function]';
+}
+
+function checkFunc(f) {
+	if (isFunc(f)) return f();
+	else return f;
+}

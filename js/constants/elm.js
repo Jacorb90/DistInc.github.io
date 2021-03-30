@@ -754,34 +754,40 @@ const DARK_EXPANDER_DESCS = {
 	10: "Unlock 2 new rows of Entropy Upgrades.",
 }
 
+const ach198check = function() { return tmp.ach?tmp.ach[198].has:false };
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
 const HC_DATA = {
-	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
-	noTRU: ["checkbox", undefined, "pre"],
-	noCad: ["checkbox", undefined, "col"],
-	noPU: ["checkbox", undefined, "col"],
-	noDC: ["checkbox", undefined, "col"],
-	noIU: ["checkbox", undefined, "inf"],
-	spaceon: ["range", [0, 6], "inf"],
-	solaris: ["range", [0, 6], "inf"],
-	infinity: ["range", [0, 6], "inf"],
-	eternity: ["range", [0, 6], "inf"],
-	reality: ["range", [0, 6], "inf"],
-	drigganiz: ["range", [0, 6], "inf"],
-	flamis: ["range", [0, 6], "inf"],
-	cranius: ["range", [0, 6], "inf"],
-	spectra: ["range", [0, 6], "inf"],
-	aqualon: ["range", [0, 6], "inf"],
-	nullum: ["range", [0, 6], "inf"],
-	quantron: ["range", [0, 6], "inf"],
-	noGems: ["checkbox", undefined, "inf"],
-	purge: ["checkbox", undefined, "inf"],
-	noDS: ["checkbox", undefined, "inf"],
-	noDB: ["checkbox", undefined, "inf"],
-	tv: ["range", [-1, 10], "elm"],
+	goal: ["text", [function() { return getHCSelector("goalMlt")?new ExpantaNum(1):Number.MAX_VALUE }, function() { return (tmp.ach?tmp.ach[198].has:false)?(getHCSelector("goalMlt")?player.bestDistance.max(1).log(DISTANCES.mlt).div(ExpantaNum.log(DISTANCES.mlt)).max(1):player.bestDistance.min("e1e9")):"e1e7" }], "main", true], // Index 0: Type, Index 1: Min/Max, Index 2: Tab, Index 3: Unlocked
+	goalMlt: ["checkbox", undefined, "main", ach198check],
+	noTRU: ["checkbox", undefined, "pre", true],
+	noCad: ["checkbox", undefined, "col", true],
+	noPU: ["checkbox", undefined, "col", true],
+	noDC: ["checkbox", undefined, "col", true],
+	noIU: ["checkbox", undefined, "inf", true],
+	spaceon: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	solaris: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	infinity: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	eternity: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	reality: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	drigganiz: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	flamis: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	cranius: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	spectra: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	aqualon: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	nullum: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	quantron: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	noGems: ["checkbox", undefined, "inf", true],
+	purge: ["checkbox", undefined, "inf", true],
+	noDS: ["checkbox", undefined, "inf", true],
+	noDB: ["checkbox", undefined, "inf", true],
+	tv: ["range", [-1, 10], "elm", true],
+	q1: ["checkbox", undefined, "mlt", ach198check],
+	q2: ["checkbox", undefined, "mlt", ach198check],
+	q3: ["checkbox", undefined, "mlt", ach198check],
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
+	goalMlt: "Challenge goal in mlt",
 	noTRU: "Time Reversal Upgrades do nothing",
 	noCad: "You do not gain Cadavers",
 	noPU: "Pathogen Upgrades do nothing",
@@ -804,9 +810,14 @@ const HC_TITLE = {
 	noDS: "Derivative Shifts do nothing",
 	noDB: "Derivative Boosts do nothing",
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
+	q1: "Multiversal Quilt 1 is disabled",
+	q2: "Multiversal Quilt 2 is disabled",
+	q3: "Multiversal Quilt 3 is disabled",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
 const HC_EXTREME_CHALLS = ["flamis","cranius","spectra","aqualon","nullum","quantron"]
+const DYNAMIC_RANGE_HC_SELECTORS = Object.keys(HC_DATA).filter(a => ((HC_DATA[a][1]!==undefined)?(isFunc(HC_DATA[a][1][0])||isFunc(HC_DATA[a][1][1])):false));
+const DYNAMIC_UNLOCK_HC_SELECTORS = Object.keys(HC_DATA).filter(a => HC_DATA[a][3] !== true);
 
 const FOAM_REQ = new ExpantaNum("1e42000000")
 const FOAM_TABS = {

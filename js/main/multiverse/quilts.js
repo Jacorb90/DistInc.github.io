@@ -6,7 +6,7 @@ function updateQuilts() {
 		tmp.mlt.quilts[i].upgCost = getQuiltUpgCost(i);
 		tmp.mlt.quilts[i].upgPow = upgPower;
 		if (i==3) tmp.mlt.quilts[i].scStart = new ExpantaNum(3.75)
-		tmp.mlt.quilts[i].upgEff = player.mlt.quiltUpgs[i-1].times(tmp.mlt.quilts[i].upgPow).div(10)
+		tmp.mlt.quilts[i].upgEff = player.mlt.quiltUpgs[i-1].times(HCCBA("q"+i)?0:1).times(tmp.mlt.quilts[i].upgPow).div(10)
 		tmp.mlt.quilts[i].strength = getQuiltStrength(i).plus(tmp.mlt.quilts[i].upgEff);
 		tmp.mlt.quilts[i].eff = getQuiltEff(i);
 	}
@@ -22,7 +22,7 @@ function getQuiltUpgPower() {
 }
 
 function getQuiltStrength(x) {
-	if (player.mlt.times.eq(0)) return new ExpantaNum(0);
+	if (player.mlt.times.eq(0) || HCCBA("q"+x)) return new ExpantaNum(0);
 	let base = new ExpantaNum(0);
 	if (x==1) base = player.distance.max(1).logBase(DISTANCES.mlt);
 	else if (x==2) base = player.inf.knowledge.max(1).logBase("1e8500");

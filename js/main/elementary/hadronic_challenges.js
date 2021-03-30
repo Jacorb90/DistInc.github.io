@@ -1,6 +1,7 @@
 function updateTempHC() {
 	if (!tmp.elm.hc) tmp.elm.hc = {}
 	tmp.elm.hc.currScore = getProjectedHadronicScore()
+	tmp.elm.hc.mltMode = HCMltMode();
 	tmp.elm.hc.hadronBulk = new ExpantaNum(1)
 	if (player.elementary.theory.inflatons.unl) tmp.elm.hc.hadronBulk = tmp.elm.hc.hadronBulk.plus(getInflatonEff2())
 	tmp.elm.hc.hadronGain = player.elementary.hc.unl ? player.elementary.hc.best.pow(1.5).div(10) : new ExpantaNum(0)
@@ -15,7 +16,9 @@ function updateTempHC() {
 
 	tmp.elm.hc.hadronEff = player.elementary.hc.hadrons.max(1).logBase(tmp.elm.hc.hadInterval).floor().times(tmp.elm.hc.hadronBulk)
 	tmp.elm.hc.next = ExpantaNum.pow(tmp.elm.hc.hadInterval, new ExpantaNum(player.elementary.hc.claimed||0).div(tmp.elm.hc.hadronBulk).plus(1))
-	tmp.elm.hc.complPerc = player.distance.log10().div(new ExpantaNum(getHCSelector("goal")).times(4.4e26).log10()).min(1)
+	let rg = new ExpantaNum(getHCSelector("goal")).times(DISTANCES.uni);
+	if (getHCSelector("goalMlt")) rg = ExpantaNum.pow(DISTANCES.mlt, getHCSelector("goal"));
+	tmp.elm.hc.complPerc = player.distance.log10().div(rg.log10()).min(1);
 	tmp.elm.hc.infState = getInflatonState()
 	tmp.elm.hc.infGain = getInflatonGain()
 	claimHadronEff()
@@ -64,8 +67,16 @@ function getProjectedHadronicScore() {
 	// Elementary Modifiers
 	score = score.times(new ExpantaNum(getHCSelector("tv")).plus(2).pow(0.25)).plus(new ExpantaNum(getHCSelector("tv")).plus(1).div(20))
 	
+	// Multiversal Modifiers
+	if (getHCSelector("q1")) score = score.times(1.2).plus(0.6)
+	if (getHCSelector("q2")) score = score.times(1.15).plus(0.575)
+	if (getHCSelector("q3")) score = score.times(1.175).plus(0.5875)
+	
 	// Goal Modifier
-	score = score.times(new ExpantaNum(getHCSelector("goal")).log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
+	let goal = new ExpantaNum(getHCSelector("goal"))
+	if (getHCSelector("goalMlt")) goal = ExpantaNum.pow(DISTANCES.mlt, goal);
+	if (goal.gte("e1e7")) goal = ExpantaNum.pow("e1e7", goal.log("e1e7").sqrt());
+	score = score.times(goal.log10().div(Math.log10(Number.MAX_VALUE)).log10().plus(1))
 	
 	if (modeActive("easy")) score = score.pow(1.025)
 	return score
@@ -92,33 +103,56 @@ function getHCSelector(name) {
 	let base;
 	let data = HC_DATA[name]
 	if (data[0]=="checkbox") return !(!player.elementary.hc.selectors[name])
-	else if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = data[1][0]
-	return new ExpantaNum(player.elementary.hc.selectors[name]||base).max(data[1][0]).min(data[1][1]).toString()
+	else {
+		let minimum = checkFunc(data[1][0]);
+		let maximum = checkFunc(data[1][1]);
+		if (data[0]=="text"||data[0]=="number"||data[0]=="range") base = minimum
+		return new ExpantaNum(player.elementary.hc.selectors[name]||base).max(minimum).min(maximum).toString()
+	}
 }
 
 function updateHCSelector(name) {
 	let data = HC_DATA[name]
+	let change = false;
 	let type = data[0]
 	let el = new Element("hcSelector"+name)
-	if (type=="checkbox") player.elementary.hc.selectors[name] = el.el.checked
-	else if (type=="text"||type=="number"||type=="range") {
+	if (type=="checkbox") {
+		if (el.el.checked != player.elementary.hc.selectors[name]) change = true;
+		player.elementary.hc.selectors[name] = el.el.checked
+	} else if (type=="text"||type=="number"||type=="range") {
 		let val = el.el.value||0
 		try {
 			let num = new ExpantaNum(val)
 			if (type=="number"||type=="range") num = num.round()
-			if (num.lt(data[1][0]) || num.isNaN()) num = new ExpantaNum(data[1][0])
-			if (num.gt(data[1][1])) num = new ExpantaNum(data[1][1])
+			let minimum = checkFunc(data[1][0])
+			let maximum = checkFunc(data[1][1])
+			if (num.lt(minimum) || num.isNaN()) num = new ExpantaNum(minimum)
+			if (num.gt(maximum)) num = new ExpantaNum(maximum)
+			if (num.eq(el.el.value)) change = true;
 			player.elementary.hc.selectors[name] = num
 			el.el.value = disp(num, 8, 3, 10)
 		} catch(e) {
 			notifier.warn("Improper Hadronic Challenge input")
 			console.log(e)
+			return;
 		}
 	}
+	if (change && name=="goalMlt" && (tmp.ach?tmp.ach[198].has:false)) { // Adjustment for conversion between mlt & uni
+		let el2 = new Element("hcSelectorgoal");
+		if (player.elementary.hc.selectors["goalMlt"]) {
+			player.elementary.hc.selectors.goal = new ExpantaNum(1);
+			el2.el.value = disp(new ExpantaNum(1), 8, 3, 10);
+		} else {
+			player.elementary.hc.selectors.goal = new ExpantaNum("e1e9");
+			el2.el.value = disp(new ExpantaNum("e1e9"), 8, 3, 10);
+		}
+	} 
 }
 
 function canCompleteHC() {
-	return (!(!player.elementary.hc.active)) && player.distance.gte(ExpantaNum.mul(getHCSelector("goal"), DISTANCES.uni))
+	let realGoal = ExpantaNum.mul(getHCSelector("goal"), DISTANCES.uni);
+	if (getHCSelector("goalMlt")) realGoal = ExpantaNum.pow(DISTANCES.mlt, getHCSelector("goal"))
+	return (!(!player.elementary.hc.active)) && player.distance.gte(realGoal);
 }
 
 function updateHCSelectorInputs(reset=false) {
@@ -134,8 +168,11 @@ function updateHCSelectorInputs(reset=false) {
 	}
 }
 
+function HCMltMode() { return Object.keys(HC_DATA).filter(a => HC_DATA[a][2]=="mlt").some(a => getHCSelector(a)) }
+
 function startHC() {
 	if (!player.elementary.hc.unl) return
+	let mltMode = tmp.elm.hc.mltMode;
 	if (player.elementary.hc.active) {
 		if (canCompleteHC()) player.elementary.hc.best = player.elementary.hc.best.max(getProjectedHadronicScore())
 		else if (player.options.hcc) if (!confirm("Are you sure you want to exit the challenge early?")) return
@@ -147,7 +184,8 @@ function startHC() {
 		return
 	}
 	player.elementary.hc.active = !player.elementary.hc.active
-	elmReset(true)
+	if (mltMode) mltReset(true, true, true);
+	else elmReset(true);
 	updateHCSelectorInputs()
 }
 

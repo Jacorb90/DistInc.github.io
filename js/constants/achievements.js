@@ -459,5 +459,6 @@ const ACH_DATA = {
 		195: "Gain showNum(11)% more Entropy.",
 		196: "boolean(extreme+hikers_dream,Useless Theories is boosted by Multiverse Quilt 3's 2nd effect)",
 		197: "Entropy Upgrades are showNum(5)% cheaperboolean(hikers_dream-extreme, and Thrusters V is 12.5% stronger).",
+		198: "Unlock new Hadronic Challenge Selectors, and you can extend the Hadronic Challenge goal to your best-ever Distance.",
 	}
 };

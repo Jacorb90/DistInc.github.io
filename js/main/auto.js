@@ -152,7 +152,10 @@ function endorseAutoTick(){
 		if (tmp.elm.bos.hasHiggs("0;0;3") || tmp.ach[142].has) tmp.inf.maxEndorse(tmp.ach[142].has)
 		else {
 			if (tmp.ach[142].has) {
-				if (player.distance.gte(tmp.inf.req)) player.inf.endorsements = player.inf.endorsements.plus(1)
+				if (player.distance.gte(tmp.inf.req)) {
+					player.inf.endorsements = player.inf.endorsements.plus(1);
+					player.inf.unl = true;
+				}
 			} else tmp.inf.manualReset(true) 
 		}
 	}

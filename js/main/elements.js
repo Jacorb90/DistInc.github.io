@@ -1251,28 +1251,39 @@ function updateHadronicChallenges(){
 	if (elmTab=="hc") {
 		tmp.el.projHadScore.setTxt(showNum(tmp.elm.hc.currScore))
 		tmp.el.startHC.setTxt((!(!player.elementary.hc.active))?(canCompleteHC()?"Complete Hadronic Challenge!":"Exit Hadronic Challenge early for no reward"):"Start Hadronic Challenge")
+		tmp.el.startHC.setClasses({btn: true, hc: !tmp.elm.hc.mltMode, mlthc: tmp.elm.hc.mltMode})
 		tmp.el.bestHadScore.setTxt(showNum(player.elementary.hc.best))
 		tmp.el.hadrons.setTxt(showNum(player.elementary.hc.hadrons))
 		tmp.el.hadronGain.setTxt(formatGain(player.elementary.hc.hadrons, tmp.elm.hc.hadronGain, "hc"))
 		tmp.el.hadronEff.setTxt(showNum(player.elementary.hc.claimed))
 		tmp.el.hadronNext.setTxt(showNum(tmp.elm.hc.next))
 		tmp.el.hadEffBulk.setTxt(showNum(tmp.elm.hc.hadronBulk))
-		tmp.el.hadInterval.setTxt(tmp.elm.hc.hadInterval.lt(1+0.1**(player.options.sf-1))?("Hadronic Intervals per OoM: "+showNum(tmp.elm.hc.hadInterval.log10().pow(-1))):("Hadronic Interval: "+showNum(tmp.elm.hc.hadInterval))) 
+		tmp.el.hadInterval.setTxt(tmp.elm.hc.hadInterval.lt(1+0.1**(player.options.sf-1))?("Hadronic Intervals per OoM: "+showNum(tmp.elm.hc.hadInterval.log10().pow(-1))):("Hadronic Interval: "+showNum(tmp.elm.hc.hadInterval)))
+		for (let s=0;s<DYNAMIC_UNLOCK_HC_SELECTORS.length;s++) {
+			let name = DYNAMIC_UNLOCK_HC_SELECTORS[s];
+			tmp.el["hcSelectorSpan"+name].setDisplay(checkFunc(HC_DATA[name][3]));
+		}
+		for (let s=0;s<DYNAMIC_RANGE_HC_SELECTORS.length;s++) {
+			let name = DYNAMIC_RANGE_HC_SELECTORS[s];
+			tmp.el["hcSelector"+name].el.min = checkFunc(HC_DATA[name][1][0])
+			tmp.el["hcSelector"+name].el.max = checkFunc(HC_DATA[name][1][1])
+		}
 		for (let i=0;i<6;i++) {
 			let x = ""
 			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+STADIUM_DESCS[HC_CHALLS[i]][j]+".\n\n"
 			tmp.el["hcChall"+HC_CHALLS[i]].setTooltip(x)
-			tmp.el["hcSelectorSpan"+HC_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl)
 			tmp.el["hcCurrent"+HC_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_CHALLS[i])))
 			
 			x = ""
 			for (let j=0;j<6;j++) x += "Difficulty Level "+(j+1)+": "+EXTREME_STADIUM_DATA[HC_EXTREME_CHALLS[i]].descs[j]+".\n\n"
 			tmp.el["hcExtrChall"+HC_EXTREME_CHALLS[i]].setTooltip(x)
-			tmp.el["hcSelectorSpan"+HC_EXTREME_CHALLS[i]].setDisplay(player.elementary.theory.inflatons.unl&&modeActive("extreme"))
 			tmp.el["hcCurrent"+HC_EXTREME_CHALLS[i]].setTxt("Currently: "+showNum(getHCSelector(HC_EXTREME_CHALLS[i])))
 		}
 		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100).max(0))+"% complete"):"")
+		let ach198 = tmp.ach[198].has;
+		tmp.el.mltHCTabButton.setDisplay(ach198);
+		tmp.el.hcSelectorTitlegoal.setTxt("Challenge goal (in "+((ach198&&getHCSelector("goalMlt"))?"mlt":"uni")+")")
 	}
 }
 

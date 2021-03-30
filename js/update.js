@@ -253,6 +253,7 @@ function setupHTML() {
 	}
 	
 	// Hadronic Challenge
+	new Element("mltHC").setHTML("<b>WARNING: STARTING A HADRONIC CHALLENGE WITH ANY OF THESE SELECTORS WILL FORCE A MULTIVERSE RESET!</b><br>");
 	let len = Object.keys(HC_DATA).length
 	for (let i=0;i<len;i++) {
 		let name = Object.keys(HC_DATA)[i]
@@ -261,7 +262,7 @@ function setupHTML() {
 		let el;
 		el = new Element(tab+"HC")
 		
-		let html = "<br><span id='hcSelectorSpan"+name+"'>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+data[1][0]+"' max='"+data[1][1]+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")
+		let html = "<br><span id='hcSelectorSpan"+name+"'><span id='hcSelectorTitle"+name+"'>"+HC_TITLE[name]+"</span>: <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+checkFunc(data[1][0])+"' max='"+checkFunc(data[1][1])+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")
 		if (HC_EXTREME_CHALLS.includes(name)) html += "<span id='hcExtrChall"+name+"'><b>(hover for info)</b></span>"
 		html += "<br>"
 		if (data[0]=="range") html += "<span id='hcCurrent"+name+"'></span><br>"

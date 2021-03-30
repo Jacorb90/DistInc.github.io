@@ -125,10 +125,15 @@ function mltActive(n) {
 	return player.mlt.active == n
 }
 
-function mltReset(force=false, auto=false) {
+function mltReset(force=false, auto=false, hc=false) {
+	let prevHC = !(!player.elementary.hc.active);
 	let c = player.distance.gte(DISTANCES.mlt);
 	let L = new Layer("multiverse", c, "multi-res", true, "mlt", true);
 	L.reset(force, auto)
+	if (hc) {
+		player.elementary.hc.active = prevHC;
+		player.elementary.hc.unl = true;
+	}
 }
 
 function setupMlt(m) {
