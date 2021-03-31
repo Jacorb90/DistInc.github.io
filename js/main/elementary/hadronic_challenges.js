@@ -72,6 +72,10 @@ function getProjectedHadronicScore() {
 	score = score.times(new ExpantaNum(getHCSelector("tv")).plus(2).pow(0.25)).plus(new ExpantaNum(getHCSelector("tv")).plus(1).div(20))
 	if (getHCSelector("sprsym")) score = score.times(1.125).plus(0.05);
 	if (getHCSelector("tree")) score = score.times(1.04).plus(0.04);
+	score = score.times(ExpantaNum.sub(12, ExpantaNum.mul(11**0.998, ExpantaNum.sub(11, getHCSelector("string")).pow(0.002))));
+	if (getHCSelector("preontb")) score = score.times(1.02).plus(0.02);
+	if (getHCSelector("aclron")) score = score.times(1.02).plus(0.02);
+	if (getHCSelector("infl")) score = score.times(1.02).plus(0.02);
 	
 	// Multiversal Modifiers
 	if (getHCSelector("q1")) score = score.times(1.2).plus(0.6)
@@ -202,6 +206,12 @@ function startHC() {
 		player.elementary.bosons.amount = new ExpantaNum(0);
 	}
 	if (getHCSelector("tree") && !mltMode) resetTheoryTree(true, true);
+	if (getHCSelector("preontb") && !mltMode) {
+		player.elementary.theory.preons.amount = new ExpantaNum(0);
+		player.elementary.theory.preons.boosters = new ExpantaNum(0);
+	}
+	if (getHCSelector("aclron") && !mltMode) player.elementary.theory.accelerons.amount = new ExpantaNum(0);
+	if (getHCSelector("infl") && !mltMode) player.elementary.theory.inflatons.amount = new ExpantaNum(0);
 	updateHCSelectorInputs()
 }
 

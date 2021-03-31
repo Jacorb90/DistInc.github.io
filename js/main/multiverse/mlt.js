@@ -193,7 +193,7 @@ function startMultiverse(m) {
 		return;
 	}
 	if (!player.options.mltnc) if (!confirm("Are you sure you want to enter this Multiverse?")) return;
-	if (!player.mlt.active!=m) mltReset(true);
+	if (player.mlt.active!=m) mltReset(true);
 	if (m==1) setupMlt1()
 	player.mlt.active = m;
 	player.tab = "main"

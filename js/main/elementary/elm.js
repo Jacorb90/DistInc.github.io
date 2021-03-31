@@ -255,9 +255,9 @@ function elTick(diff) {
 		}
 	}
 	if (tmp.ach[163].has) player.elementary.theory.strings.entangled = player.elementary.theory.strings.entangled.plus(getEntangleGain().div(10).times(diff))
-	if (player.elementary.theory.preons.unl) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
-	if (player.elementary.theory.accelerons.unl) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
-	if (player.elementary.theory.inflatons.unl) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(tmp.elm.hc.infGain, "inflatons").times(diff))
+	if (player.elementary.theory.preons.unl && !HCCBA("preontb")) player.elementary.theory.preons.amount = player.elementary.theory.preons.amount.plus(adjustGen(getPreonGain(), "preons").times(diff))
+	if (player.elementary.theory.accelerons.unl && !HCCBA("aclron")) player.elementary.theory.accelerons.amount = player.elementary.theory.accelerons.amount.plus(adjustGen(getAccelGain(), "accelerons").times(diff))
+	if (player.elementary.theory.inflatons.unl && !HCCBA("infl")) player.elementary.theory.inflatons.amount = player.elementary.theory.inflatons.amount.plus(adjustGen(tmp.elm.hc.infGain, "inflatons").times(diff))
 	if (player.elementary.hc.unl) player.elementary.hc.hadrons = player.elementary.hc.hadrons.plus(adjustGen(tmp.elm.hc.hadronGain, "hc").times(diff))
 	if (player.elementary.foam.unl) qfTick(diff)
 	if (player.elementary.entropy.upgrades.includes(12)) {
