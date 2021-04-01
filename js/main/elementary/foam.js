@@ -191,6 +191,7 @@ function getQFBoostData() {
 function qfUnl(x) {
 	if (!player.elementary.foam.maxDepth.eq(x)) return;
 	if (player.elementary.foam.maxDepth.gte(5)) return;
+	if (HCCBA("rfrm")) if (HCTVal("rfrm").gt(5-x)) return;
 	let cost = QF_NEXTLAYER_COST[x]
 	if (player.elementary.foam.amounts[x-1].lt(cost)) return
 	player.elementary.foam.maxDepth = player.elementary.foam.maxDepth.plus(1).min(5)
@@ -236,6 +237,7 @@ function getRefoamCost() {
 
 function refoam() {
 	if (player.elementary.foam.maxDepth.lt(5)) return;
+	if (HCCBA("rfrm")) if (HCTVal("rfrm").gt(0)) return;
 	let cost = getRefoamCost();
 	if (player.elementary.foam.amounts[4].lt(cost)) return;
 	if (hasMltMilestone(4)) {
@@ -290,6 +292,7 @@ function getEntropyGainMult() {
 
 function getEntropyGain() {
 	if (!player.elementary.entropy.unl || mltActive(3)) return new ExpantaNum(0);
+	if (HCCBA("etrpy")) return new ExpantaNum(0);
 	let foam = player.elementary.foam.amounts[0]
 	let gain = foam.div(1e50).pow(0.05)
 	if (player.elementary.sky.unl && tmp.elm.sky) gain = gain.pow(tmp.elm.sky.spinorEff[10].plus(1))

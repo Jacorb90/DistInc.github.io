@@ -1281,6 +1281,8 @@ function updateHadronicChallenges(){
 		}
 		tmp.el["hcCurrenttv"].setTxt("Currently: "+showNum(getHCSelector("tv")))
 		tmp.el["hcCurrentstring"].setTxt("Currently: "+showNum(getHCSelector("string")))
+		tmp.el["hcCurrentde"].setTxt("Currently: "+showNum(getHCSelector("de")))
+		tmp.el["hcCurrentrfrm"].setTxt("Currently: "+showNum(getHCSelector("rfrm")))
 		tmp.el.hcPerc.setTxt(player.elementary.hc.active?(showNum(tmp.elm.hc.complPerc.times(100).max(0))+"% complete"):"")
 		let ach198 = tmp.ach[198].has;
 		tmp.el.mltHCTabButton.setDisplay(ach198);

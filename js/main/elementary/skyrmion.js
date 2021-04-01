@@ -70,7 +70,7 @@ function getSkyGain() {
 function skyrmionReset(force=false) {
 	if (!force) {
 		if (!canSkyReset()) return;
-		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().max(0));
+		if (!HCCBA("sky")) player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().max(0));
 	};
 	
 	player.inf.pantheon.purge.power = new ExpantaNum(0);

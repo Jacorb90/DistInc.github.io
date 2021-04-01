@@ -268,7 +268,7 @@ function elTick(diff) {
 			player.elementary.bosons.amount = player.elementary.bosons.amount.plus(player.elementary.particles.times(diff).div(100))
 		}
 	}
-	if (player.elementary.sky.unl) {
+	if (player.elementary.sky.unl && !HCCBA("sky")) {
 		player.elementary.sky.pions.amount = player.elementary.sky.pions.amount.plus(adjustGen(tmp.elm.sky.pionGain.times(diff), "sky"));
 		player.elementary.sky.spinors.amount = player.elementary.sky.spinors.amount.plus(adjustGen(tmp.elm.sky.spinorGain.times(diff), "sky"));
 		if (hasMltMilestone(10)) player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().times(diff))

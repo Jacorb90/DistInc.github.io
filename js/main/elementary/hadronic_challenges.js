@@ -75,7 +75,11 @@ function getProjectedHadronicScore() {
 	score = score.times(ExpantaNum.sub(12, ExpantaNum.mul(11**0.998, ExpantaNum.sub(11, getHCSelector("string")).pow(0.002))));
 	if (getHCSelector("preontb")) score = score.times(1.02).plus(0.02);
 	if (getHCSelector("aclron")) score = score.times(1.02).plus(0.02);
+	score = score.times(ExpantaNum.sub(12, ExpantaNum.mul(11**0.996, ExpantaNum.sub(11, getHCSelector("de")).pow(0.004))));
 	if (getHCSelector("infl")) score = score.times(1.02).plus(0.02);
+	score = score.times(ExpantaNum.sub(12, ExpantaNum.mul(11**0.999, ExpantaNum.sub(11, getHCSelector("rfrm")).pow(0.001))));
+	if (getHCSelector("etrpy")) score = score.times(1.04).plus(0.04);
+	if (getHCSelector("sky")) score = score.times(1.05).plus(0.05);
 	
 	// Multiversal Modifiers
 	if (getHCSelector("q1")) score = score.times(1.2).plus(0.6)
@@ -212,6 +216,17 @@ function startHC() {
 	}
 	if (getHCSelector("aclron") && !mltMode) player.elementary.theory.accelerons.amount = new ExpantaNum(0);
 	if (getHCSelector("infl") && !mltMode) player.elementary.theory.inflatons.amount = new ExpantaNum(0);
+	if (getHCSelector("rfrm") && !mltMode) player.elementary.foam.maxDepth = new ExpantaNum(1);
+	if (getHCSelector("etrpy") && !mltMode) {
+		player.elementary.entropy.amount = new ExpantaNum(0);
+		player.elementary.entropy.best = new ExpantaNum(0);
+		player.elementary.entropy.upgrades = [];
+	}
+	if (getHCSelector("sky") && !mltMode) {
+		player.elementary.sky.amount = new ExpantaNum(0);
+		player.elementary.sky.pions.amount = new ExpantaNum(0);
+		player.elementary.sky.spinors.amount = new ExpantaNum(0);
+	}
 	updateHCSelectorInputs()
 }
 
