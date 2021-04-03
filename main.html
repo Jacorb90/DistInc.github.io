@@ -231,33 +231,39 @@
 				</div>
 			</div>
 			<div id="modes" class="optionstab" style="display: none;">
-				<table>
-					<tr>
-						<td>
-							<button id="aauMode" class="btn tb opt ob" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
-						</td>
-						<td>
-							<button id="easyMode" class="btn tb opt ob" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
-						</td>
-						<td>
-							<button id="absurdMode" class="btn tb opt ob" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
-						</td>
-						<td>
-							<button id="naMode" class="btn tb opt ob" onclick="selectMode('na')" style="z-index: 0">NA</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="extremeMode" class="btn tb opt ob" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
-						</td>
-						<td>
-							<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
-						</td>
-						<td>
-							<button id="hikers_dreamMode" class="btn tb opt ob" onclick="selectMode('hikers_dream')" style="z-index: 0">Hiker's Dream</button>
-						</td>
-					</tr>
-				</table>
+				<div id="mcta">
+					<b><span id="modeComboCompletions"></span></b><br><br>
+					<div id="modeComboTable" class="flexContainer"></div>
+				</div>
+				<div id="mctna">
+					<table>
+						<tr>
+							<td>
+								<button id="aauMode" class="btn tb opt ob" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
+							</td>
+							<td>
+								<button id="easyMode" class="btn tb opt ob" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
+							</td>
+							<td>
+								<button id="absurdMode" class="btn tb opt ob" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
+							</td>
+							<td>
+								<button id="naMode" class="btn tb opt ob" onclick="selectMode('na')" style="z-index: 0">NA</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button id="extremeMode" class="btn tb opt ob" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
+							</td>
+							<td>
+								<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
+							</td>
+							<td>
+								<button id="hikers_dreamMode" class="btn tb opt ob" onclick="selectMode('hikers_dream')" style="z-index: 0">Hiker's Dream</button>
+							</td>
+						</tr>
+					</table>
+				</div>
 				<br /><br />
 				<span id="selectedMode"></span>
 				<br />
@@ -334,6 +340,9 @@
 						</button>
 						<button id="tabsHidden" class="btn tb opt ob" onclick="changeOpt('tabsHidden', 4)">
 							Show/Hide Tabs
+						</button>
+						<button id="modeComboTableActive" class="btn tb opt ob" onclick="changeOpt('modeComboTableActive', 0)">
+							Mode Combination Table: OFF
 						</button>
 					</div>
 				</div>

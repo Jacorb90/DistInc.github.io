@@ -47,6 +47,9 @@ function loadGame() {
 		updateTempHikersDream();
 		calcInclines();
 	}
+	completedModeCombos = getCompletedModeCombos();
+	completedModeCombos = completedModeCombos.map(x => calcModeAndBalanceName(x).balanceName);
+	completedModeCombos = completedModeCombos.filter((x,i) => i==completedModeCombos.indexOf(x));
 	interval = setInterval(function () {
 		simulateTime();
 	}, 50);

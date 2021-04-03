@@ -45,6 +45,9 @@ function setupHTML() {
 	}
 	achTable.setHTML(table);
 	
+	// Setup Mode Combo Table
+	setupModeComboTable();
+	
 	// Rank/Tier Stats
 	let rankTierTable = new Element("rankTierStats")
 	table = "<div class='flexTopRow'><div class='flexContainer'>"

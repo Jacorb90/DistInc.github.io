@@ -25,6 +25,7 @@ const DEFAULT_START = {
 		visUpd: "every tick",
 		tht: true,
 		hcc: true,
+		modeComboTableActive: false,
 	},
 	modes: [],
 	time: new Date().getTime(),

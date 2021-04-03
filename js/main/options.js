@@ -411,3 +411,50 @@ function modeActive(name) {
 		return true;
 	} else return player.modes.includes(name);
 }
+
+function setupModeComboTable() {
+	let data = MODE_TABLE_DATA;
+	let el = new Element("modeComboTable");
+	let html = "<div class='flexRow'>"
+	for (let i=-1;i<data.top.length;i++) {
+		if (i==-1) html += "<div class='rtRewardMini'></div>";
+		else html += "<div class='rtRewardMini'>"+data.top[i][1]+"</div>";
+	}
+	html += "</div>"
+	for (let r=0;r<data.left.length;r++) {
+		html += "<div class='flexRow'>";
+		for (let c=-1;c<data.top.length;c++) {
+			let rc = c;
+			c = Math.max(c, 0);
+			let o = data.left[r][0].concat(data.top[c][0]);
+			let nameData = calcModeAndBalanceName(o);
+			let id = nameData.balanceName;
+			let name = nameData.modeName;
+			
+			html += "<div class='rtRewardMini'>";
+			if (rc==-1) html += name;
+			else html += "<button id='"+id+"modeCombo' class='btn tb' style='height: 40px; width: 80px;' onclick='modesSelected = "+JSON.stringify(o)+"'>Activate</button>"
+			html += "</div>"
+			c = rc;
+		}
+		html += "</div>"
+	}
+	
+	el.addHTML(html);
+}
+
+function getCompletedModeCombos() {
+	let data = MODEBALANCES;
+	let toRet = [];
+	let all = getAllSaves();
+	for (let x=0;x<all.length;x++) {
+		let p = all[x];
+		if (p==null) continue;
+		let m = p.modes;
+		let id = calcModeAndBalanceName(m).balanceName;
+		
+		if (MODEBALANCES[id].balancing=="balanced up to first multiverse" && ExpantaNum.gte(p.bestDistance, DISTANCES.mlt) && p.achievements.length>=136) toRet.push(m);
+		else if (ExpantaNum.gte(p.bestDistance, ExpantaNum.pow(DISTANCES.mlt, 1e3)) && p.achievements.length>=152) toRet.push(m);
+	}
+	return toRet;
+}

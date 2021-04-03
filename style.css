@@ -76,6 +76,25 @@ body {
 	box-shadow: none;
 }
 
+.btn.tb.sel, .btn.tb.sel:hover {
+	box-shadow: 3px 4px 0px 0px #59228f;
+	background: linear-gradient(to bottom, #6a1bbf 5%, #a32feb 100%);
+	background-color: #6a1bbf;
+	color: #ffffff;
+	text-shadow: 0px 1px 0px #3c0675;
+	border: none;
+	cursor: default;
+}
+
+.btn.tb.bought, .btn.tb.bought:hover {
+	box-shadow: 3px 4px 0px 0px #218a7d;
+	background: linear-gradient(to bottom, #1bbfb4 5%, #34ebe5 100%);
+	background-color: #1bbfb4;
+	color: #ffffff;
+	text-shadow: 0px 1px 0px #057d29;
+	cursor: default;
+}
+
 .btn.bought {
 	box-shadow: 3px 4px 0px 0px #218a7d;
 	background: linear-gradient(to bottom, #1bbfb4 5%, #34ebe5 100%);
@@ -1802,6 +1821,13 @@ table {
 .rtReward {
 	min-width: 300px;
 	max-width: 300px;
+	min-height: 50px;
+	border: 1px solid var(--plaintxt);
+}
+
+.rtRewardMini {
+	min-width: 100px;
+	max-width: 100px;
 	min-height: 50px;
 	border: 1px solid var(--plaintxt);
 }

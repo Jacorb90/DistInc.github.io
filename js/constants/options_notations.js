@@ -16,7 +16,7 @@ const OPT_NAMES = {
 };
 
 const AUTOSAVE_TIME = 12;
-const MAX_SAVES = 25;
+const MAX_SAVES = 96;
 const VIS_UPDS = {
 	"every tick": 1,
 	"every 2 ticks": 2,

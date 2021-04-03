@@ -34,6 +34,7 @@ var thTab = "tv";
 var enTab = "mainEN";
 var autoRobotTarget = 0
 var betaID = "beta2.0";
+var completedModeCombos = [];
 var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0

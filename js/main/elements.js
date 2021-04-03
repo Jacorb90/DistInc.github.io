@@ -40,6 +40,9 @@ function calcModeAndBalanceName(modes) {
 }
 
 function updateModesHTML() {
+	tmp.el.mcta.setDisplay(player.options.modeComboTableActive);
+	tmp.el.mctna.setDisplay(!player.options.modeComboTableActive);
+	
 	let data = calcModeAndBalanceName(modesSelected);
 
 	tmp.el.selectedMode.setTxt("Selected Mode: "+(data.modeName));
@@ -48,15 +51,33 @@ function updateModesHTML() {
 
 function updateOptionsHTML(){
 	if (player.tab == "options") {
-		for (let i = 0; i < Object.keys(MODES).length; i++) {
-			tmp.el[Object.keys(MODES)[i] + "Mode"].setClasses({
-				btn: true,
-				tb: true,
-				opt: !modesSelected.includes(Object.keys(MODES)[i]),
-				ob: true,
-				optSelected: modesSelected.includes(Object.keys(MODES)[i])
-			});
-			tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+		if (player.options.modeComboTableActive) {
+			let data = MODE_TABLE_DATA;
+			tmp.el.modeComboCompletions.setTxt("Completions: "+completedModeCombos.length+"/"+Object.keys(MODEBALANCES).length)
+			for (let r=0;r<data.left.length;r++) {
+				for (let c=0;c<data.top.length;c++) {
+					let o = data.left[r][0].concat(data.top[c][0]);
+					let nameData = calcModeAndBalanceName(o);
+					let id = nameData.balanceName;
+					let name = nameData.modeName;
+					let selID = calcModeAndBalanceName(modesSelected).balanceName;
+					let comp = completedModeCombos.includes(id);
+					
+					tmp.el[id+"modeCombo"].setClasses({btn: true, tb: true, sel: id==selID, bought: (id!=selID&&comp)})
+					tmp.el[id+"modeCombo"].setTxt((id==selID)?"Selected":(comp?"Completed":"Activate"))
+				}
+			}
+		} else {
+			for (let i = 0; i < Object.keys(MODES).length; i++) {
+				tmp.el[Object.keys(MODES)[i] + "Mode"].setClasses({
+					btn: true,
+					tb: true,
+					opt: !modesSelected.includes(Object.keys(MODES)[i]),
+					ob: true,
+					optSelected: modesSelected.includes(Object.keys(MODES)[i])
+				});
+				tmp.el[Object.keys(MODES)[i] + "Mode"].setTooltip(MODES[Object.keys(MODES)[i]].desc)
+			}
 		}
 		tmp.el.ingamebtn.setDisplay(player.dc.unl||player.elementary.unl||player.mlt.times.gt(0))
 		tmp.el.sf.setTxt("Significant Figures: " + player.options.sf.toString());
@@ -82,6 +103,7 @@ function updateOptionsHTML(){
 		tmp.el.hcc.changeStyle("visibility", (player.elementary.hc.unl)?"visible":"hidden")
 		tmp.el.tht.setTxt("Theory Tree Display: "+(player.options.tht?"GROUPS":"TREE"))
 		tmp.el.tht.changeStyle("visibility", (player.elementary.theory.tree.unl)?"visible":"hidden")
+		tmp.el.modeComboTableActive.setTxt("Mode Combination Table: "+(player.options.modeComboTableActive?"ON":"OFF"));
 		
 		updateModesHTML()
 	}

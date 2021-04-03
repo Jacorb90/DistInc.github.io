@@ -119,6 +119,9 @@ const NEWS_DATA = {
 	m100: ["Paradoxes 301: The following statement is false. The following statement is false. The first statement is false."],
 	m101: ["Jacorb's mental instability is increasing quite quickly. If he reaches 100% mental instability, the multiverse implodes."],
 	m102: ["Has this game been abandoned by its developer? "+((Math.random()>0.5)?"Obviously yes.":"Definitely not.")],
+	m103: ['"When is the egg update coming?" - The Almighty Orb about his own game'],
+	m104: ["We're lucky that our universes were never infected, I'm sure there's some parallel multiverse out there where that's an issue..."],
+	m105: ["Some people say that each multiverse has its own High Gods. Those people tend not to survive very long around here."],
 
 	// Distance-based Conditions
 	d1: [
@@ -528,5 +531,13 @@ const NEWS_DATA = {
 	s38: [
 		'"(Derivative after the latest you have unlocked) when?" - A derivative enthusiast',
 		function() { return player.mlt.highestCompleted>=2 },
+	],
+	s39: [
+		"Even the High Gods aren't perfect. Although they're supposed to look over the multiverse, there are some threats that are just... too much.",
+		function() { return player.elementary.times.gte(555) && player.elementary.times.lt(777777) },
+	],
+	s40: [
+		"There are more multiverses out there, somewhere... I wonder what sort of chaos is going on over there.",
+		function() { return player.mlt.highestCompleted>=5 },
 	],
 };

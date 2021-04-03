@@ -13,16 +13,19 @@ const MODEBALANCES = {
 	},
 	na: { // 4
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
-	// 5 - NA Hard (unknown)
+	na_hard: { // 5
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	aau_na: { // 6
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_hard: { // 7
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd: { // 8
 		balancing: "balanced up to endgame",
@@ -42,16 +45,19 @@ const MODEBALANCES = {
 	},
 	absurd_na: { // 12
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
-	// 13 - Absurd NA Hard (unknown)
+	absurd_na_hard: { // 13
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	absurd_aau_na: { // 14
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_hard: { // 15
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	easy: { // 16
 		balancing: "balanced up to endgame",
@@ -71,19 +77,19 @@ const MODEBALANCES = {
 	},
 	na_easy: { // 20
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	na_easy_hard: { // 21
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_easy: { // 22
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_easy_hard: { // 23
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_easy: { // 24
 		balancing: "balanced up to endgame",
@@ -103,19 +109,19 @@ const MODEBALANCES = {
 	},
 	absurd_na_easy: { // 28
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_na_easy_hard: { // 29
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_easy: { // 30
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_easy_hard: { // 31
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	extreme: { // 32
 		balancing: "balanced up to endgame",
@@ -127,11 +133,11 @@ const MODEBALANCES = {
 	},
 	na_extreme: { // 34
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_extreme: { // 35
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_extreme: { // 36
 		balancing: "balanced up to endgame",
@@ -143,11 +149,11 @@ const MODEBALANCES = {
 	},
 	absurd_na_extreme: { // 38
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_extreme: { // 39
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	easy_extreme: { // 40
 		balancing: "balanced up to endgame",
@@ -159,11 +165,11 @@ const MODEBALANCES = {
 	},
 	na_easy_extreme: { // 42
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_easy_extreme: { // 43
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_easy_extreme: { // 44
 		balancing: "balanced up to endgame",
@@ -175,11 +181,11 @@ const MODEBALANCES = {
 	},
 	absurd_na_easy_extreme: { // 46
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_easy_extreme: { // 47
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	hikers_dream: { // 48
 		balancing: "balanced up to endgame",
@@ -187,7 +193,7 @@ const MODEBALANCES = {
 	},
 	hard_hikers_dream: { // 49
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_hikers_dream: { // 50
 		balancing: "balanced up to endgame",
@@ -195,20 +201,23 @@ const MODEBALANCES = {
 	},
 	aau_hard_hikers_dream: { // 51
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	na_hikers_dream: { // 52
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
-	// 53 - NA Hard Dream (unknown)
+	na_hard_hikers_dream: { // 53
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	aau_na_hikers_dream: { // 54
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_na_hard_hikers_dream: { // 55
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_hikers_dream: { // 56
 		balancing: "balanced up to endgame",
@@ -216,7 +225,7 @@ const MODEBALANCES = {
 	},
 	absurd_hard_hikers_dream: { // 57
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_hikers_dream: { // 58
 		balancing: "balanced up to endgame",
@@ -224,20 +233,23 @@ const MODEBALANCES = {
 	},
 	absurd_aau_hard_hikers_dream: { // 59
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_na_hikers_dream: { // 60
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
-	// 61 - Absurd NA Hard Dream (unknown)
+	absurd_na_hard_hikers_dream: { // 61
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	absurd_aau_na_hikers_dream: { // 62
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	absurd_aau_na_hard_hikers_dream: { // 63
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	easy_hikers_dream: { // 64
 		balancing: "balanced up to endgame",
@@ -245,63 +257,63 @@ const MODEBALANCES = {
 	},
 	easy_hard_hikers_dream: { // 65
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
 	aau_easy_hikers_dream: { // 66
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	aau_easy_hard_hikers_dream: { // 67
-		balancing: "balanced up to first multiverse",
-		balanceCheck: false
-	},
-	aau_easy_hikers_dream: { // 68
+	na_easy_hikers_dream: { // 67
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	aau_easy_hard_hikers_dream: { // 69
+	aau_easy_hard_hikers_dream: { // 68
 		balancing: "balanced up to first multiverse",
+		balanceCheck: true
+	},
+	aau_na_easy_hikers_dream: { // 69
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	aau_na_easy_hikers_dream: { // 70
+	aau_na_easy_hard_hikers_dream: { // 70
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
-	aau_na_easy_hard_hikers_dream: { // 71
+	aau_na_easy_hikers_dream: { // 71
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
-	absurd_easy_hikers_dream: { // 72
+	aau_na_easy_hard_hikers_dream: { // 72
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true
+	},
+	absurd_easy_hikers_dream: { // 73
 		balancing: "balanced up toendgame",
 		balanceCheck: false,
 	},
-	absurd_easy_hard_hikers_dream: { // 73
+	absurd_easy_hard_hikers_dream: { // 74
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false,
+		balanceCheck: true,
 	},
-	absurd_aau_easy_hikers_dream: { // 74
+	absurd_aau_easy_hikers_dream: { // 75
 		balancing: "balanced up to endgame",
 		balanceCheck: false,
 	},
-	absurd_aau_easy_hard_hikers_dream: { // 75
+	absurd_aau_easy_hard_hikers_dream: { // 76
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
-	absurd_aau_easy_hikers_dream: { // 76
-		balancing: "balanced up to first multiverse",
-		balanceCheck: false
-	},
-	absurd_aau_easy_hard_hikers_dream: { // 77
-		balancing: "balanced up to first multiverse",
+	absurd_na_easy_hikers_dream: { // 77
+		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
 	absurd_aau_na_easy_hikers_dream: { // 78
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	absurd_aau_na_easy_hard_hikers_dream: { // 79
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	extreme_hikers_dream: { // 80
 		balancing: "balanced up to endgame",
@@ -311,10 +323,13 @@ const MODEBALANCES = {
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	// 82 - NA Extreme Dream (unknown)
+	na_extreme_hikers_dream: { // 82
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	aau_na_extreme_hikers_dream: { // 83
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	absurd_extreme_hikers_dream: { // 84
 		balancing: "balanced up to endgame",
@@ -324,10 +339,13 @@ const MODEBALANCES = {
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	// 86 - Absurd NA Extreme Dream (unknown)
+	absurd_na_extreme_hikers_dream: { // 86
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
 	absurd_aau_na_extreme_hikers_dream: { // 87
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	easy_extreme_hikers_dream: { // 88
 		balancing: "balanced up to endgame",
@@ -339,11 +357,11 @@ const MODEBALANCES = {
 	},
 	na_easy_extreme_hikers_dream: { // 90
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	aau_na_easy_extreme_hikers_dream: { // 91
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	absurd_easy_extreme_hikers_dream: { // 92
 		balancing: "balanced up to endgame",
@@ -355,11 +373,11 @@ const MODEBALANCES = {
 	},
 	absurd_na_easy_extreme_hikers_dream: { // 94
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	absurd_aau_na_easy_extreme_hikers_dream: { // 95
 		balancing: "balanced up to first multiverse",
-		balanceCheck: false
+		balanceCheck: true
 	},
 	"": { // 96
 		balancing: "balanced up to endgame",
@@ -392,6 +410,11 @@ const MODES = {
 		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill.",
 	},
 };
+
+const MODE_TABLE_DATA = {
+	top: [[[""],"Normal"], [["hikers_dream"],"Hiker's Dream"], [["extreme","hard"],"Extreme"], [["hikers_dream","extreme","hard"],"Extreme Dream"], [["hard"],"Hard"], [["hard","hikers_dream"],"Hard Dream"], [["absurd"],"Absurd"], [["absurd","hikers_dream"],"Absurd Dream"], [["absurd","extreme","hard"],"Absurd Extreme"], [["absurd","hikers_dream","extreme","hard"],"Absurd Extreme Dream"], [["absurd","hard"],"Absurd Hard"], [["absurd","hard","hikers_dream"],"Absurd Hard Dream"]],
+	left: [[[""],"Normal"], [["easy"],"Easy"], [["aau"],"AAU"], [["easy","aau"],"Easy AAU"], [["na"], "NA"], [["easy","na"],"Easy NA"], [["aau","na"],"AAU NA"], [["easy","na","aau"],"Easy AAU NA"]],
+}
 
 const MODE_VARS = {
 	extreme: {
