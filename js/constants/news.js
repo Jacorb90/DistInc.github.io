@@ -121,7 +121,8 @@ const NEWS_DATA = {
 	m102: ["Has this game been abandoned by its developer? "+((Math.random()>0.5)?"Obviously yes.":"Definitely not.")],
 	m103: ['"When is the egg update coming?" - The Almighty Orb about his own game'],
 	m104: ["We're lucky that our universes were never infected, I'm sure there's some parallel multiverse out there where that's an issue..."],
-	m105: ["Some people say that each multiverse has its own High Gods. Those people tend not to survive very long around here."],
+	m105: ["Some people say that each multiverse does not have its own High Gods. Those people tend not to survive very long around here."],
+	m106: ["Some people say that there is only one set of High Gods. Those people tend not to survive very long around here."],
 
 	// Distance-based Conditions
 	d1: [

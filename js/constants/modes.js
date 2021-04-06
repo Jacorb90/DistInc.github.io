@@ -267,45 +267,45 @@ const MODEBALANCES = {
 		balancing: "balanced up to endgame",
 		balanceCheck: false
 	},
-	aau_easy_hard_hikers_dream: { // 68
-		balancing: "balanced up to first multiverse",
-		balanceCheck: true
-	},
-	aau_na_easy_hikers_dream: { // 69
-		balancing: "balanced up to endgame",
-		balanceCheck: false
-	},
-	aau_na_easy_hard_hikers_dream: { // 70
-		balancing: "balanced up to first multiverse",
-		balanceCheck: true
-	},
-	aau_na_easy_hikers_dream: { // 71
-		balancing: "balanced up to first multiverse",
-		balanceCheck: true
-	},
-	aau_na_easy_hard_hikers_dream: { // 72
-		balancing: "balanced up to first multiverse",
-		balanceCheck: true
-	},
-	absurd_easy_hikers_dream: { // 73
-		balancing: "balanced up toendgame",
-		balanceCheck: false,
-	},
-	absurd_easy_hard_hikers_dream: { // 74
+	na_easy_hard_hikers_dream: { // 68
 		balancing: "balanced up to first multiverse",
 		balanceCheck: true,
 	},
-	absurd_aau_easy_hikers_dream: { // 75
-		balancing: "balanced up to endgame",
-		balanceCheck: false,
-	},
-	absurd_aau_easy_hard_hikers_dream: { // 76
+	aau_easy_hard_hikers_dream: { // 69
 		balancing: "balanced up to first multiverse",
 		balanceCheck: true
 	},
-	absurd_na_easy_hikers_dream: { // 77
+	aau_na_easy_hikers_dream: { // 70
 		balancing: "balanced up to endgame",
 		balanceCheck: false
+	},
+	aau_na_easy_hard_hikers_dream: { // 71
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true
+	},
+	absurd_easy_hikers_dream: { // 72
+		balancing: "balanced up toendgame",
+		balanceCheck: false,
+	},
+	absurd_easy_hard_hikers_dream: { // 73
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
+	},
+	absurd_aau_easy_hikers_dream: { // 74
+		balancing: "balanced up to endgame",
+		balanceCheck: false,
+	},
+	absurd_aau_easy_hard_hikers_dream: { // 75
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true
+	},
+	absurd_na_easy_hikers_dream: { // 76
+		balancing: "balanced up to endgame",
+		balanceCheck: false
+	},
+	absurd_na_easy_hard_hikers_dream: { // 77
+		balancing: "balanced up to first multiverse",
+		balanceCheck: true,
 	},
 	absurd_aau_na_easy_hikers_dream: { // 78
 		balancing: "balanced up to first multiverse",
