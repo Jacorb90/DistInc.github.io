@@ -104,23 +104,24 @@ function startModes(modes) {
 	reload();
 }
 
-function setDropdown(dropdown, els, load=false) {
+function setDropdown(dropdown, els, load=false, type=0) {
 	let html = "";
 	for (let i = 0; i < Object.keys(els).length; i++) {
 		let el = els[Object.keys(els)[i]];
+		if (el.display!==undefined) if (!el.display) continue;
 		html += "<br>";
 		if (load) {
 			html += "<b>" + el.name + "</b><br>";
 			html += el.info + "<br>";
 			for (let x = 1; x <= el.buttons; x++)
 				html +=
-					"<button class='btn tb opt"+"' onclick='" +
+					"<button "+((el.display!==undefined)?(" style='display: "+(el.display?"":"none")+"'"):"")+"class='"+(el.classOnLoad?el.classOnLoad:"btn tb opt")+"' onclick='" +
 					el["onclick" + x] +
 					"' "+">" +
 					el["txt" + x] +
 					"</button> ";
-		} else html += "<button class='btn tb opt tt' onclick='" + el.onclick + "'>" + el.txt + "</button>";
-		if (load) html += "<br><br>";
+		} else html += "<button "+((el.display!==undefined)?(" style='display: "+(el.display?"":"none")+"'"):"")+"class='"+(el.classOnLoad?(el.classOnLoad+" tt"):"btn tb opt tt")+"' onclick='" + el.onclick + "'>" + el.txt + "</button>";
+		if (load || el.bottomLineBreak) html += "<br><br>";
 	}
 	dropdown.setHTML(html + "<br><button class='btn tb opt' style='visibility: hidden;'></button>");
 }
@@ -134,8 +135,10 @@ function changeOpt(name, type) {
 		);
 	else dropdown.changeStyle("display", "none");
 	let els = {};
-	if (type == 0) player.options[name] = !player.options[name]
-	else if (type == 1) {
+	if (type == 0) {
+		player.options[name] = !player.options[name]
+		saveOptions()
+	} else if (type == 1) {
 		let max = OPT_CHNG_MAX[name];
 		let min = OPT_CHNG_MIN[name];
 		for (x = min; x <= max; x++)
@@ -169,10 +172,41 @@ function changeOpt(name, type) {
 		save();
 		saveOptions();
 		return;
+	} else if (type == 4) {
+		let data = TABBTN_SHOWN;
+		let types = Object.keys(data);
+		els.exit = {
+			txt: "EXIT",
+			classOnLoad: "btn tb opt redTint",
+			bottomLineBreak: true,
+			onclick: "this.parentElement.style.display=&quot;none&quot;;",
+		}
+		for (x = 0; x < types.length; x++) {
+			if (HIDE_WHITELIST.includes(types[x])) continue;
+			els[types[x]] = {
+				txt: FULL_TAB_NAMES[types[x]],
+				display: data[types[x]](),
+				classOnLoad: "btn tb opt"+(player.options[name].includes(types[x])?" optActive":""),
+				onclick: 
+					"toggleTabDisplay(&quot;"+types[x]+"&quot;, this); saveOptions();"
+			};
+		}
 	}
 	if (type>0) {
 		setDropdown(dropdown, els);
 		ddState = name;
+	}
+}
+
+function toggleTabDisplay(x, el) {
+	let extensions = el.className.split(" ").filter(x => x != "btn" && x != "tb" && x != "opt" && x != "optActive").join(" ")
+	if (extensions.length>0) extensions = " "+extensions
+	if (!player.options.tabsHidden.includes(x)) {
+		player.options.tabsHidden.push(x)
+		el.className = "btn tb opt optActive"+extensions
+	} else {
+		player.options.tabsHidden.splice(player.options.tabsHidden.indexOf(x), 1);
+		el.className = "btn tb opt"+extensions
 	}
 }
 
@@ -182,7 +216,9 @@ function getInfo(sav) {
 	else if (sav.modes.length > 0) mds = capitalFirst(sav.modes[0].replace("_"," "));
 	else mds = "None";
 	let info = "Modes: " + mds + "<br>";
-	if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
+	if (sav.mlt?(sav.mlt.times?ExpantaNum.gt(sav.mlt.times, 0):false):false) {
+		info += "Total ME: "+showNum(new ExpantaNum(sav.mlt.totalEnergy))+", Unique Multiverses Completed: "+(sav.mlt.highestCompleted+1)+", Total Quilt Upgrades: "+showNum(new ExpantaNum(sav.mlt.quiltUpgs.reduce((a,c) => ExpantaNum.add(a,c))))+", "
+	} else if (sav.elementary?(sav.elementary.sky?sav.elementary.sky.unl:false):false) {
 		info += "Skyrmions: "+showNum(new ExpantaNum(sav.elementary.sky.amount))+", Pions: "+showNum(new ExpantaNum(sav.elementary.sky.pions.amount))+", Spinors: "+showNum(new ExpantaNum(sav.elementary.sky.spinors.amount))+", "
 	} else if (sav.elementary?(sav.elementary.foam?sav.elementary.foam.unl:false):false) {
 		info += "Quantum Foam: "+showNum(new ExpantaNum(sav.elementary.foam.amounts[0]))+", "
@@ -256,7 +292,7 @@ function getInfo(sav) {
 			info += "Rank Cheapener " + showNum(new ExpantaNum(sav.rankCheap || 0)) + ", ";
 		info += "Rank " + showNum(new ExpantaNum(sav.rank)) + ", ";
 	}
-	info += "Distance: " + formatDistance(new ExpantaNum(sav.distance));
+	info += "Distance: " + formatDistance(new ExpantaNum(sav.distance), sav.mlt?(sav.mlt.times?ExpantaNum.lt(sav.mlt.times, 1):true):true);
 	return info;
 }
 
@@ -374,4 +410,51 @@ function modeActive(name) {
 		}
 		return true;
 	} else return player.modes.includes(name);
+}
+
+function setupModeComboTable() {
+	let data = MODE_TABLE_DATA;
+	let el = new Element("modeComboTable");
+	let html = "<div class='flexRow'>"
+	for (let i=-1;i<data.top.length;i++) {
+		if (i==-1) html += "<div class='rtRewardMini'></div>";
+		else html += "<div class='rtRewardMini'>"+data.top[i][1]+"</div>";
+	}
+	html += "</div>"
+	for (let r=0;r<data.left.length;r++) {
+		html += "<div class='flexRow'>";
+		for (let c=-1;c<data.top.length;c++) {
+			let rc = c;
+			c = Math.max(c, 0);
+			let o = data.left[r][0].concat(data.top[c][0]);
+			let nameData = calcModeAndBalanceName(o);
+			let id = nameData.balanceName;
+			let name = nameData.modeName;
+			
+			html += "<div class='rtRewardMini'>";
+			if (rc==-1) html += name;
+			else html += "<button id='"+id+"modeCombo' class='btn tb' style='height: 40px; width: 80px;' onclick='modesSelected = "+JSON.stringify(o)+"'>Activate</button>"
+			html += "</div>"
+			c = rc;
+		}
+		html += "</div>"
+	}
+	
+	el.addHTML(html);
+}
+
+function getCompletedModeCombos() {
+	let data = MODEBALANCES;
+	let toRet = [];
+	let all = getAllSaves();
+	for (let x=0;x<all.length;x++) {
+		let p = all[x];
+		if (p==null) continue;
+		let m = p.modes;
+		let id = calcModeAndBalanceName(m).balanceName;
+		
+		if (MODEBALANCES[id].balancing=="balanced up to first multiverse" && ExpantaNum.gte(p.bestDistance, DISTANCES.mlt) && p.achievements.length>=136) toRet.push(m);
+		else if (ExpantaNum.gte(p.bestDistance, ExpantaNum.pow(DISTANCES.mlt, 1e3)) && p.achievements.length>=152) toRet.push(m);
+	}
+	return toRet;
 }

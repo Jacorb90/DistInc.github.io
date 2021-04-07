@@ -75,9 +75,8 @@ function decimalPlaces(value, places, roundWhole=false, base = 10) {
 	}
 }
 
-function formatDistance(x) {
+function formatDistance(x, fc=multiverseCapped()) {
 	x = new ExpantaNum(x);
-	let fc = futureCapped();
 	for (i = Object.keys(DISTANCES).length - 1; i >= 0; i--) {
 		let name = Object.keys(DISTANCES)[i];
 		let val = new ExpantaNum(DISTANCES[name]);
@@ -114,4 +113,14 @@ function formatGain(amt, gain, name, isDist, gainNotIncluded) {
 	let func = isDist?formatDistance:showNum
 	if (trueGain.gte(1e100) && trueGain.gt(amt)) return "(+"+showNum(trueGain.max(1).log10().sub(amt.max(1).log10().max(1)).times(50/VIS_UPDS[player.options.visUpd]))+" OoMs/sec)"
 	else return "(+"+func(trueGain)+"/sec)"
+}
+
+function isFunc(f) {
+	let n = {};
+	return n.toString.call(f) === '[object Function]';
+}
+
+function checkFunc(f) {
+	if (isFunc(f)) return f();
+	else return f;
 }

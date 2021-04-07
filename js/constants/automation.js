@@ -88,6 +88,9 @@ const AUTOMATORS = {
 	tree_upgrades: function() {
 		return tmp.ach[168].has
 	},
+	theoriverse: function() {
+		return hasMltMilestone(4)
+	},
 	theoretical_boosters: function() {
 		return player.elementary.entropy.upgrades.includes(17)
 	},
@@ -99,6 +102,21 @@ const AUTOMATORS = {
 	},
 	entropy_upgrades: function() {
 		return player.elementary.entropy.upgrades.includes(11)
+	},
+	pion_field: function() {
+		return hasMltMilestone(8)
+	},
+	spinor_field: function() {
+		return hasMltMilestone(9)
+	},
+	multiverse_runs: function() {
+		return tmp.ach[186].has
+	},
+	magma: function() {
+		return hasMltMilestone(1) && modeActive("extreme");
+	},
+	plasma: function() {
+		return hasMltMilestone(8) && modeActive("extreme");
 	},
 };
 
@@ -117,16 +135,24 @@ const AUTOMATOR_BORDER = {
 	photon_upgrades: "#a39c5d",
 	gluon_upgrades: "#83f7ee",
 	tree_upgrades: "#fcb377",
+	theoriverse: "#e66700",
 	theoretical_boosters: "#fcb377",
 	foam_unlocks: "white",
 	entropy: "#dbaca9",
 	entropy_upgrades: "#dbaca9",
+	pion_field: "#a875d1",
+	spinor_field: "#a875d1",
+	multiverse_runs: "#837eed",
+	magma: "#4d3636",
+	plasma: "#49364d",
 }
 
 const AUTOMATOR_X = {
 	elementaries: 2,
+	multiverse_runs: 2,
 }
 
 const AUTOMATOR_MODES = {
 	elementaries: ["AMOUNT", "TIME"],
+	multiverse_runs: ["AMOUNT", "TIME"],
 }

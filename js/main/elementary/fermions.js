@@ -36,7 +36,7 @@ function updateTempQuarks() {
 			return ExpantaNum.pow(ExpantaNum.mul(0.4, qks.plus(1).log10()).plus(1), stacks.plus(1));
 	};
 	if (!tmp.elm.ferm.quarkR) tmp.elm.ferm.quarkR = function (name) {
-		if ((name == QUARK_NAMES[player.elementary.fermions.quarks.type - 1]) || ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1)) return tmp.elm.ferm.quarkEff(name);
+		if ((name == QUARK_NAMES[player.elementary.fermions.quarks.type - 1]) || ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1) || hasMltMilestone(14)) return tmp.elm.ferm.quarkEff(name);
 		else return new ExpantaNum(1);
 	};
 	if (!tmp.elm.ferm.quarkDesc) tmp.elm.ferm.quarkDesc = function (name) {
@@ -95,7 +95,7 @@ function updateTempLeptons() {
 		else if (name == "psi") return lpts.max(0).plus(1).log10().plus(1).pow(stacks.plus(0.5)).max(1);
 	};
 	if (!tmp.elm.ferm.leptonR) tmp.elm.ferm.leptonR = function (name) {
-		if ((name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1])||ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1)) return tmp.elm.ferm.leptonEff(name);
+		if ((name == LEPTON_NAMES[player.elementary.fermions.leptons.type - 1])||ExpantaNum.gte(player.elementary.theory.tree.upgrades[32]||0, 1) || hasMltMilestone(14)) return tmp.elm.ferm.leptonEff(name);
 		else return new ExpantaNum(1);
 	};
 	if (!tmp.elm.ferm.leptonDesc) tmp.elm.ferm.leptonDesc = function (name) {
@@ -116,13 +116,13 @@ function updateTempFermions() {
 	if (!tmp.elm.ferm.transfer1) tmp.elm.ferm.transfer1 = function () {
 		if (player.elementary.particles.lt(1)) return;
 		player.elementary.particles = player.elementary.particles.sub(1);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(1);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(HCCBA("fermbos")?0:1);
 	};
 	if (!tmp.elm.ferm.transfer) tmp.elm.ferm.transfer = function (ratio) {
 		if (player.elementary.particles.times(ratio).floor().lt(1)) return;
 		let toSub = player.elementary.particles.times(ratio).floor();
 		player.elementary.particles = player.elementary.particles.sub(toSub);
-		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(toSub);
+		player.elementary.fermions.amount = player.elementary.fermions.amount.plus(HCCBA("fermbos")?0:toSub);
 	};
 	
 	updateTempQuarks();

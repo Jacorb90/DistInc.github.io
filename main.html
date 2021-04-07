@@ -9,8 +9,85 @@
 		<img src="images/game_icon.ico" style="width: 200px; height: 200px;"></img>
 		<span class="centered" style="color: white">Loading...<br><span style="font-size: 20px !important;"><a href="https://discord.gg/wwQfgPa" target="_blank">Help</a></span></span>
 	</div>
+	<div id="mltContainer" style="display: none">
+		<br><span class="mltTitle">Multiverse Map</span><br><br>
+		You have <span id="mltEnergy" class="mlttxt"></span> Multiversal Energy (<span id="totalME" class="mlttxt"></span> total)<br>
+		<span style="font-size: 12px">You have moved on from a Multiverse <span id="mltTimes" class="mlttxt"></span> times.</span><br><br>
+		<div class="band pnk">
+			<button id="mltReset2" class="btn locked" onclick="mltReset()"></button>
+			<table>
+				<tr>
+					<td><button class="btn tb inf" style="visibility: hidden;"></button></td>
+				</tr>
+				<tr>
+					<td>
+						<button id="mltMaptabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('mltMap')">
+							Multiverse Map
+						</button>
+					</td>
+					<td>
+						<button id="mltMilestonestabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('mltMilestones')">
+							Milestones
+						</button>
+					</td>
+					<td>
+						<button id="quiltstabbtn" class="btn tb mlt main" onclick="tmp.mlt.showTab('quilts')">
+							Quilts
+						</button>
+					</td>
+				</tr>
+			</table><br>
+		</div>
+		<div id="mltMap" class="mlttab">
+			<div id="mltData" class="sideBand pnkSeeThru" style="height: 60px;">
+				<div id="mltDataTxt"></div><br><br>
+				<button id="mltUnl" class="btn locked" onclick="unlMlt(mltSelected)">Unlock</button>
+				<button id="mltStart" class="btn mlt" onclick="startMultiverse(mltSelected)">Enter the Multiverse</button>
+			</div><br>
+			<div id="mltMapContainer">
+				<button id="mltmapPrime" class="mltPrime" style="top: 12vw; left: 21.5vw;" onclick="setupMlt(0)">PRIME</button>
+				<div id="innerMltOrbit">
+					<button id="mltmap1" class="innerMltOrbit" style="top: 8vw; left: -2vw;" onclick="setupMlt(1)"><div class="uprightOrbitTxt">1</div></button>
+					<button id="mltmap2" class="innerMltOrbit" style="top: -1.2vw; left: 6vw;" onclick="setupMlt(2)"><div class="uprightOrbitTxt">2</div></button>
+					<button id="mltmap3" class="innerMltOrbit" style="top: 4vw; left: 17vw;" onclick="setupMlt(3)"><div class="uprightOrbitTxt">3</div></button>
+					<button id="mltmap4" class="innerMltOrbit" style="top: 15vw; left: 16vw;" onclick="setupMlt(4)"><div class="uprightOrbitTxt">4</div></button>
+					<button id="mltmap5" class="innerMltOrbit" style="top: 17.5vw; left: 5vw;" onclick="setupMlt(5)"><div class="uprightOrbitTxt">5</div></button>
+				</div>
+			</div>
+		</div>
+		<div id="mltMilestones" class="mlttab">
+			<br><br><div id="mltMilestoneTable"></div><br><br><br>
+		</div>
+		<div id="quilts" class="mlttab">
+			<br><br>
+			<div class="flexRow">
+				<div class="flexContainer" style="background-color: rgba(183, 0, 255, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt I</div>
+					<div>Quilt Strength: <span id="quilt1Strength" class="mlttxt"></span>% (based on Distance)</div><br>
+					<div>Multiplies Time Speed by <span id="quilt1Eff" class="mlttxt"></span></div><br>
+					<div>Also multiplies the speed of all Theory subfeatures & all Foam types by <span id="quilt1Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg1" class="btn locked" onclick="buyQuiltUpg(1)"></button>
+				</div>
+				<div class="flexContainer" style="background-color: rgba(255, 183, 0, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt II</div>
+					<div>Quilt Strength: <span id="quilt2Strength" class="mlttxt"></span>% (based on Knowledge)</div><br>
+					<div>Makes Endorsements <span id="quilt2Eff" class="mlttxt"></span>% more efficient</div><br>
+					<div>Also multiplies Theory Point gain from Theoriverse completions<span id="quilt2Eff2Desc"></span> by <span id="quilt2Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg2" class="btn locked" onclick="buyQuiltUpg(2)"></button>
+				</div>
+				<div class="flexContainer" style="background-color: rgba(0, 247, 255, 0.4); width: 33%; min-height: 400px;">
+					<div class="mltMinorTitle">Multiversal Quilt III</div>
+					<div>Quilt Strength: <span id="quilt3Strength" class="mlttxt"></span>% (based on Elementary Particles)</div><br>
+					<div>Increases Quark & Lepton exponents and Gauge Speed's efficiency by <span id="quilt3Eff" class="mlttxt"></span>%<span id="quilt3sc" class="sc dark"></span></div><br>
+					<div>Also multiplies Gauge Speed, Higgs Boson gain, & Hadron gain by <span id="quilt3Eff2" class="mlttxt"></span></div><br><br>
+					<button id="quiltUpg3" class="btn locked" onclick="buyQuiltUpg(3)"></button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
+			<button id="mltReset" class="btn locked" onclick="mltReset()"></button>
 			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
 			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
@@ -74,7 +151,11 @@
 								Elementary
 							</button>
 						</td>
-						<td><button id="v1.9Endtabbtn" class="btn tb main" onclick="showTab('v1.9End')">Hey you shouldn't be seeing this</button></td>
+						<td>
+							<button id="multiversestabbtn" class="btn tb s mlt main" onclick="player.tab = 'mlt'; mltSelected = player.mlt.active;">
+								Multiverses
+							</button>
+						</td>
 					</tr>
 				</table><br>
 			</div>
@@ -150,33 +231,39 @@
 				</div>
 			</div>
 			<div id="modes" class="optionstab" style="display: none;">
-				<table>
-					<tr>
-						<td>
-							<button id="aauMode" class="btn tb opt ob" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
-						</td>
-						<td>
-							<button id="easyMode" class="btn tb opt ob" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
-						</td>
-						<td>
-							<button id="absurdMode" class="btn tb opt ob" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
-						</td>
-						<td>
-							<button id="naMode" class="btn tb opt ob" onclick="selectMode('na')" style="z-index: 0">NA</button>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button id="extremeMode" class="btn tb opt ob" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
-						</td>
-						<td>
-							<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
-						</td>
-						<td>
-							<button id="hikers_dreamMode" class="btn tb opt ob" onclick="selectMode('hikers_dream')" style="z-index: 0">Hiker's Dream</button>
-						</td>
-					</tr>
-				</table>
+				<div id="mcta">
+					<b><span id="modeComboCompletions"></span></b><br><br>
+					<div id="modeComboTable" class="flexContainer"></div>
+				</div>
+				<div id="mctna">
+					<table>
+						<tr>
+							<td>
+								<button id="aauMode" class="btn tb opt ob" onclick="selectMode('aau')" style="z-index: 0">AAU</button>
+							</td>
+							<td>
+								<button id="easyMode" class="btn tb opt ob" onclick="selectMode('easy')" style="z-index: 0">Easy</button>
+							</td>
+							<td>
+								<button id="absurdMode" class="btn tb opt ob" onclick="selectMode('absurd')" style="z-index: 0">Absurd</button>
+							</td>
+							<td>
+								<button id="naMode" class="btn tb opt ob" onclick="selectMode('na')" style="z-index: 0">NA</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button id="extremeMode" class="btn tb opt ob" onclick="selectMode('extreme')" style="z-index: 0">Extreme</button>
+							</td>
+							<td>
+								<button id="hardMode" class="btn tb opt ob" onclick="selectMode('hard')" style="z-index: 0">Hard</button>
+							</td>
+							<td>
+								<button id="hikers_dreamMode" class="btn tb opt ob" onclick="selectMode('hikers_dream')" style="z-index: 0">Hiker's Dream</button>
+							</td>
+						</tr>
+					</table>
+				</div>
 				<br /><br />
 				<span id="selectedMode"></span>
 				<br />
@@ -198,6 +285,14 @@
 						</button>
 						<button id="hcc" class="btn tb opt ob" onclick="changeOpt('hcc', 0)">
 							Exit Hadronic Chall Confirmation: ON
+						</button>
+					</div>
+					<div class="flexRow">
+						<button id="mltnc" class="btn tb opt ob" onclick="changeOpt('mltnc', 0)">
+							Multiverse Confirmation: ON
+						</button>
+						<button id="hideMltBtn" class="btn tb opt ob" onclick="changeOpt('hideMltBtn', 0)">
+							Multiverse Reset Button: TOP OF SCREEN
 						</button>
 					</div>
 				</div>
@@ -242,6 +337,12 @@
 						</button>
 						<button id="visUpd" class="btn tb opt ob" onclick="changeOpt('visUpd', 2)">
 							Visual Updates: X
+						</button>
+						<button id="tabsHidden" class="btn tb opt ob" onclick="changeOpt('tabsHidden', 4)">
+							Show/Hide Tabs
+						</button>
+						<button id="modeComboTableActive" class="btn tb opt ob" onclick="changeOpt('modeComboTableActive', 0)">
+							Mode Combination Table: OFF
 						</button>
 					</div>
 				</div>
@@ -306,8 +407,7 @@
 				</div>
 			</div><div id="rankTiers" class="stattab" style="display: none;">
 				<div class="flexContainer">
-					<div id="rankStats"></div>
-					<div id="tierStats"></div>
+					<div id="rankTierStats"></div>
 				</div>
 			</div>
 		</div>
@@ -384,6 +484,17 @@
 						<td><button id="energyUpg28" class="btn locked" onclick="buyEnergyUpg(28)"><h2>Super-Confidence</h2><br>Your Motive is multiplied by your Hadrons<br><br>Cost: <span id="energyUpg28Cost"></span> Motive<br>Currently: <span id="energyUpg28Current"></span>x</button></td>
 						<td><button id="energyUpg30" class="btn locked" onclick="buyEnergyUpg(30)"><h2>Omnipotence V</h2><br><b>Omnipotence I-IV</b> are stronger based on your Best Entropy<br><br>Cost: <span id="energyUpg30Cost"></span> Motive<br>Currently: <span id="energyUpg30Current"></span>% stronger</button></td>
 					</tr>
+					<tr>
+						<td><button id="energyUpg31" class="btn locked" onclick="buyEnergyUpg(31)"><h2>Omnipotence VI</h2><br><b>Omnipotence I-V</b> are stronger based on your Total Multiversal Energy<br><br>Cost: <span id="energyUpg31Cost"></span> Motive<br>Currently: <span id="energyUpg31Current"></span>% stronger</button></td>
+						<td><button id="energyUpg32" class="btn locked" onclick="buyEnergyUpg(32)"><h2>Anti-Incline</h2><br>The Incline's Secant is reduced by 25% for each unique Multiverse completed (50% stronger in non-Prime Multiverses)<br><br>Cost: <span id="energyUpg32Cost"></span> Motive<br>Currently: -<span id="energyUpg32Current"></span>%</button></td>
+						<td><button id="energyUpg33" class="btn locked" onclick="buyEnergyUpg(33)" style="font-size: 11px;"><h2>Generator Evolution</h2><br>The cost of Purchasing/Upgrading Generators scales slower based on your Energy, and the Energy effect is raised ^20.<br><br>Cost: <span id="energyUpg33Cost"></span> Motive<br>Currently: <span id="energyUpg33Current"></span>% slower</button></td>
+						<td><button id="energyUpg34" class="btn locked" onclick="buyEnergyUpg(34)"><h2>Anti-Incline II</h2><br>The Incline's Secant is divided based on your Ranks.<br><br>Cost: <span id="energyUpg34Cost"></span> Motive<br>Currently: /<span id="energyUpg34Current"></span></button></td>
+						<td><button id="energyUpg35" class="btn locked" onclick="buyEnergyUpg(35)"><h2>Entropic Energy</h2><br>Energy boosts Entropy gain.<br><br>Cost: <span id="energyUpg35Cost"></span> Motive<br>Currently: <span id="energyUpg35Current"></span>x</button></td>
+					</tr>
+					<tr>
+						<td></td><td></td>
+						<td><button id="energyUpg36" class="btn locked" onclick="buyEnergyUpg(36)"><h2>Thrusters V</h2><br><b>Thrusters I-IV</b> are exponentially stronger based on your Distance.<br><br>Cost: <span id="energyUpg36Cost"></span> Motive<br>Currently: <span id="energyUpg36Current"></span>% stronger</button></td>
+					</tr>
 				</table><br><br><br>
 			</div><div id="generator" class="enTab">
 				<br><br>The <span id="geners"></span> currently at Level <span id="genLvl" class="energy"></span>, and so it is generating <span id="energyGen" class="energy"></span> Energy/sec, with a limit of <span id="energyLim" class="energy"></span> Energy<br><br>
@@ -401,7 +512,7 @@
 			You have <span id="rocketsAmt"></span>, which are making your acceleration & maximum velocity boost
 			themselves (log(x+1)<sup><span id="rocketsEff"></span></sup>) <span id="rocketEffSC"></span><br /><br />
 			<button id="rfReset" class="btn locked" onclick="tmp.rf.layer.reset(false, false)">
-				Reset your rockets to get 1 rocket fuel<br />Req:
+				Reset your rockets (but nothing else) to get 1 rocket fuel<br />Req:
 				<span id="rfReq" class="based"></span> rockets.</button
 			><br /><br />
 			You have <span id="rf"></span> <span id="rfName"></span>, which boosts the effect of rockets by
@@ -1152,8 +1263,8 @@
 					You have <span id="angels" class="spectral"></span> Angels.<br /><br />
 					You have <span id="chips" class="spectral"></span> Heavenly Chips
 					<span id="chipGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity, but they also make Demonic Souls in their effect divide by
-					<span id="chipNerf" class="spectral"></span>.
+					<span id="chipBoost" class="spectral"></span>% boost to the rewards of Spaceon, Solaris, & Eternity, but they also make Demonic Souls in their effect 
+					<span id="chipNerf" style="color: black;"></span>.
 					<br /><br /><br />
 				</div>
 				<div style="background-color: #a31414;">
@@ -1163,8 +1274,15 @@
 					You have <span id="demons" class="spectral"></span> Demons.<br /><br />
 					You have <span id="souls" class="spectral"></span> Demonic Souls
 					<span id="soulGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
-					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength, but they also make Heavenly Chips in their effect divide by 
-					<span id="soulNerf" class="spectral"></span>.
+					<span id="soulBoost" class="spectral"></span>% increase to Perk Strength, but they also make Heavenly Chips in their effect 
+					<span id="soulNerf"></span>.
+					<br /><br /><br />
+				</div>
+				<div id="phantomDiv" style="background-color: #461673; color: white;">
+					<br>You have <span id="phantoms" class="spectral"></span> Phantoms (1 every 3 Spectral Gems).<br /><br />
+					You have <span id="hauntingEnergy" class="spectral"></span> Haunting Energy
+					<span id="hauntingEnergyGain" style="color: #9fc4bc; font-weight: bold;"></span>, translated to a
+					<span id="hauntingEnergyBoost" class="spectral"></span>% increase in Spectral Gem frequency, and a <span id="hauntingEnergyBoost2" class="spectral"></span>x multiplier to Heavenly Chip, Demonic Soul, & Haunting Energy gain bases.
 					<br /><br /><br />
 				</div>
 				<div id="purgeDiv" style="background-color: #259199;">
@@ -1625,7 +1743,7 @@
 							</tr></table>
 							<table><tr>
 								<td><button id="tree4" class="tree locked" onclick="tmp.elm.theory.tree.buy(4)"></button></td>
-								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree40" class="tree locked" onclick="tmp.elm.theory.tree.buy(40)"></button></td>
 								<td><button id="tree5" class="tree locked" onclick="tmp.elm.theory.tree.buy(5)"></button></td>
 							</tr></table>
 							<table><tr>
@@ -1651,11 +1769,11 @@
 							</tr></table>
 							<table><tr>
 								<td><button id="tree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
-								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree41" class="tree locked" onclick="tmp.elm.theory.tree.buy(41)"></button></td>
 								<td><button id="tree30" class="tree locked" onclick="tmp.elm.theory.tree.buy(30)"></button></td>
 								<td><button class="tree locked" style="visibility: hidden;"></button></td>
 								<td><button id="tree31" class="tree locked" onclick="tmp.elm.theory.tree.buy(31)"></button></td>
-								<td><button class="tree locked" style="visibility: hidden;"></button></td>
+								<td><button id="tree42" class="tree locked" onclick="tmp.elm.theory.tree.buy(42)"></button></td>
 								<td><button id="tree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
 							</tr></table>
 							<table><tr>
@@ -1716,6 +1834,7 @@
 											<tr>
 												<td><button id="gTree2" class="tree locked" onclick="tmp.elm.theory.tree.buy(2)"></button></td>
 												<td><button id="gTree3" class="tree locked" onclick="tmp.elm.theory.tree.buy(3)"></button></td>
+												<td><button id="gTree42" class="tree locked" onclick="tmp.elm.theory.tree.buy(42)"></button></td>
 											</tr>
 										</table>
 									</div>
@@ -1746,6 +1865,7 @@
 											<tr>
 												<td><button id="gTree20" class="tree locked" onclick="tmp.elm.theory.tree.buy(20)"></button></td>
 												<td><button id="gTree21" class="tree locked" onclick="tmp.elm.theory.tree.buy(21)"></button></td>
+												<td><button id="gTree41" class="tree locked" onclick="tmp.elm.theory.tree.buy(41)"></button></td>
 											</tr>
 										</table>
 									</div>
@@ -1795,6 +1915,7 @@
 											<tr>
 												<td><button id="gTree9" class="tree locked" onclick="tmp.elm.theory.tree.buy(9)"></button></td>
 												<td><button id="gTree10" class="tree locked" onclick="tmp.elm.theory.tree.buy(10)"></button></td>
+												<td><button id="gTree40" class="tree locked" onclick="tmp.elm.theory.tree.buy(40)"></button></td>
 											</tr>
 										</table>
 									</div>
@@ -1863,6 +1984,9 @@
 						<span id="str5" style="display: none">You have a Quinary String with a length of <span id="str5amt" class="thp"></span> <span id="str5gain"></span>, translated to a <span id="str5eff" class="thp"></span>x multiplier to Quaternary String gain.<br><br></span>
 						<span id="str6" style="display: none">You have a Senary String with a length of <span id="str6amt" class="thp"></span> <span id="str6gain"></span>, translated to a <span id="str6eff" class="thp"></span>x multiplier to Quinary String gain.<br><br></span>
 						<span id="str7" style="display: none">You have a Septenary String with a length of <span id="str7amt" class="thp"></span> <span id="str7gain"></span>, translated to a <span id="str7eff" class="thp"></span>x multiplier to Senary String gain.<br><br></span>
+						<span id="str8" style="display: none">You have an Octonary String with a length of <span id="str8amt" class="thp"></span> <span id="str8gain"></span>, translated to a <span id="str8eff" class="thp"></span>x multiplier to Septenary String gain.<br><br></span>
+						<span id="str9" style="display: none">You have a Nonary String with a length of <span id="str9amt" class="thp"></span> <span id="str9gain"></span>, translated to a <span id="str9eff" class="thp"></span>x multiplier to Octonary String gain.<br><br></span>
+						<span id="str10" style="display: none">You have a Dekanary String with a length of <span id="str10amt" class="thp"></span> <span id="str10gain"></span>, translated to a <span id="str10eff" class="thp"></span>x multiplier to Nonary String gain.<br><br></span>
 						<br><br><span id="entangleDiv"><button id="entangle" class="btn th" onclick="entangleStrings()"></button><br><br>You have <span id="entangleAmt" class="thp"></span> of Entangled Strings, translated to a <span id="entangleEff" class="thp"></span>x multiplier to the generation speed of all Strings.<br><br></span>
 					</div>
 				</div>
@@ -1872,7 +1996,7 @@
 					<div id="preonsDiv">
 						Your Primary Strings have generated you <span id="preonAmt" class="thp"></span> Preons <span id="preonGain"></span>.<br><br><br>
 						<button id="theoryBoost" class="btn locked" onclick="theoryBoost()"></button><br><br>
-						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters.
+						You have <span id="theoryBoosters" class="thp"></span> Theoretical Boosters, which are providing a total of <span id="theoryBoostersEff" class="thp"></span> TP.<br><br>
 					</div>
 				</div>
 				<div id="accelerons" class="theorytab">
@@ -1880,7 +2004,7 @@
 					<button id="acceleronsUnl" class="btn th" onclick="unlockAccelerons()">Unlock Accelerons<br>Cost: 84 Theory Points</button>
 					<div id="acceleronsDiv">
 						Your Acceleration is generating you <span id="accelGain"></span> Accelerons each second <span id="accelerSC"></span>.<br><br>
-						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened <span id="accelEff"></span><br><br><br>
+						You have <span id="accel" class="thp"></span> Accelerons, which are making your Perk Accelerator get Weakened later <span id="accelEff"></span><br><br><br>
 						<button id="darkExp" class="btn locked" onclick="darkExpand()"></button><br><br>
 						You have <span id="darkExpAmt"></span> Dark Expanders.<br><br>
 						<span id="darkExpPast"></span><br><br><br>
@@ -1890,7 +2014,7 @@
 					<br>
 					<button id="inflatonsUnl" class="btn th" onclick="unlockInflatons()">Unlock Inflatons<br>Cost: 1,600 Theory Points</button>
 					<div id="inflatonsDiv">
-						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second<span id="inflatonSC" class="sc"></span>.<br>
+						You are gaining <span id="inflatonGain" class="thp"></span> Inflatons each second (based on Inflaton amount)<span id="inflatonSC" class="sc"></span>.<br>
 						You have <span id="inflatonAmt" class="thp"></span> Inflatons (<span id="inflatonPerc"></span>)<br><br>
 						Your Inflatons are making all Theory Tree Upgrades <span id="inflaton1" class="thp"></span>x cheaper.<br>
 						Your Inflatons are making each Hadron effect interval give <span id="inflaton2" class="thp"></span> more TP. <span id="inflaton2sc" class="sc"></span><br><br><br>
@@ -1900,7 +2024,8 @@
 			<div id="hc" class="elmtab" style="display: none;">
 				<br><b>Projected Hadronic Score: <span id="projHadScore" class="had"></span></b><br><br>
 				<b>Best Hadronic Score: <span id="bestHadScore" class="had"></span></b><br><br>
-				You have <span id="hadrons" class="had"></span> Hadrons <span id="hadronGain"></span>, which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br><br>
+				You have <span id="hadrons" class="had"></span> Hadrons <span id="hadronGain"></span>, which are providing you with <span id="hadronEff" class="had"></span> free TP (next <span id="hadEffBulk"></span> TP at <span id="hadronNext"></span> Hadrons)<br>
+				<span id="hadInterval"></span><br><br>
 				<br><button id="startHC" class="btn hc" onclick="startHC()"></button><br><br>
 				<button class="btn hc" onclick="exportHC()">Export</button>&nbsp;<button class="btn hc" onclick="importHC()">Import</button>&nbsp;<button class="btn hc" onclick="clearHCData()">Clear Selector Data</button><br><br>
 				<span id="hcPerc"></span><br><br>
@@ -1935,6 +2060,11 @@
 									Elementary Selectors
 								</button>
 							</td>
+							<td>
+								<button id="mltHCTabButton" class="btn tb mlthc" onclick="showHCTab('mltHC')">
+									Multiversal Selectors
+								</button>
+							</td>
 						</tr>
 					</table>
 				</div><br><br>
@@ -1943,6 +2073,7 @@
 				<div id="colHC" class="hcTab"></div>
 				<div id="infHC" class="hcTab"></div>
 				<div id="elmHC" class="hcTab"></div>
+				<div id="mltHC" class="hcTab"></div>
 				<br><br>
 			</div>
 			<div id="foam" class="elmtab" style="display: none;">
@@ -2158,6 +2289,20 @@
 							<td><button id="entropy20" class="btn locked" onclick="buyEntropyUpg(20)" style="min-height: 200px;">The first Inflaton effect uses a better formula, Pions & Spinors do not make each other increase in cost, and you can buy max Pion/Spinor Fields (kept on Skyrmion reset)<br>Cost: <span id="entropyCost20" style="color: black;"></span> Entropy</button></td>
 							<td><button id="entropy25" class="btn locked" onclick="buyEntropyUpg(25)" style="min-height: 200px;">FU4 & EFU3 also multiply the upgrade's effect (but only at 20% upgrade power).<br>Cost: <span id="entropyCost25" style="color: black;"></span> Entropy</button></td>
 						</tr>
+						<tr>
+							<td><button id="entropy26" class="btn locked" onclick="buyEntropyUpg(26)" style="min-height: 200px;">Theory Tree Upgrade costs scale 50% slower, and the "Useless Theories" achievement's reward is raised to an exponent based on your Entropy.<br>Cost: <span id="entropyCost26" style="color: black;"></span> Entropy<br>Currently: ^<span id="entropyEff26" style="color: black;"></span></button></td>
+							<td><button id="entropy27" class="btn locked" onclick="buyEntropyUpg(27)" style="min-height: 200px;">The Entropy effect is stronger based on your Best Entropy.<br>Cost: <span id="entropyCost27" style="color: black;"></span> Entropy<br>Currently: ^<span id="entropyEff27" style="color: black;"></span></button></td>
+							<td><button id="entropy28" class="btn locked" onclick="buyEntropyUpg(28)" style="min-height: 200px;">Pion & Spinor gain are multiplied based on your Theory Points gotten from Hadrons.<br>Cost: <span id="entropyCost28" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff28" style="color: black;"></span>x</button></td>
+							<td><button id="entropy29" class="btn locked" onclick="buyEntropyUpg(29)" style="min-height: 200px;">&Omega; Particles multiply Skyrmion gain.<br>Cost: <span id="entropyCost29" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff29" style="color: black;"></span>x</button></td>
+							<td><button id="entropy34" class="btn locked" onclick="buyEntropyUpg(34)" style="min-height: 200px;">Entropy gain is increased by 50%.<br>Cost: <span id="entropyCost34" style="color: black;"></span> Entropy</button></td>
+						</tr>
+						<tr>
+							<td><button id="entropy30" class="btn locked" onclick="buyEntropyUpg(30)" style="min-height: 200px;">Quantum Foam boosts Skyrmion gain.<br>Cost: <span id="entropyCost30" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff30" style="color: black;"></span>x</button></td>
+							<td><button id="entropy31" class="btn locked" onclick="buyEntropyUpg(31)" style="min-height: 200px;">Entropy Upgrades bought boost Pion & Spinor gain.<br>Cost: <span id="entropyCost31" style="color: black;"></span> Entropy<br>Currently: <span id="entropyEff31" style="color: black;"></span>x</button></td>
+							<td><button id="entropy32" class="btn locked" onclick="buyEntropyUpg(32)" style="min-height: 200px;">Superscaled Derivative Boost scaling starts 2 later.<br>Cost: <span id="entropyCost32" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy33" class="btn locked" onclick="buyEntropyUpg(33)" style="min-height: 200px;">Base Pion/Spinor gain is raised to the 1.5th power.<br>Cost: <span id="entropyCost33" style="color: black;"></span> Entropy</button></td>
+							<td><button id="entropy35" class="btn locked" onclick="buyEntropyUpg(35)" style="min-height: 200px;">The "Multiverse Conquered" achievement's final effect extends to 25,000 instead of 250, and the Cadaver effect is raised ^100.<br>Cost: <span id="entropyCost35" style="color: black;"></span> Entropy</button></td>
+						</tr>
 					</table>
 					<br><br><br><br><br>
 				</div>
@@ -2191,7 +2336,9 @@
 				<div id="skyrmions" class="skyTab">
 					Destabilizing the topology of your multiverse will force an Entropy & Elementary reset, and will also reset your Purge Power, Elementary Particles, Fermions, Bosons, Photon & Gluon Upgrades, Supersymmetric Particles, Theory Tree Upgrades, Strings (and Entangled Strings), Preon amount, Acceleron amount, Inflatons, Hadrons, Entropy, & Entropy Upgrades (except the first one).<br><br>
 					<button id="skyrmionReset" class="btn locked" onclick="skyrmionReset()">Destabilize the topology of your multiverse to gain <span id="skyrmionGain"></span> Skyrmions</button><br><br>
-					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br><br>
+					You have <span id="skyrmionAmt" class="skytxt"></span> Skyrmions, which multiply the Quark/Lepton exponents by <span id="skyrmionEff" class="skytxt"></span><br>
+					Base Pion/Spinor Gain: <span id="skyrmionEff2" class="skytxt"></span>/s.<br><br>
+					<button id="maxBothFields" onclick="maxBothFields()" class="btn sky">Max Pion & Spinor Fields</button>
 					<button onclick="respecBothFields()" class="btn sky">Reset Pion & Spinor Fields</button>
 				</div>
 				<div id="pions" class="skyTab" style="display: none;">
@@ -2214,14 +2361,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="v1.9End" class="tab" style="display: none;">
-		<br>Dear Player,<br><br><br>Welp you've done it, you've reached the end of the multiverse!<br>
-		Sadly, more content won't be available for the time being...<br>
-		For now, just try another mode or something, I dunno.<br>
-		Thanks for playing my game!<br>
-		From Jacorb<br><br><br><br><br>
-		P.S: If you're wondering why I put this message here, it's because it's prep for future content and because v2.0 may not be out for a while...
-	</div>
 	
 	<!-- Links -->
 	<link rel="stylesheet" type="text/css" href="style.css" />
@@ -2231,6 +2370,13 @@
 	<script type="text/javascript" src="js/notify.min.js"></script>
 	<script type="text/javascript" src="js/classes/Notifier.js"></script>
 	<script type="text/javascript" src="js/classes/OmegaNum.js"></script>
+	
+	<!-- Functions -->
+	<script type="text/javascript" src="js/functions/formatting.js"></script>
+	<script type="text/javascript" src="js/functions/tabs.js"></script>
+	<script type="text/javascript" src="js/functions/achievements.js"></script>
+	<script type="text/javascript" src="js/functions/important.js"></script>
+	<script type="text/javascript" src="js/functions/misc.js"></script>
 
 	<!-- Constants -->
 	<script type="text/javascript" src="js/constants/default.js"></script>
@@ -2249,6 +2395,7 @@
 	<script type="text/javascript" src="js/constants/dc.js"></script>
 	<script type="text/javascript" src="js/constants/inf.js"></script>
 	<script type="text/javascript" src="js/constants/elm.js"></script>
+	<script type="text/javascript" src="js/constants/mlt.js"></script>
 	<script type="text/javascript" src="js/constants/news.js"></script>
 
 	<!-- Primary Classes -->
@@ -2256,13 +2403,6 @@
 
 	<!-- Notations -->
 	<script type="text/javascript" src="js/notations.js"></script>
-
-	<!-- Functions -->
-	<script type="text/javascript" src="js/functions/formatting.js"></script>
-	<script type="text/javascript" src="js/functions/tabs.js"></script>
-	<script type="text/javascript" src="js/functions/achievements.js"></script>
-	<script type="text/javascript" src="js/functions/important.js"></script>
-	<script type="text/javascript" src="js/functions/misc.js"></script>
 
 	<!-- Secondary Classes -->
 	<script type="text/javascript" src="js/classes/Layer.js"></script>
@@ -2274,7 +2414,8 @@
 	<script type="text/javascript" src="js/game.js"></script>
 
 	<!-- File Data -->
-	<script type="text/javascript" src="js/main/future_content/setup.js"></script>
+	<script type="text/javascript" src="js/main/multiverse/quilts.js"></script>
+	<script type="text/javascript" src="js/main/multiverse/mlt.js"></script>
 	<script type="text/javascript" src="js/main/elementary/bosons.js"></script>
 	<script type="text/javascript" src="js/main/elementary/elm.js"></script>
 	<script type="text/javascript" src="js/main/elementary/fermions.js"></script>

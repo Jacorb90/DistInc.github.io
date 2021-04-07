@@ -47,6 +47,9 @@ function loadGame() {
 		updateTempHikersDream();
 		calcInclines();
 	}
+	completedModeCombos = getCompletedModeCombos();
+	completedModeCombos = completedModeCombos.map(x => calcModeAndBalanceName(x).balanceName);
+	completedModeCombos = completedModeCombos.filter((x,i) => i==completedModeCombos.indexOf(x));
 	interval = setInterval(function () {
 		simulateTime();
 	}, 50);
@@ -70,6 +73,7 @@ function simulateTime() {
 function modeLoad(resetted) {
 	if (!resetted.includes("extremeStad") && modeActive("extreme")) if (player.activeFC==6) resetted = resetted.filter(x => x!="activeFC")
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;0;0")) resetted = resetted.filter(x => x != "bestMotive")
+	if (hasMltMilestone(3) && modeActive("hikers_dream")) resetted = resetted.filter(x => x != "energyUpgs");
 	if (tmp.ach) if (tmp.ach[141].has) resetted = resetted.filter(x => x != "geners" && x != "genLvl")
 	if (player.modes.some(x => Object.keys(MODE_VARS).includes(x))) {
 		player.modes

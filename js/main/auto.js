@@ -104,6 +104,19 @@ function furnaceAutoTick(){
 	}
 }
 
+function magmaAutoTick() {
+	if (player.automators["magma"] && modeActive("extreme")) {
+		magmaSearch(true);
+		reformMagma(true);
+	}
+}
+
+function plasmaAutoTick() {
+	if (player.automators["plasma"] && modeActive("extreme")) {
+		buyPlasmaBoost(true);
+	}
+}
+
 function pathogenAutoTick(){
 	if (player.automators["pathogens"]) tmp.pathogens.maxAll();
 }
@@ -139,7 +152,10 @@ function endorseAutoTick(){
 		if (tmp.elm.bos.hasHiggs("0;0;3") || tmp.ach[142].has) tmp.inf.maxEndorse(tmp.ach[142].has)
 		else {
 			if (tmp.ach[142].has) {
-				if (player.distance.gte(tmp.inf.req)) player.inf.endorsements = player.inf.endorsements.plus(1)
+				if (player.distance.gte(tmp.inf.req)) {
+					player.inf.endorsements = player.inf.endorsements.plus(1);
+					player.inf.unl = true;
+				}
 			} else tmp.inf.manualReset(true) 
 		}
 	}
@@ -200,6 +216,31 @@ function gluonAutoTick(){
 	}
 }
 
+function theoriverseAutoPerSec() {
+	if (player.automators["theoriverse"] && player.elementary.theory.unl && hasMltMilestone(4)) {
+		if (HCTVal("tv").gt(-1)) return;
+		let a = player.distance.div("1e1000000")
+		if (modeActive("easy")) a = a.root(5/6);
+		if (modeActive("hikers_dream")) {
+			a = a.root(4/3);
+			a = a.root(9/8);
+			a = a.root((modeActive("extreme+hikers_dream")?2.675:4) / 3)
+		}
+		if (modeActive("extreme")) a = a.root(1.25);
+		let target = a.logBase(1/0.8).root(4/3).plus(tmp.elm.theory.subbed)
+		if (target.gte(20)) target = target.log(20).plus(19)
+		target = target.floor();
+		let toAdd = target.sub(player.elementary.theory.depth.max(0))
+		let oldPoints = tmp.elm.theory.gainMult.times(ExpantaNum.sub(1, ExpantaNum.pow(2, player.elementary.theory.depth))).times(-1);
+		let newPoints = tmp.elm.theory.gainMult.times(ExpantaNum.sub(1, ExpantaNum.pow(2, target.max(player.elementary.theory.depth)))).times(-1);
+		if (toAdd.gt(0)) {
+			player.elementary.theory.points = player.elementary.theory.points.plus(newPoints.sub(oldPoints).max(0).round())
+			player.elementary.theory.depth = player.elementary.theory.depth.max(target);
+			player.elementary.theory.bestDepth = player.elementary.theory.bestDepth.max(target);
+		}
+	}
+}
+
 function theoryTreeAutoTick(){
 	if (player.automators["tree_upgrades"]) {
 		if (player.elementary.theory.tree.unl) {
@@ -211,18 +252,25 @@ function theoryTreeAutoTick(){
 }
 
 function theoryBoosterAutoTick() {
-	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17)) theoryBoost(true)
+	if (player.automators["theoretical_boosters"] && player.elementary.entropy.upgrades.includes(17) && player.elementary.theory.unl) theoryBoost(true)
+}
+
+function foamUnlocksAutoTick() {
+	if (player.automators["foam_unlocks"] && player.elementary.foam.unl) {
+		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
+		else refoam();
+	}
 }
 
 function entropyAutoTick(){
-	if (player.automators["entropy"] && player.elementary.entropy.unl) {
+	if (player.automators["entropy"] && player.elementary.entropy.unl && !mltActive(3)) {
 		player.elementary.entropy.amount = player.elementary.entropy.amount.plus(tmp.elm.entropy.gain)
 		player.elementary.entropy.best = player.elementary.entropy.best.max(player.elementary.entropy.amount)
 	}
 }
 
 function entropyUpgAutoTick(){
-	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl) {
+	if (player.automators["entropy_upgrades"] && player.elementary.entropy.unl && !mltActive(3)) {
 		let toBuy = Array.from({length: ENTROPY_UPGS}, (v, i) => i+1).filter(x => !player.elementary.entropy.upgrades.includes(x)&&entropyUpgShown(x));
 		if (toBuy.length==0) return;
 		let nextUpg = toBuy.reduce((a,c) => ENTROPY_UPG_AUTO_ORDER[Math.min(ENTROPY_UPG_AUTO_ORDER.indexOf(a),ENTROPY_UPG_AUTO_ORDER.indexOf(c))]);
@@ -235,6 +283,23 @@ function energyAutoTick(){
 	if (tmp.ach) if (tmp.ach[141].has) {
 		buyGen()
 		newGen()
+	}
+}
+
+function pionSpinorAutoTick() {
+	if (player.automators["pion_field"] && hasMltMilestone(8) && player.elementary.sky.unl) maxField("pions")
+	if (player.automators["spinor_field"] && hasMltMilestone(9) && player.elementary.sky.unl) maxField("spinors")
+}
+
+function multivAutoTick() {
+	if (player.automators["multiverse_runs"]) {
+		let mode = player.autoModes["multiverse_runs"]
+		let val = new ExpantaNum(player.autoTxt["multiverse_runs"]||0)
+		if (mode=="AMOUNT") {
+			if (tmp.mlt.layer.gain.gte(val)) mltReset(false, true)
+		} else if (mode=="TIME") {
+			if (player.elementary.time.gte(val)) mltReset(false, true)
+		}
 	}
 }
 
@@ -255,13 +320,19 @@ function autoTick(diff) {
 	gluonAutoTick()
 	theoryTreeAutoTick()
 	theoryBoosterAutoTick()
+	if (hasMltMilestone(21)) foamUnlocksAutoTick();
 	entropyAutoTick()
 	entropyUpgAutoTick()
-	 energyAutoTick()
+	energyAutoTick()
+	pionSpinorAutoTick()
+	multivAutoTick()
+	magmaAutoTick()
+	plasmaAutoTick()
 }
 
 function autoPerSec() {
-	if (player.automators["foam_unlocks"]) {
+	theoriverseAutoPerSec()
+	if (!hasMltMilestone(21) && player.automators["foam_unlocks"] && player.elementary.foam.unl) {
 		if (player.elementary.foam.maxDepth.lt(5)) qfUnl(player.elementary.foam.maxDepth.toNumber())
 		else refoam();
 	}

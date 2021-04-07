@@ -3,21 +3,30 @@ const ELM_TABS = {
 		return true;
 	},
 	bosons: function () {
-		return player.elementary.times.gte(2);
+		return player.elementary.times.gte(2)||hasMltMilestone(3);
 	},
 	theory: function () {
-		return player.elementary.theory.unl;
+		return player.elementary.theory.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	hc: function () {
-		return player.elementary.hc.unl;
+		return player.elementary.hc.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	foam: function() {
-		return player.elementary.foam.unl;
+		return player.elementary.foam.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 	sky: function() {
-		return player.elementary.sky.unl;
+		return player.elementary.sky.unl||(mltActive(1)&&player.mlt.mlt1selected.length<2);
 	},
 };
+
+const FULL_ELM_NAMES = {
+	fermions: "Fermions",
+	bosons: "Bosons",
+	theory: "Theory",
+	hc: "Hadronic Challenge",
+	foam: "Quantum Foam",
+	sky: "Skyrmions",
+}
 
 const QUARK_NAMES = ["up", "down", "charm", "strange", "top", "bottom"];
 const QUARK_DESCS = {
@@ -94,6 +103,8 @@ const HIGGS_UPGS_EXTR_DESCS = {
 		active: () => modeActive("hikers_dream") ? "hikers" : false,
 	},
 }
+
+const DE_HIGGS_UPGS = ["5;0;0", "0;0;5", "5;0;5", "4;1;0", "0;1;4", "1;1;1", "3;2;2"]
 
 const HIGGS_UPGS = {
 	"0;0;0": {
@@ -381,6 +392,7 @@ const TREE_UPGS = {
 		target: function(points) { return points.div(20).sub(1).times(2).plus(1).floor() },
 		cap: new ExpantaNum(5),
 		desc: "The above upgrade gets extra levels added to its effect based on your Preons.",
+		altDesc: "The previous upgrade gets extra levels added to its effect based on your Preons.",
 		effect: function(bought) { return player.elementary.theory.preons.amount.plus(1).times(10).slog(10).times(bought) },
 		effD: function(e) { return showNum(e)+" extra levels" },
 	},
@@ -509,6 +521,7 @@ const TREE_UPGS = {
 		cost: function(bought) { return new ExpantaNum(250) },
 		cap: new ExpantaNum(1),
 		desc: "The topmost Theory Tree Upgrade's effect uses a better formula.",
+		altDesc: "The first Supersymmetry Theory Tree Upgrade's effect uses a better formula.",
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
@@ -622,6 +635,39 @@ const TREE_UPGS = {
 		effect: function(bought) { return new ExpantaNum(1).times(bought) },
 		effD: function(e) { return e.eq(1)?"Active":"Nothing" },
 	},
+	40: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return ExpantaNum.pow(1.1, ExpantaNum.pow(bought, 1.025)).times(1e15) },
+		target: function(points) { return points.div(1e15).max(1).logBase(1.1).root(1.025).plus(1).floor() },
+		cap: new ExpantaNum(200),
+		desc: "The Theoretical Booster cost increases 1% slower.",
+		effect: function(bought) { return ExpantaNum.pow(0.99, bought) },
+		effD: function(e) { return showNum(e.pow(-1).sub(1).times(100))+"% slower" },
+	},
+	41: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return new ExpantaNum(1.2e20) },
+		cap: new ExpantaNum(1),
+		desc: "Elementaries boost Gauge Speed.",
+		effect: function(bought) { 
+			let e = player.elementary.times;
+			return e.times(bought).plus(1).pow(1.4) 
+		},
+		effD: function(e) { return showNum(e)+"x" },
+	},
+	42: {
+		unl: function() { return hasDE(6) },
+		cost: function(bought) { return new ExpantaNum(1.1e20) },
+		cap: new ExpantaNum(1),
+		desc: "OoMs of Distance boost Base Knowledge gain & all Foam layers.",
+		effect: function(bought) { 
+			let log = player.distance.plus(1).log10()
+			if (log.gte(1e11)) log = log.log10().times(1e12/12)
+			if (log.gte(1e9)) log = ExpantaNum.pow(1e9, log.logBase(1e9).root(10))
+			return log.times(bought).plus(1).pow(1.6) 
+		},
+		effD: function(e) { return showNum(e)+"x" },
+	},
 }
 const TREE_AMT = Object.keys(TREE_UPGS).length
 const G_TREE_SECTS = {
@@ -643,10 +689,11 @@ const G_TREE_SECTS = {
 }
 
 const UNL_STR = function() { 
-	if (hasDE(2)) return 7
+	if (mltRewardActive(4)) return 10;
+	else if (hasDE(2)) return 7
 	else return 5 
 }
-const TOTAL_STR = 7
+const TOTAL_STR = 10
 const STR_REQS = {
 	1: new ExpantaNum(0),
 	2: new ExpantaNum(0.5),
@@ -655,6 +702,9 @@ const STR_REQS = {
 	5: new ExpantaNum(1e7),
 	6: new ExpantaNum(1e14),
 	7: new ExpantaNum(DISTANCES.pc),
+	8: new ExpantaNum(DISTANCES.uni).times("1e800"),
+	9: new ExpantaNum(DISTANCES.uni).times("1e2650"),
+	10: new ExpantaNum(DISTANCES.uni).times("1e3000"),
 }
 const STR_NAMES = {
 	1: "Primary",
@@ -663,16 +713,33 @@ const STR_NAMES = {
 	4: "Quaternary",
 	5: "Quinary",
 	6: "Senary",
-	7: "Septenary"
+	7: "Septenary",
+	8: "Octonary",
+	9: "Nonary",
+	10: "Dekanary",
 }
 
 const MAX_DARK_EXPANDERS = 5
+const MAX_DARK_EXPANDERS_MLT_3 = 10
 const DARK_EXPANDER_COSTS = {
 	1: new ExpantaNum(40),
 	2: new ExpantaNum(250),
 	3: new ExpantaNum(600),
 	4: new ExpantaNum(2e3),
 	5: new ExpantaNum(4e3),
+	6: new ExpantaNum("1.1111111111111111111111e1111"),
+	7: new ExpantaNum("1e39000"),
+	8: new ExpantaNum("1e46500"),
+	9: new ExpantaNum("1e81725"),
+	10: new ExpantaNum("1e108000"),
+}
+const EXTREME_DE_COSTS = {
+	9: new ExpantaNum("1e68500"),
+	10: new ExpantaNum("1e80500"), 
+}
+const HD_DE_COSTS = {
+	7: new ExpantaNum("1e38750"),
+	8: new ExpantaNum("1e44350"),
 }
 const DARK_EXPANDER_DESCS = {
 	1: "Unlock a third Gluon Upgrade.",
@@ -680,36 +747,68 @@ const DARK_EXPANDER_DESCS = {
 	3: "Unlock new Higgs Upgrades.",
 	4: "Unlock Graviton Boosts.",
 	5: "Unlock new Theory Tree Upgrades, and the Theoretical Boost formula is much slower.",
+	6: "Unlock new Theory Tree Upgrades, and the Graviton Boost requirement increases half as fast when below 60.",
+	7: "Accelerons now reduce the Hadron effect interval.",
+	8: "The Primary String effect is squared.",
+	9: "The Purge Power effect is divided by 1.01 for every Theoretical Booster, and Octonary, Nonary, & Dekanary String effects are squared.",
+	10: "Unlock 2 new rows of Entropy Upgrades.",
 }
 
+const ach198check = function() { return tmp.ach?tmp.ach[198].has:false };
 const HC_REQ = [new ExpantaNum("e2e7").times(DISTANCES.uni), new ExpantaNum(64)]
 const HC_DATA = {
-	goal: ["text", [Number.MAX_VALUE, "e1e7"], "main"],
-	noTRU: ["checkbox", undefined, "pre"],
-	noCad: ["checkbox", undefined, "col"],
-	noPU: ["checkbox", undefined, "col"],
-	noDC: ["checkbox", undefined, "col"],
-	noIU: ["checkbox", undefined, "inf"],
-	spaceon: ["range", [0, 6], "inf"],
-	solaris: ["range", [0, 6], "inf"],
-	infinity: ["range", [0, 6], "inf"],
-	eternity: ["range", [0, 6], "inf"],
-	reality: ["range", [0, 6], "inf"],
-	drigganiz: ["range", [0, 6], "inf"],
-	flamis: ["range", [0, 6], "inf"],
-	cranius: ["range", [0, 6], "inf"],
-	spectra: ["range", [0, 6], "inf"],
-	aqualon: ["range", [0, 6], "inf"],
-	nullum: ["range", [0, 6], "inf"],
-	quantron: ["range", [0, 6], "inf"],
-	noGems: ["checkbox", undefined, "inf"],
-	purge: ["checkbox", undefined, "inf"],
-	noDS: ["checkbox", undefined, "inf"],
-	noDB: ["checkbox", undefined, "inf"],
-	tv: ["range", [-1, 10], "elm"],
+	goal: ["text", [function() { return getHCSelector("goalMlt")?new ExpantaNum(1):Number.MAX_VALUE }, function() { return (tmp.ach?tmp.ach[198].has:false)?(getHCSelector("goalMlt")?player.bestDistance.max(1).log(DISTANCES.mlt).div(ExpantaNum.log(DISTANCES.mlt)).max(1):player.bestDistance.min("e1e9")):"e1e7" }], "main", true], // Index 0: Type, Index 1: Min/Max, Index 2: Tab, Index 3: Unlocked
+	goalMlt: ["checkbox", undefined, "main", ach198check],
+	rockets: ["checkbox", undefined, "pre", ach198check],
+	rf: ["checkbox", undefined, "pre", ach198check],
+	noTRU: ["checkbox", undefined, "pre", true],
+	noCad: ["checkbox", undefined, "col", true],
+	noPU: ["checkbox", undefined, "col", true],
+	noDC: ["checkbox", undefined, "col", true],
+	noIU: ["checkbox", undefined, "inf", true],
+	spaceon: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	solaris: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	infinity: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	eternity: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	reality: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	drigganiz: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl }],
+	flamis: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	cranius: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	spectra: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	aqualon: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	nullum: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	quantron: ["range", [0, 6], "inf", function() { return player.elementary.theory.inflatons.unl&&modeActive("extreme") }],
+	noGems: ["checkbox", undefined, "inf", true],
+	purge: ["checkbox", undefined, "inf", true],
+	noDS: ["checkbox", undefined, "inf", true],
+	noDB: ["checkbox", undefined, "inf", true],
+	elm: ["checkbox", undefined, "elm", ach198check],
+	fermbos: ["checkbox", undefined, "elm", ach198check],
+	tv: ["range", [-1, function() { return (tmp.ach?tmp.ach[198].has:false)?player.elementary.theory.bestDepth.min(100).toNumber():10}], "elm", true],
+	sprsym: ["checkbox", undefined, "elm", ach198check],
+	tree: ["checkbox", undefined, "elm", ach198check],
+	string: ["range", [0, function() { return UNL_STR() }], "elm", ach198check],
+	preontb: ["checkbox", undefined, "elm", ach198check],
+	aclron: ["checkbox", undefined, "elm", ach198check],
+	de: ["range", [0, function() { return mltCompleted(3)?MAX_DARK_EXPANDERS_MLT_3:MAX_DARK_EXPANDERS}], "elm", ach198check],
+	infl: ["checkbox", undefined, "elm", ach198check],
+	rfrm: ["range", [0, 5], "elm", ach198check],
+	etrpy: ["checkbox", undefined, "elm", ach198check],
+	sky: ["checkbox", undefined, "elm", ach198check],
+	q1: ["checkbox", undefined, "mlt", ach198check],
+	q2: ["checkbox", undefined, "mlt", ach198check],
+	q3: ["checkbox", undefined, "mlt", ach198check],
+	mlt1: ["checkbox", undefined, "mlt", ach198check],
+	mlt2: ["checkbox", undefined, "mlt", ach198check],
+	mlt3: ["checkbox", undefined, "mlt", ach198check],
+	mlt4: ["checkbox", undefined, "mlt", ach198check],
+	mlt5: ["checkbox", undefined, "mlt", ach198check],
 }
 const HC_TITLE = {
 	goal: "Challenge goal (in uni)",
+	goalMlt: "Challenge goal in mlt",
+	rockets: "You cannot gain Rockets", 
+	rf: "You cannot gain Rocket Fuel",
 	noTRU: "Time Reversal Upgrades do nothing",
 	noCad: "You do not gain Cadavers",
 	noPU: "Pathogen Upgrades do nothing",
@@ -731,10 +830,32 @@ const HC_TITLE = {
 	purge: "Trapped in Purge",
 	noDS: "Derivative Shifts do nothing",
 	noDB: "Derivative Boosts do nothing",
+	elm: "You cannot gain Elementaries or Elementary Particles (both are reset on start)",
+	fermbos: "You cannot gain Fermions or Bosons (both are reset on start)",
 	tv: "Trapped in Theoriverse Depth (disabled: -1)",
+	sprsym: "Supersymmetric Particles & Wave do nothing",
+	tree: "You cannot purchase Theory Tree Upgrades (they are respecced on start)",
+	string: "The last X strings do nothing (disabled: 0)",
+	preontb: "You cannot gain Preons or Theoretical Boosters (both are reset on start)",
+	aclron: "You cannot gain Accelerons (they are reset on start)",
+	de: "The last X Dark Expanders do nothing (disabled: 0)",
+	infl: "You cannot gain Inflations (they are reset on start)",
+	rfrm: "You can only reform up to the (5-x)th foam (disabled: 0, they are reset on start)",
+	etrpy: "You cannot gain Entropy (they are reset on start, along with their upgrades)",
+	sky: "You cannot gain Skyrmions, Pions, or Spinors (all are reset on start)",
+	q1: "Multiversal Quilt 1 is disabled",
+	q2: "Multiversal Quilt 2 is disabled",
+	q3: "Multiversal Quilt 3 is disabled",
+	mlt1: "Trapped in Multiverse 1 (HC is always unlocked)",
+	mlt2: "Trapped in Multiverse 2",
+	mlt3: "Trapped in Multiverse 3",
+	mlt4: "Trapped in Multiverse 4 (stacks with Theoriverse selector)",
+	mlt5: "Trapped in Multiverse 5",
 }
 const HC_CHALLS = ["spaceon","solaris","infinity","eternity","reality","drigganiz"]
 const HC_EXTREME_CHALLS = ["flamis","cranius","spectra","aqualon","nullum","quantron"]
+const DYNAMIC_RANGE_HC_SELECTORS = Object.keys(HC_DATA).filter(a => ((HC_DATA[a][1]!==undefined)?(isFunc(HC_DATA[a][1][0])||isFunc(HC_DATA[a][1][1])):false));
+const DYNAMIC_UNLOCK_HC_SELECTORS = Object.keys(HC_DATA).filter(a => HC_DATA[a][3] !== true);
 
 const FOAM_REQ = new ExpantaNum("1e42000000")
 const FOAM_TABS = {
@@ -837,7 +958,7 @@ const QF_NEXTLAYER_COST = {
 	5: new ExpantaNum(1e6),
 }
 const QFB17_TARGETS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
-const ENTROPY_UPGS = 25
+const ENTROPY_UPGS = 35
 const ENTROPY_UPG_COSTS = {
 	1: new ExpantaNum(4),
 	2: new ExpantaNum(10),
@@ -868,6 +989,18 @@ const ENTROPY_UPG_COSTS = {
 	19: new ExpantaNum(17500),
 	20: new ExpantaNum(18250),
 	25: new ExpantaNum(30000),
+	
+	26: new ExpantaNum(250000),
+	27: new ExpantaNum(282500),
+	28: new ExpantaNum(420000),
+	29: new ExpantaNum(482500),
+	34: new ExpantaNum(5e8),
+	
+	30: new ExpantaNum(580000),
+	31: new ExpantaNum(1.03e6),
+	32: new ExpantaNum(1.125e6),
+	33: new ExpantaNum(1.133e6),
+	35: new ExpantaNum(7.75e8),
 }
 const ENTROPY_UPG_EFFS = {
 	2: function() { return ExpantaNum.pow(1.5, player.elementary.theory.depth) },
@@ -881,13 +1014,22 @@ const ENTROPY_UPG_EFFS = {
 	19: function() { return player.elementary.hc.hadrons.plus(1).log10().plus(1).log10().plus(1).pow(10) },
 	21: function() { return modeActive("extreme")?player.magma.amount.cbrt().times(75):new ExpantaNum(0) },
 	24: function() { return player.elementary.entropy.best.plus(1).root(14) },
+	26: function() { return ExpantaNum.pow(10, player.elementary.entropy.amount.plus(1).log10().root(4)) },
+	27: function() { return player.elementary.entropy.best.plus(1).log10().plus(1) },
+	28: function() { return player.elementary.hc.claimed.plus(1) },
+	29: function() { return (tmp.elm?tmp.elm.entropy.omega:false)?(tmp.elm.entropy.omega.plus(1)):new ExpantaNum(1) },
+	30: function() { return player.elementary.foam.amounts[0].plus(1).log10().pow(.8) },
+	31: function() { return ExpantaNum.pow(player.elementary.entropy.upgrades.length+1, Math.sqrt(player.elementary.entropy.upgrades.length*2)) },
 }
 const ENTROPY_UPG_AUTO_ORDER = [1,2,3,4,21,
 								5,6,7,8,22,
 								9,10,11,12,
 								13,14,15,16,
 								23,24,
-								17,18,19,20,25];
+								17,18,19,20,25,
+								26,27,28,29,
+								30,31,32,33,
+								34,35];
 
 const SKY_REQ = [
 	"4.4e108000026",
@@ -950,8 +1092,16 @@ const SKY_FIELDS = {
 		spinorDesc: "Skyrmions boost Supersymmetric Particle gain.",
 		baseCost: new ExpantaNum(1e5),
 		costMult: new ExpantaNum(10),
-		pionEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(400) },
-		spinorEff(bought) { return player.elementary.sky.amount.plus(1).pow(bought).pow(10) },
+		pionEff(bought) {
+			let base = player.elementary.sky.amount.plus(1).pow(bought);
+			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
+			return base.pow(400) 
+		},
+		spinorEff(bought) { 
+			let base = player.elementary.sky.amount.plus(1).pow(bought)
+			if (base.gte(1e60)) base = ExpantaNum.pow(10, base.log10().times(60).sqrt())
+			return base.pow(10) 
+		},
 		desc(eff) { return showNum(eff)+"x" },
 	},
 	6: {
@@ -1020,8 +1170,14 @@ const SKY_FIELDS = {
 		spinorDesc: "The Skyrmion effect is multiplied.",
 		baseCost: new ExpantaNum(1e43),
 		costMult: new ExpantaNum(1e12),
-		pionEff(bought) { return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) },
-		spinorEff(bought) { return ExpantaNum.add(bought, 1).pow(1.65) },
+		pionEff(bought) { 
+			if (bought.gte(3)) bought = bought.logBase(3).plus(2);
+			return ExpantaNum.add(ExpantaNum.cbrt(bought), 1).pow(11) 
+		},
+		spinorEff(bought) { 
+			if (bought.gte(2)) bought = bought.logBase(2).plus(1).root(5)
+			return ExpantaNum.add(bought, 1).pow(1.65) 
+		},
 		desc(eff) { return showNum(eff) },
 	},
 	13: {

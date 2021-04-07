@@ -664,7 +664,8 @@ const INF_UPGS = {
 				if (ret.gte(0.9)) ret = new ExpantaNum(0.9)
 				return ret;
 			} else if (type=="snp") {
-				return player.distance.plus(1).log10().plus(1).pow(10)
+				if (hasMltMilestone(16)) return ExpantaNum.pow(10, player.distance.log10().root(1.15)).max(player.distance.plus(1).log10().plus(1).pow(10))
+				else return player.distance.plus(1).log10().plus(1).pow(10)
 			}
 		},
 		"10;2": function() {
@@ -716,16 +717,16 @@ const INF_TABS = {
 		return true;
 	},
 	ascension: function () {
-		return player.inf.endorsements.gte(10);
+		return player.inf.endorsements.gte(10) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("ascension"));
 	},
 	stadium: function () {
-		return player.inf.endorsements.gte(15);
+		return player.inf.endorsements.gte(15) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("stadium"));
 	},
 	pantheon: function () {
-		return player.inf.endorsements.gte(21);
+		return player.inf.endorsements.gte(21) && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("pantheon"));
 	},
 	derivatives: function () {
-		return player.inf.derivatives.unl;
+		return player.inf.derivatives.unl && !(mltActive(3) && player.mlt.mlt3selected.length>=1 && !player.mlt.mlt3selected.includes("derivatives"));
 	}
 };
 
@@ -793,6 +794,7 @@ const STADIUM_REWARDS = {
 	drigganiz: "Pathogen Upgrades are 0.75% stronger for every achievement you have.",
 	effects: {
 		spaceon: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.spaceon();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let ret = player.rockets.plus(1).log10().plus(1).log().pow(2.25).plus(1);
 			if (ret.gte(30)) ret = ret.logBase(30).times(30).min(ret);
@@ -801,6 +803,7 @@ const STADIUM_REWARDS = {
 			return ret;
 		},
 		solaris: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.solaris();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let ret = player.collapse.cadavers.plus(1).slog(10).pow(3.25);
 			if (ret.gte(15)) ret = ret.logBase(15).times(15).min(ret);
@@ -808,6 +811,7 @@ const STADIUM_REWARDS = {
 			return ret;
 		},
 		eternity: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.eternity();
 			let mult = tmp.inf.pantheon.chipBoost;
 			let base = player.inf.endorsements.plus(1).times(player.inf.ascension.power.plus(1).slog(10).plus(1));
 			let exp = player.inf.endorsements.div(15).plus(1).logBase(2).plus(1).pow(7);
@@ -819,6 +823,7 @@ const STADIUM_REWARDS = {
 			return ret.max(1);
 		},
 		drigganiz: function () {
+			if (mltRewardActive(1)) return MLT_1_STADIUM_REWARDS.effects.drigganiz();
 			let ret = ExpantaNum.mul(0.0075, player.achievements.length);
 			return ret;
 		}
@@ -1026,6 +1031,8 @@ const EXTREME_STADIUM_DATA = {
 
 const DERV = ["distance", "velocity", "acceleration", "jerk", "snap"];
 const DERV_INCR = ["acceleration", "jerk", "snap"];
+const DERV_MLT_2 = ["distance", "velocity", "acceleration", "jerk", "snap", "crackle", "pop", "lock", "drop", "shot", "put"];
+const DERV_INCR_MLT_2 = ["acceleration", "jerk", "snap", "crackle", "pop", "lock", "drop", "shot", "put"];
 
 // More Extreme Stuff
 

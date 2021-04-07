@@ -15,6 +15,7 @@ function updateTemp() {
 	updateTempDC(); 
 	updateTempInf();
 	updateTempElementary();
+	updateTempMultiverse();
 	updateTempSC(); 
 	updateTempMisc();
 	updateTempTimeSpeed();
@@ -44,8 +45,11 @@ function setupHTML() {
 	}
 	achTable.setHTML(table);
 	
+	// Setup Mode Combo Table
+	setupModeComboTable();
+	
 	// Rank/Tier Stats
-	let rankTable = new Element("rankStats")
+	let rankTierTable = new Element("rankTierStats")
 	table = "<div class='flexTopRow'><div class='flexContainer'>"
 	for (let i=0;i<Object.keys(RANK_DESCS).length;i++) {
 		let ranks = Object.keys(RANK_DESCS)[i]
@@ -63,7 +67,7 @@ function setupHTML() {
 		table += "</div>"
 	}
 	table += "</div></div>"
-	rankTable.setHTML(table)
+	rankTierTable.setHTML(table)
 
 	// Time Reversal Upgrade Table
 	let trTable = new Element("trTable");
@@ -186,8 +190,9 @@ function setupHTML() {
 	// Derivatives
 	let dv = new Element("derivs");
 	data = "<br>";
-	for (let i = 0; i < DERV.length; i++) {
-		let name = DERV[i];
+	let de = DERV_MLT_2;
+	for (let i = 0; i < de.length; i++) {
+		let name = de[i];
 		let suffix = i == 0 ? "" : "/s" + (i == 1 ? "" : "<sup>" + i + "</sup>");
 		data +=
 			"<div id='dervDiv" +
@@ -201,7 +206,7 @@ function setupHTML() {
 			" <span id='dervgain" +
 			name +
 			"'></span>" +
-			"</div><br>";
+			"<br><br></div>";
 	}
 	dv.setHTML(data);
 
@@ -251,6 +256,7 @@ function setupHTML() {
 	}
 	
 	// Hadronic Challenge
+	new Element("mltHC").setHTML("<b>WARNING: STARTING A HADRONIC CHALLENGE WITH ANY OF THESE SELECTORS WILL FORCE A MULTIVERSE RESET!</b><br>");
 	let len = Object.keys(HC_DATA).length
 	for (let i=0;i<len;i++) {
 		let name = Object.keys(HC_DATA)[i]
@@ -259,7 +265,7 @@ function setupHTML() {
 		let el;
 		el = new Element(tab+"HC")
 		
-		let html = "<br><span id='hcSelectorSpan"+name+"'>"+HC_TITLE[name]+": <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+data[1][0]+"' max='"+data[1][1]+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")
+		let html = "<br><span id='hcSelectorSpan"+name+"'><span id='hcSelectorTitle"+name+"'>"+HC_TITLE[name]+"</span>: <input id='hcSelector"+name+"' style='color: black;' type='"+data[0]+"' onchange='updateHCSelector(&quot;"+name+"&quot;)' "+(data[0]=="range"?("min='"+checkFunc(data[1][0])+"' max='"+checkFunc(data[1][1])+"'"):"")+"></input>"+(HC_CHALLS.includes(name)?("<span id='hcChall"+name+"'><b>(hover for info)</b></span>"):"")
 		if (HC_EXTREME_CHALLS.includes(name)) html += "<span id='hcExtrChall"+name+"'><b>(hover for info)</b></span>"
 		html += "<br>"
 		if (data[0]=="range") html += "<span id='hcCurrent"+name+"'></span><br>"
@@ -274,6 +280,9 @@ function setupHTML() {
 	
 	// Plasma Boosts
 	setupPlasmaBoosts()
+	
+	// Multiverse Stuff
+	setupMltMilestoneTable()
 	
 	// Version
 	let v = new Element("version")
@@ -331,13 +340,15 @@ function updateUnlocks() {
 	if (player.distance.gte(ExpantaNum.mul(COLLAPSE_UNL, tmp.collapse.lrm))) player.collapse.unl = true;
 	if (player.collapse.cadavers.gte(ExpantaNum.mul(PATHOGENS_UNL, tmp.pathogens.lrm))) player.pathogens.unl = true;
 	if (player.distance.gte(ExpantaNum.mul(DC_UNL, tmp.dc.lrm))) player.dc.unl = true;
-	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10)) tmp.inf.forceReset();
+	if (tmp.inf.can && !infActive && player.inf.endorsements.lt(10) && !(tmp.ach[178].has&&tmp.elm.bos.hasHiggs("2;0;0"))) tmp.inf.forceReset();
 	if (player.distance.gte(ExpantaNum.mul(DISTANCES.uni, "1e90000"))) player.inf.derivatives.unl = true;
-	if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
-	if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
-	if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
-	if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
-	if (player.distance.gte(SKY_REQ[0]) && player.elementary.fermions.quarks.amount.gte(SKY_REQ[1]) && player.elementary.fermions.leptons.amount.gte(SKY_REQ[2])) player.elementary.sky.unl = true;
+	if (!mltActive(1)) {
+		if ((player.distance.gte(THEORY_REQ[0]) && player.bestEP.gte(THEORY_REQ[1])) || player.elementary.theory.unl) player.elementary.theory.unl = true;
+		if (player.distance.gte(HC_REQ[0]) && player.inf.endorsements.gte(HC_REQ[1])) player.elementary.hc.unl = true
+		if (player.distance.gte(FOAM_REQ)) player.elementary.foam.unl = true
+		if (player.elementary.foam.maxDepth.gte(5)) player.elementary.entropy.unl = true;
+		if (player.distance.gte(getSkyReqData(0)) && player.elementary.fermions.quarks.amount.gte(getSkyReqData(1)) && player.elementary.fermions.leptons.amount.gte(getSkyReqData(2))) player.elementary.sky.unl = true;
+	} 
 }
 
 document.onkeyup = function(e) {
@@ -347,6 +358,7 @@ document.onkeyup = function(e) {
 document.onkeydown = function(e) {
 	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
+	if (player.tab=="mlt") return;
 	let shiftDown = e.shiftKey
 	let key = e.which
 	switch(key) {

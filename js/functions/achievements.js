@@ -127,7 +127,7 @@ function checkR12Ach(){
 	if (player.inf.ascension.power.gte(2.5e5)) tmp.ach[123].grant();
 	if (player.inf.pantheon.purge.power.gte(modeActive("extreme")?9:30)) tmp.ach[124].grant();
 	if (player.distance.gte(1e4) && tmp.inf.stadium.active("reality", 6) && player.inf.pantheon.purge.active) tmp.ach[125].grant();
-	if (tmp.auto.rankbot.magnitude.gte(1e200)) tmp.ach[126].grant();
+	if (tmp.auto.rankbot.magnitude.gte(modeActive("hard")?1e75:1e200)) tmp.ach[126].grant();
 	if (player.tr.cubes.gte("1e100000") && tmp.nopathogenupgs && player.dc.cores.eq(0)) tmp.ach[127].grant();
 	if (tmp.acc.gte("5.55e5555") && player.inf.pantheon.purge.active) tmp.ach[128].grant();
 }
@@ -185,6 +185,28 @@ function checkR17Ach(){
 	if (player.elementary.theory.depth.gte(20)) tmp.ach[176].grant();
 	if (tmp.pathogens) if (tmp.pathogens.upgPow.gte(16.25)) tmp.ach[177].grant();
 	if (player.distance.gte(DISTANCES.mlt)) tmp.ach[178].grant();
+}
+
+function checkR18Ach() {
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 2))) tmp.ach[181].grant();
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 3.5)) && player.elementary.theory.depth.eq(0)) tmp.ach[182].grant();
+	if (player.mlt.highestCompleted>=1) tmp.ach[183].grant();
+	if (player.elementary.entropy.amount.gte(1e5)) tmp.ach[184].grant();
+	if (mltActive(2) && tmp.inf.stadium.active("eternity", 6) && player.distance.gte("3.911111e88888915")) tmp.ach[185].grant();
+	if (player.distance.gte(ExpantaNum.pow(DISTANCES.mlt, 100))) tmp.ach[186].grant();
+	if (player.mlt.highestCompleted>=5) tmp.ach[187].grant();
+	if (player.elementary.foam.amounts[4].gte("1e430")) tmp.ach[188].grant();
+}
+
+function checkR19Ach() {
+	if (player.elementary.theory.accelerons.expanders.gte(10)) tmp.ach[191].grant();
+	if (player.rank.gte(1337) && mltActive(1) && player.mlt.mlt1selected.length==0) tmp.ach[192].grant();
+	if (mltActive(3) && !player.mlt.mlt3selected.includes("ascension") && player.distance.gte("4.4e800000026")) tmp.ach[193].grant();
+	if (player.tier.gte(69)) tmp.ach[194].grant();
+	// ach195 is in the Multiverse reset function
+	if (player.distance.gte("4.4e10000026") && mltActive(5) && getProjectedHadronicScore().gte(modeActive("extreme")?12:15) && player.elementary.hc.active) tmp.ach[196].grant();
+	// ach197 is in the Multiverse reset function
+	if (player.distance.gte("2.8e1000000026643")) tmp.ach[198].grant();
 }
 
 function updateAchievements() {

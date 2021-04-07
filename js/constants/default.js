@@ -1,6 +1,6 @@
 const DEFAULT_START = {
 	tab: "main",
-	version: 1.9,
+	version: 2.0,
 	optionsTab: "saving",
 	achievements: [],
 	savePos: 1,
@@ -13,15 +13,19 @@ const DEFAULT_START = {
 		autoSave: true,
 		newst: true,
 		elc: true,
+		mltnc: false,
+		hideMltBtn: false,
 		saveImp: "new save",
 		hot: true,
 		featPerc: "logarithm",
+		tabsHidden: [],
 		dcPulse: true,
 		fonts: "courier",
 		hideAch: false,
 		visUpd: "every tick",
 		tht: true,
 		hcc: true,
+		modeComboTableActive: false,
 	},
 	modes: [],
 	time: new Date().getTime(),
@@ -103,6 +107,7 @@ const DEFAULT_START = {
 			demons: new ExpantaNum(0),
 			heavenlyChips: new ExpantaNum(0),
 			demonicSouls: new ExpantaNum(0),
+			hauntingEnergy: new ExpantaNum(0),
 			purge: {
 				unl: false,
 				active: false,
@@ -167,6 +172,7 @@ const DEFAULT_START = {
 			active: false,
 			points: new ExpantaNum(0),
 			depth: new ExpantaNum(0),
+			bestDepth: new ExpantaNum(0),
 			supersymmetry: {
 				unl: false,
 				squarks: new ExpantaNum(0),
@@ -181,7 +187,7 @@ const DEFAULT_START = {
 			},
 			strings: {
 				unl: false,
-				amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+				amounts: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
 				entangled: new ExpantaNum(0),
 			},
 			preons: {
@@ -233,5 +239,17 @@ const DEFAULT_START = {
 				field: {},
 			},
 		},
-	}
+	},
+	mlt: {
+		times: new ExpantaNum(0),
+		energy: new ExpantaNum(0),
+		bestEnergy: new ExpantaNum(0),
+		totalEnergy: new ExpantaNum(0),
+		highestCompleted: 0,
+		highestUnlocked: 0,
+		active: 0,
+		quiltUpgs: [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)],
+		mlt1selected: [],
+		mlt3selected: [],
+	},
 };

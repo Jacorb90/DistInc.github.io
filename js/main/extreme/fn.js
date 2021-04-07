@@ -218,6 +218,7 @@ function updateCoalEff() {
 	if (tmp.ach[35].has) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(25) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(2);
 	if (player.tr.upgrades.includes(31) && !HCCBA("noTRU")) tmp.fn.eff = tmp.fn.eff.times(1.8);
+	if (hasMltMilestone(10)) tmp.fn.eff = tmp.fn.eff.pow(2);
 	if (extremeStadiumActive("spectra", 2)) tmp.fn.eff = new ExpantaNum(0)
 }
 

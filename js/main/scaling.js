@@ -25,6 +25,8 @@ function getScalingStart(type, name) {
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("6;2")) start = start.plus(5)
 			if (tmp.inf) if (tmp.inf.stadium.completed("solaris")) start = start.plus(STADIUM_REWARDS.effects.solaris())
+		} else if (type=="hyper") {
+			if (hasMltMilestone(23) && player.mlt.active==0) start = start.plus(250);
 		} else if (type=="atomic") {
 			if (player.elementary.bosons.scalar.higgs.upgrades.includes("0;0;5") && tmp.elm) start = start.plus(tmp.elm.bos["higgs_0;0;5"]())
 		}
@@ -56,6 +58,8 @@ function getScalingStart(type, name) {
 	} else if (name=="pathogenUpg") {
 		if (type=="scaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("4;5")) start = start.plus(2)
+		} else if (type=="superscaled") {
+			if (tmp.inf && mltRewardActive(1)) if (tmp.inf.stadium.completed("solaris")) start = start.plus(STADIUM_REWARDS.effects.solaris())
 		} else if (type=="hyper") {
 			if (player.elementary.entropy.upgrades.includes(4) && tmp.elm) start = start.plus(tmp.elm.entropy.upgEff[4])
 		}
@@ -82,6 +86,10 @@ function getScalingStart(type, name) {
 		if (type=="scaled") {
 			if (modeActive("extreme")) start = start.sub(4)
 		}
+	} else if (name=="dervBoost") {
+		if (type=="superscaled") {
+			if (player.elementary.entropy.upgrades.includes(32)) start = start.plus(2);
+		}
 	}
 	if (type!=="atomic") if (Object.values(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1][name]!==undefined) start = start.min(getScalingStart(Object.keys(SCALING_STARTS)[Object.keys(SCALING_STARTS).indexOf(type)+1], name))
 	return start
@@ -103,6 +111,8 @@ function getScalingPower(type, name) {
 		} else if (type=="hyper") {
 			if (tmp.inf) if (tmp.inf.upgs.has("8;6")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["8;6"]()))
 			if (tmp.inf) if (tmp.inf.upgs.has("7;9")) power = power.times(0.98)
+		} else if (type=="atomic") {
+			if (hasMltMilestone(15) && tmp.mlt) power = power.times(tmp.mlt.mil15reward)
 		}
 	} else if (name=="rankCheap" && modeActive("extreme")) {
 		if (type=="scaled") {
@@ -144,6 +154,8 @@ function getScalingPower(type, name) {
 			if (tmp.inf) if (tmp.inf.upgs.has("8;7")) power = power.times(0.16)
 		} else if (type=="superscaled") {
 			if (tmp.inf) if (tmp.inf.upgs.has("10;1")) power = power.times(ExpantaNum.sub(1, INF_UPGS.effects["10;1"]("pth")))
+		} else if (type=="hyper") {
+			if (tmp.ach[185].has) power = power.sub(.1);
 		}
 	} else if (name=="darkCore") {
 		if (type=="scaled") {

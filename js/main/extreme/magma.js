@@ -27,6 +27,7 @@ function getMagmaReformEff() {
 function getMagmaReqScaling() {
 	let s = 1
 	if (player.elementary.bosons.scalar.higgs.upgrades.includes("1;1;1")) s /= 2
+	if (tmp.fn.pl) s *= 1-tmp.fn.pl.boosts[10].toNumber();
 	return s;
 }
 
@@ -36,10 +37,17 @@ function getMagmaReq() {
 	return req;
 }
 
-function magmaSearch() {
+function getMagmaBulk() {
+	if (!modeActive("extreme")) return new ExpantaNum(0);
+	let req = player.furnace.enhancedCoal.max(1).log10().div(200).max(1).logBase(1.25).div(getMagmaReqScaling())
+	return req.plus(1).floor();
+}
+
+function magmaSearch(max=false) {
 	if (!modeActive("extreme")) return;
 	if (player.furnace.enhancedCoal.lt(getMagmaReq())) return;
-	player.magma.amount = player.magma.amount.plus(1);
+	if (max) player.magma.amount = player.magma.amount.max(getMagmaBulk());
+	else player.magma.amount = player.magma.amount.plus(1);
 }
 
 function getMagmaReformReq() {
@@ -60,10 +68,25 @@ function getMagmaReformReq2() {
 	return req;
 }
 
-function reformMagma() {
+function getMagmaReformBulk() {
+	if (!modeActive("extreme")) return new ExpantaNum(0);
+	let ret1 = player.magma.amount.div(2);
+	if (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl) ret1 = ret1.root(TREE_UPGS[34].effect(player.elementary.theory.tree.upgrades[34]||0));
+	if (ret1.gte(28)) ret1 = ret1.div(28).logBase(1.1).plus(27);
+	let ret2 = player.inf.knowledge.div(1e60).max(1).logBase(1e20).sqrt();
+	if (modeActive("extreme+hikers_dream")?hasDE(5):player.elementary.hc.unl) ret2 = ret2.root(TREE_UPGS[36].effect(player.elementary.theory.tree.upgrades[36]||0));
+	if (ret2.gte(26)) ret2 = ret2.div(26).logBase(1.5).plus(25);
+	
+	return ret1.min(ret2).plus(1).floor();
+}
+
+function reformMagma(max=false) {
 	if (!modeActive("extreme")) return;
 	let req = getMagmaReformReq();
 	if (player.magma.amount.lt(req)||player.inf.knowledge.lt(getMagmaReformReq2())) return;
-	player.magma.amount = player.magma.amount.sub(req);
-	player.magma.ref = player.magma.ref.plus(1);
+	if (max) player.magma.ref = player.magma.ref.max(getMagmaReformBulk());
+	else {
+		player.magma.amount = player.magma.amount.sub(req);
+		player.magma.ref = player.magma.ref.plus(1);
+	}
 }

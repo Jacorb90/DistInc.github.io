@@ -42,6 +42,7 @@ function ENString(obj) {
 	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons).toString();
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips).toString();
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls).toString();
+	ret.inf.pantheon.hauntingEnergy = new ExpantaNum(ret.inf.pantheon.hauntingEnergy||0).toString();
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power).toString();
 	if (Object.keys(ret.inf.derivatives.amts).length > 0)
 		for (const key in ret.inf.derivatives.amts)
@@ -121,13 +122,14 @@ function ENString(obj) {
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount).toString();
 	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points).toString();
 	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth).toString();
+	ret.elementary.theory.bestDepth = new ExpantaNum(ret.elementary.theory.bestDepth).toString();
 	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks).toString();
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons).toString();
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos).toString();
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos).toString();
 	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent).toString();
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]).toString();
-	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]).toString();
+	for (let i=0;i<10;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]||0).toString();
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled).toString();
 	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount).toString();
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters).toString();
@@ -150,6 +152,11 @@ function ENString(obj) {
 	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0).toString();
 	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0).toString();
 	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0).toString();
+	ret.mlt.times = new ExpantaNum(ret.mlt.times).toString();
+	ret.mlt.energy = new ExpantaNum(ret.mlt.energy).toString();
+	ret.mlt.bestEnergy = new ExpantaNum(ret.mlt.bestEnergy).toString();
+	ret.mlt.totalEnergy = new ExpantaNum(ret.mlt.totalEnergy).toString();
+	for (let i=0;i<Object.keys(ret.mlt.quiltUpgs).length;i++) ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]] = new ExpantaNum(ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]]).toString();
 	return ret;
 }
 
@@ -171,11 +178,19 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	if (ret.version < 1.8 || !ret.elementary.foam.amounts) ret.elementary.foam.amounts = deepCopy(sc.elementary.foam.amounts);
 	if (ret.version < 1.8 || !ret.elementary.entropy) ret.elementary.entropy = deepCopy(sc.elementary.entropy);
 	if (ret.version < 1.9 || !ret.elementary.sky) ret.elementary.sky = deepCopy(sc.elementary.sky);
+	if (ret.version < 2.0 || !ret.mlt) ret.mlt = deepCopy(sc.mlt);
 	if (ret.version < sc.version) onVersionChange();
 	if (ret.elementary.theory.tree.spent === undefined) ret.elementary.theory.tree.spent = deepCopy(sc.elementary.theory.tree.spent)
 	if (ret.elementary.theory.inflatons === undefined) ret.elementary.theory.inflatons = deepCopy(sc.elementary.theory.inflatons)
 	if (ret.autoModes === undefined) ret.autoModes = {};
 	if (ret.autoTxt === undefined) ret.autoTxt = {};
+	if (ret.options.tabsHidden === undefined) ret.options.tabsHidden = []; // just in case
+	if (ret.mlt.highestUnlocked === undefined) {
+		ret.mlt.highestUnlocked = 0;
+		if (ret.mlt.highestCompleted>=1 || ret.mlt.active==1) ret.mlt.highestUnlocked = 1;
+	}
+	if (ret.mlt.mlt1selected === undefined) ret.mlt.mlt1selected = [];
+	if (ret.mlt.mlt3selected === undefined) ret.mlt.mlt3selected = [];
 	ret.distance = new ExpantaNum(ret.distance);
 	ret.velocity = new ExpantaNum(ret.velocity);
 	ret.rank = new ExpantaNum(ret.rank);
@@ -211,6 +226,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.inf.pantheon.demons = new ExpantaNum(ret.inf.pantheon.demons);
 	ret.inf.pantheon.heavenlyChips = new ExpantaNum(ret.inf.pantheon.heavenlyChips);
 	ret.inf.pantheon.demonicSouls = new ExpantaNum(ret.inf.pantheon.demonicSouls);
+	ret.inf.pantheon.hauntingEnergy = new ExpantaNum(ret.inf.pantheon.hauntingEnergy||0);
 	ret.inf.pantheon.purge.power = new ExpantaNum(ret.inf.pantheon.purge.power);
 	if (Object.keys(ret.inf.derivatives.amts).length > 0)
 		for (const key in ret.inf.derivatives.amts)
@@ -290,13 +306,14 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.bosons.scalar.higgs.amount = new ExpantaNum(ret.elementary.bosons.scalar.higgs.amount);
 	ret.elementary.theory.points = new ExpantaNum(ret.elementary.theory.points);
 	ret.elementary.theory.depth = new ExpantaNum(ret.elementary.theory.depth);
+	ret.elementary.theory.bestDepth = new ExpantaNum(ret.elementary.theory.bestDepth).max(ret.elementary.theory.depth);
 	ret.elementary.theory.supersymmetry.squarks = new ExpantaNum(ret.elementary.theory.supersymmetry.squarks);
 	ret.elementary.theory.supersymmetry.sleptons = new ExpantaNum(ret.elementary.theory.supersymmetry.sleptons);
 	ret.elementary.theory.supersymmetry.neutralinos = new ExpantaNum(ret.elementary.theory.supersymmetry.neutralinos);
 	ret.elementary.theory.supersymmetry.charginos = new ExpantaNum(ret.elementary.theory.supersymmetry.charginos);
 	ret.elementary.theory.tree.spent = new ExpantaNum(ret.elementary.theory.tree.spent);
 	if (Object.keys(ret.elementary.theory.tree.upgrades).length>0) for (let i=0;i<Object.keys(ret.elementary.theory.tree.upgrades).length;i++) ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]] = new ExpantaNum(ret.elementary.theory.tree.upgrades[Object.keys(ret.elementary.theory.tree.upgrades)[i]]);
-	for (let i=0;i<7;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]);
+	for (let i=0;i<10;i++) ret.elementary.theory.strings.amounts[i] = new ExpantaNum(ret.elementary.theory.strings.amounts[i]||0);
 	ret.elementary.theory.strings.entangled = new ExpantaNum(ret.elementary.theory.strings.entangled);
 	ret.elementary.theory.preons.amount = new ExpantaNum(ret.elementary.theory.preons.amount);
 	ret.elementary.theory.preons.boosters = new ExpantaNum(ret.elementary.theory.preons.boosters);
@@ -319,6 +336,11 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.elementary.sky.spinors.amount = new ExpantaNum(ret.elementary.sky.spinors.amount||0);
 	for (let i=0;i<Object.keys(ret.elementary.sky.pions.field).length;i++) ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]] = new ExpantaNum(ret.elementary.sky.pions.field[Object.keys(ret.elementary.sky.pions.field)[i]]||0);
 	for (let i=0;i<Object.keys(ret.elementary.sky.spinors.field).length;i++) ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]] = new ExpantaNum(ret.elementary.sky.spinors.field[Object.keys(ret.elementary.sky.spinors.field)[i]]||0);
+	ret.mlt.times = new ExpantaNum(ret.mlt.times);
+	ret.mlt.energy = new ExpantaNum(ret.mlt.energy);
+	ret.mlt.bestEnergy = new ExpantaNum(ret.mlt.bestEnergy);
+	ret.mlt.totalEnergy = new ExpantaNum(ret.mlt.totalEnergy);
+	for (let i=0;i<Object.keys(ret.mlt.quiltUpgs).length;i++) ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]] = new ExpantaNum(ret.mlt.quiltUpgs[Object.keys(ret.mlt.quiltUpgs)[i]]);
 	ret.version = Math.max(ret.version, sc.version);
 	return ret;
 }

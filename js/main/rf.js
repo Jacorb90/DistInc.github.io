@@ -11,16 +11,18 @@ function getFreeFuel() {
 function getFuelEff() {
 	let rf = player.rf;
 	if (modeActive("extreme") && rf.gte(10)) rf = rf.log10().times(10);
-	let eff = rf
+	let trf = rf
 		.plus(getFreeFuel())
 		.times(getFuelPow())
-		.plus(1)
+		
+	let eff = trf.plus(1)
 		.logBase(2)
 		.plus(1)
 		.pow(0.05);
+	if (tmp.inf ? (tmp.inf.stadium.completed("infinity") && mltRewardActive(1)) : false) eff = eff.max(trf.plus(1).pow(0.1))
 	if (modeActive("hard")) eff = eff.sub(0.02);
 	if (modeActive('easy')) eff = eff.plus(0.012);
-	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(2).add(1);
+	if (tmp.inf) if (tmp.inf.stadium.completed("infinity")) eff = eff.sub(1).times(mltRewardActive(1)?10:2).add(1);
 	if (nerfActive("noRF")) eff = new ExpantaNum(1);
 	return eff
 }

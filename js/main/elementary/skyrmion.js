@@ -42,18 +42,27 @@ function updateTempSkyrmions() {
 }
 
 // Skyrmions
+function getSkyReqData(n, direct=false) {
+	let req = SKY_REQ[n]
+	if ((hasMltMilestone(11)||direct=="mlt") && tmp.mlt) req = ExpantaNum.root(req, tmp.mlt.mil11reward)
+	return req;
+}
+
 function canSkyReset() {
 	if (!player.elementary.sky.unl) return false;
-	if (player.distance.lt(SKY_REQ[0])) return false;
-	if (player.elementary.fermions.quarks.amount.lt(SKY_REQ[1])) return false;
-	if (player.elementary.fermions.leptons.amount.lt(SKY_REQ[2])) return false;
+	if (player.distance.lt(getSkyReqData(0))) return false;
+	if (player.elementary.fermions.quarks.amount.lt(getSkyReqData(1))) return false;
+	if (player.elementary.fermions.leptons.amount.lt(getSkyReqData(2))) return false;
 	return true;
 }
 
 function getSkyGain() {
-	if (!canSkyReset()) return false;
-	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(SKY_REQ[1]).times(player.elementary.fermions.leptons.amount.max(1).logBase(SKY_REQ[2])).pow(2);
+	if (!canSkyReset()) return new ExpantaNum(0);
+	let gain = player.elementary.fermions.quarks.amount.max(1).logBase(getSkyReqData(1)).times(player.elementary.fermions.leptons.amount.max(1).logBase(getSkyReqData(2))).pow(2);
 	if (player.elementary.entropy.upgrades.includes(14)) gain = gain.times(tmp.elm.entropy.upgEff[14])
+	if (player.elementary.entropy.upgrades.includes(29)) gain = gain.times(tmp.elm.entropy.upgEff[29])
+	if (player.elementary.entropy.upgrades.includes(30)) gain = gain.times(tmp.elm.entropy.upgEff[30])
+	if (mltRewardActive(1) && tmp.mlt) gain = gain.times(tmp.mlt.mlt1reward)
 	if (tmp.fn) if (tmp.fn.pl) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[8])
 	return gain.floor();
 }
@@ -61,7 +70,7 @@ function getSkyGain() {
 function skyrmionReset(force=false) {
 	if (!force) {
 		if (!canSkyReset()) return;
-		player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().max(0));
+		if (!HCCBA("sky")) player.elementary.sky.amount = player.elementary.sky.amount.plus(getSkyGain().max(0));
 	};
 	
 	player.inf.pantheon.purge.power = new ExpantaNum(0);
@@ -77,7 +86,7 @@ function skyrmionReset(force=false) {
 	player.elementary.theory.tree.upgrades = {};
 	player.elementary.theory.points = player.elementary.theory.points.plus(player.elementary.theory.tree.spent)
 	player.elementary.theory.tree.spent = new ExpantaNum(0);
-	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
+	player.elementary.theory.strings.amounts = [new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0), new ExpantaNum(0)];
 	player.elementary.theory.strings.entangled = new ExpantaNum(0);
 	player.elementary.theory.preons.amount = new ExpantaNum(0);
 	if (player.elementary.entropy.upgrades.includes(17)) player.elementary.theory.preons.boosters = new ExpantaNum(0)
@@ -116,48 +125,67 @@ function getSkyEff() {
 function getSkyUpgPow() {
 	if (!player.elementary.sky.unl) return new ExpantaNum(0);
 	let pow = new ExpantaNum(1)
+	if (mltActive(2)) pow = pow.times(0.6);
 	if (modeActive("extreme")) pow = pow.div(2);
 	if (tmp.fn) if (tmp.fn.pl.unl) pow = pow.times(tmp.fn.pl.boosts[3])
 	return pow;
 }
 
 function getQuarkStacks(x) {
+	if (mltActive(3)) return new ExpantaNum(0);
 	let stacks = new ExpantaNum(x)
-			.sub(player.elementary.fermions.quarks.type)
+			.sub(hasMltMilestone(14)?0:player.elementary.fermions.quarks.type)
 			.div(QUARK_NAMES.length)
 			.plus(1)
 			.ceil()
 			.max(0);
 	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
+	if (player.mlt.times.gt(0) && tmp.mlt) stacks = stacks.times(tmp.mlt.quilts[3].eff);
 	return stacks;
 }
 
 function getLeptonStacks(x) {
+	if (mltActive(3)) return new ExpantaNum(0);
 	let stacks = new ExpantaNum(x)
-			.sub(player.elementary.fermions.leptons.type)
+			.sub(hasMltMilestone(14)?0:player.elementary.fermions.leptons.type)
 			.div(LEPTON_NAMES.length)
 			.plus(1)
 			.ceil()
 			.max(0);
 	if (player.elementary.sky.unl && tmp.elm.sky) stacks = stacks.times(tmp.elm.sky.eff);
+	if (player.mlt.times.gt(0) && tmp.mlt) stacks = stacks.times(tmp.mlt.quilts[3].eff);
 	return stacks;
 }
 
+function getSkyToPionSpinorGainMult() {
+	let m = player.elementary.sky.amount.pow(2).times(5);
+	if (player.elementary.entropy.upgrades.includes(33)) m = m.pow(1.5);
+	return m;
+}
+
 function getPionGain() {
-	let gain = player.elementary.sky.amount.pow(2).times(5)
+	let gain = getSkyToPionSpinorGainMult();
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
 	if (modeActive("easy")) gain = gain.times(4)
+	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
+	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.pion)
+	if (player.elementary.entropy.upgrades.includes(28)) gain = gain.times(tmp.elm.entropy.upgEff[28])
+	if (player.elementary.entropy.upgrades.includes(31)) gain = gain.times(tmp.elm.entropy.upgEff[31])
 	return gain;
 }
 
 function getSpinorGain() {
-	let gain = player.elementary.sky.amount.pow(2).times(5)
+	let gain = getSkyToPionSpinorGainMult();
 	if (player.elementary.sky.unl && tmp.elm.sky.pionEff) gain = gain.times(tmp.elm.sky.pionEff[6])
 	if (player.elementary.sky.unl && tmp.elm.sky.spinorEff) gain = gain.times(tmp.elm.sky.spinorEff[6])
 	if (modeActive("extreme") && tmp.fn) if (tmp.fn.pl.unl) gain = gain.times(tmp.fn.pl.boosts[5])
 	if (modeActive("easy")) gain = gain.times(4)
+	if (hasMltMilestone(6) && tmp.mlt) gain = gain.times(tmp.mlt.quilts[2].eff2)
+	if (hasMltMilestone(20) && tmp.mlt) gain = gain.times(tmp.mlt.mil20reward.spinor)
+	if (player.elementary.entropy.upgrades.includes(28)) gain = gain.times(tmp.elm.entropy.upgEff[28])
+	if (player.elementary.entropy.upgrades.includes(31)) gain = gain.times(tmp.elm.entropy.upgEff[31])
 	return gain;
 }
 
@@ -239,6 +267,12 @@ function maxField(type, lims={}, ignoreUpgReq=false) {
 		if (bulk.lt(1)) continue;
 		player.elementary.sky[type].field[i] = ExpantaNum.add(ExpantaNum.max(player.elementary.sky[type].field[i]||0, 0), bulk).max(0)
 	}
+}
+
+function maxBothFields() {
+	if (!tmp.ach[178].has) return;
+	maxField("pions")
+	maxField("spinors")
 }
 
 function exportField(type) {

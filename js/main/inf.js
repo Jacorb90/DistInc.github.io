@@ -59,7 +59,7 @@ function updateTempInfUpgs() {
 				showNum(INF_UPGS.effects[id]()["knowledge"]) +
 				"x"
 			);
-		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, Snap: +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
+		else if (id=="10;1") return "Superscaled Pathogen Upgrades: "+showNum(INF_UPGS.effects[id]("pth").times(100))+" % weaker, "+(hasMltMilestone(16)?"Final Derivative":"Snap")+": +"+formatDistance(INF_UPGS.effects[id]("snp"))+"/sec"
 		else if (id == "2;7" || id == "8;6" || id == "9;6" || id=="1;10")
 			return showNum(INF_UPGS.effects[id]().times(100)) + "% weaker";
 		else if (id == "3;2")
@@ -124,7 +124,7 @@ function updateTempInfUpgs() {
 	if (!tmp.inf.upgs.desc) tmp.inf.upgs.desc = function (sel) {
 		if (sel === undefined) return "";
 		return (
-			INF_UPGS.descs[sel] +
+			((sel=="10;1"&&hasMltMilestone(16))?"Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces your last Derivative at a reduced rate (unaffected by Time Speed)":INF_UPGS.descs[sel]) +
 			"<br>" +
 			(!tmp.inf.upgs.has(sel)
 				? "Cost: " +
@@ -164,6 +164,7 @@ function calcKnowledgeGain(){
 	tmp.inf.knowledgeBase = ExpantaNum.pow(ExpantaNum.pow(2, tmp.inf.emPow), player.inf.endorsements).times(player.inf.endorsements);
 	if (tmp.inf.upgs.has("2;8")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(INF_UPGS.effects["2;8"]());
 	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(3)
+	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[42]||0, 1) && hasDE(6)) tmp.inf.knowledgeBase = tmp.inf.knowledgeBase.times(TREE_UPGS[42].effect(player.elementary.theory.tree.upgrades[42]||0))
 	tmp.inf.knowledgeExp = new ExpantaNum(1);
 	if (tmp.inf.upgs.has("1;7")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.25);
 	if (tmp.inf.upgs.has("2;10")) tmp.inf.knowledgeExp = tmp.inf.knowledgeExp.times(1.15);
@@ -199,6 +200,7 @@ function updateTempInfLayer() {
 	tmp.inf.fp = new ExpantaNum(1);
 	tmp.inf.bc = INF_UNL;
 	tmp.inf.emPow = new ExpantaNum(1);
+	if (player.mlt.times.gt(0) && tmp.mlt) tmp.inf.emPow = tmp.inf.emPow.times(tmp.mlt.quilts[2].eff)
 	calcKnowledgeGain()
 	
 
@@ -282,7 +284,7 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.doGain) tmp.inf.doGain = function () {
 		let fcb = tmp.inf.layer.fcBulk
-		if (player.inf.endorsements.lt(10)) fcb = fcb.max(player.inf.endorsements.plus(1));
+		if (player.inf.endorsements.lt(10) && !(tmp.ach[178].has&&tmp.elm.bos.hasHiggs("2;0;0"))) fcb = fcb.max(player.inf.endorsements.plus(1));
 		let mag = new ExpantaNum(1);
 		let m = player.inf.endorsements.plus(mag).min(fcb).floor();
 		player.inf.endorsements = player.inf.endorsements.max(m);
@@ -316,6 +318,12 @@ function updateTempInfLayer() {
 	};
 	if (!tmp.inf.showTab) tmp.inf.showTab = function (name) {
 		if (infTab == name) return;
+		if (mltActive(3) && player.mlt.mlt3selected.length<1) {
+			if (name=="ascension"||name=="stadium"||name=="pantheon"||name=="derivatives") {
+				player.mlt.mlt3selected.push(name)
+				notifier.info("Unlocked "+capitalFirst(name)+"!")
+			}
+		}
 		infTab = name;
 	};
 	tmp.inf.updateTabs();
@@ -335,6 +343,7 @@ function updateTempInfLayer() {
 		if (player.distance.lt(tmp.inf.req) && tmp.inf.bulk.floor().gt(player.inf.endorsements)) return
 		player.inf.endorsements = player.inf.endorsements.max(tmp.inf.bulk.floor().max(player.inf.endorsements.plus(1)))
 		if (!keep) tmp.inf.layer.reset(true)
+		player.inf.unl = true;
 	};
 }
 
@@ -411,7 +420,7 @@ function updateTempAscension() {
 	if (modeActive('easy')) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(3)
 	if (player.elementary.foam.unl && tmp.elm) tmp.inf.asc.powerGain = tmp.inf.asc.powerGain.times(tmp.elm.qf.boost14)
 	if (!tmp.inf.asc.activatePerk) tmp.inf.asc.activatePerk = function (n) {
-		if (player.inf.endorsements.lt(10)) return;
+		if (player.inf.endorsements.lt(10) || (mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) return;
 		if (tmp.inf.asc.perkActive(n)) {
 			player.inf.ascension.time[n - 1] = new ExpantaNum(0);
 			return;
@@ -421,7 +430,7 @@ function updateTempAscension() {
 	};
 	if (!tmp.inf.asc.perkEff) tmp.inf.asc.perkEff = function (n) {
 		let base = new ExpantaNum([null, 1, 0, 1, 1][n]);
-		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks")) return base;
+		if (!tmp.inf.asc.perkActive(n) || player.inf.endorsements.lt(10) || nerfActive("noPerks") || (mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) return base;
 		let pow = new ExpantaNum(tmp.inf.asc.perkPower[n]);
 		if (pow.gte(90)) pow = pow.div(10).plus(81)
 		if (pow.gte(150)) pow = pow.sqrt().times(Math.sqrt(150))
@@ -575,10 +584,11 @@ function updateTempStadium() {
 		if (player.inf.stadium.completions.includes(name))
 			l = Math.min(player.inf.stadium.completions.indexOf(name) + 1, l);
 		let goal = goal_data[l - 1] ? goal_data[l - 1] : new ExpantaNum(1 / 0);
+		if (mltRewardActive(1)) goal = ExpantaNum.pow(goal, name=="eternity"?MLT_1_ETERNITY_GOAL_EXP:MLT_1_STADIUM_GOAL_EXP)
 		return goal;
 	};
 	tmp.inf.stadium.canComplete =
-		player.inf.endorsements.gte(15) &&
+		(player.inf.endorsements.gte(15) && !(mltActive(3) && !player.mlt.mlt3selected.includes("stadium"))) &&
 		player.inf.stadium.current != "" &&
 		player.distance.gte(Object.keys(EXTREME_STADIUM_DATA).includes(player.inf.stadium.current)?extremeStadiumGoal(player.inf.stadium.current):tmp.inf.stadium.goal(player.inf.stadium.current));
 	if (!tmp.inf.stadium.start) tmp.inf.stadium.start = function (name) {
@@ -601,7 +611,7 @@ function updateTempStadium() {
 	};
 	if (!tmp.inf.stadium.completed) tmp.inf.stadium.completed = function (name) {
 		if (extremeStadiumActive("spectra", 3)) return false
-		return player.inf.endorsements.gte(15) && player.inf.stadium.completions.includes(name);
+		return (player.inf.endorsements.gte(15) && !(mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) && player.inf.stadium.completions.includes(name);
 	};
 	if (!tmp.inf.stadium.progress) tmp.inf.stadium.progress = function() {
 		let current = player.inf.stadium.current
@@ -616,8 +626,10 @@ function updateTempPantheon() {
 	tmp.inf.pantheon.totalGems = player.inf.pantheon.gems.plus(player.inf.pantheon.angels).plus(player.inf.pantheon.demons);
 	tmp.inf.pantheon.bc = new ExpantaNum(21);
 	if (tmp.inf.upgs.has("5;9")) tmp.inf.pantheon.bc = new ExpantaNum(16);
-	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(2).plus(tmp.inf.pantheon.bc).sub(1);
-	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).sqrt().floor();
+	tmp.inf.pantheon.gemExp = new ExpantaNum(2)
+	if (mltRewardActive(5) && tmp.inf.pantheon.hauntingEnergyBoost) tmp.inf.pantheon.gemExp = tmp.inf.pantheon.gemExp.sub(ExpantaNum.sub(2, ExpantaNum.div(2, tmp.inf.pantheon.hauntingEnergyBoost)))
+	tmp.inf.pantheon.next = tmp.inf.pantheon.totalGems.plus(1).pow(tmp.inf.pantheon.gemExp).plus(tmp.inf.pantheon.bc).sub(1);
+	tmp.inf.pantheon.bulk = player.inf.endorsements.sub(tmp.inf.pantheon.bc).add(1).root(tmp.inf.pantheon.gemExp).floor();
 	if (scalingActive("spectralGems", tmp.inf.pantheon.totalGems.max(tmp.inf.pantheon.bulk), "scaled")) {
 		let start = getScalingStart("scaled", "spectralGems");
 		let power = getScalingPower("scaled", "spectralGems");
@@ -626,13 +638,13 @@ function updateTempPantheon() {
 			.pow(exp)
 			.div(start.pow(exp.sub(1)))
 			.plus(1)
-			.pow(2)
+			.pow(tmp.inf.pantheon.gemExp)
 			.plus(tmp.inf.pantheon.bc)
 			.sub(1);
 		tmp.inf.pantheon.bulk = player.inf.endorsements
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
-			.sqrt()
+			.root(tmp.inf.pantheon.gemExp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.plus(1)
@@ -651,13 +663,13 @@ function updateTempPantheon() {
 			.pow(exp)
 			.div(start.pow(exp.sub(1)))
 			.plus(1)
-			.pow(2)
+			.pow(tmp.inf.pantheon.gemExp)
 			.plus(tmp.inf.pantheon.bc)
 			.sub(1);
 		tmp.inf.pantheon.bulk = player.inf.endorsements
 			.sub(tmp.inf.pantheon.bc)
 			.add(1)
-			.sqrt()
+			.root(tmp.inf.pantheon.gemExp)
 			.times(start.pow(exp.sub(1)))
 			.pow(exp.pow(-1))
 			.times(start2.pow(exp2.sub(1)))
@@ -690,8 +702,10 @@ function updateTempPantheon() {
 		player.inf.pantheon.demonicSouls = new ExpantaNum(0);
 		tmp.inf.layer.reset(true);
 	};
-	tmp.inf.pantheon.chipGain = ExpantaNum.pow(2, player.inf.pantheon.angels).sub(1);
-	tmp.inf.pantheon.soulGain = ExpantaNum.pow(2, player.inf.pantheon.demons).sub(1);
+	tmp.inf.pantheon.angelDemonPhantomBase = new ExpantaNum(2);
+	if (mltRewardActive(5) && tmp.inf.pantheon.hauntingEnergyBoost2) tmp.inf.pantheon.angelDemonPhantomBase = tmp.inf.pantheon.angelDemonPhantomBase.times(tmp.inf.pantheon.hauntingEnergyBoost2)
+	tmp.inf.pantheon.chipGain = ExpantaNum.pow(tmp.inf.pantheon.angelDemonPhantomBase, player.inf.pantheon.angels).sub(1);
+	tmp.inf.pantheon.soulGain = ExpantaNum.pow(tmp.inf.pantheon.angelDemonPhantomBase, player.inf.pantheon.demons).sub(1);
 	if (modeActive("easy")) {
 		tmp.inf.pantheon.chipGain = tmp.inf.pantheon.chipGain.times(4)
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(4)
@@ -718,19 +732,42 @@ function updateTempPantheon() {
 	let h = player.inf.pantheon.heavenlyChips;
 	let d = player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
-	tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
-	if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
-	if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
-	tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-	if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
-	if (tmp.inf.pantheon.chipBoost.gte(2.5)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.logBase(2.5).plus(1.5);
-	tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-	if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2);
-	if (tmp.inf.pantheon.soulBoost.gte(2.5)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.logBase(2.5).plus(1.5);
+	if (mltRewardActive(5)) {
+		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().times(-0.01)
+		if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(2)
+		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(2)
+		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
+		tmp.inf.pantheon.chipBoost = h.times(d.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = d.times(h.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+	} else {
+		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
+		if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
+		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
+		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
+		tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+	}
+	if (!mltRewardActive(5)) {
+		if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
+		if (tmp.inf.pantheon.chipBoost.gte(2.5)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.logBase(2.5).plus(1.5);
+	} else tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.pow(1.25);
+	if (!mltRewardActive(5)) {
+		if (tmp.inf.pantheon.soulBoost.gte(2)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.slog(2).times(2);
+		if (tmp.inf.pantheon.soulBoost.gte(2.5)) tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.logBase(2.5).plus(1.5);
+	} else tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.pow(1.25);
+	if (mltRewardActive(5) && !mltActive(5)) {
+		tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.pow(2);
+		tmp.inf.pantheon.soulBoost = tmp.inf.pantheon.soulBoost.pow(2);
+	}
 	if (player.inf.pantheon.purge.active||HCCBA("purge")) {
 		tmp.inf.pantheon.chipBoost = new ExpantaNum(1);
 		tmp.inf.pantheon.soulBoost = new ExpantaNum(1);
 	}
+	
+	tmp.inf.pantheon.phantoms = tmp.inf.pantheon.totalGems.div(3).floor();
+	tmp.inf.pantheon.hauntingEnergyGain = ExpantaNum.pow(tmp.inf.pantheon.angelDemonPhantomBase, tmp.inf.pantheon.phantoms).sub(1);
+	tmp.inf.pantheon.hauntingEnergyBoost = player.inf.pantheon.hauntingEnergy.plus(1).log10().plus(1).log10().div(3).plus(1)
+	tmp.inf.pantheon.hauntingEnergyBoost2 = ExpantaNum.pow(10, player.inf.pantheon.hauntingEnergy.log10().sqrt()).pow(10).max(1);
 }
 
 function updateTempPurge() {
@@ -785,31 +822,42 @@ function updateTempPurge() {
 	};
 }
 
+function getDervNames() {
+	if (mltRewardActive(2)) return DERV_MLT_2
+	return DERV;
+}
+
+function getDervIncrs() {
+	if (mltRewardActive(2)) return DERV_INCR_MLT_2
+	return DERV_INCR;
+}
+
 function updateTempDerivatives() {
 	if (!tmp.inf.derv) tmp.inf.derv = {};
 	tmp.inf.derv.maxShifts = new ExpantaNum(2);
 	if (!tmp.inf.derv.unlocked) tmp.inf.derv.unlocked = function (name) {
 		if (name == "distance" || name == "velocity" || name == "acceleration") return true;
-		if (name == "jerk" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:1)) return true;
-		if (name == "snap" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:2)) return true;
+		else if (name == "jerk" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:1)) return true;
+		else if (name == "snap" && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:2)) return true;
+		else if ((mltRewardActive(2)&&name!="jerk"&&name!="snap") && player.inf.derivatives.unlocks.gte(HCCBA("noDS")?1/0:(getDervIncrs().indexOf(name)*3-4))) return true;
 		return false;
 	};
 	if (!tmp.inf.derv.amt) tmp.inf.derv.amt = function (name) {
-		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance" || name == "velocity") return player[name];
 		if (name == "acceleration") return tmp.acc;
 		return player.inf.derivatives.amts[name] ? player.inf.derivatives.amts[name] : new ExpantaNum(0);
 	};
 	if (!tmp.inf.derv.gain) tmp.inf.derv.gain = function (name) {
-		if (!player.inf.derivatives.unl) return new ExpantaNum(0);
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return new ExpantaNum(0);
 		if (!tmp.inf.derv.unlocked(name)) return new ExpantaNum(0);
 		if (name == "distance")
 			return adjustGen(player.velocity, "dist").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
 		if (name == "velocity")
 			return adjustGen(tmp.acc, "vel").times(nerfActive("noTS") ? 1 : tmp.timeSpeed);
-		let next = DERV_INCR[DERV_INCR.indexOf(name) + 1];
-		if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
+		let next = getDervIncrs()[getDervIncrs().indexOf(name) + 1];
+		if (!mltRewardActive(2)) if (name=="snap" && tmp.inf.upgs.has("10;1")) return adjustGen(INF_UPGS.effects["10;1"]("snp").times(tmp.inf.derv.mult(name)), "derv")
 		if (next === undefined) return new ExpantaNum(0);
 		let gain = adjustGen(tmp.inf.derv.mult(name).times(tmp.inf.derv.amt(next)), "derv");
 		if (name == "acceleration")
@@ -823,7 +871,8 @@ function updateTempDerivatives() {
 						).max(1)
 					)
 				);
-		return gain.times((nerfActive("noTS")||name=="snap") ? 1 : tmp.timeSpeed);
+		if (((!hasMltMilestone(16)?(name == "snap"):(name==getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()]))) && tmp.inf.upgs.has("10;1")) return INF_UPGS.effects["10;1"]("snp").times(gain).times(nerfActive("noTS") ? 1 : tmp.timeSpeed)
+		return gain.times((nerfActive("noTS")||(name=="snap"&&!mltRewardActive(2))) ? 1 : tmp.timeSpeed);
 	};
 	tmp.inf.derv.costBase = new ExpantaNum(modeActive("extreme")?4e34:2.5e29)
 	tmp.inf.derv.costLB = new ExpantaNum(modeActive("extreme")?2.5:2)
@@ -909,18 +958,19 @@ function updateTempDerivatives() {
 		return mult;
 	};
 	if (!tmp.inf.derv.tick) tmp.inf.derv.tick = function (diff) {
-		if (!player.inf.derivatives.unl) return;
-		for (let i = 0; i < DERV_INCR.length; i++) {
-			let name = DERV_INCR[i];
-			let next = DERV_INCR[i + 1];
+		if (!player.inf.derivatives.unl || (mltActive(3) && !player.mlt.mlt3selected.includes("derivatives"))) return;
+		let incr = getDervIncrs();
+		for (let i = 0; i < incr.length; i++) {
+			let name = incr[i];
+			let next = incr[i + 1];
 			if (!tmp.inf.derv.unlocked(name)) continue;
-			if (name=="snap" && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts["snap"]||0).gt(0)) {
+			if ((!hasMltMilestone(16)?(name == "snap"):(name==getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()])) && tmp.inf.upgs.has("10;1") && new ExpantaNum(player.inf.derivatives.amts[(!hasMltMilestone(16)?"snap":(getDervIncrs()[player.inf.derivatives.unlocks.plus(4).div(3).floor().min(8).toNumber()]))]||0).gt(0)) {
 				player.inf.derivatives.amts[name] = new ExpantaNum(player.inf.derivatives.amts[name]||0).plus(adjustGen(INF_UPGS.effects["10;1"]("snp"), "derv").times(tmp.inf.derv.mult(name))).max(1)
-				return
+				if (!mltRewardActive(2)) return
 			}
-			if (i == DERV_INCR.length - 1 ? true : !tmp.inf.derv.unlocked(next))
+			if ((i == incr.length - 1 ? true : !tmp.inf.derv.unlocked(next)) && !(hasMltMilestone(16)&&ExpantaNum.gt(player.inf.derivatives.amts[name]||0, 0))) {
 				player.inf.derivatives.amts[name] = new ExpantaNum(1);
-			else
+			} else
 				player.inf.derivatives.amts[name] = (player.inf.derivatives.amts[name]
 					? player.inf.derivatives.amts[name]
 					: new ExpantaNum(0)
@@ -960,7 +1010,7 @@ function infTick(diff) {
 		adjustGen(tmp.inf.knowledgeGain, "knowledge").times(diff)
 	);
 	
-	if (player.inf.endorsements.gte(10)) {
+	if (player.inf.endorsements.gte(10) && !(mltActive(3) && !player.mlt.mlt3selected.includes("ascension"))) {
 		for (let i = 1; i <= 4; i++)
 			if (tmp.inf.asc.perkActive(i))
 				player.inf.ascension.time[i - 1] = player.inf.ascension.time[i - 1].sub(diff).max(0);
@@ -970,7 +1020,7 @@ function infTick(diff) {
 			);
 	}
 	
-	if (player.inf.endorsements.gte(21)) {
+	if (player.inf.endorsements.gte(21) && !(mltActive(3) && !player.mlt.mlt3selected.includes("pantheon"))) {
 		tmp.inf.pantheon.collect();
 		player.inf.pantheon.heavenlyChips = player.inf.pantheon.heavenlyChips.plus(
 			diff.times(adjustGen(tmp.inf.pantheon.chipGain, "heavenlyChips"))
@@ -978,11 +1028,13 @@ function infTick(diff) {
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
 			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
 		);
+		if (mltRewardActive(5)) player.inf.pantheon.hauntingEnergy = player.inf.pantheon.hauntingEnergy.plus(diff.times(adjustGen(tmp.inf.pantheon.hauntingEnergyGain, "hauntingEnergy")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
 	}
 	
-	if (player.elementary.hc.unl) {
+	if (player.elementary.hc.unl || hasMltMilestone(14)) {
 		let autoPurgeMul = TREE_UPGS[28].effect(player.elementary.theory.tree.upgrades[28]||0)
+		if (hasMltMilestone(14)) autoPurgeMul = new ExpantaNum(1);
 		if (autoPurgeMul.gt(0)) {
 			player.inf.pantheon.purge.power = player.inf.pantheon.purge.power.max(tmp.inf.pantheon.purgeGain.plus(player.inf.pantheon.purge.power).times(autoPurgeMul).floor());
 		}

@@ -219,9 +219,9 @@ function loadTempFeatures() {
 			name: "skyrmions",
 			res_amt: 3,
 			req: [
-				new ExpantaNum(SKY_REQ[0]),
-				new ExpantaNum(SKY_REQ[1]),
-				new ExpantaNum(SKY_REQ[2])
+				new ExpantaNum(getSkyReqData(0)),
+				new ExpantaNum(getSkyReqData(1)),
+				new ExpantaNum(getSkyReqData(2))
 			],
 			res: ["distance", function() { return player.elementary.fermions.quarks.amount }, function() { return player.elementary.fermions.leptons.amount }],
 			resName: ["distance", "quarks", "leptons"],
@@ -232,20 +232,34 @@ function loadTempFeatures() {
 					return player.distance
 						.max(1)
 						.log10()
-						.div(new ExpantaNum(SKY_REQ[0]).log10())
+						.div(new ExpantaNum(getSkyReqData(0)).log10())
 						.min(1)
-						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[1]).log10()).min(1))
-						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(SKY_REQ[2]).log10()).min(1));
+						.times(player.elementary.fermions.quarks.amount.max(1).log10().div(new ExpantaNum(getSkyReqData(1)).log10()).min(1))
+						.times(player.elementary.fermions.leptons.amount.max(1).log10().div(new ExpantaNum(getSkyReqData(2)).log10()).min(1));
 				} else {
 					return player.distance
-						.div(SKY_REQ[0])
+						.div(getSkyReqData(0))
 						.min(1)
-						.times(player.elementary.fermions.quarks.amount.div(SKY_REQ[1]).min(1))
-						.times(player.elementary.fermions.leptons.amount.div(SKY_REQ[2]).min(1));
+						.times(player.elementary.fermions.quarks.amount.div(getSkyReqData(1)).min(1))
+						.times(player.elementary.fermions.leptons.amount.div(getSkyReqData(2)).min(1));
 				}
 			},
 			spec: [false, true, true],
 			superSpec: [false, true, true],
+		}),
+		multiverse: new Feature({
+			name: "multiverse",
+			req: function() { return new ExpantaNum(DISTANCES.mlt) },
+			res: "distance",
+			display: formatDistance,
+			reached: function() { return false },
+			progress: function() {
+				if (player.options.featPerc=="logarithm") {
+					return player.distance.max(1).log10().div(ExpantaNum.log10(DISTANCES.mlt)).min(1);
+				} else {
+					return player.distance.div(DISTANCES.mlt).min(1);
+				}
+			},
 		}),
 	};
 }
@@ -258,6 +272,7 @@ function updateTempSpecial() {
 	for (let i = 0; i < Object.keys(tmp.features).length; i++) {
 		let feature = Object.values(tmp.features)[i];
 		if (!(feature.name=="theory"&&player.elementary.theory.unl)) if (!feature.reached) {
+			if (mltActive(1) && (feature.name=="theory"||feature.name=="hadronic challenge"||feature.name=="quantum foam"||feature.name=="skyrmions")) continue;
 			tmp.nf = feature.name;
 			break;
 		}
@@ -276,6 +291,15 @@ function updateTempSpecial() {
 	if (tmp.selAch === undefined || player.tab !== "achievements") tmp.selAch = 0;
 	tmp.ga = player.achievements.length;
 	tmp.ta = getAllAchievements().length;
+	
+	// Misc
+	if (tmp.nf=="skyrmions") {
+		tmp.features.skyrmions.req = [
+			new ExpantaNum(getSkyReqData(0)),
+			new ExpantaNum(getSkyReqData(1)),
+			new ExpantaNum(getSkyReqData(2))
+		]
+	}
 }
 
 function updateLayerMults() {

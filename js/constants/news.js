@@ -1,9 +1,19 @@
 var eheheTimes = 0;
+var eheheResetAmt = 0;
+var eheheResetReq = 1000;
 var ehehe = function() { 
-	eheheTimes++;
-	if (eheheTimes>=1000000) return 'EHEHE '+eheheTimes+': OKAY STOP. I GIVE UP. YOURE CRAZY AND WHY WOULD YOU DO THIS?!?!?!??!?!!?!'
-	else if (eheheTimes>=1000) return 'EHEHE '+eheheTimes+': SERIOUSLY STOP IT YOURE INSANE!'
+	eheheTimes+=eheheResetAmt+1;
+	if (eheheTimes>=eheheResetReq) return 'EHEHE '+eheheTimes+': Copy paste the following to prestige: console.log(ehehePrestige())'
 	else return 'EHEHE '+eheheTimes+': Copy paste the following into the console and press enter: console.log(ehehe())' 
+}
+var ehehePrestige = function() {
+	if (eheheTimes<eheheResetReq) return "NOT ENOUGH EHEHE, YOU NEED "+eheheResetReq;
+	else {
+		eheheTimes = 0
+		eheheResetReq = Math.round(eheheResetReq*1.2);
+		eheheResetAmt++;
+		return "EHEHE PRESTIGE POINTS: "+eheheResetAmt+": Multiply EHEHE gain by "+(eheheResetAmt+1)+" (copy paste the following into the console: console.log(ehehe()))"
+	}
 }
 const NEWS_DATA = {
 	// No Conditions
@@ -98,8 +108,21 @@ const NEWS_DATA = {
 	m89: ["For all the tickers saying you are Canadian: Canadian or not, you are enjoying this game."],
 	m90: ["In 2073, we will be at v193.6, with over 200 prestige layers, and the game will cost over $20.00"],
 	m91: ["Well yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually yes, but actually -INFINITE LOOP-"],
-	m92: ["Check the console after pressing <a href='#' onclick=&quot;console.log(ehehe())&quot;>here</a>..."],
+	m92: ["Check the console after pressing <a href='#' onclick='console.log(ehehe()); return false;'>here</a>..."],
 	m93: ["Hello puny mortals. I have come back in time to tell you that this game will be dead in two days... or maybe I've come back too far?"],
+	m94: ['"If I edit a message to ping, will it actually ping the user?" - New Discord User'],
+	m95: ['"Sea urchins, malt? Whats next, cream pie?" - A food nerd'],
+	m96: ["Jacorb finds it mind-boggling that DI was first released publicly on May 1st 2020. You'd better remember that, you might see it in a Kahoot!"],
+	m97: ["Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: Ticker: T- go to #spam please :)"],
+	m98: ["Paradoxes 101: This statement is false."],
+	m99: ["Paradoxes 201: The following statement is false. The previous statement is true."],
+	m100: ["Paradoxes 301: The following statement is false. The following statement is false. The first statement is false."],
+	m101: ["Jacorb's mental instability is increasing quite quickly. If he reaches 100% mental instability, the multiverse implodes."],
+	m102: ["Has this game been abandoned by its developer? "+((Math.random()>0.5)?"Obviously yes.":"Definitely not.")],
+	m103: ['"When is the egg update coming?" - The Almighty Orb about his own game'],
+	m104: ["We're lucky that our universes were never infected, I'm sure there's some parallel multiverse out there where that's an issue..."],
+	m105: ["Some people say that each multiverse does not have its own High Gods. Those people tend not to survive very long around here."],
+	m106: ["Some people say that there is only one set of High Gods. Those people tend not to survive very long around here."],
 
 	// Distance-based Conditions
 	d1: [
@@ -487,5 +510,35 @@ const NEWS_DATA = {
 	s33: [
 		'"Elementary is cool, it has hadronic challenged me to make up theories and has brought to photonic light a new meme: fome, I must go now, my skyrmions need me." - A really punny guy',
 		function() { return player.elementary.sky.unl },
+	],
+	s34: [
+		"No wait please, don't obliterate the multiverse, I need it to survive!",
+		function() { return player.distance.gte(DISTANCES.mlt)&&player.mlt.times.eq(0) },
+	],
+	s35: [
+		"If the world is your oyster, then the multiverse is your ocean. That's right, you own the ocean now.",
+		function() { return player.mlt.times.gt(0) },
+	],
+	s36: [
+		'"But where are the pentogens?" - Incremental Mass fan after unlocking multiverses',
+		function () {
+			return player.mlt.times.gt(0)
+		}
+	],
+	s37: [
+		"lOoK iT'S cRaCKlE!?!?!?!!",
+		function() { return player.inf.derivatives.amts.crackle!==undefined },
+	],
+	s38: [
+		'"(Derivative after the latest you have unlocked) when?" - A derivative enthusiast',
+		function() { return player.mlt.highestCompleted>=2 },
+	],
+	s39: [
+		"Even the High Gods aren't perfect. Although they're supposed to look over the multiverse, there are some threats that are just... too much.",
+		function() { return player.elementary.times.gte(555) && player.elementary.times.lt(777777) },
+	],
+	s40: [
+		"There are more multiverses out there, somewhere... I wonder what sort of chaos is going on over there.",
+		function() { return player.mlt.highestCompleted>=5 },
 	],
 };

@@ -69,6 +69,7 @@ function calcMaxVelocity(){
 	if (nerfActive("nerfMaxVel")) tmp.maxVel = tmp.maxVel.pow(0.1);
 	if (extremeStadiumActive("nullum", 2)) tmp.maxVel = ExpantaNum.pow(10, tmp.maxVel.log10().times(0.9-0.02*(extremeStadDiffLevel("nullum")-2)))
 	if (modeActive("hikers_dream") && tmp.hd) tmp.maxVel = tmp.maxVel.pow(tmp.hd.inclineRed)
+	if (mltActive(2)) tmp.maxVel = tmp.maxVel.root(1.3);
 }
 
 function calcAccelerationEnergy(){
