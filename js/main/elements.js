@@ -270,16 +270,14 @@ function updateRobotsHTML(){
 }
 
 function updateAutomationHTML(){
-	if (player.tab == "auto") {
-		updateRobotsHTML()
+	if (player.tab == "auto") updateRobotsHTML()
 
-		// Automators
-		for (let i = 0; i < Object.keys(AUTOMATORS).length; i++) {
-			tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
-			player.automators[Object.keys(AUTOMATORS)[i]] =
-				tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
-			let name = Object.keys(AUTOMATORS)[i]
-		}
+	// Automators
+	for (let i = 0; i < Object.keys(AUTOMATORS).length; i++) {
+		tmp.el["automatorDiv-" + Object.keys(AUTOMATORS)[i]].setDisplay(Object.values(AUTOMATORS)[i]());
+		player.automators[Object.keys(AUTOMATORS)[i]] =
+			tmp.el["automator-" + Object.keys(AUTOMATORS)[i]].isChecked() && Object.values(AUTOMATORS)[i]();
+		let name = Object.keys(AUTOMATORS)[i]
 	}
 }
 
