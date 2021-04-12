@@ -89,6 +89,8 @@ function updateOptionsHTML(){
 		tmp.el.elc.setTxt("Elementary Confirmation: "+ (player.options.elc ? "ON" : "OFF"));
 		tmp.el.mltnc.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"))
 		tmp.el.mltnc.setTxt("Multiverse Confirmation: "+ (player.options.mltnc ? "OFF" : "ON"));
+		tmp.el.mltforcetab.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"))
+		tmp.el.mltforcetab.setTxt("Multiverse Tab Shown on Reset: "+ ((player.options.mltforcetab||(player.options.mltforcetab===undefined)) ? "ON" : "OFF"));
 		tmp.el.hideMltBtn.changeStyle("visibility", (player.mlt.times.gt(0)?"visible":"hidden"));
 		tmp.el.hideMltBtn.setTxt("Multiverse Reset Button: "+(player.options.hideMltBtn ? "MULTIVERSE TAB" : "TOP OF SCREEN"))
 		tmp.el.saveImp.setTxt("Imports: "+ capitalFirst(player.options.saveImp));

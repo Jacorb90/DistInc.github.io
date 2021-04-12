@@ -21,7 +21,7 @@ function updateMiscMltStuff() {
 function setMultiverseResetFunction() {
 	if (!tmp.mlt.onReset) tmp.mlt.onReset = function (prev, auto) {
 		// Main Stuff
-		if (!auto) {
+		if (!auto && player.options.mltforcetab) {
 			player.mlt.active = "NONE";
 			player.tab = "mlt"
 		} else player.tab = prev.tab;
@@ -63,7 +63,7 @@ function setMultiverseResetFunction() {
 		player.elementary.theory.bestDepth = prev.elementary.theory.bestDepth;
 			
 		// Bugfixes
-		if (!auto) {
+		if (!auto && player.options.mltforcetab) {
 			infTab = "infinity"
 			elmTab = "fermions"
 			player.mlt.mlt1selected = [];

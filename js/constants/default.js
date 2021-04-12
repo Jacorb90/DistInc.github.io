@@ -14,6 +14,7 @@ const DEFAULT_START = {
 		newst: true,
 		elc: true,
 		mltnc: false,
+		mltforcetab: true,
 		hideMltBtn: false,
 		saveImp: "new save",
 		hot: true,

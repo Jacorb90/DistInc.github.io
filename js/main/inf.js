@@ -269,7 +269,7 @@ function updateTempInfLayer() {
 		infActive = true;
 		let amActive = player.inf.endorsements.eq(9);
 		let message =
-			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you" +
+			"The High God <span class='infinity'>Infinity</span> has seen your power, and would like to endorse you (press E to skip)" +
 			".<br><button class='btn inf' onclick='tmp.inf.layer.reset(false, false)'>Allow <span class='infinity'>Infinity</span> to endorse you</button>";
 		if (amActive)
 			message =

@@ -261,7 +261,7 @@ function importHC() {
 	let toImport = prompt("Paste Hadronic Challenge data here.")
 	try {
 		let data = JSON.parse(atob(toImport))
-		player.elementary.hc.selectors = data
+		for (let d in data) if (checkFunc(HC_DATA[d][3])) player.elementary.hc.selectors[d] = data[d];
 		updateHCSelectorInputs()
 	} catch(e) {
 		notifier.warn("Invalid Hadronic Challenge data!")
