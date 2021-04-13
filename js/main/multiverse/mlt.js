@@ -63,9 +63,11 @@ function setMultiverseResetFunction() {
 		player.elementary.theory.bestDepth = prev.elementary.theory.bestDepth;
 			
 		// Bugfixes
-		if (!auto && player.options.mltforcetab) {
-			infTab = "infinity"
-			elmTab = "fermions"
+		if (!auto) {
+			if (player.options.mltforcetab) {
+				infTab = "infinity"
+				elmTab = "fermions"
+			}
 			player.mlt.mlt1selected = [];
 			player.mlt.mlt3selected = [];
 		} 

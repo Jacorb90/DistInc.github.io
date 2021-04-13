@@ -839,7 +839,7 @@ const HC_TITLE = {
 	preontb: "You cannot gain Preons or Theoretical Boosters (both are reset on start)",
 	aclron: "You cannot gain Accelerons (they are reset on start)",
 	de: "The last X Dark Expanders do nothing (disabled: 0)",
-	infl: "You cannot gain Inflations (they are reset on start)",
+	infl: "You cannot gain Inflatons (they are reset on start)",
 	rfrm: "You can only reform up to the (5-x)th foam (disabled: 0, they are reset on start)",
 	etrpy: "You cannot gain Entropy (they are reset on start, along with their upgrades)",
 	sky: "You cannot gain Skyrmions, Pions, or Spinors (all are reset on start)",
