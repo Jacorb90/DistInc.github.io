@@ -216,7 +216,7 @@ function startHC() {
 	}
 	if (getHCSelector("aclron") && !mltMode) player.elementary.theory.accelerons.amount = new ExpantaNum(0);
 	if (getHCSelector("infl") && !mltMode) player.elementary.theory.inflatons.amount = new ExpantaNum(0);
-	if (getHCSelector("rfrm") && !mltMode) player.elementary.foam.maxDepth = new ExpantaNum(1);
+	if ((getHCSelector("rfrm")=="0") && !mltMode) player.elementary.foam.maxDepth = new ExpantaNum(1);
 	if (getHCSelector("etrpy") && !mltMode) {
 		player.elementary.entropy.amount = new ExpantaNum(0);
 		player.elementary.entropy.best = new ExpantaNum(0);
