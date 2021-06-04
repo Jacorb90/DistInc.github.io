@@ -206,6 +206,7 @@ function updateTempGauge() {
 	if (player.elementary.entropy.upgrades.includes(15)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(5)
 	if (player.elementary.sky.unl && tmp.elm.sky) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.pow(tmp.elm.sky.spinorEff[11])
 	if (modeActive("easy")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(2);
+	if(modeActive("super_easy")) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(4);
 	if (ExpantaNum.gte(player.elementary.theory.tree.upgrades[41]||0, 1) && hasDE(6)) tmp.elm.bos.forceEff = tmp.elm.bos.forceEff.times(TREE_UPGS[41].effect(player.elementary.theory.tree.upgrades[41]||0))
 	let gaugeSpeed = new ExpantaNum(tmp.elm.bos.forceEff);
 
