@@ -409,6 +409,10 @@ const MODES = {
 	hikers_dream: {
 		desc: "You have to climb up a hill that gets steeper and steeper as you go (making progress slow down drastically), however there are new buffs to compensate for this steep hill.",
 	},
+	super_easy: {
+		desc: "Easy but super easy.",
+		ext: ["easy"]
+	},
 };
 
 const MODE_TABLE_DATA = {
