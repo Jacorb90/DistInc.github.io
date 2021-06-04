@@ -272,7 +272,7 @@ function updateTempScalar() {
 	if (tmp.inf510) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(INF_UPGS.effects["5;10"]().hb);
 	if (player.elementary.theory.tree.unl) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(TREE_UPGS[2].effect(player.elementary.theory.tree.upgrades[2]||0))
 	if (modeActive("easy")) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(10)
-	if (modeActive("supereasy")) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(1e10)
+	if (modeActive("super_easy")) tmp.elm.bos.higgsGain = tmp.elm.bos.higgsGain.times(1e10)
 	if (!tmp.elm.bos.buyHiggs) tmp.elm.bos.buyHiggs = function(id) {
 		let data = HIGGS_UPGS[id]
 		if (player.elementary.bosons.scalar.higgs.amount.lt(data.cost) || player.elementary.bosons.scalar.higgs.upgrades.includes(id)) return
