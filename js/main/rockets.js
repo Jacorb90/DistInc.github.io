@@ -33,6 +33,7 @@ function getRocketEffect() {
 
 function getRocketGainMult() {
 	let mult = new ExpantaNum(1);
+	if(modeActive("super-easy"))mult=mult.times(3)
 	if (tmp.ach[34].has) mult = mult.times(1.1);
 	if (tmp.ach[15].has) mult = mult.times(1.05);
 	if (tmp.ach[26].has) mult = mult.times(1.1);
