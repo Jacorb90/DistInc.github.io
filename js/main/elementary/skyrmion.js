@@ -271,8 +271,8 @@ function maxField(type, lims={}, ignoreUpgReq=false) {
 
 function maxBothFields() {
 	if (!tmp.ach[178].has) return;
-	maxField("pions")
-	maxField("spinors")
+	maxField("pions", {}, true)
+	maxField("spinors", {}, true)
 }
 
 function exportField(type) {

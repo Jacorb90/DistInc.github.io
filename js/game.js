@@ -39,7 +39,7 @@ var needUpdate = true
 var updating = false
 var visUpdTicks = 1/0
 var robotActives = {}
-var correctLink = "jacorb90.github.io"
+var correctLink = "jacorb90.me"
 var outerShiftDown = false
 
 // Game Loops 

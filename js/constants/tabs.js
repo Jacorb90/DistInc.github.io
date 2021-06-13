@@ -39,7 +39,7 @@ const TABBTN_SHOWN = {
 		return player.inf.unl || (player.mlt.times.gt(0)&&tmp.inf.can);
 	},
 	elementary: function () {
-		return (tmp.elm ? tmp.elm.can : false) || player.elementary.times.gt(0) || player.elementary.hc.active;
+		return (tmp.elm ? tmp.elm.can : false) || player.elementary.times.gt(0) || player.elementary.theory.active || player.elementary.hc.active;
 	},
 };
 
