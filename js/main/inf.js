@@ -378,7 +378,7 @@ function updateTempAscension() {
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff);
 	if (extremeStadiumComplete("nullum")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.plus(0.25)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]());
-	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost ? tmp.soulBoost : 1);
+	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.inf.pantheon && tmp.inf.pantheon.soulBoost ? tmp.inf.pantheon.soulBoost : 1);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1));
@@ -991,7 +991,6 @@ function updateTempInf() {
 			tmp.inf.layer.reset(true);
 		};
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete;
-		if (!tmp.soulBoost) tmp.soulBoost = tmp.inf.pantheon.soulBoost;
 		if (!tmp.doDervReset) tmp.doDervReset = tmp.inf.derv.resetDervs;
 	}
 	
