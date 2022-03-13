@@ -730,7 +730,8 @@ function updateTempPantheon() {
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(mul)
 	}
 	let h = player.inf.pantheon.heavenlyChips;
-	let d = tmp.ach[135].has ? player.bestDemonicSouls : player.inf.pantheon.demonicSouls;
+	let adjustedD = tmp.ach[135].has ? player.bestDemonicSouls : player.inf.pantheon.demonicSouls;
+	let d = player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
 	if (mltRewardActive(5)) {
 		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().times(-0.01)
@@ -738,14 +739,14 @@ function updateTempPantheon() {
 		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(2)
 		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
 		tmp.inf.pantheon.chipBoost = h.times(d.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-		tmp.inf.pantheon.soulBoost = d.times(h.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = adjustedD.times(h.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	} else {
 		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
 		if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
 		tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-		tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = adjustedD.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	}
 	if (!mltRewardActive(5)) {
 		if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
