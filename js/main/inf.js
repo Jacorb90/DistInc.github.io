@@ -730,7 +730,7 @@ function updateTempPantheon() {
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(mul)
 	}
 	let h = player.inf.pantheon.heavenlyChips;
-	let d = player.inf.pantheon.demonicSouls;
+	let d = tmp.ach[135].has ? player.bestDemonicSouls : player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
 	if (mltRewardActive(5)) {
 		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().times(-0.01)
@@ -1027,6 +1027,8 @@ function infTick(diff) {
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
 			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
 		);
+		player.bestDemonicSouls = player.bestDemonicSouls.max(player.inf.pantheon.demonicSouls);
+
 		if (mltRewardActive(5)) player.inf.pantheon.hauntingEnergy = player.inf.pantheon.hauntingEnergy.plus(diff.times(adjustGen(tmp.inf.pantheon.hauntingEnergyGain, "hauntingEnergy")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
 	}

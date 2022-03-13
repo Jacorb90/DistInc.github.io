@@ -424,7 +424,7 @@ const ACH_DATA = {
 		131: "Rockets, Cadavers, & Pathogens are gained twice as fast, and Dark Flow is showNum(50)% fasterboolean(extreme, and coal & enhanced coal gain is always 100x faster).",
 		132: "The Gauge Force Effect is doubled.",
 		133: "Unlock Auto-Elementaries.",
-		135: "The Purge Power effect is halved.",
+		135: "The Purge Power effect is halved, and boost to perk strength from Demonic Souls is based on best Demonic Souls.",
 
 		141: "boolean(hikers_dream,Keep generators and buy them automatically.)",
 		142: "Endorsements that are bought automatically do not reset anything.",
