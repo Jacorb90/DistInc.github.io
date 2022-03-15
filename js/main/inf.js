@@ -378,7 +378,7 @@ function updateTempAscension() {
 	tmp.inf.asc.perkStrength = ExpantaNum.add(1, tmp.inf.asc.powerEff);
 	if (extremeStadiumComplete("nullum")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.plus(0.25)
 	if (tmp.inf.upgs.has("7;1")) tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(INF_UPGS.effects["7;1"]());
-	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.soulBoost ? tmp.soulBoost : 1);
+	tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.inf.pantheon && tmp.inf.pantheon.soulBoost ? tmp.inf.pantheon.soulBoost : 1);
 	if (tmp.elm)
 		if (player.elementary.times.gt(0))
 			tmp.inf.asc.perkStrength = tmp.inf.asc.perkStrength.times(tmp.elm.ferm.leptonR("electron").plus(1));
@@ -730,6 +730,7 @@ function updateTempPantheon() {
 		tmp.inf.pantheon.soulGain = tmp.inf.pantheon.soulGain.times(mul)
 	}
 	let h = player.inf.pantheon.heavenlyChips;
+	let adjustedD = tmp.ach[135].has ? player.bestDemonicSouls : player.inf.pantheon.demonicSouls;
 	let d = player.inf.pantheon.demonicSouls;
 	let p = player.inf.pantheon.purge.unl ? player.inf.pantheon.purge.power : new ExpantaNum(0);
 	if (mltRewardActive(5)) {
@@ -738,14 +739,14 @@ function updateTempPantheon() {
 		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(2)
 		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.times(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
 		tmp.inf.pantheon.chipBoost = h.times(d.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-		tmp.inf.pantheon.soulBoost = d.times(h.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = adjustedD.times(h.pow(tmp.inf.pantheon.ppe.times(-1)).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	} else {
 		tmp.inf.pantheon.ppe = p.div(10).plus(1).log10().plus(1).pow(-1);
 		if (tmp.inf.upgs.has("10;4")) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 		if (tmp.ach[135].has) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(2)
 		if (hasDE(9)) tmp.inf.pantheon.ppe = tmp.inf.pantheon.ppe.div(ExpantaNum.pow(1.01, player.elementary.theory.preons.boosters))
 		tmp.inf.pantheon.chipBoost = h.div(d.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
-		tmp.inf.pantheon.soulBoost = d.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
+		tmp.inf.pantheon.soulBoost = adjustedD.div(h.pow(tmp.inf.pantheon.ppe).plus(1)).plus(1).log10().plus(1).log10().plus(1);
 	}
 	if (!mltRewardActive(5)) {
 		if (tmp.inf.pantheon.chipBoost.gte(2)) tmp.inf.pantheon.chipBoost = tmp.inf.pantheon.chipBoost.slog(2).times(2);
@@ -991,7 +992,6 @@ function updateTempInf() {
 			tmp.inf.layer.reset(true);
 		};
 		tmp.canCompleteStadium = tmp.inf.stadium.canComplete;
-		if (!tmp.soulBoost) tmp.soulBoost = tmp.inf.pantheon.soulBoost;
 		if (!tmp.doDervReset) tmp.doDervReset = tmp.inf.derv.resetDervs;
 	}
 	
@@ -1028,6 +1028,8 @@ function infTick(diff) {
 		player.inf.pantheon.demonicSouls = player.inf.pantheon.demonicSouls.plus(
 			diff.times(adjustGen(tmp.inf.pantheon.soulGain, "demonicSouls"))
 		);
+		player.bestDemonicSouls = player.bestDemonicSouls.max(player.inf.pantheon.demonicSouls);
+
 		if (mltRewardActive(5)) player.inf.pantheon.hauntingEnergy = player.inf.pantheon.hauntingEnergy.plus(diff.times(adjustGen(tmp.inf.pantheon.hauntingEnergyGain, "hauntingEnergy")))
 		if (tmp.inf.pantheon.totalGems.gte(2)) player.inf.pantheon.purge.unl = true;
 	}

@@ -238,6 +238,7 @@ function transformToEN(obj, sc = DEFAULT_START) {
 	ret.bestA = new ExpantaNum(ret.bestA)
 	ret.bestEnd = new ExpantaNum(ret.bestEnd)
 	ret.bestEP = new ExpantaNum(ret.bestEP)
+	ret.bestDemonicSouls = new ExpantaNum(ret.bestDemonicSouls);
 	ret.elementary.times = new ExpantaNum(ret.elementary.times);
 	ret.elementary.particles = new ExpantaNum(ret.elementary.particles);
 	ret.elementary.fermions.amount = new ExpantaNum(ret.elementary.fermions.amount);
