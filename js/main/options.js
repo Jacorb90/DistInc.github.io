@@ -92,7 +92,7 @@ function exportSave() {
 function startModes(modes) {
 	let s = transformToEN(DEFAULT_START);
 	s.modes = modes;
-	if (s.modes.includes("aau")) s.achievements = getAllAchievements();
+	if (s.modes.includes("aau")) s.achievements = getAllAchievements(s.modes.includes("na"));
 	let all = getAllSaves();
 	if (all.indexOf(null) > -1 && all[all.indexOf(null)] === null) s.savePos = all.indexOf(null) + 1;
 	else s.savePos = all.length + 1;
