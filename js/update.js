@@ -358,9 +358,9 @@ document.onkeyup = function(e) {
 document.onkeydown = function(e) {
 	outerShiftDown = !(!e.shiftKey);
 	if (!player.options.hot || player.modes.includes("absurd")) return
-	if (player.tab=="mlt") return;
 	let shiftDown = e.shiftKey
 	let key = e.which
+	if (player.tab=="mlt" && key!==77) return;
 	switch(key) {
 		case 49: 
 			if (INF_TABS.ascension()) tmp.inf.asc.activatePerk(1)
@@ -395,6 +395,9 @@ document.onkeydown = function(e) {
 			break;
 		case 74:
 			if (modeActive("hikers_dream")) refillEnergy()
+			break;
+		case 77:
+			if (tmp.mlt.can) mltReset()
 			break;
 		case 80:
 			if (shiftDown && INF_TABS.derivatives()) tmp.inf.pantheon.startPurge()

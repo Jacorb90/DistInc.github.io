@@ -4,7 +4,6 @@
 	--tb: #03fcf0;
 	--ach: #4ceb34;
 	--rbt: #c9c9c9;
-	--threeArrows: url("images/threeArrows.jpg");
 	--font: Courier;
 	--foamcol: #d3e8cc;
 }
@@ -1180,10 +1179,11 @@ table {
 }
 
 #dc {
-	background-image: var(--threeArrows);
+	background-image: url("images/threeArrows.svg");
 	background-repeat: no-repeat;
 	background-size: 550px 550px;
-	background-position: calc(50% - 25px) 20px;
+	background-position: calc(50% - 6px) 30px;
+	height: 572px;
 }
 
 #newsticker {
