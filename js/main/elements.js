@@ -1420,7 +1420,8 @@ function updateMiscHTML(){
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
 		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
 		(TH_TABS.strings()?"S -> Entangled String reset\n":"")+
-		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset":"")
+		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset\n":"")+
+		(player.achievements.includes(178)?"M -> Multiverse reset":"")
 	);
 }
 
