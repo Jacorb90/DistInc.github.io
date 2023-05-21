@@ -1394,7 +1394,6 @@ function updateMiscHTML(){
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
-	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
 	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
 	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364")
 
