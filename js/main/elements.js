@@ -1394,7 +1394,6 @@ function updateMiscHTML(){
 	root.style.setProperty("--tb", player.options.theme == "dark" ? "#00968f" : "#03fcf0");
 	root.style.setProperty("--ach", player.options.theme == "dark" ? "#287d1b" : "#4ceb34");
 	root.style.setProperty("--rbt", player.options.theme == "dark" ? "#666666" : "#c9c9c9");
-	root.style.setProperty("--threeArrows", player.options.theme == "dark" ? 'url("images/threeArrows2.jpg")' : 'url("images/threeArrows.jpg")');
 	root.style.setProperty("--font", '"'+capitalFirst(player.options.fonts)+'"')
 	root.style.setProperty("--foamcol", player.options.theme == "dark" ? "#d3e8cc" : "#687364")
 
@@ -1421,7 +1420,8 @@ function updateMiscHTML(){
 		(TABBTN_SHOWN.elementary()?"Shift + E -> Elementary Reset\n":"")+
 		(ELM_TABS.theory()?"Shift + T -> Toggle Theoriverse\n":"")+
 		(TH_TABS.strings()?"S -> Entangled String reset\n":"")+
-		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset":"")
+		(ELM_TABS.sky()?"Shift + S -> Skyrmion reset\n":"")+
+		(player.achievements.includes(178)?"M -> Multiverse reset":"")
 	);
 }
 

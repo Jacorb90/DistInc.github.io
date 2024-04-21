@@ -92,7 +92,7 @@ function exportSave() {
 function startModes(modes) {
 	let s = transformToEN(DEFAULT_START);
 	s.modes = modes;
-	if (s.modes.includes("aau")) s.achievements = getAllAchievements();
+	if (s.modes.includes("aau")) s.achievements = getAllAchievements(s.modes.includes("na"));
 	let all = getAllSaves();
 	if (all.indexOf(null) > -1 && all[all.indexOf(null)] === null) s.savePos = all.indexOf(null) + 1;
 	else s.savePos = all.length + 1;
@@ -452,9 +452,10 @@ function getCompletedModeCombos() {
 		if (p==null) continue;
 		let m = p.modes;
 		let id = calcModeAndBalanceName(m).balanceName;
-		
+		let neededAchs = 152
+		if(p.modes.includes("na"))neededAchs=96
 		if (MODEBALANCES[id].balancing=="balanced up to first multiverse" && ExpantaNum.gte(p.bestDistance, DISTANCES.mlt) && p.achievements.length>=136) toRet.push(m);
-		else if (ExpantaNum.gte(p.bestDistance, ExpantaNum.pow(DISTANCES.mlt, 1e3)) && p.achievements.length>=152) toRet.push(m);
+		else if (ExpantaNum.gte(p.bestDistance, ExpantaNum.pow(DISTANCES.mlt, 1e3)) && p.achievements.length>=neededAchs) toRet.push(m);
 	}
 	return toRet;
 }

@@ -381,10 +381,10 @@ function getCurrentTime() {
 	return Date.now();
 }
 
-function getAllAchievements() {
+function getAllAchievements(NAactive=undefined) {
 	let a = [];
 	for (let r = 1; r <= ACH_DATA.rows; r++) for (let c = 1; c <= ACH_DATA.cols; c++) a.push(r * 10 + c);
-	if (modeActive("na")) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
+	if ((modeActive("na")&&NAactive==undefined)||NAactive) a = a.filter(x => Object.keys(ACH_DATA.rewards).includes(x.toString()));
 	return a;
 }
 
