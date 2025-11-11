@@ -50,13 +50,9 @@ class Achievement {
 
 	get desc() {
 		return (
-			this.title +
-			"\n" +
 			(ACH_DATA.descs[this.name] !== undefined
 				? this.parse(ACH_DATA.descs[this.name])
-				: "Not currently implemented.") +
-			"\n" +
-			(this.reward === "" ? "" : "Reward: " + this.reward)
+				: "Not currently implemented.")
 		);
 	}
 
@@ -67,7 +63,9 @@ class Achievement {
 	grant() {
 		if (!player.achievements.includes(this.name) && getAllAchievements().includes(this.name)) {
 			player.achievements.push(this.name);
-			notifier.success("Achievement gotten: " + ACH_DATA.names[this.name]);
+			const message = "Achievement gotten: " + ACH_DATA.names[this.name];
+			notifier.success(message);
+			document.ariaNotify(message); // specifically do it here or we get "game saved!" every 5s
 		}
 	}
 	

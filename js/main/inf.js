@@ -123,30 +123,23 @@ function updateTempInfUpgs() {
 	};
 	if (!tmp.inf.upgs.desc) tmp.inf.upgs.desc = function (sel) {
 		if (sel === undefined) return "";
-		return (
-			((sel=="10;1"&&hasMltMilestone(16))?"Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces your last Derivative at a reduced rate (unaffected by Time Speed)":INF_UPGS.descs[sel]) +
-			"<br>" +
-			(!tmp.inf.upgs.has(sel)
-				? "Cost: " +
-				  showNum(ExpantaNum.mul(INF_UPGS.costs[sel], tmp.inf.upgCostMult(sel))) +
-				  " knowledge<br>" +
-				  (INF_UPGS.reqs[sel]
-						? "Req: inf" +
-						  INF_UPGS.reqs[sel].reduce(
-								(x, y, i) => x + (i == INF_UPGS.reqs[sel].length ? "" : ", ") + "inf" + y
-						  ) +
-						  "<br>"
-						: "") +
-				  (INF_UPGS.repeals[sel]
-						? "Repeals: inf" +
-						  INF_UPGS.repeals[sel].reduce(
-								(x, y, i) => x + (i == INF_UPGS.repeals[sel].length ? "" : ", ") + "inf" + y
-						  ) +
-						  "<br>"
-						: "")
-				: "") +
-			(INF_UPGS.effects[sel] ? "Currently: " + tmp.inf.upgs.current(sel) : "")
-		);
+		const description = sel=="10;1"&&hasMltMilestone(16)?"Superscaled Pathogen Upgrade scaling is weaker based on your Ascension Power, and Distance produces your last Derivative at a reduced rate (unaffected by Time Speed)":INF_UPGS.descs[sel];
+		const isRepealed = tmp.inf.upgs.repealed(sel) ? "(repealed)" : "";
+		const cost = !tmp.inf.upgs.has(sel) ? `Cost: ${showNum(ExpantaNum.mul(INF_UPGS.costs[sel], tmp.inf.upgCostMult(sel)))} knowledge ${isRepealed}<br>` : "";
+
+		const reqsArray = INF_UPGS.reqs[sel];
+		const repealsArray = INF_UPGS.repeals[sel];
+
+		const reqs = reqsArray ? `Reqs: inf ${reqsArray.reduce((x, y, i) => x + (i == reqsArray.length ? "" : ", ") + "inf" + y)}<br>` : "";
+		const repeals = repealsArray ? `Repeals: inf ${repealsArray.reduce((x, y, i) => x + (i == repealsArray.length ? "" : ", ") + "inf" + y)}<br>` : "";
+		const effect = INF_UPGS.effects[sel] ? `Currently: ${tmp.inf.upgs.current(sel)}` : "";
+
+		return `${description}<br>
+			${cost}
+			${reqs}
+			${repeals}
+			${effect}
+		`;
 	};
 	if (!tmp.inf.upgs.buy) tmp.inf.upgs.buy = function (id) {
 		if (!tmp.inf.upgs.canBuy(id)) return;

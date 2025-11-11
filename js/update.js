@@ -122,26 +122,27 @@ function setupHTML() {
 
 	// Infinity Upgrade Table
 	let infTable = new Element("infUpgs");
-	table = "";
 	for (let r = 1; r <= INF_UPGS.rows; r++) {
-		table += "<tr>";
+		let row = document.createElement("tr");
+		infTable.el.append(row);
 		for (let c = 1; c <= INF_UPGS.cols; c++) {
 			let id = r + ";" + c;
-			table +=
-				"<td><button id='inf" +
-				id +
-				"' class='btn locked' onmouseover='tmp.inf.upgs.hover(&quot;" +
-				id +
-				"&quot;)' onclick='tmp.inf.upgs.buy(&quot;" +
-				id +
-				"&quot;)'>inf" +
-				id +
-				"</button></td>";
+			let cell = document.createElement("td");
+			row.append(cell);
+			let elem = document.createElement("button");
+			cell.append(elem);
+			elem.id = `inf-${id}`;
+			cell.id = `inf-cell-${id}`;
+			elem.class='btn locked'
+			// elem.onmouseover = () => tmp.inf.upgs.hover(id);
+			elem.onclick = (event) => srInfUpgBuy(event, id);
+/*
+			elem.innerHTML = `${INF_UPGS.descs[id]}
+			Currently: <span id="inf-effect-${id}"></span>
+			Costs: ${INF_UPGS.costs[id]} knowledge`;
+*/
 		}
-		table += "</tr>";
 	}
-	infTable.setHTML(table);
-
 	// Automators
 	let au = new Element("automator");
 	autos = "<br>";

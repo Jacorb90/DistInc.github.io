@@ -88,7 +88,7 @@
 	<div id="mainContainer" style="display: none">
 		<div class="band lb" style="min-height: 100px;">
 			<button id="mltReset" class="btn locked" onclick="mltReset()"></button>
-			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><span id="nextFeature"></span><p class="halfline">&nbsp;</p>
+			<p class="halfline">&nbsp;</p><span id="linkToGame"></span><progress min="0" max="100" id="nextFeature"></progress><p class="halfline">&nbsp;</p>
 			<div id="newsticker"><div id="news"></div></div><br>
 			<div style="overflow-x: auto;">
 				<table>
@@ -1034,7 +1034,7 @@
 				<button class="btn inf" onclick="tmp.inf.upgs.reset()">Reset Infinity Upgrades</button><br /><br />
 				<div id="infUpgData" class="bandBig or"></div>
 				<br /><br />
-				<div style="overflow-x: auto;"><table id="infUpgs"></table><br><br></div>
+				<div style="overflow-x: auto;"><table id="infUpgs" role="table"></table><br><br></div>
 				<br /><br />
 			</div>
 			<div id="ascension" class="inftab">
@@ -1140,8 +1140,8 @@
 				<span id="stadiumProg"></span><br><br>
 				<table>
 					<tr>
-						<td id="spaceonDiv" class="stadiumChall" tooltip="Spaceon Challenge Description">
-							<div class="spaceon">Spaceon</div><br /><button
+						<td id="spaceonDiv" class="stadiumChall">
+							<div class="spaceon">Spaceon</div><div id="spaceonDiv-effect"></div><br /><button
 								id="spaceonChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('spaceon')"
@@ -1149,8 +1149,8 @@
 								Start</button
 							><br /><br /><span id="spaceonBtm" class="stadiumDesc"></span>
 						</td>
-						<td id="solarisDiv" class="stadiumChall" tooltip="Solaris Challenge Description">
-							<div class="solaris">Solaris</div><br /><button
+						<td id="solarisDiv" class="stadiumChall">
+							<div class="solaris">Solaris</div><div id="solarisDiv-effect"></div><br /><button
 								id="solarisChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('solaris')"
@@ -1158,8 +1158,8 @@
 								Start</button
 							><br /><br /><span id="solarisBtm" class="stadiumDesc"></span>
 						</td>
-						<td id="infinityDiv" class="stadiumChall" tooltip="Infinity Challenge Description">
-							<div class="infinity">Infinity</div><br /><button
+						<td id="infinityDiv" class="stadiumChall">
+							<div class="infinity">Infinity</div><div id="infinityDiv-effect"></div><br /><button
 								id="infinityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('infinity')"
@@ -1167,8 +1167,8 @@
 								Start</button
 							><br /><br /><span id="infinityBtm" class="stadiumDesc"></span>
 						</td>
-						<td id="eternityDiv" class="stadiumChall" tooltip="Eternity Challenge Description">
-							<div class="eternity">Eternity</div><br /><button
+						<td id="eternityDiv" class="stadiumChall">
+							<div class="eternity">Eternity</div><div id="eternityDiv-effect"></div><br /><button
 								id="eternityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('eternity')"
@@ -1176,8 +1176,8 @@
 								Start</button
 							><br /><br /><span id="eternityBtm" class="stadiumDesc"></span>
 						</td>
-						<td id="realityDiv" class="stadiumChall" tooltip="Reality Challenge Description">
-							<div class="reality">Reality</div><br /><button
+						<td id="realityDiv" class="stadiumChall">
+							<div class="reality">Reality</div><div id="realityDiv-effect"></div><br /><button
 								id="realityChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('reality')"
@@ -1185,8 +1185,8 @@
 								Start</button
 							><br /><br /><span id="realityBtm" class="stadiumDesc"></span>
 						</td>
-						<td id="drigganizDiv" class="stadiumChall" tooltip="Drigganiz Challenge Description">
-							<div class="drigganiz">Drigganiz</div><br /><button
+						<td id="drigganizDiv" class="stadiumChall">
+							<div class="drigganiz">Drigganiz</div><div id="drigganizDiv-effect"></div><br /><button
 								id="drigganizChall"
 								class="btn locked"
 								onclick="tmp.inf.stadium.start('drigganiz')"
@@ -1370,7 +1370,7 @@
 					<span id="quarkGain" class="quark"></span> Quarks/sec.<br />
 					You have <span id="quarks" class="quark"></span>.<br /><br />
 					<button id="quarkRewards" class="btn elm" onclick="tmp.elm.ferm.changeQuark()">
-						Hover to see current Quark effect<br />Click to change Quark Type
+Hover to see current Quark effect<br />Click to change Quark Type
 					</button>
 				</div>
 				<div style="width: 50%; min-height: 300px; background-color: #e34430; float: right; color: black;">

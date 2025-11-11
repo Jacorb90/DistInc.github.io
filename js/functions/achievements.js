@@ -212,6 +212,28 @@ function checkR19Ach() {
 function updateAchievements() {
 	tmp.nopathogenupgs = getTotalPathogenUpgrades().eq(0)
 	for (let r=1;r<=ACH_DATA.rows;r++) if (!Achievement.hasRow(r)) window["checkR"+r+"Ach"]();
+	if (isTabShown("achievements")) {
+		for (let r = 1; r <= ACH_DATA.rows; r++) {
+			for (let c = 1; c <= ACH_DATA.cols; c++) {
+				let id = r * 10 + c;
+				let ach = tmp.ach[id];
+				if (ach) {
+					let el = new Element("ach" + id);
+					let name = ach.title;
+					let req = (ACH_DATA.descs[id] !== undefined ? ach.parse(ACH_DATA.descs[id]) : "Not currently implemented.");
+					let reward = ach.reward;
+					let txt = name + "<br>" + req;
+					if (ach.has) txt += " (completed)";
+					if (reward !== "") txt += "<br>Reward: " + reward;
+					el.setHTML(txt);
+					el.setClasses({
+						achCont: true,
+						[ach.has ? "completed" : "locked"]: true
+					});
+				}
+			}
+		}
+	}
 }
 
 function rowComplete(r) {
